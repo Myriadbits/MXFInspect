@@ -34,11 +34,14 @@ The MXF file specification is huge! The specification allows for a lot of differ
 
 Some screenshots:
 
+Report screen showing the new ‘Execute all tests’ button
 ![Report screen showing the new ‘Execute all tests’ button](https://www.myriadbits.com/wp-content/uploads/2015/01/Report1.png)
 
+Logical view
 ![Logical view](https://www.myriadbits.com/wp-content/uploads/2015/01/Logical.png)
 
-![MXF file tree (with new coloring)](https://www.myriadbits.com/wp-content/uploads/2015/01/WholeFile2.png)
+MXF file tree (with 'syntax' coloring)
+![MXF file tree (with 'syntax' coloring)](https://www.myriadbits.com/wp-content/uploads/2015/01/WholeFile2.png)
 
 ## Future work
 There are a number of features that require some work:
@@ -53,7 +56,7 @@ There are a number of features that require some work:
 
 ## Installation
 
-Windows setup file of the 2.2.0.4 version can be downloaded here: [MXF Inspect 2.2.0.4](https://www.myriadbits.com/index.php/mxf-inspect-2/#)
+Windows setup file of the 2.2.0.4 version can be downloaded on my website: [MXF Inspect](https://www.myriadbits.com/index.php/mxf-inspect-2/#)
 
 
 Have fun!
