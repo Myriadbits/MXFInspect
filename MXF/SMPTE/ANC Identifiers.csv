@@ -1,0 +1,77 @@
+Data Type;DID;SDID;Status;Used Where;Application;Last Modified Time
+;00h;;Deprecated;S291;Undefined data deleted, (Deprecated; revision of ST291-2010);2010-07-11 14:26:49
+2;08h;08h;In Force;S353;MPEG recoding data, VANC space;2010-07-11 14:26:49
+2;08h;0Ch;In Force;S353;MPEG recoding data, HANC space;2010-07-15 17:25:46
+2;40h;01h;In Force;S305;SDTI transport in active frame space;2010-07-11 14:26:49
+2;40h;02h;In Force;S348;HD-SDTI transport in active frame space;2010-07-11 14:26:49
+2;40h;04h;In Force;S427;Link Encryption Message 1;2010-07-11 14:26:49
+2;40h;05h;In Force;S427;Link Encryption Message 2;2010-07-11 14:26:49
+2;40h;06h;In Force;S427;Link Encryption Metadata;2010-07-11 14:26:49
+2;41h;01h;In Force;S352;Payload Identification , HANC space;2010-07-11 14:26:49
+2;41h;05h;In Force;S2016-3;AFD and Bar Data;2010-07-11 14:26:49
+2;41h;06h;In Force;S2016-4;Pan-Scan Data;2010-07-11 14:26:49
+2;41h;07h;In Force;S2010;ANSI/SCTE 104 messages;2010-07-11 14:26:49
+2;41h;08h;In Force;S2031;DVB/SCTE VBI data;2010-07-11 14:26:49
+2;41h;09h;Provisionally Assigned;ST 2056 (pending approval);MPEG TS packets in VANC;2010-11-26 12:46:59
+2;41h;0Ah;Provisionally Assigned;ST 2068 (Pending Approval);Stereoscopic 3D Frame Compatible Packing and Signaling;2011-09-15 10:27:36
+2;43h;01h;In Force;ITU-R BT.1685;Structure of inter-station control data conveyed by ancillary data packets;2010-07-11 14:26:49
+2;43h;02h;In Force;RDD 8;Subtitling Distribution packet (SDP);2010-07-11 14:26:49
+2;43h;03h;In Force;RDD 8;Transport of ANC packet in an ANC Multipacket;2010-07-11 14:26:49
+2;43h;04h;In Force;ARIB TR-B29;Metadata to monitor errors of audio and video signals on a broadcasting chain ARIB http://www.arib.or.jp/english/html/overview/archives/br/8-TR-B29v1_0-E1.pdf;2010-07-11 14:26:49
+2;43h;05h;In Force;RDD18;Acquisition Metadata Sets for Video Camera Parameters;2010-07-26 10:55:10
+2;44h;04h;In Force;RP214;KLV Metadata transport in VANC space;2010-07-11 14:26:49
+2;44h;14h;In Force;RP214;KLV Metadata transport in HANC space;2010-07-11 14:26:49
+2;44h;44h;In Force;RP223;Packing UMID and Program Identification Label Data into SMPTE 291M Ancillary Data Packets;2010-07-11 14:26:49
+2;45h;01h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;02h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;03h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;04h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;05h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;06h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;07h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;08h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;45h;09h;In Force;S2020-1;Compressed Audio Metadata;2010-07-11 14:26:49
+2;46h;01h;In Force;ST 2051;Two Frame Marker in HANC;2010-12-06 12:21:27
+2;50h;01h;In Force;RDD 8;WSS data per RDD 8;2010-07-11 14:26:49
+2;51h;01h;In Force;RP215;Film Codes in VANC space;2010-07-11 14:26:49
+2;60h;60h;In Force;S12M-2;Ancillary Time Code;2010-07-11 14:26:49
+2;61h;01h;In Force;S334-1;EIA 708B Data mapping into VANC space;2010-07-11 14:26:49
+2;61h;02h;In Force;S334-1;EIA 608 Data mapping into VANC space;2010-07-11 14:26:49
+2;62h;01h;In Force;RP207;Program Description in VANC space;2010-07-11 14:26:49
+2;62h;02h;In Force;S334-1;Data broadcast (DTV) in VANC space;2010-07-11 14:26:49
+2;62h;03h;In Force;RP208;VBI Data in VANC space;2010-07-11 14:26:49
+2;64h;64h;Deprecated;RP196 (Withdrawn);Time Code in HANC space (Deprecated; for reference only);2010-07-11 14:26:49
+2;64h;7Fh;Deprecated;RP196 (Withdrawn);VITC in HANC space (Deprecated; for reference only);2010-07-11 14:26:49
+1;80h;;In Force;S291;Packet marked for deletion;2010-07-11 14:26:49
+1;84h;;Deprecated;S291;End packet deleted  (Deprecated; revision of ST291-2010);2010-07-11 14:49:46
+1;88h;;Deprecated;S291;Start packet deleted (Deprecated; revision of ST291-2010);2010-07-11 14:26:49
+1;A0h;;In Force;ST 299-2;Audio data in HANC space (3G) - Group 8 Control pkt;2010-07-28 02:38:50
+1;A1h;;In Force;ST 299-2;Audio data in HANC space (3G) - Group 7 Control pkt;2010-07-28 02:38:50
+1;A2h;;In Force;ST 299-2;Audio data in HANC space (3G) - Group 6 Control pkt;2010-07-28 02:38:50
+1;A3h;;In Force;ST 299-2;Audio data in HANC space (3G- Group 5 Control pkt);2010-07-28 02:38:50
+1;A4h;;In Force;ST 299-2;Audio data in HANC space (3G) - Group 8;2010-07-28 02:38:50
+1;A5h;;In Force;ST 299-2;Audio data in HANC space (3G) - Group 7;2010-07-28 02:38:50
+1;A6h;;In Force;ST 299-2;Audio data in HANC space (3G) - Group 6;2010-07-28 02:38:50
+1;A7h;;In Force;ST 299-2;Audio data in HANC space (3G)- Group 5;2010-07-28 02:38:50
+1;E0h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;E1h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;E2h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;E3h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;E4h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;E5h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;E6h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;E7h;;In Force;ST 299-1;Audio data in HANC space (HDTV);2010-07-28 02:39:30
+1;Ech;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;Edh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;Eeh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;Efh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;F0h;;In Force;S315;Camera position (HANC or VANC space);2010-07-11 14:26:49
+1;F4h;;In Force;RP165;Error Detection and Handling (HANC space);2010-07-11 14:26:49
+1;F8h;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;F9h;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;Fah;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;FBh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;FCh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;FDh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;FEh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
+1;FFh;;In Force;S272;Audio Data in HANC space (SDTV);2010-07-11 14:26:49
