@@ -35,14 +35,15 @@ The MXF file specification is huge! The specification allows for a lot of differ
 Some screenshots:
 
 Report screen showing the new ‘Execute all tests’ button
+
 ![Report screen showing the new ‘Execute all tests’ button](https://www.myriadbits.com/wp-content/uploads/2015/01/Report1.png)
 
-
 Logical view
+
 ![Logical view](https://www.myriadbits.com/wp-content/uploads/2015/01/Logical.png)
 
-
 MXF file tree (with 'syntax' coloring)
+
 ![MXF file tree (with 'syntax' coloring)](https://www.myriadbits.com/wp-content/uploads/2015/01/WholeFile2.png)
 
 
