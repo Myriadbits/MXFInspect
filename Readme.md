@@ -12,7 +12,7 @@ MXF files are extensively used in the broadcast industry. Since I was working in
 * Only show/filter the current object type.
 * Show/hide fillers.
 * Large file support. It is possible to load very huge MXF files (several Gigabyte) in seconds.
-* 'Syntax‘ coloring. Different types of metadata can be given separate colors so it is easier to discontinuous between the different types.
+* 'Syntax‘ coloring. Different types of metadata can be given separate colors so it is easier to distinguish between the different types.
 * Report screen that shows the results of the following tests:
 	* Consistency of partitions (check if the previous/next partitions and footer partitions are filled in correctly)
 	* RIP check (present and pointing to valid partitions)
