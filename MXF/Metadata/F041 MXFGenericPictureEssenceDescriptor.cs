@@ -116,8 +116,8 @@ namespace Myriadbits.MXF
 				case 0x3204: this.SampledHeight = reader.ReadD(); return true;
 				case 0x3206: this.SampledXOffset = (Int32) reader.ReadD(); return true;
 				case 0x3207: this.SampledYOffset = (Int32) reader.ReadD(); return true;
-				case 0x3208: this.DisplayWidth = reader.ReadD(); return true;
-				case 0x3209: this.DisplayHeight = reader.ReadD(); return true;
+				case 0x3208: this.DisplayHeight = reader.ReadD(); return true;
+				case 0x3209: this.DisplayWidth = reader.ReadD(); return true;
 				case 0x320A: this.DisplayXOffset = (Int32)reader.ReadD(); return true;
 				case 0x320B: this.DisplayYOffset = (Int32)reader.ReadD(); return true;
 				case 0x3217: this.DisplayF2Offset = (Int32)reader.ReadD(); return true;

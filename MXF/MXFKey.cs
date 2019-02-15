@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -98,85 +99,103 @@ namespace Myriadbits.MXF
 		static MXFKey()
 		{
 			m_ULDescriptions = new Dictionary<MXFShortKey,  string[]>();
-			
-			// Read SMPTE RP224 data
-			string allText = MXF.Properties.Resources.UL_Identifiers;
-			string[] allLines = allText.Split('\n');
-			if (allLines.Count() > 3)
-			{
-				string temp;
-				for (int n = 3; n < allLines.Count(); n++) // Start the first 3 header lines
-				{
-					string line = allLines[n];
-					string[] parts = line.Split(';');
-					if (parts.Count() > 6)
-					{
-						try
-						{
-							UInt64 value1 = 0;
-							UInt64 value2 = 0;
-							if (!string.IsNullOrEmpty(parts[1]))
-							{
-								temp = parts[1].Trim(' ');
-								temp = temp.Replace(".", "");
-								value1 = Convert.ToUInt64(temp, 16);
-							}
-							if (!string.IsNullOrEmpty(parts[2]))
-							{
-								temp = parts[2].Trim(' ');
-								temp = temp.Replace(".", "");
-								value2 = Convert.ToUInt64(temp, 16);
-							}
-							MXFShortKey shortKey = new MXFShortKey(value1, value2);
-							m_ULDescriptions.Add(shortKey, new string[] { parts[4], parts[5], parts[6] });
-							//Debug.WriteLine("combinedDID = {0}, Name = {1} ({2}) [{3}]", shortKey, parts[4], parts[5], parts[6]);
-						}
-						catch (Exception)
-						{
-						}
-					}
-				}
-			}
 
 
-			// Read SMPTE RP210 data
-			allText = MXF.Properties.Resources.MD_Identifiers;
-			allLines = allText.Split('\n');
-			if (allLines.Count() > 7)
-			{
-				for (int n = 7; n < allLines.Count(); n++) // Start the first 7 header lines
-				{
-					string line = allLines[n];
-					string[] parts = line.Split(';');
-					if (parts.Count() > 8)
-					{
-						try
-						{
-							string fullID = parts[5].Replace(".", "");
-							if (!string.IsNullOrEmpty(fullID))
-							{
-								UInt64 value1 = 0;
-								UInt64 value2 = 0;
-								string svalue1 = fullID.Substring(0, 16);
-								string svalue2 = fullID.Substring(16, 16);
-								if (!string.IsNullOrEmpty(svalue1))
-									value1 = Convert.ToUInt64(svalue1, 16);
-								if (!string.IsNullOrEmpty(svalue2))
-									value2 = Convert.ToUInt64(svalue2, 16);
-								MXFShortKey shortKey = new MXFShortKey(value1, value2);
-								if (parts.Count() > 12)
-									m_ULDescriptions.Add(shortKey, new string[] { string.Format("{0} - {1}", parts[6], parts[7]), parts[8], parts[13] });
-								else
-									m_ULDescriptions.Add(shortKey, new string[] { string.Format("{0} - {1}", parts[6], parts[7]), parts[8], string.Empty });
-							}
-						}
-						catch (Exception)
-						{
-						}
-					}
-				}
-			}
-		}
+
+            //Parse SMPTE Labels register
+
+            XElement regEntries;
+            XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
+
+            regEntries = XElement.Parse(MXF.Properties.Resources.Labels);
+
+            foreach (var el in regEntries.Element(ns + "Entries").Elements(ns + "Entry"))
+            {
+                UInt64 value1 = 0;
+                UInt64 value2 = 0;
+                string UL_string = "";
+                string name_string = "";
+                string definition_string = "";
+                string defining_document_string = "";
+                var x = el.Element(ns + "UL");
+                if (x != null) UL_string = x.Value.Replace("urn:smpte:ul:", "").Replace(".", "");
+                else continue; // No UL --> ignore this entry
+                //Debug.WriteLine(UL_string);
+                value1 = Convert.ToUInt64(UL_string.Substring(0, 16), 16);
+                value2 = Convert.ToUInt64(UL_string.Substring(16, 16), 16);
+                MXFShortKey shortKey = new MXFShortKey(value1, value2);
+                x = el.Element(ns + "Name");
+                if (x != null) name_string = x.Value;
+                x = el.Element(ns + "Definition");
+                if (x != null) definition_string = x.Value;
+                x = el.Element(ns + "DefiningDocument");
+                if ( x != null ) defining_document_string = x.Value;
+                //Debug.WriteLine(shortKey.ToString() + name_string +  definition_string + defining_document_string);
+                m_ULDescriptions.Add(shortKey, new string[] { name_string, definition_string, defining_document_string });
+            }
+
+
+            // Parse SMPTE Elements register
+
+            ns = "http://www.smpte-ra.org/schemas/335/2012";
+            regEntries = XElement.Parse(MXF.Properties.Resources.Elements);
+
+            foreach (var el in regEntries.Element(ns + "Entries").Elements(ns + "Entry"))
+            {
+                UInt64 value1 = 0;
+                UInt64 value2 = 0;
+                string UL_string = "";
+                string name_string = "";
+                string definition_string = "";
+                string defining_document_string = "";
+                var x = el.Element(ns + "UL");
+                if (x != null) UL_string = x.Value.Replace("urn:smpte:ul:", "").Replace(".", "");
+                else continue; // No UL --> ignore this entry
+                //Debug.WriteLine(UL_string);
+                value1 = Convert.ToUInt64(UL_string.Substring(0, 16), 16);
+                value2 = Convert.ToUInt64(UL_string.Substring(16, 16), 16);
+                MXFShortKey shortKey = new MXFShortKey(value1, value2);
+                x = el.Element(ns + "Name");
+                if (x != null) name_string = x.Value;
+                x = el.Element(ns + "Definition");
+                if (x != null) definition_string = x.Value;
+                x = el.Element(ns + "DefiningDocument");
+                if (x != null) defining_document_string = x.Value;
+                //Debug.WriteLine(shortKey.ToString() + name_string +  definition_string + defining_document_string);
+                m_ULDescriptions.Add(shortKey, new string[] { name_string, definition_string, defining_document_string });
+            }
+
+
+            //Parse SMPTE Groups register
+
+            ns = "http://www.smpte-ra.org/ns/395/2016";
+            regEntries = XElement.Parse(MXF.Properties.Resources.Groups);
+
+            foreach (var el in regEntries.Element(ns + "Entries").Elements(ns + "Entry"))
+            {
+                UInt64 value1 = 0;
+                UInt64 value2 = 0;
+                string UL_string = "";
+                string name_string = "";
+                string definition_string = "";
+                string notes_string = "";
+                var x = el.Element(ns + "UL");
+                if (x != null) UL_string = x.Value.Replace("urn:smpte:ul:", "").Replace(".", "");
+                else continue; // No UL --> ignore this entry
+                //Debug.WriteLine(UL_string);
+                value1 = Convert.ToUInt64(UL_string.Substring(0, 16), 16);
+                value2 = Convert.ToUInt64(UL_string.Substring(16, 16), 16);
+                MXFShortKey shortKey = new MXFShortKey(value1, value2);
+                x = el.Element(ns + "Name");
+                if (x != null) name_string = x.Value;
+                x = el.Element(ns + "Definition");
+                if (x != null) definition_string = x.Value;
+                x = el.Element(ns + "Notes");
+                if (x != null) notes_string = x.Value;
+                //Debug.WriteLine(shortKey.ToString() + name_string +  definition_string + defining_document_string);
+                m_ULDescriptions.Add(shortKey, new string[] { name_string + " - " + definition_string, "", notes_string });
+            }
+        }
 
 		[Browsable(false)]
 		public int Length 

@@ -187,6 +187,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MXFInspect.ico" />
+    <Content Include="Resources\Elements.xml" />
+    <Content Include="Resources\Groups.xml" />
+    <Content Include="Resources\Labels.xml" />
+    <Content Include="Resources\Types.xml" />
+    <None Include="MXF\SMPTE\Types.xml" />
+    <None Include="MXF\SMPTE\Labels.xml" />
+    <None Include="MXF\SMPTE\Groups.xml" />
+    <None Include="MXF\SMPTE\Elements.xml" />
     <None Include="Resources\RSReport_16xLG.png" />
     <None Include="Resources\Open_6529.png" />
     <None Include="Resources\FindPrevious_13244.png" />

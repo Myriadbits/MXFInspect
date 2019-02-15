@@ -84,6 +84,8 @@
     <Compile Include="Metadata\B32 MXFDMSegment.cs" />
     <Compile Include="Metadata\B33 MXFDMSourceClip.cs" />
     <Compile Include="Metadata\B34 MXFPackageMarkerObject.cs" />
+    <Compile Include="Metadata\B40 MXFACESPictureSubDescriptor.cs" />
+    <Compile Include="Metadata\B41 MXFTargetFrameSubDescriptor.cs" />
     <Compile Include="Metadata\D01 MXFDescriptiveFramework.cs" />
     <Compile Include="Metadata\E01 MXFMaterialPackage.cs" />
     <Compile Include="Metadata\E02 MXFSourcePackage.cs" />
@@ -136,6 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index_8287.ico" />
+    <None Include="SMPTE\Types.xml" />
+    <None Include="SMPTE\Labels.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SMPTE\Groups.xml" />
+    <None Include="SMPTE\Elements.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
