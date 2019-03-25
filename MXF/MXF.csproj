@@ -85,6 +85,11 @@
     <Compile Include="Metadata\B33 MXFDMSourceClip.cs" />
     <Compile Include="Metadata\B34 MXFPackageMarkerObject.cs" />
     <Compile Include="Metadata\B40 MXFACESPictureSubDescriptor.cs" />
+    <Compile Include="Metadata\B61 AudioChannelLabelSubDescriptor.cs" />
+    <Compile Include="Metadata\B63 GroupOfSoundfieldGroupsLabelSub Descriptor.cs" />
+    <Compile Include="Metadata\B62 SoundfieldGroupLabelSubDescriptor.cs" />
+    <Compile Include="Metadata\B60 MCALabelSubDescriptor.cs" />
+    <Compile Include="Metadata\B50 JPEG2000SubDescriptor.cs" />
     <Compile Include="Metadata\B41 MXFTargetFrameSubDescriptor.cs" />
     <Compile Include="Metadata\D01 MXFDescriptiveFramework.cs" />
     <Compile Include="Metadata\E01 MXFMaterialPackage.cs" />
@@ -95,6 +100,7 @@
     <Compile Include="Metadata\F042 MXFCDCIPictureEssenceDescriptor.cs" />
     <Compile Include="Metadata\F043 MXFRGBAPictureEssenceDescriptor.cs" />
     <Compile Include="Metadata\F05 MXFGenericSoundEssenceDescriptor.cs" />
+    <Compile Include="Metadata\F061 MXFDCTimedTextDescriptor.cs" />
     <Compile Include="Metadata\F06 MXFGenericDataEssenceDescriptor.cs" />
     <Compile Include="Metadata\SMPTE 382M MXFAES3AudioEssenceDescriptor.cs" />
     <Compile Include="Metadata\SMPTE 382M MXFWaveAudioEssenceDescriptor.cs" />
