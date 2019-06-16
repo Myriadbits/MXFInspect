@@ -30,7 +30,7 @@ namespace Myriadbits.MXF
 	/// </summary>
 	public class MXFReader : IDisposable
 	{
-		protected FileStream	m_FileStream = null;
+		protected FileStream m_FileStream = null;
 
 		/// <summary>
 		/// Reader constructor
@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Constructor, create the file reader
+		/// Constructor, creates the file reader
 		/// </summary>
 		/// <param name="reader"></param>
 		public MXFReader(string fileName)
@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Initialize, create the file reader
+		/// Initializes, creates the file reader
 		/// </summary>
 		/// <param name="reader"></param>
 		public void Open(string fileName)
@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Initialize, create the file reader
+		/// Closes the file reader
 		/// </summary>
 		/// <param name="reader"></param>
 		public void Close()
@@ -72,10 +72,10 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Return the current file position
+		/// Returns the current file position
 		/// </summary>
-		public long Position 
-		{ 
+		public long Position
+		{
 			get
 			{
 				return this.m_FileStream.Position;
@@ -83,17 +83,18 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Seek to a position in the file
+		/// Seeks to a position in the file
 		/// </summary>
-		/// <param name="newPosition"></param>
+		/// <param name="newPosition">The position to head for</param>
 		public void Seek(long newPosition)
 		{
-			this.m_FileStream.Seek(newPosition, System.IO.SeekOrigin.Begin);
+			this.m_FileStream.Seek(newPosition, SeekOrigin.Begin);
 		}
 
 		/// <summary>
-		/// Skip some bytes
+		/// Skips some bytes
 		/// </summary>
+		/// <param name="toSkip">The amount to skip</param>
 		public void Skip(long toSkip)
 		{
 			Seek(this.Position + toSkip);
@@ -101,7 +102,7 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Return the name of this MXF
+		/// Returns the file name of this MXF file
 		/// </summary>
 		public string FileName { get; set; }
 
@@ -120,7 +121,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Returns true when the end-of-file is reached
+		/// Gets the size of the file
 		/// </summary>
 		public long Size
 		{
@@ -139,9 +140,9 @@ namespace Myriadbits.MXF
 		{
 			Close();
 		}
-	
+
 		/// <summary>
-		/// Read a single byte
+		/// Reads a single byte
 		/// </summary>
 		public byte ReadB()
 		{
@@ -151,7 +152,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a single byte
+		/// Reads a single byte
 		/// </summary>
 		public bool ReadBool()
 		{
@@ -159,16 +160,18 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read multiple bytes
+		/// Reads multiple bytes into an array
 		/// </summary>
+		/// <param name="array">The array into which the bytes are read</param>
+		/// <param name="count">the number of bytes to read</param>
 		public void Read(byte[] array, long count)
 		{
 			if (this.m_FileStream != null)
-				this.m_FileStream.Read(array, 0, (int) count);
+				this.m_FileStream.Read(array, 0, (int)count);
 		}
 
 		/// <summary>
-		/// Read a single byte
+		/// Reads a single byte
 		/// </summary>
 		public sbyte ReadsB()
 		{
@@ -178,7 +181,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a single word
+		/// Reads a single word
 		/// </summary>
 		public UInt16 ReadW()
 		{
@@ -186,9 +189,9 @@ namespace Myriadbits.MXF
 				return (UInt16)((this.m_FileStream.ReadByte() << 8) + this.m_FileStream.ReadByte());
 			return 0;
 		}
-		
+
 		/// <summary>
-		/// Read a dword
+		/// Reads a dword
 		/// </summary>
 		public UInt32 ReadD()
 		{
@@ -203,7 +206,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a long
+		/// Reads a long
 		/// </summary>
 		public UInt64 ReadL()
 		{
@@ -222,8 +225,9 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a string
+		/// Reads a string
 		/// </summary>
+		/// <param name="length">The length of the string to read</param>
 		public string ReadS(int length)
 		{
 			byte[] data = new byte[length];
@@ -233,7 +237,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a reference key
+		/// Reads a reference key
 		/// </summary>
 		public MXFRefKey ReadRefKey()
 		{
@@ -241,7 +245,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a normal (non-reference) key
+		/// Reads a normal (non-reference) key
 		/// </summary>
 		public MXFKey ReadKey()
 		{
@@ -249,7 +253,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a UMID key (with reference)
+		/// Reads a UMID key (with reference)
 		/// </summary>
 		public MXFUMIDKey ReadUMIDKey()
 		{
@@ -257,9 +261,8 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a version
+		/// Reads a version
 		/// </summary>
-		/// <returns></returns>
 		public UInt16[] ReadVersion()
 		{
 			UInt16[] version = new UInt16[5];
@@ -269,10 +272,8 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a timestamp
+		/// Reads a timestamp
 		/// </summary>
-		/// <param name="rateNonDrop"></param>
-		/// <returns></returns>
 		public DateTime ReadTimestamp()
 		{
 			UInt16 year = this.ReadW();
@@ -294,10 +295,8 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Read a timestamp
+		/// Reads a rational
 		/// </summary>
-		/// <param name="rateNonDrop"></param>
-		/// <returns></returns>
 		public MXFRational ReadRational()
 		{
 			MXFRational rat = new MXFRational();
@@ -307,11 +306,10 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Read a list of keys
+		/// Reads a list of keys
 		/// </summary>
-		/// <param name="reader"></param>
 		/// <param name="categoryName"></param>
-		/// <returns></returns>
+		/// <param name="singleItem"></param>
 		public MXFObject ReadKeyList(string categoryName, string singleItem)
 		{
 			UInt32 nofItems = this.ReadD();
@@ -331,9 +329,9 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Read a BCD timecode
+		/// Reads a BCD timecode
 		/// </summary>
-		/// <param name="rateNonDrop"></param>
+		/// <param name="frameRate"></param>
 		/// <returns></returns>
 		public MXFTimeStamp ReadBCDTimeCode(double frameRate)
 		{
@@ -352,6 +350,6 @@ namespace Myriadbits.MXF
 		}
 
 
-		
+
 	}
 }
