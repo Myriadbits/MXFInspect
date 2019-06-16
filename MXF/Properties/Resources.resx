@@ -121,10 +121,16 @@
   <data name="ANC_Identifiers" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SMPTE\ANC Identifiers.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="MD_Identifiers" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SMPTE\RP210v13-pub-20120214.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Elements" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SMPTE\Elements.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="UL_Identifiers" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SMPTE\RP224v12-pub-20120418.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SMPTE\Groups.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Labels" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SMPTE\Labels.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Types" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SMPTE\Types.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

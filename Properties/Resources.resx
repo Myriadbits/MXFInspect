@@ -142,4 +142,16 @@
   <data name="RSReport_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RSReport_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Elements" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\MXF\SMPTE\Elements.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\MXF\SMPTE\Groups.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Labels" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\MXF\SMPTE\Labels.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Types" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\MXF\SMPTE\Types.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

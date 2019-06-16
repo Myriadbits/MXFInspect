@@ -5,3 +5,4 @@ bin
 /Publish/MXF_Setup_2_2_0_4.exe
 /Publish/MXFInspect Sources 2.0.1.3.zip
 obj
+.vs/
