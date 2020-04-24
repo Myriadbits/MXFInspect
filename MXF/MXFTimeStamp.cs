@@ -103,10 +103,10 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Compare 2 timestamps to check if they ar the same
+		/// Compares two timestamps to check if they are the same
 		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
+		/// <param name="other">The timestamp to be compared</param>
+		/// <returns>True if the timestamps are the same</returns>
 		public bool IsSame(MXFTimeStamp other)
 		{
 			if (this.Year == other.Year &&
@@ -125,10 +125,9 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Compare 2 timestamps to check if they ar the same
+		/// Checks whether the timestamp is empty
 		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
+		/// <returns>True if the timestamp is emppty</returns>
 		public bool IsEmpty()
 		{
 			if (this.Year == 0 &&
@@ -150,7 +149,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="value"></param>
 		/// <param name="tenMask"></param>
-		/// <returns></returns>
+		/// <returns>The numeric value of the timestamp component</returns>
 		private byte ParseBCD(byte value, byte tenMask)
 		{
 			return (byte)((value & 0x0F) + ((value & tenMask) >> 4) * 10);
