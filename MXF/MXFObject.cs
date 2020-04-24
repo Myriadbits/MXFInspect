@@ -276,7 +276,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="currentObject"></param>
 		/// <returns></returns>
-		public MXFObject FindPreviousibling(Type typeToFind, bool skipFillers)
+		public MXFObject FindPreviousSibling(Type typeToFind, bool skipFillers)
 		{
 			MXFObject found = null;
 			if (this.Parent != null && this.Parent.HasChildren)
@@ -301,7 +301,7 @@ namespace Myriadbits.MXF
 				}
 
 				// Hmm still not found, try our grand-parent:
-				found = this.Parent.FindPreviousibling(typeToFind, skipFillers);
+				found = this.Parent.FindPreviousSibling(typeToFind, skipFillers);
 			}
 			return found;
 		}
