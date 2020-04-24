@@ -74,11 +74,11 @@ namespace Myriadbits.MXF
 			{
 				case 0x3D03: this.AudioSamplingRate = reader.ReadRational(); return true;
 				case 0x3D02: this.Locked = reader.ReadBool(); return true;
-				case 0x3D04: this.AudioRefLevel = reader.ReadsB(); return true;
+				case 0x3D04: this.AudioRefLevel = reader.ReadSB(); return true;
 				case 0x3D05: this.ElectroSpatialFormulation = reader.ReadB(); return true;
 				case 0x3D07: this.ChannelCount = reader.ReadD(); return true;
 				case 0x3D01: this.QuantizationBits = reader.ReadD(); return true;
-				case 0x3D0C: this.DialNorm = reader.ReadsB(); return true;
+				case 0x3D0C: this.DialNorm = reader.ReadSB(); return true;
 				case 0x3D06: this.SoundEssenceCoding = reader.ReadKey(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

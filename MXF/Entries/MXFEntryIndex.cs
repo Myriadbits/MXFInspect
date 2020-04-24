@@ -48,8 +48,8 @@ namespace Myriadbits.MXF
 
 			this.Length = length;
 			this.Index = index;
-			this.TemporalOffset = reader.ReadsB();
-			this.KeyFrameOffset = reader.ReadsB();
+			this.TemporalOffset = reader.ReadSB();
+			this.KeyFrameOffset = reader.ReadSB();
 			this.Flags = reader.ReadB();
 			this.StreamOffset = reader.ReadL();
 
