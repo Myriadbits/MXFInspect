@@ -29,10 +29,10 @@ namespace Myriadbits.MXF
 		private static MXFKey s_MxfKlvKey = new MXFKey(0x06, 0x0e, 0x2b, 0x34);
 
 		[CategoryAttribute("KLV"), ReadOnly(true)]
-		public MXFKey	Key { get; set; }
+		public MXFKey Key { get; set; }
 
 		[CategoryAttribute("KLV"), ReadOnly(true)]
-		public long		DataOffset { get; set; } // Points just after the KLV
+		public long DataOffset { get; set; } // Points just after the KLV
 		
 		[Browsable(false)]
 		public MXFPartition Partition { get; set; }
