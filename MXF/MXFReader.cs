@@ -92,7 +92,7 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Skips some bytes
+		/// Skips a given amount of bytes
 		/// </summary>
 		/// <param name="toSkip">The amount to skip</param>
 		public void Skip(long toSkip)
@@ -152,7 +152,17 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
-		/// Reads a single byte
+		/// Reads a signed byte
+		/// </summary>
+		public sbyte ReadSB()
+		{
+			if (this.m_FileStream != null)
+				return (sbyte)this.m_FileStream.ReadByte();
+			return 0;
+		}
+
+		/// <summary>
+		/// Reads a single byte holding a boolean value
 		/// </summary>
 		public bool ReadBool()
 		{
@@ -170,15 +180,6 @@ namespace Myriadbits.MXF
 				this.m_FileStream.Read(array, 0, (int)count);
 		}
 
-		/// <summary>
-		/// Reads a single byte
-		/// </summary>
-		public sbyte ReadsB()
-		{
-			if (this.m_FileStream != null)
-				return (sbyte)this.m_FileStream.ReadByte();
-			return 0;
-		}
 
 		/// <summary>
 		/// Reads a single word
