@@ -23,7 +23,7 @@ using System;
 
 namespace Myriadbits.MXF
 {
-	public class MXFTimeStamp : Object
+	public class MXFTimeStamp
 	{
 		public MXFTimeStamp()
 		{
@@ -89,7 +89,16 @@ namespace Myriadbits.MXF
 							this.Hour = 0;
 							this.Day++;
 
-							// TODO MONTH + year
+							if (this.Day > DateTime.DaysInMonth(Year, Month))
+							{
+								this.Day = 1;
+								this.Month++;
+								if (this.Month > 12)
+								{
+									this.Month = 1;
+									this.Year++;
+								}
+							}
 						}
 					}
 				}
@@ -127,7 +136,7 @@ namespace Myriadbits.MXF
 		/// <summary>
 		/// Checks whether the timestamp is empty
 		/// </summary>
-		/// <returns>True if the timestamp is emppty</returns>
+		/// <returns>True if the timestamp is empty</returns>
 		public bool IsEmpty()
 		{
 			if (this.Year == 0 &&
