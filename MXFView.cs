@@ -348,7 +348,7 @@ namespace Myriadbits.MXFInspect
 						previousObject = this.m_filterList[index - 1];
 				}
 				else
-					previousObject = selectedObject.FindPreviousibling(selectedObject.GetType(), this.HideFillers);
+					previousObject = selectedObject.FindPreviousSibling(selectedObject.GetType(), this.HideFillers);
 				SelectObjectInMainList(previousObject);
 			}
 		}
