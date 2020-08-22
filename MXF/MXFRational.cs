@@ -23,7 +23,7 @@ using System;
 
 namespace Myriadbits.MXF
 {
-	public class MXFRational : Object
+	public class MXFRational
 	{
 		public UInt32 Num { get; set; }
 		public UInt32 Den { get; set; }
@@ -37,6 +37,17 @@ namespace Myriadbits.MXF
 				return ((double)this.Num) / ((double)this.Den);
 			}
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != typeof(MXFRational)) return false;
+			var other = (MXFRational)obj;
+			return this.Num == other.Num && this.Den == other.Den;
+		}
+		public static bool operator ==(MXFRational x, MXFRational y) { return Equals(x, y); }
+		public static bool operator !=(MXFRational x, MXFRational y) { return !Equals(x, y); }
 
 		public override string ToString()
 		{
