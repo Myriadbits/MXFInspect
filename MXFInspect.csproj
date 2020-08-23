@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MXFInspect.ico" />
+    <None Include="Resources\64702.png" />
     <Content Include="Resources\Elements.xml" />
     <Content Include="Resources\Groups.xml" />
     <Content Include="Resources\Labels.xml" />
@@ -217,6 +218,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation">
+      <Version>8.6.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
