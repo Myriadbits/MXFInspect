@@ -183,7 +183,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Report";
-			this.Load += new System.EventHandler(this.AboutForm_Load);
+			this.Load += new System.EventHandler(this.ReportForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.tlvResults)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

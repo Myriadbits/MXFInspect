@@ -55,12 +55,7 @@ namespace Myriadbits.MXFInspect
 			m_mainFile = file;
 		}
 
-		/// <summary>
-		/// Display correct assembly version number
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AboutForm_Load(object sender, EventArgs e)
+		private void ReportForm_Load(object sender, EventArgs e)
 		{
 			DisplayFileInfo();
 		}
