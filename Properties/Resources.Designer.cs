@@ -19,7 +19,7 @@ namespace Myriadbits.MXFInspect.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,6 +61,16 @@ namespace Myriadbits.MXFInspect.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64702 {
+            get {
+                object obj = ResourceManager.GetObject("_64702", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon ChildIcon {
@@ -84,7 +94,7 @@ namespace Myriadbits.MXFInspect.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Elements {
             get {
@@ -136,7 +146,7 @@ namespace Myriadbits.MXFInspect.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Groups {
             get {
@@ -168,7 +178,7 @@ namespace Myriadbits.MXFInspect.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Labels {
             get {
@@ -188,7 +198,7 @@ namespace Myriadbits.MXFInspect.Properties {
         ///                     GNU GENERAL PUBLIC LICENSE
         ///   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
         ///
-        ///  0. This License applies to any program or other work which con [rest of string was truncated]&quot;;.
+        ///  0. This License applies to any program or other wor [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string License {
             get {
@@ -230,7 +240,7 @@ namespace Myriadbits.MXFInspect.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Types {
             get {

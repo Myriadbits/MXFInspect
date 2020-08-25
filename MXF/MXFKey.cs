@@ -243,6 +243,12 @@ namespace Myriadbits.MXF
 			Initialize(list);
 		}
 
+		public MXFKey(int[] firstKey, int[] secondKey)
+		{
+			int[] key = firstKey.Concat(secondKey).ToArray();
+			Initialize(key);
+		}
+
 		/// <summary>
 		/// Create a new key
 		/// </summary>
