@@ -19,11 +19,13 @@
 // For more information, contact me at: info@myriadbits.com
 //
 
+using FluentValidation;
 using Myriadbits.MXF;
 using Myriadbits.MXF.ConformanceValidators;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -275,18 +277,23 @@ namespace Myriadbits.MXFInspect
 
 				if (file != null)
 				{
+					ValidatorOptions.Global.LanguageManager.Enabled = false;
 					var validator = new MXFProfile01Validator(file);
+					var i = validator.CreateDescriptor();
+					
 					var result = validator.Validate(file);
 					if (result.IsValid)
 					{
-						MessageBox.Show("Picture Essence Descriptor is valid");
+						MessageBox.Show("MXF file conforms to selected profile");
 					}
 					else
 					{
+						var sb = new StringBuilder();
 						foreach (var err in result.Errors)
 						{
-							MessageBox.Show(err.ErrorMessage);
+							sb.Append($"Error: {err.ErrorMessage}, Exp. Value: {""} Actual Value {err.AttemptedValue} \r\n");
 						}
+						MessageBox.Show(sb.ToString());
 					}
 				}
 				else MessageBox.Show("Cannot find Picture Essence Descriptor");
