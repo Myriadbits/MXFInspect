@@ -31,7 +31,7 @@ namespace Myriadbits.MXF.ConformanceValidators
         // Undefined: 060e2b34.04010101.04020201.7f000000 (= Uncompressed Sound Coding, Undefined Sound Coding) 
         private static readonly int[] uncompressedCodingKey1 = new int[] { 0x06, 0x0e, 0x2b, 0x34, 0x04, 0x01, 0x01, 0x01 };
         private static readonly int[] uncompressedCodingKey2 = new int[] { 0x04, 0x02, 0x02, 0x01, 0x7f, 0x00, 0x00, 0x00 };
-        public static readonly MXFKey Uncompressed_SoundEssenceCoding_Key = new MXFKey(uncompressedCodingKey1, uncompressedCodingKey2);
+        public static readonly MXFKey Undefined_SoundEssenceCoding_Key = new MXFKey(uncompressedCodingKey1, uncompressedCodingKey2);
 
         // Dolby-E: 060e2b34.04010101.04020202.03021c00(= Dolby-E Compressed Audio)
         private static readonly int[] dolbyECodingKey1 = new int[] { 0x06, 0x0e, 0x2b, 0x34, 0x04, 0x01, 0x01, 0x01 };
@@ -54,21 +54,6 @@ namespace Myriadbits.MXF.ConformanceValidators
         public static readonly MXFKey SingleSequenceFlag_Key = new MXFKey(firstKey, new int[] { 0x04, 0x01, 0x06, 0x02, 0x01, 0x02, 0x00, 0x00 });
         public static readonly MXFKey ClosedGOP_Key = new MXFKey(firstKey, new int[] { 0x04, 0x01, 0x06, 0x02, 0x01, 0x06, 0x00, 0x00 });
         public static readonly MXFKey LowDelay_Key = new MXFKey(firstKey, new int[] { 0x04, 0x01, 0x06, 0x02, 0x01, 0x05, 0x00, 0x00 });
-
-
-        // 00 00 00 01 00 00 00 18 85 00 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 60 (= standard mode, Professional Use, Linear PCM, No Emphasis, 48kHz Sampling, the CRCC value: 60)
-        private static readonly int[] frameWrappedAudioData =
-        {0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18, 0x85, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00,
-         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60};
-
-        //00 00 00 01 00 00 00 18 85 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 (= minimum mode, Professional Use, Linear PCM, No Emphasis, 48kHz Sampling)
-
-
-
-
-
-
-
 
     }
 }

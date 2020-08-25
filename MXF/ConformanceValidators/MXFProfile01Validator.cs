@@ -21,6 +21,7 @@ namespace Myriadbits.MXF.ConformanceValidators
             // check all audio specs
             var aes3descriptors = f.GetMXFAES3AudioEssenceDescriptor();
             RuleForEach(file => aes3descriptors).SetValidator(new MXFProfile01AES3AudioDescriptorValidator());
+
         }
     }
 }
