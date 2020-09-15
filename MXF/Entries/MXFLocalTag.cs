@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;

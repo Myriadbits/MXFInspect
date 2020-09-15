@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXFInspect - Myriadbits MXF Viewer. 
 // Inspect MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,8 +19,8 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
-using System;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
