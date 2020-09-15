@@ -21,7 +21,7 @@
 
 namespace Myriadbits.MXF
 {
-	class MXFPackageMarkerObject : MXFSegment
+	public class MXFPackageMarkerObject : MXFSegment
 	{
 		public MXFPackageMarkerObject(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Package Marker Object")

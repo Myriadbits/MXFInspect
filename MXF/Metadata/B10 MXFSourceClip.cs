@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFSourceClip : MXFStructuralComponent
+	public class MXFSourceClip : MXFStructuralComponent
 	{
 		[CategoryAttribute("SourceClip"), Description("1201")]
 		public UInt64? StartPosition { get; set; }

@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFDMSegment : MXFEvent
+	public class MXFDMSegment : MXFEvent
 	{
 		[CategoryAttribute("DMSegment"), Description("6102")]
 		public UInt64? Track { get; set; }

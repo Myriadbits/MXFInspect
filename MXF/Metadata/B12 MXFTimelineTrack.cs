@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFTimelineTrack : MXFGenericTrack
+	public class MXFTimelineTrack : MXFGenericTrack
 	{
 		[CategoryAttribute("TimelineTrack"), Description("4B01")]
 		public MXFRational EditRate { get; set; }

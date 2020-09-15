@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFEssenceContainerData : MXFInterchangeObject
+	public class MXFEssenceContainerData : MXFInterchangeObject
 	{
 		[CategoryAttribute("EssenceContainerData"), Description("2701")]
 		public MXFUMIDKey LinkedPackageUID { get; set; }

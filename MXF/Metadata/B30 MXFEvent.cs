@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFEvent : MXFSegment
+	public class MXFEvent : MXFSegment
 	{
 		[CategoryAttribute("SourceClip"), Description("0601")]
 		public UInt64? EventStartPosition { get; set; }

@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFTimecodeComponent : MXFStructuralComponent
+	public class MXFTimecodeComponent : MXFStructuralComponent
 	{
 		[CategoryAttribute("TimecodeComponent"), Description("1501")]
 		public UInt64? StartTimecode { get; set; }

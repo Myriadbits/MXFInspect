@@ -23,7 +23,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFTextLocator : MXFInterchangeObject
+	public class MXFTextLocator : MXFInterchangeObject
 	{
 		[CategoryAttribute("TexLocator"), Description("4001")]
 		public string LocatorName { get; set; }

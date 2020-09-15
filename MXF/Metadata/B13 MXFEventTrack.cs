@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFEventTrack : MXFGenericTrack
+	public class MXFEventTrack : MXFGenericTrack
 	{
 		[CategoryAttribute("EventTrack"), Description("4B01")]
 		public MXFRational EventEditRate { get; set; }

@@ -22,7 +22,7 @@
 
 namespace Myriadbits.MXF
 {
-	class MXFDMSourceClip : MXFSourceClip
+	public class MXFDMSourceClip : MXFSourceClip
 	{
 		public MXFDMSourceClip(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "DM Source Clip")

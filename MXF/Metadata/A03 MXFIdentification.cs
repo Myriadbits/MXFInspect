@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFIdentification : MXFInterchangeObject
+	public class MXFIdentification : MXFInterchangeObject
 	{
 		[CategoryAttribute("Identification"), Description("3C01")]
 		public string CompanyName { get; set; }

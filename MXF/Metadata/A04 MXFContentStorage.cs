@@ -21,7 +21,7 @@
 
 namespace Myriadbits.MXF
 {
-	class MXFContentStorage : MXFInterchangeObject
+	public class MXFContentStorage : MXFInterchangeObject
 	{
 		public MXFContentStorage(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "ContentStorage")

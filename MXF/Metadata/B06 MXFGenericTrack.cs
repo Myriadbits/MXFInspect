@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFGenericTrack : MXFInterchangeObject
+	public class MXFGenericTrack : MXFInterchangeObject
 	{
 		[CategoryAttribute("GenericTrack"), Description("4801")]
 		public UInt32? TrackID { get; set; }
