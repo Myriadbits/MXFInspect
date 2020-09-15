@@ -23,7 +23,7 @@ using System;
 
 namespace Myriadbits.MXF
 {
-	public class MXFRational : Object
+	public class MXFRational : IEquatable<MXFRational>
 	{
 		public UInt32 Num { get; set; }
 		public UInt32 Den { get; set; }
@@ -42,5 +42,39 @@ namespace Myriadbits.MXF
 		{
 			return string.Format("{0:.00} ({1}/{2})", this.Value, this.Num, this.Den);
 		}
+
+		/// <summary>
+		/// Checks whether two rationals are equal?
+		/// </summary>
+		/// <param name="other">The other rational to be compared</param>
+		/// <returns>True if the two rationals are equal</returns>
+		public bool Equals(MXFRational other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+
+			if(this.Num == other.Num && this.Den == other.Den)
+			{
+				return true;
+			}
+			return false;
+		}
+
+		/// <summary>
+		///  Checks if this rational is equal to another object
+		/// </summary>
+		/// <param name="obj">The other object to be compared</param>
+		/// <returns>True if the two objects are equal</returns>
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != typeof(MXFRational)) return false;
+			return Equals((MXFRational)obj);
+		}
+
+		public override int GetHashCode() { return (this.Num + this.Den).GetHashCode(); }
+		public static bool operator ==(MXFRational x, MXFRational y) { return Equals(x, y); }
+		public static bool operator !=(MXFRational x, MXFRational y) { return !Equals(x, y); }
 	}
 }
