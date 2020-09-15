@@ -1,162 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A9C52737-E342-4E0A-A995-D0A973C12902}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Myriadbits.MXF</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Company>Myriadbits</Company>
+    <Description>MXF .NET Standard 2.0 Library</Description>
+    <Copyright>Copyright © 2015 by Myriadbits.com</Copyright>
+    <PackageProjectUrl>https://github.com/Myriadbits/MXFInspect</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Myriadbits/MXFInspect</RepositoryUrl>
+    <PackageId>MXF Inspect Library</PackageId>
+    <Authors>Jochem Bakker</Authors>
+    <Product>MXF Inspect</Product>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <AssemblyVersion>2.2.0.4</AssemblyVersion>
+    <FileVersion>2.2.0.4</FileVersion>
+    <Version>2.2.0.4</Version>
     <AssemblyName>Myriadbits.MXF</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <RootNamespace>Myriadbits.MXF</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Index_8287.ico</ApplicationIcon>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="System.ComponentModel.EventBasedAsync" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Entries\MXFANCPacket.cs" />
-    <Compile Include="Entries\MXFCDPFooter.cs" />
-    <Compile Include="Entries\MXFCDPFuture.cs" />
-    <Compile Include="Entries\MXFCDPPacket.cs" />
-    <Compile Include="Entries\MXFEntryCCData.cs" />
-    <Compile Include="Entries\MXFEntryDelta.cs" />
-    <Compile Include="Entries\MXFEntryIndex.cs" />
-    <Compile Include="Entries\MXFEntryPrimer.cs" />
-    <Compile Include="Entries\MXFEntryRIP.cs" />
-    <Compile Include="Entries\MXFEntrySVCInfo.cs" />
-    <Compile Include="Entries\MXFLocalTag.cs" />
-    <Compile Include="MainElements\MXFANCFrameElement.cs" />
-    <Compile Include="MainElements\MXFEssenceElement.cs" />
-    <Compile Include="MainElements\MXFPackageMetadata.cs" />
-    <Compile Include="MainElements\MXFPartition.cs" />
-    <Compile Include="MainElements\MXFPrimerPack.cs" />
-    <Compile Include="MainElements\MXFRIP.cs" />
-    <Compile Include="MainElements\MXFSystemItem.cs" />
-    <Compile Include="Metadata\A00 MXFMetadataBaseclass.cs" />
-    <Compile Include="Metadata\A01 MXFInterchangeObject.cs" />
-    <Compile Include="Metadata\A02 MXFPreface.cs" />
-    <Compile Include="Metadata\A03 MXFIdentification.cs" />
-    <Compile Include="Metadata\A04 MXFContentStorage.cs" />
-    <Compile Include="Metadata\A05 MXFEssenceContainerData.cs" />
-    <Compile Include="Metadata\B01 MXFGenericPackage.cs" />
-    <Compile Include="Metadata\B02 MXFGenericDescriptor.cs" />
-    <Compile Include="Metadata\B04 MXFNetworkLocator.cs" />
-    <Compile Include="Metadata\B05 MXFTextLocator.cs" />
-    <Compile Include="Metadata\B06 MXFGenericTrack.cs" />
-    <Compile Include="Metadata\B08 MXFStructuralComponent.cs" />
-    <Compile Include="Metadata\B09 MXFSequence.cs" />
-    <Compile Include="Metadata\B10 MXFSourceClip.cs" />
-    <Compile Include="Metadata\B11 MXFFiller.cs" />
-    <Compile Include="Metadata\B12 MXFTimelineTrack.cs" />
-    <Compile Include="Metadata\B13 MXFEventTrack.cs" />
-    <Compile Include="Metadata\B17 MXFTimecodeComponent.cs" />
-    <Compile Include="Metadata\B29 MXFSegment.cs" />
-    <Compile Include="Metadata\B30 MXFEvent.cs" />
-    <Compile Include="Metadata\B32 MXFDMSegment.cs" />
-    <Compile Include="Metadata\B33 MXFDMSourceClip.cs" />
-    <Compile Include="Metadata\B34 MXFPackageMarkerObject.cs" />
-    <Compile Include="Metadata\B40 MXFACESPictureSubDescriptor.cs" />
-    <Compile Include="Metadata\B61 AudioChannelLabelSubDescriptor.cs" />
-    <Compile Include="Metadata\B63 GroupOfSoundfieldGroupsLabelSub Descriptor.cs" />
-    <Compile Include="Metadata\B62 SoundfieldGroupLabelSubDescriptor.cs" />
-    <Compile Include="Metadata\B60 MCALabelSubDescriptor.cs" />
-    <Compile Include="Metadata\B50 JPEG2000SubDescriptor.cs" />
-    <Compile Include="Metadata\B41 MXFTargetFrameSubDescriptor.cs" />
-    <Compile Include="Metadata\D01 MXFDescriptiveFramework.cs" />
-    <Compile Include="Metadata\E01 MXFMaterialPackage.cs" />
-    <Compile Include="Metadata\E02 MXFSourcePackage.cs" />
-    <Compile Include="Metadata\F02 MXFFileDescriptor.cs" />
-    <Compile Include="Metadata\F03 MXFMultipleDescriptor.cs" />
-    <Compile Include="Metadata\F041 MXFGenericPictureEssenceDescriptor.cs" />
-    <Compile Include="Metadata\F042 MXFCDCIPictureEssenceDescriptor.cs" />
-    <Compile Include="Metadata\F043 MXFRGBAPictureEssenceDescriptor.cs" />
-    <Compile Include="Metadata\F05 MXFGenericSoundEssenceDescriptor.cs" />
-    <Compile Include="Metadata\F061 MXFDCTimedTextDescriptor.cs" />
-    <Compile Include="Metadata\F06 MXFGenericDataEssenceDescriptor.cs" />
-    <Compile Include="Metadata\SMPTE 382M MXFAES3AudioEssenceDescriptor.cs" />
-    <Compile Include="Metadata\SMPTE 382M MXFWaveAudioEssenceDescriptor.cs" />
-    <Compile Include="Metadata\XXX MXFIndexTableSegment.cs" />
-    <Compile Include="MXFData.cs" />
-    <Compile Include="MXFFile.cs" />
-    <Compile Include="MXFKey.cs" />
-    <Compile Include="MXFKLV.cs" />
-    <Compile Include="MXFKLVFactory.cs" />
-    <Compile Include="MXFLogicalObject.cs" />
-    <Compile Include="MXFNamedObject.cs" />
-    <Compile Include="MXFObject.cs" />
-    <Compile Include="MXFRational.cs" />
-    <Compile Include="MXFReader.cs" />
-    <Compile Include="MXFRefKey.cs" />
-    <Compile Include="MXFTimeStamp.cs" />
-    <Compile Include="MXFUMIDKey.cs" />
-    <Compile Include="MXFValidationResult.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
+    <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Validators\MXFValidator.cs" />
-    <Compile Include="Validators\MXFValidatorIndex.cs" />
-    <Compile Include="Validators\MXFValidatorInfo.cs" />
-    <Compile Include="Validators\MXFValidatorPartitions.cs" />
-    <Compile Include="Validators\MXFValidatorRIP.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="SMPTE\ANC Identifiers.csv" />
-    <None Include="SMPTE\RP210v13-pub-20120214.csv" />
-    <None Include="SMPTE\RP224v12-pub-20120418.csv" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Index_8287.ico" />
-    <None Include="SMPTE\Types.xml" />
-    <None Include="SMPTE\Labels.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SMPTE\Groups.xml" />
-    <None Include="SMPTE\Elements.xml" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
