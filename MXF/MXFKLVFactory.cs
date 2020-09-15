@@ -1,4 +1,4 @@
-﻿#region license
+#region license
 //
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Metadata;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -134,6 +135,9 @@ namespace Myriadbits.MXF
             // Generic metadata (when all else fails)
             m_allKeys.Add(new MXFKey(typeof(MXFDescriptiveFramework), 0x06, 0x0e, 0x2b, 0x34, 0x02, 0x53, 0x01, 0x01, 0x0d, 0x01, 0x01, 0x01));
 			m_allKeys.Add(new MXFKey(typeof(MXFDescriptiveFramework), 0x06, 0x0e, 0x2b, 0x34, 0x02, 0x53, 0x01, 0x01, 0x0d, 0x01, 0x04, 0x01));
+
+			// XML Document
+			m_allKeys.Add(new MXFKey(typeof(XMLDocumentText), 0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x03, 0x01, 0x02, 0x20));
 		}
 
 

@@ -240,6 +240,18 @@ namespace Myriadbits.MXF
 		}
 
 		/// <summary>
+		/// Reads a string in UTF8 coding
+		/// </summary>
+		/// <param name="length">The length of the string to read</param>
+		public string ReadUTF8String(int length)
+		{
+			byte[] data = new byte[length];
+			for (int n = 0; n < length; n++)
+				data[n] = this.ReadB();
+			return System.Text.Encoding.UTF8.GetString(data);
+		}
+
+		/// <summary>
 		/// Reads a reference key
 		/// </summary>
 		public MXFRefKey ReadRefKey()
