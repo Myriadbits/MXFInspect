@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -184,8 +185,7 @@ namespace Myriadbits.MXF
 		/// <summary>
 		/// Find the top level parent
 		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
+		/// <returns>The top level parent</returns>
 		[Browsable(false)]
 		public MXFObject TopParent
 		{
@@ -195,6 +195,28 @@ namespace Myriadbits.MXF
 					return this.Parent.TopParent;
 				return this;
 			}
+		}
+
+		public IEnumerable<MXFObject> Descendants()
+		{
+			if (this.HasChildren)
+			{
+				var nodes = new Stack<MXFObject>(this.Children);
+				while (nodes.Any())
+				{
+					MXFObject node = nodes.Pop();
+					yield return node;
+					if (node.HasChildren)
+					{
+						foreach (var n in node.Children)
+						{
+							nodes.Push(n);
+						}
+					}
+
+				}
+			}
+			else yield break;
 		}
 
 		public void LogInfo(string format, params object[] args) { this.Log(MXFLogType.Info, format, args); }
