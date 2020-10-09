@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 	public class MXFAES3AudioEssenceDescriptor : MXFWaveAudioEssenceDescriptor
 	{
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D0D")]
-		public byte? Emphasis { get; set; }
+		public MXFEmphasis? Emphasis { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D0F")]
 		public UInt16? BlockStartOffset { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D08")]
@@ -67,7 +67,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3D0D: this.Emphasis = reader.ReadB(); return true;
+				case 0x3D0D: this.Emphasis = (MXFEmphasis)reader.ReadB(); return true;
 				case 0x3D0F: this.BlockStartOffset = reader.ReadW(); return true;
 				case 0x3D08: this.AuxiliaryBitsMode = reader.ReadB(); return true;
 				case 0x3D10: 
