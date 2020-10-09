@@ -297,14 +297,6 @@ namespace Myriadbits.MXF
 			return System.Text.Encoding.UTF8.GetString(data);
 		}
 
-		/// <summary>
-		/// Reads a reference key
-		/// </summary>
-		public MXFRefKey ReadRefKey()
-		{
-			return new MXFRefKey(this);
-		}
-
         /// <summary>
         /// Reads a MXF version
         /// </summary>
@@ -321,7 +313,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Reads a MXF long version in a partition
         /// </summary>
-        public MXFProductVersion ReadLongVersion()
+        public MXFProductVersion ReadProductVersion()
         {
             UInt16[] version = ReadUint16Array(5);
             return new MXFProductVersion
@@ -334,7 +326,7 @@ namespace Myriadbits.MXF
             };
         }
 
-        public MXFVersion ReadPrefaceVersion()
+        public MXFVersion ReadVersion()
         {
             return new MXFVersion
             {
