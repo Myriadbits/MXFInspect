@@ -21,27 +21,104 @@
 //
 #endregion
 
+using System;
+using System.ComponentModel;
+
 namespace Myriadbits.MXF
 {
-	public class JPEG2000SubDescriptor : MXFInterchangeObject
-	{
-		public JPEG2000SubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "JPEG2000SubDescriptor")
-		{
-		}
+    public class JPEG2000SubDescriptor : MXFInterchangeObject
+    {
+        private readonly MXFKey rsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x01, 0x00, 0x00, 0x00);
+        private readonly MXFKey xsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x02, 0x00, 0x00, 0x00);
+        private readonly MXFKey ysiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x03, 0x00, 0x00, 0x00);
+        private readonly MXFKey xOsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x04, 0x00, 0x00, 0x00);
+        private readonly MXFKey yOsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x05, 0x00, 0x00, 0x00);
+        private readonly MXFKey xTsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x06, 0x00, 0x00, 0x00);
+        private readonly MXFKey yTsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x07, 0x00, 0x00, 0x00);
+        private readonly MXFKey xTOsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x08, 0x00, 0x00, 0x00);
+        private readonly MXFKey yTOsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x09, 0x00, 0x00, 0x00);
+        private readonly MXFKey csiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x0a, 0x00, 0x00, 0x00);
+        private readonly MXFKey pictureComponentSizing = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x0b, 0x00, 0x00, 0x00);
+        private readonly MXFKey codingStyleDefault = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x0c, 0x00, 0x00, 0x00);
+        private readonly MXFKey quantizationDefault = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x0d, 0x00, 0x00, 0x00);
+        private readonly MXFKey j2CLayout = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x0101010e, 0x04, 0x01, 0x06, 0x03, 0x0e, 0x00, 0x00, 0x00);
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				//case 0x2F01: ReadKeyList(reader, "Locators", "Locator"); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
 
-	}
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt16? Rsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? Xsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? Ysiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? XOsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? YOsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? XTsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? YTsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? XTOsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt32? YTOsiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public UInt16? Csiz { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public byte[] PictureComponentSizing { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public byte[] CodingStyleDefault { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public byte[] QuantizationDefault { get; set; }
+        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        public byte[] J2CLayout { get; set; }
+
+
+        public JPEG2000SubDescriptor(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "JPEG2000SubDescriptor")
+        {
+        }
+
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            if (localTag.Key != null)
+            {
+                switch (localTag.Key)
+                {
+                    case var a when localTag.Key == rsiz: this.Rsiz = reader.ReadW(); return true;
+                    case var a when localTag.Key == xsiz: this.Xsiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == ysiz: this.Ysiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == xOsiz: this.XOsiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == yOsiz: this.YOsiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == xTsiz: this.XTsiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == yTsiz: this.YTsiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == xTOsiz: this.XTOsiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == yTOsiz: this.YTOsiz = reader.ReadD(); return true;
+                    case var a when localTag.Key == csiz: this.Csiz = reader.ReadW(); return true;
+                    case var a when localTag.Key == pictureComponentSizing:
+                        this.PictureComponentSizing = new byte[localTag.Size];
+                        reader.Read(this.PictureComponentSizing, localTag.Size);
+                        return true;
+                    case var a when localTag.Key == codingStyleDefault:
+                        this.CodingStyleDefault = new byte[localTag.Size];
+                        reader.Read(this.CodingStyleDefault, localTag.Size);
+                        return true;
+                    case var a when localTag.Key == quantizationDefault:
+                        this.QuantizationDefault = new byte[localTag.Size];
+                        reader.Read(this.QuantizationDefault, localTag.Size);
+                        return true;
+                    case var a when localTag.Key == j2CLayout:
+                        this.J2CLayout = new byte[localTag.Size];
+                        reader.Read(this.J2CLayout, localTag.Size);
+                        return true;
+                }
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
+
+    }
 }
