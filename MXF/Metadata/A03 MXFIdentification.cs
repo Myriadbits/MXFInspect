@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("Identification"), Description("3C02")]
 		public string ProductName { get; set; }
 		[CategoryAttribute("Identification"), Description("3C03")]
-		public UInt16[] ProductVersion { get; set; }
+		public MXFProductVersion ProductVersion { get; set; }
 		[CategoryAttribute("Identification"), Description("3C04")]
 		public string ProductVersionString { get; set; }
 		[CategoryAttribute("Identification"), Description("3C05")]
@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("Identification"), Description("3C06")]
 		public DateTime? ModificationDate { get; set; }
 		[CategoryAttribute("Identification"), Description("3C07")]
-		public UInt16[] ToolkitVersion { get; set; }
+		public MXFProductVersion ToolkitVersion { get; set; }
 		[CategoryAttribute("Identification"), Description("3C08")]
 		public string Platform { get; set; }
 		[CategoryAttribute("Identification"), Description("3C09")]
@@ -63,11 +63,11 @@ namespace Myriadbits.MXF
 				case 0x3C09: this.ThisGenerationUID = reader.ReadKey(); return true;
 				case 0x3C01: this.CompanyName = reader.ReadS(localTag.Size); return true;
 				case 0x3C02: this.ProductName = reader.ReadS(localTag.Size); return true;
-				case 0x3C03: this.ProductVersion = reader.ReadVersion(); return true;
+				case 0x3C03: this.ProductVersion = reader.ReadLongVersion(); return true;
 				case 0x3C04: this.ProductVersionString = reader.ReadS(localTag.Size); return true;
 				case 0x3C05: this.ProductUID = reader.ReadKey(); return true;
 				case 0x3C06: this.ModificationDate = reader.ReadTimestamp(); return true;
-				case 0x3C07: this.ToolkitVersion = reader.ReadVersion(); return true;
+				case 0x3C07: this.ToolkitVersion = reader.ReadLongVersion(); return true;
 				case 0x3C08: this.Platform = reader.ReadS(localTag.Size); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

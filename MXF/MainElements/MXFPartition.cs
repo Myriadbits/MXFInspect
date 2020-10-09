@@ -46,6 +46,9 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
 		public bool Complete { get; set; }
 
+		[CategoryAttribute("PartitionHeader"), ReadOnly(true)]
+		public MXFVersion Version { get; set; }
+
 		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
 		public UInt32 KagSize { get; set; }
 
@@ -115,7 +118,8 @@ namespace Myriadbits.MXF
 			// Make sure we read at the data position
 			reader.Seek(this.DataOffset);
 
-			reader.ReadD(); // Skip 4 bytes
+			//reader.ReadD(); // Skip 4 bytes
+			this.Version = reader.ReadVersion();
 
 			this.KagSize = reader.ReadD();
 			this.ThisPartition = reader.ReadL();
