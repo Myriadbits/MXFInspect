@@ -69,6 +69,7 @@ namespace Myriadbits.MXF
 			{
 				MXFLocalTag tag = new MXFLocalTag(reader);
 				long next = tag.DataOffset + tag.Size;
+				AddRefKeyFromPrimerPack(tag);
 
 				if (tag.Tag == 0x3C0A)
 				{
@@ -78,20 +79,12 @@ namespace Myriadbits.MXF
 				else
 				{
 					if (tag.Tag > 0x7FFF)
-					{
-						// Find the tag in the primerpack's keys
-						if (this.Partition != null && this.Partition.PrimerKeys != null)
-						{
-							if (this.Partition.PrimerKeys.ContainsKey(tag.Tag))
-							{
-								MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
-								tag.Name = entry.AliasUID.Key.Name;
-							}
-						}
-					}
+                    {
+                        //AddRefKeyFromPrimerPack(tag);
+                    }
 
-					// Allow derived classes to handle the data
-					if (!ParseLocalTag(reader, tag))
+                    // Allow derived classes to handle the data
+                    if (!ParseLocalTag(reader, tag))
 					{
 						// Not processed, use default
 						tag.Parse(reader);
@@ -107,12 +100,30 @@ namespace Myriadbits.MXF
 			// Allow derived classes to do some final work
 			PostInitialize();
 		}
-		
+
 		/// <summary>
-		/// Allow derived classes to process the local tag
+		///	Tries to find the local tag in the primer pack and if so,
+		///	adds the referring key to the tag.
 		/// </summary>
-		/// <param name="localTag"></param>
-		protected virtual bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		/// <param name="tag"></param>
+        private void AddRefKeyFromPrimerPack(MXFLocalTag tag)
+        {
+            if (this.Partition != null && this.Partition.PrimerKeys != null)
+            {
+                if (this.Partition.PrimerKeys.ContainsKey(tag.Tag))
+                {
+                    MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
+                    tag.Key = entry.AliasUID.Key;
+                    tag.Name = entry.AliasUID.Key.Name;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Allow derived classes to process the local tag
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected virtual bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
 		{
 			return false;
 		}

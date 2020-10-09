@@ -38,6 +38,8 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("LocalTag"), ReadOnly(true)]
 		public string Name { get; set; }
 		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		public MXFKey Key { get; set; }
+		[CategoryAttribute("LocalTag"), ReadOnly(true)]
 		public object Value { get; set; }
 		[CategoryAttribute("LocalTag"), ReadOnly(true)]
 		public object ValueString { get; set; }
