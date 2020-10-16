@@ -25,6 +25,8 @@ using System;
 
 namespace Myriadbits.MXF
 {
+    // http://www.smpte-ra.org/reg/2003/2012 	
+    // urn:smpte:ul:060e2b34.01040101.0201012a.00000000
     public enum MXFCodedContentScanning
     {
         NotKnown = 0x00,
