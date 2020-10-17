@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
 			: base(reader)
 		{
 			this.SectionID = sectionID;
-			this.Length = reader.ReadB();
+			this.Length = reader.ReadByte();
 			this.Data = new byte[this.Length];
 			reader.Read(this.Data, this.Length);
 		}

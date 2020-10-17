@@ -437,7 +437,7 @@ namespace Myriadbits.MXF
 			{
 				// Read the last 4 bytes of the file
 				m_reader.Seek(this.Filesize - 4);
-				uint ripSize = m_reader.ReadD();
+				uint ripSize = m_reader.ReadUInt32();
 				if (ripSize < this.Filesize && ripSize >= 4) // At least 4 bytes
 				{
 					m_reader.Seek(this.Filesize - ripSize);					

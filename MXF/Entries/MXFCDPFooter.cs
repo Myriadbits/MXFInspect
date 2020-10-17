@@ -37,8 +37,8 @@ namespace Myriadbits.MXF
 		public MXFCDPFooter(MXFReader reader)
 			: base(reader)
 		{
-			this.SequenceCounter = reader.ReadW();
-			this.PacketChecksum = reader.ReadB();
+			this.SequenceCounter = reader.ReadUInt16();
+			this.PacketChecksum = reader.ReadByte();
 		}
 
 		/// <summary>

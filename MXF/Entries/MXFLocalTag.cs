@@ -47,8 +47,8 @@ namespace Myriadbits.MXF
 		public MXFLocalTag(MXFReader reader)
 			: base(reader)
 		{
-			this.Tag = reader.ReadW();
-			this.Size = reader.ReadW();
+			this.Tag = reader.ReadUInt16();
+			this.Size = reader.ReadUInt16();
 			this.DataOffset = reader.Position;
 			this.Length = this.Size;
 		}
@@ -60,18 +60,18 @@ namespace Myriadbits.MXF
 		public void Parse(MXFReader reader)
 		{
 			if (this.Size == 1)
-				this.Value = reader.ReadB();
+				this.Value = reader.ReadByte();
 			else if (this.Size == 2)
-				this.Value = reader.ReadW();
+				this.Value = reader.ReadUInt16();
 			else if (this.Size == 4)
-				this.Value = reader.ReadD();
+				this.Value = reader.ReadUInt32();
 			else if (this.Size == 8)
-				this.Value = reader.ReadL();
+				this.Value = reader.ReadUInt64();
 			else
 			{
 				byte[] data = new byte[this.Size];
 				for (int n = 0; n < this.Size; n++)
-					data[n] = reader.ReadB();
+					data[n] = reader.ReadByte();
 				this.Value = data;
 			}
 		}

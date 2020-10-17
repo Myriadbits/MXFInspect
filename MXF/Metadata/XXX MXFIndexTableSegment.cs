@@ -73,20 +73,20 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3F05: this.EditUnitByteCount = reader.ReadD(); return true;
-				case 0x3F06: this.IndexSID = reader.ReadD(); return true;
-				case 0x3F07: this.BodySID = reader.ReadD(); return true;
-				case 0x3F08: this.SliceCount = reader.ReadB(); return true;
-				case 0x3F0C: this.IndexStartPosition = reader.ReadL(); return true;
-				case 0x3F0D: this.IndexDuration = reader.ReadL(); return true;
-				case 0x3F0E: this.PosTableCount = reader.ReadB(); return true;
-				case 0x3F0F: this.ExtStartOffset = reader.ReadL(); return true;
-				case 0x3F10: this.VBEByteCount = reader.ReadL(); return true;
+				case 0x3F05: this.EditUnitByteCount = reader.ReadUInt32(); return true;
+				case 0x3F06: this.IndexSID = reader.ReadUInt32(); return true;
+				case 0x3F07: this.BodySID = reader.ReadUInt32(); return true;
+				case 0x3F08: this.SliceCount = reader.ReadByte(); return true;
+				case 0x3F0C: this.IndexStartPosition = reader.ReadUInt64(); return true;
+				case 0x3F0D: this.IndexDuration = reader.ReadUInt64(); return true;
+				case 0x3F0E: this.PosTableCount = reader.ReadByte(); return true;
+				case 0x3F0F: this.ExtStartOffset = reader.ReadUInt64(); return true;
+				case 0x3F10: this.VBEByteCount = reader.ReadUInt64(); return true;
 				case 0x3F0B: this.IndexEditRate = reader.ReadRational(); return true;
 				case 0x3F0A:  // Index entry array
 					{
-						UInt32 NbIndexEntries = reader.ReadD();
-						UInt32 entryLength = reader.ReadD();						
+						UInt32 NbIndexEntries = reader.ReadUInt32();
+						UInt32 entryLength = reader.ReadUInt32();						
 						if (NbIndexEntries > 0)
 						{
 							this.IndexEntries = new List<MXFEntryIndex>();
@@ -111,8 +111,8 @@ namespace Myriadbits.MXF
 
 				case 0x3F09:  // Delta entry array
 					{ 
-						UInt32 NbDeltaEntries = reader.ReadD();
-						UInt32 entryLength = reader.ReadD();
+						UInt32 NbDeltaEntries = reader.ReadUInt32();
+						UInt32 entryLength = reader.ReadUInt32();
 						if (NbDeltaEntries > 0)
 						{
 							MXFObject deltaCollection = new MXFNamedObject("DeltaEntries", reader.Position, MXFObjectType.Index);

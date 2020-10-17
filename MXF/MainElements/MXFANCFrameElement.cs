@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
 		public MXFANCFrameElement(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV)
 		{
-			UInt16 nofPackets = reader.ReadW();
+			UInt16 nofPackets = reader.ReadUInt16();
 			for(int n = 0; n < nofPackets; n++)
 			{
 				MXFANCPacket newpacket = new MXFANCPacket(reader);

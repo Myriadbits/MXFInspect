@@ -56,10 +56,10 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4801: this.TrackID = reader.ReadD(); return true;
-				case 0x4802: this.TrackName = reader.ReadS(localTag.Size); return true;
+				case 0x4801: this.TrackID = reader.ReadUInt32(); return true;
+				case 0x4802: this.TrackName = reader.ReadUTF16String(localTag.Size); return true;
 				case 0x4803: this.Sequence = reader.ReadRefKey(); return true;
-				case 0x4804: this.TrackNumber = reader.ReadD(); return true;
+				case 0x4804: this.TrackNumber = reader.ReadUInt32(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

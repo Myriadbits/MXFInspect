@@ -97,14 +97,14 @@ namespace Myriadbits.MXF
 		/// </summary>
 		private MXFKey CreateAndValidateKey(MXFReader reader)
 		{
-			byte iso = reader.ReadB();
-			byte len = reader.ReadB();
+			byte iso = reader.ReadByte();
+			byte len = reader.ReadByte();
 			byte smp = 0, te = 0;
 			bool valid = false;
 			if (iso == 0x06 ) // Do not check length when not iso
 			{
-				smp = reader.ReadB();
-				te = reader.ReadB();
+				smp = reader.ReadByte();
+				te = reader.ReadByte();
 				valid = (smp == 0x2B && te == 0x34); // SMPTE define
 			}
 			if (!valid)
@@ -126,7 +126,7 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		private long DecodeBerLength(MXFReader reader)
 		{
-			long size = reader.ReadB();
+			long size = reader.ReadByte();
 			if ((size & 0x80) != 0)
 			{ 
 				// long form
@@ -139,7 +139,7 @@ namespace Myriadbits.MXF
 				}
 				size = 0;
 				while ( (bytes_num--) != 0)
-					size = size << 8 | reader.ReadB();
+					size = size << 8 | reader.ReadByte();
 			}
 			return size;
 		}

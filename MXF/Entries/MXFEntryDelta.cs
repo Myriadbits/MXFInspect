@@ -41,9 +41,9 @@ namespace Myriadbits.MXF
 			this.m_eType = MXFObjectType.Index;
 
 			this.Length = length;
-			this.PosTableIndex = reader.ReadSB();
-			this.Slice = reader.ReadB();
-			this.ElementDelta = reader.ReadD();
+			this.PosTableIndex = reader.ReadSignedByte();
+			this.Slice = reader.ReadByte();
+			this.ElementDelta = reader.ReadUInt32();
 		}
 
 		/// <summary>

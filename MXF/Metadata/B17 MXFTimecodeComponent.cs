@@ -53,9 +53,9 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x1501: this.StartTimecode = reader.ReadL(); return true;
-				case 0x1502: this.RoundedTimecodeBase = reader.ReadW(); return true;
-				case 0x1503: this.DropFrame = (reader.ReadB() != 0); return true;
+				case 0x1501: this.StartTimecode = reader.ReadUInt64(); return true;
+				case 0x1502: this.RoundedTimecodeBase = reader.ReadUInt16(); return true;
+				case 0x1503: this.DropFrame = (reader.ReadByte() != 0); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x4B01: this.EventEditRate = reader.ReadRational(); return true;
-				case 0x4B02: this.EventOrigin = reader.ReadL(); return true;
+				case 0x4B02: this.EventOrigin = reader.ReadUInt64(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

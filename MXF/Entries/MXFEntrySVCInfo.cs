@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
 		{
 			this.Length = 7; // Fixed
 
-			byte b0 = reader.ReadB();
+			byte b0 = reader.ReadByte();
 			if ((b0 & 0x40) != 0)
 				this.CaptionServiceNumber = (byte)(b0 & 0x1F);
 			else

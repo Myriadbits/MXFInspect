@@ -70,12 +70,12 @@ namespace Myriadbits.MXF
 			long end = this.DataOffset + this.Length;
 			while (reader.Position < end)
 			{
-				byte type = reader.ReadB();
+				byte type = reader.ReadByte();
 				UInt32 size = 0;
 				if (nofSizeSize == 2) 
-					size = reader.ReadW();
+					size = reader.ReadUInt16();
 				else
-					size = reader.ReadD();
+					size = reader.ReadUInt32();
 				long startPos = reader.Position;
 				if (m_itemTypes.ContainsKey(type))
 				{

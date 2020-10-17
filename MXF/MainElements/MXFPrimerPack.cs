@@ -57,8 +57,8 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		protected UInt32 ReadTagList(MXFReader reader, string categoryName)
 		{
-			UInt32 nofItems = reader.ReadD();
-			UInt32 objectSize = reader.ReadD(); // useless size of objects, always 16 according to specs
+			UInt32 nofItems = reader.ReadUInt32();
+			UInt32 objectSize = reader.ReadUInt32(); // useless size of objects, always 16 according to specs
 
 			MXFObject keylist = new MXFNamedObject(categoryName, reader.Position);
 			if (nofItems > 0 && nofItems < UInt32.MaxValue)

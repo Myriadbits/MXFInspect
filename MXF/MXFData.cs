@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 			this.Name = name;
 			this.Data = new byte[size];
 			for (int n = 0; n < size; n++)
-				this.Data[n] = reader.ReadB();
+				this.Data[n] = reader.ReadByte();
 
 			StringBuilder sb = new StringBuilder();
 			for (int n = 0; n < this.Data.Length; n++)

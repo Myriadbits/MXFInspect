@@ -49,8 +49,8 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x2701: this.LinkedPackageUID = reader.ReadUMIDKey(); return true;
-				case 0x3F06: this.IndexSID = reader.ReadD(); return true;
-				case 0x3F07: this.BodySID = reader.ReadD(); return true;
+				case 0x3F06: this.IndexSID = reader.ReadUInt32(); return true;
+				case 0x3F07: this.BodySID = reader.ReadUInt32(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

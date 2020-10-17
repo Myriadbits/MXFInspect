@@ -50,16 +50,16 @@ namespace Myriadbits.MXF
 
 			this.Length = length;
 			this.Index = index;
-			this.TemporalOffset = reader.ReadSB();
-			this.KeyFrameOffset = reader.ReadSB();
-			this.Flags = reader.ReadB();
-			this.StreamOffset = reader.ReadL();
+			this.TemporalOffset = reader.ReadSignedByte();
+			this.KeyFrameOffset = reader.ReadSignedByte();
+			this.Flags = reader.ReadByte();
+			this.StreamOffset = reader.ReadUInt64();
 
 			if (sliceCount.HasValue && sliceCount.Value > 0)
 			{
 				this.SliceOffsets = new UInt32[sliceCount.Value];
 				for (int n = 0; n < sliceCount; n++)
-					this.SliceOffsets[n] = reader.ReadD();
+					this.SliceOffsets[n] = reader.ReadUInt32();
 			}
 
 			if (posTableCount.HasValue && posTableCount.Value > 0)

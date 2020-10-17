@@ -46,8 +46,8 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x0601: this.EventStartPosition = reader.ReadL(); return true;
-				case 0x0602: this.EventComment = reader.ReadS(localTag.Size); return true;
+				case 0x0601: this.EventStartPosition = reader.ReadUInt64(); return true;
+				case 0x0602: this.EventComment = reader.ReadUTF16String(localTag.Size); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

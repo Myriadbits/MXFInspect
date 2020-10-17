@@ -89,16 +89,16 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == rsiz: this.Rsiz = reader.ReadW(); return true;
-                    case var a when localTag.Key == xsiz: this.Xsiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == ysiz: this.Ysiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == xOsiz: this.XOsiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == yOsiz: this.YOsiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == xTsiz: this.XTsiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == yTsiz: this.YTsiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == xTOsiz: this.XTOsiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == yTOsiz: this.YTOsiz = reader.ReadD(); return true;
-                    case var a when localTag.Key == csiz: this.Csiz = reader.ReadW(); return true;
+                    case var a when localTag.Key == rsiz: this.Rsiz = reader.ReadUInt16(); return true;
+                    case var a when localTag.Key == xsiz: this.Xsiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == ysiz: this.Ysiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == xOsiz: this.XOsiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == yOsiz: this.YOsiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == xTsiz: this.XTsiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == yTsiz: this.YTsiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == xTOsiz: this.XTOsiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == yTOsiz: this.YTOsiz = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == csiz: this.Csiz = reader.ReadUInt16(); return true;
                     case var a when localTag.Key == pictureComponentSizing:
                         this.PictureComponentSizing = new byte[localTag.Size];
                         reader.Read(this.PictureComponentSizing, localTag.Size);

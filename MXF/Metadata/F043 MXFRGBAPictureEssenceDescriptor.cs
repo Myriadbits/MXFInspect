@@ -63,14 +63,14 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3406: this.ComponentMaxRef = reader.ReadD(); return true;
-				case 0x3407: this.ComponentMinRef = reader.ReadD(); return true;
-				case 0x3408: this.AlphaMaxRef = reader.ReadD(); return true;
-				case 0x3409: this.AlphaMinRef = reader.ReadD(); return true;
-				case 0x3405: this.ScanningDirection = reader.ReadB(); return true;
-				case 0x3401: this.PixelLayout = reader.ReadW(); return true;
-				case 0x3403: this.Palette = reader.ReadS(localTag.Size); return true; // TODO
-				case 0x3404: this.PaletteLayout = reader.ReadS(localTag.Size); return true; // TODO
+				case 0x3406: this.ComponentMaxRef = reader.ReadUInt32(); return true;
+				case 0x3407: this.ComponentMinRef = reader.ReadUInt32(); return true;
+				case 0x3408: this.AlphaMaxRef = reader.ReadUInt32(); return true;
+				case 0x3409: this.AlphaMinRef = reader.ReadUInt32(); return true;
+				case 0x3405: this.ScanningDirection = reader.ReadByte(); return true;
+				case 0x3401: this.PixelLayout = reader.ReadUInt16(); return true;
+				case 0x3403: this.Palette = reader.ReadUTF16String(localTag.Size); return true; // TODO
+				case 0x3404: this.PaletteLayout = reader.ReadUTF16String(localTag.Size); return true; // TODO
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

@@ -46,14 +46,14 @@ namespace Myriadbits.MXF
 			: base(reader)
 		{
 			this.Length = 3; // Fixed
-			byte b0 = reader.ReadB();
+			byte b0 = reader.ReadByte();
 			if ((b0 & 0xF8) == 0xF8) // Valid marker bits?
 			{
 				this.Valid = ((b0 & 0x04) != 0);
 				this.CCType = (CCDataType)(b0 & 0x03);
 				this.Data = new byte[2];
-				this.Data[0] = reader.ReadB();
-				this.Data[1] = reader.ReadB();
+				this.Data[0] = reader.ReadByte();
+				this.Data[1] = reader.ReadByte();
 			}	
 			
 			// When this object is not valid, set the type to filler

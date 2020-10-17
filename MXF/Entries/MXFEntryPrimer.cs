@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
 			: base(reader)
 		{
 			this.Offset = reader.Position;
-			this.LocalTag = reader.ReadW();
+			this.LocalTag = reader.ReadUInt16();
 			this.AliasUID = new MXFRefKey(reader, 16, "AliasUID");
 			this.Length = 20; // Fixed length
 		}

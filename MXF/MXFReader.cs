@@ -146,7 +146,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Reads a single byte
         /// </summary>
-        public byte ReadB()
+        public byte ReadByte()
         {
             if (this.m_FileStream != null)
                 return (byte)this.m_FileStream.ReadByte();
@@ -156,7 +156,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Reads a signed byte
         /// </summary>
-        public sbyte ReadSB()
+        public sbyte ReadSignedByte()
         {
             if (this.m_FileStream != null)
                 return (sbyte)this.m_FileStream.ReadByte();
@@ -168,7 +168,7 @@ namespace Myriadbits.MXF
         /// </summary>
         public bool ReadBool()
         {
-            return (this.ReadB() != 0);
+            return (this.ReadByte() != 0);
         }
 
         /// <summary>
@@ -182,20 +182,10 @@ namespace Myriadbits.MXF
                 this.m_FileStream.Read(array, 0, (int)count);
         }
 
-		/// <summary>
-		/// Reads a single byte
-		/// </summary>
-		public sbyte ReadsB()
-		{
-			if (this.m_FileStream != null)
-				return (sbyte)this.m_FileStream.ReadByte();
-			return 0;
-		}
-
         /// <summary>
         /// Reads a single word
         /// </summary>
-        public UInt16 ReadW()
+        public UInt16 ReadUInt16()
         {
             if (this.m_FileStream != null)
                 return (UInt16)((this.m_FileStream.ReadByte() << 8) + this.m_FileStream.ReadByte());
@@ -205,7 +195,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Reads a dword
         /// </summary>
-        public UInt32 ReadD()
+        public UInt32 ReadUInt32()
         {
             if (this.m_FileStream != null)
                 return (UInt32)(
@@ -220,7 +210,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Reads a long
         /// </summary>
-        public UInt64 ReadL()
+        public UInt64 ReadUInt64()
         {
             if (this.m_FileStream != null)
                 return (UInt64)(
@@ -237,14 +227,26 @@ namespace Myriadbits.MXF
         }
 
         /// <summary>
-        /// Reads a string
+        /// Reads a string in UTF8 coding
         /// </summary>
         /// <param name="length">The length of the string to read</param>
-        public string ReadS(int length)
+        public string ReadUTF8String(int length)
         {
             byte[] data = new byte[length];
             for (int n = 0; n < length; n++)
-                data[n] = this.ReadB();
+                data[n] = this.ReadByte();
+            return System.Text.Encoding.UTF8.GetString(data);
+        }
+
+        /// <summary>
+        /// Reads a string
+        /// </summary>
+        /// <param name="length">The length of the string to read</param>
+        public string ReadUTF16String(int length)
+        {
+            byte[] data = new byte[length];
+            for (int n = 0; n < length; n++)
+                data[n] = this.ReadByte();
             return System.Text.Encoding.BigEndianUnicode.GetString(data);
         }
 
@@ -282,21 +284,9 @@ namespace Myriadbits.MXF
         {
             UInt16[] version = new UInt16[count];
             for (int n = 0; n < count; n++)
-                version[n] = ReadW();
+                version[n] = ReadUInt16();
             return version;
         }
-
-		/// <summary>
-		/// Reads a string in UTF8 coding
-		/// </summary>
-		/// <param name="length">The length of the string to read</param>
-		public string ReadUTF8String(int length)
-		{
-			byte[] data = new byte[length];
-			for (int n = 0; n < length; n++)
-				data[n] = this.ReadB();
-			return System.Text.Encoding.UTF8.GetString(data);
-		}
 
         /// <summary>
         /// Reads a MXF long version in a partition
@@ -332,13 +322,13 @@ namespace Myriadbits.MXF
         /// </summary>
         public DateTime ReadTimestamp()
         {
-            UInt16 year = this.ReadW();
-            byte month = this.ReadB();
-            byte day = this.ReadB();
-            byte hour = this.ReadB();
-            byte minute = this.ReadB();
-            byte second = this.ReadB();
-            byte millisecond = this.ReadB();
+            UInt16 year = this.ReadUInt16();
+            byte month = this.ReadByte();
+            byte day = this.ReadByte();
+            byte hour = this.ReadByte();
+            byte minute = this.ReadByte();
+            byte second = this.ReadByte();
+            byte millisecond = this.ReadByte();
             try
             {
                 return new DateTime(year, month, day, hour, minute, second, millisecond);
@@ -355,8 +345,8 @@ namespace Myriadbits.MXF
         public MXFRational ReadRational()
         {
             MXFRational rat = new MXFRational();
-            rat.Num = this.ReadD();
-            rat.Den = this.ReadD();
+            rat.Num = this.ReadUInt32();
+            rat.Den = this.ReadUInt32();
             return rat;
         }
 
@@ -367,8 +357,8 @@ namespace Myriadbits.MXF
         /// <param name="singleItem"></param>
         public MXFObject ReadKeyList(string categoryName, string singleItem)
         {
-            UInt32 nofItems = this.ReadD();
-            UInt32 objectSize = this.ReadD(); // useless size of objects, always 16 according to specs
+            UInt32 nofItems = this.ReadUInt32();
+            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
 
             MXFObject keylist = new MXFNamedObject(categoryName, this.Position, objectSize);
             if (nofItems < UInt32.MaxValue)
@@ -390,15 +380,15 @@ namespace Myriadbits.MXF
         public MXFTimeStamp ReadBCDTimeCode(double frameRate)
         {
             // TODO If MJD is set, time is milliseconds since X
-            byte type = this.ReadB();
+            byte type = this.ReadByte();
 
             MXFTimeStamp timeStamp = new MXFTimeStamp();
             timeStamp.ParseBCDTimeCode(this, frameRate);
 
-            this.ReadB(); // BG7 + BG8
+            this.ReadByte(); // BG7 + BG8
 
             // Read 8 dummy bytes (always zero)
-            this.ReadL();
+            this.ReadUInt64();
 
             return timeStamp;
         }

@@ -121,15 +121,15 @@ namespace Myriadbits.MXF
 			//reader.ReadD(); // Skip 4 bytes
 			this.Version = reader.ReadVersion();
 
-			this.KagSize = reader.ReadD();
-			this.ThisPartition = reader.ReadL();
-			this.PreviousPartition = reader.ReadL();
-			this.FooterPartition = reader.ReadL();
-			this.HeaderByteCount = reader.ReadL();
-			this.IndexByteCount = reader.ReadL();
-			this.IndexSID = reader.ReadD();
-			this.BodyOffset = reader.ReadL();
-			this.BodySID = reader.ReadD();
+			this.KagSize = reader.ReadUInt32();
+			this.ThisPartition = reader.ReadUInt64();
+			this.PreviousPartition = reader.ReadUInt64();
+			this.FooterPartition = reader.ReadUInt64();
+			this.HeaderByteCount = reader.ReadUInt64();
+			this.IndexByteCount = reader.ReadUInt64();
+			this.IndexSID = reader.ReadUInt32();
+			this.BodyOffset = reader.ReadUInt64();
+			this.BodySID = reader.ReadUInt32();
 
 			this.OP = new MXFKey(reader, 16);
 

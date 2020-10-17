@@ -56,8 +56,8 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x3B02: this.LastModificationDate = reader.ReadTimestamp(); return true;
-				case 0x3B05: this.Version = reader.ReadW(); return true;
-				case 0x3B07: this.ObjectModelVersion = reader.ReadD(); return true;
+				case 0x3B05: this.Version = reader.ReadUInt16(); return true;
+				case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
 				case 0x3B03: this.ContentStorageUID = new MXFRefKey(reader, 16, "ContentStorageUID"); return true;
 				case 0x3B08: this.PrimaryPackageUID = new MXFRefKey(reader, 16, "PrimaryPackageUID"); return true;
 				case 0x3B09: this.OperationalPattern = new MXFKey(reader, 16); return true;

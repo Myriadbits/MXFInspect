@@ -308,7 +308,7 @@ namespace Myriadbits.MXF
 				this.m_mxfKey[3] = b3;
 
 				for (int n = 4; n < len; n++)
-					m_mxfKey[n] = reader.ReadB();
+					m_mxfKey[n] = reader.ReadByte();
 			}
 
 			FindKeyName();
@@ -321,11 +321,11 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		public MXFKey(MXFReader reader)
 		{
-			byte isoMark = reader.ReadB();
-			byte length = reader.ReadB();
+			byte isoMark = reader.ReadByte();
+			byte length = reader.ReadByte();
 			this.m_mxfKey = new byte[length];
 			for (int n = 2; n < length; n++)
-				m_mxfKey[n] = reader.ReadB();
+				m_mxfKey[n] = reader.ReadByte();
 
 			FindKeyName();
 		}
@@ -340,7 +340,7 @@ namespace Myriadbits.MXF
 		{
 			this.m_mxfKey = new byte[length];
 			for (int n = 0; n < length; n++)
-				m_mxfKey[n] = reader.ReadB();
+				m_mxfKey[n] = reader.ReadByte();
 
 			FindKeyName();
 		}

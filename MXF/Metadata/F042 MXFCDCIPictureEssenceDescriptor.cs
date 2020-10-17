@@ -67,16 +67,16 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x3301: this.ComponentDepth = reader.ReadD(); return true;
-                case 0x3302: this.HorizontalSubsampling = reader.ReadD(); return true;
-                case 0x3308: this.VerticalSubsampling = reader.ReadD(); return true;
-                case 0x3303: this.ColorSiting = (MXFColorSiting)reader.ReadB(); return true;
+                case 0x3301: this.ComponentDepth = reader.ReadUInt32(); return true;
+                case 0x3302: this.HorizontalSubsampling = reader.ReadUInt32(); return true;
+                case 0x3308: this.VerticalSubsampling = reader.ReadUInt32(); return true;
+                case 0x3303: this.ColorSiting = (MXFColorSiting)reader.ReadByte(); return true;
                 case 0x330B: this.ReversedByteOrder = reader.ReadBool(); return true;
-                case 0x3307: this.PaddingBits = (Int16)reader.ReadW(); return true;
-                case 0x3309: this.AlphaSampleDepth = reader.ReadD(); return true;
-                case 0x3304: this.BlackRefLevel = reader.ReadD(); return true;
-                case 0x3305: this.WhiteRefLevel = reader.ReadD(); return true;
-                case 0x3306: this.ColorRange = reader.ReadD(); return true;
+                case 0x3307: this.PaddingBits = (Int16)reader.ReadUInt16(); return true;
+                case 0x3309: this.AlphaSampleDepth = reader.ReadUInt32(); return true;
+                case 0x3304: this.BlackRefLevel = reader.ReadUInt32(); return true;
+                case 0x3305: this.WhiteRefLevel = reader.ReadUInt32(); return true;
+                case 0x3306: this.ColorRange = reader.ReadUInt32(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
