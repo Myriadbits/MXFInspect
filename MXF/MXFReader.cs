@@ -285,6 +285,7 @@ namespace Myriadbits.MXF
                 version[n] = ReadW();
             return version;
         }
+
 		/// <summary>
 		/// Reads a string in UTF8 coding
 		/// </summary>
@@ -296,19 +297,6 @@ namespace Myriadbits.MXF
 				data[n] = this.ReadB();
 			return System.Text.Encoding.UTF8.GetString(data);
 		}
-
-        /// <summary>
-        /// Reads a MXF version
-        /// </summary>
-        public MXFVersion ReadVersion()
-        {
-            UInt16[] version = ReadUint16Array(2);
-            return new MXFVersion
-            {
-                Major = version[0],
-                Minor = version[1]
-            };
-        }
 
         /// <summary>
         /// Reads a MXF long version in a partition
@@ -326,12 +314,16 @@ namespace Myriadbits.MXF
             };
         }
 
+        /// <summary>
+        /// Reads a MXF version
+        /// </summary>
         public MXFVersion ReadVersion()
         {
+            UInt16[] version = ReadUint16Array(2);
             return new MXFVersion
             {
-                Major = this.ReadB(),
-                Minor = this.ReadB(),
+                Major = version[0],
+                Minor = version[1],
             };
         }
 
@@ -357,7 +349,6 @@ namespace Myriadbits.MXF
             }
         }
 
-
         /// <summary>
         /// Reads a rational
         /// </summary>
@@ -368,8 +359,6 @@ namespace Myriadbits.MXF
             rat.Den = this.ReadD();
             return rat;
         }
-
-
 
         /// <summary>
         /// Reads a list of keys
@@ -393,7 +382,6 @@ namespace Myriadbits.MXF
             return keylist;
         }
 
-
         /// <summary>
         /// Reads a BCD timecode
         /// </summary>
@@ -414,8 +402,5 @@ namespace Myriadbits.MXF
 
             return timeStamp;
         }
-
-
-
     }
 }
