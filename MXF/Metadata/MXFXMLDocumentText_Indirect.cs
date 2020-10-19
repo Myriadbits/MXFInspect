@@ -29,13 +29,13 @@ using System.Text;
 
 namespace Myriadbits.MXF.Metadata
 {
-    public class XMLDocumentText :  MXFKLV
+    public class MXFXMLDocumentText_Indirect :  MXFKLV
     {
-        [CategoryAttribute("Document Text"), ReadOnly(true)]
+        [CategoryAttribute("XML Document Text (Indirect)"), ReadOnly(true)]
         public string Text { get; set; }
 
-        public XMLDocumentText(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "XML Document Text", KeyType.MetaData)
+        public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV headerKLV)
+            : base(headerKLV, "XML Document Text (Indirect)", KeyType.MetaData)
         {
             this.m_eType = MXFObjectType.Meta;
             Initialize(reader);
