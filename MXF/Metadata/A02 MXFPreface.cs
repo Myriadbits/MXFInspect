@@ -26,47 +26,54 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFPreface : MXFInterchangeObject
-	{
+    public class MXFPreface : MXFInterchangeObject
+    {
+        private readonly MXFKey isRIPPresent_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x04, 0x05, 0x03, 0x00, 0x00, 0x00, 0x00);
+
 		[CategoryAttribute("Preface"), Description("3B02")]
-		public DateTime? LastModificationDate { get; set; }
-		[CategoryAttribute("Preface"), Description("3B03")]
-		public MXFRefKey ContentStorageUID { get; set; }
-		[CategoryAttribute("Preface"), Description("3B05")]
-		public UInt16? Version { get; set; }
-		[CategoryAttribute("Preface"), Description("3B07")]
-		public UInt32? ObjectModelVersion { get; set; }
-		[CategoryAttribute("Preface"), Description("3B08")]
-		public MXFRefKey PrimaryPackageUID { get; set; }
-		[CategoryAttribute("Preface"), Description("3B09")]
-		public MXFKey OperationalPattern { get; set; }
+        public DateTime? LastModificationDate { get; set; }
+        [CategoryAttribute("Preface"), Description("3B03")]
+        public MXFRefKey ContentStorageUID { get; set; }
+        [CategoryAttribute("Preface"), Description("3B05")]
+        public UInt16? Version { get; set; }
+        [CategoryAttribute("Preface"), Description("3B07")]
+        public UInt32? ObjectModelVersion { get; set; }
+        [CategoryAttribute("Preface"), Description("3B08")]
+        public MXFRefKey PrimaryPackageUID { get; set; }
+        [CategoryAttribute("Preface"), Description("3B09")]
+        public MXFKey OperationalPattern { get; set; }
+        [CategoryAttribute("Preface"), Description("")]
+        public bool? IsRIPPresent { get; set; }
 
-		public MXFPreface(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Preface")
-		{
-			this.Key.Type = KeyType.Preface;
-		}
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x3B02: this.LastModificationDate = reader.ReadTimestamp(); return true;
-				case 0x3B05: this.Version = reader.ReadUInt16(); return true;
-				case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
-				case 0x3B03: this.ContentStorageUID = new MXFRefKey(reader, 16, "ContentStorageUID"); return true;
-				case 0x3B08: this.PrimaryPackageUID = new MXFRefKey(reader, 16, "PrimaryPackageUID"); return true;
-				case 0x3B09: this.OperationalPattern = new MXFKey(reader, 16); return true;
-				case 0x3B06: ReadKeyList(reader, "Identifications", "Identification"); return true;
-				case 0x3B0A: ReadKeyList(reader, "Essencecontainers", "Essencecontainer"); return true;
-				case 0x3B0B: ReadKeyList(reader, "Descriptive Metadata Schemes", "DM scheme"); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
 
-	}
+        public MXFPreface(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "Preface")
+        {
+            this.Key.Type = KeyType.Preface;
+        }
+
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.Tag)
+            {
+                case 0x3B02: this.LastModificationDate = reader.ReadTimestamp(); return true;
+                case 0x3B05: this.Version = reader.ReadUInt16(); return true;
+                case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
+                case 0x3B03: this.ContentStorageUID = new MXFRefKey(reader, 16, "ContentStorageUID"); return true;
+                case 0x3B08: this.PrimaryPackageUID = new MXFRefKey(reader, 16, "PrimaryPackageUID"); return true;
+                case 0x3B09: this.OperationalPattern = new MXFKey(reader, 16); return true;
+                case 0x3B06: ReadKeyList(reader, "Identifications", "Identification"); return true;
+                case 0x3B0A: ReadKeyList(reader, "Essencecontainers", "Essencecontainer"); return true;
+                case 0x3B0B: ReadKeyList(reader, "Descriptive Metadata Schemes", "DM scheme"); return true;
+                case var a when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBool(); return true;
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
+
+    }
 }
