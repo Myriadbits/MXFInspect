@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
     // urn:smpte:ul:060e2b34.01040101.02010122.00000000
     public enum MXFElectroSpatialFormulation
     {
-        Default 			                                                                                    0 			AAF[1.1:]       false
+        Default = 0x00,
         TwoChannelMode = 0x01,
         SingleChannelMode = 0x02,
         PrimarySecondaryMode = 0x03,
