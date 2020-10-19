@@ -48,10 +48,17 @@ namespace Myriadbits.MXF
 		public byte? SliceCount { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F0E")]
 		public byte? PosTableCount { get; set; }
+		[CategoryAttribute("IndexTableSegment"), Description("3F11")]
+		public bool? SingleIndexLocation { get; set; }
+		[CategoryAttribute("IndexTableSegment"), Description("3F13")]
+		public bool? ForwardIndexDirection { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F0F")]
 		public UInt64? ExtStartOffset { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F10")]
 		public UInt64? VBEByteCount { get; set; }
+		[CategoryAttribute("IndexTableSegment"), Description("3F12")]
+		public bool? SingleEssenceLocation { get; set; }
+
 
 		[Browsable(false)]
 		public List<MXFEntryIndex> IndexEntries { get; set; }
@@ -82,6 +89,9 @@ namespace Myriadbits.MXF
 				case 0x3F0E: this.PosTableCount = reader.ReadByte(); return true;
 				case 0x3F0F: this.ExtStartOffset = reader.ReadUInt64(); return true;
 				case 0x3F10: this.VBEByteCount = reader.ReadUInt64(); return true;
+				case 0x3F11: this.SingleIndexLocation = reader.ReadBool(); return true;
+				case 0x3F12: this.SingleEssenceLocation = reader.ReadBool(); return true;
+				case 0x3F13: this.ForwardIndexDirection = reader.ReadBool(); return true;
 				case 0x3F0B: this.IndexEditRate = reader.ReadRational(); return true;
 				case 0x3F0A:  // Index entry array
 					{
