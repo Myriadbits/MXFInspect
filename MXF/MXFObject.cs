@@ -55,7 +55,7 @@ namespace Myriadbits.MXF
 		private long m_lLength = -1;			// Length in bytes of this object
 		protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
 
-		[CategoryAttribute("Object"), ReadOnly(true)]
+		[CategoryAttribute("KLV"), ReadOnly(true)]
 		public long Offset
 		{
 			get
@@ -68,7 +68,7 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		[CategoryAttribute("Object"), ReadOnly(true)]
+		[CategoryAttribute("KLV"), ReadOnly(true)]
 		public long Length
 		{
 			get
