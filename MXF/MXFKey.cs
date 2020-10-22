@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 	}
 
 
-	public enum KeyField
+	public enum KeyCategory
 	{
 		Unknown = 0x00,
 		Dictionary = 0x01,
@@ -224,14 +224,19 @@ namespace Myriadbits.MXF
 		/// <summary>
 		/// Keyfield, describes the type of data
 		/// </summary>
-		[Browsable(false)]
-		public KeyField KeyField // TODO
+		[CategoryAttribute("Key"), ReadOnly(true)]
+		public KeyCategory Category
 		{
 			get
 			{
 				if (this.m_mxfKey != null && this.m_mxfKey.Length > 4)
-					return (KeyField)this.m_mxfKey[5];
-				return KeyField.Unknown;
+                {
+					return (KeyCategory)this.m_mxfKey[5];
+				}
+				else
+				{
+					return KeyCategory.Unknown;
+				}	
 			}
 		}
 
