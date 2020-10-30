@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,13 +19,14 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFEventTrack : MXFGenericTrack
+	public class MXFEventTrack : MXFGenericTrack
 	{
 		[CategoryAttribute("EventTrack"), Description("4B01")]
 		public MXFRational EventEditRate { get; set; }
@@ -45,7 +47,7 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x4B01: this.EventEditRate = reader.ReadRational(); return true;
-				case 0x4B02: this.EventOrigin = reader.ReadL(); return true;
+				case 0x4B02: this.EventOrigin = reader.ReadUInt64(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
@@ -47,7 +49,7 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x0201: this.DataDefinition = reader.ReadKey(); return true;
-				case 0x0202: this.Duration = reader.ReadL(); return true;
+				case 0x0202: this.Duration = reader.ReadUInt64(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

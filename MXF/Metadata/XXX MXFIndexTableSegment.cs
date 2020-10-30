@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -46,10 +48,17 @@ namespace Myriadbits.MXF
 		public byte? SliceCount { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F0E")]
 		public byte? PosTableCount { get; set; }
+		[CategoryAttribute("IndexTableSegment"), Description("3F11")]
+		public bool? SingleIndexLocation { get; set; }
+		[CategoryAttribute("IndexTableSegment"), Description("3F13")]
+		public bool? ForwardIndexDirection { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F0F")]
 		public UInt64? ExtStartOffset { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F10")]
 		public UInt64? VBEByteCount { get; set; }
+		[CategoryAttribute("IndexTableSegment"), Description("3F12")]
+		public bool? SingleEssenceLocation { get; set; }
+
 
 		[Browsable(false)]
 		public List<MXFEntryIndex> IndexEntries { get; set; }
@@ -71,20 +80,23 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3F05: this.EditUnitByteCount = reader.ReadD(); return true;
-				case 0x3F06: this.IndexSID = reader.ReadD(); return true;
-				case 0x3F07: this.BodySID = reader.ReadD(); return true;
-				case 0x3F08: this.SliceCount = reader.ReadB(); return true;
-				case 0x3F0C: this.IndexStartPosition = reader.ReadL(); return true;
-				case 0x3F0D: this.IndexDuration = reader.ReadL(); return true;
-				case 0x3F0E: this.PosTableCount = reader.ReadB(); return true;
-				case 0x3F0F: this.ExtStartOffset = reader.ReadL(); return true;
-				case 0x3F10: this.VBEByteCount = reader.ReadL(); return true;
+				case 0x3F05: this.EditUnitByteCount = reader.ReadUInt32(); return true;
+				case 0x3F06: this.IndexSID = reader.ReadUInt32(); return true;
+				case 0x3F07: this.BodySID = reader.ReadUInt32(); return true;
+				case 0x3F08: this.SliceCount = reader.ReadByte(); return true;
+				case 0x3F0C: this.IndexStartPosition = reader.ReadUInt64(); return true;
+				case 0x3F0D: this.IndexDuration = reader.ReadUInt64(); return true;
+				case 0x3F0E: this.PosTableCount = reader.ReadByte(); return true;
+				case 0x3F0F: this.ExtStartOffset = reader.ReadUInt64(); return true;
+				case 0x3F10: this.VBEByteCount = reader.ReadUInt64(); return true;
+				case 0x3F11: this.SingleIndexLocation = reader.ReadBool(); return true;
+				case 0x3F12: this.SingleEssenceLocation = reader.ReadBool(); return true;
+				case 0x3F13: this.ForwardIndexDirection = reader.ReadBool(); return true;
 				case 0x3F0B: this.IndexEditRate = reader.ReadRational(); return true;
 				case 0x3F0A:  // Index entry array
 					{
-						UInt32 NbIndexEntries = reader.ReadD();
-						UInt32 entryLength = reader.ReadD();						
+						UInt32 NbIndexEntries = reader.ReadUInt32();
+						UInt32 entryLength = reader.ReadUInt32();						
 						if (NbIndexEntries > 0)
 						{
 							this.IndexEntries = new List<MXFEntryIndex>();
@@ -109,8 +121,8 @@ namespace Myriadbits.MXF
 
 				case 0x3F09:  // Delta entry array
 					{ 
-						UInt32 NbDeltaEntries = reader.ReadD();
-						UInt32 entryLength = reader.ReadD();
+						UInt32 NbDeltaEntries = reader.ReadUInt32();
+						UInt32 entryLength = reader.ReadUInt32();
 						if (NbDeltaEntries > 0)
 						{
 							MXFObject deltaCollection = new MXFNamedObject("DeltaEntries", reader.Position, MXFObjectType.Index);

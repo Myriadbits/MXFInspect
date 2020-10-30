@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System.ComponentModel;
 
@@ -37,7 +39,7 @@ namespace Myriadbits.MXF
 		{
 			this.Length = 7; // Fixed
 
-			byte b0 = reader.ReadB();
+			byte b0 = reader.ReadByte();
 			if ((b0 & 0x40) != 0)
 				this.CaptionServiceNumber = (byte)(b0 & 0x1F);
 			else

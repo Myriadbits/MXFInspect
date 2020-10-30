@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Myriadbits.MXFInspect</RootNamespace>
     <AssemblyName>MXFInspect</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -49,6 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>MXFInspect.ico</ApplicationIcon>
@@ -147,7 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="MXF\MXF.csproj">
-      <Project>{a9c52737-e342-4e0a-a995-d0a973c12902}</Project>
+      <Project>{b01e7474-6a0c-4815-9c33-28b70df95b2e}</Project>
       <Name>MXF</Name>
     </ProjectReference>
     <ProjectReference Include="ObjectListView\ObjectListView2012.csproj">

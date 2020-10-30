@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,13 +19,14 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFDMSegment : MXFEvent
+	public class MXFDMSegment : MXFEvent
 	{
 		[CategoryAttribute("DMSegment"), Description("6102")]
 		public UInt64? Track { get; set; }

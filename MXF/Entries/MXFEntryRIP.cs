@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
@@ -35,8 +37,8 @@ namespace Myriadbits.MXF
 			: base(reader)
 		{
 			this.m_eType = MXFObjectType.RIP;
-			this.BodySID = reader.ReadD();
-			this.PartitionOffset = reader.ReadL();
+			this.BodySID = reader.ReadUInt32();
+			this.PartitionOffset = reader.ReadUInt64();
 			this.Length = 12; // Fixed length
 		}
 
@@ -46,7 +48,7 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("RIPEntry - BodySID {0}, ParitionOffset {1}", this.BodySID, this.PartitionOffset);
+			return string.Format("RIPEntry - BodySID {0}, PartitionOffset {1}", this.BodySID, this.PartitionOffset);
 		}
 	}
 }

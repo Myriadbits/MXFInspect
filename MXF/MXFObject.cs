@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,11 +19,13 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -182,8 +185,7 @@ namespace Myriadbits.MXF
 		/// <summary>
 		/// Find the top level parent
 		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
+		/// <returns>The top level parent</returns>
 		[Browsable(false)]
 		public MXFObject TopParent
 		{
@@ -193,6 +195,28 @@ namespace Myriadbits.MXF
 					return this.Parent.TopParent;
 				return this;
 			}
+		}
+
+		public IEnumerable<MXFObject> Descendants()
+		{
+			if (this.HasChildren)
+			{
+				var nodes = new Stack<MXFObject>(this.Children);
+				while (nodes.Any())
+				{
+					MXFObject node = nodes.Pop();
+					yield return node;
+					if (node.HasChildren)
+					{
+						foreach (var n in node.Children)
+						{
+							nodes.Push(n);
+						}
+					}
+
+				}
+			}
+			else yield break;
 		}
 
 		public void LogInfo(string format, params object[] args) { this.Log(MXFLogType.Info, format, args); }
@@ -276,7 +300,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="currentObject"></param>
 		/// <returns></returns>
-		public MXFObject FindPreviousibling(Type typeToFind, bool skipFillers)
+		public MXFObject FindPreviousSibling(Type typeToFind, bool skipFillers)
 		{
 			MXFObject found = null;
 			if (this.Parent != null && this.Parent.HasChildren)
@@ -301,7 +325,7 @@ namespace Myriadbits.MXF
 				}
 
 				// Hmm still not found, try our grand-parent:
-				found = this.Parent.FindPreviousibling(typeToFind, skipFillers);
+				found = this.Parent.FindPreviousSibling(typeToFind, skipFillers);
 			}
 			return found;
 		}

@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
@@ -75,11 +77,11 @@ namespace Myriadbits.MXF
 		public MXFCDPPacket(MXFReader reader)
 			: base(reader)
 		{
-			UInt16 identifier = reader.ReadW();
+			UInt16 identifier = reader.ReadUInt16();
 			if (identifier == 0x9669)
 			{
-				this.Length = reader.ReadB();
-				this.FrameRateE = (MXFCDFFrameRate) ((reader.ReadB() & 0xF0) >> 4);
+				this.Length = reader.ReadByte();
+				this.FrameRateE = (MXFCDFFrameRate) ((reader.ReadByte() & 0xF0) >> 4);
 
 				switch (this.FrameRateE)
 				{
@@ -93,7 +95,7 @@ namespace Myriadbits.MXF
 					case MXFCDFFrameRate.Rate_60000_1001: this.FrameRate = 60000.0/1001.0; break;
 				}
 
-				byte options = reader.ReadB();
+				byte options = reader.ReadByte();
 				this.TimeCodePresent = ((options & 0x80) != 0);
 				this.CCDataPresent = ((options & 0x40) != 0);
 				this.SVCInfoPresent = ((options & 0x20) != 0);
@@ -101,13 +103,13 @@ namespace Myriadbits.MXF
 				this.SVCInfoChange = ((options & 0x08) != 0);
 				this.SVCInfoComplete = ((options & 0x04) != 0);
 				this.CaptionServiceActive = ((options & 0x02) != 0);
-				this.SequenceCounter = reader.ReadW();
+				this.SequenceCounter = reader.ReadUInt16();
 
 				byte count = 0;
 				long endPos = this.Offset + this.Length;
 				while (reader.Position < endPos)
 				{
-					identifier = reader.ReadB();
+					identifier = reader.ReadByte();
 					switch (identifier)
 					{
 						case 0x71:
@@ -115,12 +117,12 @@ namespace Myriadbits.MXF
 							this.TimeCode.ParseSMPTE12M(reader, this.FrameRate.Value);
 							break;
 						case 0x72:
-							count = (byte)(reader.ReadB() & 0x1F);
+							count = (byte)(reader.ReadByte() & 0x1F);
 							for (int n = 0; n < count; n++)
 								this.AddChild(new MXFEntryCCData(reader));
 							break;
 						case 0x73:
-							count = (byte)(reader.ReadB() & 0x0F);
+							count = (byte)(reader.ReadByte() & 0x0F);
 							for (int n = 0; n < count; n++)
 								this.AddChild(new MXFEntrySVCInfo(reader));
 							break;

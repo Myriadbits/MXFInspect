@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,13 +19,14 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFTimecodeComponent : MXFStructuralComponent
+	public class MXFTimecodeComponent : MXFStructuralComponent
 	{
 		[CategoryAttribute("TimecodeComponent"), Description("1501")]
 		public UInt64? StartTimecode { get; set; }
@@ -51,9 +53,9 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x1501: this.StartTimecode = reader.ReadL(); return true;
-				case 0x1502: this.RoundedTimecodeBase = reader.ReadW(); return true;
-				case 0x1503: this.DropFrame = (reader.ReadB() != 0); return true;
+				case 0x1501: this.StartTimecode = reader.ReadUInt64(); return true;
+				case 0x1502: this.RoundedTimecodeBase = reader.ReadUInt16(); return true;
+				case 0x1503: this.DropFrame = (reader.ReadByte() != 0); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

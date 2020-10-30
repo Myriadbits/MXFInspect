@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
@@ -39,9 +41,9 @@ namespace Myriadbits.MXF
 			this.m_eType = MXFObjectType.Index;
 
 			this.Length = length;
-			this.PosTableIndex = reader.ReadsB();
-			this.Slice = reader.ReadB();
-			this.ElementDelta = reader.ReadD();
+			this.PosTableIndex = reader.ReadSignedByte();
+			this.Slice = reader.ReadByte();
+			this.ElementDelta = reader.ReadUInt32();
 		}
 
 		/// <summary>

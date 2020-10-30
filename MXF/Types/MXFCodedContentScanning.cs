@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,29 +19,19 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 
 namespace Myriadbits.MXF
 {
-	public class MXFRational : Object
-	{
-		public UInt32 Num { get; set; }
-		public UInt32 Den { get; set; }
-
-		public double Value 
-		{ 
-			get 
-			{
-				if (this.Den == 0)
-					return 0;
-				return ((double)this.Num) / ((double)this.Den);
-			}
-		}
-
-		public override string ToString()
-		{
-			return string.Format("{0:.00} ({1}/{2})", this.Value, this.Num, this.Den);
-		}
-	}
+    // http://www.smpte-ra.org/reg/2003/2012 	
+    // urn:smpte:ul:060e2b34.01040101.0201012a.00000000
+    public enum MXFCodedContentScanning
+    {
+        NotKnown = 0x00,
+        Progressive = 0x01,   
+        Interlace = 0x02,  
+        Mixed = 0x03,
+    }
 }

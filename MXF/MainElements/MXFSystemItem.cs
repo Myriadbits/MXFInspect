@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 
 using System;
@@ -119,10 +121,10 @@ namespace Myriadbits.MXF
 			reader.Seek(this.DataOffset); // Seek to the start of the data
 
 			// Parse system bitmap
-			this.SystemBitmap = (SystemBitmap)reader.ReadB();
+			this.SystemBitmap = (SystemBitmap)reader.ReadByte();
 
 			// Parse Content package rate
-			byte rate = reader.ReadB();
+			byte rate = reader.ReadByte();
 			int rateIndex = (rate & 0x1E) >> 1;
 			int[] rates = new int[16] {0, 24, 25, 30, 48, 50, 60, 72, 75, 90, 96, 100, 120, 0, 0, 0 };
 			int rateNonDrop = 1;
@@ -134,14 +136,14 @@ namespace Myriadbits.MXF
 
 
 			// Parse Content Package Type
-			byte type = reader.ReadB();
+			byte type = reader.ReadByte();
 			this.StreamStatus = (SystemStreamStatus)((type & 0xE0) >> 5);
 			this.LowLatencyMode = ((type & 0x10) == 0x10);
 			this.TransferMode = (SystemTransferMode)((type & 0x0C) >> 2);
 			this.TimingMode = (SystemTimingMode)(type & 0x03);
 
-			this.ChannelHandle = reader.ReadW();
-			this.ContinuityCount = reader.ReadW();
+			this.ChannelHandle = reader.ReadUInt16();
+			this.ContinuityCount = reader.ReadUInt16();
 
 			this.SMPTE = new MXFRefKey(reader, 16, "SMPTE"); // Always read even if zero
 

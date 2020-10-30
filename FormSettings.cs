@@ -1,7 +1,8 @@
-﻿//
-// Myriadbits Disk space analyzer 
-// Find free space on your NTFS disk
-// Copyright (C) 2014 Myriadbits, Jochem Bakker
+﻿#region license
+//
+// MXFInspect - Myriadbits MXF Viewer. 
+// Inspect MXF Files.
+// Copyright (C) 2015 Myriadbits, Jochem Bakker
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using Myriadbits.MXFInspect.Properties;
 using System;

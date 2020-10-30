@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -55,8 +57,8 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		protected UInt32 ReadTagList(MXFReader reader, string categoryName)
 		{
-			UInt32 nofItems = reader.ReadD();
-			UInt32 objectSize = reader.ReadD(); // useless size of objects, always 16 according to specs
+			UInt32 nofItems = reader.ReadUInt32();
+			UInt32 objectSize = reader.ReadUInt32(); // useless size of objects, always 16 according to specs
 
 			MXFObject keylist = new MXFNamedObject(categoryName, reader.Position);
 			if (nofItems > 0 && nofItems < UInt32.MaxValue)

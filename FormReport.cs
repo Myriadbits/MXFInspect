@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXFInspect - Myriadbits MXF Viewer. 
 // Inspect MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
@@ -55,12 +57,7 @@ namespace Myriadbits.MXFInspect
 			m_mainFile = file;
 		}
 
-		/// <summary>
-		/// Display correct assembly version number
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AboutForm_Load(object sender, EventArgs e)
+		private void ReportForm_Load(object sender, EventArgs e)
 		{
 			DisplayFileInfo();
 		}

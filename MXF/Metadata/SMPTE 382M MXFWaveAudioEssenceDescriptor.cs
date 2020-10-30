@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
@@ -82,17 +84,17 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3D0A: this.BlockAlign = reader.ReadW(); return true;
-				case 0x3D0B: this.SequenceOffset = reader.ReadB(); return true;
-				case 0x3D09: this.AveragesBytesPerSecond = reader.ReadD(); return true;
+				case 0x3D0A: this.BlockAlign = reader.ReadUInt16(); return true;
+				case 0x3D0B: this.SequenceOffset = reader.ReadByte(); return true;
+				case 0x3D09: this.AveragesBytesPerSecond = reader.ReadUInt32(); return true;
 				case 0x3D32: this.ChannelAssignment = reader.ReadKey(); return true;
-				case 0x3D29: this.PeakEnvelopeVersion = reader.ReadD(); return true;
-				case 0x3D2A: this.PeakEnvelopeFormat = reader.ReadD(); return true;
-				case 0x3D2B: this.PointsPerPeakValue = reader.ReadD(); return true;
-				case 0x3D2C: this.PeakEnvelopeBlockSize = reader.ReadD(); return true;
-				case 0x3D2D: this.PeakChannels = reader.ReadD(); return true;
-				case 0x3D2E: this.PeakFrames = reader.ReadD(); return true;
-				case 0x3D2F: this.PeakOfPeaksPosition = reader.ReadL(); return true;
+				case 0x3D29: this.PeakEnvelopeVersion = reader.ReadUInt32(); return true;
+				case 0x3D2A: this.PeakEnvelopeFormat = reader.ReadUInt32(); return true;
+				case 0x3D2B: this.PointsPerPeakValue = reader.ReadUInt32(); return true;
+				case 0x3D2C: this.PeakEnvelopeBlockSize = reader.ReadUInt32(); return true;
+				case 0x3D2D: this.PeakChannels = reader.ReadUInt32(); return true;
+				case 0x3D2E: this.PeakFrames = reader.ReadUInt32(); return true;
+				case 0x3D2F: this.PeakOfPeaksPosition = reader.ReadUInt64(); return true;
 				case 0x3D30: this.PeakEnvelopeTimestamp = reader.ReadTimestamp(); return true;
 				case 0x3D31: 
 						this.PeakEnvelopeData = new byte[localTag.Size];

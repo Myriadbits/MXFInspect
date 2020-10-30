@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
@@ -29,10 +31,10 @@ namespace Myriadbits.MXF
 		private static MXFKey s_MxfKlvKey = new MXFKey(0x06, 0x0e, 0x2b, 0x34);
 
 		[CategoryAttribute("KLV"), ReadOnly(true)]
-		public MXFKey	Key { get; set; }
+		public MXFKey Key { get; set; }
 
 		[CategoryAttribute("KLV"), ReadOnly(true)]
-		public long		DataOffset { get; set; } // Points just after the KLV
+		public long DataOffset { get; set; } // Points just after the KLV
 		
 		[Browsable(false)]
 		public MXFPartition Partition { get; set; }
@@ -95,14 +97,14 @@ namespace Myriadbits.MXF
 		/// </summary>
 		private MXFKey CreateAndValidateKey(MXFReader reader)
 		{
-			byte iso = reader.ReadB();
-			byte len = reader.ReadB();
+			byte iso = reader.ReadByte();
+			byte len = reader.ReadByte();
 			byte smp = 0, te = 0;
 			bool valid = false;
 			if (iso == 0x06 ) // Do not check length when not iso
 			{
-				smp = reader.ReadB();
-				te = reader.ReadB();
+				smp = reader.ReadByte();
+				te = reader.ReadByte();
 				valid = (smp == 0x2B && te == 0x34); // SMPTE define
 			}
 			if (!valid)
@@ -124,7 +126,7 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		private long DecodeBerLength(MXFReader reader)
 		{
-			long size = reader.ReadB();
+			long size = reader.ReadByte();
 			if ((size & 0x80) != 0)
 			{ 
 				// long form
@@ -137,7 +139,7 @@ namespace Myriadbits.MXF
 				}
 				size = 0;
 				while ( (bytes_num--) != 0)
-					size = size << 8 | reader.ReadB();
+					size = size << 8 | reader.ReadByte();
 			}
 			return size;
 		}

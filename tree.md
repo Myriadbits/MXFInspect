@@ -1,0 +1,376 @@
+## Scope
+This document shows the SMPTE groups register as a hierarchical inheritance tree (as of September, 2020) 
+
+## Group Registers Tree
+
+| Mark          | Description                                       |
+| ------------- | ------------------------------------------------- |
+| :hammer:      | not fully implemented                             |
+| :interrobang: | more investigation required to remove uncertainty |
+| :question:    | unclear about what  this  group shouldrepresent   |
+| :scroll:      | properties defined by local tags                  |
+| :dart:        | easy to implement                                 |
+
+
+
+
+
+<font size="-1">
+
+- [ ] DMCVTGenericSet1 :question:
+    - [ ] DMCVTApp1Set 
+    - [ ] DMCVTApp2Set 
+    - [ ] DMCVTApp3Set 
+    - [ ] DMCVTApp4Set
+- [x] InterchangeObject :hammer: :scroll:
+    - [x] Component :hammer: :scroll:
+        - [x] Segment *(abstract class?)*
+            - [ ] EdgeCode
+            - [ ] EssenceGroup 
+            - [x] Event
+                - [ ] GPITrigger 
+                - [ ] CommentMarker
+                    - [ ] DescriptiveMarker
+                      - [ ] DynamicMarker
+                        - [ ] DynamicClip
+            - [x] Filler *(is this the B11 MXFFiller.cs?)* :question:
+            - [ ] OperationGroup 
+            - [ ] NestedScope 
+            - [ ] Pulldown
+            - [ ] ScopeReference 
+            - [ ] Selector
+            - [x] Sequence :hammer: *(ComponentObjects missing)* :scroll:
+            - [ ] SourceReference
+                - [x] SourceClip :hammer: :scroll: *(some properties missing)* 
+                    - [ ] DescriptiveClip :scroll: :dart:
+                - [ ] TextClip *(abstract class?)*
+                    - [ ] HTMLClip :scroll: :dart:
+            - [x] Timecode
+            - [ ] TimecodeStream :scroll: :dart:
+                - [ ] TimecodeStream12M :scroll: :dart:
+            - [ ] Transition :scroll:
+    - [x] ContentStorage :scroll: :hammer:
+    - [ ] ControlPoint :scroll:
+    - [ ] DefinitionObject :scroll:
+        - [ ] DataDefinition :scroll:
+        - [ ] OperationDefinition :scroll:
+        - [ ] ParameterDefinition :scroll:
+        - [ ] PluginDefinition :scroll:
+        - [ ] CodecDefinition :scroll:
+        - [ ] ContainerDefinition :scroll:
+        - [ ] InterpolationDefinition :scroll:
+        - [ ] TaggedValueDefinition :scroll:
+        - [ ] KLVDataDefinition :scroll:
+        - [ ] OPDefinition :scroll:
+        - [ ] CompressionDefinition :scroll:
+    - [ ] Dictionary :scroll:
+    - [ ] EssenceData *(A05 EssenceContainerData)* :hammer: :scroll:
+    - [x] EssenceDescriptor *(B02 GenericDescriptor)* :hammer: :scroll:
+        - [x] FileDescriptor :scroll:
+            - [ ] AIFCDescriptor :scroll: :dart:
+            - [x] PictureDescriptor :scroll: :hammer:
+                - [x] CDCIDescriptor :scroll:
+                    - [x] MPEGVideoDescriptor
+                    - [ ] VC1VideoDescriptor
+                - [X] RGBADescriptor :scroll: :hammer: :dart:
+                - [ ] TIFFPictureEssenceDescriptor :scroll: :dart:
+            - [ ] HTMLDescriptor *(abstract class?)*
+            - [ ] TIFFDescriptor *(abstract class?)*
+            - [ ] WAVEDescriptor *(abstract class?)*
+            - [x] SoundDescriptor :hammer: :scroll:
+                - [X] WAVEPCMDescriptor *(MXFWAVEAudioEssenceDescriptor.cs)*
+                    - [X] AES3PCMDescriptor *(1 property missing in online register)*
+                - [ ] DCPCMSoundDescriptor
+                - [ ] MPEGAudioDescriptor
+            - [X] DataEssenceDescriptor
+                - [ ] ParsedTextDescriptor :scroll: :dart:
+                    - [ ] SGMLDescriptor
+                        - [ ] XMLDescriptor :scroll: :dart:
+                        - [ ] HTMLParsedTextDescriptor :scroll: :dart:
+                - [ ] RP217Descriptor :scroll: :dart:
+                - [ ] VBIDataDescriptor
+                - [ ] ANCDataDescriptor
+                - [ ] DCTimedTextDescriptor
+                - [ ] EventTextDescriptor
+                    - [ ] STLDescriptor
+                - [ ] AuxDataEssenceDescriptor
+            - [X] MultipleDescriptor 
+            - [ ] DateTimeDescriptor :scroll: :dart:
+        - [ ] FilmDescriptor :scroll: :dart:
+        - [ ] TapeDescriptor :scroll:
+        - [ ] PhysicalDescriptor *(abstract class?)*
+            - [ ] ImportDescriptor *(abstract class?)*
+                - [ ] BWFImportDescriptor :scroll:
+            - [ ] RecordingDescriptor *(abstract class?)*
+            - [ ] AuxiliaryDescriptor :scroll: :dart: 
+    - [X] Preface :hammer:
+    - [x] Identification 
+    - [ ] Locator
+        - [ ] NetworkLocator :dart: :scroll:
+        - [ ] TextLocator :dart: :scroll:
+        - [ ] FROM HERE ON THE LIST IS NOT UPDATED
+    - [ ] Package :scroll: 
+        - [ ] CompositionPackage 
+        - [ ] MaterialPackage 
+        - [ ] SourcePackage 
+    - [ ] Track
+        - [ ] EventTrack 
+        - [ ] StaticTrack 
+        - [ ] TimelineTrack 
+    - [ ] Parameter
+        - [ ] ConstantValue 
+        - [ ] VaryingValue 
+    - [ ] TaggedValue 
+    - [ ] KLVData 
+    - [ ] RIFFChunk 
+    - [ ] SubDescriptor
+        - [ ] JPEG2000SubDescriptor 
+        - [ ] StereoscopicPictureSubDescriptor
+        - [ ] DCTimedTextResourceSubDescriptor
+        - [ ] ContainerConstraintsSubDescriptor
+        - [ ] MPEG4VisualSubDescriptor 
+        - [ ] MCALabelSubDescriptor
+            - [ ] AudioChannelLabelSubDescriptor
+            - [ ] SoundfieldGroupLabelSubDescriptor
+            - [ ] GroupOfSoundfieldGroupsLabelSubDescriptor
+        - [ ] AVCSubDescriptor 
+        - [ ] STLSubDescriptor 
+        - [ ] OperationsStereoscopicSubDescriptor
+        - [ ] VC2SubDescriptor 
+        - [ ] DMCVTTargetSubDescriptor 
+        - [ ] VC5BayerPictureEssenceSubDescriptor
+        - [ ] VC5CDCIPictureEssenceSubDescriptor
+        - [ ] AACSubDescriptor 
+        - [ ] ACESPictureSubDescriptor 
+        - [ ] TargetFrameSubDescriptor 
+        - [ ] AS_07_TimecodeLabelSubdescriptor
+    - [ ] PackageMarker 
+    - [ ] ApplicationObject
+        - [ ] ApplicationPlugInObject 
+        - [ ] ApplicationReferencedObject 
+    - [ ] DescriptiveObject
+        - [ ] DMS1Object
+            - [ ] Publication 
+            - [ ] ContactsList 
+            - [ ] Address 
+            - [ ] Communications 
+            - [ ] PictureFormat 
+            - [ ] NameValue 
+            - [ ] Processing 
+            - [ ] Project 
+            - [ ] TextLanguage
+                - [ ] Titles 
+                - [ ] Branding
+                - [ ] Shot 
+                - [ ] CueWords
+                - [ ] Thesaurus
+                    - [ ] DMS1Identification
+                    - [ ] GroupRelationship
+                    - [ ] DMS1Event
+                    - [ ] Award
+                    - [ ] CaptionsDescription
+                    - [ ] DMS1Annotation
+                    - [ ] SettingPeriod
+                    - [ ] Scripting
+                    - [ ] Classification
+                    - [ ] Keypoint
+                    - [ ] Participant
+                    - [ ] Contract
+                    - [ ] Rights
+                    - [ ] DeviceParameters
+                    - [ ] Contact
+                        - [ ] Person
+                        - [ ] Organization
+                        - [ ] Location
+        - [ ] CryptographicContext 
+        - [ ] TextBasedObject
+            - [ ] GenericStreamTextBasedSet
+                - [ ] AS_07_GSP_DMS_Object
+            - [ ] UTF8TextBasedSet 
+            - [ ] UTF16TextBasedSet 
+        - [ ] AS_12_DescriptiveObject
+            - [ ] DMS_AS_12_AdID_Slate
+        - [ ] EBUCoreObject
+            - [ ] coreMetadata 
+            - [ ] metadataSchemaInformation
+            - [ ] identifier 
+            - [ ] title 
+            - [ ] alternativeTitle 
+            - [ ] subject 
+            - [ ] description 
+            - [ ] date 
+            - [ ] dateType 
+            - [ ] type 
+            - [ ] objectType 
+            - [ ] genre 
+            - [ ] targetAudience 
+            - [ ] language 
+            - [ ] coverage 
+            - [ ] spatial 
+            - [ ] location 
+            - [ ] coordinates 
+            - [ ] temporal 
+            - [ ] periodOfTime 
+            - [ ] rights 
+            - [ ] version 
+            - [ ] rating 
+            - [ ] publicationEvent 
+            - [ ] publicationHistory 
+            - [ ] publicationChannel 
+            - [ ] publicationMedium 
+            - [ ] publicationService 
+            - [ ] entity 
+            - [ ] contact 
+            - [ ] organization 
+            - [ ] department 
+            - [ ] details 
+            - [ ] address 
+            - [ ] region 
+            - [ ] compoundName 
+            - [ ] role 
+            - [ ] countryType 
+            - [ ] customRelation 
+            - [ ] basicRelation 
+            - [ ] planning 
+            - [ ] typeGroup 
+            - [ ] formatGroup 
+            - [ ] statusGroup 
+            - [ ] textualAnnotation 
+            - [ ] basicLink 
+            - [ ] format 
+            - [ ] videoFormat 
+            - [ ] imageFormat 
+            - [ ] audioFormat 
+            - [ ] track 
+            - [ ] dataFormat 
+            - [ ] captioning 
+            - [ ] subtitling 
+            - [ ] ancillaryData 
+            - [ ] signingFormat 
+            - [ ] technicalAttributeString
+            - [ ] technicalAttributeInt8
+            - [ ] technicalAttributeInt16
+            - [ ] technicalAttributeInt32
+            - [ ] technicalAttributeInt64
+            - [ ] technicalAttributeUInt8
+            - [ ] technicalAttributeUInt16
+            - [ ] technicalAttributeUInt32
+            - [ ] technicalAttributeUInt64
+            - [ ] technicalAttributeFloat
+            - [ ] technicalAttributeRational
+            - [ ] technicalAttributeAnyURI
+            - [ ] technicalAttributeBoolean
+            - [ ] dimension 
+            - [ ] packageInfo 
+            - [ ] medium 
+            - [ ] codec 
+            - [ ] rational 
+            - [ ] aspectRatio 
+            - [ ] height 
+            - [ ] width 
+            - [ ] part 
+            - [ ] partMetadata 
+            - [ ] hash 
+            - [ ] locator 
+            - [ ] containerFormat 
+            - [ ] audioFormatExtended
+            - [ ] audioProgramme 
+            - [ ] IDRef 
+            - [ ] loudnessMetadata 
+            - [ ] audioContent 
+            - [ ] audioObject 
+            - [ ] audioPackFormat 
+            - [ ] audioChannelFormat 
+            - [ ] audioBlockFormat 
+            - [ ] audioBlockMatrixCoefficient
+            - [ ] audioStreamFormat 
+            - [ ] audioTrackFormat 
+            - [ ] audioTrackUID 
+            - [ ] audioMXFLookup 
+            - [ ] audioBlockMatrix 
+            - [ ] time 
+            - [ ] metadataFormat 
+            - [ ] timecodeFormat 
+            - [ ] videoNoiseFilter 
+            - [ ] audience 
+            - [ ] filter 
+            - [ ] filterSetting 
+            - [ ] referenceScreen 
+            - [ ] referenceScreenCentrePosition
+            - [ ] referenceScreenWidth
+            - [ ] audioContentDialogue
+            - [ ] audioObjectInteraction
+            - [ ] gainInteractionRange
+            - [ ] positionInteractionRange
+            - [ ] audioBlockPosition 
+            - [ ] audioBlockDivergence
+            - [ ] audioBlockZoneExclusion
+            - [ ] audioBlockZone 
+            - [ ] audioBlockJumpPosition
+            - [ ] event 
+            - [ ] award 
+            - [ ] affiliation 
+        - [ ] AS_07_DMS_Device 
+        - [ ] AS_07_DMS_Identifier 
+    - [ ] DescriptiveFramework
+        - [ ] DMS1Framework
+            - [ ] SceneFramework 
+            - [ ] ProductionClipFramework
+                - [ ] ProductionFramework
+                - [ ] ClipFramework
+        - [ ] CryptographicFramework 
+        - [ ] DMS_AS_03_Framework 
+        - [ ] TextBasedFramework
+            - [ ] AS_07_GSP_DMS_Framework
+                - [ ] AS_07_GSP_BD_DMS_Framework
+                - [ ] AS_07_GSP_TD_DMS_Framework
+        - [ ] EIDRFramework 
+        - [ ] DM_Segmentation_Framework
+            - [ ] DM_AS_11_Segmentation_Framework
+            - [ ] AS_07_Segmentation_DMS_Framework
+        - [ ] DMS_AS_10_Core_Framework 
+        - [ ] DM_AS_11_Core_Framework 
+        - [ ] DMS_AS_12_Framework 
+        - [ ] EBUCoreMainFramework 
+        - [ ] APP_InfaxFramework 
+        - [ ] APP_PSEAnalysisFramework 
+        - [ ] APP_VTRReplayErrorFramework 
+        - [ ] APP_DigiBetaDropoutFramework 
+        - [ ] APP_TimecodeBreakFramework 
+        - [ ] DM_AS_11_UKDPP_Framework 
+        - [ ] AS_07_Core_DMS_Framework 
+- [ ] MetaDefinition
+    - [ ] ClassDefinition 
+    - [ ] PropertyDefinition 
+    - [ ] TypeDefinition
+        - [ ] TypeDefinitionInteger 
+        - [ ] TypeDefinitionStrongObjectReference
+        - [ ] TypeDefinitionWeakObjectReference
+        - [ ] TypeDefinitionEnumeration 
+        - [ ] TypeDefinitionFixedArray 
+        - [ ] TypeDefinitionVariableArray 
+        - [ ] TypeDefinitionSet 
+        - [ ] TypeDefinitionString 
+        - [ ] TypeDefinitionStream 
+        - [ ] TypeDefinitionRecord 
+        - [ ] TypeDefinitionRename 
+        - [ ] TypeDefinitionExtendibleEnumeration
+        - [ ] TypeDefinitionIndirect
+            - [ ] TypeDefinitionOpaque
+        - [ ] TypeDefinitionCharacter
+- [ ] PartitionPack
+    - [ ] HeaderPartitionPack
+        - [ ] HeaderPartitionOpenIncomplete 
+        - [ ] HeaderPartitionClosedIncomplete
+        - [ ] HeaderPartitionOpenComplete 
+        - [ ] HeaderPartitionClosedComplete 
+    - [ ] BodyPartitionPack
+        - [ ] BodyPartitionOpenIncomplete 
+        - [ ] BodyPartitionClosedIncomplete 
+        - [ ] BodyPartitionOpenComplete 
+        - [ ] BodyPartitionClosedComplete 
+        - [ ] GenericStreamPartition 
+    - [ ] FooterPartitionPack
+        - [ ] FooterPartitionClosedIncomplete
+        - [ ] FooterPartitionClosedComplete 
+</font>

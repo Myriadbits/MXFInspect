@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXFInspect - Myriadbits MXF Viewer. 
 // Inspect MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
@@ -348,7 +350,7 @@ namespace Myriadbits.MXFInspect
 						previousObject = this.m_filterList[index - 1];
 				}
 				else
-					previousObject = selectedObject.FindPreviousibling(selectedObject.GetType(), this.HideFillers);
+					previousObject = selectedObject.FindPreviousSibling(selectedObject.GetType(), this.HideFillers);
 				SelectObjectInMainList(previousObject);
 			}
 		}

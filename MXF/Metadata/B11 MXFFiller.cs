@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,10 +19,11 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 namespace Myriadbits.MXF
 {
-	class MXFFiller : MXFStructuralComponent
+	public class MXFFiller : MXFStructuralComponent
 	{
 		public MXFFiller(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Filler")

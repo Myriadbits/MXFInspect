@@ -19,7 +19,7 @@ namespace Myriadbits.MXF.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -67,7 +67,7 @@ namespace Myriadbits.MXF.Properties {
         ///2;08h;0Ch;In Force;S353;MPEG recoding data, HANC space;2010-07-15 17:25:46
         ///2;40h;01h;In Force;S305;SDTI transport in active frame space;2010-07-11 14:26:49
         ///2;40h;02h;In Force;S348;HD-SDTI transport in active frame space;2010-07-11 14:26:49
-        ///2;40h;04h;In Force;S427;Li [rest of string was truncated]&quot;;.
+        ///2;40h;04h;In Force;S [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ANC_Identifiers {
             get {
@@ -89,7 +89,7 @@ namespace Myriadbits.MXF.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Elements {
             get {
@@ -111,7 +111,7 @@ namespace Myriadbits.MXF.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Groups {
             get {
@@ -133,7 +133,7 @@ namespace Myriadbits.MXF.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Labels {
             get {
@@ -155,7 +155,7 @@ namespace Myriadbits.MXF.Properties {
         ///&lt;!-- SMPTE METADATA REGISTER --&gt;
         ///&lt;!-- ####################### --&gt;
         ///&lt;!--  --&gt;
-        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE Metadata Regis [rest of string was truncated]&quot;;.
+        ///&lt;!-- See https://registry.smpte-ra.org for SMPTE M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Types {
             get {

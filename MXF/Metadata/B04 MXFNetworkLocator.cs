@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,12 +19,13 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	class MXFNetworkLocator : MXFInterchangeObject
+	public class MXFNetworkLocator : MXFInterchangeObject
 	{
 		[CategoryAttribute("NetworkLocator"), Description("4001")]
 		public string URLString { get; set; }
@@ -41,7 +43,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4001: URLString = reader.ReadS(localTag.Size); return true;
+				case 0x4001: URLString = reader.ReadUTF16String(localTag.Size); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

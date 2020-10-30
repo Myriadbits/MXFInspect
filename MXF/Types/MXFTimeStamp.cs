@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,12 +19,13 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 
 namespace Myriadbits.MXF
 {
-	public class MXFTimeStamp : Object
+	public class MXFTimeStamp
 	{
 		public MXFTimeStamp()
 		{
@@ -89,7 +91,16 @@ namespace Myriadbits.MXF
 							this.Hour = 0;
 							this.Day++;
 
-							// TODO MONTH + year
+							if (this.Day > DateTime.DaysInMonth(Year, Month))
+							{
+								this.Day = 1;
+								this.Month++;
+								if (this.Month > 12)
+								{
+									this.Month = 1;
+									this.Year++;
+								}
+							}
 						}
 					}
 				}
@@ -103,10 +114,10 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Compare 2 timestamps to check if they ar the same
+		/// Compares two timestamps to check if they are the same
 		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
+		/// <param name="other">The timestamp to be compared</param>
+		/// <returns>True if the timestamps are the same</returns>
 		public bool IsSame(MXFTimeStamp other)
 		{
 			if (this.Year == other.Year &&
@@ -125,10 +136,9 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Compare 2 timestamps to check if they ar the same
+		/// Checks whether the timestamp is empty
 		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
+		/// <returns>True if the timestamp is empty</returns>
 		public bool IsEmpty()
 		{
 			if (this.Year == 0 &&
@@ -150,7 +160,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="value"></param>
 		/// <param name="tenMask"></param>
-		/// <returns></returns>
+		/// <returns>The numeric value of the timestamp component</returns>
 		private byte ParseBCD(byte value, byte tenMask)
 		{
 			return (byte)((value & 0x0F) + ((value & tenMask) >> 4) * 10);
@@ -164,10 +174,10 @@ namespace Myriadbits.MXF
 		/// <param name="frameRateNonDrop"></param>
 		public void ParseBCDTimeCode(MXFReader reader, double frameRate)
 		{
-			byte frameb = reader.ReadB();
-			byte secondb = reader.ReadB();
-			byte minuteb = reader.ReadB();
-			byte hourb = reader.ReadB();
+			byte frameb = reader.ReadByte();
+			byte secondb = reader.ReadByte();
+			byte minuteb = reader.ReadByte();
+			byte hourb = reader.ReadByte();
 
 			bool colorFlag = (frameb & 0x80) == 0x80;
 			bool dropFlag = (frameb & 0x40) == 0x40;
@@ -200,9 +210,9 @@ namespace Myriadbits.MXF
 			this.Hour = ParseBCD(hourb, 0x30);
 
 			// Read the other bytes
-			this.Day = ParseBCD(reader.ReadB(), 0x30); // Binary group data BG1 + BG2
-			this.Month = ParseBCD(reader.ReadB(), 0x10); // Binary group data BG3 + BG4
-			this.Year = ParseBCD(reader.ReadB(), 0xF0); // Binary group data BG5 + BG6
+			this.Day = ParseBCD(reader.ReadByte(), 0x30); // Binary group data BG1 + BG2
+			this.Month = ParseBCD(reader.ReadByte(), 0x10); // Binary group data BG3 + BG4
+			this.Year = ParseBCD(reader.ReadByte(), 0xF0); // Binary group data BG5 + BG6
 		}
 
 
@@ -213,10 +223,10 @@ namespace Myriadbits.MXF
 		/// <param name="frameRate"></param>
 		public void ParseSMPTE12M(MXFReader reader, double frameRate)
 		{
-			byte hoursb = reader.ReadB();
-			byte minutesb = reader.ReadB();
-			byte secondsb = reader.ReadB();
-			byte framesb = reader.ReadB();
+			byte hoursb = reader.ReadByte();
+			byte minutesb = reader.ReadByte();
+			byte secondsb = reader.ReadByte();
+			byte framesb = reader.ReadByte();
 
 			this.Hour = ParseBCD(hoursb, 0x30);
 			this.Minute = ParseBCD(minutesb, 0x70);

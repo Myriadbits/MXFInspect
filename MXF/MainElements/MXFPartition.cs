@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -43,6 +45,9 @@ namespace Myriadbits.MXF
 
 		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
 		public bool Complete { get; set; }
+
+		[CategoryAttribute("PartitionHeader"), ReadOnly(true)]
+		public MXFVersion Version { get; set; }
 
 		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
 		public UInt32 KagSize { get; set; }
@@ -113,17 +118,18 @@ namespace Myriadbits.MXF
 			// Make sure we read at the data position
 			reader.Seek(this.DataOffset);
 
-			reader.ReadD(); // Skip 4 bytes
+			//reader.ReadD(); // Skip 4 bytes
+			this.Version = reader.ReadVersion();
 
-			this.KagSize = reader.ReadD();
-			this.ThisPartition = reader.ReadL();
-			this.PreviousPartition = reader.ReadL();
-			this.FooterPartition = reader.ReadL();
-			this.HeaderByteCount = reader.ReadL();
-			this.IndexByteCount = reader.ReadL();
-			this.IndexSID = reader.ReadD();
-			this.BodyOffset = reader.ReadL();
-			this.BodySID = reader.ReadD();
+			this.KagSize = reader.ReadUInt32();
+			this.ThisPartition = reader.ReadUInt64();
+			this.PreviousPartition = reader.ReadUInt64();
+			this.FooterPartition = reader.ReadUInt64();
+			this.HeaderByteCount = reader.ReadUInt64();
+			this.IndexByteCount = reader.ReadUInt64();
+			this.IndexSID = reader.ReadUInt32();
+			this.BodyOffset = reader.ReadUInt64();
+			this.BodySID = reader.ReadUInt32();
 
 			this.OP = new MXFKey(reader, 16);
 

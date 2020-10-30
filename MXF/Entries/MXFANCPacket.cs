@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,6 +19,7 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -116,10 +118,10 @@ namespace Myriadbits.MXF
 		public MXFANCPacket(MXFReader reader)
 			: base(reader)
 		{
-			this.LineNumber = reader.ReadW();
-			this.WrappingType = (MXFANCWrappingType) reader.ReadB();
-			this.PayloadSamplingCoding = (MXFANCPayloadCoding) reader.ReadB();
-			this.PayloadSampleCount = reader.ReadW();
+			this.LineNumber = reader.ReadUInt16();
+			this.WrappingType = (MXFANCWrappingType) reader.ReadByte();
+			this.PayloadSamplingCoding = (MXFANCPayloadCoding) reader.ReadByte();
+			this.PayloadSampleCount = reader.ReadUInt16();
 
 			this.Length = this.PayloadSampleCount;
 			if (this.PayloadSamplingCoding == MXFANCPayloadCoding.Coding_10_bit_luma_samples ||
@@ -130,8 +132,8 @@ namespace Myriadbits.MXF
 			}
 
 			// Skip 8 bytes (seems to be data but cannot find any meaning in the spec!)
-			UInt32 unknownData1 = reader.ReadD();
-			UInt32 unknownData2 = reader.ReadD();
+			UInt32 unknownData1 = reader.ReadUInt32();
+			UInt32 unknownData2 = reader.ReadUInt32();
 
 			// Length Alignment
 			this.Length = 4 * ((this.Length + 3) / 4);
@@ -139,9 +141,9 @@ namespace Myriadbits.MXF
 			if (this.Length > 3)
 			{
 				// Read the DID
-				this.DID = reader.ReadB();
-				this.SDID = reader.ReadB();
-				this.Size = reader.ReadB();
+				this.DID = reader.ReadByte();
+				this.SDID = reader.ReadByte();
+				this.Size = reader.ReadByte();
 
 				UInt16 combinedID = (UInt16)((((UInt16)this.DID) << 8) | this.SDID);
 				if (m_DIDDescription.ContainsKey(combinedID))
