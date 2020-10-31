@@ -26,34 +26,6 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-
-
-    [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class BER
-    {
-        public BERForm Form { get; set; }
-        public int NumOfOctets { get; set; }
-        public long Size { get; set; }
-        
-        public BER(int octets, long size)
-        {
-            NumOfOctets = octets;
-            Size = size;
-            Form = (NumOfOctets > 0) ? BERForm.LongForm : BERForm.ShortForm;
-        }
-
-        public override string ToString()
-        {
-            return (NumOfOctets > 0) ? $"{Form}, 1 + {NumOfOctets} Octets" : $"{Form}";
-        }
-    }
-
-    public enum BERForm
-    {
-        ShortForm,
-        LongForm,
-    }
-
     public class MXFKLV : MXFObject
     {
         private static MXFKey s_MxfKlvKey = new MXFKey(0x06, 0x0e, 0x2b, 0x34);
@@ -68,7 +40,7 @@ namespace Myriadbits.MXF
         public MXFPartition Partition { get; set; }
 
         [CategoryAttribute("KLV"), ReadOnly(true)]
-        public BER BER { get; set; }
+        public MXFBER BER { get; set; }
 
         /// <summary>
         /// Create the KLV key
@@ -132,7 +104,7 @@ namespace Myriadbits.MXF
         /// Decode the length
         /// </summary>
         /// <param name="reader"></param>
-        private BER DecodeBerLength(MXFReader reader)
+        private MXFBER DecodeBerLength(MXFReader reader)
         {
             long size = reader.ReadByte();
             int numOfOctets = (int)size - 0x80;
@@ -151,7 +123,7 @@ namespace Myriadbits.MXF
                     size = size << 8 | reader.ReadByte();
                 }
             }
-            return new BER(numOfOctets, size);
+            return new MXFBER(numOfOctets, size);
         }
 
         /// <summary>
