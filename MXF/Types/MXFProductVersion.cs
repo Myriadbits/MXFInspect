@@ -27,23 +27,39 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
 	//namespace: http://www.smpte-ra.org/reg/2003/2012 	
+	//urn:smpte:ul:060e2b34.01040101.02010101.00000000
+
+	public enum MXFProductReleaseType
+	{
+		VersionUnknown = 0x00,
+		VersionReleased = 0x01,
+		VersionDebug = 0x02,
+		VersionPatched = 0x03,
+		VersionBeta = 0x04,
+		VersionPrivateBuild = 0x05,
+	}
+
+	//namespace: http://www.smpte-ra.org/reg/2003/2012 	
 	//urn:smpte:ul:060e2b34.01040101.03010200.00000000
 	[TypeConverter(typeof(ExpandableObjectConverter))]
-	public class MXFProductVersion : MXFVersion
+	public class MXFProductVersion 
 	{
+		[CategoryAttribute("Version"), ReadOnly(true)]
+		public UInt16 Major { get; set; }
+		[CategoryAttribute("Version"), ReadOnly(true)]
+		public UInt16 Minor { get; set; }
+		[CategoryAttribute("Version"), ReadOnly(true)]
+		public UInt16 Tertiary { get; set; }
 
 		[CategoryAttribute("Version"), ReadOnly(true)]
 		public UInt16 Patch { get; set; }
 
 		[CategoryAttribute("Version"), ReadOnly(true)]
-		public UInt16 Build { get; set; }
-
-		[CategoryAttribute("Version"), ReadOnly(true)]
-		public UInt16 Release { get; set; }
+		public MXFProductReleaseType Build { get; set; }
 
 		public override string ToString()
 		{
-			return string.Format("{0}.{1}.{2}.{3}.{4}", this.Major, this.Minor, this.Patch, this.Build, this.Release);
+			return string.Format("{0}.{1}.{2}.{3} - {4}", this.Major, this.Minor, this.Tertiary, this.Patch, this.Build);
 		}
 	}
 }

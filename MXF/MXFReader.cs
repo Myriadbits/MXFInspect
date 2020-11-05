@@ -293,14 +293,15 @@ namespace Myriadbits.MXF
         /// </summary>
         public MXFProductVersion ReadProductVersion()
         {
-            UInt16[] version = ReadUint16Array(5);
+            UInt16[] version = ReadUint16Array(4);
+            MXFProductReleaseType build = (MXFProductReleaseType)this.ReadUInt16();
             return new MXFProductVersion
             {
                 Major = version[0],
                 Minor = version[1],
-                Patch = version[2],
-                Build = version[3],
-                Release = version[4]
+                Tertiary = version[2],
+                Patch = version[3],
+                Build = build,
             };
         }
 
