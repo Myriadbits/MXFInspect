@@ -310,12 +310,9 @@ namespace Myriadbits.MXF
         /// </summary>
         public MXFVersion ReadVersion()
         {
-            UInt16[] version = ReadUint16Array(2);
-            return new MXFVersion
-            {
-                Major = version[0],
-                Minor = version[1],
-            };
+            var major = this.ReadByte();
+            var minor = this.ReadByte();
+            return new MXFVersion(major, minor);
         }
 
         /// <summary>

@@ -35,12 +35,6 @@ namespace Myriadbits.MXF
         [CategoryAttribute("Version"), ReadOnly(true)]
         public UInt16 Minor { get; set; }
 
-
-        public MXFVersion()
-        {
-
-        }
-
         public MXFVersion(UInt16 major, UInt16 minor)
         {
             Major = major;

@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("Preface"), Description("3B03")]
         public MXFRefKey ContentStorageUID { get; set; }
         [CategoryAttribute("Preface"), Description("3B05")]
-        public UInt16? Version { get; set; }
+        public MXFVersion Version { get; set; }
         [CategoryAttribute("Preface"), Description("3B07")]
         public UInt32? ObjectModelVersion { get; set; }
         [CategoryAttribute("Preface"), Description("3B08")]
@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
             switch (localTag.Tag)
             {
                 case 0x3B02: this.LastModificationDate = reader.ReadTimestamp(); return true;
-                case 0x3B05: this.Version = reader.ReadUInt16(); return true;
+                case 0x3B05: this.Version = reader.ReadVersion(); return true;
                 case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
                 case 0x3B03: this.ContentStorageUID = new MXFRefKey(reader, 16, "ContentStorageUID"); return true;
                 case 0x3B08: this.PrimaryPackageUID = new MXFRefKey(reader, 16, "PrimaryPackageUID"); return true;
