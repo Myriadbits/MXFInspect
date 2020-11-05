@@ -78,10 +78,10 @@ namespace Myriadbits.MXF
 				}
 				else
 				{
-					if (tag.Tag > 0x7FFF)
-                    {
-                        //AddRefKeyFromPrimerPack(tag);
-                    }
+					//if (tag.Tag > 0x7FFF)
+     //               {
+     //                   //AddRefKeyFromPrimerPack(tag);
+     //               }
 
                     // Allow derived classes to handle the data
                     if (!ParseLocalTag(reader, tag))

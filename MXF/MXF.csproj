@@ -40,8 +40,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Metadata\InterchangeObjects\DescriptiveFrameworks\" />
-  </ItemGroup>
-
 </Project>
