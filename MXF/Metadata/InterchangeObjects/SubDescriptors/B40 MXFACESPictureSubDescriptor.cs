@@ -21,17 +21,12 @@
 //
 #endregion
 
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
-	public class MXFMaterialPackage : MXFGenericPackage
+	public class ACESPictureSubDescriptor : MXFInterchangeObject
 	{
-		[CategoryAttribute("MaterialPackage")]
-		public MXFRefKey PackageMarker { get; set; }
-
-		public MXFMaterialPackage(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Material Package")
+		public ACESPictureSubDescriptor(MXFReader reader, MXFKLV headerKLV)
+			: base(reader, headerKLV, "ACESPictureSubDescriptor")
 		{
 		}
 

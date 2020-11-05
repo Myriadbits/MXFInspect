@@ -21,17 +21,12 @@
 //
 #endregion
 
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
-	public class MXFSourcePackage : MXFGenericPackage
+	public class TargetFrameSubDescriptor : MXFInterchangeObject
 	{
-		[CategoryAttribute("SourcePackage"), Description("4701")]
-		public MXFRefKey Descriptor { get; set; }
-
-		public MXFSourcePackage(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Source Package")
+		public TargetFrameSubDescriptor(MXFReader reader, MXFKLV headerKLV)
+			: base(reader, headerKLV, "TargetFrameSubDescriptor")
 		{
 		}
 
@@ -43,7 +38,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4701: this.Descriptor = reader.ReadRefKey(); return true;
+				//case 0x2F01: ReadKeyList(reader, "Locators", "Locator"); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}
