@@ -27,8 +27,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFTextLocator : MXFInterchangeObject
 	{
-		[CategoryAttribute("TexLocator"), Description("4001")]
-		public string LocatorName { get; set; }
+		[CategoryAttribute("TexLocator"), Description("4101")]
+		public string LocationName { get; set; }
 
 		public MXFTextLocator(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Text Locator")
@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4001: LocatorName = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x4101: LocationName = reader.ReadUTF16String(localTag.Size); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

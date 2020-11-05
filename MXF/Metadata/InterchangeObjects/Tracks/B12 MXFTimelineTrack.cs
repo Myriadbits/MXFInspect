@@ -31,7 +31,17 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("TimelineTrack"), Description("4B01")]
 		public MXFRational EditRate { get; set; }
 		[CategoryAttribute("TimelineTrack"), Description("4B02")]
-		public UInt64? Origin { get; set; }
+		public UInt64 Origin { get; set; }
+		[CategoryAttribute("TimelineTrack"), Description("4B02")]
+		public UInt64? MarkIn { get; set; }
+		[CategoryAttribute("TimelineTrack"), Description("4B03")]
+		public UInt64? UserPosition { get; set; }
+		[CategoryAttribute("TimelineTrack"), Description("4B05")]
+		public UInt64? PackageMarkInPosition { get; set; }
+		[CategoryAttribute("TimelineTrack"), Description("4B06")]
+		public UInt64? MarkOut { get; set; }
+		[CategoryAttribute("TimelineTrack"), Description("4B07")]
+		public UInt64? PackageMarkOutPosition { get; set; }
 
 		public MXFTimelineTrack(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Timeline Track")
@@ -53,6 +63,11 @@ namespace Myriadbits.MXF
 			{
 				case 0x4B01: this.EditRate = reader.ReadRational(); return true;
 				case 0x4B02: this.Origin = reader.ReadUInt64(); return true;
+				case 0x4B03: this.MarkIn = reader.ReadUInt64(); return true;
+				case 0x4B05: this.UserPosition = reader.ReadUInt64(); return true;
+				case 0x4B06: this.PackageMarkInPosition = reader.ReadUInt64(); return true;
+				case 0x4B04: this.MarkOut = reader.ReadUInt64(); return true;
+				case 0x4B07: this.PackageMarkOutPosition = reader.ReadUInt64(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}
