@@ -33,20 +33,15 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D0F")]
 		public UInt16? BlockStartOffset { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D08")]
-		public byte? AuxiliaryBitsMode { get; set; }
+		public MXFAuxBitsMode? AuxiliaryBitsMode { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D10")]
-		public byte[] ChannelStatusMode { get; set; }
+		public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D11")]
 		public byte[] FixedChannelStatusData { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D12")]
-		public byte[] UserDataMode { get; set; }
+		public MXFUserDataMode[] UserDataMode { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D13")]
-		public byte[] FixedUserData { get; set; }
-		//[CategoryAttribute("AES3AudioEssenceDescriptor"), ReadOnly(true)]
-		//public UInt32? LinkedTimecodeTrackID { get; set; }
-		//[CategoryAttribute("AES3AudioEssenceDescriptor"), ReadOnly(true)]
-		//public byte? DataStreamNumber { get; set; }
-		
+		public byte[] FixedUserData { get; set; }		
 		
 		/// <summary>
 		/// Constructor, set the correct descriptor name
@@ -69,19 +64,14 @@ namespace Myriadbits.MXF
 			{
 				case 0x3D0D: this.Emphasis = (MXFEmphasis)reader.ReadByte(); return true;
 				case 0x3D0F: this.BlockStartOffset = reader.ReadUInt16(); return true;
-				case 0x3D08: this.AuxiliaryBitsMode = reader.ReadByte(); return true;
-				case 0x3D10: 
-						this.ChannelStatusMode = new byte[localTag.Size];
-						reader.Read(this.ChannelStatusMode, localTag.Size);
-						return true;
-				case 0x3D11:
+				case 0x3D08: this.AuxiliaryBitsMode = (MXFAuxBitsMode)reader.ReadByte(); return true;
+                case 0x3D10: this.ChannelStatusMode = reader.ReadChannelstatusMode(); return true;
+                case 0x3D11:
 						this.FixedChannelStatusData = new byte[localTag.Size];
 						reader.Read(this.FixedChannelStatusData, localTag.Size);
 						return true;
 				case 0x3D12:
-						this.UserDataMode = new byte[localTag.Size];
-						reader.Read(this.UserDataMode, localTag.Size);
-						return true;
+					this.UserDataMode = reader.ReadUserDataMode(); return true;
 				case 0x3D13:
 						this.FixedUserData = new byte[localTag.Size];
 						reader.Read(this.FixedUserData, localTag.Size);
@@ -89,6 +79,5 @@ namespace Myriadbits.MXF
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}
-
-	}
+    }
 }

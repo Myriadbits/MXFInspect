@@ -435,6 +435,9 @@ namespace Myriadbits.MXF
             };
         }
 
+        /// <summary>
+        /// Reads a RGBA layout
+        /// </summary>
         public MXFRGBAComponent[] ReadRGBALayout()
         {
             const int size = 8;
@@ -446,8 +449,33 @@ namespace Myriadbits.MXF
             return components;
         }
 
+        /// <summary>
+        /// Reads a channel status mode
+        /// </summary>
+        public MXFChannelStatusMode[] ReadChannelstatusMode()
+        {
+            return new MXFChannelStatusMode[8] {
+                            (MXFChannelStatusMode) this.ReadByte(),
+                            (MXFChannelStatusMode) this.ReadByte(),
+                            (MXFChannelStatusMode) this.ReadByte(),
+                            (MXFChannelStatusMode) this.ReadByte(),
+                            (MXFChannelStatusMode) this.ReadByte(),
+                            (MXFChannelStatusMode) this.ReadByte(),
+                            (MXFChannelStatusMode) this.ReadByte(),
+                            (MXFChannelStatusMode) this.ReadByte()
+            };
+        }
 
-        #endregion
-    }
+        public MXFUserDataMode[] ReadUserDataMode()
+        {
+            var byte1 = (MXFUserDataMode)this.ReadByte();
+            var byte2 = (MXFUserDataMode)this.ReadByte();
+            return new MXFUserDataMode[2] {byte1 , byte2};
+        }
+
+
+
+    #endregion
+}
 
 }
