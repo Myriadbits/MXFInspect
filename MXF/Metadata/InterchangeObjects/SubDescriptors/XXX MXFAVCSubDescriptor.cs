@@ -46,35 +46,35 @@ namespace Myriadbits.MXF
 
 
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public bool AVCConstantBPictureFlag { get; set; }
+        public bool? AVCConstantBPictureFlag { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public MXFAVCContentScanning AVCCodedContentKind { get; set; }
+        public MXFAVCContentScanning? AVCCodedContentKind { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public bool AVCClosedGOPIndicator { get; set; }
+        public bool? AVCClosedGOPIndicator { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public bool AVCIdenticalGOPIndicator { get; set; }
+        public bool? AVCIdenticalGOPIndicator { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public UInt16 AVCMaximumGOPSize { get; set; }
+        public UInt16? AVCMaximumGOPSize { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public UInt16 AVCMaximumBPictureCount { get; set; }
+        public UInt16? AVCMaximumBPictureCount { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public byte AVCProfile { get; set; }
+        public byte? AVCProfile { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public UInt32 AVCMaximumBitRate { get; set; }
+        public UInt32? AVCMaximumBitRate { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public byte AVCProfileConstraint { get; set; }
+        public byte? AVCProfileConstraint { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public byte AVCLevel { get; set; }
+        public byte? AVCLevel { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public byte AVCDecodingDelay { get; set; }
+        public byte? AVCDecodingDelay { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public byte AVCMaximumRefFrames { get; set; }
+        public byte? AVCMaximumRefFrames { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public byte AVCSequenceParameterSetFlag { get; set; }
+        public byte? AVCSequenceParameterSetFlag { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public byte AVCPictureParameterSetFlag { get; set; }
+        public byte? AVCPictureParameterSetFlag { get; set; }
         [CategoryAttribute("AVCSubDescriptor"), Description("")]
-        public UInt32 AVCAverageBitRate { get; set; }
+        public UInt32? AVCAverageBitRate { get; set; }
 
 
         public MXFAVCSubDescriptor(MXFReader reader, MXFKLV headerKLV)

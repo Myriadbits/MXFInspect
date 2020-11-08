@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
         public bool? LowDelayIndicator { get; set; }
 
         [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
-        public UInt32 BitRate { get; set; }
+        public UInt32? BitRate { get; set; }
 
         [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
         public bool? IdenticalGOPIndicator { get; set; }
@@ -60,16 +60,16 @@ namespace Myriadbits.MXF
         public bool? ClosedGOPIndicator { get; set; }
 
         [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
-        public UInt16 MaximumGOPSize { get; set; }
+        public UInt16? MaximumGOPSize { get; set; }
 
         [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
-        public UInt16 MaximumBPictureCount { get; set; }
+        public UInt16? MaximumBPictureCount { get; set; }
 
         [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
-        public byte ProfileAndLevel { get; set; }
+        public byte? ProfileAndLevel { get; set; }
 
         [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
-        public MXFCodedContentScanning CodedContentScanningKind { get; set; }
+        public MXFCodedContentScanning? CodedContentScanningKind { get; set; }
 
 
         /// <summary>

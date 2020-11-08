@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("TimelineTrack"), Description("4B01")]
 		public MXFRational EditRate { get; set; }
 		[CategoryAttribute("TimelineTrack"), Description("4B02")]
-		public UInt64 Origin { get; set; }
+		public UInt64? Origin { get; set; }
 		[CategoryAttribute("TimelineTrack"), Description("4B02")]
 		public UInt64? MarkIn { get; set; }
 		[CategoryAttribute("TimelineTrack"), Description("4B03")]
