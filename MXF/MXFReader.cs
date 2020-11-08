@@ -390,5 +390,17 @@ namespace Myriadbits.MXF
 
             return timeStamp;
         }
+
+
+        /// <summary>
+        /// Reads a color primary
+        /// </summary>
+        public MXFColorPrimary ReadColorPrimary()
+        {
+            MXFColorPrimary colorPrimary = new MXFColorPrimary();
+            colorPrimary.XColorCoordinate = this.ReadUInt16();
+            colorPrimary.YColorCoordinate = this.ReadUInt16();
+            return colorPrimary;
+        }
     }
 }

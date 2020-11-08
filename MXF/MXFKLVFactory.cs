@@ -126,8 +126,9 @@ namespace Myriadbits.MXF
 			#endregion
 
 			#region Sub-Descriptors
-			
+
 			// ACESPictureSubDescriptor SMPTE ST 2067-50
+			// urn:smpte:ul:060e2b34.027f0101.0d010101.01017900
 			m_allKeys.Add(new MXFKey(typeof(ACESPictureSubDescriptor),					0x06, 0x0e, 0x2b, 0x34, 0x02, 0x53, 0x01, 0x01, 0x0d, 0x01, 0x01, 0x01, 0x01, 0x01, 0x79, 0x00));
 
 			// TargetFrameSubDescriptor SMPTE ST 2067-50

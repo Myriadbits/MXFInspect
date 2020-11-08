@@ -21,23 +21,63 @@
 //
 #endregion
 
+using System;
+using System.ComponentModel;
+
 namespace Myriadbits.MXF
 {
-	public class ACESPictureSubDescriptor : MXFInterchangeObject
-	{
-		public ACESPictureSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "ACESPictureSubDescriptor")
-		{
-		}
+    public class ACESPictureSubDescriptor : MXFInterchangeObject
+    {
+        private readonly MXFKey aCESAuthoringInformation_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x01, 0x00, 0x00, 0x00);
+        private readonly MXFKey aCESMasteringDisplayPrimaries_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x02, 0x00, 0x00, 0x00);
+        private readonly MXFKey aCESMasteringDisplayWhitePointChromaticity_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x03, 0x00, 0x00, 0x00);
+        private readonly MXFKey aCESMasteringDisplayMaximumLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x04, 0x00, 0x00, 0x00);
+        private readonly MXFKey aCESMasteringDisplayMinimumLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x05, 0x00, 0x00, 0x00);
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			return base.ParseLocalTag(reader, localTag); 
-		}
+        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+        public string ACESAuthoringInformation { get; set; }
+        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+        public MXFColorPrimary[] ACESMasteringDisplayPrimaries { get; set; }
+        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+        public MXFColorPrimary ACESMasteringDisplayWhitePointChromaticity { get; set; }
+        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+        public UInt32? ACESMasteringDisplayMaximumLuminance { get; set; }
+        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+        public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
-	}
+        public ACESPictureSubDescriptor(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "ACESPictureSubDescriptor")
+        {
+        }
+
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            if (localTag.Key != null)
+            {
+                switch (localTag.Key)
+                {
+                    case var a when localTag.Key == aCESAuthoringInformation_Key: this.ACESAuthoringInformation = reader.ReadUTF16String(localTag.Size); return true;
+                    case var a when localTag.Key == aCESMasteringDisplayPrimaries_Key:
+                        {
+                            this.ACESMasteringDisplayPrimaries = new MXFColorPrimary[3]
+                            {
+                                reader.ReadColorPrimary(),
+                                reader.ReadColorPrimary(),
+                                reader.ReadColorPrimary()
+                            };
+                            return true;
+                        };
+                    case var a when localTag.Key == aCESMasteringDisplayWhitePointChromaticity_Key: this.ACESMasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
+                    case var a when localTag.Key == aCESMasteringDisplayMaximumLuminance_Key: this.ACESMasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
+                    case var a when localTag.Key == aCESMasteringDisplayMinimumLuminance_Key: this.ACESMasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
+                }
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
+
+    }
 }
