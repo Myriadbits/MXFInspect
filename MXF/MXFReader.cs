@@ -143,6 +143,8 @@ namespace Myriadbits.MXF
             Close();
         }
 
+
+        #region basic types
         /// <summary>
         /// Reads a single byte
         /// </summary>
@@ -288,6 +290,10 @@ namespace Myriadbits.MXF
             return version;
         }
 
+        #endregion
+
+        #region reference types
+
         /// <summary>
         /// Reads a MXF long version in a partition
         /// </summary>
@@ -402,5 +408,46 @@ namespace Myriadbits.MXF
             colorPrimary.YColorCoordinate = this.ReadUInt16();
             return colorPrimary;
         }
+
+        /// <summary>
+        /// Reads three color primaries
+        /// </summary>
+        public MXFColorPrimary[] ReadThreeColorPrimaries()
+        {
+            var primary1 = this.ReadColorPrimary();
+            var primary2 = this.ReadColorPrimary();
+            var primary3 = this.ReadColorPrimary();
+            return new MXFColorPrimary[3] { primary1, primary2, primary3 };
+        }
+
+
+        /// <summary>
+        /// Reads a RGBA component
+        /// </summary>
+        public MXFRGBAComponent ReadRGBAComponent()
+        {
+            var code = (MXFRGBAComponentKind) this.ReadByte();
+            var componentSize = this.ReadByte();
+            return new MXFRGBAComponent
+            {
+                Code = code,
+                ComponentSize = componentSize
+            };
+        }
+
+        public MXFRGBAComponent[] ReadRGBALayout()
+        {
+            const int size = 8;
+            MXFRGBAComponent[] components = new MXFRGBAComponent[size];
+            for (int i = 0; i < size; i++)
+            {
+                components[i] = this.ReadRGBAComponent();
+            }
+            return components;
+        }
+
+
+        #endregion
     }
+
 }

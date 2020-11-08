@@ -71,7 +71,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
         public byte[] QuantizationDefault { get; set; }
         [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
-        public byte[] J2CLayout { get; set; }
+        public MXFRGBAComponent[] J2CLayout { get; set; }
 
 
         public JPEG2000SubDescriptor(MXFReader reader, MXFKLV headerKLV)
@@ -112,8 +112,8 @@ namespace Myriadbits.MXF
                         reader.Read(this.QuantizationDefault, localTag.Size);
                         return true;
                     case var a when localTag.Key == j2CLayout:
-                        this.J2CLayout = new byte[localTag.Size];
-                        reader.Read(this.J2CLayout, localTag.Size);
+                        var size = localTag.Size;
+                        this.J2CLayout = reader.ReadRGBALayout();
                         return true;
                 }
             }
