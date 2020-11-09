@@ -45,6 +45,8 @@ namespace Myriadbits.MXF
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D06")]
         public MXFKey SoundEssenceCoding { get; set; }
 
+        // TODO ReferenceImageEditRate
+        // TODO ReferenceAudioAlignmentLevel
 
         /// <summary>
         /// Constructor, set the correct descriptor name
