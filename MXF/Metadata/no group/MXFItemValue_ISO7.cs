@@ -21,33 +21,29 @@
 //
 #endregion
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFCDPFuture : MXFObject
+	public class MXFItemValue_ISO7 : MXFKLV
 	{
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
-		public byte? SectionID { get; set; }
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
-		public byte[] Data { get; set; }
+		[CategoryAttribute("Item Value ISO7"), ReadOnly(true)]
+		public string ItemValue_ISO7 { get; set; }
 
+        public MXFItemValue_ISO7(MXFReader reader, MXFKLV headerKLV)
+            : base(headerKLV, "Item Value ISO7", KeyType.MetaData)
+        {
+            this.m_eType = MXFObjectType.Meta;
+            Initialize(reader);
+        }
 
-		public MXFCDPFuture(MXFReader reader, byte sectionID)
-			: base(reader)
-		{
-			this.SectionID = sectionID;
-			this.Length = reader.ReadByte();
-			this.Data = reader.ReadArray(reader.ReadByte, (int)this.Length);
-		}
-
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return string.Format("CDP FutureExtension, SectionID {0}", this.SectionID);
-		}
-	}
+        private void Initialize(MXFReader reader)
+        {
+            // Make sure we read at the data position
+            reader.Seek(this.DataOffset);
+            ItemValue_ISO7 = reader.ReadUTF8String((int)this.Length);
+        }
+    }
 }

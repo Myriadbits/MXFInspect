@@ -141,13 +141,25 @@ namespace Myriadbits.MXF
 		/// Read a list of keys
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="categoryName"></param>
+		/// <param name="groupName"></param>
 		/// <returns></returns>
-		protected UInt32 ReadKeyList(MXFReader reader, string categoryName, string singleItem)
+		protected UInt32 ReadKeyList(MXFReader reader, string groupName, string singleItemName)
 		{
-			MXFObject keylist = reader.ReadKeyList(categoryName, singleItem);
+			MXFObject keylist = reader.ReadKeyList(groupName, singleItemName);
 			this.AddChild(keylist);
 			return (UInt32) keylist.ChildCount;
+		}
+
+		/// <summary>
+		/// Read a strong reference
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <param name="categoryName"></param>
+		/// <returns></returns>
+		protected void ReadStrongReference(MXFReader reader, string singleItemName)
+		{
+			MXFRefKey uuid = new MXFRefKey(reader, 16, singleItemName);
+			this.AddChild(uuid);
 		}
 
 

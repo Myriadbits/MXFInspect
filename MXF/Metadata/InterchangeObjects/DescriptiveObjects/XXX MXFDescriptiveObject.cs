@@ -25,16 +25,15 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	//namespace: http://www.smpte-ra.org/reg/395/2014/13/1/aaf 	
-	//urn:smpte:ul:060e2b34.027f0101.0d010400.00000000
 	public class MXFDescriptiveObject : MXFInterchangeObject
 	{
-		//TODO: what type is it?
-		[CategoryAttribute("DescriptiveObject"), Description("")]
-		public object LinkedDescriptiveObjectPluginID { get; set; }
+		public readonly MXFKey linkedObjPluginID_Key = new MXFKey(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x0c,0x05,0x20,0x07,0x01,0x11,0x00,0x00,0x00);
+
+		[CategoryAttribute("Descriptive Object"), Description("")]
+		public MXFRefKey LinkedDescriptiveObjectPluginID { get; set; }
 
 		public MXFDescriptiveObject(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "DescriptiveObject")
+			: base(reader, headerKLV, "Descriptive Object")
 		{
 		}
 
@@ -44,6 +43,14 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
 		{
+			if (localTag.Key != null)
+			{
+				switch (localTag.Key)
+				{
+					case var a when localTag.Key == linkedObjPluginID_Key: this.LinkedDescriptiveObjectPluginID = reader.ReadRefKey(); return true;
+				}
+			}
+
 			return base.ParseLocalTag(reader, localTag);
 		}
 

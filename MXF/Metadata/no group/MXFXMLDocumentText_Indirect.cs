@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Myriadbits.MXF.Metadata
 {
-    public class MXFXMLDocumentText_Indirect :  MXFKLV
+    public class MXFXMLDocumentText_Indirect : MXFKLV
     {
         [CategoryAttribute("XML Document Text (Indirect)"), ReadOnly(true)]
         public string Text { get; set; }
@@ -45,7 +45,6 @@ namespace Myriadbits.MXF.Metadata
         {
             // Make sure we read at the data position
             reader.Seek(this.DataOffset);
-
             Text = reader.ReadUTF8String((int)this.Length);
         }
     }

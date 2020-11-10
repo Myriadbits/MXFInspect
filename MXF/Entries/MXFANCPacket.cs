@@ -162,8 +162,7 @@ namespace Myriadbits.MXF
 						break;
 					default:
 						// Read the real payload without the did/sdid/size
-						this.Payload = new byte[this.Length - 3];
-						reader.Read(this.Payload, this.Length - 3);
+						this.Payload = reader.ReadArray(reader.ReadByte, (int)(this.Length - 3));
 						break;
 				}
 			}

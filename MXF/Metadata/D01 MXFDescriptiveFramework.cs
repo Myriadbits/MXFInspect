@@ -26,11 +26,11 @@ using System.Collections.Generic;
 
 namespace Myriadbits.MXF
 {
-	public class MXFDescriptiveFramework : MXFGenericPackage
+	public class _MXFDescriptiveFramework : MXFGenericPackage
 	{
 		protected static Dictionary<UInt16, string> m_FWNames = new Dictionary<UInt16, string>();
 
-		static MXFDescriptiveFramework()
+		static _MXFDescriptiveFramework()
 		{
 			m_FWNames.Add(0x0101, "Production Framework");
 			m_FWNames.Add(0x0102, "Clip Framework");
@@ -72,7 +72,7 @@ namespace Myriadbits.MXF
 			m_FWNames.Add(0x7F1A, "Contact");
 		}
 
-		public MXFDescriptiveFramework(MXFReader reader, MXFKLV headerKLV)
+		public _MXFDescriptiveFramework(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "DM Framework: <unknown>")
 		{
 			UInt16 setKey = (UInt16)( ( ((UInt16) headerKLV.Key[13]) << 8) + ((UInt16) headerKLV.Key[14]) );
@@ -80,7 +80,7 @@ namespace Myriadbits.MXF
 				this.MetaDataName = string.Format("DM Framework: {0}", m_FWNames[setKey]);
 		}
 
-		public MXFDescriptiveFramework(MXFReader reader, MXFKLV headerKLV, string metadataName)
+		public _MXFDescriptiveFramework(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, metadataName)
 		{
 		}

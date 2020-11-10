@@ -63,6 +63,9 @@ namespace Myriadbits.MXF
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320D")]
         public Int32[] VideoLineMap { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320F")]
+
+        // TODO: see AlphaTransparencyType http://www.smpte-ra.org/reg/2003/2012 
+        // urn:smpte:ul:060e2b34.01040101.02010120.00000000
         public byte? AlphaTransparency { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3210")]
         public MXFKey TransferCharacteristics { get; set; }
@@ -113,25 +116,19 @@ namespace Myriadbits.MXF
                 case 0x320C: this.FrameLayout = (MXFFrameLayout)reader.ReadByte(); return true;
                 case 0x3203: this.StoredWidth = reader.ReadUInt32(); return true;
                 case 0x3202: this.StoredHeight = reader.ReadUInt32(); return true;
-                case 0x3216: this.StoredF2Offset = (Int32)reader.ReadUInt32(); return true;
+                case 0x3216: this.StoredF2Offset = reader.ReadInt32(); return true;
                 case 0x3205: this.SampledWidth = reader.ReadUInt32(); return true;
                 case 0x3204: this.SampledHeight = reader.ReadUInt32(); return true;
-                case 0x3206: this.SampledXOffset = (Int32)reader.ReadUInt32(); return true;
-                case 0x3207: this.SampledYOffset = (Int32)reader.ReadUInt32(); return true;
+                case 0x3206: this.SampledXOffset = reader.ReadInt32(); return true;
+                case 0x3207: this.SampledYOffset = reader.ReadInt32(); return true;
                 case 0x3208: this.DisplayHeight = reader.ReadUInt32(); return true;
                 case 0x3209: this.DisplayWidth = reader.ReadUInt32(); return true;
-                case 0x320A: this.DisplayXOffset = (Int32)reader.ReadUInt32(); return true;
-                case 0x320B: this.DisplayYOffset = (Int32)reader.ReadUInt32(); return true;
-                case 0x3217: this.DisplayF2Offset = (Int32)reader.ReadUInt32(); return true;
+                case 0x320A: this.DisplayXOffset = reader.ReadInt32(); return true;
+                case 0x320B: this.DisplayYOffset = reader.ReadInt32(); return true;
+                case 0x3217: this.DisplayF2Offset = reader.ReadInt32(); return true;
                 case 0x320E: this.AspectRatio = reader.ReadRational(); return true;
                 case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
-                case 0x320D:
-                    this.VideoLineMap = new Int32[4];
-                    this.VideoLineMap[0] = (Int32)reader.ReadUInt32();
-                    this.VideoLineMap[1] = (Int32)reader.ReadUInt32();
-                    this.VideoLineMap[2] = (Int32)reader.ReadUInt32();
-                    this.VideoLineMap[3] = (Int32)reader.ReadUInt32();
-                    return true;
+                case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
                 case 0x320F: this.AlphaTransparency = reader.ReadByte(); return true;
                 case 0x3210: this.TransferCharacteristics = reader.ReadKey(); return true;
                 case 0x3211: this.ImageAlignmentOffset = reader.ReadUInt32(); return true;

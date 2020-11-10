@@ -45,8 +45,7 @@ namespace Myriadbits.MXF
 			else
 				this.CaptionServiceNumber = (byte)(b0 & 0x3F);
 
-			this.Data = new byte[6];
-			reader.Read(this.Data, 6);
+			this.Data = reader.ReadArray(reader.ReadByte, 6);
 
 			this.DataString = System.Text.Encoding.ASCII.GetString(this.Data);
 		}

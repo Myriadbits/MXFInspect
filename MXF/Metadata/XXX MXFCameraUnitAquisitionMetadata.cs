@@ -114,7 +114,7 @@ namespace Myriadbits.MXF
                 case 0x810b: this.ISOSensitivity = reader.ReadUInt16(); return true;
                 case 0x810c: this.ElectricalExtenderMagnification = reader.ReadUInt16(); return true;
                 case 0x8115: this.ExposureIndexOfPhotoMeter = reader.ReadUInt16(); return true;
-                case 0x8118: this.ColorMatrix = GetRationals(reader, localTag.Size); return true;
+                case 0x8118: this.ColorMatrix = reader.ReadArray(reader.ReadRational, localTag.Size); return true;
                 case 0x810d: this.AutoWhiteBalanceMode = (MXFAutoWhiteBalanceMode)reader.ReadByte(); return true;
                 case 0x810e: this.WhiteBalance = reader.ReadUInt16(); return true;
                 case 0x810f: this.CameraMasterBlackLevel = (short) reader.ReadUInt16(); return true;
@@ -126,16 +126,6 @@ namespace Myriadbits.MXF
 
 
             return base.ParseLocalTag(reader, localTag);
-        }
-
-        private MXFRational[] GetRationals(MXFReader reader, int count)
-        {
-            MXFRational[] array = new MXFRational[count];
-            for (int i = 0; i < count; i++)
-            {
-                array[i] = reader.ReadRational();
-            }
-            return array;
         }
     }
 }

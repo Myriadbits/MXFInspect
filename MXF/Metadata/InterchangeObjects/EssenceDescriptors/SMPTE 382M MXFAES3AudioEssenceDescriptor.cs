@@ -65,16 +65,14 @@ namespace Myriadbits.MXF
 				case 0x3D0D: this.Emphasis = (MXFEmphasis)reader.ReadByte(); return true;
 				case 0x3D0F: this.BlockStartOffset = reader.ReadUInt16(); return true;
 				case 0x3D08: this.AuxiliaryBitsMode = (MXFAuxBitsMode)reader.ReadByte(); return true;
-                case 0x3D10: this.ChannelStatusMode = reader.ReadChannelstatusMode(); return true;
+                case 0x3D10: this.ChannelStatusMode = reader.ReadArray(reader.ReadChannelstatusMode, 8); return true;
                 case 0x3D11:
-						this.FixedChannelStatusData = new byte[localTag.Size];
-						reader.Read(this.FixedChannelStatusData, localTag.Size);
+						this.FixedChannelStatusData = reader.ReadArray(reader.ReadByte, localTag.Size);
 						return true;
 				case 0x3D12:
-					this.UserDataMode = reader.ReadUserDataMode(); return true;
+					this.UserDataMode = reader.ReadArray(reader.ReadUserDataMode, 2); return true;
 				case 0x3D13:
-						this.FixedUserData = new byte[localTag.Size];
-						reader.Read(this.FixedUserData, localTag.Size);
+						this.FixedUserData = reader.ReadArray(reader.ReadByte, localTag.Size);
 						return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

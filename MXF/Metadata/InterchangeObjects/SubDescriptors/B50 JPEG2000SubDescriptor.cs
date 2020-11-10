@@ -100,19 +100,15 @@ namespace Myriadbits.MXF
                     case var a when localTag.Key == yTOsiz: this.YTOsiz = reader.ReadUInt32(); return true;
                     case var a when localTag.Key == csiz: this.Csiz = reader.ReadUInt16(); return true;
                     case var a when localTag.Key == pictureComponentSizing:
-                        this.PictureComponentSizing = new byte[localTag.Size];
-                        reader.Read(this.PictureComponentSizing, localTag.Size);
+                        this.PictureComponentSizing = reader.ReadArray(reader.ReadByte, localTag.Size);
                         return true;
                     case var a when localTag.Key == codingStyleDefault:
-                        this.CodingStyleDefault = new byte[localTag.Size];
-                        reader.Read(this.CodingStyleDefault, localTag.Size);
+                        this.CodingStyleDefault = reader.ReadArray(reader.ReadByte, localTag.Size);
                         return true;
                     case var a when localTag.Key == quantizationDefault:
-                        this.QuantizationDefault = new byte[localTag.Size];
-                        reader.Read(this.QuantizationDefault, localTag.Size);
+                        this.QuantizationDefault = reader.ReadArray(reader.ReadByte, localTag.Size);
                         return true;
                     case var a when localTag.Key == j2CLayout:
-                        var size = localTag.Size;
                         this.J2CLayout = reader.ReadRGBALayout();
                         return true;
                 }

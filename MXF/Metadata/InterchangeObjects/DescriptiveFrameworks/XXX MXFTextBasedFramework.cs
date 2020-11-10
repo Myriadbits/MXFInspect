@@ -25,7 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFTextBasedFramework : MXFInterchangeObject
+	public class MXFTextBasedFramework : MXFDescriptiveFramework
 	{
 		public readonly MXFKey textBasedObject_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x06, 0x01, 0x01, 0x04, 0x05, 0x41, 0x01, 0x00);
 
@@ -33,8 +33,9 @@ namespace Myriadbits.MXF
 		public MXFRefKey TextBasedObject { get; set; }
 
 		public MXFTextBasedFramework(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "TextBased Framework")
+			: base(reader, headerKLV)
 		{
+			this.MetaDataName = "TextBasedFramework";
 		}
 
 		/// <summary>

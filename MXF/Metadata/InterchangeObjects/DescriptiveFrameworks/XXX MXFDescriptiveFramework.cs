@@ -25,29 +25,33 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFCDPFuture : MXFObject
+	public class MXFDescriptiveFramework : MXFInterchangeObject
 	{
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
-		public byte? SectionID { get; set; }
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
-		public byte[] Data { get; set; }
+		public readonly MXFKey linkedDMPluginID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x0c, 0x00, 0x00, 0x00);
 
+		[CategoryAttribute("DescriptiveFramework"), Description("")]
+		public MXFRefKey LinkedDescriptiveFrameworkPluginID { get; set; }
 
-		public MXFCDPFuture(MXFReader reader, byte sectionID)
-			: base(reader)
+		public MXFDescriptiveFramework(MXFReader reader, MXFKLV headerKLV)
+			: base(reader, headerKLV, "DescriptiveFramework")
 		{
-			this.SectionID = sectionID;
-			this.Length = reader.ReadByte();
-			this.Data = reader.ReadArray(reader.ReadByte, (int)this.Length);
 		}
 
 		/// <summary>
-		/// Some output
+		/// Overridden method to process local tags
 		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
+		/// <param name="localTag"></param>
+		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
 		{
-			return string.Format("CDP FutureExtension, SectionID {0}", this.SectionID);
+			if (localTag.Key != null)
+			{
+				switch (localTag.Key)
+				{
+					case var a when localTag.Key == linkedDMPluginID_Key: this.LinkedDescriptiveFrameworkPluginID = reader.ReadRefKey(); return true;
+				}
+			}
+
+			return base.ParseLocalTag(reader, localTag);
 		}
 	}
 }

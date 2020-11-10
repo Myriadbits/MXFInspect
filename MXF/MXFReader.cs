@@ -34,12 +34,54 @@ namespace Myriadbits.MXF
     {
         protected FileStream m_FileStream = null;
 
+        #region Properties
+
         /// <summary>
-        /// Reader constructor
+        /// Returns the file name of this MXF file
         /// </summary>
-        public MXFReader()
+        public string FileName { get; set; }
+
+
+        /// <summary>
+        /// Returns the current file position
+        /// </summary>
+        public long Position
         {
+            get
+            {
+                return this.m_FileStream.Position;
+            }
         }
+
+
+        /// <summary>
+        /// Returns true when the end-of-file is reached
+        /// </summary>
+        public bool EOF
+        {
+            get
+            {
+                if (this.m_FileStream == null)
+                    return true;
+                return this.m_FileStream.Position >= this.m_FileStream.Length;
+            }
+        }
+
+
+        /// <summary>
+        /// Gets the size of the file
+        /// </summary>
+        public long Size
+        {
+            get
+            {
+                if (this.m_FileStream == null)
+                    return 0;
+                return this.m_FileStream.Length;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Constructor, creates the file reader
@@ -73,16 +115,6 @@ namespace Myriadbits.MXF
                 this.m_FileStream.Close();
         }
 
-        /// <summary>
-        /// Returns the current file position
-        /// </summary>
-        public long Position
-        {
-            get
-            {
-                return this.m_FileStream.Position;
-            }
-        }
 
         /// <summary>
         /// Seeks to a position in the file
@@ -104,38 +136,6 @@ namespace Myriadbits.MXF
 
 
         /// <summary>
-        /// Returns the file name of this MXF file
-        /// </summary>
-        public string FileName { get; set; }
-
-
-        /// <summary>
-        /// Returns true when the end-of-file is reached
-        /// </summary>
-        public bool EOF
-        {
-            get
-            {
-                if (this.m_FileStream == null)
-                    return true;
-                return this.m_FileStream.Position >= this.m_FileStream.Length;
-            }
-        }
-
-        /// <summary>
-        /// Gets the size of the file
-        /// </summary>
-        public long Size
-        {
-            get
-            {
-                if (this.m_FileStream == null)
-                    return 0;
-                return this.m_FileStream.Length;
-            }
-        }
-
-        /// <summary>
         /// Clean-up
         /// </summary>
         void IDisposable.Dispose()
@@ -143,8 +143,8 @@ namespace Myriadbits.MXF
             Close();
         }
 
+        #region Basic types
 
-        #region basic types
         /// <summary>
         /// Reads a single byte
         /// </summary>
@@ -173,6 +173,7 @@ namespace Myriadbits.MXF
             return (this.ReadByte() != 0);
         }
 
+        // TODO: should be removed in favor of the generic method
         /// <summary>
         /// Reads multiple bytes into an array
         /// </summary>
@@ -208,6 +209,17 @@ namespace Myriadbits.MXF
                         );
             return 0;
         }
+
+
+        /// <summary>
+        /// Reads a signed dword
+        /// </summary>
+        public Int32 ReadInt32()
+        {
+            // TODO: pay attention, this method works only for positive numbers!!!
+            return (Int32)this.ReadUInt32();
+        }
+
 
         /// <summary>
         /// Reads a long
@@ -275,31 +287,18 @@ namespace Myriadbits.MXF
         {
             return new MXFUMIDKey(this); // Always read 32 bytes for UMID's 
         }
-
-        /// <summary>
-        /// Reads an array of Uint16's
-        /// </summary>
-        /// </summary>
-        /// <param name="count">The number of Uint16 to read</param>
-        /// <returns></returns>
-        public UInt16[] ReadUint16Array(int count)
-        {
-            UInt16[] version = new UInt16[count];
-            for (int n = 0; n < count; n++)
-                version[n] = ReadUInt16();
-            return version;
-        }
-
+        
         #endregion
 
-        #region reference types
+
+        #region Reference types
 
         /// <summary>
         /// Reads a MXF long version in a partition
         /// </summary>
         public MXFProductVersion ReadProductVersion()
         {
-            UInt16[] version = ReadUint16Array(4);
+            UInt16[] version = this.ReadArray(this.ReadUInt16, 4);
             MXFProductReleaseType build = (MXFProductReleaseType)this.ReadUInt16();
             return new MXFProductVersion
             {
@@ -410,23 +409,11 @@ namespace Myriadbits.MXF
         }
 
         /// <summary>
-        /// Reads three color primaries
-        /// </summary>
-        public MXFColorPrimary[] ReadThreeColorPrimaries()
-        {
-            var primary1 = this.ReadColorPrimary();
-            var primary2 = this.ReadColorPrimary();
-            var primary3 = this.ReadColorPrimary();
-            return new MXFColorPrimary[3] { primary1, primary2, primary3 };
-        }
-
-
-        /// <summary>
         /// Reads a RGBA component
         /// </summary>
         public MXFRGBAComponent ReadRGBAComponent()
         {
-            var code = (MXFRGBAComponentKind) this.ReadByte();
+            var code = (MXFRGBAComponentKind)this.ReadByte();
             var componentSize = this.ReadByte();
             return new MXFRGBAComponent
             {
@@ -440,42 +427,33 @@ namespace Myriadbits.MXF
         /// </summary>
         public MXFRGBAComponent[] ReadRGBALayout()
         {
-            const int size = 8;
-            MXFRGBAComponent[] components = new MXFRGBAComponent[size];
-            for (int i = 0; i < size; i++)
-            {
-                components[i] = this.ReadRGBAComponent();
-            }
-            return components;
+            return this.ReadArray(this.ReadRGBAComponent, 8);
         }
 
         /// <summary>
         /// Reads a channel status mode
         /// </summary>
-        public MXFChannelStatusMode[] ReadChannelstatusMode()
+        public MXFChannelStatusMode ReadChannelstatusMode()
         {
-            return new MXFChannelStatusMode[8] {
-                            (MXFChannelStatusMode) this.ReadByte(),
-                            (MXFChannelStatusMode) this.ReadByte(),
-                            (MXFChannelStatusMode) this.ReadByte(),
-                            (MXFChannelStatusMode) this.ReadByte(),
-                            (MXFChannelStatusMode) this.ReadByte(),
-                            (MXFChannelStatusMode) this.ReadByte(),
-                            (MXFChannelStatusMode) this.ReadByte(),
-                            (MXFChannelStatusMode) this.ReadByte()
-            };
+            return (MXFChannelStatusMode)this.ReadByte();
         }
 
-        public MXFUserDataMode[] ReadUserDataMode()
+        public MXFUserDataMode ReadUserDataMode()
         {
-            var byte1 = (MXFUserDataMode)this.ReadByte();
-            var byte2 = (MXFUserDataMode)this.ReadByte();
-            return new MXFUserDataMode[2] {byte1 , byte2};
+            return (MXFUserDataMode)this.ReadByte();
         }
 
+        public T[] ReadArray<T>(Func<T> readFunction, int count)
+        {
+            T[] retval = new T[count];
+            for (int i = 0; i < count; i++)
+            {
+                retval[i] = readFunction();
+            }
+            return retval;
+        }
 
-
-    #endregion
-}
+        #endregion
+    }
 
 }

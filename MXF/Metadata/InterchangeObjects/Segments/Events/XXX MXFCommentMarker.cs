@@ -26,31 +26,28 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFDMSegment : MXFEvent
-	{
-		[CategoryAttribute("DMSegment"), Description("6102")]
-		public UInt64? Track { get; set; }
-		[CategoryAttribute("DMSegment"), Description("6101")]
-		public MXFRefKey DMFramework { get; set; }
+    public class MXFCommentMarker : MXFEvent
+    {
+        [CategoryAttribute("Comment Marker"), Description("")]
+        public MXFRefKey AnnotationSource { get; set; }
 
-		public MXFDMSegment(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "DM Segment")
-		{
-		}
+        public MXFCommentMarker(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "Comment Marker")
+        {
+        }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x6102: ReadKeyList(reader, "TrackIDs", "TrackID"); return true;
-				case 0x6101: this.DMFramework = reader.ReadRefKey(); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.Tag)
+            {
+                case 0x0901: this.AnnotationSource = reader.ReadRefKey(); return true;
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
 
-	}
+    }
 }

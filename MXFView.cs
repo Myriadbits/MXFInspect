@@ -231,7 +231,7 @@ namespace Myriadbits.MXFInspect
 				using (MXFReader reader = new MXFReader(this.Filename))
 				{
 					reader.Seek(readerOffset);
-					reader.Read(data, len);
+					data = reader.ReadArray(reader.ReadByte, data.Length);
 				}
 
 				long lines = (len + (dataLength - 1)) / dataLength;
