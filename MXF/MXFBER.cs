@@ -29,21 +29,29 @@ namespace Myriadbits.MXF
     {
         ShortForm,
         LongForm,
+        Indefinite
     }
 
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class MXFBER
     {
-        public BERForm Form { get; set; }
-        public int AdditionalOctets { get; set; }
-        public long Size { get; set; }
+        public BERForm Form { get; private set; }
+        public int AdditionalOctets { get; private set; }
+        public long Size { get; private set; }
         
         public MXFBER(int octets, long size)
         {
             AdditionalOctets = octets;
             Size = size;
-            Form = (AdditionalOctets > 0) ? BERForm.LongForm : BERForm.ShortForm;
+            if(octets == -1 && size == -1)
+            {
+                Form = BERForm.Indefinite;
+            }
+            else
+            {
+                Form = (AdditionalOctets > 0) ? BERForm.LongForm : BERForm.ShortForm;
+            }     
         }
 
         public override string ToString()
