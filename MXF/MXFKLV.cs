@@ -107,23 +107,28 @@ namespace Myriadbits.MXF
         private MXFBER DecodeBerLength(MXFReader reader)
         {
             long size = reader.ReadByte();
-            int numOfOctets = (int)size - 0x80;
-            if (numOfOctets != 0)
+            int additionalOctets = (int)size - 0x80;
+            if (additionalOctets > 0)
             {
-                // long form
-                // SMPTE 379M 5.3.4 guarantee that bytes_num must not exceed 8 bytes
-                if (numOfOctets > 8)
+                // long form 1 + additionalOctets
+                // SMPTE 379M 5.3.4 guarantee that additional octets must not exceed 8 bytes
+                if (additionalOctets > 8)
                 {
                     //throw new ArgumentException("KLV length more then 8 bytes!");
                     LogWarning("KLV length more then 8 bytes (not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
                 }
                 size = 0;
-                for (int i = 0; i < numOfOctets; i++)
+                for (int i = 0; i < additionalOctets; i++)
                 {
                     size = size << 8 | reader.ReadByte();
                 }
             }
-            return new MXFBER(numOfOctets, size);
+            else
+            {
+                // short form
+                additionalOctets = 0;
+            }
+            return new MXFBER(additionalOctets, size);
         }
 
         /// <summary>

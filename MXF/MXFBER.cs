@@ -36,19 +36,19 @@ namespace Myriadbits.MXF
     public class MXFBER
     {
         public BERForm Form { get; set; }
-        public int NumOfOctets { get; set; }
+        public int AdditionalOctets { get; set; }
         public long Size { get; set; }
         
         public MXFBER(int octets, long size)
         {
-            NumOfOctets = octets;
+            AdditionalOctets = octets;
             Size = size;
-            Form = (NumOfOctets > 0) ? BERForm.LongForm : BERForm.ShortForm;
+            Form = (AdditionalOctets > 0) ? BERForm.LongForm : BERForm.ShortForm;
         }
 
         public override string ToString()
         {
-            return (NumOfOctets > 0) ? $"{Form}, 1 + {NumOfOctets} Octets" : $"{Form}";
+            return (AdditionalOctets > 0) ? $"{Form}, 1 + {AdditionalOctets} Octets" : $"{Form}";
         }
     }
 }
