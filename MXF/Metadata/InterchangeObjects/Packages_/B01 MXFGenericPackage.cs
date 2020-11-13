@@ -28,17 +28,17 @@ namespace Myriadbits.MXF
 {
 	public class MXFGenericPackage : MXFInterchangeObject
 	{
-		[CategoryAttribute("MaterialPackage"), Description("4401")]
+		[CategoryAttribute("GenericPackage"), Description("4401")]
 		public MXFUMIDKey PackageUID { get; set; }
-		[CategoryAttribute("MaterialPackage"), Description("4402")]
+		[CategoryAttribute("GenericPackage"), Description("4402")]
 		public string PackageName { get; set; }
-		[CategoryAttribute("MaterialPackage"), Description("4404")]
+		[CategoryAttribute("GenericPackage"), Description("4404")]
 		public DateTime? ModifiedDate { get; set; }
-		[CategoryAttribute("MaterialPackage"), Description("4405")]
+		[CategoryAttribute("GenericPackage"), Description("4405")]
 		public DateTime? CreationDate { get; set; }
 
 		public MXFGenericPackage(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "MaterialPackage")
+			: base(reader, headerKLV, "Generic Package")
 		{
 		}
 
