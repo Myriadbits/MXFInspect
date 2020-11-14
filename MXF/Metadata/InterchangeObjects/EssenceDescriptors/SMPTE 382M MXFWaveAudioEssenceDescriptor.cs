@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D0B")]
         public byte? SequenceOffset { get; set; }
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D09")]
-        public UInt32? AveragesBytesPerSecond { get; set; }
+        public UInt32? AverageBytesPerSecond { get; set; }
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D32")]
         public MXFKey ChannelAssignment { get; set; }
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D29")]
@@ -86,7 +86,7 @@ namespace Myriadbits.MXF
             {
                 case 0x3D0A: this.BlockAlign = reader.ReadUInt16(); return true;
                 case 0x3D0B: this.SequenceOffset = reader.ReadByte(); return true;
-                case 0x3D09: this.AveragesBytesPerSecond = reader.ReadUInt32(); return true;
+                case 0x3D09: this.AverageBytesPerSecond = reader.ReadUInt32(); return true;
                 case 0x3D32: this.ChannelAssignment = reader.ReadKey(); return true;
                 case 0x3D29: this.PeakEnvelopeVersion = reader.ReadUInt32(); return true;
                 case 0x3D2A: this.PeakEnvelopeFormat = reader.ReadUInt32(); return true;

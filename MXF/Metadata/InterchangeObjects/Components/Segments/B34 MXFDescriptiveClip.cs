@@ -23,13 +23,13 @@
 
 namespace Myriadbits.MXF
 {
-	public class MXFPackageMarkerObject : MXFSegment
+	public class MXFDescriptiveClip : MXFSegment
 	{
 		// TODO: this seems to be the smpte group:
 		// DescriptiveClip – urn:smpte:ul:060e2b34.027f0101.0d010101.01014500
 		// and should inherit from sourceclip -> sourcereference -> segment -> Component
-		public MXFPackageMarkerObject(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Package Marker Object")
+		public MXFDescriptiveClip(MXFReader reader, MXFKLV headerKLV)
+			: base(reader, headerKLV, "Descriptive Clip")
 		{
 		}
 
@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x6103: ReadKeyList(reader, "TrackIDs", "TrackID"); return true;
+				case 0x6103: ReadKeyList(reader, "DescriptiveClipDescribedTrackIDs", "DescriptiveClipDescribedTrackID"); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

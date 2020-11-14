@@ -23,11 +23,12 @@
 
 namespace Myriadbits.MXF
 {
-	public class AudioChannelLabelSubDescriptor : MXFInterchangeObject
+	public class AudioChannelLabelSubDescriptor : MCALabelSubDescriptor
     {
 		public AudioChannelLabelSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "AudioChannelLabelSubDescriptor")
+			: base(reader, headerKLV)
 		{
+			this.MetaDataName = "AudioChannelLabelSubDescriptor";
 		}
 
 		/// <summary>
