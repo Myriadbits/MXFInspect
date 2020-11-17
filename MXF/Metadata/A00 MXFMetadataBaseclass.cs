@@ -33,6 +33,8 @@ namespace Myriadbits.MXF
 	{
 		[CategoryAttribute("Metadata"), ReadOnly(true)]
 		public string MetaDataName { get; set; }
+
+		//TODO move instance ID to interchange object class
 		[CategoryAttribute("Metadata"), Description("3C0A")]
 		public MXFKey InstanceUID { get; set; }
 

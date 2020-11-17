@@ -21,24 +21,18 @@
 //
 #endregion
 
+using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFInterchangeObject : MXFMetadataBaseclass
+	public class MXFGPITrigger : MXFEvent
 	{
-		public readonly MXFKey appPluginObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x06, 0x01, 0x01, 0x04, 0x02, 0x0e, 0x00, 0x00);
+		[CategoryAttribute("GPITrigger"), Description("0801")]
+		public bool? ActiveState { get; set; }
 
-		[CategoryAttribute("InterchangeObject"), Description("0101")]
-		public MXFKey ObjectClass { get; set; }
-		[CategoryAttribute("InterchangeObject"), Description("0102")]
-		public MXFKey GenerationUID { get; set; }
-
-		public MXFRefKey[] ApplicationPluginObjects { get; set; }
-
-
-		public MXFInterchangeObject(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFGPITrigger(MXFReader reader, MXFKLV headerKLV, string metadataName)
+			: base(reader, headerKLV, "GPITrigger")
 		{
 		}
 
@@ -49,10 +43,8 @@ namespace Myriadbits.MXF
 		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
-			{				
-				case 0x0102: this.GenerationUID = reader.ReadKey(); return true;
-				case 0x0101: this.ObjectClass = reader.ReadKey(); return true;
-				case var a when localTag.Key == appPluginObjects_Key: reader.ReadKeyList("Application Plugin Objects", "Application Plugin Object");  return true;
+			{
+				case 0x0801: this.ActiveState = reader.ReadBool(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

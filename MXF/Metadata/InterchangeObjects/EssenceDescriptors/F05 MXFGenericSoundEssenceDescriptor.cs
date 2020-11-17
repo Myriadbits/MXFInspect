@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D04")]
         public sbyte? AudioRefLevel { get; set; }
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D05")]
-        public MXFElectroSpatialFormulation ElectroSpatialFormulation { get; set; }
+        public MXFElectroSpatialFormulation? ElectroSpatialFormulation { get; set; }
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D07")]
         public UInt32? ChannelCount { get; set; }
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D01")]

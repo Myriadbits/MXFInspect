@@ -28,10 +28,20 @@ namespace Myriadbits.MXF
 {
     public class MXFDescriptiveMarker : MXFCommentMarker
     {
+        public readonly MXFKey metadataScheme_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x06, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00);
+        public readonly MXFKey metadataPlugInID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x0e, 0x00, 0x00, 0x00);
+        public readonly MXFKey metadataApplicationEnvironmentID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x10, 0x00, 0x00, 0x00);
+
         [CategoryAttribute("DescriptiveMarker"), Description("6102")]
         public UInt32[] DescribedTrackIDs { get; set; }
         [CategoryAttribute("DescriptiveMarker"), Description("6101")]
         public MXFRefKey DescriptiveFrameworkObject { get; set; }
+        [CategoryAttribute("DescriptiveMarker"), Description("")]
+        public MXFRefKey DescriptiveMetadataScheme { get; set; }
+        [CategoryAttribute("DescriptiveMarker"), Description("")]
+        public MXFRefKey DescriptiveMetadataPlugInID { get; set; }
+        [CategoryAttribute("DescriptiveMarker"), Description("")]
+        public string DescriptiveMetadataApplicationEnvironmentID { get; set; }
 
         public MXFDescriptiveMarker(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV)
@@ -51,6 +61,11 @@ namespace Myriadbits.MXF
                     this.DescribedTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Size / sizeof(UInt32));
                     return true;
                 case 0x6101: this.DescriptiveFrameworkObject = reader.ReadRefKey(); return true;
+                case var a when localTag.Key == metadataScheme_Key: this.DescriptiveMetadataScheme = reader.ReadRefKey(); return true;
+                case var a when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadRefKey(); return true;
+                case var a when localTag.Key == metadataApplicationEnvironmentID_Key: 
+                    this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Size); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

@@ -22,15 +22,15 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [ ] DMCVTApp2Set 
     - [ ] DMCVTApp3Set 
     - [ ] DMCVTApp4Set
-- [x] InterchangeObject [2/4] *(abstract)* :hammer: :scroll:
-    - [x] Component [2/5]*(abstract)* (= Structural Component):hammer: :scroll:
+- [x] InterchangeObject [(3+1)/4] *(abstract)* :hammer: :scroll:
+    - [x] Component [5/5]*(abstract)* (= Structural Component):hammer: :scroll:
         - [x] Segment [0/0] *(abstract)*
-            - [ ] EdgeCode
-            - [ ] EssenceGroup 
+            - [x] EdgeCode [4/4]
+            - [x] EssenceGroup [2/2]
             - [x] Event [2/2]
-                - [ ] GPITrigger 
+                - [x] GPITrigger [1/1]
                 - [x] CommentMarker [1/1]
-                    - [x] DescriptiveMarker [2/5]
+                    - [x] DescriptiveMarker [5/5]
                       - [ ] DynamicMarker
                         - [ ] DynamicClip
             - [x] Filler [0/0] *(is this the B11 MXFFiller.cs?)* :question:
@@ -108,7 +108,6 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [ ] Locator [0] *(abstract)*
         - [x] NetworkLocator [1/1]
         - [x] TextLocator [1/1]
-        *- [ ] FROM HERE ON THE LIST IS NOT UPDATED
     - [x] Package [4/9] *(abstract)* :scroll: 
         - [ ] CompositionPackage [0/4] :hammer:
         - [x] MaterialPackage *abstract* [0/0]

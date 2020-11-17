@@ -22,35 +22,23 @@
 #endregion
 
 using System;
-using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEvent : MXFSegment
-	{
-		[CategoryAttribute("Event"), Description("0601")]
-		public UInt64? EventStartPosition { get; set; }
-		[CategoryAttribute("Event"), Description("0602")]
-		public string EventComment { get; set; }
+    // http://www.smpte-ra.org/reg/2003/2012 	
+    // urn:smpte:ul:060e2b34.01040101.01012001.00000000
+    public struct MXFPositionType
+    {
+        private UInt64 _Value;
 
-		public MXFEvent(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, "Event")
-		{
-		}
+        public static implicit operator MXFPositionType(UInt64 value)
+        {
+            return new MXFPositionType { _Value = value };
+        }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x0601: this.EventStartPosition = reader.ReadUInt64(); return true;
-				case 0x0602: this.EventComment = reader.ReadUTF16String(localTag.Size); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
-
-	}
+        public static implicit operator UInt64(MXFPositionType value)
+        {
+            return value._Value;
+        }
+    }
 }
