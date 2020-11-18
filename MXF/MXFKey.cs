@@ -30,79 +30,77 @@ using System.Xml.Linq;
 
 namespace Myriadbits.MXF
 {
-	public enum KeyType
-	{
-		None,
-		// Real MXF types
-		Partition,
-		PackageMetaDataSet,
-		Essence,
-		IndexSegment,
-		MetaData,
-		SystemItem,
-		PrimerPack,
-		Preface,
-		Filler,
-		RIP
-	}
+    public enum KeyType
+    {
+        None,
+        // Real MXF types
+        Partition,
+        PackageMetaDataSet,
+        Essence,
+        IndexSegment,
+        MetaData,
+        SystemItem,
+        PrimerPack,
+        Preface,
+        Filler,
+        RIP
+    }
 
 
-	public enum KeyCategory
-	{
-		Unknown = 0x00,
-		Dictionary = 0x01,
-		Group = 0x02,
-		Container = 0x03,
-		Label = 0x04
-	}
+    public enum KeyCategory
+    {
+        Unknown = 0x00,
+        Dictionary_Element = 0x01,
+        Group = 0x02,
+        Container_Wrapper = 0x03,
+        Label = 0x04
+    }
 
 
-	public struct MXFShortKey
-	{
-		UInt64 Key1;
-		UInt64 Key2;
+    public struct MXFShortKey
+    {
+        UInt64 Key1;
+        UInt64 Key2;
 
-		public MXFShortKey(UInt64 key1, UInt64 key2)
-		{
-			this.Key1 = key1;
-			this.Key2 = key2;
-		}
+        public MXFShortKey(UInt64 key1, UInt64 key2)
+        {
+            this.Key1 = key1;
+            this.Key2 = key2;
+        }
 
-		public MXFShortKey(byte[] data)
-		{
-			// Change endianess
-			this.Key1 = 0;
-			this.Key2 = 0;
-			if (data.Length == 16)
-			{
-				byte[] datar = new byte[16];
-				Array.Copy(data, datar, 16);
-				Array.Reverse(datar);
-				this.Key2 = BitConverter.ToUInt64(datar, 0);
-				this.Key1 = BitConverter.ToUInt64(datar, 8);
-			}
-		}
+        public MXFShortKey(byte[] data)
+        {
+            // Change endianess
+            this.Key1 = 0;
+            this.Key2 = 0;
+            if (data.Length == 16)
+            {
+                byte[] datar = new byte[16];
+                Array.Copy(data, datar, 16);
+                Array.Reverse(datar);
+                this.Key2 = BitConverter.ToUInt64(datar, 0);
+                this.Key1 = BitConverter.ToUInt64(datar, 8);
+            }
+        }
 
-		public override string ToString()
-		{
-			return string.Format(string.Format("{0:X16}.{1:X16}", this.Key1, this.Key2));
-		}
+        public override string ToString()
+        {
+            return string.Format(string.Format("{0:X16}.{1:X16}", this.Key1, this.Key2));
+        }
 
-	};
+    };
 
-	[TypeConverter(typeof(ExpandableObjectConverter))]
-	public class MXFKey : IEquatable<MXFKey>
-	{
-		private static Dictionary<MXFShortKey, string[]> m_ULDescriptions;
-		private byte[] m_mxfKey = null;
-		private bool m_fIsUID = false;
-
-	
-		static MXFKey()
-		{
-			m_ULDescriptions = new Dictionary<MXFShortKey,  string[]>();
+    [TypeConverter(typeof(ExpandableObjectConverter))]
+    public class MXFKey : MXFIdentifier, IEquatable<MXFKey>
+    {
+        private static Dictionary<MXFShortKey, string[]> m_ULDescriptions;
+        //private byte[] m_mxfKey = null;
+        private bool m_fIsUID = false;
 
 
+        static MXFKey()
+        {
+            m_ULDescriptions = new Dictionary<MXFShortKey, string[]>();
 
             //Parse SMPTE Labels register
 
@@ -110,63 +108,13 @@ namespace Myriadbits.MXF
             XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
 
             regEntries = XElement.Parse(MXF.Properties.Resources.Labels);
-
-            foreach (var el in regEntries.Element(ns + "Entries").Elements(ns + "Entry"))
-            {
-                UInt64 value1 = 0;
-                UInt64 value2 = 0;
-                string UL_string = "";
-                string name_string = "";
-                string definition_string = "";
-                string defining_document_string = "";
-                var x = el.Element(ns + "UL");
-                if (x != null) UL_string = x.Value.Replace("urn:smpte:ul:", "").Replace(".", "");
-                else continue; // No UL --> ignore this entry
-                //Debug.WriteLine(UL_string);
-                value1 = Convert.ToUInt64(UL_string.Substring(0, 16), 16);
-                value2 = Convert.ToUInt64(UL_string.Substring(16, 16), 16);
-                MXFShortKey shortKey = new MXFShortKey(value1, value2);
-                x = el.Element(ns + "Name");
-                if (x != null) name_string = x.Value;
-                x = el.Element(ns + "Definition");
-                if (x != null) definition_string = x.Value;
-                x = el.Element(ns + "DefiningDocument");
-                if ( x != null ) defining_document_string = x.Value;
-                //Debug.WriteLine(shortKey.ToString() + name_string +  definition_string + defining_document_string);
-                m_ULDescriptions.Add(shortKey, new string[] { name_string, definition_string, defining_document_string });
-            }
-
+            ParseEntries(regEntries, ns);
 
             // Parse SMPTE Elements register
 
             ns = "http://www.smpte-ra.org/schemas/335/2012";
             regEntries = XElement.Parse(MXF.Properties.Resources.Elements);
-
-            foreach (var el in regEntries.Element(ns + "Entries").Elements(ns + "Entry"))
-            {
-                UInt64 value1 = 0;
-                UInt64 value2 = 0;
-                string UL_string = "";
-                string name_string = "";
-                string definition_string = "";
-                string defining_document_string = "";
-                var x = el.Element(ns + "UL");
-                if (x != null) UL_string = x.Value.Replace("urn:smpte:ul:", "").Replace(".", "");
-                else continue; // No UL --> ignore this entry
-                //Debug.WriteLine(UL_string);
-                value1 = Convert.ToUInt64(UL_string.Substring(0, 16), 16);
-                value2 = Convert.ToUInt64(UL_string.Substring(16, 16), 16);
-                MXFShortKey shortKey = new MXFShortKey(value1, value2);
-                x = el.Element(ns + "Name");
-                if (x != null) name_string = x.Value;
-                x = el.Element(ns + "Definition");
-                if (x != null) definition_string = x.Value;
-                x = el.Element(ns + "DefiningDocument");
-                if (x != null) defining_document_string = x.Value;
-                //Debug.WriteLine(shortKey.ToString() + name_string +  definition_string + defining_document_string);
-                m_ULDescriptions.Add(shortKey, new string[] { name_string, definition_string, defining_document_string });
-            }
-
+            ParseEntries(regEntries, ns);
 
             //Parse SMPTE Groups register
 
@@ -199,307 +147,302 @@ namespace Myriadbits.MXF
             }
         }
 
-		[Browsable(false)]
-		public int Length 
-		{ 
-			get
-			{
-				if (this.m_mxfKey == null)
-					return 0;
-				return this.m_mxfKey.Length;
-			}
-		}
-
-		[Browsable(false)]
-		public KeyType Type { get; set; }
-		[Browsable(false)]
-		public Type ObjectType { get; set; }
-
-		/// <summary>
-		/// The name of this key (if found in SMPTE RP210 or RP224)
-		/// </summary>
-		[CategoryAttribute("Key"), ReadOnly(true)]
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Keyfield, describes the type of data
-		/// </summary>
-		[CategoryAttribute("Key"), ReadOnly(true)]
-		public KeyCategory Category
-		{
-			get
-			{
-				if (this.m_mxfKey != null && this.m_mxfKey.Length > 4)
+        private static void ParseEntries(XElement regEntries, XNamespace ns)
+        {
+            foreach (var e in regEntries.Descendants(ns + "Entry"))
+            {
+                var UL_string = (string)e.Element(ns + "UL") ?? "";
+                if (!string.IsNullOrEmpty(UL_string))
                 {
-					return (KeyCategory)this.m_mxfKey[5];
-				}
-				else
-				{
-					return KeyCategory.Unknown;
-				}	
-			}
-		}
+                    MXFShortKey shortKey = GetShortKeyFromSMPTEULString(UL_string);
+                    string name = (string)e.Element(ns + "Name") ?? "";
+                    string definition = (string)e.Element(ns + "Definition") ?? "";
+                    string definingDocument = (string)e.Element(ns + "DefiningDocument") ?? "";
+                    m_ULDescriptions.Add(shortKey, new string[] { name, definition, definingDocument });
+                }
 
-		/// <summary>
-		/// Create a new key
-		/// </summary>
-		/// <param name="list"></param>
-		public MXFKey(params int[] list)
-		{
-			this.Type = KeyType.None;
-			Initialize(list);
-		}
+            }
+        }
 
-		/// <summary>
-		/// Create a new key
-		/// </summary>
-		/// <param name="list"></param>
-		public MXFKey(string name, params int[] list)
-		{
-			this.Type = KeyType.None;
-			this.Name = name;
-			Initialize(list);
-		}
+        private static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
+        {
+            const int hexBase = 16;
+            string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
+            UInt64 value1 = Convert.ToUInt64(byteString.Substring(0, 16), hexBase);
+            UInt64 value2 = Convert.ToUInt64(byteString.Substring(16, 16), hexBase);
+            return new MXFShortKey(value1, value2);
+        }
 
-		/// <summary>
-		/// Create a new key
-		/// </summary>
-		/// <param name="list"></param>
-		public MXFKey(Type objectType, params int[] list)
-		{
-			this.ObjectType = objectType;
-			Initialize(list);
-		}
+        [Browsable(false)]
+        public KeyType Type { get; set; }
+        [Browsable(false)]
+        public Type ObjectType { get; set; }
 
-		/// <summary>
-		/// Create a new key
-		/// </summary>
-		/// <param name="list"></param>
-		public MXFKey(string name, KeyType type, params int[] list)
-		{
-			this.Name = name;
-			this.Type = type;
-			Initialize(list);
-		}
+        /// <summary>
+        /// Return a byte of the key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [Browsable(false)]
+        public byte this[int key]
+        {
+            get
+            {
+                if (this.byteArray == null)
+                    return 0;
+                if (key >= 0 && key < this.byteArray.Length)
+                    return byteArray[key];
+                return 0;
+            }
+            //set
+            //{
+            //    if (this.m_mxfKey != null && key >= 0 && key < this.m_mxfKey.Length)
+            //        m_mxfKey[key] = (byte)value;
+            //}
+        }
 
-		/// <summary>
-		/// Initialize the key value
-		/// </summary>
-		/// <param name="list"></param>
-		private void Initialize(params int[] list)
-		{
-			this.m_mxfKey = new byte[list.Length];
-			for (int n = 0; n < list.Length; n++)
-				m_mxfKey[n] = (byte)list[n];
+        /// <summary>
+        /// The name of this key (if found in SMPTE RP210 or RP224)
+        /// </summary>
+        [CategoryAttribute("Key"), ReadOnly(true)]
+        public string Name { get; set; }
 
-			FindKeyName();
-		}
+        /// <summary>
+        /// Keyfield, describes the type of data
+        /// </summary>
+        [CategoryAttribute("Key"), ReadOnly(true)]
+        public KeyCategory Category
+        {
+            get
+            {
+                if (this.Length > 4)
+                {
+                    return (KeyCategory)this[5];
+                }
+                else
+                {
+                    return KeyCategory.Unknown;
+                }
+            }
+        }
 
-		/// <summary>
-		/// Create a new key combining 2 parts, first should be 4 bytes
-		/// </summary>
-		/// <param name="firstPart"></param>
-		/// <param name="reader"></param>
-		public MXFKey(byte b0, byte b1, byte b2, byte b3, MXFReader reader)
-		{
-			this.m_mxfKey = null;
-			int len = b1 + 2;
-			if (len >= 4)
-			{
-				this.m_mxfKey = new byte[len];
-				this.m_mxfKey[0] = b0;
-				this.m_mxfKey[1] = b1;
-				this.m_mxfKey[2] = b2;
-				this.m_mxfKey[3] = b3;
+        /// <summary>
+        /// Create a new key
+        /// </summary>
+        /// <param name="list"></param>
+        public MXFKey(params int[] list) : base(list)
+        {
+            this.Type = KeyType.None;
+            FindKeyName();
+            //Initialize(list);
+        }
 
-				for (int n = 4; n < len; n++)
-					m_mxfKey[n] = reader.ReadByte();
-			}
+        /// <summary>
+        /// Create a new key
+        /// </summary>
+        /// <param name="list"></param>
+        public MXFKey(string name, params int[] list) : this(list)
+        {
+            this.Name = name;
+            FindKeyName();
+        }
 
-			FindKeyName();
-		}
+        /// <summary>
+        /// Create a new key
+        /// </summary>
+        /// <param name="list"></param>
+        public MXFKey(Type objectType, params int[] list) : this(list)
+        {
+            this.ObjectType = objectType;
+            FindKeyName();
+        }
 
-		/// <summary>
-		/// Create a new key by reading from the current file location
-		/// </summary>
-		/// <param name="firstPart"></param>
-		/// <param name="reader"></param>
-		public MXFKey(MXFReader reader)
-		{
-			byte isoMark = reader.ReadByte();
-			byte length = reader.ReadByte();
-			this.m_mxfKey = new byte[length];
-			for (int n = 2; n < length; n++)
-				m_mxfKey[n] = reader.ReadByte();
+        /// <summary>
+        /// Create a new key
+        /// </summary>
+        /// <param name="list"></param>
+        public MXFKey(string name, KeyType type, params int[] list) : this(name, list)
+        {
+            this.Type = type;
+            FindKeyName();
+        }
 
-			FindKeyName();
-		}
+        /// <summary>
+        /// Create a new key combining 2 parts, first should be 4 bytes
+        /// </summary>
+        /// <param name="firstPart"></param>
+        /// <param name="reader"></param>
+        public MXFKey(byte b0, byte b1, byte b2, byte b3, MXFReader reader)
+        {
+            int len = b1 + 2;
+            if (len >= 4)
+            {
+                var arr = new byte[len];
+                arr[0] = b0;
+                arr[1] = b1;
+                arr[2] = b2;
+                arr[3] = b3;
 
+                for (int n = 4; n < len; n++)
+                    arr[n] = reader.ReadByte();
 
-		/// <summary>
-		/// Create a new key by reading from the current file location with a fixed size
-		/// </summary>
-		/// <param name="firstPart"></param>
-		/// <param name="reader"></param>
-		public MXFKey(MXFReader reader, UInt32 length)
-		{
-			this.m_mxfKey = new byte[length];
-			for (int n = 0; n < length; n++)
-				m_mxfKey[n] = reader.ReadByte();
+                Initialize(arr.Select(e => (int)e).ToArray());
+            }
 
-			FindKeyName();
-		}
+           
 
-		/// <summary>
-		/// Locate the key name (if found)
-		/// </summary>
-		private void FindKeyName()
-		{
-			MXFShortKey skey = this.ShortKey;
-			if (m_ULDescriptions.ContainsKey(skey))
-			{
-				this.Name = m_ULDescriptions[skey][0];
-				this.m_fIsUID = false;
-			}
-			else
-			{
-				this.Name = "UID"; // Not in the global UL list, probably an unique ID
-				this.m_fIsUID = true;
-			}
-		}
+            FindKeyName();
+        }
 
+        /// <summary>
+        /// Create a new key by reading from the current file location with a fixed size
+        /// </summary>
+        /// <param name="firstPart"></param>
+        /// <param name="reader"></param>
+        public MXFKey(MXFReader reader, UInt32 length) : base(reader, length)
+        {
+            FindKeyName();
+        }
 
-		/// <summary>
-		/// Return a byte of the key
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		[Browsable(false)]
-		public byte this[int key]
-		{
-			get
-			{
-				if (this.m_mxfKey == null)
-					return 0;
-				if (key >= 0 && key < this.m_mxfKey.Length)
-					return m_mxfKey[key];
-				return 0;
-			}
-			set
-			{
-				if (this.m_mxfKey != null && key >= 0 && key < this.m_mxfKey.Length)
-					m_mxfKey[key] = (byte) value;
-			}
-		}
-
-
-		[CategoryAttribute("Key"), ReadOnly(true)]
-		public MXFShortKey ShortKey 
-		{ 
-			get
-			{
-				return new MXFShortKey(this.m_mxfKey);
-			}
-		}
+        /// <summary>
+        /// Locate the key name (if found)
+        /// </summary>
+        private void FindKeyName()
+        {
+            MXFShortKey skey = this.ShortKey;
+            if (m_ULDescriptions.ContainsKey(skey))
+            {
+                this.Name = m_ULDescriptions[skey][0];
+                this.m_fIsUID = false;
+            }
+            else
+            {
+                this.Name = "UID"; // Not in the global UL list, probably an unique ID
+                this.m_fIsUID = true;
+            }
+        }
 
 
-		/// <summary>
-		/// Return a description if available
-		/// </summary>
-		[CategoryAttribute("Key"), ReadOnly(true)]
-		public string Description
-		{
-			get
-			{
-				MXFShortKey skey = this.ShortKey;
-				if (m_ULDescriptions.ContainsKey(skey))
-					return m_ULDescriptions[skey][1];
-				return string.Empty;
-			}
-		}
+        ///// <summary>
+        ///// Return a byte of the key
+        ///// </summary>
+        ///// <param name="key"></param>
+        ///// <returns></returns>
+        //[Browsable(false)]
+        //public byte this[int key]
+        //{
+        //    get
+        //    {
+        //        if (this.m_mxfKey == null)
+        //            return 0;
+        //        if (key >= 0 && key < this.m_mxfKey.Length)
+        //            return m_mxfKey[key];
+        //        return 0;
+        //    }
+        //    set
+        //    {
+        //        if (this.m_mxfKey != null && key >= 0 && key < this.m_mxfKey.Length)
+        //            m_mxfKey[key] = (byte)value;
+        //    }
+        //}
 
 
-		/// <summary>
-		/// Return a description if available
-		/// </summary>
-		[CategoryAttribute("Key"), ReadOnly(true)]
-		public string Information
-		{
-			get
-			{
-				MXFShortKey skey = this.ShortKey;
-				if (m_ULDescriptions.ContainsKey(skey))
-					return m_ULDescriptions[skey][2];
-				return string.Empty;
-			}
-		}
+        [CategoryAttribute("Key"), ReadOnly(true)]
+        public MXFShortKey ShortKey
+        {
+            get
+            {
+                return new MXFShortKey(this.byteArray);
+            }
+        }
 
 
-		//
-		//
-		// Equal stuff
-		//
-		//
+        /// <summary>
+        /// Return a description if available
+        /// </summary>
+        [CategoryAttribute("Key"), ReadOnly(true)]
+        public string Description
+        {
+            get
+            {
+                MXFShortKey skey = this.ShortKey;
+                if (m_ULDescriptions.ContainsKey(skey))
+                    return m_ULDescriptions[skey][1];
+                return string.Empty;
+            }
+        }
 
-		
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (m_fIsUID)
-			{
-				StringBuilder sb = new StringBuilder();
-				if (!string.IsNullOrEmpty(this.Name))
-					sb.Append(this.Name + " - ");
-				sb.Append("{");
-				for (int n = 0; n < this.Length; n++)
-				{
-					if (n > 0)
-						sb.Append(", ");
-					sb.Append(string.Format("{0:X2}", this.m_mxfKey[n]));
-				}
-				sb.Append("}");
-				return sb.ToString();
-			}
-			else
-				return this.Name;
-		}
 
-		/// <summary>
-		/// Equal keys?
-		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
-		public bool Equals(MXFKey other)
-		{
-			if (ReferenceEquals(null, other)) return false;
-			if (ReferenceEquals(this, other)) return true;
+        /// <summary>
+        /// Return a description if available
+        /// </summary>
+        [CategoryAttribute("Key"), ReadOnly(true)]
+        public string Information
+        {
+            get
+            {
+                MXFShortKey skey = this.ShortKey;
+                if (m_ULDescriptions.ContainsKey(skey))
+                    return m_ULDescriptions[skey][2];
+                return string.Empty;
+            }
+        }
 
-			int len = Math.Min(this.Length, other.Length);
-			if (len == 0) return false;
-			for (int n = 0; n < len; n++)
-				if (this[n] != other[n])
-					return false;
-			return true;
-		}
+        public override string ToString()
+        {
+            if (m_fIsUID)
+            {
+                StringBuilder sb = new StringBuilder();
+                if (!string.IsNullOrEmpty(this.Name))
+                    sb.Append(this.Name + " - ");
+                sb.Append("{");
+                for (int n = 0; n < this.Length; n++)
+                {
+                    if (n > 0)
+                        sb.Append(", ");
+                    sb.Append(string.Format("{0:X2}", this.byteArray[n]));
+                }
+                sb.Append("}");
+                return sb.ToString();
+            }
+            else
+                return this.Name;
+        }
 
-		/// <summary>
-		/// Equal to object?
-		/// </summary>
-		/// <param name="obj"></param>
-		/// <returns></returns>
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != typeof(MXFKey)) return false;
-			return Equals((MXFKey)obj);
-		}
 
-		public override int GetHashCode() { return this.m_mxfKey.GetHashCode(); }
-		public static bool operator ==(MXFKey x, MXFKey y) { return Equals(x, y); }
-		public static bool operator !=(MXFKey x, MXFKey y) { return !Equals(x, y); }
-	}
+        #region Equals
+
+        /// <summary>
+        /// Equal keys?
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(MXFKey other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+
+            // TODO not really semantic equality
+            return IsEqualByteSequence(this.byteArray, other.byteArray);
+        }
+
+        /// <summary>
+        /// Equal to object?
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof(MXFKey)) return false;
+            return Equals((MXFKey)obj);
+        }
+
+        public override int GetHashCode() { return base.GetHashCode(); }
+        public static bool operator ==(MXFKey x, MXFKey y) { return Equals(x, y); }
+        public static bool operator !=(MXFKey x, MXFKey y) { return !Equals(x, y); }
+
+        #endregion
+    }
 }

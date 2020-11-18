@@ -87,17 +87,15 @@ namespace Myriadbits.MXF
                 te = reader.ReadByte();
                 valid = (smp == 0x2B && te == 0x34); // SMPTE define
             }
+
+            MXFKey key = new MXFKey(iso, len, smp, te, reader);
+
             if (!valid)
             {
                 //throw new ApplicationException(string.Format("Invalid SMPTE Key found at offset {0}! Incorrect MXF file!", reader.Position - 4));
-                MXFKey key = new MXFKey(iso, len, smp, te, reader);
                 LogError("Invalid SMPTE Key found at offset {0}! Key: {1}", reader.Position - 4, key.Name);
-                return key;
             }
-            else
-            {
-                return new MXFKey(iso, len, smp, te, reader);
-            }
+            return key;
         }
 
         /// <summary>
