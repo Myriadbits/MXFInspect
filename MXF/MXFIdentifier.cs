@@ -22,11 +22,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -35,15 +33,7 @@ namespace Myriadbits.MXF
         protected byte[] byteArray = null;
 
         [Browsable(false)]
-        public int Length
-        {
-            get
-            {
-                if (this.byteArray == null)
-                    return 0;
-                return this.byteArray.Length;
-            }
-        }
+        public int Length => byteArray.Length;
 
         public byte this[int key] => byteArray[key];
 
@@ -71,13 +61,18 @@ namespace Myriadbits.MXF
             this.byteArray = reader.ReadArray(reader.ReadByte, (int)length); 
         }
 
-        protected void Initialize(int[] list)
-        {
-            this.byteArray = new byte[list.Length];
-
-        }
-
         private MXFIdentifier() { }
+
+        // TODO find a better name for this method
+        public bool HasSameBeginning(MXFIdentifier id)
+        {
+            int len = Math.Min(this.byteArray.Length, id.byteArray.Length);
+            if (len == 0)
+            {
+                return false;
+            }
+            else return this.byteArray.Take(len).SequenceEqual(id.byteArray.Take(len));
+        }
 
         public override string ToString()
         {
@@ -95,32 +90,9 @@ namespace Myriadbits.MXF
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            // TODO not really semantic equality
-            return IsEqualByteSequence(this.byteArray, other.byteArray);
-
+            return this.byteArray.SequenceEqual(other.byteArray);
         }
 
-        protected bool IsEqualByteSequence(byte[] arr1, byte[] arr2)
-        {
-            int len = Math.Min(arr1.Length, arr2.Length);
-            if (len == 0)
-            {
-                return false;
-            }
-            else
-            {
-                for (int n = 0; n < len; n++)
-                    if (arr1[n] != arr2[n])
-                        return false;
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Equal to object?
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;

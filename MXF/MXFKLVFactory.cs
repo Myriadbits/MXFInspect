@@ -254,7 +254,7 @@ namespace Myriadbits.MXF
 			klv.Partition = currentPartition; // Pass the current partition through to the classes
 			foreach (MXFKey knownKey in MXFKLVFactory.m_allKeys)
 			{
-				if (klv.Key == knownKey)
+				if (klv.Key.HasSameBeginning(knownKey))
 				{
 					if (knownKey.ObjectType != null)
 					{						

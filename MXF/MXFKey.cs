@@ -178,28 +178,28 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public Type ObjectType { get; set; }
 
-        /// <summary>
-        /// Return a byte of the key
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        [Browsable(false)]
-        public byte this[int key]
-        {
-            get
-            {
-                if (this.byteArray == null)
-                    return 0;
-                if (key >= 0 && key < this.byteArray.Length)
-                    return byteArray[key];
-                return 0;
-            }
-            //set
-            //{
-            //    if (this.m_mxfKey != null && key >= 0 && key < this.m_mxfKey.Length)
-            //        m_mxfKey[key] = (byte)value;
-            //}
-        }
+        ///// <summary>
+        ///// Return a byte of the key
+        ///// </summary>
+        ///// <param name="key"></param>
+        ///// <returns></returns>
+        //[Browsable(false)]
+        //public byte this[int key]
+        //{
+        //    get
+        //    {
+        //        if (this.byteArray == null)
+        //            return 0;
+        //        if (key >= 0 && key < this.byteArray.Length)
+        //            return byteArray[key];
+        //        return 0;
+        //    }
+        //    //set
+        //    //{
+        //    //    if (this.m_mxfKey != null && key >= 0 && key < this.m_mxfKey.Length)
+        //    //        m_mxfKey[key] = (byte)value;
+        //    //}
+        //}
 
         /// <summary>
         /// The name of this key (if found in SMPTE RP210 or RP224)
@@ -267,6 +267,8 @@ namespace Myriadbits.MXF
             FindKeyName();
         }
 
+
+        // TODO remove this constructor, reduce ctors in general for this class
         /// <summary>
         /// Create a new key combining 2 parts, first should be 4 bytes
         /// </summary>
@@ -419,8 +421,7 @@ namespace Myriadbits.MXF
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            // TODO not really semantic equality
-            return IsEqualByteSequence(this.byteArray, other.byteArray);
+            return this.Equals((MXFIdentifier)other);
         }
 
         /// <summary>
