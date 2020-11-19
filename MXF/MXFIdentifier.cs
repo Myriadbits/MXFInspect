@@ -55,7 +55,10 @@ namespace Myriadbits.MXF
         public MXFIdentifier(params int[] list)
         {
             this.byteArray = new byte[list.Length];
-            Initialize(list);
+            for (int n = 0; n < list.Length; n++)
+            {
+                byteArray[n] = (byte)list[n];
+            }
         }
 
         /// <summary>
@@ -65,17 +68,13 @@ namespace Myriadbits.MXF
         /// <param name="reader"></param>
         public MXFIdentifier(MXFReader reader, UInt32 length)
         {
-            byte[] arr = reader.ReadArray(reader.ReadByte, (int)length);
-            Initialize(arr.Select(e => (int)e).ToArray());  
+            this.byteArray = reader.ReadArray(reader.ReadByte, (int)length); 
         }
 
         protected void Initialize(int[] list)
         {
             this.byteArray = new byte[list.Length];
-            for (int n = 0; n < list.Length; n++)
-            {
-                byteArray[n] = (byte)list[n];
-            }
+
         }
 
         private MXFIdentifier() { }

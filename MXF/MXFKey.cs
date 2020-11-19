@@ -286,11 +286,8 @@ namespace Myriadbits.MXF
                 for (int n = 4; n < len; n++)
                     arr[n] = reader.ReadByte();
 
-                Initialize(arr.Select(e => (int)e).ToArray());
+                this.byteArray = arr;
             }
-
-           
-
             FindKeyName();
         }
 
