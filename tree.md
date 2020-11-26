@@ -128,7 +128,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] DCTimedTextResourceSubDescriptor
         - [x] ContainerConstraintsSubDescriptor [0/0]
         - [ ] MPEG4VisualSubDescriptor 
-        - [x] MCALabelSubDescriptor [14/14]
+        - [x] MCALabelSubDescriptor [0/14]
             - [x] AudioChannelLabelSubDescriptor [0/1] *inheritance*
             - [x] SoundfieldGroupLabelSubDescriptor [0/1] *inheritance*
             - [x] GroupOfSoundfieldGroupsLabelSubDescriptor [0/0] *inheritance*

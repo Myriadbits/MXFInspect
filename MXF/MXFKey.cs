@@ -57,6 +57,9 @@ namespace Myriadbits.MXF
     }
 
 
+
+    // short keys implemented as struct, as there are loaded
+    // over 1000 in the static constructor => so better performance
     public struct MXFShortKey
     {
         UInt64 Key1;
@@ -70,6 +73,7 @@ namespace Myriadbits.MXF
 
         public MXFShortKey(byte[] data)
         {
+            // TODO: why changing this?
             // Change endianess
             this.Key1 = 0;
             this.Key2 = 0;
@@ -320,30 +324,6 @@ namespace Myriadbits.MXF
                 this.m_fIsUID = true;
             }
         }
-
-
-        ///// <summary>
-        ///// Return a byte of the key
-        ///// </summary>
-        ///// <param name="key"></param>
-        ///// <returns></returns>
-        //[Browsable(false)]
-        //public byte this[int key]
-        //{
-        //    get
-        //    {
-        //        if (this.m_mxfKey == null)
-        //            return 0;
-        //        if (key >= 0 && key < this.m_mxfKey.Length)
-        //            return m_mxfKey[key];
-        //        return 0;
-        //    }
-        //    set
-        //    {
-        //        if (this.m_mxfKey != null && key >= 0 && key < this.m_mxfKey.Length)
-        //            m_mxfKey[key] = (byte)value;
-        //    }
-        //}
 
 
         [CategoryAttribute("Key"), ReadOnly(true)]
