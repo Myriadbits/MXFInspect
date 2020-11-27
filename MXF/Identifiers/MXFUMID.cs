@@ -42,6 +42,7 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            var bytes = this.GetByteArray();
             sb.Append("UMID - { ");
             for (int n = 0; n < this.Length; n++)
             {
@@ -50,7 +51,7 @@ namespace Myriadbits.MXF
                     sb.Append(".");
                 }
 
-                sb.Append(string.Format("{0:X2}", this.byteArray[n]));
+                sb.Append(string.Format("{0:X2}", bytes[n]));
             }
             sb.Append(" }");
             return sb.ToString();

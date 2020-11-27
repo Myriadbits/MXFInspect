@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace Myriadbits.MXF
 {
     public class MXFIdentifier : IEquatable<MXFIdentifier>
     {
-        protected byte[] byteArray = null;
+        private readonly byte[] byteArray = null;
 
         [Browsable(false)]
         public int Length => byteArray.Length;
@@ -72,6 +73,11 @@ namespace Myriadbits.MXF
                 return false;
             }
             else return this.byteArray.Take(len).SequenceEqual(id.byteArray.Take(len));
+        }
+
+        public IList<byte> GetByteArray()
+        {
+            return Array.AsReadOnly(this.byteArray);
         }
 
         public override string ToString()

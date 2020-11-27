@@ -23,6 +23,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
 
 namespace Myriadbits.MXF
 {
@@ -60,15 +62,30 @@ namespace Myriadbits.MXF
 			this.Length = this.Key.Length;
 		}
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (string.IsNullOrEmpty(this.Name))
-				return this.Key.Name;
-			return string.Format("{0} [{1}]", this.Name, this.Key.ToString());
-		}
+		///// <summary>
+		///// Some output
+		///// </summary>
+		///// <returns></returns>
+		//public override string ToString()
+		//{
+		//	if (string.IsNullOrEmpty(this.Name))
+		//		return this.Key.Name;
+
+		//	StringBuilder sb = new StringBuilder();
+		//	var arr = this.Key.GetByteArray();
+		//	sb.Append("{ ");
+		//	for (int n = 0; n < this.Length; n++)
+		//	{
+		//		if (n == 4 || n == 7)
+		//		{
+		//			sb.Append("-");
+		//		}
+
+		//		sb.Append(string.Format("{0:X2}", arr[n]));
+		//	}
+		//	sb.Append(" }");
+		//	//return sb.ToString();
+		//	return string.Format("{0} [{1}]", this.Name, sb);
+		//}
 	}
 }

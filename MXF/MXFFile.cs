@@ -620,9 +620,9 @@ namespace Myriadbits.MXF
 			{
 				if (meta.InstanceUID != null)
 				{
-					if (!allKeys.ContainsKey(meta.InstanceUID.ShortKey.ToString()))
+					if (!allKeys.ContainsKey(meta.InstanceUID.ToString()))
 					{
-						allKeys.Add(meta.InstanceUID.ShortKey.ToString(), parent);
+						allKeys.Add(meta.InstanceUID.ToString(), parent);
 					}
 				}
 			}

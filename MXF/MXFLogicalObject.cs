@@ -62,10 +62,13 @@ namespace Myriadbits.MXF
 		{
 			get
 			{
-				foreach(MXFLogicalObject lo in this.Children)
-				{
-					if (lo.Object != null && lo.Object.GetType() == type)
-						return lo;
+				if(this.Children != null)
+                {
+					foreach (MXFLogicalObject lo in this.Children)
+					{
+						if (lo.Object != null && lo.Object.GetType() == type)
+							return lo;
+					}
 				}
 				return null;
 			}

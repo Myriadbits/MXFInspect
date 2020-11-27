@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("DescriptiveMarker"), Description("")]
         public MXFRefKey DescriptiveMetadataScheme { get; set; }
         [CategoryAttribute("DescriptiveMarker"), Description("")]
-        public MXFRefKey DescriptiveMetadataPlugInID { get; set; }
+        public MXFUUID DescriptiveMetadataPlugInID { get; set; }
         [CategoryAttribute("DescriptiveMarker"), Description("")]
         public string DescriptiveMetadataApplicationEnvironmentID { get; set; }
 
@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
                     return true;
                 case 0x6101: this.DescriptiveFrameworkObject = reader.ReadRefKey(); return true;
                 case var a when localTag.Key == metadataScheme_Key: this.DescriptiveMetadataScheme = reader.ReadRefKey(); return true;
-                case var a when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadRefKey(); return true;
+                case var a when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = new MXFUUID(reader); return true;
                 case var a when localTag.Key == metadataApplicationEnvironmentID_Key: 
                     this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Size); 
                     return true;

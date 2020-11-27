@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
 
 		//TODO move instance ID to interchange object class
 		[CategoryAttribute("Metadata"), Description("3C0A")]
-		public MXFKey InstanceUID { get; set; }
+		public MXFUUID InstanceUID { get; set; }
 
 		
 		public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)
@@ -76,7 +76,7 @@ namespace Myriadbits.MXF
 				if (tag.Tag == 0x3C0A)
 				{
 					// Generic instance UID
-					this.InstanceUID = reader.ReadKey();
+					this.InstanceUID = new MXFUUID(reader);
 				}
 				else
 				{
@@ -116,7 +116,7 @@ namespace Myriadbits.MXF
                 {
                     MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
                     tag.Key = entry.AliasUID.Key;
-                    tag.Name = entry.AliasUID.Key.Name;
+                    //tag.Name = entry.AliasUID.Key.Name;
                 }
             }
         }
