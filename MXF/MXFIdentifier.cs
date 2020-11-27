@@ -42,7 +42,7 @@ namespace Myriadbits.MXF
         /// Create a new identifier
         /// </summary>
         /// <param name="list"></param>
-        public MXFIdentifier(params int[] list)
+        public MXFIdentifier(params byte[] list)
         {
             this.byteArray = new byte[list.Length];
             for (int n = 0; n < list.Length; n++)

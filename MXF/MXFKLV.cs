@@ -23,12 +23,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
     public class MXFKLV : MXFObject
     {
-        private static MXFKey s_MxfKlvKey = new MXFKey(0x06, 0x0e, 0x2b, 0x34);
+        private byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
         [CategoryAttribute("KLV"), ReadOnly(true)]
         public MXFKey Key { get; set; }
@@ -77,18 +78,13 @@ namespace Myriadbits.MXF
         /// </summary>
         private MXFKey CreateAndValidateKey(MXFReader reader)
         {
-            byte iso = reader.ReadByte();
-            byte len = reader.ReadByte();
-            byte smp = 0, te = 0;
-            bool valid = false;
-            if (iso == 0x06) // Do not check length when not iso
-            {
-                smp = reader.ReadByte();
-                te = reader.ReadByte();
-                valid = (smp == 0x2B && te == 0x34); // SMPTE define
-            }
+            byte[] prefix = reader.ReadArray(reader.ReadByte, 4);
+            bool valid = prefix.SequenceEqual(validULPrefix);
 
-            MXFKey key = new MXFKey(iso, len, smp, te, reader);
+            // read the other bytes of the UL (length is defined in second byte minus two already read bytes)
+            byte[] other = reader.ReadArray(reader.ReadByte, prefix[1] - 2);
+            byte[] keyBytes = prefix.Concat(other).ToArray();
+            MXFKey key = new MXFKey(keyBytes);
 
             if (!valid)
             {

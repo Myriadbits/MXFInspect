@@ -182,29 +182,6 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public Type ObjectType { get; set; }
 
-        ///// <summary>
-        ///// Return a byte of the key
-        ///// </summary>
-        ///// <param name="key"></param>
-        ///// <returns></returns>
-        //[Browsable(false)]
-        //public byte this[int key]
-        //{
-        //    get
-        //    {
-        //        if (this.byteArray == null)
-        //            return 0;
-        //        if (key >= 0 && key < this.byteArray.Length)
-        //            return byteArray[key];
-        //        return 0;
-        //    }
-        //    //set
-        //    //{
-        //    //    if (this.m_mxfKey != null && key >= 0 && key < this.m_mxfKey.Length)
-        //    //        m_mxfKey[key] = (byte)value;
-        //    //}
-        //}
-
         /// <summary>
         /// The name of this key (if found in SMPTE RP210 or RP224)
         /// </summary>
@@ -234,18 +211,17 @@ namespace Myriadbits.MXF
         /// Create a new key
         /// </summary>
         /// <param name="list"></param>
-        public MXFKey(params int[] list) : base(list)
+        public MXFKey(params byte[] list) : base(list)
         {
             this.Type = KeyType.None;
             FindKeyName();
-            //Initialize(list);
         }
 
         /// <summary>
         /// Create a new key
         /// </summary>
         /// <param name="list"></param>
-        public MXFKey(string name, params int[] list) : this(list)
+        public MXFKey(string name, params byte[] list) : this(list)
         {
             this.Name = name;
             FindKeyName();
@@ -255,7 +231,7 @@ namespace Myriadbits.MXF
         /// Create a new key
         /// </summary>
         /// <param name="list"></param>
-        public MXFKey(Type objectType, params int[] list) : this(list)
+        public MXFKey(Type objectType, params byte[] list) : this(list)
         {
             this.ObjectType = objectType;
             FindKeyName();
@@ -265,35 +241,9 @@ namespace Myriadbits.MXF
         /// Create a new key
         /// </summary>
         /// <param name="list"></param>
-        public MXFKey(string name, KeyType type, params int[] list) : this(name, list)
+        public MXFKey(string name, KeyType type, params byte[] list) : this(name, list)
         {
             this.Type = type;
-            FindKeyName();
-        }
-
-
-        // TODO remove this constructor, reduce ctors in general for this class
-        /// <summary>
-        /// Create a new key combining 2 parts, first should be 4 bytes
-        /// </summary>
-        /// <param name="firstPart"></param>
-        /// <param name="reader"></param>
-        public MXFKey(byte b0, byte b1, byte b2, byte b3, MXFReader reader)
-        {
-            int len = b1 + 2;
-            if (len >= 4)
-            {
-                var arr = new byte[len];
-                arr[0] = b0;
-                arr[1] = b1;
-                arr[2] = b2;
-                arr[3] = b3;
-
-                for (int n = 4; n < len; n++)
-                    arr[n] = reader.ReadByte();
-
-                this.byteArray = arr;
-            }
             FindKeyName();
         }
 

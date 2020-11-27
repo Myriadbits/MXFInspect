@@ -173,18 +173,6 @@ namespace Myriadbits.MXF
             return (this.ReadByte() != 0);
         }
 
-        // TODO: should be removed in favor of the generic method
-        /// <summary>
-        /// Reads multiple bytes into an array
-        /// </summary>
-        /// <param name="array">The array into which the bytes are read</param>
-        /// <param name="count">the number of bytes to read</param>
-        public void Read(byte[] array, long count)
-        {
-            if (this.m_FileStream != null)
-                this.m_FileStream.Read(array, 0, (int)count);
-        }
-
         /// <summary>
         /// Reads a single word
         /// </summary>
