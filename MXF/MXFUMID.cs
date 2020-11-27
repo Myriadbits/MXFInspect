@@ -22,40 +22,38 @@
 #endregion
 
 using System.ComponentModel;
+using System.Text;
 
 namespace Myriadbits.MXF
 {
-	[TypeConverter(typeof(ExpandableObjectConverter))]
-	public class MXFUMIDKey : MXFRefKey
+	public class MXFUMID : MXFIdentifier
 	{
 		/// <summary>
-		/// Create a new reference key by reading from the current file location
+		/// Create a new UMID by reading 32 bytes from the current file location
 		/// </summary>
 		/// <param name="firstPart"></param>
 		/// <param name="reader"></param>
-		public MXFUMIDKey(MXFReader reader)
-			: base(reader, 32, "UMID")
+		public MXFUMID(MXFReader reader)
+			: base(reader, 32)
 		{
+            //a UMID is 32 bytes long by definition
 		}
 
-		/// <summary>
-		/// Named Reference key
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFUMIDKey(MXFReader reader, string name)
-			: base(reader, 32, name)
-		{
-		}
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("UMID - { ");
+            for (int n = 0; n < this.Length; n++)
+            {
+                if (n > 0)
+                {
+                    sb.Append(".");
+                }
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (string.IsNullOrEmpty(this.Name))
-				return this.Key.Name;
-			return string.Format("{0} [{1}]", this.Name, this.Key.ToString());
-		}
-	}
+                sb.Append(string.Format("{0:X2}", this.byteArray[n]));
+            }
+            sb.Append(" }");
+            return sb.ToString();
+        }
+    }
 }

@@ -324,14 +324,27 @@ namespace Myriadbits.MXF
                 StringBuilder sb = new StringBuilder();
                 if (!string.IsNullOrEmpty(this.Name))
                     sb.Append(this.Name + " - ");
-                sb.Append("{");
+                sb.Append("{ ");
                 for (int n = 0; n < this.Length; n++)
                 {
                     if (n > 0)
-                        sb.Append(", ");
+                    {
+                        sb.Append(".");
+
+                        //if (n % 4 == 0)
+                        //{
+                        //    sb.Append(" - ");
+                        //}
+                        //else
+                        //{
+                        //    sb.Append(".");
+                        //}
+
+                    }
+                        
                     sb.Append(string.Format("{0:X2}", this.byteArray[n]));
                 }
-                sb.Append("}");
+                sb.Append(" }");
                 return sb.ToString();
             }
             else

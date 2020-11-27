@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("SourceClip"), Description("1201")]
 		public UInt64? StartPosition { get; set; }
 		[CategoryAttribute("SourceClip"), Description("1101")]
-		public MXFUMIDKey SourcePackageID { get; set; }
+		public MXFUMID SourcePackageID { get; set; }
 		[CategoryAttribute("SourceClip"), Description("1102")]
 		public UInt32? SourceTrackId { get; set; }
 

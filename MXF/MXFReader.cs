@@ -271,9 +271,9 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Reads a UMID key (with reference)
         /// </summary>
-        public MXFUMIDKey ReadUMIDKey()
+        public MXFUMID ReadUMIDKey()
         {
-            return new MXFUMIDKey(this); // Always read 32 bytes for UMID's 
+            return new MXFUMID(this); // Always read 32 bytes for UMID's 
         }
         
         #endregion

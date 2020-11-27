@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 	public class MXFEssenceContainerData : MXFInterchangeObject
 	{
 		[CategoryAttribute("EssenceContainerData"), Description("2701")]
-		public MXFUMIDKey LinkedPackageUID { get; set; }
+		public MXFUMID LinkedPackageID { get; set; }
 		[CategoryAttribute("EssenceContainerData"), Description("3F06")]
 		public UInt32? IndexSID { get; set; }
 		[CategoryAttribute("EssenceContainerData"), Description("3F07")]
@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x2701: this.LinkedPackageUID = reader.ReadUMIDKey(); return true;
+				case 0x2701: this.LinkedPackageID = reader.ReadUMIDKey(); return true;
 				case 0x3F06: this.IndexSID = reader.ReadUInt32(); return true;
 				case 0x3F07: this.BodySID = reader.ReadUInt32(); return true;
 			}

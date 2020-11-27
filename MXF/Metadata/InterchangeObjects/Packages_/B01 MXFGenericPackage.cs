@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 	public class MXFGenericPackage : MXFInterchangeObject
 	{
 		[CategoryAttribute("GenericPackage"), Description("4401")]
-		public MXFUMIDKey PackageUID { get; set; }
+		public MXFUMID PackageID { get; set; }
 		[CategoryAttribute("GenericPackage"), Description("4402")]
 		public string PackageName { get; set; }
 		[CategoryAttribute("GenericPackage"), Description("4404")]
@@ -55,7 +55,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4401: this.PackageUID = reader.ReadUMIDKey(); return true;
+				case 0x4401: this.PackageID = reader.ReadUMIDKey(); return true;
 				case 0x4402: this.PackageName = reader.ReadUTF16String(localTag.Size); return true;
 				case 0x4403: ReadKeyList(reader, "Tracks", "Track"); return true;
 				case 0x4404: this.ModifiedDate = reader.ReadTimestamp(); return true;
