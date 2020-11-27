@@ -23,6 +23,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace Myriadbits.MXF
 {
@@ -113,13 +115,13 @@ namespace Myriadbits.MXF
         }
 
 
-        /// <summary>
-        /// Called after all local tags have been processed
-        /// </summary>
-        /// <param name="localTag"></param>
-        protected virtual void PostInitialize()
-        {
-        }
+		/// <summary>
+		/// Called after all local tags have been processed
+		/// </summary>
+		/// <param name="localTag"></param>
+		protected virtual void PostInitialize()
+		{
+		}
 
         protected int ReadReferenceSet<T>(MXFReader reader, string referringSetName, string singleItemName) where T : MXFObject
         {

@@ -23,12 +23,25 @@
 
 using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
+	/// <summary>
+	/// <see cref="https://www.csharp-examples.net/readonly-propertygrid/"/>
+	/// </summary>
 	public class ReadOnlyPropertyGrid : PropertyGrid
 	{
+        public ReadOnlyPropertyGrid() : base()
+        {
+			// this hack changes the color from disabled-grey to
+			// almost-black, see: https://stackoverflow.com/a/11183799 
+			this.ViewForeColor = Color.FromArgb(1, 0, 0);
+		}
+
 		private bool _readOnly;
 		public bool ReadOnly
 		{
@@ -50,7 +63,16 @@ namespace Myriadbits.MXFInspect
 		{
 			if (this.SelectedObject != null)
 			{
-				TypeDescriptor.AddAttributes(this.SelectedObject, new Attribute[] { new ReadOnlyAttribute(_readOnly) });
+				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(this))
+				{
+					var attr = prop.Attributes.OfType<Attribute>().Where(x => !(x is ReadOnlyAttribute)).ToList();
+					attr.Add(new ReadOnlyAttribute(true));
+
+					typeof(MemberDescriptor).GetProperty("AttributeArray", BindingFlags.Instance | BindingFlags.NonPublic)
+					.SetValue(prop, attr.ToArray());
+				}
+
+				//TypeDescriptor.AddAttributes(this.SelectedObject, new Attribute[] { new ReadOnlyAttribute(_readOnly) });
 				this.Refresh();
 			}
 		}
