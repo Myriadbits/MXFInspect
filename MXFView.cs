@@ -99,10 +99,10 @@ namespace Myriadbits.MXFInspect
 
 			//
 			// Set the tree styles
-			OLVColumn col = (OLVColumn)this.treeListViewMain.Columns[0];
+			OLVColumn col = (OLVColumn)this.treeListViewPhysical.Columns[0];
 			col.Renderer = null;
-			col = (OLVColumn)this.treeListViewMain.Columns[1];
-			col.Renderer = this.treeListViewMain.TreeColumnRenderer;
+			col = (OLVColumn)this.treeListViewPhysical.Columns[1];
+			col.Renderer = this.treeListViewPhysical.TreeColumnRenderer;
 			col = (OLVColumn)this.treeListViewLogical.Columns[0];
 			col.Renderer = null;
 			col = (OLVColumn)this.treeListViewLogical.Columns[1];
@@ -110,12 +110,12 @@ namespace Myriadbits.MXFInspect
 
 			Pen pen = new Pen(Color.Black, 1.001f);
 			pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-			this.treeListViewMain.TreeColumnRenderer.LinePen = pen;
+			this.treeListViewPhysical.TreeColumnRenderer.LinePen = pen;
 			this.treeListViewLogical.TreeColumnRenderer.LinePen = pen;
 
 			// Set tree delegates
-			this.treeListViewMain.CanExpandGetter = Tree_HasChildren;
-			this.treeListViewMain.ChildrenGetter = Tree_ChildGetter;
+			this.treeListViewPhysical.CanExpandGetter = Tree_HasChildren;
+			this.treeListViewPhysical.ChildrenGetter = Tree_ChildGetter;
 			this.treeListViewLogical.CanExpandGetter = Tree_HasLogicalChildren;
 			this.treeListViewLogical.ChildrenGetter = Tree_LogicalChildGetter;
 
@@ -149,7 +149,7 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void treeListViewMain_SelectionChanged(object sender, EventArgs e)
 		{
-			MXFObject obj = this.treeListViewMain.SelectedObject as MXFObject;
+			MXFObject obj = this.treeListViewPhysical.SelectedObject as MXFObject;
 			if (obj != null)
 			{
 				if (!m_fDoNotSelectOther)
@@ -312,7 +312,7 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		public void SelectNextObject()
 		{
-			MXFObject selectedObject = this.treeListViewMain.SelectedObject as MXFObject;
+			MXFObject selectedObject = this.treeListViewPhysical.SelectedObject as MXFObject;
 			if (selectedObject != null)
 			{
 				MXFObject nextObject = selectedObject;
@@ -336,7 +336,7 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		public void SelectPreviousObject()
 		{
-			MXFObject selectedObject = this.treeListViewMain.SelectedObject as MXFObject;
+			MXFObject selectedObject = this.treeListViewPhysical.SelectedObject as MXFObject;
 			if (selectedObject != null)
 			{
 				MXFObject previousObject = selectedObject;
@@ -410,14 +410,14 @@ namespace Myriadbits.MXFInspect
 					// Now loop backwards through the parent list, expanding each item
 					parentList.Reverse();
 					foreach (MXFObject obj in parentList)
-						if (!this.treeListViewMain.IsExpanded(obj))
-							this.treeListViewMain.Expand(obj);
+						if (!this.treeListViewPhysical.IsExpanded(obj))
+							this.treeListViewPhysical.Expand(obj);
 				}
 
 				// Select the next object
-				this.treeListViewMain.EnsureModelVisible(selObject);
-				this.treeListViewMain.SelectObject(selObject);
-				this.treeListViewMain.RefreshObject(selObject);				
+				this.treeListViewPhysical.EnsureModelVisible(selObject);
+				this.treeListViewPhysical.SelectObject(selObject);
+				this.treeListViewPhysical.RefreshObject(selObject);				
 			}
 		}
 
@@ -482,7 +482,7 @@ namespace Myriadbits.MXFInspect
 			try
 			{
 				// Reset whole tree's
-				this.treeListViewMain.Items.Clear();
+				this.treeListViewPhysical.Items.Clear();
 				this.treeListViewLogical.Items.Clear();
 
 				// Add the data
@@ -662,17 +662,17 @@ namespace Myriadbits.MXFInspect
 		/// </summary>
 		private void AddItemsToTree(bool filterCurrentType)
 		{
-			MXFObject selObject = this.treeListViewMain.SelectedObject as MXFObject;
+			MXFObject selObject = this.treeListViewPhysical.SelectedObject as MXFObject;
 			if (filterCurrentType && selObject != null)
 			{
 				Type selectedType = selObject.GetType();
 
 				// Create a new list with the selected items only)
 				if (this.HideFillers)
-					this.m_filterList = this.m_MXFFile.FlatList.Where(a => a.GetType() == selectedType && a.Type != MXFObjectType.Filler).ToList();
+					this.m_filterList = this.m_MXFFile.Descendants().Where(a => a.GetType() == selectedType && a.Type != MXFObjectType.Filler).ToList();
 				else
-					this.m_filterList = this.m_MXFFile.FlatList.Where(a => a.GetType() == selectedType).ToList();
-				this.treeListViewMain.SetObjects(this.m_filterList);
+					this.m_filterList = this.m_MXFFile.Descendants().Where(a => a.GetType() == selectedType).ToList();
+				this.treeListViewPhysical.SetObjects(this.m_filterList);
 				this.txtOverall.Text = string.Format("Number of filtered objects: {0}", this.m_filterList.Count);
 			}
 			else
@@ -680,8 +680,8 @@ namespace Myriadbits.MXFInspect
 				this.m_filterList = null;
 				if (this.m_MXFFile != null)
 				{
-					this.treeListViewMain.SetObjects(this.m_MXFFile.Children);
-					this.txtOverall.Text = string.Format("Total objects: {0}", this.m_MXFFile.FlatList.Count);
+					this.treeListViewPhysical.SetObjects(this.m_MXFFile.Children);
+					this.txtOverall.Text = string.Format("Total objects: {0}", this.m_MXFFile.Descendants().Count());
 				}
 				else
 					this.txtOverall.Text = "";
@@ -743,12 +743,12 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		public void CollapseAll()
 		{
-			this.treeListViewMain.CollapseAll();
+			this.treeListViewPhysical.CollapseAll();
 
 			// No item selected, just select the first partition
 			if (this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
 			{
-				this.treeListViewMain.Expand(this.m_MXFFile.Children[0]);
+				this.treeListViewPhysical.Expand(this.m_MXFFile.Children[0]);
 				//foreach (MXFObject obj in this.m_MXFFile.Partitions)
 				//	if (!this.treeListViewMain.IsExpanded(obj))
 				//		this.treeListViewMain.Expand(obj);
@@ -761,7 +761,7 @@ namespace Myriadbits.MXFInspect
 		/// </summary>
 		public void ApplyUserSettings()
 		{
-			this.treeListViewMain.Refresh();
+			this.treeListViewPhysical.Refresh();
 			this.treeListViewLogical.Refresh();
 		}
 

@@ -65,9 +65,6 @@ namespace Myriadbits.MXF
         public MXFSystemItem FirstSystemItem { get; set; }
         public MXFSystemItem LastSystemItem { get; set; }
 
-        // TODO remove FlatList or at least get from Descendants as materialized list
-        public List<MXFObject> FlatList { get; set; }
-
         public MXFLogicalObject LogicalBase { get; set; }
 
         public int PartitionCount
@@ -407,8 +404,8 @@ namespace Myriadbits.MXF
             // TODO why don't we use Descendants method?
             worker.ReportProgress(93, "Resolving flatlist");
             sw.Restart();
-            this.FlatList = new List<MXFObject>();
-            this.AddToList(this.FlatList);
+            //this.FlatList = new List<MXFObject>();
+            //this.AddToList(this.FlatList);
             Debug.WriteLine("Flatlist created in {0} ms", sw.ElapsedMilliseconds);
 
 
