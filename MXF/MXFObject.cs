@@ -99,8 +99,8 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		[Browsable(false)]		
-		public List<MXFObject> Children { get; set; }
+		[Browsable(false)]
+		public List<MXFObject> Children { get; set; } = new List<MXFObject>();
 
 		[Browsable(false)]
 		public MXFObject Parent { get; set; }
@@ -112,6 +112,7 @@ namespace Myriadbits.MXF
 		///Default constructor needed for derived classes such as MXFFile, ...
 		/// </summary>
 		/// <param name="reader"></param>
+		// TODO can be removed, can it?
 		public MXFObject()
 		{
 		}
@@ -140,42 +141,40 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="child"></param>
 		/// <returns></returns>
-		[Browsable(false)]		
-		public bool HasChildren
-		{
-			get
-			{
-				if (this.Children == null)
-					return false;
-				return this.Children.Count > 0;
-			}
-		}
+		//[Browsable(false)]		
+		//public bool HasChildren
+		//{
+		//	get
+		//	{
+		//		if (this.Children == null)
+		//			return false;
+		//		return this.Children.Count > 0;
+		//	}
+		//}
 
 		/// <summary>
 		/// Returns the number of children
 		/// </summary>
 		/// <param name="child"></param>
 		/// <returns></returns>
-		[Browsable(false)]
-		public int ChildCount
-		{
-			get
-			{
-				if (this.Children == null)
-					return 0;
-				return this.Children.Count;
-			}
-		}
+		//[Browsable(false)]
+		//public int ChildCount
+		//{
+		//	get
+		//	{
+		//		if (this.Children == null)
+		//			return 0;
+		//		return this.Children.Count;
+		//	}
+		//}
 
 		/// <summary>
-		/// Add a child
+		/// Adds a child an sets reference of parent to this
 		/// </summary>
 		/// <param name="child"></param>
 		/// <returns></returns>
 		public MXFObject AddChild(MXFObject child)
 		{
-			if (this.Children == null)
-				this.Children = new List<MXFObject>();
 			child.Parent = this;
 			this.Children.Add(child);
 			if (child.Offset < this.m_lOffset)
@@ -188,26 +187,23 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <returns>The top level parent</returns>
 		[Browsable(false)]
-		public MXFObject TopParent
+		public MXFObject Root()
 		{
-			get 
-			{
 				if (this.Parent != null)
-					return this.Parent.TopParent;
+					return this.Parent.Root();
 				return this;
-			}
 		}
 
 		public IEnumerable<MXFObject> Descendants()
 		{
-			if (this.HasChildren)
+			if (this.Children.Any())
 			{
 				var nodes = new Stack<MXFObject>(this.Children);
 				while (nodes.Any())
 				{
 					MXFObject node = nodes.Pop();
 					yield return node;
-					if (node.HasChildren)
+					if (node.Children.Any())
 					{
 						foreach (var n in node.Children)
 						{
@@ -243,7 +239,7 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		public override string ToString()
 		{
-			if (this.Children == null)
+			if (this.Children.Any())
 				return this.Offset.ToString();
 			return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
 		}
@@ -269,7 +265,7 @@ namespace Myriadbits.MXF
 		public MXFObject FindNextSibling(Type typeToFind, bool skipFillers)
 		{
 			MXFObject found = null;
-			if (this.Parent != null && this.Parent.HasChildren)
+			if (this.Parent != null && this.Parent.Children.Any())
 			{
 				int index = this.Parent.Children.FindIndex(a => a == this);
 				if (index >= 0 && index < this.Parent.Children.Count - 1)
@@ -304,7 +300,7 @@ namespace Myriadbits.MXF
 		public MXFObject FindPreviousSibling(Type typeToFind, bool skipFillers)
 		{
 			MXFObject found = null;
-			if (this.Parent != null && this.Parent.HasChildren)
+			if (this.Parent != null && this.Parent.Children.Any())
 			{
 				int index = this.Parent.Children.FindIndex(a => a == this);
 				if (index > 0)
@@ -346,7 +342,7 @@ namespace Myriadbits.MXF
 				{
 					if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
 						return child;
-					if (child.HasChildren)
+					if (child.Children.Any())
 					{
 						found = child.FindChild(typeToFind, skipFillers);
 						if (found != null)
@@ -374,7 +370,7 @@ namespace Myriadbits.MXF
 					MXFObject child = this.Children[n];
 					if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
 						return child;
-					if (child.HasChildren)
+					if (child.Children.Any())
 					{
 						found = child.FindChildReverse(typeToFind, skipFillers);
 						if (found != null)
@@ -409,7 +405,7 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		public MXFObject GetChild(int index)
 		{
-			if (this.Children == null)
+			if (this.Children.Any())
 				return null;
 			if (index >= 0 && index < this.Children.Count)
 				return this.Children[index];
@@ -417,17 +413,17 @@ namespace Myriadbits.MXF
 		}
 
 
-		/// <summary>
-		/// Returns true if a child with a certain offset already exists
-		/// </summary>
-		/// <param name="currentObject"></param>
-		/// <returns></returns>
-		public bool ChildExists(MXFObject child)
-		{
-			if (this.Children != null && child != null)
-				return this.Children.Exists(a => a.Offset == child.Offset);
-			return false;
-		}
+		///// <summary>
+		///// Returns true if a child with a certain offset already exists
+		///// </summary>
+		///// <param name="currentObject"></param>
+		///// <returns></returns>
+		//public bool ChildExists(MXFObject child)
+		//{
+		//	if (this.Children != null && child != null)
+		//		return this.Children.Exists(a => a.Offset == child.Offset);
+		//	return false;
+		//}
 
 		/// <summary>
 		/// Load the entire object from disk (when not yet loaded)

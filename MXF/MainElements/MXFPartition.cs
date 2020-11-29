@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -174,7 +175,7 @@ namespace Myriadbits.MXF
 					if (klv.Key.Type == KeyType.Partition || klv.Key.Type == KeyType.RIP || klv.Key.Type == KeyType.PrimerPack)
 						break; // Next partition or other segment, quit reading							
 
-					if (!this.ChildExists(klv))
+					if (!this.Children.Any(a => a.Offset == klv.Offset))
 					{
 						// Normal, just add the new child
 						this.AddChild(klv);

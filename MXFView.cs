@@ -504,7 +504,7 @@ namespace Myriadbits.MXFInspect
 		{
 			MXFObject mxf = x as MXFObject;
 			if (mxf == null) return false;
-			return mxf.HasChildren;
+			return mxf.Children.Any();
 		}
 
 		/// <summary>

@@ -139,7 +139,7 @@ namespace Myriadbits.MXF
             }
 
             this.AddChild(referenceSet);
-            return referenceSet.ChildCount;
+            return referenceSet.Children.Count;
         }
 
         /// <summary>

@@ -81,9 +81,7 @@ namespace Myriadbits.MXF
         {
             get
             {
-                if (this.RIP == null) return 0;
-                if (this.RIP.Children == null) return 0;
-                return this.RIP.Children.Count;
+                return this.RIP?.Children.Count ?? 0;
             }
         }
 
@@ -499,13 +497,18 @@ namespace Myriadbits.MXF
                 {
                     // create and add the logical child
                     var refObj = r.GetReference();
-                    MXFLogicalObject lo = new MXFLogicalObject(refObj, refObj.ToString());
-                    node.AddChild(lo);
-
-                    if (refObj.HasChildren)
+                    if(refObj != null)
                     {
-                        LogicalAddChilds(lo);
+                        MXFLogicalObject lo = new MXFLogicalObject(refObj, refObj.ToString());
+                        node.AddChild(lo);
+
+                        if (refObj.Children.Any())
+                        {
+                            LogicalAddChilds(lo);
+                        }
                     }
+
+
                 }
             }
             return node;

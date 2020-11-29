@@ -390,7 +390,7 @@ namespace Myriadbits.MXF
 				}
 			}
 
-			if (current.Children == null)
+			if (!current.Children.Any())
 				return;
 
 			foreach(MXFObject child in current.Children)
