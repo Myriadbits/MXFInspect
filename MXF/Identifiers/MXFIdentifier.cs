@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public class MXFIdentifier : IEquatable<MXFIdentifier>
+    public abstract class MXFIdentifier : IEquatable<MXFIdentifier>
     {
         private readonly byte[] byteArray = null;
 

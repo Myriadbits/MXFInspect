@@ -24,12 +24,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public class MXFReference<T> : MXFObject where T : MXFObject 
+    public class MXFReference<T> : MXFObject, IReference<T> where T: MXFObject
     {
         [CategoryAttribute("Reference"), ReadOnly(true)]
         public string Name { get; set; }
@@ -48,6 +49,26 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             return string.Format("{0} -> [{1}]", this.Name, this.Identifier);
+        }
+
+        public bool ResolveReference(IUUIDIdentifiable obj)
+        {
+            if (Identifier.Equals(obj.GetUUID()))
+            {
+                if(obj is T)
+                {
+                    Reference = (T)obj;
+                    Debug.WriteLine(string.Format("Reference resolved: {0} -> {1}", this.ToString(), Reference.ToString()));
+                    return true;
+                }
+                Debug.WriteLine(string.Format("Reference not resolveable as types don't match: {0} -> {1}", this.GetType(), Reference.GetType()));
+            }
+            return false;
+        }
+
+        public MXFObject GetReference()
+        {
+            return Reference;
         }
 
     }

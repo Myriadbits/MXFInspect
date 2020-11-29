@@ -295,7 +295,7 @@ namespace Myriadbits.MXF
 		/// <summary>
 		/// Update all descriptions with data from the primer pack
 		/// </summary>
-		public void UpdateAllTypeDescriptions(Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
+		public static void UpdateAllTypeDescriptions(Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
 		{
 			// Start by setting all properties of all these classes to readonly
 			foreach (MXFKey key in m_allKeys)
@@ -308,7 +308,7 @@ namespace Myriadbits.MXF
 		/// <summary>
 		/// Set all properties to readonly (recursive through to the base classes)
 		/// </summary>
-		public void UpdateTypeDescriptions(Type type, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
+		public static void UpdateTypeDescriptions(Type type, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
 		{
 			if (type != null && allPrimerKeys != null)
 			{

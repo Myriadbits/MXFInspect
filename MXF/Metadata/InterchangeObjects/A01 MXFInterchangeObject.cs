@@ -25,14 +25,17 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFInterchangeObject : MXFMetadataBaseclass
+	public class MXFInterchangeObject : MXFMetadataBaseclass, IUUIDIdentifiable
 	{
 		public readonly MXFKey appPluginObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x06, 0x01, 0x01, 0x04, 0x02, 0x0e, 0x00, 0x00);
+
+		[CategoryAttribute("InterchangeObject"), Description("3C0A")]
+		public MXFUUID InstanceID { get; set; }
 
 		[CategoryAttribute("InterchangeObject"), Description("0101")]
 		public MXFKey ObjectClass { get; set; }
 		[CategoryAttribute("InterchangeObject"), Description("0102")]
-		public MXFUUID GenerationUID { get; set; }
+		public MXFUUID LinkedGenerationID { get; set; }
 
 		public MXFInterchangeObject(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, metadataName)
@@ -46,8 +49,9 @@ namespace Myriadbits.MXF
 		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
-			{				
-				case 0x0102: this.GenerationUID = new MXFUUID(reader); return true;
+			{
+				case 0x3C0A: this.InstanceID = new MXFUUID(reader); return true;
+				case 0x0102: this.LinkedGenerationID = new MXFUUID(reader); return true;
 				case 0x0101: this.ObjectClass = reader.ReadKey(); return true;
 				// TODO replace generic MXFObject with class ApplicationPluginObject once implemented
 				case var a when localTag.Key == appPluginObjects_Key: ReadReferenceSet<MXFObject>(reader, "Application Plugin Objects", "Application Plugin Object");  return true;
@@ -55,5 +59,9 @@ namespace Myriadbits.MXF
 			return base.ParseLocalTag(reader, localTag); 
 		}
 
-	}
+        public MXFUUID GetUUID()
+        {
+            return this.InstanceID;
+        }
+    }
 }

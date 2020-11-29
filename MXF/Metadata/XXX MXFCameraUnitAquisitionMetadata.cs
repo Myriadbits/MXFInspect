@@ -28,6 +28,8 @@ namespace Myriadbits.MXF
 {
     // CameraUnitAcquisitionMetadata 
     // urn:smpte:ul:060e2b34.027f0101.0c020101.02010000
+
+    // TODO add InstanceID property and check the inheritance tree, does it really derive from metadatabase class?
     public class MXFCameraUnitAquisitionMetadata : MXFMetadataBaseclass
     {
         [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]

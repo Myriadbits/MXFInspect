@@ -21,36 +21,17 @@
 //
 #endregion
 
-using System;
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
-	public class MXFEntryPrimer : MXFObject
-	{
-		[CategoryAttribute("PrimerEntry"), ReadOnly(true)]
-		public UInt16 LocalTag { get; set; }
-		[CategoryAttribute("PrimerEntry"), ReadOnly(true)]
-		// TODO smpte specs request an AUID, but 
-		// probably a MXFKey = UL would make more sense here, so can we change this safely?
-		public MXFAUID AliasUID { get; set; }
+    public interface IReference<T> : IResolvable where T : MXFObject 
+    {
+        T Reference { get; set; }
+    }
 
-		public MXFEntryPrimer(MXFReader reader)
-			: base(reader)
-		{
-			this.Offset = reader.Position;
-			this.LocalTag = reader.ReadUInt16();
-			this.AliasUID = new MXFAUID(reader, 16, "AliasUID");
-			this.Length = 20; // Fixed length
-		}
+    public interface IResolvable
+    {
+        bool ResolveReference(IUUIDIdentifiable obj);
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return string.Format("Localtag 0x{0:X4} -> {1}", this.LocalTag, this.AliasUID.ToString());
-		}
-	}
+        MXFObject GetReference();
+    }
 }

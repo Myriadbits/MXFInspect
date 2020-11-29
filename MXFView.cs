@@ -280,14 +280,12 @@ namespace Myriadbits.MXFInspect
 				// Select the reference itself by default
 				m_currentReference = m_selectedObject;
 
-				// Refkey, then select the reference it points too
-				MXFAUID refkey = m_selectedObject as MXFAUID;
-				if (refkey != null)
+				if (m_selectedObject is IResolvable refkey)
 				{
-					if (refkey.Reference != null)
-						m_currentReference = refkey.Reference;
+					if (refkey.GetReference() != null)
+						m_currentReference = refkey.GetReference();
 					else
-						m_currentReference = null; // Reset
+						m_currentReference = null; // Reset ?? dumb logic?
 				}
 			}
 			this.btnSelectReference.Enabled = (m_currentReference != null);			
