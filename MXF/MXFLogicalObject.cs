@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
 		[Browsable(false)]
 		public MXFObject Object { get; set; }
 
-		[Browsable(false)]		
+		[Browsable(false)]
 		public List<MXFLogicalObject> Children { get; set; }
 
 		[Browsable(false)]
@@ -52,6 +52,27 @@ namespace Myriadbits.MXF
 			this.Name = name;
 		}
 
+		public IEnumerable<MXFLogicalObject> Descendants()
+		{
+			if (this.HasChildren)
+			{
+				var nodes = new Stack<MXFLogicalObject>(this.Children);
+				while (nodes.Any())
+				{
+					var node = nodes.Pop();
+					yield return node;
+					if (node.HasChildren)
+					{
+						foreach (var n in node.Children)
+						{
+							nodes.Push(n);
+						}
+					}
+
+				}
+			}
+			else yield break;
+		}
 
 		/// <summary>
 		/// Find the first child with this type
@@ -73,6 +94,9 @@ namespace Myriadbits.MXF
 				return null;
 			}
 		}
+
+
+
 
 		/// <summary>
 		/// Get all childs cast to the required type

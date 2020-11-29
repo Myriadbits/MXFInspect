@@ -31,10 +31,10 @@ namespace Myriadbits.MXF
 		public override void OnExecuteTest(ref List<MXFValidationResult> results)
 		{
 			this.Task = "Track Info";
-			int not = this.File.NumberOfTracks;
-			for(int n = 1; n <= not; n++)
+			int noT = this.File.NumberOfTracks;
+			for(int n = 0; n < noT; n++)
 			{
-				ReportProgress(n * 100 / not);
+				ReportProgress(n * 100 / noT);
 				MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
 				valResult.Category = "Track Info";
 				results.Add(valResult); // And directly add the results

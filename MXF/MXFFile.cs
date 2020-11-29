@@ -548,7 +548,14 @@ namespace Myriadbits.MXF
         {
             try
             {
-                List<MXFLogicalObject> lot = MXFLogicalObject.GetLogicChilds<MXFGenericTrack>(this.LogicalBase[typeof(MXFMaterialPackage)]);
+                //List<MXFLogicalObject> lot = MXFLogicalObject.GetLogicChilds<MXFGenericTrack>(this.LogicalBase[typeof(MXFMaterialPackage)]);
+
+                var lot = this.LogicalBase
+                    .Descendants()
+                    .Where(o => o.Object is MXFMaterialPackage)
+                    .First()
+                    .Children.Where(c => c.Object is MXFGenericTrack);
+
                 MXFLogicalObject track = lot.Where(a => ((MXFGenericTrack)a.Object).TrackID == trackID).FirstOrDefault();
                 if (track != null)
                 {
@@ -562,7 +569,7 @@ namespace Myriadbits.MXF
                             sb.Append(string.Format("Rate: {0} ", ttrack.EditRate));
                         MXFSequence seq = MXFLogicalObject.GetFirstChild<MXFSequence>(track);
                         if (seq != null && seq.DataDefinition != null)
-                            sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Description));
+                            sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Name));
                         return sb.ToString();
                     }
                 }
@@ -583,10 +590,16 @@ namespace Myriadbits.MXF
             {
                 if (this.LogicalBase == null)
                     return 0;
-                MXFLogicalObject lo = this.LogicalBase[typeof(MXFMaterialPackage)];
-                if (lo != null && lo.Children != null)
-                    return lo.Children.Count();
-                return 0;
+
+                return this.LogicalBase
+                    .Descendants()
+                    .First(o => o.Object is MXFMaterialPackage)
+                    .Children
+                    .Count;
+
+                //if (lo != null && lo.Children != null)
+                //    return lo.Children.Count();
+                //return 0;
             }
         }
 
