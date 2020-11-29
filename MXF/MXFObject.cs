@@ -49,6 +49,7 @@ namespace Myriadbits.MXF
 		Error
 	};
 
+	[TypeConverter(typeof(ExpandableObjectConverter))]
 	public abstract class MXFObject
 	{
 		private long m_lOffset = long.MaxValue;	// Offset in bytes from the beginning of the file

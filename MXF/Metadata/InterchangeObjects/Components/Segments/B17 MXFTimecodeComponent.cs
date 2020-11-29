@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
 		public bool? DropFrame { get; set; }
 
 		public MXFTimecodeComponent(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Timecode Component")
+			: base(reader, headerKLV, "TimeCodeComponent")
 		{
 		}
 

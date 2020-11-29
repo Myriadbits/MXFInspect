@@ -65,9 +65,30 @@ namespace Myriadbits.MXF
         public MXFSystemItem FirstSystemItem { get; set; }
         public MXFSystemItem LastSystemItem { get; set; }
 
+        // TODO remove FlatList or at least get from Descendants as materialized list
         public List<MXFObject> FlatList { get; set; }
 
         public MXFLogicalObject LogicalBase { get; set; }
+
+        public int PartitionCount
+        {
+            get
+            {
+                if (this.Partitions == null)
+                    return 0;
+                return this.Partitions.Count;
+            }
+        }
+
+        public int RIPEntryCount
+        {
+            get
+            {
+                if (this.RIP == null) return 0;
+                if (this.RIP.Children == null) return 0;
+                return this.RIP.Children.Count;
+            }
+        }
 
 
         /// <summary>
@@ -466,61 +487,31 @@ namespace Myriadbits.MXF
         }
 
         /// <summary>
-        /// Add all children (recusive)
+        /// Add all children (recursively)
         /// </summary>
-        /// <param name="parent"></param>
-        protected MXFLogicalObject LogicalAddChilds(MXFLogicalObject parent)
+        /// <param name="node"></param>
+        protected MXFLogicalObject LogicalAddChilds(MXFLogicalObject node)
         {
             // Check properties for reference
-            MXFObject reference = parent.Object;
-            if (reference != null)
+            MXFObject obj = node.Object;
+            if (obj != null)
             {
-                foreach (PropertyInfo propertyInfo in reference.GetType().GetProperties())
+                var desc = obj.Descendants().OfType<IResolvable>();
+
+                foreach (var r in desc)
                 {
-                    if (propertyInfo.CanRead)
+                    // create and add the logical child
+                    var refObj = r.GetReference();
+                    MXFLogicalObject lo = new MXFLogicalObject(refObj, refObj.ToString());
+                    node.AddChild(lo);
+
+                    if (refObj.HasChildren)
                     {
-                        if (propertyInfo.PropertyType == typeof(MXFAUID))
-                        {
-                            // Found one!
-                            MXFAUID refKey = (MXFAUID)propertyInfo.GetValue(reference, null);
-                            if (refKey != null && refKey.Reference != null)
-                            {
-                                // Add the child
-                                MXFLogicalObject lo = new MXFLogicalObject(refKey.Reference, refKey.Reference.ToString());
-                                parent.AddChild(lo);
-
-                                // Add all sub stuff
-                                LogicalAddChilds(lo);
-                            }
-                        }
-                    }
-                }
-
-                if (reference.HasChildren)
-                {
-                    foreach (MXFObject child in reference.Children)
-                    {
-                        if (child.HasChildren)
-                        {
-                            foreach (MXFObject grandchild in child.Children)
-                            {
-                                MXFAUID refKey = grandchild as MXFAUID;
-                                if (refKey != null && refKey.Reference != null)
-                                {
-                                    MXFLogicalObject lo = new MXFLogicalObject(refKey.Reference, refKey.Reference.ToString());
-
-                                    // Add the child
-                                    parent.AddChild(lo);
-
-                                    // Add all sub stuff
-                                    LogicalAddChilds(lo);
-                                }
-                            }
-                        }
+                        LogicalAddChilds(lo);
                     }
                 }
             }
-            return parent;
+            return node;
         }
 
         /// <summary>
@@ -538,7 +529,7 @@ namespace Myriadbits.MXF
             {
                 foreach (var o in uuidObjs)
                 {
-                     bool IsResolved = r.ResolveReference(o);
+                    bool IsResolved = r.ResolveReference(o);
                     if (IsResolved)
                     {
                         numOfResolved++;
@@ -547,27 +538,6 @@ namespace Myriadbits.MXF
             }
             return numOfResolved;
         }
-
-        public int PartitionCount
-        {
-            get
-            {
-                if (this.Partitions == null)
-                    return 0;
-                return this.Partitions.Count;
-            }
-        }
-
-        public int RIPEntryCount
-        {
-            get
-            {
-                if (this.RIP == null) return 0;
-                if (this.RIP.Children == null) return 0;
-                return this.RIP.Children.Count;
-            }
-        }
-
 
         /// <summary>
         /// Return info from this MXFFile
@@ -603,7 +573,6 @@ namespace Myriadbits.MXF
             }
             return "";
         }
-
 
         /// <summary>
         /// Count the number of tracks

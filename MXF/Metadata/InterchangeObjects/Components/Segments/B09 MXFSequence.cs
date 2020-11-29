@@ -28,6 +28,7 @@ namespace Myriadbits.MXF
 		public MXFSequence(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Sequence")
 		{
+			this.MetaDataName = "Sequence";
 		}
 
 		public MXFSequence(MXFReader reader, MXFKLV headerKLV, string metadataName)
