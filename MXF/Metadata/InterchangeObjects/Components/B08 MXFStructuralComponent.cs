@@ -28,6 +28,7 @@ namespace Myriadbits.MXF
 {
 	public class MXFStructuralComponent : MXFInterchangeObject
 	{
+		// TODO this should be a UUID?
 		[CategoryAttribute("StructuralComponent"), Description("0201")]
 		public MXFKey DataDefinition { get; set; }
 
@@ -35,13 +36,6 @@ namespace Myriadbits.MXF
 		public UInt64? Duration { get; set; }
 
 		[CategoryAttribute("StructuralComponent"), Description("0204")]
-		public MXFRefKey[] UserComments { get; set; }
-
-		[CategoryAttribute("StructuralComponent"), Description("0203")]
-		public MXFRefKey[] KLVData { get; set; }
-
-		[CategoryAttribute("StructuralComponent"), Description("0205")]
-		public MXFRefKey[] Attributes { get; set; }
 
 		public MXFStructuralComponent(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, metadataName)
@@ -58,10 +52,11 @@ namespace Myriadbits.MXF
 			{
 				case 0x0201: this.DataDefinition = reader.ReadKey(); return true;
 				case 0x0202: this.Duration = reader.ReadUInt64(); return true;
-				case 0x0203: reader.ReadKeyList("KLV Data", "KLV Data"); return true;
-				case 0x0204: reader.ReadKeyList("User Comments", "User Comment"); return true;
-				case 0x0205: reader.ReadKeyList("Attributes", "Attribute"); ; return true;
-			}
+				// TODO make specific classes
+                case 0x0203: ReadReferenceSet<MXFObject>(reader, "KLV Data", "KLV Data"); return true;
+                case 0x0204: ReadReferenceSet<MXFObject>(reader, "User Comments", "User Comment"); return true;
+                case 0x0205: ReadReferenceSet<MXFObject>(reader, "Attributes", "Attribute"); return true;
+            }
 			return base.ParseLocalTag(reader, localTag); 
 		}
 

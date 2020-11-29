@@ -98,8 +98,6 @@ namespace Myriadbits.MXF
     public class MXFKey : MXFIdentifier, IEquatable<MXFKey>
     {
         private static Dictionary<MXFShortKey, string[]> m_ULDescriptions;
-        //private byte[] m_mxfKey = null;
-        private bool m_fIsUID = false;
 
 
         static MXFKey()
@@ -266,12 +264,6 @@ namespace Myriadbits.MXF
             if (m_ULDescriptions.ContainsKey(skey))
             {
                 this.Name = m_ULDescriptions[skey][0];
-                this.m_fIsUID = false;
-            }
-            else
-            {
-                this.Name = "UID"; // Not in the global UL list, probably an unique ID
-                this.m_fIsUID = true;
             }
         }
 
@@ -319,8 +311,6 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            if (m_fIsUID)
-            {
                 StringBuilder sb = new StringBuilder();
                 var bytes = this.GetByteArray();
                 if (!string.IsNullOrEmpty(this.Name))
@@ -331,16 +321,6 @@ namespace Myriadbits.MXF
                     if (n > 0)
                     {
                         sb.Append(".");
-
-                        //if (n % 4 == 0)
-                        //{
-                        //    sb.Append(" - ");
-                        //}
-                        //else
-                        //{
-                        //    sb.Append(".");
-                        //}
-
                     }
                         
                     sb.Append(string.Format("{0:X2}", bytes[n]));
@@ -348,9 +328,6 @@ namespace Myriadbits.MXF
                 sb.Append(" }");
                 return sb.ToString();
             }
-            else
-                return this.Name;
-        }
 
 
         #region Equals

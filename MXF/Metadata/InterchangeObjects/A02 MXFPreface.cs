@@ -33,14 +33,10 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("Preface"), Description("3B02")]
         public DateTime? LastModificationDate { get; set; }
         [CategoryAttribute("Preface"), Description("3B03")]
-        public MXFRefKey ContentStorageUID { get; set; }
-        [CategoryAttribute("Preface"), Description("3B05")]
         public MXFVersion Version { get; set; }
         [CategoryAttribute("Preface"), Description("3B07")]
         public UInt32? ObjectModelVersion { get; set; }
         [CategoryAttribute("Preface"), Description("3B08")]
-        public MXFRefKey PrimaryPackageUID { get; set; }
-        [CategoryAttribute("Preface"), Description("3B09")]
         public MXFKey OperationalPattern { get; set; }
         [CategoryAttribute("Preface"), Description("")]
         public bool? IsRIPPresent { get; set; }
@@ -64,12 +60,12 @@ namespace Myriadbits.MXF
                 case 0x3B02: this.LastModificationDate = reader.ReadTimestamp(); return true;
                 case 0x3B05: this.Version = reader.ReadVersion(); return true;
                 case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
-                case 0x3B03: this.ContentStorageUID = new MXFRefKey(reader, 16, "ContentStorage"); return true;
-                case 0x3B08: this.PrimaryPackageUID = new MXFRefKey(reader, 16, "PrimaryPackage"); return true;
+                case 0x3B03: ReadReference<MXFContentStorage>(reader, "ContentStorage"); return true;
+                case 0x3B08: ReadReference<MXFGenericPackage>(reader, "PrimaryPackage"); return true;
                 case 0x3B09: this.OperationalPattern = new MXFKey(reader, 16); return true;
-                case 0x3B06: ReadKeyList(reader, "Identifications", "Identification"); return true;
-                case 0x3B0A: ReadKeyList(reader, "Essencecontainers", "Essencecontainer"); return true;
-                case 0x3B0B: ReadKeyList(reader, "Descriptive Metadata Schemes", "DM scheme"); return true;
+                case 0x3B06: ReadReferenceSet<MXFIdentification>(reader, "Identifications", "Identification"); return true;
+                case 0x3B0A: ReadAUIDSet(reader, "Essencecontainers", "Essencecontainer"); return true;
+                case 0x3B0B: ReadAUIDSet(reader, "Descriptive Metadata Schemes", "DM scheme"); return true;
                 case var a when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBool(); return true;
             }
             return base.ParseLocalTag(reader, localTag);

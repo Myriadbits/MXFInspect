@@ -34,9 +34,9 @@ namespace Myriadbits.MXF
 
         [CategoryAttribute("DescriptiveMarker"), Description("6102")]
         public UInt32[] DescribedTrackIDs { get; set; }
-        [CategoryAttribute("DescriptiveMarker"), Description("6101")]
-        public MXFRefKey DescriptiveFrameworkObject { get; set; }
         [CategoryAttribute("DescriptiveMarker"), Description("")]
+
+        // TODO should this be UUID or AUID or UL?
         public MXFRefKey DescriptiveMetadataScheme { get; set; }
         [CategoryAttribute("DescriptiveMarker"), Description("")]
         public MXFUUID DescriptiveMetadataPlugInID { get; set; }
@@ -60,7 +60,7 @@ namespace Myriadbits.MXF
                 case 0x6102:
                     this.DescribedTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Size / sizeof(UInt32));
                     return true;
-                case 0x6101: this.DescriptiveFrameworkObject = reader.ReadRefKey(); return true;
+                case 0x6101: ReadReference<MXFDescriptiveFramework>(reader, "DescriptiveFramework"); return true;
                 case var a when localTag.Key == metadataScheme_Key: this.DescriptiveMetadataScheme = reader.ReadRefKey(); return true;
                 case var a when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = new MXFUUID(reader); return true;
                 case var a when localTag.Key == metadataApplicationEnvironmentID_Key: 

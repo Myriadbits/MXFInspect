@@ -21,31 +21,30 @@
 //
 #endregion
 
-using System.ComponentModel;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public class MXFEssenceGroup : MXFStructuralComponent
+    public class MXFReference<T> : MXFObject where T : MXFObject 
     {
-        public MXFEssenceGroup(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+        public string Name { get; set; }
+        public T Reference { get; set; }
+        public MXFUUID Identifier { get; set; }
+
+        public MXFReference(MXFReader reader, string name) : base(reader.Position)
         {
+            Name = name;
+            Identifier = new MXFUUID(reader);
+            Length = Identifier.Length;
         }
 
-        /// <summary>
-        /// Overridden method to process local tags
-        /// </summary>
-        /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        public override string ToString()
         {
-            switch (localTag.Tag)
-            {
-                // TODO create class SourceReference for the referring objects
-                case 0x0502: this.ReadReference<MXFObject>(reader, "StillFrame"); return true;
-                case 0x0501: this.ReadReferenceSet<MXFObject>(reader, "Choices", "Choice"); return true;
-            }
-            return base.ParseLocalTag(reader, localTag);
+            return string.Format("{0} -> [{1}]", this.Name, this.Identifier);
         }
 
     }

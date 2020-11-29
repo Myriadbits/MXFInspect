@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 		Error
 	};
 
-	public class MXFObject
+	public abstract class MXFObject
 	{
 		private long m_lOffset = long.MaxValue;	// Offset in bytes from the beginning of the file
 		private long m_lLength = -1;			// Length in bytes of this object
@@ -108,7 +108,7 @@ namespace Myriadbits.MXF
 		public bool IsLoaded { get; set; }
 
 		/// <summary>
-		///Default constructor
+		///Default constructor needed for derived classes such as MXFFile, ...
 		/// </summary>
 		/// <param name="reader"></param>
 		public MXFObject()

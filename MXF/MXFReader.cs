@@ -362,7 +362,6 @@ namespace Myriadbits.MXF
             }
             return keylist;
         }
-
         /// <summary>
         /// Reads a BCD timecode
         /// </summary>

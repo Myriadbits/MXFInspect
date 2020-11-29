@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
         public readonly MXFKey nameValueObjects_Key = new MXFKey(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x05,0x06,0x01,0x01,0x04,0x05,0x40,0x1f,0x02);
 
         [CategoryAttribute("Contact"), Description("")]
-        public MXFKey ContactID { get; set; }
+        public MXFUUID ContactID { get; set; }
 
         public MXFContact(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV)
@@ -50,9 +50,10 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == contactID_Key: this.ContactID = reader.ReadKey(); return true;
-                    case var a when localTag.Key == addressObjects_Key: ReadKeyList(reader, "Address Objects", "Address Object"); return true;
-                    case var a when localTag.Key == nameValueObjects_Key: ReadKeyList(reader, "NameValue Objects", "NameValue Object"); return true;
+                    case var a when localTag.Key == contactID_Key: this.ContactID = new MXFUUID(reader); return true;
+                    case var a when localTag.Key == addressObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "Address Objects", "Address Object"); return true;
+                    // TODO create NameValue class for the reference
+                    case var a when localTag.Key == nameValueObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "NameValue Objects", "NameValue Object"); return true;
                 }
             }
 

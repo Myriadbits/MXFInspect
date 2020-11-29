@@ -145,25 +145,44 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		/// <param name="groupName"></param>
 		/// <returns></returns>
-		protected UInt32 ReadKeyList(MXFReader reader, string groupName, string singleItemName)
+		// TODO move this class to the reader and simplify, check if AUID is always an UL (=MXFKey!?)
+		protected UInt32 ReadAUIDSet(MXFReader reader, string groupName, string singleItemName)
 		{
 			MXFObject keylist = reader.ReadKeyList(groupName, singleItemName);
 			this.AddChild(keylist);
 			return (UInt32) keylist.ChildCount;
 		}
 
-		/// <summary>
-		/// Read a strong reference
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="categoryName"></param>
-		/// <returns></returns>
-		protected void ReadStrongReference(MXFReader reader, string singleItemName)
+		protected int ReadReferenceSet<T>(MXFReader reader, string referringSetName, string singleItemName) where T: MXFObject
 		{
-			MXFRefKey uuid = new MXFRefKey(reader, 16, singleItemName);
-			this.AddChild(uuid);
+			UInt32 nofItems = reader.ReadUInt32();
+			UInt32 objectSize = reader.ReadUInt32(); // useless size of objects, always 16 according to specs
+
+			MXFObject referenceSet = new MXFNamedObject(referringSetName, reader.Position, objectSize);
+			
+			// TODO what if this condition is not met? should we throw an exception?
+			if (nofItems < UInt32.MaxValue)
+			{
+				for (int n = 0; n < nofItems; n++)
+				{
+					var reference = new MXFReference<T>(reader, singleItemName);
+					referenceSet.AddChild(reference);
+				}
+			}
+
+			this.AddChild(referenceSet);
+			return referenceSet.ChildCount;
 		}
 
+		/// <summary>
+		/// Reads a strong reference
+		/// </summary>
+		/// <param name="reader"></param>
+		protected void ReadReference<T>(MXFReader reader, string referringItemName) where T : MXFObject
+		{
+			MXFReference<T> reference = new MXFReference<T>(reader, referringItemName);  
+			this.AddChild(reference);
+		}
 
 		/// <summary>
 		/// Display some output

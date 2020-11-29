@@ -35,7 +35,6 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("GenericTrack"), Description("4803")]
 		public string TrackName { get; set; }
 		[CategoryAttribute("GenericTrack"), Description("4804")]
-		public MXFRefKey Sequence { get; set; }
 
 		public MXFGenericTrack(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Generic Track")
@@ -58,7 +57,7 @@ namespace Myriadbits.MXF
 			{
 				case 0x4801: this.TrackID = reader.ReadUInt32(); return true;
 				case 0x4802: this.TrackName = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x4803: this.Sequence = reader.ReadRefKey(); return true;
+				case 0x4803: ReadReference<MXFSegment>(reader, "Segment"); return true;
 				case 0x4804: this.TrackNumber = reader.ReadUInt32(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 

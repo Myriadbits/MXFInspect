@@ -43,10 +43,6 @@ namespace Myriadbits.MXF
 		public readonly MXFKey geoCoordinates_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x07, 0x07, 0x01, 0x20, 0x01, 0x04, 0x01, 0x15, 0x00);
 		public readonly MXFKey astroBodyName_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x07, 0x07, 0x01, 0x20, 0x01, 0x04, 0x01, 0x16, 0x01);
 
-		//[CategoryAttribute("Address"), Description("")]
-		//public string CommunicationsObjects
-		//[CategoryAttribute("Address"), Description("")]
-		// public string AddressNameValueObjects
 		[CategoryAttribute("Address"), Description("")]
 		public string RoomSuiteNumber { get; set; }
 		[CategoryAttribute("Address"), Description("")]
@@ -90,8 +86,9 @@ namespace Myriadbits.MXF
 			{
 				switch (localTag.Key)
 				{
-					case var a when localTag.Key == commObjects_Key: ReadKeyList(reader, "Communication Objects", "Communication Object"); return true;
-					case var a when localTag.Key == addrNameValueObjects_Key: ReadKeyList(reader, "Address NameValue Objects", "Address NameValue Object"); return true;
+					case var a when localTag.Key == commObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "CommunicationObjects", "CommunicationObject"); return true;
+					// TODO add NameValue class for the strong reference
+					case var a when localTag.Key == addrNameValueObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "AddressNameValueObjects", "AddressNameValueObject"); return true;
 					case var a when localTag.Key == roomSuiteNumber_Key: this.RoomSuiteNumber = reader.ReadUTF16String(localTag.Size); return true;
 					case var a when localTag.Key == streetNumber_Key: this.StreetNumber = reader.ReadUTF16String(localTag.Size); return true;
 					case var a when localTag.Key == streetName_Key: this.StreetNumber = reader.ReadUTF16String(localTag.Size); return true;

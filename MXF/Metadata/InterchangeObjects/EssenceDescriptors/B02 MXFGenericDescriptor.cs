@@ -38,7 +38,8 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x2F01: ReadKeyList(reader, "Locators", "Locator"); return true;
+				// TODO: add class MXFLocator for this reference
+				case 0x2F01: ReadReferenceSet<MXFObject>(reader, "Locators", "Locator"); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}
