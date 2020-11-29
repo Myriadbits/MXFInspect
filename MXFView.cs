@@ -281,7 +281,7 @@ namespace Myriadbits.MXFInspect
 				m_currentReference = m_selectedObject;
 
 				// Refkey, then select the reference it points too
-				MXFRefKey refkey = m_selectedObject as MXFRefKey;
+				MXFAUID refkey = m_selectedObject as MXFAUID;
 				if (refkey != null)
 				{
 					if (refkey.Reference != null)

@@ -29,9 +29,6 @@ namespace Myriadbits.MXF
 	{
 		public readonly MXFKey linkedDMPluginID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x0c, 0x00, 0x00, 0x00);
 
-		[CategoryAttribute("DescriptiveFramework"), Description("")]
-		public MXFRefKey LinkedDescriptiveFrameworkPluginID { get; set; }
-
 		public MXFDescriptiveFramework(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "DescriptiveFramework")
 		{
@@ -47,7 +44,7 @@ namespace Myriadbits.MXF
 			{
 				switch (localTag.Key)
 				{
-					case var a when localTag.Key == linkedDMPluginID_Key: this.LinkedDescriptiveFrameworkPluginID = reader.ReadRefKey(); return true;
+					case var a when localTag.Key == linkedDMPluginID_Key: ReadReference<MXFDescriptiveMarker>(reader, "LinkedDescriptiveFrameworkPluginID"); return true;
 				}
 			}
 

@@ -139,20 +139,6 @@ namespace Myriadbits.MXF
 		{
 		}
 
-		/// <summary>
-		/// Read a list of keys
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="groupName"></param>
-		/// <returns></returns>
-		// TODO move this class to the reader and simplify, check if AUID is always an UL (=MXFKey!?)
-		protected UInt32 ReadAUIDSet(MXFReader reader, string groupName, string singleItemName)
-		{
-			MXFObject keylist = reader.ReadKeyList(groupName, singleItemName);
-			this.AddChild(keylist);
-			return (UInt32) keylist.ChildCount;
-		}
-
 		protected int ReadReferenceSet<T>(MXFReader reader, string referringSetName, string singleItemName) where T: MXFObject
 		{
 			UInt32 nofItems = reader.ReadUInt32();

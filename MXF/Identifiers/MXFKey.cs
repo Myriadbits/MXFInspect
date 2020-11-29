@@ -73,7 +73,7 @@ namespace Myriadbits.MXF
 
         public MXFShortKey(byte[] data)
         {
-            // TODO: why changing this?
+            // TODO why changing this?
             // Change endianess
             this.Key1 = 0;
             this.Key2 = 0;

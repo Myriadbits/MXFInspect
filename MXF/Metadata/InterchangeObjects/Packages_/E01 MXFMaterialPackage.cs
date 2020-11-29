@@ -27,9 +27,6 @@ namespace Myriadbits.MXF
 {
 	public class MXFMaterialPackage : MXFGenericPackage
 	{
-		[CategoryAttribute("MaterialPackage")]
-		public MXFRefKey PackageMarker { get; set; }
-
 		public MXFMaterialPackage(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Material Package")
 		{

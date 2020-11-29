@@ -28,8 +28,6 @@ namespace Myriadbits.MXF
 {
     public class MXFCommentMarker : MXFEvent
     {
-        [CategoryAttribute("Comment Marker"), Description("")]
-        public MXFRefKey AnnotationSource { get; set; }
 
         public MXFCommentMarker(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV, "Comment Marker")
@@ -44,7 +42,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x0901: this.AnnotationSource = reader.ReadRefKey(); return true;
+                case 0x0901: ReadReference<MXFSourceReference>(reader, "AnnotationSource"); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

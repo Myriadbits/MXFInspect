@@ -64,7 +64,7 @@ namespace Myriadbits.MXF
         public Int32[] VideoLineMap { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320F")]
 
-        // TODO: see AlphaTransparencyType http://www.smpte-ra.org/reg/2003/2012 
+        // TODO implement AlphaTransparencyType http://www.smpte-ra.org/reg/2003/2012 
         // urn:smpte:ul:060e2b34.01040101.02010120.00000000
         public byte? AlphaTransparency { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3210")]

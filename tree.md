@@ -7,7 +7,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
 | ------------- | ------------------------------------------------- |
 | :hammer:      | not fully implemented                             |
 | :interrobang: | more investigation required to remove uncertainty |
-| :question:    | unclear about what  this  group shouldrepresent   |
+| :question:    | unclear about what  this  group should represent   |
 | :scroll:      | properties defined by local tags                  |
 | :dart:        | easy to implement                                 |
 
@@ -40,8 +40,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] ScopeReference 
             - [ ] Selector
             - [x] Sequence [1/1]
-            - [ ] SourceReference [4] *(abstract)*
-                - [x] SourceClip [3/5] :hammer: :scroll:
+            - [x] SourceReference [4/4] *(abstract)*
+                - [x] SourceClip [1/5] :hammer: :scroll:
                     - [x] DescriptiveClip [1/1]
                 - [ ] TextClip [0] *(abstract)*
                     - [ ] HTMLClip :scroll: :dart:

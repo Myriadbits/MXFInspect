@@ -64,8 +64,9 @@ namespace Myriadbits.MXF
                 case 0x3B08: ReadReference<MXFGenericPackage>(reader, "PrimaryPackage"); return true;
                 case 0x3B09: this.OperationalPattern = new MXFKey(reader, 16); return true;
                 case 0x3B06: ReadReferenceSet<MXFIdentification>(reader, "Identifications", "Identification"); return true;
-                case 0x3B0A: ReadAUIDSet(reader, "Essencecontainers", "Essencecontainer"); return true;
-                case 0x3B0B: ReadAUIDSet(reader, "Descriptive Metadata Schemes", "DM scheme"); return true;
+                case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
+                    // TODO review how the metadataschemes are read (especially if there are no schemes present)
+                case 0x3B0B: this.AddChild(reader.ReadAUIDSet("Descriptive Metadata Schemes", "DM scheme")); return true;
                 case var a when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBool(); return true;
             }
             return base.ParseLocalTag(reader, localTag);

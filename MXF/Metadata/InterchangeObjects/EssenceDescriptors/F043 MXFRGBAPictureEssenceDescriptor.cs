@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3409")]
 		public UInt32? AlphaMinRef { get; set; }
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3405")]
-		// TODO: implement scanning type
+		// TODO implement scanning type
 		public byte? ScanningDirection { get; set; }
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3401")]
 		public MXFRGBAComponent[] PixelLayout { get; set; }

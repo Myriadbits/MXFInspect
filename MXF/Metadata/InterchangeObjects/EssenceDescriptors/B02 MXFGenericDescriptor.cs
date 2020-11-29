@@ -25,6 +25,7 @@ namespace Myriadbits.MXF
 {
 	public class MXFGenericDescriptor : MXFInterchangeObject
 	{
+		private readonly MXFKey subDescriptorKey = new MXFKey(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x09,0x06,0x01,0x01,0x04,0x06,0x10,0x00,0x00);
 		public MXFGenericDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, metadataName)
 		{
@@ -38,8 +39,10 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				// TODO: add class MXFLocator for this reference
+				// TODO replace generic MXFObject with class MXFLocator once implemented
 				case 0x2F01: ReadReferenceSet<MXFObject>(reader, "Locators", "Locator"); return true;
+				// TODO replace generic MXFObject with class SubDescriptor once implemented
+				case var a when localTag.Key == subDescriptorKey: ReadReferenceSet<MXFObject>(reader, "SubDescriptors", "SubDescriptor"); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

@@ -37,18 +37,6 @@ namespace Myriadbits.MXF
 
         [CategoryAttribute("ProductionFramework"), Description("")]
         public string IntegrationIndication { get; set; }
-        [CategoryAttribute("ProductionFramework"), Description("")]
-        public MXFRefKey GroupRelationshipObjects { get; set; }
-        [CategoryAttribute("ProductionFramework"), Description("")]
-        public MXFRefKey IdentificationObjects { get; set; }
-        [CategoryAttribute("ProductionFramework"), Description("")]
-        public MXFRefKey BrandingObjects { get; set; }
-        [CategoryAttribute("ProductionFramework"), Description("")]
-        public MXFRefKey EventObjects { get; set; }
-        [CategoryAttribute("ProductionFramework"), Description("")]
-        public MXFRefKey AwardObjects { get; set; }
-        [CategoryAttribute("ProductionFramework"), Description("")]
-        public MXFRefKey ProductionSettingPeriodObjects { get; set; }
 
         public MXFProductionFramework(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV)
@@ -67,12 +55,24 @@ namespace Myriadbits.MXF
                 switch (localTag.Key)
                 {
                     case var a when localTag.Key == integrationIndication_Key: this.IntegrationIndication = reader.ReadUTF16String(localTag.Size); return true;
-                    case var a when localTag.Key == groupRelationshipObjects_Key: this.GroupRelationshipObjects = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == identificationObjects_Key: this.IdentificationObjects = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == brandingObjects_Key: this.BrandingObjects = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == eventObjects_Key: this.EventObjects = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == awardObjects_Key: this.AwardObjects = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == prodSettingPerObjects_Key: this.ProductionSettingPeriodObjects = reader.ReadRefKey(); return true;
+                    case var a when localTag.Key == groupRelationshipObjects_Key: 
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "GroupRelationshipObjects", "GroupRelationshipObject"); 
+                        return true;
+                    case var a when localTag.Key == identificationObjects_Key:
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "IdentificationObjects", "IdentificationObject");
+                        return true;
+                    case var a when localTag.Key == brandingObjects_Key:
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "BrandingObjects", "BrandingObject");
+                        return true;
+                    case var a when localTag.Key == eventObjects_Key:
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "EventObjects", "EventObject");
+                        return true;
+                    case var a when localTag.Key == awardObjects_Key:
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "AwardObjects", "AwardObject");
+                        return true;
+                    case var a when localTag.Key == prodSettingPerObjects_Key:
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "ProductionSettingPeriodObjects", "ProductionSettingPeriodObject");
+                        return true;
                 }
             }
 

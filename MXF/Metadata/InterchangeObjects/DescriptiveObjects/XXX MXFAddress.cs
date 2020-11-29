@@ -87,8 +87,8 @@ namespace Myriadbits.MXF
 				switch (localTag.Key)
 				{
 					case var a when localTag.Key == commObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "CommunicationObjects", "CommunicationObject"); return true;
-					// TODO add NameValue class for the strong reference
-					case var a when localTag.Key == addrNameValueObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "AddressNameValueObjects", "AddressNameValueObject"); return true;
+					// TODO replace generic MXFObject with class NameValue once implemented
+					case var a when localTag.Key == addrNameValueObjects_Key: ReadReferenceSet<MXFObject>(reader, "AddressNameValueObjects", "AddressNameValueObject"); return true;
 					case var a when localTag.Key == roomSuiteNumber_Key: this.RoomSuiteNumber = reader.ReadUTF16String(localTag.Size); return true;
 					case var a when localTag.Key == streetNumber_Key: this.StreetNumber = reader.ReadUTF16String(localTag.Size); return true;
 					case var a when localTag.Key == streetName_Key: this.StreetNumber = reader.ReadUTF16String(localTag.Size); return true;

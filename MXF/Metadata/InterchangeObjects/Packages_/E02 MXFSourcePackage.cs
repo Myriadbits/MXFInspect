@@ -27,9 +27,6 @@ namespace Myriadbits.MXF
 {
 	public class MXFSourcePackage : MXFGenericPackage
 	{
-		[CategoryAttribute("SourcePackage"), Description("4701")]
-		public MXFRefKey Descriptor { get; set; }
-
 		public MXFSourcePackage(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Source Package")
 		{
@@ -43,7 +40,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4701: this.Descriptor = reader.ReadRefKey(); return true;
+				case 0x4701: ReadReference<MXFGenericDescriptor>(reader, "EssenceDescription"); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

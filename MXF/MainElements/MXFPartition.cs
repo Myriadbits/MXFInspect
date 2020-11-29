@@ -138,7 +138,7 @@ namespace Myriadbits.MXF
 
 			this.OP = new MXFKey(reader, 16);
 
-			MXFObject essenceContainers = reader.ReadKeyList("Essence Containers", "Essence Container");
+			MXFObject essenceContainers = reader.ReadAUIDSet("Essence Containers", "Essence Container");
 			this.AddChild(essenceContainers);
 		}
 

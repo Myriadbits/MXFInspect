@@ -88,7 +88,7 @@ namespace Myriadbits.MXF
 		public UInt16 ContinuityCount { get; set; }
 
 		[CategoryAttribute("SystemItem"), ReadOnly(true)]
-		public MXFRefKey SMPTE { get; set; }
+		public MXFAUID SMPTE { get; set; }
 
 		[CategoryAttribute("SystemItem"), ReadOnly(true)]
 		public string CreationDate { get; set; }
@@ -145,7 +145,7 @@ namespace Myriadbits.MXF
 			this.ChannelHandle = reader.ReadUInt16();
 			this.ContinuityCount = reader.ReadUInt16();
 
-			this.SMPTE = new MXFRefKey(reader, 16, "SMPTE"); // Always read even if zero
+			this.SMPTE = new MXFAUID(reader, 16, "SMPTE"); // Always read even if zero
 
 			MXFTimeStamp creationTimeStamp = reader.ReadBCDTimeCode(this.PackageRate);
 			this.CreationDate = creationTimeStamp.ToString();

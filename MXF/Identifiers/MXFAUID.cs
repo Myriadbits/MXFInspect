@@ -29,32 +29,19 @@ using System.Text;
 namespace Myriadbits.MXF
 {
 	[TypeConverter(typeof(ExpandableObjectConverter))]
-	public class MXFRefKey : MXFNamedObject 
+	public class MXFAUID : MXFNamedObject 
 	{
-		[CategoryAttribute("ReferenceKey"), ReadOnly(true), TypeConverter(typeof(ExpandableObjectConverter))]
+		[CategoryAttribute("AUID"), ReadOnly(true), TypeConverter(typeof(ExpandableObjectConverter))]
 		public MXFObject Reference { get; set; }
 
-		[CategoryAttribute("ReferenceKey"), ReadOnly(true)]
+		[CategoryAttribute("AUID"), ReadOnly(true)]
 		public MXFKey Key { get; set; }
-
-
-		/// <summary>
-		/// Create a new reference key by reading from the current file location
-		/// </summary>
-		/// <param name="firstPart"></param>
-		/// <param name="reader"></param>
-		public MXFRefKey(MXFReader reader)
-			: base(reader.Position)
-		{
-			this.Key = new MXFKey(reader, 16);
-			this.Length = 16;
-		}
 
 		/// <summary>
 		/// Named Reference key
 		/// </summary>
 		/// <param name="reader"></param>
-		public MXFRefKey(MXFReader reader, UInt32 size, string name)
+		public MXFAUID(MXFReader reader, UInt32 size, string name)
 			: base(reader.Position)
 		{
 			this.Name = name;
@@ -71,21 +58,8 @@ namespace Myriadbits.MXF
             if (string.IsNullOrEmpty(this.Name))
                 return this.Key.Name;
 
-            StringBuilder sb = new StringBuilder();
-            var arr = this.Key.GetByteArray();
-            sb.Append("{ ");
-            for (int n = 0; n < this.Length; n++)
-            {
-                if (n > 0)
-                {
-                    sb.Append(".");
-                }
-
-                sb.Append(string.Format("{0:X2}", arr[n]));
-            }
-            sb.Append(" }");
-            //return sb.ToString();
-            return string.Format("{0} [{1}]", this.Name, sb);
+			string keyName = this.Key.Name ?? this.Key.ToString();
+            return string.Format("{0} [{1}]", this.Name, keyName);
         }
     }
 }

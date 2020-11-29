@@ -32,15 +32,6 @@ namespace Myriadbits.MXF
         public readonly MXFKey captionsDescriptionObjects_Key = new MXFKey(0x06,0x0e,0x2,0xb,0x34,0x01,0x01,0x01,0x05,0x06,0x01,0x01,0x04,0x05,0x40,0x0c,0x00);
         public readonly MXFKey contractObjects_Key = new MXFKey(0x06,0x0e,0x2,0xb,0x34,0x01,0x01,0x01,0x05,0x06,0x01,0x01,0x04,0x05,0x40,0x19,0x00);
 
-        [CategoryAttribute("ProductionClipFramework"), Description("")]
-        public MXFRefKey PictureFormatObject { get; set; }
-        [CategoryAttribute("ProductionClipFramework"), Description("")]
-        public MXFRefKey ProjectObject { get; set; }
-        [CategoryAttribute("ProductionClipFramework"), Description("")]
-        public MXFRefKey CaptionsDescriptionObjects { get; set; }
-        [CategoryAttribute("ProductionClipFramework"), Description("")]
-        public MXFRefKey ContractObjects { get; set; }
-
         public MXFProductionClipFramework(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV)
         {
@@ -57,10 +48,18 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == pictureFormatObject_Key: this.PictureFormatObject = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == projectObject_Key: this.ProjectObject = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == captionsDescriptionObjects_Key: this.CaptionsDescriptionObjects = reader.ReadRefKey(); return true;
-                    case var a when localTag.Key == contractObjects_Key: this.ContractObjects = reader.ReadRefKey(); return true;
+                    case var a when localTag.Key == pictureFormatObject_Key:
+                        ReadReference<MXFDescriptiveObject>(reader, "PictureFormatObject");
+                        return true;
+                    case var a when localTag.Key == projectObject_Key:
+                        ReadReference<MXFDescriptiveObject>(reader, "ProjectObject");
+                        return true;
+                    case var a when localTag.Key == captionsDescriptionObjects_Key:
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "CaptionsDescriptionObjects", "CaptionsDescriptionObject");
+                        return true;
+                    case var a when localTag.Key == contractObjects_Key:
+                        ReadReferenceSet<MXFDescriptiveObject>(reader, "ContractObjects", "ContractObject");
+                        return true;
                 }
             }
 

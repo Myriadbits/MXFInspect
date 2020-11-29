@@ -513,10 +513,10 @@ namespace Myriadbits.MXF
 				{
 					if (propertyInfo.CanRead)
 					{
-						if (propertyInfo.PropertyType == typeof(MXFRefKey))
+						if (propertyInfo.PropertyType == typeof(MXFAUID))
 						{
 							// Found one!
-							MXFRefKey refKey = (MXFRefKey)propertyInfo.GetValue(reference, null);
+							MXFAUID refKey = (MXFAUID)propertyInfo.GetValue(reference, null);
 							if (refKey != null && refKey.Reference != null)
 							{
 								// Add the child
@@ -538,7 +538,7 @@ namespace Myriadbits.MXF
 						{
 							foreach (MXFObject grandchild in child.Children)
 							{
-								MXFRefKey refKey = grandchild as MXFRefKey;
+								MXFAUID refKey = grandchild as MXFAUID;
 								if (refKey != null && refKey.Reference != null)
 								{
 									MXFLogicalObject lo = new MXFLogicalObject(refKey.Reference, refKey.Reference.ToString());
@@ -563,7 +563,7 @@ namespace Myriadbits.MXF
 		/// <param name="parent"></param> 
 		protected void ResolveReferences(Dictionary<string, MXFObject> allKeys, MXFObject parent)
 		{
-			MXFRefKey refParent = parent as MXFRefKey;
+			MXFAUID refParent = parent as MXFAUID;
 			if ((object)refParent != null)
 			{
 				if (allKeys.ContainsKey(refParent.Key.ShortKey.ToString()))
@@ -581,10 +581,10 @@ namespace Myriadbits.MXF
 			{
 				if (propertyInfo.CanRead)
 				{
-					if (propertyInfo.PropertyType == typeof(MXFRefKey))
+					if (propertyInfo.PropertyType == typeof(MXFAUID))
 					{
 						// Found one!
-						MXFRefKey refKey = (MXFRefKey)propertyInfo.GetValue(parent, null);
+						MXFAUID refKey = (MXFAUID)propertyInfo.GetValue(parent, null);
 						if (refKey != null)
 						{
 							if (allKeys.ContainsKey(refKey.Key.ShortKey.ToString()))
@@ -614,7 +614,7 @@ namespace Myriadbits.MXF
 		/// <param name="refKey"></param>
 		protected void CreateKeyList(Dictionary<string, MXFObject> allKeys, MXFObject parent)
 		{
-			// This will only use public properties. Is that enough?
+			// TODO This will only use public properties. Is that enough?
 			MXFMetadataBaseclass meta = parent as MXFMetadataBaseclass;
 			if (meta != null)
 			{

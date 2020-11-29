@@ -31,8 +31,11 @@ namespace Myriadbits.MXF
 {
     public class MXFReference<T> : MXFObject where T : MXFObject 
     {
+        [CategoryAttribute("Reference"), ReadOnly(true)]
         public string Name { get; set; }
+        [CategoryAttribute("Reference"), ReadOnly(true)]
         public T Reference { get; set; }
+        [CategoryAttribute("Reference"), ReadOnly(true)]
         public MXFUUID Identifier { get; set; }
 
         public MXFReference(MXFReader reader, string name) : base(reader.Position)

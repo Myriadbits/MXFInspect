@@ -26,23 +26,15 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFSourceClip : MXFStructuralComponent
+	public class MXFSourceClip : MXFSourceReference
 	{
 		[CategoryAttribute("SourceClip"), Description("1201")]
-		public UInt64? StartPosition { get; set; }
-		[CategoryAttribute("SourceClip"), Description("1101")]
-		public MXFUMID SourcePackageID { get; set; }
-		[CategoryAttribute("SourceClip"), Description("1102")]
-		public UInt32? SourceTrackId { get; set; }
+		public MXFPositionType? StartPosition { get; set; }
 
 		public MXFSourceClip(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "SourceClip")
+			: base(reader, headerKLV)
 		{
-		}
-
-		public MXFSourceClip(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
-		{
+			this.MetaDataName = "SourceClip";
 		}
 
 		/// <summary>
@@ -54,8 +46,6 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x1201: this.StartPosition = reader.ReadUInt64(); return true;
-				case 0x1101: this.SourcePackageID = reader.ReadUMIDKey(); return true;
-				case 0x1102: this.SourceTrackId = reader.ReadUInt32(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

@@ -39,7 +39,9 @@ namespace Myriadbits.MXF
         [CategoryAttribute("TextBasedObject"), Description("")]
         public string TextDataDescription { get; set; }
         [CategoryAttribute("TextBasedObject"), Description("")]
-        public MXFRefKey TextBasedMetadataPayloadSchemeID { get; set; }
+        
+        // TODO this should be a AUID?
+        public MXFUUID TextBasedMetadataPayloadSchemeID { get; set; }
         [CategoryAttribute("TextBasedObject"), Description("")]
         public string TextMIMEMediaType { get; set; }
 
@@ -62,7 +64,7 @@ namespace Myriadbits.MXF
                 {
                     case var a when localTag.Key == rfc5646TextLanguageCode_Key: this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Size); return true;
                     case var a when localTag.Key == textDataDescription_Key: this.TextDataDescription = reader.ReadUTF16String(localTag.Size); return true;
-                    case var a when localTag.Key == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadRefKey(); return true;
+                    case var a when localTag.Key == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = new MXFUUID(reader); return true;
                     case var a when localTag.Key == textMIMEMediaType_Key: this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Size); return true;
                 }
             }

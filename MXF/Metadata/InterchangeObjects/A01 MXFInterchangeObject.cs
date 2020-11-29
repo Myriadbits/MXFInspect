@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 			{				
 				case 0x0102: this.GenerationUID = new MXFUUID(reader); return true;
 				case 0x0101: this.ObjectClass = reader.ReadKey(); return true;
-					// TODO make specific class
+				// TODO replace generic MXFObject with class ApplicationPluginObject once implemented
 				case var a when localTag.Key == appPluginObjects_Key: ReadReferenceSet<MXFObject>(reader, "Application Plugin Objects", "Application Plugin Object");  return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 

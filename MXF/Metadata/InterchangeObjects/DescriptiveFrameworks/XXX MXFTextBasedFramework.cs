@@ -29,9 +29,6 @@ namespace Myriadbits.MXF
 	{
 		public readonly MXFKey textBasedObject_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x06, 0x01, 0x01, 0x04, 0x05, 0x41, 0x01, 0x00);
 
-		[CategoryAttribute("TextBasedFramework"), Description("")]
-		public MXFRefKey TextBasedObject { get; set; }
-
 		public MXFTextBasedFramework(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV)
 		{
@@ -48,7 +45,7 @@ namespace Myriadbits.MXF
 			{
 				switch (localTag.Key)
 				{
-					case var a when localTag.Key == textBasedObject_Key: this.TextBasedObject = reader.ReadRefKey(); return true;
+					case var a when localTag.Key == textBasedObject_Key: ReadReference<MXFTextBasedObject>(reader, "TextBasedObject"); return true;
 				}
 			}
 

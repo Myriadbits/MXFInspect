@@ -26,7 +26,7 @@ namespace Myriadbits.MXF
 	public class MXFSegment : MXFStructuralComponent
 	{
 		public MXFSegment(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+			: base(reader, headerKLV, "Segment")
 		{
 		}
 

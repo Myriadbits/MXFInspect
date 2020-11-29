@@ -25,16 +25,14 @@ using System;
 
 namespace Myriadbits.MXF
 {
-	public class MXFDescriptiveClip : MXFSegment
+	public class MXFDescriptiveClip : MXFSourceClip
 	{
         public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
         
-		// TODO: this seems to be the smpte group:
-        // DescriptiveClip – urn:smpte:ul:060e2b34.027f0101.0d010101.01014500
-        // and should inherit from sourceclip -> sourcereference -> segment -> Component
         public MXFDescriptiveClip(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Descriptive Clip")
+			: base(reader, headerKLV)
 		{
+			this.MetaDataName = "DescriptiveClip";
 		}
 
 		/// <summary>

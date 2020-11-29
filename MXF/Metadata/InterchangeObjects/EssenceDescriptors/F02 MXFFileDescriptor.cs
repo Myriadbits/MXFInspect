@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 {
 	public class MXFFileDescriptor : MXFGenericDescriptor
 	{
-		// TODO: remove this field, once all specialized subclasses have been implemented
+		// TODO remove this field, once all specialized subclasses have been implemented
 		private static Dictionary<int, string> m_metaTypes = new Dictionary<int, string>();
 
 		[CategoryAttribute("FileDescriptor"), Description("3006")]

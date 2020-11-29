@@ -204,7 +204,7 @@ namespace Myriadbits.MXF
         /// </summary>
         public Int32 ReadInt32()
         {
-            // TODO: pay attention, this method works only for positive numbers!!!
+            // TODO pay attention, this method works only for positive numbers!!!
             return (Int32)this.ReadUInt32();
         }
 
@@ -252,13 +252,10 @@ namespace Myriadbits.MXF
             return System.Text.Encoding.BigEndianUnicode.GetString(data);
         }
 
-        /// <summary>
-        /// Reads a reference key
-        /// </summary>
-        public MXFRefKey ReadRefKey()
-        {
-            return new MXFRefKey(this);
-        }
+
+        #endregion
+
+        #region Identifiers
 
         /// <summary>
         /// Reads a normal (non-reference) key
@@ -275,9 +272,30 @@ namespace Myriadbits.MXF
         {
             return new MXFUMID(this); // Always read 32 bytes for UMID's 
         }
-        
-        #endregion
 
+        /// <summary>
+        /// Reads a list of AUIDs and returns a MXFObject containing the AUIDs as children
+        /// </summary>
+        /// <param name="groupName">The name of the MXFObject acting as group container</param>
+        /// <param name="singleItem">The name of the single items</param>
+        public MXFObject ReadAUIDSet(string groupName, string singleItem)
+        {
+            UInt32 nofItems = this.ReadUInt32();
+            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
+
+            MXFObject auidGroup = new MXFNamedObject(groupName, this.Position, objectSize);
+            if (nofItems < UInt32.MaxValue)
+            {
+                for (int n = 0; n < nofItems; n++)
+                {
+                    MXFAUID auid = new MXFAUID(this, objectSize, singleItem);
+                    auidGroup.AddChild(auid);
+                }
+            }
+            return auidGroup;
+        }
+
+        #endregion
 
         #region Reference types
 
@@ -341,27 +359,6 @@ namespace Myriadbits.MXF
             return rat;
         }
 
-        /// <summary>
-        /// Reads a list of keys
-        /// </summary>
-        /// <param name="categoryName"></param>
-        /// <param name="singleItem"></param>
-        public MXFObject ReadKeyList(string categoryName, string singleItem)
-        {
-            UInt32 nofItems = this.ReadUInt32();
-            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
-
-            MXFObject keylist = new MXFNamedObject(categoryName, this.Position, objectSize);
-            if (nofItems < UInt32.MaxValue)
-            {
-                for (int n = 0; n < nofItems; n++)
-                {
-                    MXFRefKey key = new MXFRefKey(this, objectSize, singleItem);
-                    keylist.AddChild(key);
-                }
-            }
-            return keylist;
-        }
         /// <summary>
         /// Reads a BCD timecode
         /// </summary>

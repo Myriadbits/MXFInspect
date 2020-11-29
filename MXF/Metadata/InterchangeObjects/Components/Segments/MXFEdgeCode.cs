@@ -26,7 +26,7 @@ using System;
 
 namespace Myriadbits.MXF
 {
-    public class MXFEdgeCode : MXFStructuralComponent
+    public class MXFEdgeCode : MXFSegment
     {
         [CategoryAttribute("EdgeCode"), Description("")]
         public byte[] EdgeCodeHeader { get; set; }
@@ -38,7 +38,7 @@ namespace Myriadbits.MXF
         public MXFFilmType? EdgeCodeFilmFormat { get; set; }
 
         public MXFEdgeCode(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+            : base(reader, headerKLV, "EdgeCode")
         {
         }
 

@@ -21,15 +21,24 @@
 //
 #endregion
 
-using System.ComponentModel;
 using System;
+using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFEssenceGroup : MXFSegment
+    public class MXFSourceReference : MXFSegment
     {
-        public MXFEssenceGroup(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "EssenceGroup")
+        [CategoryAttribute("SourceReference"), Description("1101")]
+        public MXFUMID SourcePackageID { get; set; }
+        [CategoryAttribute("SourceReference"), Description("1102")]
+        public UInt32? SourceTrackId { get; set; }
+        [CategoryAttribute("SourceReference"), Description("1102")]
+        public UInt32[] ChannelIDs { get; set; }
+        [CategoryAttribute("SourceReference"), Description("1102")]
+        public UInt32[] MonoSourceTrackIDs { get; set; }
+
+        public MXFSourceReference(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "SourceReference")
         {
         }
 
@@ -41,8 +50,10 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x0502: this.ReadReference<MXFSourceReference>(reader, "StillFrame"); return true;
-                case 0x0501: this.ReadReferenceSet<MXFSourceReference>(reader, "Choices", "Choice"); return true;
+                case 0x1101: this.SourcePackageID = reader.ReadUMIDKey(); return true;
+                case 0x1102: this.SourceTrackId = reader.ReadUInt32(); return true;
+                case 0x1103: this.ChannelIDs = reader.ReadArray(reader.ReadUInt32, localTag.Size); return true;
+                case 0x1104: this.MonoSourceTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Size); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

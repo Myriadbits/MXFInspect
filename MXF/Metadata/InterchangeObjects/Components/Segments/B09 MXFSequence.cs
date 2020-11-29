@@ -23,7 +23,7 @@
 
 namespace Myriadbits.MXF
 {
-	public class MXFSequence : MXFStructuralComponent
+	public class MXFSequence : MXFSegment
 	{
 		public MXFSequence(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Sequence")

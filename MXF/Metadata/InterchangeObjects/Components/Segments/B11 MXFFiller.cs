@@ -23,7 +23,7 @@
 
 namespace Myriadbits.MXF
 {
-	public class MXFFiller : MXFStructuralComponent
+	public class MXFFiller : MXFSegment
 	{
 		public MXFFiller(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Filler")
