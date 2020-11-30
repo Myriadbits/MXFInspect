@@ -398,15 +398,6 @@ namespace Myriadbits.MXF
             Debug.WriteLine("{0} references resolved in {1} ms", numOfResolved, sw.ElapsedMilliseconds);
 
 
-            // Create Flatlist
-            // TODO why don't we use Descendants method?
-            worker.ReportProgress(93, "Resolving flatlist");
-            sw.Restart();
-            //this.FlatList = new List<MXFObject>();
-            //this.AddToList(this.FlatList);
-            Debug.WriteLine("Flatlist created in {0} ms", sw.ElapsedMilliseconds);
-
-
             // Create the logical tree
             worker.ReportProgress(94, "Creating Logical tree");
             sw.Restart();
@@ -546,6 +537,7 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public string GetTrackInfo(int trackID)
         {
+            // TODO optimize and refactor
             try
             {
                 //List<MXFLogicalObject> lot = MXFLogicalObject.GetLogicChilds<MXFGenericTrack>(this.LogicalBase[typeof(MXFMaterialPackage)]);
@@ -567,7 +559,7 @@ namespace Myriadbits.MXF
                         MXFTimelineTrack ttrack = gtrack as MXFTimelineTrack;
                         if (ttrack != null)
                             sb.Append(string.Format("Rate: {0} ", ttrack.EditRate));
-                        MXFSequence seq = MXFLogicalObject.GetFirstChild<MXFSequence>(track);
+                        MXFSequence seq = track.Children.Select(l => l.Object).OfType<MXFSequence>().FirstOrDefault();
                         if (seq != null && seq.DataDefinition != null)
                             sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Name));
                         return sb.ToString();
@@ -586,6 +578,7 @@ namespace Myriadbits.MXF
         /// </summary>
         public int NumberOfTracks
         {
+            // TODO optimize and refactor
             get
             {
                 if (this.LogicalBase == null)

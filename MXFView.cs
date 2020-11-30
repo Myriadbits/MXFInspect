@@ -538,7 +538,7 @@ namespace Myriadbits.MXFInspect
 		{
 			MXFLogicalObject mxf = x as MXFLogicalObject;
 			if (mxf == null) return false;
-			return mxf.HasChildren;
+			return mxf.Children.Any();
 		}
 
 		/// <summary>

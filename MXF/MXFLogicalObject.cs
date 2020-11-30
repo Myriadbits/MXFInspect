@@ -28,16 +28,10 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	public class MXFLogicalObject
+	public class MXFLogicalObject : MXFNode<MXFLogicalObject>
 	{		
 		[Browsable(false)]
 		public MXFObject Object { get; set; }
-
-		[Browsable(false)]
-		public List<MXFLogicalObject> Children { get; set; }
-
-		[Browsable(false)]
-		public MXFLogicalObject Parent { get; set; }
 
 		[Browsable(false)]
 		public string Name { get; set; }
@@ -51,123 +45,7 @@ namespace Myriadbits.MXF
 			this.Object = obj;
 			this.Name = name;
 		}
-
-		public IEnumerable<MXFLogicalObject> Descendants()
-		{
-			if (this.HasChildren)
-			{
-				var nodes = new Stack<MXFLogicalObject>(this.Children);
-				while (nodes.Any())
-				{
-					var node = nodes.Pop();
-					yield return node;
-					if (node.HasChildren)
-					{
-						foreach (var n in node.Children)
-						{
-							nodes.Push(n);
-						}
-					}
-
-				}
-			}
-			else yield break;
-		}
-
-		/// <summary>
-		/// Find the first child with this type
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public MXFLogicalObject this[Type type]
-		{
-			get
-			{
-				if(this.Children != null)
-                {
-					foreach (MXFLogicalObject lo in this.Children)
-					{
-						if (lo.Object != null && lo.Object.GetType() == type)
-							return lo;
-					}
-				}
-				return null;
-			}
-		}
-
-
-
-
-		/// <summary>
-		/// Get all childs cast to the required type
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="lo"></param>
-		/// <returns></returns>
-		public static List<T> GetChilds<T>(MXFLogicalObject lo)
-		{
-			if (lo.HasChildren)
-				return lo.Children.Select(a => a.Object).Cast<T>().ToList();
-			return null;
-		}
-
-		/// <summary>
-		/// Get all childs cast to the required type
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="lo"></param>
-		/// <returns></returns>
-		public static List<MXFLogicalObject> GetLogicChilds<T>(MXFLogicalObject lo)
-		{
-			if (lo.HasChildren)
-				return lo.Children.Where(a => a.Object is T).ToList();
-			return null;
-		}
-
-		/// <summary>
-		/// Get all childs cast to the required type
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="lo"></param>
-		/// <returns></returns>
-		public static T GetFirstChild<T>(MXFLogicalObject lo)
-		{
-			if (lo.HasChildren)
-				return lo.Children.Select(a => a.Object).Cast<T>().FirstOrDefault();
-			return default(T);
-		}
 			
-		/// <summary>
-		/// Add a child
-		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
-		[Browsable(false)]
-		public bool HasChildren
-		{
-			get
-			{
-				if (this.Children == null)
-					return false;
-				return this.Children.Count > 0;
-			}
-		}
-
-		
-		/// <summary>
-		/// Add a child
-		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
-		public MXFLogicalObject AddChild(MXFLogicalObject child)
-		{
-			if (this.Children == null)
-				this.Children = new List<MXFLogicalObject>();
-			child.Parent = this;
-			this.Children.Add(child);
-			return child;
-		}
-
 		/// <summary>
 		/// Some output
 		/// </summary>

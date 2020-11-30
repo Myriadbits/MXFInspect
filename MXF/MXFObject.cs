@@ -50,7 +50,7 @@ namespace Myriadbits.MXF
 	};
 
 	[TypeConverter(typeof(ExpandableObjectConverter))]
-	public abstract class MXFObject : MXFNode
+	public abstract class MXFObject : MXFNode<MXFObject>
     {
 		private long m_lOffset = long.MaxValue;	// Offset in bytes from the beginning of the file
 		private long m_lLength = -1;			// Length in bytes of this object
@@ -135,13 +135,134 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="child"></param>
 		/// <returns></returns>
-		public MXFObject AddChild(MXFObject child)
+		public override void AddChild(MXFObject child)
 		{
-			child.Parent = this;
-			this.Children.Add(child);
+			base.AddChild(child);
 			if (child.Offset < this.m_lOffset)
 				this.m_lOffset = child.Offset;
-			return child;
+		}
+
+		/// <summary>
+		/// Find the first child of a specific type
+		/// </summary>
+		/// <param name="currentObject"></param>
+		/// <returns></returns>
+		public MXFObject FindChild(Type typeToFind, bool skipFillers)
+		{
+			if (this.Children != null)
+			{
+				MXFObject found = null;
+				foreach (MXFObject child in this.Children)
+				{
+					if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
+						return child;
+					if (child.Children.Any())
+					{
+						found = child.FindChild(typeToFind, skipFillers);
+						if (found != null)
+							return found;
+					}
+				}
+				return null;
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Find the first child of a specific type
+		/// </summary>
+		/// <param name="currentObject"></param>
+		/// <returns></returns>
+		public MXFObject FindChildReverse(Type typeToFind, bool skipFillers)
+		{
+			if (this.Children != null)
+			{
+				MXFObject found = null;
+				for (int n = this.Children.Count - 1; n >= 0; n--)
+				{
+					MXFObject child = this.Children[n];
+					if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
+						return child;
+					if (child.Children.Any())
+					{
+						found = child.FindChildReverse(typeToFind, skipFillers);
+						if (found != null)
+							return found;
+					}
+				}
+				return null;
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Find the next object of a specific type
+		/// </summary>
+		/// <param name="currentObject"></param>
+		/// <returns></returns>
+		public MXFObject FindNextSibling(Type typeToFind, bool skipFillers)
+		{
+			MXFObject found = null;
+			if (this.Parent != null && this.Parent.Children.Any())
+			{
+				int index = this.Parent.Children.FindIndex(a => a == this);
+				if (index >= 0 && index < this.Parent.Children.Count - 1)
+				{
+					for (int n = index + 1; n < this.Parent.Children.Count; n++)
+					{
+						MXFObject child = this.Parent.Children[n];
+						if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
+						{
+							// Yes found next sibling of the same type
+							return this.Parent.Children[n];
+						}
+
+						// Not the correct type, try its children
+						found = this.Parent.Children[n].FindChild(typeToFind, skipFillers);
+						if (found != null)
+							return found;
+					}
+				}
+
+				// Hmm still not found, try our grand-parent:
+				found = this.Parent.FindNextSibling(typeToFind, skipFillers);
+			}
+			return found;
+		}
+
+		/// <summary>
+		/// Find the next object of a specific type
+		/// </summary>
+		/// <param name="currentObject"></param>
+		/// <returns></returns>
+		public MXFObject FindPreviousSibling(Type typeToFind, bool skipFillers)
+		{
+			MXFObject found = null;
+			if (this.Parent != null && this.Parent.Children.Any())
+			{
+				int index = this.Parent.Children.FindIndex(a => a == this);
+				if (index > 0)
+				{
+					for (int n = index - 1; n >= 0; n--)
+					{
+						MXFObject child = this.Parent.Children[n];
+						if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
+						{
+							// Yes found next sibling of the same type
+							return this.Parent.Children[n];
+						}
+
+						// Not the correct type, try its children
+						found = this.Parent.Children[n].FindChildReverse(typeToFind, skipFillers);
+						if (found != null)
+							return found;
+					}
+				}
+
+				// Hmm still not found, try our grand-parent:
+				found = this.Parent.FindPreviousSibling(typeToFind, skipFillers);
+			}
+			return found;
 		}
 
 		public void LogInfo(string format, params object[] args) { this.Log(MXFLogType.Info, format, args); }
