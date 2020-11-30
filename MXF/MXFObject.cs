@@ -100,6 +100,7 @@ namespace Myriadbits.MXF
 		}
 
         [Browsable(false)]
+		// TODO extract Loaded/Load to an interface
 		public bool IsLoaded { get; set; }
 
 		/// <summary>
@@ -202,6 +203,7 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		public MXFObject FindNextSibling(Type typeToFind, bool skipFillers)
 		{
+			// TODO simplify and if necessary move to another class
 			MXFObject found = null;
 			if (this.Parent != null && this.Parent.Children.Any())
 			{
