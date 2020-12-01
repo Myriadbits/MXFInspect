@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		public override string ToString()
 		{
-			if (this.Children == null)
+			if (!this.Children.Any())
 				return this.Name;
 			return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
 		}
