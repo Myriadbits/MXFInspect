@@ -25,7 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFNetworkLocator : MXFInterchangeObject
+	public class MXFNetworkLocator : MXFLocator
 	{
 		[CategoryAttribute("NetworkLocator"), Description("4001")]
 		public string URLString { get; set; }

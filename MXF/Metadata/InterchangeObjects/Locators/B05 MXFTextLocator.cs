@@ -25,7 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFTextLocator : MXFInterchangeObject
+	public class MXFTextLocator : MXFLocator
 	{
 		[CategoryAttribute("TexLocator"), Description("4101")]
 		public string LocationName { get; set; }

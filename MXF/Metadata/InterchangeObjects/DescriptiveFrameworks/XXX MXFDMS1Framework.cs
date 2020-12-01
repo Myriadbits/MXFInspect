@@ -81,8 +81,7 @@ namespace Myriadbits.MXF
                     case var a when localTag.Key == titlesObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "Titles Objects", "TitlesObject"); return true;
                     case var a when localTag.Key == annotationObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "AnnotationObjects", "AnnotationObject"); return true;
                     case var a when localTag.Key == participantObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "ParticipantObjects", "ParticipantObjects"); return true;
-                        // TODO replace generic MXFObject with class MXFLocator once implemented
-                    case var a when localTag.Key == metadataServerLocators_Key: ReadReferenceSet<MXFObject>(reader, "MetadataServerLocators", "MetadataServerLocator"); return true;
+                    case var a when localTag.Key == metadataServerLocators_Key: ReadReferenceSet<MXFLocator>(reader, "MetadataServerLocators", "MetadataServerLocator"); return true;
                 }
             }
 
