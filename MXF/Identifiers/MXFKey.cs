@@ -95,7 +95,7 @@ namespace Myriadbits.MXF
     };
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    // TODO rename this class into UL = Universal Label
+    // TODO rename this class into SMPTEUL = Universal Label
     // TODO reduce number of ctors as much as possible
     public class MXFKey : MXFIdentifier, IEquatable<MXFKey>
     {

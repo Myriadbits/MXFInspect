@@ -64,9 +64,7 @@ namespace Myriadbits.MXF
         public Int32[] VideoLineMap { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320F")]
 
-        // TODO implement AlphaTransparencyType http://www.smpte-ra.org/reg/2003/2012 
-        // urn:smpte:ul:060e2b34.01040101.02010120.00000000
-        public byte? AlphaTransparency { get; set; }
+        public MXFAlphaTransparencyType? AlphaTransparency { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3210")]
         public MXFKey TransferCharacteristics { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3211")]
@@ -129,7 +127,7 @@ namespace Myriadbits.MXF
                 case 0x320E: this.AspectRatio = reader.ReadRational(); return true;
                 case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
                 case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
-                case 0x320F: this.AlphaTransparency = reader.ReadByte(); return true;
+                case 0x320F: this.AlphaTransparency = (MXFAlphaTransparencyType) reader.ReadByte(); return true;
                 case 0x3210: this.TransferCharacteristics = reader.ReadKey(); return true;
                 case 0x3211: this.ImageAlignmentOffset = reader.ReadUInt32(); return true;
                 case 0x3213: this.ImageStartOffset = reader.ReadUInt32(); return true;
