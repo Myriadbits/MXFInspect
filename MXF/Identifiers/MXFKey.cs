@@ -361,6 +361,8 @@ namespace Myriadbits.MXF
         }
 
         public override int GetHashCode() { return base.GetHashCode(); }
+
+        // TODO remove operator overloading as they are considered bad (see UUID.Equals...)
         public static bool operator ==(MXFKey x, MXFKey y) { return Equals(x, y); }
         public static bool operator !=(MXFKey x, MXFKey y) { return !Equals(x, y); }
 

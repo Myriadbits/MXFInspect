@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace Myriadbits.MXF
@@ -67,12 +68,17 @@ namespace Myriadbits.MXF
         // TODO find a better name for this method
         public bool HasSameBeginning(MXFIdentifier id)
         {
-            int len = Math.Min(this.byteArray.Length, id.byteArray.Length);
-            if (len == 0)
+            int smallerLength = Math.Min(this.byteArray.Length, id.byteArray.Length);
+
+            for (int i = 0; i < smallerLength; i++)
             {
-                return false;
+                if(byteArray[i] != id.byteArray[i])
+                {
+                    return false;
+                }
             }
-            else return this.byteArray.Take(len).SequenceEqual(id.byteArray.Take(len));
+            return true;
+
         }
 
         public IList<byte> GetByteArray()
@@ -107,7 +113,25 @@ namespace Myriadbits.MXF
             return Equals((MXFIdentifier)obj);
         }
 
-        public override int GetHashCode() { return this.byteArray.GetHashCode(); }
+        // TODO see https://stackoverflow.com/a/468084 and https://stackoverflow.com/a/53316768
+        public override int GetHashCode() {
+            
+            unchecked
+            {
+                const int p = 16777619;
+                int hash = (int)2166136261;
+
+                for (int i = 0; i < byteArray.Length; i++)
+                    hash = (hash ^ byteArray[i]) * p;
+
+                hash += hash << 13;
+                hash ^= hash >> 7;
+                hash += hash << 3;
+                hash ^= hash >> 17;
+                hash += hash << 5;
+                return hash;
+            }
+        }
         public static bool operator ==(MXFIdentifier x, MXFIdentifier y) { return Equals(x, y); }
         public static bool operator !=(MXFIdentifier x, MXFIdentifier y) { return !Equals(x, y); }
         #endregion
