@@ -40,5 +40,10 @@ namespace Myriadbits.MXF
         {
             return value._Value;
         }
+
+        public override string ToString()
+        {
+            return _Value.ToString();
+        }
     }
 }
