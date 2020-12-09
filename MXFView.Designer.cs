@@ -32,8 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MXFView));
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.tabMain = new System.Windows.Forms.TabControl();
-            this.tpLocation = new System.Windows.Forms.TabPage();
-            this.treeListViewMain = new BrightIdeasSoftware.TreeListView();
+            this.tpPhysical = new System.Windows.Forms.TabPage();
+            this.treeListViewPhysical = new BrightIdeasSoftware.TreeListView();
             this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.tpLogical = new System.Windows.Forms.TabPage();
@@ -43,6 +43,7 @@
             this.splitRight = new System.Windows.Forms.SplitContainer();
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.btnSelectReference = new System.Windows.Forms.Button();
+            this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.txtHex = new System.Windows.Forms.RichTextBox();
@@ -53,14 +54,13 @@
             this.mainPanel = new System.Windows.Forms.Panel();
             this.prbProcessing = new System.Windows.Forms.ProgressBar();
             this.bgwProcess = new System.ComponentModel.BackgroundWorker();
-            this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
             this.splitMain.SuspendLayout();
             this.tabMain.SuspendLayout();
-            this.tpLocation.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.treeListViewMain)).BeginInit();
+            this.tpPhysical.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.treeListViewPhysical)).BeginInit();
             this.tpLogical.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewLogical)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitRight)).BeginInit();
@@ -94,7 +94,7 @@
             this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabMain.Controls.Add(this.tpLocation);
+            this.tabMain.Controls.Add(this.tpPhysical);
             this.tabMain.Controls.Add(this.tpLogical);
             this.tabMain.Location = new System.Drawing.Point(4, 4);
             this.tabMain.Name = "tabMain";
@@ -102,52 +102,52 @@
             this.tabMain.Size = new System.Drawing.Size(523, 545);
             this.tabMain.TabIndex = 0;
             // 
-            // tpLocation
+            // tpPhysical
             // 
-            this.tpLocation.Controls.Add(this.treeListViewMain);
-            this.tpLocation.Location = new System.Drawing.Point(4, 22);
-            this.tpLocation.Name = "tpLocation";
-            this.tpLocation.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLocation.Size = new System.Drawing.Size(515, 519);
-            this.tpLocation.TabIndex = 0;
-            this.tpLocation.Text = "Location";
-            this.tpLocation.UseVisualStyleBackColor = true;
+            this.tpPhysical.Controls.Add(this.treeListViewPhysical);
+            this.tpPhysical.Location = new System.Drawing.Point(4, 22);
+            this.tpPhysical.Name = "tpPhysical";
+            this.tpPhysical.Padding = new System.Windows.Forms.Padding(3);
+            this.tpPhysical.Size = new System.Drawing.Size(515, 519);
+            this.tpPhysical.TabIndex = 0;
+            this.tpPhysical.Text = "Physical";
+            this.tpPhysical.UseVisualStyleBackColor = true;
             // 
-            // treeListViewMain
+            // treeListViewPhysical
             // 
-            this.treeListViewMain.AllColumns.Add(this.olvColumn1);
-            this.treeListViewMain.AllColumns.Add(this.olvColumn2);
-            this.treeListViewMain.AlternateRowBackColor = System.Drawing.Color.WhiteSmoke;
-            this.treeListViewMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.treeListViewPhysical.AllColumns.Add(this.olvColumn1);
+            this.treeListViewPhysical.AllColumns.Add(this.olvColumn2);
+            this.treeListViewPhysical.AlternateRowBackColor = System.Drawing.Color.WhiteSmoke;
+            this.treeListViewPhysical.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeListViewMain.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.treeListViewPhysical.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
             this.olvColumn2});
-            this.treeListViewMain.EmptyListMsg = "No items present";
-            this.treeListViewMain.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeListViewMain.FullRowSelect = true;
-            this.treeListViewMain.HideSelection = false;
-            this.treeListViewMain.HighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
-            this.treeListViewMain.Location = new System.Drawing.Point(6, 6);
-            this.treeListViewMain.MultiSelect = false;
-            this.treeListViewMain.Name = "treeListViewMain";
-            this.treeListViewMain.OwnerDraw = true;
-            this.treeListViewMain.RowHeight = 19;
-            this.treeListViewMain.ShowGroups = false;
-            this.treeListViewMain.Size = new System.Drawing.Size(503, 507);
-            this.treeListViewMain.TabIndex = 15;
-            this.treeListViewMain.TintSortColumn = true;
-            this.treeListViewMain.UnfocusedHighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
-            this.treeListViewMain.UseAlternatingBackColors = true;
-            this.treeListViewMain.UseCellFormatEvents = true;
-            this.treeListViewMain.UseCompatibleStateImageBehavior = false;
-            this.treeListViewMain.UseFiltering = true;
-            this.treeListViewMain.View = System.Windows.Forms.View.Details;
-            this.treeListViewMain.VirtualMode = true;
-            this.treeListViewMain.Expanding += new System.EventHandler<BrightIdeasSoftware.TreeBranchExpandingEventArgs>(this.treeListViewMain_Expanding);
-            this.treeListViewMain.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewMain_FormatCell);
-            this.treeListViewMain.SelectionChanged += new System.EventHandler(this.treeListViewMain_SelectionChanged);
+            this.treeListViewPhysical.EmptyListMsg = "No items present";
+            this.treeListViewPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeListViewPhysical.FullRowSelect = true;
+            this.treeListViewPhysical.HideSelection = false;
+            this.treeListViewPhysical.HighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.treeListViewPhysical.Location = new System.Drawing.Point(6, 6);
+            this.treeListViewPhysical.MultiSelect = false;
+            this.treeListViewPhysical.Name = "treeListViewPhysical";
+            this.treeListViewPhysical.OwnerDraw = true;
+            this.treeListViewPhysical.RowHeight = 19;
+            this.treeListViewPhysical.ShowGroups = false;
+            this.treeListViewPhysical.Size = new System.Drawing.Size(503, 507);
+            this.treeListViewPhysical.TabIndex = 15;
+            this.treeListViewPhysical.TintSortColumn = true;
+            this.treeListViewPhysical.UnfocusedHighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.treeListViewPhysical.UseAlternatingBackColors = true;
+            this.treeListViewPhysical.UseCellFormatEvents = true;
+            this.treeListViewPhysical.UseCompatibleStateImageBehavior = false;
+            this.treeListViewPhysical.UseFiltering = true;
+            this.treeListViewPhysical.View = System.Windows.Forms.View.Details;
+            this.treeListViewPhysical.VirtualMode = true;
+            this.treeListViewPhysical.Expanding += new System.EventHandler<BrightIdeasSoftware.TreeBranchExpandingEventArgs>(this.treeListViewPhysical_Expanding);
+            this.treeListViewPhysical.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewPhysical_FormatCell);
+            this.treeListViewPhysical.SelectionChanged += new System.EventHandler(this.treeListViewPhysical_SelectionChanged);
             // 
             // olvColumn1
             // 
@@ -206,7 +206,7 @@
             this.treeListViewLogical.UseFiltering = true;
             this.treeListViewLogical.View = System.Windows.Forms.View.Details;
             this.treeListViewLogical.VirtualMode = true;
-            this.treeListViewLogical.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewMain_FormatCell);
+            this.treeListViewLogical.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewPhysical_FormatCell);
             this.treeListViewLogical.SelectionChanged += new System.EventHandler(this.treeListViewLogical_SelectionChanged);
             // 
             // olvColumn3
@@ -271,6 +271,23 @@
             this.btnSelectReference.Text = "Select Reference";
             this.btnSelectReference.UseVisualStyleBackColor = true;
             this.btnSelectReference.Click += new System.EventHandler(this.btnSelectReference_Click);
+            // 
+            // propGrid
+            // 
+            this.propGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.propGrid.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.propGrid.HelpVisible = false;
+            this.propGrid.Location = new System.Drawing.Point(3, 32);
+            this.propGrid.Name = "propGrid";
+            this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propGrid.ReadOnly = true;
+            this.propGrid.Size = new System.Drawing.Size(573, 324);
+            this.propGrid.TabIndex = 1;
+            this.propGrid.ToolbarVisible = false;
+            this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.propGrid.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propGrid_SelectedGridItemChanged);
             // 
             // btnPrevious
             // 
@@ -363,23 +380,6 @@
             this.bgwProcess.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwProcess_ProgressChanged);
             this.bgwProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwProcess_RunWorkerCompleted);
             // 
-            // propGrid
-            // 
-            this.propGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.propGrid.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.propGrid.HelpVisible = false;
-            this.propGrid.Location = new System.Drawing.Point(3, 32);
-            this.propGrid.Name = "propGrid";
-            this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propGrid.ReadOnly = true;
-            this.propGrid.Size = new System.Drawing.Size(573, 324);
-            this.propGrid.TabIndex = 1;
-            this.propGrid.ToolbarVisible = false;
-            this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.propGrid.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propGrid_SelectedGridItemChanged);
-            // 
             // MXFView
             // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -401,8 +401,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).EndInit();
             this.splitMain.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
-            this.tpLocation.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.treeListViewMain)).EndInit();
+            this.tpPhysical.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.treeListViewPhysical)).EndInit();
             this.tpLogical.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewLogical)).EndInit();
             this.splitRight.Panel1.ResumeLayout(false);
@@ -427,7 +427,7 @@
 		private System.Windows.Forms.Button btnNext;
 		private System.Windows.Forms.Button btnPrevious;
 		private System.Windows.Forms.TabControl tabMain;
-		private System.Windows.Forms.TabPage tpLocation;
+		private System.Windows.Forms.TabPage tpPhysical;
 		private BrightIdeasSoftware.TreeListView treeListViewPhysical;
 		private BrightIdeasSoftware.OLVColumn olvColumn1;
 		private BrightIdeasSoftware.OLVColumn olvColumn2;

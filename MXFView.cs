@@ -147,7 +147,7 @@ namespace Myriadbits.MXFInspect
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void treeListViewMain_SelectionChanged(object sender, EventArgs e)
+		private void treeListViewPhysical_SelectionChanged(object sender, EventArgs e)
 		{
 			MXFObject obj = this.treeListViewPhysical.SelectedObject as MXFObject;
 			if (obj != null)
@@ -610,7 +610,7 @@ namespace Myriadbits.MXFInspect
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void treeListViewMain_FormatCell(object sender, FormatCellEventArgs e)
+		private void treeListViewPhysical_FormatCell(object sender, FormatCellEventArgs e)
 		{
 			if (e.ColumnIndex == 0)
 			{
@@ -722,7 +722,7 @@ namespace Myriadbits.MXFInspect
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void treeListViewMain_Expanding(object sender, TreeBranchExpandingEventArgs e)
+		private void treeListViewPhysical_Expanding(object sender, TreeBranchExpandingEventArgs e)
 		{
 			MXFObject selObject = e.Model as MXFObject;
 			if (selObject != null)
