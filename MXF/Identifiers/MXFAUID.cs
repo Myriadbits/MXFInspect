@@ -34,10 +34,6 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("AUID"), ReadOnly(true)]
 		public MXFKey Key { get; set; }
 
-		/// <summary>
-		/// Named Reference key
-		/// </summary>
-		/// <param name="reader"></param>
 		public MXFAUID(MXFReader reader, UInt32 size, string name)
 			: base(reader.Position)
 		{
