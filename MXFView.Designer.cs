@@ -43,7 +43,6 @@
             this.splitRight = new System.Windows.Forms.SplitContainer();
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.btnSelectReference = new System.Windows.Forms.Button();
-            this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.txtHex = new System.Windows.Forms.RichTextBox();
@@ -54,6 +53,7 @@
             this.mainPanel = new System.Windows.Forms.Panel();
             this.prbProcessing = new System.Windows.Forms.ProgressBar();
             this.bgwProcess = new System.ComponentModel.BackgroundWorker();
+            this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -272,23 +272,6 @@
             this.btnSelectReference.UseVisualStyleBackColor = true;
             this.btnSelectReference.Click += new System.EventHandler(this.btnSelectReference_Click);
             // 
-            // propGrid
-            // 
-            this.propGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.propGrid.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.propGrid.HelpVisible = false;
-            this.propGrid.Location = new System.Drawing.Point(3, 32);
-            this.propGrid.Name = "propGrid";
-            this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propGrid.ReadOnly = false;
-            this.propGrid.Size = new System.Drawing.Size(573, 324);
-            this.propGrid.TabIndex = 1;
-            this.propGrid.ToolbarVisible = false;
-            this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.propGrid.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propGrid_SelectedGridItemChanged);
-            // 
             // btnPrevious
             // 
             this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -380,6 +363,23 @@
             this.bgwProcess.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwProcess_ProgressChanged);
             this.bgwProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwProcess_RunWorkerCompleted);
             // 
+            // propGrid
+            // 
+            this.propGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.propGrid.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.propGrid.HelpVisible = false;
+            this.propGrid.Location = new System.Drawing.Point(3, 32);
+            this.propGrid.Name = "propGrid";
+            this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propGrid.ReadOnly = true;
+            this.propGrid.Size = new System.Drawing.Size(573, 324);
+            this.propGrid.TabIndex = 1;
+            this.propGrid.ToolbarVisible = false;
+            this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.propGrid.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propGrid_SelectedGridItemChanged);
+            // 
             // MXFView
             // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -442,6 +442,6 @@
 		private BrightIdeasSoftware.OLVColumn olvColumn3;
 		private BrightIdeasSoftware.OLVColumn olvColumn4;
 		private System.Windows.Forms.RichTextBox txtHex;
-	}
+    }
 }
 

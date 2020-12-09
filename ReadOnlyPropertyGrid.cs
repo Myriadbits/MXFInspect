@@ -42,7 +42,8 @@ namespace Myriadbits.MXFInspect
 			this.ViewForeColor = Color.FromArgb(1, 0, 0);
 		}
 
-		private bool _readOnly;
+		private bool _readOnly = true;
+
 		public bool ReadOnly
 		{
 			get { return _readOnly; }
@@ -61,18 +62,18 @@ namespace Myriadbits.MXFInspect
 
 		private void SetObjectAsReadOnly(object selectedObject, bool isReadOnly)
 		{
-			if (this.SelectedObject != null)
+			if (selectedObject != null)
 			{
-				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(this))
+				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(selectedObject))
 				{
-					var attr = prop.Attributes.OfType<Attribute>().Where(x => !(x is ReadOnlyAttribute)).ToList();
-					attr.Add(new ReadOnlyAttribute(true));
-
-					typeof(MemberDescriptor).GetProperty("AttributeArray", BindingFlags.Instance | BindingFlags.NonPublic)
-					.SetValue(prop, attr.ToArray());
+					ReadOnlyAttribute attr = prop.Attributes[typeof(ReadOnlyAttribute)] as ReadOnlyAttribute;
+					if (attr != null)
+					{
+						FieldInfo fi = attr.GetType().GetField("isReadOnly", BindingFlags.NonPublic | BindingFlags.Instance);
+						if (fi != null)
+							fi.SetValue(attr, isReadOnly);
+					}
 				}
-
-				//TypeDescriptor.AddAttributes(this.SelectedObject, new Attribute[] { new ReadOnlyAttribute(_readOnly) });
 				this.Refresh();
 			}
 		}
