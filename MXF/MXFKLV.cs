@@ -78,18 +78,24 @@ namespace Myriadbits.MXF
         /// </summary>
         private MXFKey CreateAndValidateKey(MXFReader reader)
         {
+            long originalPos = reader.Position;
+            
             byte[] prefix = reader.ReadArray(reader.ReadByte, 4);
             bool valid = prefix.SequenceEqual(validULPrefix);
 
+            // TODO does this really make sense checking key length if not valid whenever not equal to 16 bytes?
             // read the other bytes of the UL (length is defined in second byte minus two already read bytes)
             byte[] other = reader.ReadArray(reader.ReadByte, prefix[1] - 2);
             byte[] keyBytes = prefix.Concat(other).ToArray();
             MXFKey key = new MXFKey(keyBytes);
 
+            // TODO the responsibility for checking the key should be moved to file MXFKey???
+            // TODO check that none of the bytes excceds value 7F = 127 according to SMPTE298M
             if (!valid)
             {
                 //throw new ApplicationException(string.Format("Invalid SMPTE Key found at offset {0}! Incorrect MXF file!", reader.Position - 4));
                 LogError("Invalid SMPTE Key found at offset {0}! Key: {1}", reader.Position - 4, key.Name);
+                throw new Exception(string.Format("Invalid SMPTE UL found at @{0}! Key: {1}", originalPos, key.ToString()));
             }
             return key;
         }
