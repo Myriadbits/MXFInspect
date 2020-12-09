@@ -27,9 +27,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFCDPFuture : MXFObject
 	{
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
+		[CategoryAttribute("CDPFooter")]
 		public byte? SectionID { get; set; }
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
+		[CategoryAttribute("CDPFooter")]
 		public byte[] Data { get; set; }
 
 

@@ -28,9 +28,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFEntryPrimer : MXFObject
 	{
-		[CategoryAttribute("PrimerEntry"), ReadOnly(true)]
+		[CategoryAttribute("PrimerEntry")]
 		public UInt16 LocalTag { get; set; }
-		[CategoryAttribute("PrimerEntry"), ReadOnly(true)]
+		[CategoryAttribute("PrimerEntry")]
 		// TODO smpte specs request an AUID, but 
 		// probably a MXFKey = UL would make more sense here, so can we change this safely?
 		public MXFAUID AliasUID { get; set; }

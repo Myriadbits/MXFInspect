@@ -31,7 +31,7 @@ namespace Myriadbits.MXF.Metadata
 {
     public class MXFXMLDocumentText_Indirect : MXFKLV
     {
-        [CategoryAttribute("XML Document Text (Indirect)"), ReadOnly(true)]
+        [CategoryAttribute("XML Document Text (Indirect)")]
         public string Text { get; set; }
 
         public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV headerKLV)

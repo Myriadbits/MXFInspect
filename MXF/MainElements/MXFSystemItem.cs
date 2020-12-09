@@ -70,37 +70,37 @@ namespace Myriadbits.MXF
 
 	public class MXFSystemItem : MXFKLV
 	{
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemBitmap SystemBitmap { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public double PackageRate { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemStreamStatus StreamStatus { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public bool LowLatencyMode { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemTransferMode TransferMode { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemTimingMode TimingMode { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public UInt16 ChannelHandle { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public UInt16 ContinuityCount { get; set; }
 
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public MXFKey SMPTE { get; set; }
 
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public string CreationDate { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public MXFTimeStamp UserDate { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public string UserDateFullFrameNb { get; set; }
 
 		[Browsable(false)]
 		public bool Indexed { get; set; }
 
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public long EssenceOffset
 		{
 			get

@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
 	[TypeConverter(typeof(ExpandableObjectConverter))]
 	public class MXFAUID : MXFNamedObject 
 	{
-		[CategoryAttribute("AUID"), ReadOnly(true)]
+		[CategoryAttribute("AUID")]
 		public MXFKey Key { get; set; }
 
 		public MXFAUID(MXFReader reader, UInt32 size, string name)

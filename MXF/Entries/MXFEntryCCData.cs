@@ -35,11 +35,11 @@ namespace Myriadbits.MXF
 
 	public class MXFEntryCCData : MXFObject
 	{
-		[CategoryAttribute("CCData"), ReadOnly(true)] 
+		[CategoryAttribute("CCData")] 
 		public bool? Valid { get; set; }
-		[CategoryAttribute("CCData"), ReadOnly(true)]
+		[CategoryAttribute("CCData")]
 		public CCDataType? CCType { get; set; }
-		[CategoryAttribute("CCData"), ReadOnly(true)]
+		[CategoryAttribute("CCData")]
 		public byte[] Data { get; set; }		
 
 		public MXFEntryCCData(MXFReader reader)

@@ -50,27 +50,27 @@ namespace Myriadbits.MXF
 	{
 		private MXFCDFFrameRate FrameRateE { get; set; }
 
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public double? FrameRate { get; set; }
 
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public bool TimeCodePresent { get; set; }
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public bool CCDataPresent { get; set; }
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public bool SVCInfoPresent { get; set; }
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public bool SVCInfoStart { get; set; }
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public bool SVCInfoChange { get; set; }
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public bool SVCInfoComplete { get; set; }
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public bool CaptionServiceActive { get; set; }
-		[CategoryAttribute("CDP Header"), ReadOnly(true)]
+		[CategoryAttribute("CDP Header")]
 		public UInt16 SequenceCounter { get; set; }
 
-		[CategoryAttribute("CDP TimeCode"), ReadOnly(true)]
+		[CategoryAttribute("CDP TimeCode")]
 		public MXFTimeStamp TimeCode { get; set; }
 		
 

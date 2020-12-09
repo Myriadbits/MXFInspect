@@ -30,18 +30,18 @@ namespace Myriadbits.MXF
 	{
 		private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>();
 
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
+		[CategoryAttribute("EssenceElement")]
 		public string ItemType { get; set; }
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
+		[CategoryAttribute("EssenceElement")]
 		public byte ElementCount { get; set; }
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
+		[CategoryAttribute("EssenceElement")]
 		public byte ElementType { get; set; }
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
+		[CategoryAttribute("EssenceElement")]
 		public byte ElementNumber { get; set; }
 		[Browsable(false)]
 		public bool IsPicture { get; set; }
 
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
+		[CategoryAttribute("EssenceElement")]
 		public long EssenceOffset
 		{
 			get

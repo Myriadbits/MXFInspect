@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFMetadataBaseclass : MXFKLV
     {
-        [CategoryAttribute("Metadata"), ReadOnly(true)]
+        [CategoryAttribute("Metadata")]
         public string MetaDataName { get; set; }
 
         public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)

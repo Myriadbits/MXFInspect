@@ -27,11 +27,11 @@ namespace Myriadbits.MXF
 {
 	public class MXFEntrySVCInfo : MXFObject
 	{
-		[CategoryAttribute("SVC Info"), ReadOnly(true)]
+		[CategoryAttribute("SVC Info")]
 		public byte? CaptionServiceNumber { get; set; }
-		[CategoryAttribute("SVC Info "), ReadOnly(true)]
+		[CategoryAttribute("SVC Info ")]
 		public byte[] Data { get; set; }
-		[CategoryAttribute("SVC Info "), ReadOnly(true)]
+		[CategoryAttribute("SVC Info ")]
 		public string DataString { get; set; }
 
 		public MXFEntrySVCInfo(MXFReader reader)

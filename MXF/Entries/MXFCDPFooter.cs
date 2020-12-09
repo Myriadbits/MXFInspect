@@ -28,9 +28,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFCDPFooter : MXFObject
 	{
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)] 
+		[CategoryAttribute("CDPFooter")] 
 		public UInt16? SequenceCounter { get; set; }
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
+		[CategoryAttribute("CDPFooter")]
 		public byte? PacketChecksum { get; set; }
 
 

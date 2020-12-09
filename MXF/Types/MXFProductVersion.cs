@@ -44,17 +44,17 @@ namespace Myriadbits.MXF
 	[TypeConverter(typeof(ExpandableObjectConverter))]
 	public class MXFProductVersion 
 	{
-		[CategoryAttribute("Version"), ReadOnly(true)]
+		[CategoryAttribute("Version")]
 		public UInt16 Major { get; set; }
-		[CategoryAttribute("Version"), ReadOnly(true)]
+		[CategoryAttribute("Version")]
 		public UInt16 Minor { get; set; }
-		[CategoryAttribute("Version"), ReadOnly(true)]
+		[CategoryAttribute("Version")]
 		public UInt16 Tertiary { get; set; }
 
-		[CategoryAttribute("Version"), ReadOnly(true)]
+		[CategoryAttribute("Version")]
 		public UInt16 Patch { get; set; }
 
-		[CategoryAttribute("Version"), ReadOnly(true)]
+		[CategoryAttribute("Version")]
 		public MXFProductReleaseType Build { get; set; }
 
 		public override string ToString()

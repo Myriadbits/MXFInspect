@@ -28,9 +28,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFEntryRIP : MXFObject
 	{
-		[CategoryAttribute("RIPEntry"), ReadOnly(true)]
+		[CategoryAttribute("RIPEntry")]
 		public UInt32 BodySID { get; set; }
-		[CategoryAttribute("RIPEntry"), ReadOnly(true)]
+		[CategoryAttribute("RIPEntry")]
 		public UInt64 PartitionOffset { get; set; }
 
 		public MXFEntryRIP(MXFReader reader)

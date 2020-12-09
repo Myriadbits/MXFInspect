@@ -38,51 +38,51 @@ namespace Myriadbits.MXF
 
 	public class MXFPartition : MXFKLV
 	{		
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public PartitionType PartitionType { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public bool Closed { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public bool Complete { get; set; }
 
-        //[CategoryAttribute("PartitionHeader"), ReadOnly(true)]
+        //[CategoryAttribute("PartitionHeader")]
         //public MXFVersion Version { get; set; }
-        [CategoryAttribute("PartitionHeader"), ReadOnly(true)]
+        [CategoryAttribute("PartitionHeader")]
         public UInt16 MajorVersion { get; set; }
 
-        [CategoryAttribute("PartitionHeader"), ReadOnly(true)]
+        [CategoryAttribute("PartitionHeader")]
         public UInt16 MinorVersion { get; set; }
 
-        [CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+        [CategoryAttribute("PartitionHeader")] 
 		public UInt32 KagSize { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 ThisPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 PreviousPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 FooterPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 HeaderByteCount { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 IndexByteCount { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt32 IndexSID { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 BodyOffset { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt32 BodySID { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public MXFKey OP { get; set; }
 
 		[Browsable(false)]

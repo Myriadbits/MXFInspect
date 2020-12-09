@@ -28,11 +28,11 @@ namespace Myriadbits.MXF
 {
 	public class MXFEntryDelta : MXFObject
 	{
-		[CategoryAttribute("DeltaEntry"), ReadOnly(true)] 
+		[CategoryAttribute("DeltaEntry")] 
 		public sbyte PosTableIndex { get; set; }
-		[CategoryAttribute("DeltaEntry"), ReadOnly(true)]
+		[CategoryAttribute("DeltaEntry")]
 		public byte Slice { get; set; }
-		[CategoryAttribute("DeltaEntry"), ReadOnly(true)]
+		[CategoryAttribute("DeltaEntry")]
 		public UInt32 ElementDelta { get; set; }
 
 		public MXFEntryDelta(MXFReader reader, UInt32 length)
