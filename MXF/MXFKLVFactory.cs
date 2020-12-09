@@ -230,16 +230,6 @@ namespace Myriadbits.MXF
         }
 
 
-        public MXFKLVFactory()
-        {
-            // set all properties of all classes of this factory to readonly
-            foreach (var type in dict.Values)
-            {
-                SetTypePropertiesToReadOnly(type);
-            }
-        }
-
-
         /// <summary>
         /// Create a new MXF object based on the KLV key
         /// </summary>
@@ -264,28 +254,6 @@ namespace Myriadbits.MXF
             return klv;
         }
 
-        /// <summary>
-        /// Set all properties to readonly (recursive through to the base classes)
-        /// </summary>
-        protected void SetTypePropertiesToReadOnly(Type type)
-        {
-            if (type != null)
-            {
-                if (type.BaseType != null)
-                    SetTypePropertiesToReadOnly(type.BaseType);
-
-                foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(type))
-                {
-                    ReadOnlyAttribute attr = prop.Attributes[typeof(ReadOnlyAttribute)] as ReadOnlyAttribute;
-                    if (attr != null)
-                    {
-                        FieldInfo fi = attr.GetType().GetField("isReadOnly", BindingFlags.NonPublic | BindingFlags.Instance);
-                        if (fi != null)
-                            fi.SetValue(attr, true);
-                    }
-                }
-            }
-        }
 
         /// <summary>
         /// Update all descriptions with data from the primer pack
