@@ -65,7 +65,7 @@ namespace Myriadbits.MXF
 
         private MXFIdentifier() { }
 
-        // TODO find a better name for this method
+        // TODO find a better name for this method, move to the only caller class???
         public bool HasSameBeginning(MXFIdentifier id)
         {
             int smallerLength = Math.Min(this.byteArray.Length, id.byteArray.Length);
@@ -113,15 +113,20 @@ namespace Myriadbits.MXF
             return Equals((MXFIdentifier)obj);
         }
 
-        // TODO see https://stackoverflow.com/a/468084 and https://stackoverflow.com/a/53316768
+        //see https://stackoverflow.com/a/468084 and https://stackoverflow.com/a/53316768
         public override int GetHashCode() {
-            
+
+            return GetHashCode(byteArray.Length);
+        }
+
+        public int GetHashCode(int arrayLength)
+        {
             unchecked
             {
                 const int p = 16777619;
                 int hash = (int)2166136261;
 
-                for (int i = 0; i < byteArray.Length; i++)
+                for (int i = 0; i < arrayLength; i++)
                     hash = (hash ^ byteArray[i]) * p;
 
                 hash += hash << 13;
@@ -132,6 +137,7 @@ namespace Myriadbits.MXF
                 return hash;
             }
         }
+
         public static bool operator ==(MXFIdentifier x, MXFIdentifier y) { return Equals(x, y); }
         public static bool operator !=(MXFIdentifier x, MXFIdentifier y) { return !Equals(x, y); }
         #endregion

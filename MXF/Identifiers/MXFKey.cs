@@ -101,7 +101,7 @@ namespace Myriadbits.MXF
     {
         private static Dictionary<MXFShortKey, string[]> m_ULDescriptions;
 
-
+        // TODO move this to new static class "KeyDictionary"
         static MXFKey()
         {
             m_ULDescriptions = new Dictionary<MXFShortKey, string[]>();
@@ -227,26 +227,7 @@ namespace Myriadbits.MXF
             FindKeyName();
         }
 
-        /// <summary>
-        /// Create a new key
-        /// </summary>
-        /// <param name="list"></param>
-        public MXFKey(Type objectType, params byte[] list) : this(list)
-        {
-            this.ObjectType = objectType;
-            FindKeyName();
-        }
-
-        /// <summary>
-        /// Create a new key
-        /// </summary>
-        /// <param name="list"></param>
-        public MXFKey(string name, KeyType type, params byte[] list) : this(name, list)
-        {
-            this.Type = type;
-            FindKeyName();
-        }
-
+        // TODO remove ctor if possible
         /// <summary>
         /// Create a new key by reading from the current file location with a fixed size
         /// </summary>
