@@ -12,8 +12,6 @@ namespace Myriadbits.MXF
 
         IEnumerable<T> Descendants();
 
-        T GetChild(int index);
-
         void AddChild(T child);
 
     }

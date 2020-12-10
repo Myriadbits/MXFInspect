@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
 
 		public MXFEntryRIP GetPartition(int partitionIndex)
 		{
-			return this.GetChild(partitionIndex) as MXFEntryRIP;
+			return this.Children.ElementAtOrDefault(partitionIndex) as MXFEntryRIP;
 		}
 	}
 }

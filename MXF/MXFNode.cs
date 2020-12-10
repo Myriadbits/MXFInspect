@@ -44,20 +44,6 @@ namespace Myriadbits.MXF
             else yield break;
         }
 
-        /// <summary>
-        /// Returns a specific child
-        /// </summary>
-        /// <param name="child"></param>
-        /// <returns></returns>
-        public T GetChild(int index)
-        {
-            if (this.Children.Any())
-                return null;
-            if (index >= 0 && index < this.Children.Count)
-                return this.Children[index];
-            return null;
-        }
-
         public virtual void AddChild(T child)
         {
             child.Parent = (T)this;
