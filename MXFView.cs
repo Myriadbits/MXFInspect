@@ -190,7 +190,7 @@ namespace Myriadbits.MXFInspect
 
 						// Try to select this item in the main list as well
 						m_fDoNotSelectOther = true;
-						SelectObjectInMainList(obj);
+						SelectObjectInPhysicalTree(obj);
 						m_fDoNotSelectOther = false;
 
 						// Display the hex data
@@ -301,7 +301,7 @@ namespace Myriadbits.MXFInspect
 		{
 			if (m_currentReference != null)
 			{
-				SelectObjectInMainList(m_currentReference);
+				SelectObjectInPhysicalTree(m_currentReference);
 			}
 		}
 
@@ -324,8 +324,9 @@ namespace Myriadbits.MXFInspect
 						nextObject = this.m_filterList[index + 1];
 				}
 				else
-					nextObject = selectedObject.FindNextSibling(selectedObject.GetType(), this.HideFillers);
-				SelectObjectInMainList(nextObject);
+					// TODO is the hidefillers boolean really needed?
+					nextObject = selectedObject.FindNextObjectOfType(selectedObject.GetType(), this.HideFillers);
+				SelectObjectInPhysicalTree(nextObject);
 			}
 		}
 
@@ -348,8 +349,9 @@ namespace Myriadbits.MXFInspect
 						previousObject = this.m_filterList[index - 1];
 				}
 				else
-					previousObject = selectedObject.FindPreviousSibling(selectedObject.GetType(), this.HideFillers);
-				SelectObjectInMainList(previousObject);
+					// TODO is the hidefillers boolean really needed?
+					previousObject = selectedObject.FindPreviousObjectOfType(selectedObject.GetType(), this.HideFillers);
+				SelectObjectInPhysicalTree(previousObject);
 			}
 		}
 
@@ -385,10 +387,10 @@ namespace Myriadbits.MXFInspect
 
 
 		/// <summary>
-		/// Select the new object in the tree
+		/// Select an object in the physical tree
 		/// </summary>
-		/// <param name="newObject"></param>
-		private void SelectObjectInMainList(MXFObject selObject)
+		/// <param name="selObject"></param>
+		private void SelectObjectInPhysicalTree(MXFObject selObject)
 		{
 			if (selObject != null)
 			{
@@ -423,9 +425,9 @@ namespace Myriadbits.MXFInspect
 
 
 		/// <summary>
-		/// Select the new object in the tree
+		/// Select an object in the physical tree
 		/// </summary>
-		/// <param name="newObject"></param>
+		/// <param name="selObject"></param>
 		private void SelectObjectInLogicalList(MXFObject selObject)
 		{
 			if (selObject != null)
@@ -696,13 +698,13 @@ namespace Myriadbits.MXFInspect
 
 			// (Re)-select the selected item
 			if (selObject != null)
-				SelectObjectInMainList(selObject);
+				SelectObjectInPhysicalTree(selObject);
 			else
 			{
 				// No item selected, just select the first partition
 				if (this.m_MXFFile != null && this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
 				{
-					SelectObjectInMainList(this.m_MXFFile.Partitions[0]);
+					SelectObjectInPhysicalTree(this.m_MXFFile.Partitions[0]);
 				}
 			}
 		}
