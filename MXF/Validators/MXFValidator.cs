@@ -30,6 +30,7 @@ using System.Text;
 
 namespace Myriadbits.MXF
 {
+	// TODO should this class inherit from MXFObject?
 	public class MXFValidator : MXFObject
 	{
 		public MXFFile File { get; set; }
