@@ -23,8 +23,10 @@
 
 namespace Myriadbits.MXF
 {
-    public interface IReference<T> : IResolvable where T : MXFObject 
+    public interface IResolvable
     {
-        T Reference { get; set; }
+        bool ResolveReference(IUUIDIdentifiable obj);
+
+        MXFObject GetReference();
     }
 }
