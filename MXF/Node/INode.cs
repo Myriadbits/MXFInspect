@@ -21,43 +21,23 @@
 //
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	public class MXFLogicalObject : Node<MXFLogicalObject>
-	{		
-		[Browsable(false)]
-		public MXFObject Object { get; set; }
+    public interface INode<T>
+    {
+        List<T> Children { get; set; }
+        
+        T Parent { get; set; }
 
-		[Browsable(false)]
-		public string Name { get; set; }
+        INode<T> Root();
 
-		/// <summary>
-		///Default constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFLogicalObject(MXFObject obj, string name)
-		{
-			this.Object = obj;
-			this.Name = name;
-		}
-			
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (!this.Children.Any())
-				return this.Name;
-			return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
-		}
+        IEnumerable<T> Descendants();
 
+        IEnumerable<T> Ancestors();
 
+        void AddChild(T child);
 
-	}
+    }
 }
