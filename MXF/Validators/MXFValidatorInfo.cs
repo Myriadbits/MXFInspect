@@ -22,24 +22,27 @@
 #endregion
 
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Linq;
 
 namespace Myriadbits.MXF
-{	
-	public class MXFValidatorInfo : MXFValidator
-	{
-		public override void OnExecuteTest(ref List<MXFValidationResult> results)
-		{
-			this.Task = "Track Info";
-			int noT = this.File.NumberOfTracks;
-			for(int n = 0; n < noT; n++)
-			{
-				ReportProgress(n * 100 / noT);
-				MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
-				valResult.Category = "Track Info";
-				results.Add(valResult); // And directly add the results
-				valResult.SetInfo(this.File.GetTrackInfo(n));
-			}
-		}		
-	}
+{
+    public class MXFValidatorInfo : MXFValidator
+    {
+        public override void OnExecuteTest(ref List<MXFValidationResult> results)
+        {
+            //this.Task = "Track Info";
+            //MXFMaterialPackage mp = this.File.GetContentStorage()?.GetFirstMaterialPackage();
+            //List<MXFGenericTrack> tracks = mp.GetGenericTracks().ToList();
+
+            //foreach (var t in tracks)
+            //{
+            //    int n = tracks.IndexOf(t);
+            //    ReportProgress(n * 100 / tracks.Count);
+            //    MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
+            //    valResult.Category = "Track Info";
+            //    valResult.SetInfo(this.File.GetTrackInfo(t));
+            //    results.Add(valResult); // And directly add the results
+            //}
+        }
+    }
 }

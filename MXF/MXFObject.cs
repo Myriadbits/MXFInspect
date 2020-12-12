@@ -50,7 +50,7 @@ namespace Myriadbits.MXF
     };
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public abstract class MXFObject : MXFNode<MXFObject>
+    public abstract class MXFObject : Node<MXFObject>
     {
         private long m_lLength = -1;            // Length in bytes of this object
         protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type

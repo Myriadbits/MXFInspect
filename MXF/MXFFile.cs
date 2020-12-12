@@ -508,7 +508,8 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Loop through all resolvable items and try to find the object with a matching UUID 
         /// </summary>
-        /// <param name="parent"></param> 
+        /// <param name="parent"></param>
+        /// <returns>the number of successfully resolved references</returns>  
         protected int ResolveReferences()
         {
             // TODO optimize further, rethink solution
@@ -531,39 +532,29 @@ namespace Myriadbits.MXF
         }
 
         /// <summary>
-        /// Return info from this MXFFile
+        /// Return info for a generic track packet
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public string GetTrackInfo(int trackID)
+        /// <returns>A string representing information about a generic track</returns>
+        public string GetTrackInfo(MXFGenericTrack genericTrack)
         {
-            // TODO optimize and refactor
             try
             {
-                //List<MXFLogicalObject> lot = MXFLogicalObject.GetLogicChilds<MXFGenericTrack>(this.LogicalBase[typeof(MXFMaterialPackage)]);
-
-                var lot = this.LogicalBase
-                    .Descendants()
-                    .Where(o => o.Object is MXFMaterialPackage)
-                    .First()
-                    .Children.Where(c => c.Object is MXFGenericTrack);
-
-                MXFLogicalObject track = lot.Where(a => ((MXFGenericTrack)a.Object).TrackID == trackID).FirstOrDefault();
-                if (track != null)
+                if (genericTrack != null)
                 {
-                    MXFGenericTrack gtrack = track.Object as MXFGenericTrack;
-                    if (gtrack != null)
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(string.Format(@"Name: ""{0}"", ", genericTrack.TrackName));
+                    if (genericTrack is MXFTimelineTrack timeLineTrack)
                     {
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append(string.Format("'{0}' ", gtrack.TrackName));
-                        MXFTimelineTrack ttrack = gtrack as MXFTimelineTrack;
-                        if (ttrack != null)
-                            sb.Append(string.Format("Rate: {0} ", ttrack.EditRate));
-                        MXFSequence seq = track.Children.Select(l => l.Object).OfType<MXFSequence>().FirstOrDefault();
-                        if (seq != null && seq.DataDefinition != null)
-                            sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Name));
-                        return sb.ToString();
+                        sb.Append(string.Format("Edit Rate: {0} ", timeLineTrack.EditRate));
                     }
+
+                    //MXFSequence seq = genericTrack.NodesOfType<MXFSequence>().FirstOrDefault()?.Value as MXFSequence;
+                    //if (seq != null && seq.DataDefinition != null)
+                    //{
+                    //    sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Name));
+                    //}
+                    return sb.ToString();
+
                 }
                 return "";
             }
@@ -571,30 +562,41 @@ namespace Myriadbits.MXF
             {
             }
             return "";
+
+            //// TODO optimize and refactor
+            //try
+            //{
+            //    //List<MXFLogicalObject> lot = MXFLogicalObject.GetLogicChilds<MXFGenericTrack>(this.LogicalBase[typeof(MXFMaterialPackage)]);
+
+            //    var lot = this.LogicalTree
+            //        .Descendants()
+            //        .Where(o => o.Object is MXFMaterialPackage)
+            //        .First()
+            //        .Children.Where(c => c.Object is MXFGenericTrack);
+
+            //    MXFLogicalObject track = lot.Where(a => ((MXFGenericTrack)a.Object).TrackID == trackID).FirstOrDefault();
+            //    if (track != null)
+            //    {
+            //        MXFGenericTrack gtrack = track.Object as MXFGenericTrack;
+            //        if (gtrack != null)
+            //        {
+            //            StringBuilder sb = new StringBuilder();
+            //            sb.Append(string.Format("'{0}' ", gtrack.TrackName));
+            //            MXFTimelineTrack ttrack = gtrack as MXFTimelineTrack;
+            //            if (ttrack != null)
+            //                sb.Append(string.Format("Rate: {0} ", ttrack.EditRate));
+            //            MXFSequence seq = track.Children.Select(l => l.Object).OfType<MXFSequence>().FirstOrDefault();
+            //            if (seq != null && seq.DataDefinition != null)
+            //                sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Name));
+            //            return sb.ToString();
+            //        }
+            //    }
+            //    return "";
+            //}
+            //catch (Exception)
+            //{
+            //}
+            //return "";
         }
-
-        /// <summary>
-        /// Count the number of tracks
-        /// </summary>
-        public int NumberOfTracks
-        {
-            // TODO optimize and refactor
-            get
-            {
-                if (this.LogicalBase == null)
-                    return 0;
-
-                return this.LogicalBase
-                    .Descendants()
-                    .First(o => o.Object is MXFMaterialPackage)
-                    .Children
-                    .Count;
-
-                //if (lo != null && lo.Children != null)
-                //    return lo.Children.Count();
-                //return 0;
-            }
-        }
-
     }
 }
