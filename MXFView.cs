@@ -280,10 +280,10 @@ namespace Myriadbits.MXFInspect
 				// Select the reference itself by default
 				m_currentReference = m_selectedObject;
 
-				if (m_selectedObject is IResolvable refkey)
+				if (m_selectedObject is IResolvable resolvable)
 				{
-					if (refkey.GetReference() != null)
-						m_currentReference = refkey.GetReference();
+					if (resolvable.GetReference() != null)
+						m_currentReference = resolvable.GetReference();
 					else
 						m_currentReference = null; // Reset ?? dumb logic?
 				}
