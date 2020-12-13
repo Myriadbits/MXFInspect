@@ -47,8 +47,6 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("PartitionHeader")] 
 		public bool Complete { get; set; }
 
-        //[CategoryAttribute("PartitionHeader")]
-        //public MXFVersion Version { get; set; }
         [CategoryAttribute("PartitionHeader")]
         public UInt16 MajorVersion { get; set; }
 
