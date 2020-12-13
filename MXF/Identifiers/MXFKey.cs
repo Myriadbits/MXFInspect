@@ -198,7 +198,7 @@ namespace Myriadbits.MXF
             {
                 if (this.Length > 4)
                 {
-                    return (KeyCategory)this[5];
+                    return (KeyCategory)this[4];
                 }
                 else
                 {
