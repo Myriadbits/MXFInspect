@@ -143,10 +143,13 @@
             this.treeListViewPhysical.UseCellFormatEvents = true;
             this.treeListViewPhysical.UseCompatibleStateImageBehavior = false;
             this.treeListViewPhysical.UseFiltering = true;
+            this.treeListViewPhysical.UseHyperlinks = true;
             this.treeListViewPhysical.View = System.Windows.Forms.View.Details;
             this.treeListViewPhysical.VirtualMode = true;
             this.treeListViewPhysical.Expanding += new System.EventHandler<BrightIdeasSoftware.TreeBranchExpandingEventArgs>(this.treeListViewPhysical_Expanding);
             this.treeListViewPhysical.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewPhysical_FormatCell);
+            this.treeListViewPhysical.HyperlinkClicked += new System.EventHandler<BrightIdeasSoftware.HyperlinkClickedEventArgs>(this.treeListViewPhysical_HyperlinkClicked);
+            this.treeListViewPhysical.IsHyperlink += new System.EventHandler<BrightIdeasSoftware.IsHyperlinkEventArgs>(this.treeListViewPhysical_IsHyperlink);
             this.treeListViewPhysical.SelectionChanged += new System.EventHandler(this.treeListViewPhysical_SelectionChanged);
             // 
             // olvColumn1
