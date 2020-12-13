@@ -368,7 +368,7 @@ namespace Myriadbits.MXF
                     break;
 
                 case KeyType.Preface:
-                    this.LogicalBase = new MXFLogicalObject(klv, klv.ToString());
+                    this.LogicalBase = klv.CreateLogicalObject();
                     // Normal
                     if (currentPartition != null)
                         currentPartition.AddChild(klv);
@@ -475,11 +475,11 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Add all children (recursively)
         /// </summary>
-        /// <param name="node"></param>
-        protected MXFLogicalObject LogicalAddChilds(MXFLogicalObject node)
+        /// <param name="lObj"></param>
+        protected MXFLogicalObject LogicalAddChilds(MXFLogicalObject lObj)
         {
             // Check properties for reference
-            MXFObject obj = node.Object;
+            MXFObject obj = lObj.Object;
             if (obj != null)
             {
                 var desc = obj.Descendants().OfType<IResolvable>();
@@ -490,19 +490,19 @@ namespace Myriadbits.MXF
                     var refObj = r.GetReference();
                     if(refObj != null)
                     {
-                        MXFLogicalObject lo = new MXFLogicalObject(refObj, refObj.ToString());
-                        node.AddChild(lo);
+                        MXFLogicalObject newLObj = refObj.CreateLogicalObject();
+                        lObj.AddChild(newLObj);
 
                         if (refObj.Children.Any())
                         {
-                            LogicalAddChilds(lo);
+                            LogicalAddChilds(newLObj);
                         }
                     }
 
 
                 }
             }
-            return node;
+            return lObj;
         }
 
         /// <summary>
@@ -542,17 +542,18 @@ namespace Myriadbits.MXF
                 if (genericTrack != null)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append(string.Format(@"Name: ""{0}"", ", genericTrack.TrackName));
-                    if (genericTrack is MXFTimelineTrack timeLineTrack)
+                    MXFSequence seq = genericTrack.GetFirstMXFSequence();
+                    if (seq != null && seq.DataDefinition != null)
                     {
-                        sb.Append(string.Format("Edit Rate: {0} ", timeLineTrack.EditRate));
+                        sb.Append(string.Format("{0}", seq.DataDefinition.Name));
                     }
 
-                    //MXFSequence seq = genericTrack.NodesOfType<MXFSequence>().FirstOrDefault()?.Value as MXFSequence;
-                    //if (seq != null && seq.DataDefinition != null)
-                    //{
-                    //    sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Name));
-                    //}
+                    if (genericTrack is MXFTimelineTrack timeLineTrack)
+                    {
+                        sb.Append(string.Format(" @ {0}, ", timeLineTrack.EditRate));
+                    }
+                    sb.Append(string.Format(@"""{0}"", ", genericTrack.TrackName));
+
                     return sb.ToString();
 
                 }
@@ -560,43 +561,8 @@ namespace Myriadbits.MXF
             }
             catch (Exception)
             {
+                return "Unable to retrieve track info. See error log for more details";
             }
-            return "";
-
-            //// TODO optimize and refactor
-            //try
-            //{
-            //    //List<MXFLogicalObject> lot = MXFLogicalObject.GetLogicChilds<MXFGenericTrack>(this.LogicalBase[typeof(MXFMaterialPackage)]);
-
-            //    var lot = this.LogicalTree
-            //        .Descendants()
-            //        .Where(o => o.Object is MXFMaterialPackage)
-            //        .First()
-            //        .Children.Where(c => c.Object is MXFGenericTrack);
-
-            //    MXFLogicalObject track = lot.Where(a => ((MXFGenericTrack)a.Object).TrackID == trackID).FirstOrDefault();
-            //    if (track != null)
-            //    {
-            //        MXFGenericTrack gtrack = track.Object as MXFGenericTrack;
-            //        if (gtrack != null)
-            //        {
-            //            StringBuilder sb = new StringBuilder();
-            //            sb.Append(string.Format("'{0}' ", gtrack.TrackName));
-            //            MXFTimelineTrack ttrack = gtrack as MXFTimelineTrack;
-            //            if (ttrack != null)
-            //                sb.Append(string.Format("Rate: {0} ", ttrack.EditRate));
-            //            MXFSequence seq = track.Children.Select(l => l.Object).OfType<MXFSequence>().FirstOrDefault();
-            //            if (seq != null && seq.DataDefinition != null)
-            //                sb.Append(string.Format("Type: {0} ", seq.DataDefinition.Name));
-            //            return sb.ToString();
-            //        }
-            //    }
-            //    return "";
-            //}
-            //catch (Exception)
-            //{
-            //}
-            //return "";
         }
     }
 }

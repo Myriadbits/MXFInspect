@@ -30,19 +30,19 @@ namespace Myriadbits.MXF
     {
         public override void OnExecuteTest(ref List<MXFValidationResult> results)
         {
-            //this.Task = "Track Info";
-            //MXFMaterialPackage mp = this.File.GetContentStorage()?.GetFirstMaterialPackage();
-            //List<MXFGenericTrack> tracks = mp.GetGenericTracks().ToList();
+            this.Task = "Track Info";
+            MXFMaterialPackage mp = this.File.GetContentStorage()?.GetFirstMaterialPackage();
+            List<MXFGenericTrack> tracks = mp.GetGenericTracks().ToList();
 
-            //foreach (var t in tracks)
-            //{
-            //    int n = tracks.IndexOf(t);
-            //    ReportProgress(n * 100 / tracks.Count);
-            //    MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
-            //    valResult.Category = "Track Info";
-            //    valResult.SetInfo(this.File.GetTrackInfo(t));
-            //    results.Add(valResult); // And directly add the results
-            //}
+            foreach (var t in tracks)
+            {
+                int n = tracks.IndexOf(t);
+                ReportProgress(n * 100 / tracks.Count);
+                MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
+                valResult.Category = "Track Info";
+                valResult.SetInfo(this.File.GetTrackInfo(t));
+                results.Add(valResult); // And directly add the results
+            }
         }
     }
 }

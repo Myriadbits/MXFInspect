@@ -92,6 +92,11 @@ namespace Myriadbits.MXF
         // TODO extract Loaded/Load to an interface
         public bool IsLoaded { get; set; }
 
+       
+        [Browsable(false)]
+        // TODO find better name
+        public MXFLogicalObject LogicalWrapper { get; private set; }
+
         /// <summary>
         ///Default constructor needed for derived classes such as MXFFile, ...
         /// </summary>
@@ -217,6 +222,14 @@ namespace Myriadbits.MXF
         /// </summary>
         public virtual void OnLoad()
         {
+        }
+
+        // TODO find better name, maybe Wrap
+        public MXFLogicalObject CreateLogicalObject()
+        {
+            var wrapper = new MXFLogicalObject(this, this.ToString());
+            this.LogicalWrapper = wrapper;
+            return wrapper;
         }
     }
 }

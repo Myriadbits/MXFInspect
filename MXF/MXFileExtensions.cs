@@ -117,32 +117,54 @@ namespace Myriadbits.MXF
         public static MXFContentStorage GetContentStorage(this MXFFile file)
         {
             // TODO assuming there is only one content storage
-            return file.LogicalBase.Children.OfType<MXFContentStorage>().FirstOrDefault();
+            return file.LogicalBase
+                        .Children
+                        .OfWrappedType<MXFContentStorage>()
+                        .FirstOrDefault()
+                        .UnWrapAs<MXFContentStorage>();
         }
 
-        //public static MXFMaterialPackage GetFirstMaterialPackage(this MXFContentStorage cs)
-        //{
-        //    // TODO assuming there is at least one material package linked to the content storage
-        //    //var wrapper = 
-        //    return cs.Children.Where<MXFMaterialPackage>().FirstOrDefault();
-        //}
+        public static MXFMaterialPackage GetFirstMaterialPackage(this MXFContentStorage cs)
+        {
+            // TODO assuming there is at least one material package linked to the content storage
+            return cs.LogicalWrapper
+                        .Children
+                        .OfWrappedType<MXFMaterialPackage>()
+                        .FirstOrDefault()?
+                        .UnWrapAs<MXFMaterialPackage>();
+        }
 
-        //public static IEnumerable<MXFGenericTrack> GetGenericTracks(this MXFGenericPackage package)
-        //{
-        //    return package.LogicalChildren.OfType<MXFGenericTrack>().OrderBy(t => t.TrackID);
-        //}
+        public static IEnumerable<MXFGenericTrack> GetGenericTracks(this MXFGenericPackage package)
+        {
+            return package.LogicalWrapper
+                        .Children
+                        .OfWrappedType<MXFGenericTrack>()
+                        .UnWrapAs<MXFGenericTrack>();
+        }
 
-        //public static MXFSequence GetFirstMXFSequence(this MXFGenericTrack track)
-        //{
-        //    // TODO should 
-        //    return track.LogicalChildren.OfType<MXFSequence>().FirstOrDefault();
-        //}
+        public static MXFSequence GetFirstMXFSequence(this MXFGenericTrack track)
+        {
+            return track.LogicalWrapper
+                    .Children.OfWrappedType<MXFSequence>()
+                    .FirstOrDefault()?
+                    .UnWrapAs<MXFSequence>();
+        }
 
 
-        //public static MXFLogicalObject FindLogicalWrapper(this MXFObject obj)
-        //{
-        //    // TODO should 
-        //    return obj.Root.LogicalChildren.OfType<MXFSequence>().FirstOrDefault();
-        //}
+        public static IEnumerable<MXFLogicalObject> OfWrappedType<T>(this IEnumerable<MXFLogicalObject> lObjects)
+        {
+            return lObjects.Where(o => o.Object is T);
+        }
+
+        public static T UnWrapAs<T>(this MXFLogicalObject lObj) where T : MXFObject
+        {
+            return lObj.Object as T;
+        }
+
+        public static IEnumerable<T> UnWrapAs<T>(this IEnumerable<MXFLogicalObject> lObjs) where T : MXFObject
+        {
+            return lObjs.Select(o => o.Object as T);
+        }
+
     }
 }

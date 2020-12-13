@@ -33,6 +33,8 @@ namespace Myriadbits.MXF
 		[Browsable(false)]
 		public MXFObject Object { get; set; }
 
+
+		// TODO remove property
 		[Browsable(false)]
 		public string Name { get; set; }
 
