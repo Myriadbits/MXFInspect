@@ -455,7 +455,7 @@ namespace Myriadbits.MXF
             {
                 MXFValidationResult valResult = new MXFValidationResult("Index Table");
                 this.m_results.Add(valResult);
-                valResult.SetWarning("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
+                valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
                 //MXFValidationResult valResult = new MXFValidationResult("Index Tables");				
                 //this.Results.Add(valResult); // And directly add the results
             }

@@ -30,7 +30,8 @@ namespace Myriadbits.MXF
 		Success = 1,
 		Warning = 2,
 		Error = 3,
-		Info = 4
+		Info = 4,
+		Question = 5
 	};
 
 	public class MXFValidationDetails
@@ -82,7 +83,13 @@ namespace Myriadbits.MXF
 			this.State = MXFValidationState.Info;
 			this.Result = result;
 		}
-		
+
+		public void SetQuestion(string result)
+		{
+			this.State = MXFValidationState.Question;
+			this.Result = result;
+		}
+
 		public void AddSuccess(string result)
 		{
 			this.Add(new MXFValidationDetails(MXFValidationState.Success, result));
