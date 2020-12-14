@@ -230,7 +230,7 @@ namespace Myriadbits.MXFInspect
 					this.tabMain.SelectedTab = mtp;
 
 					this.ActiveView.HideFillers = !showFillersToolStripMenuItem.Checked;
-					this.ActiveView.FilterCurrentType(this.filterCurrentTypeToolStripMenuItem.Checked);
+					this.ActiveView.SetTypeFilter(this.filterCurrentTypeToolStripMenuItem.Checked);
 				}
 			}
 			this.UpdateMenu();
@@ -333,7 +333,7 @@ namespace Myriadbits.MXFInspect
 			{
 				this.filterCurrentTypeToolStripMenuItem.Checked = !this.filterCurrentTypeToolStripMenuItem.Checked;
 				this.tsbFilterCurrent.Checked = this.filterCurrentTypeToolStripMenuItem.Checked;
-				this.ActiveView.FilterCurrentType(this.filterCurrentTypeToolStripMenuItem.Checked);
+				this.ActiveView.SetTypeFilter(this.filterCurrentTypeToolStripMenuItem.Checked);
 			}
 		}
 
@@ -344,7 +344,7 @@ namespace Myriadbits.MXFInspect
 				this.showFillersToolStripMenuItem.Checked = !showFillersToolStripMenuItem.Checked;
 				this.tsbShowFillers.Checked = this.showFillersToolStripMenuItem.Checked;
 				this.ActiveView.HideFillers = !showFillersToolStripMenuItem.Checked;
-				this.ActiveView.FilterCurrentType(this.filterCurrentTypeToolStripMenuItem.Checked);
+				this.ActiveView.ExcludeFiller(!showFillersToolStripMenuItem.Checked);
 			}
 		}
 

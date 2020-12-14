@@ -99,27 +99,34 @@ namespace Myriadbits.MXFInspect
 
             //
             // Set the tree styles
-            OLVColumn col = (OLVColumn)this.treeListViewPhysical.Columns[0];
-            col.Renderer = null;
-            col = (OLVColumn)this.treeListViewPhysical.Columns[1];
-            col.Renderer = this.treeListViewPhysical.TreeColumnRenderer;
-            col = (OLVColumn)this.treeListViewLogical.Columns[0];
+            //OLVColumn col = (OLVColumn)this.treeListViewPhysical.Columns[0];
+            //col.Renderer = null;
+            //col = (OLVColumn)this.treeListViewPhysical.Columns[1];
+            //col.Renderer = this.treeListViewPhysical.TreeColumnRenderer;
+            OLVColumn col = (OLVColumn)this.treeListViewLogical.Columns[0];
             col.Renderer = null;
             col = (OLVColumn)this.treeListViewLogical.Columns[1];
             col.Renderer = this.treeListViewLogical.TreeColumnRenderer;
 
             Pen pen = new Pen(Color.Black, 1.001f);
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            this.treeListViewPhysical.TreeColumnRenderer.LinePen = pen;
+            //this.treeListViewPhysical.TreeColumnRenderer.LinePen = pen;
             this.treeListViewLogical.TreeColumnRenderer.LinePen = pen;
 
             // Set tree delegates
-            this.treeListViewPhysical.CanExpandGetter = Tree_HasChildren;
-            this.treeListViewPhysical.ChildrenGetter = Tree_ChildGetter;
+            //this.treeListViewPhysical.CanExpandGetter = Tree_HasChildren;
+            //this.treeListViewPhysical.ChildrenGetter = Tree_ChildGetter;
             this.treeListViewLogical.CanExpandGetter = Tree_HasLogicalChildren;
             this.treeListViewLogical.ChildrenGetter = Tree_LogicalChildGetter;
-            this.treeListViewPhysical.ParentGetter = PhysicalTree_ParentGetter;
-            this.treeListViewLogical.ParentGetter = LogicalTree_ParentGetter;
+            //this.treeListViewPhysical.ParentGetter = PhysicalTree_ParentGetter;
+            //this.treeListViewLogical.ParentGetter = LogicalTree_ParentGetter;
+
+
+
+            // wiring physical treelistview with selectionchanged event
+            this.tlvPhysical.SelectionChanged += PhysicalTreeSelectionChanged;
+
+
 
             // Determine the filesize
             m_eFileParseOptions = FileParseOptions.Normal;
@@ -142,36 +149,12 @@ namespace Myriadbits.MXFInspect
                 frmMain.EnableUI(false);
         }
 
-        private object PhysicalTree_ParentGetter(object model)
+        private void PhysicalTreeSelectionChanged(object sender, EventArgs e)
         {
-            if(model is MXFObject obj)
-            {
-                return obj.Parent;
-            }
-            return null;
-        }
-
-        private object LogicalTree_ParentGetter(object model)
-        {
-            if (model is MXFLogicalObject obj)
-            {
-                return obj.Parent;
-            }
-            return null;
-        }
-
-
-        /// <summary>
-        /// User clicked another item in the tree, show the details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void treeListViewPhysical_SelectionChanged(object sender, EventArgs e)
-        {
-            MXFObject obj = this.treeListViewPhysical.SelectedObject as MXFObject;
+            MXFObject obj = this.tlvPhysical.SelectedObject as MXFObject;
             if (obj != null)
             {
-                 if (!m_fDoNotSelectOther)
+                if (!m_fDoNotSelectOther)
                 {
                     this.propGrid.SelectedObject = obj;
 
@@ -186,6 +169,33 @@ namespace Myriadbits.MXFInspect
             }
             this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
         }
+
+
+        /// <summary>
+        /// User clicked another item in the tree, show the details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        //private void treeListViewPhysical_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    MXFObject obj = this.treeListViewPhysical.SelectedObject as MXFObject;
+        //    if (obj != null)
+        //    {
+        //         if (!m_fDoNotSelectOther)
+        //        {
+        //            this.propGrid.SelectedObject = obj;
+
+        //            // Try to select this object in the logical list as well
+        //            m_fDoNotSelectOther = true;
+        //            SelectObjectInLogicalList(obj);
+        //            m_fDoNotSelectOther = false;
+
+        //            // Display the hex data
+        //            ReadData(obj);
+        //        }
+        //    }
+        //    this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
+        //}
 
 
 
@@ -224,7 +234,7 @@ namespace Myriadbits.MXFInspect
         /// Read the data and display it in the hex window
         /// </summary>
         /// <param name="obj"></param>
-        private void ReadData(MXFObject obj)
+        public void ReadData(MXFObject obj)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -331,7 +341,7 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         public void SelectNextObject()
         {
-            MXFObject selectedObject = this.treeListViewPhysical.SelectedObject as MXFObject;
+            MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
             if (selectedObject != null)
             {
                 MXFObject nextObject = selectedObject;
@@ -356,7 +366,7 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         public void SelectPreviousObject()
         {
-            MXFObject selectedObject = this.treeListViewPhysical.SelectedObject as MXFObject;
+            MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
             if (selectedObject != null)
             {
                 MXFObject previousObject = selectedObject;
@@ -374,14 +384,14 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-        /// <summary>
-        /// Find the previous item in this parent
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void FilterCurrentType(bool filter)
+        public void SetTypeFilter(bool filtered)
         {
-            AddItemsToTree(filter);
+            tlvPhysical.SetTypeFilter(filtered);
+        }
+
+        public void ExcludeFiller(bool exclude)
+        {
+            tlvPhysical.HideFillers(exclude);
         }
 
         /// <summary>
@@ -420,11 +430,11 @@ namespace Myriadbits.MXFInspect
                 else
                 {
                     // Open entire parent tree and select object
-                    treeListViewPhysical.Reveal(selObject, true);
+                    tlvPhysical.Reveal(selObject, true);
                 }
 
-                this.treeListViewPhysical.EnsureModelVisible(selObject);
-                this.treeListViewPhysical.RefreshObject(selObject);
+                this.tlvPhysical.EnsureModelVisible(selObject);
+                this.tlvPhysical.RefreshObject(selObject);
             }
         }
 
@@ -433,7 +443,7 @@ namespace Myriadbits.MXFInspect
         /// Select an object in the logical tree
         /// </summary>
         /// <param name="selObject"></param>
-        private void SelectObjectInLogicalList(MXFObject selObject)
+        public void SelectObjectInLogicalList(MXFObject selObject)
         {
             if (selObject != null)
             {
@@ -477,51 +487,20 @@ namespace Myriadbits.MXFInspect
         {
             try
             {
-                // Reset whole tree's
-                this.treeListViewPhysical.Items.Clear();
+                // File physical tree
+                this.tlvPhysical.FillTree(this.m_MXFFile.Children, this.HideFillers);
+                
                 this.treeListViewLogical.Items.Clear();
 
                 // Add the data
                 AddItemsToTree(false);
+
+                this.txtOverall.Text = string.Format("Total objects: {0}", this.m_MXFFile.Descendants().Count());
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error while opening the file");
+                MessageBox.Show(ex.Message, "Error while populating the trees");
             }
-        }
-
-
-        /// <summary>
-        /// Does this object have children?
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private bool Tree_HasChildren(object x)
-        {
-            MXFObject mxf = x as MXFObject;
-            if (mxf == null) return false;
-            return mxf.Children.Any();
-        }
-
-        /// <summary>
-        /// Get the childs!
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private IEnumerable Tree_ChildGetter(object x)
-        {
-            MXFObject mxf = x as MXFObject;
-            if (mxf == null) return null;
-            ArrayList ar = new ArrayList();
-            foreach (MXFObject child in mxf.Children)
-            {
-                bool add = true;
-                if (this.HideFillers)
-                    add = (child.Type != MXFObjectType.Filler);
-                if (add)
-                    ar.Add(child);
-            }
-            return ar;
         }
 
 
@@ -608,6 +587,7 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// // TODO fix for logical tree
         private void treeListViewPhysical_FormatCell(object sender, FormatCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
@@ -642,96 +622,63 @@ namespace Myriadbits.MXFInspect
 
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public bool IsTypeFilterActive
-        {
-            get
-            {
-                return (this.m_filterList != null);
-            }
-        }
-
-
-        /// <summary>
         /// (re)Fill the tree
         /// </summary>
         private void AddItemsToTree(bool filterCurrentType)
         {
-            MXFObject selObject = this.treeListViewPhysical.SelectedObject as MXFObject;
-            if (filterCurrentType && selObject != null)
-            {
-                Type selectedType = selObject.GetType();
+            //MXFObject selObject = this.treeListViewPhysical.SelectedObject as MXFObject;
+            //if (filterCurrentType && selObject != null)
+            //{
+            //    Type selectedType = selObject.GetType();
 
-                // Create a new list with the selected items only)
-                if (this.HideFillers)
-                    this.m_filterList = this.m_MXFFile.Descendants().Where(a => a.GetType() == selectedType && a.Type != MXFObjectType.Filler).ToList();
-                else
-                    this.m_filterList = this.m_MXFFile.Descendants().Where(a => a.GetType() == selectedType).ToList();
-                this.treeListViewPhysical.SetObjects(this.m_filterList);
-                this.txtOverall.Text = string.Format("Number of filtered objects: {0}", this.m_filterList.Count);
+            //    // Create a new list with the selected items only)
+            //    if (this.HideFillers)
+            //        this.m_filterList = this.m_MXFFile.Descendants().Where(a => a.GetType() == selectedType && a.Type != MXFObjectType.Filler).ToList();
+            //    else
+            //        this.m_filterList = this.m_MXFFile.Descendants().Where(a => a.GetType() == selectedType).ToList();
+            //    this.treeListViewPhysical.SetObjects(this.m_filterList);
+            //    this.txtOverall.Text = string.Format("Number of filtered objects: {0}", this.m_filterList.Count);
+            //}
+            //else
+            //{
+            //    this.m_filterList = null;
+            //    if (this.m_MXFFile != null)
+            //    {
+            //        this.treeListViewPhysical.SetObjects(this.m_MXFFile.Children);
+            //        this.txtOverall.Text = string.Format("Total objects: {0}", this.m_MXFFile.Descendants().Count());
+            //    }
+            //    else
+            //        this.txtOverall.Text = "";
             }
-            else
-            {
-                this.m_filterList = null;
-                if (this.m_MXFFile != null)
-                {
-                    this.treeListViewPhysical.SetObjects(this.m_MXFFile.Children);
-                    this.txtOverall.Text = string.Format("Total objects: {0}", this.m_MXFFile.Descendants().Count());
-                }
-                else
-                    this.txtOverall.Text = "";
-            }
 
-            // Set logical tree
-            List<MXFLogicalObject> los = new List<MXFLogicalObject>();
-            if (this.m_MXFFile != null)
-                los.Add(this.m_MXFFile.LogicalBase);
-            this.treeListViewLogical.SetObjects(los);
+            //    // Set logical tree
+            //    List<MXFLogicalObject> los = new List<MXFLogicalObject>();
+            //    if (this.m_MXFFile != null)
+            //        los.Add(this.m_MXFFile.LogicalBase);
+            //    this.treeListViewLogical.SetObjects(los);
 
 
-            // (Re)-select the selected item
-            if (selObject != null)
-                SelectObjectInPhysicalTree(selObject);
-            else
-            {
-                // No item selected, just select the first partition
-                if (this.m_MXFFile != null && this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
-                {
-                    SelectObjectInPhysicalTree(this.m_MXFFile.Partitions[0]);
-                }
-            }
-        }
+            //    // (Re)-select the selected item
+            //    if (selObject != null)
+            //        SelectObjectInPhysicalTree(selObject);
+            //    else
+            //    {
+                    // No item selected, just select the first partition
+                    //if (this.m_MXFFile != null && this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
+                    //{
+                    //    SelectObjectInPhysicalTree(this.m_MXFFile.Partitions[0]);
+                    //}
+            //    }
+            //}
 
-        /// <summary>
-        /// Show/hide help
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkInfo_CheckedChanged(object sender, EventArgs e)
+            /// <summary>
+            /// Show/hide help
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void chkInfo_CheckedChanged(object sender, EventArgs e)
         {
             this.propGrid.HelpVisible = this.chkInfo.Checked;
-        }
-
-        /// <summary>
-        /// Tree is expanding, load the partition
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void treeListViewPhysical_Expanding(object sender, TreeBranchExpandingEventArgs e)
-        {
-            MXFObject selObject = e.Model as MXFObject;
-            if (selObject != null)
-            {
-                if (!selObject.IsLoaded)
-                {
-                    Cursor.Current = Cursors.WaitCursor;
-                    selObject.Load();
-                    Cursor.Current = Cursors.Default;
-                }
-            }
         }
 
         /// <summary>
@@ -741,12 +688,12 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         public void CollapseAll()
         {
-            this.treeListViewPhysical.CollapseAll();
+            this.tlvPhysical.CollapseAll();
 
             // No item selected, just select the first partition
             if (this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
             {
-                this.treeListViewPhysical.Expand(this.m_MXFFile.Children[0]);
+                this.tlvPhysical.Expand(this.m_MXFFile.Children[0]);
                 //foreach (MXFObject obj in this.m_MXFFile.Partitions)
                 //	if (!this.treeListViewMain.IsExpanded(obj))
                 //		this.treeListViewMain.Expand(obj);
@@ -759,25 +706,25 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         public void ApplyUserSettings()
         {
-            this.treeListViewPhysical.Refresh();
+            this.tlvPhysical.Refresh();
             this.treeListViewLogical.Refresh();
         }
 
-        private void treeListViewPhysical_IsHyperlink(object sender, IsHyperlinkEventArgs e)
-        {
-            if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
-            {
-                e.IsHyperlink = true;
-                //e.Url = null;
-            }
-            else e.IsHyperlink = false;
-        }
+        //private void treeListViewPhysical_IsHyperlink(object sender, IsHyperlinkEventArgs e)
+        //{
+        //    if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
+        //    {
+        //        e.IsHyperlink = true;
+        //        //e.Url = null;
+        //    }
+        //    else e.IsHyperlink = false;
+        //}
 
-        private void treeListViewPhysical_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
-        {
-            var resolvable = e.Model as IResolvable;
-            treeListViewPhysical.SelectObject(resolvable.GetReference());
-            this.treeListViewPhysical.EnsureModelVisible(resolvable.GetReference());
-        }
+        //private void treeListViewPhysical_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
+        //{
+        //    var resolvable = e.Model as IResolvable;
+        //    treeListViewPhysical.SelectObject(resolvable.GetReference());
+        //    this.treeListViewPhysical.EnsureModelVisible(resolvable.GetReference());
+        //}
     }
 }
