@@ -35,89 +35,123 @@ using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-	public partial class FormSettings : Form
-	{
-		public FormSettings()
-		{
-			InitializeComponent();
-		}
+    public partial class FormSettings : Form
+    {
+        public FormSettings()
+        {
+            InitializeComponent();
+        }
 
-		private void FormSettings_Load(object sender, EventArgs e)
-		{
-			LoadSettings();
-		}
+        private void FormSettings_Load(object sender, EventArgs e)
+        {
+            LoadSettings();
+        }
 
-		private void LoadSettings()
-		{
-			Settings settings = MXFInspect.Properties.Settings.Default;
-			if (settings.PartialLoadThresholdMB == 100) this.cmbThreshold.SelectedIndex = 1;
-			else if (settings.PartialLoadThresholdMB == 500) this.cmbThreshold.SelectedIndex = 2;
-			else if (settings.PartialLoadThresholdMB == 1000) this.cmbThreshold.SelectedIndex = 3;
-			else if (settings.PartialLoadThresholdMB == 5000) this.cmbThreshold.SelectedIndex = 4;
-			else this.cmbThreshold.SelectedIndex = 0;
+        private void LoadSettings()
+        {
+            Settings settings = MXFInspect.Properties.Settings.Default;
 
-			this.pbColorPartition.BackColor = settings.Color_Partition;
-			this.pbColorEssence.BackColor = settings.Color_Essence;
-			this.pbColorIndex.BackColor = settings.Color_IndexTable;
-			this.pbColorRIP.BackColor = settings.Color_RIP;
-			this.pbColorSystemItem.BackColor = settings.Color_SystemItem;
-			this.pbColorMeta.BackColor = settings.Color_MetaData;
-			this.pbColorFiller.BackColor = settings.Color_Filler;
-			this.pbColorSpecial.BackColor = settings.Color_Special;
+            switch (settings.PartialLoadThresholdMB)
+            {
+                case 100:
+                    this.cmbThreshold.SelectedIndex = 1;
+                    break;
+                case 500:
+                    this.cmbThreshold.SelectedIndex = 2;
+                    break;
+                case 1000:
+                    this.cmbThreshold.SelectedIndex = 3;
+                    break;
+                case 5000:
+                    this.cmbThreshold.SelectedIndex = 4;
+                    break;
+                case 10*1000:
+                    this.cmbThreshold.SelectedIndex = 5;
+                    break;
+                default:
+                    this.cmbThreshold.SelectedIndex = 0;
+                    break;
+            }
 
-			this.chkPartialLoadMsg.Checked = settings.PartialLoadWarning;
-		}
+            this.pbColorPartition.BackColor = settings.Color_Partition;
+            this.pbColorEssence.BackColor = settings.Color_Essence;
+            this.pbColorIndex.BackColor = settings.Color_IndexTable;
+            this.pbColorRIP.BackColor = settings.Color_RIP;
+            this.pbColorSystemItem.BackColor = settings.Color_SystemItem;
+            this.pbColorMeta.BackColor = settings.Color_MetaData;
+            this.pbColorFiller.BackColor = settings.Color_Filler;
+            this.pbColorSpecial.BackColor = settings.Color_Special;
 
-		private void ChangeColor(PictureBox pb)
-		{
-			this.colorDialog1.Color = pb.BackColor;
-			if (this.colorDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-			{
-				pb.BackColor = this.colorDialog1.Color;
-			}
-		}
+            this.chkPartialLoadMsg.Checked = settings.PartialLoadWarning;
+        }
 
-		private void bntOk_Click(object sender, EventArgs e)
-		{
-			Settings settings = MXFInspect.Properties.Settings.Default;
-			
-			settings.Color_Partition = this.pbColorPartition.BackColor;
-			settings.Color_Essence = this.pbColorEssence.BackColor;
-			settings.Color_IndexTable = this.pbColorIndex.BackColor;
-			settings.Color_RIP = this.pbColorRIP.BackColor;
-			settings.Color_SystemItem = this.pbColorSystemItem.BackColor;
-			settings.Color_MetaData = this.pbColorMeta.BackColor;
-			settings.Color_Filler = this.pbColorFiller.BackColor;
-			settings.Color_Special = this.pbColorSpecial.BackColor;
+        private void ChangeColor(PictureBox pb)
+        {
+            this.colorDialog1.Color = pb.BackColor;
+            if (this.colorDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                pb.BackColor = this.colorDialog1.Color;
+            }
+        }
 
-			if (this.cmbThreshold.SelectedIndex == 1) settings.PartialLoadThresholdMB = 100;
-			else if (this.cmbThreshold.SelectedIndex == 2) settings.PartialLoadThresholdMB = 500;
-			else if (this.cmbThreshold.SelectedIndex == 3) settings.PartialLoadThresholdMB = 1000;
-			else if (this.cmbThreshold.SelectedIndex == 4) settings.PartialLoadThresholdMB = 5000;
-			else settings.PartialLoadThresholdMB = 0;
+        private void bntOk_Click(object sender, EventArgs e)
+        {
+            Settings settings = MXFInspect.Properties.Settings.Default;
 
-			settings.PartialLoadWarning = this.chkPartialLoadMsg.Checked;
+            settings.Color_Partition = this.pbColorPartition.BackColor;
+            settings.Color_Essence = this.pbColorEssence.BackColor;
+            settings.Color_IndexTable = this.pbColorIndex.BackColor;
+            settings.Color_RIP = this.pbColorRIP.BackColor;
+            settings.Color_SystemItem = this.pbColorSystemItem.BackColor;
+            settings.Color_MetaData = this.pbColorMeta.BackColor;
+            settings.Color_Filler = this.pbColorFiller.BackColor;
+            settings.Color_Special = this.pbColorSpecial.BackColor;
 
-			MXFInspect.Properties.Settings.Default.Save();
-			this.DialogResult = System.Windows.Forms.DialogResult.OK;
-		}
 
-		private void pbColorIndex_Click(object sender, EventArgs e) { ChangeColor(this.pbColorIndex); }
-		private void pbColorEssence_Click(object sender, EventArgs e) { ChangeColor(this.pbColorEssence); }
-		private void pbColorPartition_Click(object sender, EventArgs e) { ChangeColor(this.pbColorPartition); }
-		private void pbColorRIP_Click(object sender, EventArgs e) { ChangeColor(this.pbColorRIP); }
-		private void pbColorSystemItem_Click(object sender, EventArgs e) { ChangeColor(this.pbColorSystemItem); }
-		private void pbColorMeta_Click(object sender, EventArgs e){ ChangeColor(this.pbColorMeta); }
-		private void pbColorFiller_Click(object sender, EventArgs e){ ChangeColor(this.pbColorFiller); }
-		private void pbColorSpecial_Click(object sender, EventArgs e){ ChangeColor(this.pbColorSpecial); }
-	
-		private void btnReset_Click(object sender, EventArgs e)
-		{
-			MXFInspect.Properties.Settings.Default.Reset();
-			LoadSettings();
-		}
+            switch (cmbThreshold.SelectedIndex)
+            {
+                case 1:
+                    settings.PartialLoadThresholdMB = 100;
+                    break;
+                case 2:
+                    settings.PartialLoadThresholdMB = 500;
+                    break;
+                case 3:
+                    settings.PartialLoadThresholdMB = 1000;
+                    break;
+                case 4:
+                    settings.PartialLoadThresholdMB = 5000;
+                    break;
+                case 5:
+                    settings.PartialLoadThresholdMB = 10 * 1000;
+                    break;
+                default:
+                    settings.PartialLoadThresholdMB = 0;
+                    break;
+            }
 
-		
-		
-	}
+            settings.PartialLoadWarning = this.chkPartialLoadMsg.Checked;
+
+            MXFInspect.Properties.Settings.Default.Save();
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+        }
+
+        private void pbColorIndex_Click(object sender, EventArgs e) { ChangeColor(this.pbColorIndex); }
+        private void pbColorEssence_Click(object sender, EventArgs e) { ChangeColor(this.pbColorEssence); }
+        private void pbColorPartition_Click(object sender, EventArgs e) { ChangeColor(this.pbColorPartition); }
+        private void pbColorRIP_Click(object sender, EventArgs e) { ChangeColor(this.pbColorRIP); }
+        private void pbColorSystemItem_Click(object sender, EventArgs e) { ChangeColor(this.pbColorSystemItem); }
+        private void pbColorMeta_Click(object sender, EventArgs e) { ChangeColor(this.pbColorMeta); }
+        private void pbColorFiller_Click(object sender, EventArgs e) { ChangeColor(this.pbColorFiller); }
+        private void pbColorSpecial_Click(object sender, EventArgs e) { ChangeColor(this.pbColorSpecial); }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            MXFInspect.Properties.Settings.Default.Reset();
+            LoadSettings();
+        }
+
+
+
+    }
 }
