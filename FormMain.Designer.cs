@@ -36,17 +36,17 @@
 			this.menuMain = new System.Windows.Forms.MenuStrip();
 			this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mXFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmValidationReport = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.nextItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.previousItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.filterCurrentTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiFindNextItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiFindPreviousItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiFilterCurrentType = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-			this.showFillersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiShowFillers = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiCollapseAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -57,11 +57,11 @@
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsbOpen = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsbReport = new System.Windows.Forms.ToolStripButton();
+			this.tsbValidationReport = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsbFindNext = new System.Windows.Forms.ToolStripButton();
-			this.tsbFindPrevious = new System.Windows.Forms.ToolStripButton();
-			this.tsbFilterCurrent = new System.Windows.Forms.ToolStripButton();
+			this.tsbFindNextItem = new System.Windows.Forms.ToolStripButton();
+			this.tsbFindPreviousItem = new System.Windows.Forms.ToolStripButton();
+			this.tsbFilterCurrentType = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsbShowFillers = new System.Windows.Forms.ToolStripButton();
 			this.tabMain = new System.Windows.Forms.TabControl();
@@ -101,7 +101,7 @@
 			// 
 			this.menuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOpenFile,
-            this.menuClose,
+            this.tsmiClose,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
 			this.menuFile.Name = "menuFile";
@@ -119,11 +119,11 @@
 			// 
 			// menuClose
 			// 
-			this.menuClose.Name = "menuClose";
-			this.menuClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-			this.menuClose.Size = new System.Drawing.Size(155, 22);
-			this.menuClose.Text = "&Close";
-			this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
+			this.tsmiClose.Name = "menuClose";
+			this.tsmiClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+			this.tsmiClose.Size = new System.Drawing.Size(155, 22);
+			this.tsmiClose.Text = "&Close";
+			this.tsmiClose.Click += new System.EventHandler(this.menuClose_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -143,11 +143,11 @@
 			this.mXFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmValidationReport,
             this.toolStripSeparator4,
-            this.nextItemToolStripMenuItem,
-            this.previousItemToolStripMenuItem,
-            this.filterCurrentTypeToolStripMenuItem,
+            this.tsmiFindNextItem,
+            this.tsmiFindPreviousItem,
+            this.tsmiFilterCurrentType,
             this.toolStripSeparator5,
-            this.showFillersToolStripMenuItem});
+            this.tsmiShowFillers});
 			this.mXFToolStripMenuItem.Name = "mXFToolStripMenuItem";
 			this.mXFToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
 			this.mXFToolStripMenuItem.Text = "&MXF";
@@ -167,32 +167,32 @@
 			// 
 			// nextItemToolStripMenuItem
 			// 
-			this.nextItemToolStripMenuItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
-			this.nextItemToolStripMenuItem.Name = "nextItemToolStripMenuItem";
-			this.nextItemToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-			this.nextItemToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-			this.nextItemToolStripMenuItem.Text = "&Next item";
-			this.nextItemToolStripMenuItem.ToolTipText = "Select the next object in the MXF file";
-			this.nextItemToolStripMenuItem.Click += new System.EventHandler(this.nextItemToolStripMenuItem_Click);
+			this.tsmiFindNextItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
+			this.tsmiFindNextItem.Name = "nextItemToolStripMenuItem";
+			this.tsmiFindNextItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+			this.tsmiFindNextItem.Size = new System.Drawing.Size(197, 22);
+			this.tsmiFindNextItem.Text = "&Next item";
+			this.tsmiFindNextItem.ToolTipText = "Select the next object in the MXF file";
+			this.tsmiFindNextItem.Click += new System.EventHandler(this.nextItemToolStripMenuItem_Click);
 			// 
 			// previousItemToolStripMenuItem
 			// 
-			this.previousItemToolStripMenuItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
-			this.previousItemToolStripMenuItem.Name = "previousItemToolStripMenuItem";
-			this.previousItemToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F3)));
-			this.previousItemToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-			this.previousItemToolStripMenuItem.Text = "&Previous item";
-			this.previousItemToolStripMenuItem.ToolTipText = "Select the previous object in the MXF file";
-			this.previousItemToolStripMenuItem.Click += new System.EventHandler(this.previousItemToolStripMenuItem_Click);
+			this.tsmiFindPreviousItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
+			this.tsmiFindPreviousItem.Name = "previousItemToolStripMenuItem";
+			this.tsmiFindPreviousItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F3)));
+			this.tsmiFindPreviousItem.Size = new System.Drawing.Size(197, 22);
+			this.tsmiFindPreviousItem.Text = "&Previous item";
+			this.tsmiFindPreviousItem.ToolTipText = "Select the previous object in the MXF file";
+			this.tsmiFindPreviousItem.Click += new System.EventHandler(this.previousItemToolStripMenuItem_Click);
 			// 
 			// filterCurrentTypeToolStripMenuItem
 			// 
-			this.filterCurrentTypeToolStripMenuItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FilteredObject_13400_14x;
-			this.filterCurrentTypeToolStripMenuItem.Name = "filterCurrentTypeToolStripMenuItem";
-			this.filterCurrentTypeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.filterCurrentTypeToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-			this.filterCurrentTypeToolStripMenuItem.Text = "&Filter current type";
-			this.filterCurrentTypeToolStripMenuItem.Click += new System.EventHandler(this.filterCurrentTypeToolStripMenuItem_Click);
+			this.tsmiFilterCurrentType.Image = global::Myriadbits.MXFInspect.Properties.Resources.FilteredObject_13400_14x;
+			this.tsmiFilterCurrentType.Name = "filterCurrentTypeToolStripMenuItem";
+			this.tsmiFilterCurrentType.ShortcutKeys = System.Windows.Forms.Keys.F5;
+			this.tsmiFilterCurrentType.Size = new System.Drawing.Size(197, 22);
+			this.tsmiFilterCurrentType.Text = "&Filter current type";
+			this.tsmiFilterCurrentType.Click += new System.EventHandler(this.filterCurrentTypeToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator5
 			// 
@@ -201,12 +201,12 @@
 			// 
 			// showFillersToolStripMenuItem
 			// 
-			this.showFillersToolStripMenuItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.HideMember_6755;
-			this.showFillersToolStripMenuItem.Name = "showFillersToolStripMenuItem";
-			this.showFillersToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.showFillersToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-			this.showFillersToolStripMenuItem.Text = "&Show fillers";
-			this.showFillersToolStripMenuItem.Click += new System.EventHandler(this.showFillersToolStripMenuItem_Click);
+			this.tsmiShowFillers.Image = global::Myriadbits.MXFInspect.Properties.Resources.HideMember_6755;
+			this.tsmiShowFillers.Name = "showFillersToolStripMenuItem";
+			this.tsmiShowFillers.ShortcutKeys = System.Windows.Forms.Keys.F7;
+			this.tsmiShowFillers.Size = new System.Drawing.Size(197, 22);
+			this.tsmiShowFillers.Text = "&Show fillers";
+			this.tsmiShowFillers.Click += new System.EventHandler(this.showFillersToolStripMenuItem_Click);
 			// 
 			// viewToolStripMenuItem
 			// 
@@ -264,11 +264,11 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbOpen,
             this.toolStripSeparator2,
-            this.tsbReport,
+            this.tsbValidationReport,
             this.toolStripSeparator3,
-            this.tsbFindNext,
-            this.tsbFindPrevious,
-            this.tsbFilterCurrent,
+            this.tsbFindNextItem,
+            this.tsbFindPreviousItem,
+            this.tsbFilterCurrentType,
             this.toolStripSeparator6,
             this.tsbShowFillers});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
@@ -295,13 +295,13 @@
 			// 
 			// tsbReport
 			// 
-			this.tsbReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsbReport.Image = ((System.Drawing.Image)(resources.GetObject("tsbReport.Image")));
-			this.tsbReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsbReport.Name = "tsbReport";
-			this.tsbReport.Size = new System.Drawing.Size(23, 22);
-			this.tsbReport.Text = "Show report";
-			this.tsbReport.Click += new System.EventHandler(this.tsmValidationReport_Click);
+			this.tsbValidationReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbValidationReport.Image = ((System.Drawing.Image)(resources.GetObject("tsbReport.Image")));
+			this.tsbValidationReport.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbValidationReport.Name = "tsbReport";
+			this.tsbValidationReport.Size = new System.Drawing.Size(23, 22);
+			this.tsbValidationReport.Text = "Show report";
+			this.tsbValidationReport.Click += new System.EventHandler(this.tsmValidationReport_Click);
 			// 
 			// toolStripSeparator3
 			// 
@@ -310,33 +310,33 @@
 			// 
 			// tsbFindNext
 			// 
-			this.tsbFindNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsbFindNext.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
-			this.tsbFindNext.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsbFindNext.Name = "tsbFindNext";
-			this.tsbFindNext.Size = new System.Drawing.Size(23, 22);
-			this.tsbFindNext.Text = "Select Next";
-			this.tsbFindNext.Click += new System.EventHandler(this.nextItemToolStripMenuItem_Click);
+			this.tsbFindNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbFindNextItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
+			this.tsbFindNextItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbFindNextItem.Name = "tsbFindNext";
+			this.tsbFindNextItem.Size = new System.Drawing.Size(23, 22);
+			this.tsbFindNextItem.Text = "Select Next";
+			this.tsbFindNextItem.Click += new System.EventHandler(this.nextItemToolStripMenuItem_Click);
 			// 
 			// tsbFindPrevious
 			// 
-			this.tsbFindPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsbFindPrevious.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
-			this.tsbFindPrevious.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsbFindPrevious.Name = "tsbFindPrevious";
-			this.tsbFindPrevious.Size = new System.Drawing.Size(23, 22);
-			this.tsbFindPrevious.Text = "Find Previous";
-			this.tsbFindPrevious.Click += new System.EventHandler(this.previousItemToolStripMenuItem_Click);
+			this.tsbFindPreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbFindPreviousItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
+			this.tsbFindPreviousItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbFindPreviousItem.Name = "tsbFindPrevious";
+			this.tsbFindPreviousItem.Size = new System.Drawing.Size(23, 22);
+			this.tsbFindPreviousItem.Text = "Find Previous";
+			this.tsbFindPreviousItem.Click += new System.EventHandler(this.previousItemToolStripMenuItem_Click);
 			// 
 			// tsbFilterCurrent
 			// 
-			this.tsbFilterCurrent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsbFilterCurrent.Image = global::Myriadbits.MXFInspect.Properties.Resources.FilteredObject_13400_14x;
-			this.tsbFilterCurrent.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsbFilterCurrent.Name = "tsbFilterCurrent";
-			this.tsbFilterCurrent.Size = new System.Drawing.Size(23, 22);
-			this.tsbFilterCurrent.Text = "Filter current type";
-			this.tsbFilterCurrent.Click += new System.EventHandler(this.filterCurrentTypeToolStripMenuItem_Click);
+			this.tsbFilterCurrentType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbFilterCurrentType.Image = global::Myriadbits.MXFInspect.Properties.Resources.FilteredObject_13400_14x;
+			this.tsbFilterCurrentType.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbFilterCurrentType.Name = "tsbFilterCurrent";
+			this.tsbFilterCurrentType.Size = new System.Drawing.Size(23, 22);
+			this.tsbFilterCurrentType.Text = "Filter current type";
+			this.tsbFilterCurrentType.Click += new System.EventHandler(this.filterCurrentTypeToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator6
 			// 
@@ -401,7 +401,7 @@
 		private System.Windows.Forms.MenuStrip menuMain;
 		private System.Windows.Forms.ToolStripMenuItem menuFile;
 		private System.Windows.Forms.ToolStripMenuItem menuOpenFile;
-		private System.Windows.Forms.ToolStripMenuItem menuClose;
+		private System.Windows.Forms.ToolStripMenuItem tsmiClose;
 		private System.Windows.Forms.ToolStripMenuItem menuWindow;
 		private System.Windows.Forms.ToolStrip toolStrip1;
 		private System.Windows.Forms.ToolStripButton tsbOpen;
@@ -413,18 +413,18 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripButton tsbReport;
+		private System.Windows.Forms.ToolStripButton tsbValidationReport;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-		private System.Windows.Forms.ToolStripMenuItem nextItemToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem previousItemToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem tsmiFindNextItem;
+		private System.Windows.Forms.ToolStripMenuItem tsmiFindPreviousItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-		private System.Windows.Forms.ToolStripMenuItem filterCurrentTypeToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem showFillersToolStripMenuItem;
-		private System.Windows.Forms.ToolStripButton tsbFindNext;
-		private System.Windows.Forms.ToolStripButton tsbFindPrevious;
+		private System.Windows.Forms.ToolStripMenuItem tsmiFilterCurrentType;
+		private System.Windows.Forms.ToolStripMenuItem tsmiShowFillers;
+		private System.Windows.Forms.ToolStripButton tsbFindNextItem;
+		private System.Windows.Forms.ToolStripButton tsbFindPreviousItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-		private System.Windows.Forms.ToolStripButton tsbFilterCurrent;
+		private System.Windows.Forms.ToolStripButton tsbFilterCurrentType;
 		private System.Windows.Forms.ToolStripButton tsbShowFillers;
 		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem tsmiCollapseAll;

@@ -103,6 +103,7 @@ namespace Myriadbits.MXF
 			: base(headerKLV, "Partition", KeyType.Partition)
 		{
 			this.m_eType = MXFObjectType.Partition;
+			this.IsLoaded = false;
 
 			// Determine the partition type
 			switch (this.Key[13])

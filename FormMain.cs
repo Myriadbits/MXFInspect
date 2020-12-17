@@ -221,7 +221,7 @@ namespace Myriadbits.MXFInspect
 						this.ActiveMdiChild.Tag = newPage;
 						this.ActiveMdiChild.FormClosed += new FormClosedEventHandler(ActiveMdiChild_FormClosed);
 
-						this.tabMain.Show();//.Visible = true;
+						this.tabMain.Show();
 					}
 				}
 				else
@@ -229,8 +229,9 @@ namespace Myriadbits.MXFInspect
 					MyTabPage mtp = this.ActiveMdiChild.Tag as MyTabPage;
 					this.tabMain.SelectedTab = mtp;
 
-					this.ActiveView.HideFillers = !showFillersToolStripMenuItem.Checked;
-					this.ActiveView.SetTypeFilter(this.filterCurrentTypeToolStripMenuItem.Checked);
+					//this.ActiveView.HideFillers = !tsmiShowFillers.Checked;
+					//this.ActiveView.SetTypeFilter(this.tsmiFilterCurrentType.Checked);
+					//this.ActiveView.Prepare();
 				}
 			}
 			this.UpdateMenu();
@@ -274,7 +275,6 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// TODO Ask??
 			this.Close();
 		}
 
@@ -282,20 +282,61 @@ namespace Myriadbits.MXFInspect
 		/// <summary>
 		/// Update the menu staye
 		/// </summary>
-		private void UpdateMenu()
+		public void UpdateMenu()
 		{
-			bool fEnable = (this.ActiveView != null);
-			this.nextItemToolStripMenuItem.Enabled = fEnable;
-			this.previousItemToolStripMenuItem.Enabled = fEnable;
-			this.filterCurrentTypeToolStripMenuItem.Enabled = fEnable;
-			this.showFillersToolStripMenuItem.Enabled = fEnable;
-			this.tsmValidationReport.Enabled = fEnable;
-			this.tsmiCollapseAll.Enabled = fEnable;
-			this.tsbReport.Enabled = fEnable;
-			this.tsbFilterCurrent.Enabled = fEnable;
-			this.tsbFindNext.Enabled = fEnable;
-			this.tsbFindPrevious.Enabled = fEnable;
-			this.tsbShowFillers.Enabled = fEnable;
+
+			if(this.ActiveView == null)
+            {
+				// meaning no file open
+
+				this.tsmiClose.Enabled = false;
+
+				this.tsmiCollapseAll.Enabled = false;
+
+				this.tsmiFindNextItem.Enabled = false;
+				this.tsbFindNextItem.Enabled = false;
+
+				this.tsbFindPreviousItem.Enabled = false;
+				this.tsmiFindPreviousItem.Enabled = false;
+
+				this.tsmValidationReport.Enabled = false;
+				this.tsbValidationReport.Enabled = false;
+
+				this.tsmiFilterCurrentType.Enabled = false;
+				this.tsbFilterCurrentType.Enabled = false;
+				this.tsbFilterCurrentType.Checked = false;
+				
+				this.tsmiShowFillers.Enabled = false;
+				this.tsbShowFillers.Enabled = false;
+				this.tsbShowFillers.Checked = false;
+				this.tsmiShowFillers.Checked = false;
+			}
+			else
+            {
+				this.tsmiClose.Enabled = true;
+
+				this.tsmiCollapseAll.Enabled = true;
+
+				this.tsmiFindNextItem.Enabled = this.ActiveView.PhysicalViewShown;
+				this.tsbFindNextItem.Enabled = this.ActiveView.PhysicalViewShown;
+				
+				this.tsbFindPreviousItem.Enabled = this.ActiveView.PhysicalViewShown;
+				this.tsmiFindPreviousItem.Enabled = this.ActiveView.PhysicalViewShown;
+
+				this.tsmValidationReport.Enabled = true;
+				this.tsbValidationReport.Enabled = true;
+
+
+				this.tsmiFilterCurrentType.Enabled = true;
+				this.tsbFilterCurrentType.Enabled = true;
+				this.tsbFilterCurrentType.Checked = this.ActiveView.FilterCurrentType;
+
+				this.tsmiShowFillers.Enabled = true;
+				this.tsbShowFillers.Enabled = true;
+				this.tsbShowFillers.Checked = !this.ActiveView.FillerHidden;
+				this.tsmiShowFillers.Checked = !this.ActiveView.FillerHidden;
+			}
+
 		}
 
 		/// <summary>
@@ -331,9 +372,9 @@ namespace Myriadbits.MXFInspect
 		{
 			if (this.ActiveView != null)
 			{
-				this.filterCurrentTypeToolStripMenuItem.Checked = !this.filterCurrentTypeToolStripMenuItem.Checked;
-				this.tsbFilterCurrent.Checked = this.filterCurrentTypeToolStripMenuItem.Checked;
-				this.ActiveView.SetTypeFilter(this.filterCurrentTypeToolStripMenuItem.Checked);
+				this.tsmiFilterCurrentType.Checked = !this.tsmiFilterCurrentType.Checked;
+				this.tsbFilterCurrentType.Checked = this.tsmiFilterCurrentType.Checked;
+				this.ActiveView.FilterCurrentType = this.tsmiFilterCurrentType.Checked;
 			}
 		}
 
@@ -341,10 +382,9 @@ namespace Myriadbits.MXFInspect
 		{
 			if (this.ActiveView != null)
 			{
-				this.showFillersToolStripMenuItem.Checked = !showFillersToolStripMenuItem.Checked;
-				this.tsbShowFillers.Checked = this.showFillersToolStripMenuItem.Checked;
-				this.ActiveView.HideFillers = !showFillersToolStripMenuItem.Checked;
-				this.ActiveView.ExcludeFiller(!showFillersToolStripMenuItem.Checked);
+				this.tsmiShowFillers.Checked = !tsmiShowFillers.Checked;
+				this.tsbShowFillers.Checked = this.tsmiShowFillers.Checked;
+				this.ActiveView.FillerHidden = !tsmiShowFillers.Checked;
 			}
 		}
 

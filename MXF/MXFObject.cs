@@ -90,7 +90,7 @@ namespace Myriadbits.MXF
 
         [Browsable(false)]
         // TODO extract Loaded/Load to an interface
-        public bool IsLoaded { get; set; }
+        public bool IsLoaded { get; set; } = true;
 
        
         [Browsable(false)]

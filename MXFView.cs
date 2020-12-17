@@ -42,27 +42,35 @@ namespace Myriadbits.MXFInspect
         private MXFObject m_currentReference = null;
         private Stopwatch m_stopWatch = new Stopwatch();
         private int m_lastPercentage = 0;
-        private MXFFile m_MXFFile = null;
         private List<MXFObject> m_filterList = null;
         private bool m_fDoNotSelectOther = false;
         private FileParseOptions m_eFileParseOptions = FileParseOptions.Normal;
 
-        public bool HideFillers { get; set; }
+        private bool _fillerHidden = true;
+        public bool FillerHidden { get => _fillerHidden; set { this._fillerHidden = value; this.HideFiller(value); } }
+
+        public bool PhysicalViewShown { get; set; } = true;
         public string Filename { get; set; }
-        public MXFFile File
+
+        private bool _currentTypeFiltered = false;
+        public bool FilterCurrentType
         {
-            get
+            get => _currentTypeFiltered;
+            set
             {
-                return m_MXFFile;
+                this._currentTypeFiltered = value;
+                this.SetTypeFilter(value);
             }
         }
 
+        public MXFFile File { get; private set; }
+
         public MXFView(string fileName)
         {
-            this.Filename = fileName;
-            this.HideFillers = true;
             InitializeComponent();
+            this.Filename = fileName;
             this.Text = fileName;
+            this.FillerHidden = true;
             this.MainPanel = this.mainPanel; // Do this AFTER the InitializeComponent call!!!
         }
 
@@ -169,35 +177,6 @@ namespace Myriadbits.MXFInspect
             }
             this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
         }
-
-
-        /// <summary>
-        /// User clicked another item in the tree, show the details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void treeListViewPhysical_SelectionChanged(object sender, EventArgs e)
-        //{
-        //    MXFObject obj = this.treeListViewPhysical.SelectedObject as MXFObject;
-        //    if (obj != null)
-        //    {
-        //         if (!m_fDoNotSelectOther)
-        //        {
-        //            this.propGrid.SelectedObject = obj;
-
-        //            // Try to select this object in the logical list as well
-        //            m_fDoNotSelectOther = true;
-        //            SelectObjectInLogicalList(obj);
-        //            m_fDoNotSelectOther = false;
-
-        //            // Display the hex data
-        //            ReadData(obj);
-        //        }
-        //    }
-        //    this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
-        //}
-
-
 
         /// <summary>
         /// User clicked another item in the LOGICAL tree, show the details
@@ -354,7 +333,7 @@ namespace Myriadbits.MXFInspect
                 }
                 else
                     // TODO is the hidefillers boolean really needed?
-                    nextObject = selectedObject.FindNextObjectOfType(selectedObject.GetType(), this.HideFillers);
+                    nextObject = selectedObject.FindNextObjectOfType(selectedObject.GetType(), this.FillerHidden);
                 SelectObjectInPhysicalTree(nextObject);
             }
         }
@@ -379,17 +358,18 @@ namespace Myriadbits.MXFInspect
                 }
                 else
                     // TODO is the hidefillers boolean really needed?
-                    previousObject = selectedObject.FindPreviousObjectOfType(selectedObject.GetType(), this.HideFillers);
+                    previousObject = selectedObject.FindPreviousObjectOfType(selectedObject.GetType(), this.FillerHidden);
                 SelectObjectInPhysicalTree(previousObject);
             }
         }
 
-        public void SetTypeFilter(bool filtered)
+        private void SetTypeFilter(bool filtered)
         {
+            //tlvPhysical.ExpandAll();
             tlvPhysical.SetTypeFilter(filtered);
         }
 
-        public void ExcludeFiller(bool exclude)
+        private void HideFiller(bool exclude)
         {
             tlvPhysical.HideFillers(exclude);
         }
@@ -471,7 +451,7 @@ namespace Myriadbits.MXFInspect
             {
                 BackgroundWorker worker = sender as BackgroundWorker;
                 // Process the file
-                this.m_MXFFile = new MXFFile(this.Filename, worker, m_eFileParseOptions);
+                this.File = new MXFFile(this.Filename, worker, m_eFileParseOptions);
             }
             catch (Exception ex)
             {
@@ -488,16 +468,16 @@ namespace Myriadbits.MXFInspect
             try
             {
                 // File physical tree
-                this.tlvPhysical.FillTree(this.m_MXFFile.Children);
-                this.tlvPhysical.HideFillers(this.HideFillers);
-                
-                
+                this.tlvPhysical.FillTree(this.File.Children);
+                this.tlvPhysical.HideFillers(this.FillerHidden);
+
+
                 this.treeListViewLogical.Items.Clear();
 
                 // Add the data
                 AddItemsToTree(false);
 
-                this.txtOverall.Text = string.Format("Total objects: {0}", this.m_MXFFile.Descendants().Count());
+                this.txtOverall.Text = string.Format("Total objects: {0}", this.File.Descendants().Count());
             }
             catch (Exception ex)
             {
@@ -530,7 +510,7 @@ namespace Myriadbits.MXFInspect
             return mxf.Children.ToArray();
         }
 
-        
+
 
         /// <summary>
         /// The progress has changed
@@ -580,7 +560,7 @@ namespace Myriadbits.MXFInspect
 
             this.tabMain.SelectedIndex = 0;
 
-            FormReport fr = new FormReport(this.m_MXFFile);
+            FormReport fr = new FormReport(this.File);
             fr.ShowDialog(frmMain);
         }
 
@@ -651,34 +631,34 @@ namespace Myriadbits.MXFInspect
             //    }
             //    else
             //        this.txtOverall.Text = "";
-            }
+        }
 
-            //    // Set logical tree
-            //    List<MXFLogicalObject> los = new List<MXFLogicalObject>();
-            //    if (this.m_MXFFile != null)
-            //        los.Add(this.m_MXFFile.LogicalBase);
-            //    this.treeListViewLogical.SetObjects(los);
+        //    // Set logical tree
+        //    List<MXFLogicalObject> los = new List<MXFLogicalObject>();
+        //    if (this.m_MXFFile != null)
+        //        los.Add(this.m_MXFFile.LogicalBase);
+        //    this.treeListViewLogical.SetObjects(los);
 
 
-            //    // (Re)-select the selected item
-            //    if (selObject != null)
-            //        SelectObjectInPhysicalTree(selObject);
-            //    else
-            //    {
-                    // No item selected, just select the first partition
-                    //if (this.m_MXFFile != null && this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
-                    //{
-                    //    SelectObjectInPhysicalTree(this.m_MXFFile.Partitions[0]);
-                    //}
-            //    }
-            //}
+        //    // (Re)-select the selected item
+        //    if (selObject != null)
+        //        SelectObjectInPhysicalTree(selObject);
+        //    else
+        //    {
+        // No item selected, just select the first partition
+        //if (this.m_MXFFile != null && this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
+        //{
+        //    SelectObjectInPhysicalTree(this.m_MXFFile.Partitions[0]);
+        //}
+        //    }
+        //}
 
-            /// <summary>
-            /// Show/hide help
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void chkInfo_CheckedChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Show/hide help
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkInfo_CheckedChanged(object sender, EventArgs e)
         {
             this.propGrid.HelpVisible = this.chkInfo.Checked;
         }
@@ -691,15 +671,7 @@ namespace Myriadbits.MXFInspect
         public void CollapseAll()
         {
             this.tlvPhysical.CollapseAll();
-
-            // No item selected, just select the first partition
-            if (this.m_MXFFile.Partitions != null && this.m_MXFFile.Partitions.Count > 0)
-            {
-                this.tlvPhysical.Expand(this.m_MXFFile.Children[0]);
-                //foreach (MXFObject obj in this.m_MXFFile.Partitions)
-                //	if (!this.treeListViewMain.IsExpanded(obj))
-                //		this.treeListViewMain.Expand(obj);
-            }
+            this.tlvPhysical.RevealAndSelectObject(this.tlvPhysical.GetFirstPartition());
         }
 
 
@@ -710,6 +682,12 @@ namespace Myriadbits.MXFInspect
         {
             this.tlvPhysical.Refresh();
             this.treeListViewLogical.Refresh();
+        }
+
+        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.PhysicalViewShown = tabMain.SelectedTab == tpPhysical;
+            (this.MdiParent as FormMain).UpdateMenu();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Myriadbits.MXFInspect
 {
     public class PhysicalTreeListView : TreeListView
     {
-        public bool FillersHidden { get; private set; }
+        public bool FillersHidden { get; private set; } = true;
         public OLVColumn ColumnOffset { get; set; } = new OLVColumn();
         public OLVColumn ColumnMXFObject { get; set; } = new OLVColumn();
 
@@ -68,11 +68,15 @@ namespace Myriadbits.MXFInspect
 
         public void SetTypeFilter(bool filtered)
         {
-            if (this.SelectedObject is MXFObject obj)
+            if (filtered)
             {
-                var selectedType = obj.GetType();
-                this.ModelFilter = filtered ? new TypeFilter(selectedType, false) : null;
-                this.SelectObject(obj);
+                if (this.SelectedObject is MXFObject obj)
+                {
+                    var selectedType = obj.GetType();
+                    this.ModelFilter = new TypeFilter(selectedType, false);
+                    this.SelectObject(obj);
+                    this.EnsureModelVisible(obj);
+                }
             }
             else
             {
@@ -176,32 +180,6 @@ namespace Myriadbits.MXFInspect
         }
 
         /// <summary>
-        /// User clicked another item in the tree, show the details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Tree_SelectionChanged(object sender, EventArgs e)
-        {
-            //MXFObject obj = this.SelectedObject as MXFObject;
-            //if (obj != null)
-            //{
-            //    if (!m_fDoNotSelectOther)
-            //    {
-            //        this.propGrid.SelectedObject = obj;
-
-            //        // Try to select this object in the logical list as well
-            //        m_fDoNotSelectOther = true;
-            //        SelectObjectInLogicalList(obj);
-            //        m_fDoNotSelectOther = false;
-
-            //        // Display the hex data
-            //        ReadData(obj);
-            //    }
-            //}
-            //this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
-        }
-
-        /// <summary>
         /// Tree is expanding, load the partition
         /// </summary>
         /// <param name="sender"></param>
@@ -232,11 +210,6 @@ namespace Myriadbits.MXFInspect
             this.RevealAndSelectObject(resolvable.GetReference());
         }
 
-        /// <summary>
-        /// Color the stuff
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
             if (e.Column == ColumnOffset)
@@ -247,6 +220,15 @@ namespace Myriadbits.MXFInspect
             else if (e.Column == ColumnMXFObject)
             {
                 MXFObject obj = e.Model as MXFObject;
+
+                if(!obj.IsLoaded)
+                {
+                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
+                }
+                else
+                {
+                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
+                }
 
                 switch (obj.Type)
                 {
