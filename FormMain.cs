@@ -353,6 +353,7 @@ namespace Myriadbits.MXFInspect
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// // TODO move method to physical treelistview
 		private void tsmiCollapseAll_Click(object sender, EventArgs e)
 		{
 			if (this.ActiveView != null)

@@ -34,10 +34,9 @@ namespace Myriadbits.MXFInspect
 {
     public class PhysicalTreeListView : TreeListView
     {
-        // TODO property for showing/hiding MXFFillers
-        public bool HideFiller { get; set; }
-        public OLVColumn ColumnOffset { get; set; } = new BrightIdeasSoftware.OLVColumn();
-        public OLVColumn ColumnMXFObject { get; set; } = new BrightIdeasSoftware.OLVColumn();
+        public bool FillersHidden { get; private set; }
+        public OLVColumn ColumnOffset { get; set; } = new OLVColumn();
+        public OLVColumn ColumnMXFObject { get; set; } = new OLVColumn();
 
         public PhysicalTreeListView() : base()
         {
@@ -64,6 +63,7 @@ namespace Myriadbits.MXFInspect
             this.ModelFilter = hide ? new ExcludeFillerFilter() : null;
             this.SelectObject(obj);
             this.EnsureModelVisible(obj);
+            this.FillersHidden = hide;
         }
 
         public void SetTypeFilter(bool filtered)
@@ -76,18 +76,15 @@ namespace Myriadbits.MXFInspect
             }
             else
             {
-                this.ModelFilter = null;
+                this.ModelFilter = this.FillersHidden ? new ExcludeFillerFilter() : null;
             }
         }
 
-        public void FillTree(IEnumerable<object> objects, bool hideFillers)
+        public void FillTree(IEnumerable<object> objects)
         {
             // Clear tree and set objects
             this.Items.Clear();
             this.SetObjects(objects);
-
-            this.HideFillers(hideFillers);
-
             this.RevealAndSelectObject(GetFirstPartition());
 
         }
@@ -242,32 +239,41 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         private void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
-            if (e.ColumnIndex == 0)
+            if (e.Column == ColumnOffset)
             {
                 // Physical Address/Offset
                 e.SubItem.ForeColor = Color.Gray;
             }
-            else if (e.ColumnIndex == 1)
+            else if (e.Column == ColumnMXFObject)
             {
                 MXFObject obj = e.Model as MXFObject;
-                if (obj != null)
+
+                switch (obj.Type)
                 {
-                    if (obj.Type == MXFObjectType.Partition)
+                    case MXFObjectType.Partition:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_Partition;
-                    else if (obj.Type == MXFObjectType.Essence)
+                        break;
+                    case MXFObjectType.Essence:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_Essence;
-                    else if (obj.Type == MXFObjectType.Index)
+                        break;
+                    case MXFObjectType.Index:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_IndexTable;
-                    else if (obj.Type == MXFObjectType.SystemItem)
+                        break;
+                    case MXFObjectType.SystemItem:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_SystemItem;
-                    else if (obj.Type == MXFObjectType.RIP)
+                        break;
+                    case MXFObjectType.RIP:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_RIP;
-                    else if (obj.Type == MXFObjectType.Meta)
+                        break;
+                    case MXFObjectType.Meta:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_MetaData;
-                    else if (obj.Type == MXFObjectType.Filler)
+                        break;
+                    case MXFObjectType.Filler:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_Filler;
-                    else if (obj.Type == MXFObjectType.Special)
+                        break;
+                    case MXFObjectType.Special:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_Special;
+                        break;
                 }
             }
         }

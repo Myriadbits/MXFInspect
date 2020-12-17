@@ -488,7 +488,9 @@ namespace Myriadbits.MXFInspect
             try
             {
                 // File physical tree
-                this.tlvPhysical.FillTree(this.m_MXFFile.Children, this.HideFillers);
+                this.tlvPhysical.FillTree(this.m_MXFFile.Children);
+                this.tlvPhysical.HideFillers(this.HideFillers);
+                
                 
                 this.treeListViewLogical.Items.Clear();
 
@@ -709,22 +711,5 @@ namespace Myriadbits.MXFInspect
             this.tlvPhysical.Refresh();
             this.treeListViewLogical.Refresh();
         }
-
-        //private void treeListViewPhysical_IsHyperlink(object sender, IsHyperlinkEventArgs e)
-        //{
-        //    if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
-        //    {
-        //        e.IsHyperlink = true;
-        //        //e.Url = null;
-        //    }
-        //    else e.IsHyperlink = false;
-        //}
-
-        //private void treeListViewPhysical_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
-        //{
-        //    var resolvable = e.Model as IResolvable;
-        //    treeListViewPhysical.SelectObject(resolvable.GetReference());
-        //    this.treeListViewPhysical.EnsureModelVisible(resolvable.GetReference());
-        //}
     }
 }

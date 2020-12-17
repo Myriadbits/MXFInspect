@@ -121,7 +121,7 @@
             this.tlvPhysical.EmptyListMsg = "No items present";
             this.tlvPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tlvPhysical.FullRowSelect = true;
-            this.tlvPhysical.HideFiller = false;
+            //this.tlvPhysical.HideFiller = false;
             this.tlvPhysical.HideSelection = false;
             this.tlvPhysical.HighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
             this.tlvPhysical.Location = new System.Drawing.Point(6, 6);
