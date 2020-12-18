@@ -55,7 +55,7 @@ namespace Myriadbits.MXF
 		public void Open(string fileName)
 		{
 			this.FileName = fileName;
-			this.m_FileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+			this.m_FileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 			this.m_FileStream.Seek(0, SeekOrigin.Begin);
 		}
 
