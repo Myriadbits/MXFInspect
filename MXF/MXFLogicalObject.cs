@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
 	public class MXFLogicalObject : Node<MXFLogicalObject>
 	{		
 		[Browsable(false)]
-		public MXFObject Object { get; set; }
+		public MXFObject Object { get; private set; }
 
 
 		// TODO remove property
