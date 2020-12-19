@@ -23,6 +23,7 @@
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -31,16 +32,16 @@ using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-    public class PhysicalTreeListView : TreeListView
+    public class LogicalTreeListView : TreeListView
     {
         public bool FillersHidden { get; private set; } = true;
 
         public bool FilteredByType { get; private set; } = false;
 
         public OLVColumn ColumnOffset { get; set; } = new OLVColumn();
-        public OLVColumn ColumnMXFObject { get; set; } = new OLVColumn();
+        public OLVColumn ColumnMXFLogicalObject { get; set; } = new OLVColumn();
 
-        public PhysicalTreeListView() : base()
+        public LogicalTreeListView() : base()
         {
             SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
 
@@ -54,8 +55,6 @@ namespace Myriadbits.MXFInspect
             // Set Event Handlers
             this.FormatCell += Tree_FormatCell;
             this.Expanding += Tree_Expanding;
-            this.HyperlinkClicked += Tree_HyperlinkClicked;
-            this.IsHyperlink += Tree_IsHyperlink;
         }
 
         public void HideFillers(bool hide)
@@ -66,7 +65,7 @@ namespace Myriadbits.MXFInspect
 
             if (!FilteredByType)
             {
-                this.ModelFilter = hide ? new ExcludeFillerFilter() : null;               
+                this.ModelFilter = hide ? new ExcludeFillerFilter() : null;
             }
 
             this.SelectObject(obj);
@@ -125,14 +124,15 @@ namespace Myriadbits.MXFInspect
 
         public void RevealAndSelectObject(MXFObject objToSelect)
         {
-            if (objToSelect != null)
+            var logicalObj = this.Objects.OfType<MXFLogicalObject>().FirstOrDefault(o => o.Object == objToSelect);
+            if (logicalObj != null)
             {
                 // Open entire parent tree
                 // Open entire parent tree and select object
-                this.Reveal(objToSelect, true);
+                this.Reveal(logicalObj, true);
 
-                this.EnsureModelVisible(objToSelect);
-                this.RefreshObject(objToSelect);
+                this.EnsureModelVisible(logicalObj);
+                this.RefreshObject(logicalObj);
             }
         }
 
@@ -141,27 +141,27 @@ namespace Myriadbits.MXFInspect
         private void SetupColumns()
         {
             this.AllColumns.Add(ColumnOffset);
-            this.AllColumns.Add(ColumnMXFObject);
+            this.AllColumns.Add(ColumnMXFLogicalObject);
 
-            this.Columns.AddRange(new ColumnHeader[] { ColumnOffset, ColumnMXFObject });
+            this.Columns.AddRange(new ColumnHeader[] { ColumnOffset, ColumnMXFLogicalObject });
 
             // Set the column styles
             // 
             // olvColumn1
             // 
-            this.ColumnOffset.AspectName = "Offset";
+            this.ColumnOffset.AspectName = "Object.Offset";
             this.ColumnOffset.Text = "Offset";
             this.ColumnOffset.Width = 84;
             this.ColumnOffset.Renderer = null;
             // 
             // olvColumn2
             // 
-            this.ColumnMXFObject.AspectName = "ToString";
-            this.ColumnMXFObject.FillsFreeSpace = true;
-            this.ColumnMXFObject.Hyperlink = true;
-            this.ColumnMXFObject.Text = "Name";
-            this.ColumnMXFObject.Width = 276;
-            this.ColumnMXFObject.Renderer = TreeColumnRenderer;
+            this.ColumnMXFLogicalObject.AspectName = "ToString";
+            this.ColumnMXFLogicalObject.FillsFreeSpace = true;
+            this.ColumnMXFLogicalObject.Hyperlink = true;
+            this.ColumnMXFLogicalObject.Text = "Name";
+            this.ColumnMXFLogicalObject.Width = 276;
+            this.ColumnMXFLogicalObject.Renderer = TreeColumnRenderer;
 
             Pen pen = new Pen(Color.Black, 1.001f);
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
@@ -170,7 +170,7 @@ namespace Myriadbits.MXFInspect
 
         private bool TreeNode_HasChildren(object x)
         {
-            if (x is MXFObject obj)
+            if (x is MXFLogicalObject obj)
             {
                 return obj.Children.Any();
             }
@@ -179,7 +179,7 @@ namespace Myriadbits.MXFInspect
 
         private IEnumerable TreeNode_ChildGetter(object x)
         {
-            if (x is MXFObject obj)
+            if (x is MXFLogicalObject obj)
             {
                 return obj.Children;
             }
@@ -188,7 +188,7 @@ namespace Myriadbits.MXFInspect
 
         private object TreeNode_ParentGetter(object model)
         {
-            if (model is MXFObject obj)
+            if (model is MXFLogicalObject obj)
             {
                 return obj.Parent;
             }
@@ -206,21 +206,6 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-        private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
-        {
-            if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
-            {
-                e.IsHyperlink = true;
-            }
-            else e.IsHyperlink = false;
-        }
-
-        private void Tree_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
-        {
-            var resolvable = e.Model as IResolvable;
-            this.RevealAndSelectObject(resolvable.GetReference());
-        }
-
         private void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
             if (e.Column == ColumnOffset)
@@ -228,20 +213,11 @@ namespace Myriadbits.MXFInspect
                 // Physical Address/Offset
                 e.SubItem.ForeColor = Color.Gray;
             }
-            else if (e.Column == ColumnMXFObject)
+            else if (e.Column == ColumnMXFLogicalObject)
             {
-                MXFObject obj = e.Model as MXFObject;
+                MXFLogicalObject obj = e.Model as MXFLogicalObject;
 
-                if(!obj.IsLoaded)
-                {
-                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
-                }
-                else
-                {
-                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
-                }
-
-                switch (obj.Type)
+                switch (obj?.Object?.Type)
                 {
                     case MXFObjectType.Partition:
                         e.SubItem.ForeColor = Properties.Settings.Default.Color_Partition;

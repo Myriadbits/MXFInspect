@@ -35,9 +35,7 @@
             this.tpPhysical = new System.Windows.Forms.TabPage();
             this.tlvPhysical = new Myriadbits.MXFInspect.PhysicalTreeListView();
             this.tpLogical = new System.Windows.Forms.TabPage();
-            this.treeListViewLogical = new BrightIdeasSoftware.TreeListView();
-            this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.tlvLogical = new Myriadbits.MXFInspect.LogicalTreeListView();
             this.splitRight = new System.Windows.Forms.SplitContainer();
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.btnSelectReference = new System.Windows.Forms.Button();
@@ -60,7 +58,7 @@
             this.tpPhysical.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tlvPhysical)).BeginInit();
             this.tpLogical.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.treeListViewLogical)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tlvLogical)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitRight)).BeginInit();
             this.splitRight.Panel1.SuspendLayout();
             this.splitRight.Panel2.SuspendLayout();
@@ -144,7 +142,7 @@
             // 
             // tpLogical
             // 
-            this.tpLogical.Controls.Add(this.treeListViewLogical);
+            this.tpLogical.Controls.Add(this.tlvLogical);
             this.tpLogical.Location = new System.Drawing.Point(4, 22);
             this.tpLogical.Name = "tpLogical";
             this.tpLogical.Padding = new System.Windows.Forms.Padding(3);
@@ -155,52 +153,33 @@
             // 
             // treeListViewLogical
             // 
-            this.treeListViewLogical.AllColumns.Add(this.olvColumn3);
-            this.treeListViewLogical.AllColumns.Add(this.olvColumn4);
-            this.treeListViewLogical.AlternateRowBackColor = System.Drawing.Color.WhiteSmoke;
-            this.treeListViewLogical.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tlvLogical.AlternateRowBackColor = System.Drawing.Color.WhiteSmoke;
+            this.tlvLogical.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeListViewLogical.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumn3,
-            this.olvColumn4});
-            this.treeListViewLogical.EmptyListMsg = "No items present";
-            this.treeListViewLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeListViewLogical.FullRowSelect = true;
-            this.treeListViewLogical.HideSelection = false;
-            this.treeListViewLogical.HighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
-            this.treeListViewLogical.Location = new System.Drawing.Point(6, 6);
-            this.treeListViewLogical.MultiSelect = false;
-            this.treeListViewLogical.Name = "treeListViewLogical";
-            this.treeListViewLogical.OwnerDraw = true;
-            this.treeListViewLogical.RowHeight = 19;
-            this.treeListViewLogical.ShowGroups = false;
-            this.treeListViewLogical.Size = new System.Drawing.Size(503, 507);
-            this.treeListViewLogical.TabIndex = 16;
-            this.treeListViewLogical.TintSortColumn = true;
-            this.treeListViewLogical.UnfocusedHighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
-            this.treeListViewLogical.UseAlternatingBackColors = true;
-            this.treeListViewLogical.UseCellFormatEvents = true;
-            this.treeListViewLogical.UseCompatibleStateImageBehavior = false;
-            this.treeListViewLogical.UseFiltering = true;
-            this.treeListViewLogical.View = System.Windows.Forms.View.Details;
-            this.treeListViewLogical.VirtualMode = true;
-            this.treeListViewLogical.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewPhysical_FormatCell);
-            this.treeListViewLogical.SelectionChanged += new System.EventHandler(this.treeListViewLogical_SelectionChanged);
-            // 
-            // olvColumn3
-            // 
-            this.olvColumn3.AspectName = "Object.Offset";
-            this.olvColumn3.Text = "Offset";
-            this.olvColumn3.Width = 66;
-            // 
-            // olvColumn4
-            // 
-            this.olvColumn4.AspectName = "ToString";
-            this.olvColumn4.FillsFreeSpace = true;
-            this.olvColumn4.Hyperlink = true;
-            this.olvColumn4.Text = "Name";
-            this.olvColumn4.Width = 276;
+            this.tlvLogical.EmptyListMsg = "No items present";
+            this.tlvLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tlvLogical.FullRowSelect = true;
+            this.tlvLogical.HideSelection = false;
+            this.tlvLogical.HighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.tlvLogical.Location = new System.Drawing.Point(6, 6);
+            this.tlvLogical.MultiSelect = false;
+            this.tlvLogical.Name = "treeListViewLogical";
+            this.tlvLogical.OwnerDraw = true;
+            this.tlvLogical.RowHeight = 19;
+            this.tlvLogical.ShowGroups = false;
+            this.tlvLogical.Size = new System.Drawing.Size(503, 507);
+            this.tlvLogical.TabIndex = 16;
+            this.tlvLogical.TintSortColumn = true;
+            this.tlvLogical.UnfocusedHighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.tlvLogical.UseAlternatingBackColors = true;
+            this.tlvLogical.UseCellFormatEvents = true;
+            this.tlvLogical.UseCompatibleStateImageBehavior = false;
+            this.tlvLogical.UseFiltering = true;
+            this.tlvLogical.View = System.Windows.Forms.View.Details;
+            this.tlvLogical.VirtualMode = true;
+            //this.treeListViewLogical.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewPhysical_FormatCell);
+            //this.treeListViewLogical.SelectionChanged += new System.EventHandler(this.treeListViewLogical_SelectionChanged);
             // 
             // splitRight
             // 
@@ -383,7 +362,7 @@
             this.tpPhysical.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tlvPhysical)).EndInit();
             this.tpLogical.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.treeListViewLogical)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tlvLogical)).EndInit();
             this.splitRight.Panel1.ResumeLayout(false);
             this.splitRight.Panel1.PerformLayout();
             this.splitRight.Panel2.ResumeLayout(false);
@@ -414,11 +393,9 @@
 		private System.Windows.Forms.SplitContainer splitRight;
 		private System.Windows.Forms.CheckBox chkInfo;
 		private System.Windows.Forms.TabPage tpLogical;
-		private BrightIdeasSoftware.TreeListView treeListViewLogical;
-		private BrightIdeasSoftware.OLVColumn olvColumn3;
-		private BrightIdeasSoftware.OLVColumn olvColumn4;
 		private System.Windows.Forms.RichTextBox txtHex;
         private PhysicalTreeListView tlvPhysical;
+        private LogicalTreeListView tlvLogical;
     }
 }
 
