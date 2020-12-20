@@ -40,6 +40,8 @@ namespace Myriadbits.MXFInspect
         public MXFLogicalObject LogicalTreeSelectedObject { get; private set; }
         public MXFObject SelectedObject { get; private set; }
 
+        private FormMain ParentMainForm { get; set; }
+
         private MXFObject m_selectedObject = null;
 
         private MXFObject m_currentReference = null;
@@ -77,6 +79,7 @@ namespace Myriadbits.MXFInspect
             this.Text = fileName;
             this.FillerHidden = true;
             this.MainPanel = this.mainPanel; // Do this AFTER the InitializeComponent call!!!
+            
         }
 
         /// <summary>
@@ -86,6 +89,8 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         private void MXFView_Load(object sender, EventArgs e)
         {
+            this.ParentMainForm = this.MdiParent as FormMain;
+
             ObjectListView.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
             this.Text = this.Filename;
             this.btnSelectReference.Enabled = false;
@@ -125,14 +130,14 @@ namespace Myriadbits.MXFInspect
 
             this.bgwProcess.RunWorkerAsync(this);
 
-            FormMain frmMain = this.MdiParent as FormMain;
-            if (frmMain != null)
-                frmMain.EnableUI(false);
+            ParentMainForm.EnableUI(false);
         }
 
         private void PhysicalTree_SelectionChanged(object sender, EventArgs e)
         {
             PhysicalTreeSelectedObject = this.tlvPhysical.SelectedObject as MXFObject;
+            var logicalObj = PhysicalTreeSelectedObject?.LogicalWrapper;
+
             if (PhysicalTreeSelectedObject != null)
             {
                 if (!m_fDoNotSelectOther)
@@ -141,7 +146,11 @@ namespace Myriadbits.MXFInspect
 
                     // Try to select this object in the logical list as well
                     m_fDoNotSelectOther = true;
-                    this.tlvLogical.RevealAndSelectObject(PhysicalTreeSelectedObject);
+                    //var logicalObj = this.File.LogicalBase.Descendants().FirstOrDefault(o => o.Object == PhysicalTreeSelectedObject);
+                    if (this.tlvLogical.SelectedObject != logicalObj)
+                    {
+                        this.tlvLogical.RevealAndSelectObject(logicalObj);
+                    }
                     m_fDoNotSelectOther = false;
 
                     // Display the hex data
@@ -149,8 +158,8 @@ namespace Myriadbits.MXFInspect
                 }
             }
             this.btnNext.Enabled = this.btnPrevious.Enabled = (PhysicalTreeSelectedObject != null);
-
-            (this.MdiParent as FormMain).UpdateMenu();
+            // TODO this could case the glitch
+            ParentMainForm.UpdateMenu();
         }
 
         /// <summary>
@@ -173,7 +182,11 @@ namespace Myriadbits.MXFInspect
 
                         // Try to select this item in the main list as well
                         m_fDoNotSelectOther = true;
-                        this.tlvPhysical.RevealAndSelectObject(obj);
+                        if (this.tlvPhysical.SelectedObject != obj)
+                        {
+                            this.tlvPhysical.RevealAndSelectObject(obj);
+                        }
+
                         m_fDoNotSelectOther = false;
 
                         // Display the hex data
@@ -182,7 +195,8 @@ namespace Myriadbits.MXFInspect
                 }
                 this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
             }
-            (this.MdiParent as FormMain).UpdateMenu();
+            // TODO this could case the glitch
+            ParentMainForm.UpdateMenu();
         }
 
         /// <summary>
@@ -332,7 +346,7 @@ namespace Myriadbits.MXFInspect
         private void SetTypeFilter(bool filtered)
         {
             tlvPhysical.SetTypeFilter(filtered);
-            (this.MdiParent as FormMain).UpdateMenu();
+            ParentMainForm.UpdateMenu();
         }
 
         private void HideFiller(bool exclude)
@@ -387,15 +401,18 @@ namespace Myriadbits.MXFInspect
         {
             try
             {
-                // File physical tree
                 this.tlvPhysical.FillTree(this.File.Children.OrderBy(c => c.Offset));
-                this.tlvLogical.FillTree(this.File.LogicalBase.Children.OrderBy(c => c.Object.Offset));
                 this.tlvPhysical.HideFillers(this.FillerHidden);
+
+                var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
+                this.tlvLogical.FillTree(logicalList);
+
                 this.txtOverall.Text = string.Format("Total objects: {0}", this.File.Descendants().Count());
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error while populating the trees");
+                this.Close();
             }
         }
 
@@ -437,9 +454,7 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         private void bgwProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            FormMain frmMain = this.MdiParent as FormMain;
-            if (frmMain != null)
-                frmMain.EnableUI(true);
+            ParentMainForm.EnableUI(true);
             this.prbProcessing.Visible = false;
             this.splitMain.Visible = true;
 
@@ -448,7 +463,7 @@ namespace Myriadbits.MXFInspect
             this.tabMain.SelectedIndex = 0;
 
             FormReport fr = new FormReport(this.File);
-            fr.ShowDialog(frmMain);
+            fr.ShowDialog(ParentMainForm);
         }
 
 

@@ -99,14 +99,6 @@ namespace Myriadbits.MXFInspect
             // Clear tree and set objects
             this.Items.Clear();
             this.SetObjects(objects);
-            this.RevealAndSelectObject(GetFirstPartition());
-
-        }
-
-        public void CollapseAndSelectFirstPartition()
-        {
-            this.CollapseAll();
-            this.RevealAndSelectObject(GetFirstPartition());
         }
 
         public MXFObject GetFirstPartition()
@@ -122,17 +114,19 @@ namespace Myriadbits.MXFInspect
 
         }
 
-        public void RevealAndSelectObject(MXFObject objToSelect)
+        public void RevealAndSelectObject(MXFLogicalObject objToSelect)
         {
-            var logicalObj = this.Objects.OfType<MXFLogicalObject>().FirstOrDefault(o => o.Object == objToSelect);
-            if (logicalObj != null)
+            //if(this.Objects.OfType<MXF>)
+            //var logicalObj = this.Objects.OfType<MXFLogicalObject>().FirstOrDefault(o => o.Object == objToSelect);
+            //this.Objects.
+            if (objToSelect != null)
             {
                 // Open entire parent tree
                 // Open entire parent tree and select object
-                this.Reveal(logicalObj, true);
+                this.Reveal(objToSelect, true);
 
-                this.EnsureModelVisible(logicalObj);
-                this.RefreshObject(logicalObj);
+                this.EnsureModelVisible(objToSelect);
+                this.RefreshObject(objToSelect);
             }
         }
 

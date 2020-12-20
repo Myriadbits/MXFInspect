@@ -305,6 +305,7 @@ namespace Myriadbits.MXFInspect
                 this.tsmiFilterCurrentType.Enabled = false;
                 this.tsbFilterCurrentType.Enabled = false;
                 this.tsbFilterCurrentType.Checked = false;
+                this.tsmiFilterCurrentType.Checked = false;
 
                 this.tsmiShowFillers.Enabled = false;
                 this.tsbShowFillers.Enabled = false;
@@ -327,9 +328,10 @@ namespace Myriadbits.MXFInspect
                 this.tsbValidationReport.Enabled = true;
 
 
-                this.tsmiFilterCurrentType.Enabled = this.ActiveView.FilterCurrentType || this.ActiveView.PhysicalTreeSelectedObject != null;
-                this.tsbFilterCurrentType.Enabled = this.ActiveView.FilterCurrentType || this.ActiveView.PhysicalTreeSelectedObject != null;
+                this.tsmiFilterCurrentType.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
+                this.tsbFilterCurrentType.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
                 this.tsbFilterCurrentType.Checked = this.ActiveView.FilterCurrentType;
+                this.tsmiFilterCurrentType.Checked = this.ActiveView.FilterCurrentType;
 
                 this.tsmiShowFillers.Enabled = true;
                 this.tsbShowFillers.Enabled = true;

@@ -470,6 +470,8 @@ namespace Myriadbits.MXF
                 return;
 
             LogicalAddChilds(this.LogicalBase);
+
+            this.LogicalBase.Children.OrderBy(c => c.Object.Offset);
         }
 
         /// <summary>
