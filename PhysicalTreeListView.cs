@@ -127,12 +127,9 @@ namespace Myriadbits.MXFInspect
         {
             if (objToSelect != null)
             {
-                // Open entire parent tree
-                // Open entire parent tree and select object
+                // Expand entire parent tree and select object
                 this.Reveal(objToSelect, true);
-
                 this.EnsureModelVisible(objToSelect);
-                this.RefreshObject(objToSelect);
             }
         }
 

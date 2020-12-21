@@ -42,7 +42,7 @@
             this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
-            this.txtHex = new System.Windows.Forms.RichTextBox();
+            this.rtfHexViewer = new HexViewer();
             this.imageListResult = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtOverall = new System.Windows.Forms.TextBox();
@@ -200,7 +200,7 @@
             // 
             // splitRight.Panel2
             // 
-            this.splitRight.Panel2.Controls.Add(this.txtHex);
+            this.splitRight.Panel2.Controls.Add(this.rtfHexViewer);
             this.splitRight.Size = new System.Drawing.Size(582, 549);
             this.splitRight.SplitterDistance = 388;
             this.splitRight.TabIndex = 16;
@@ -272,18 +272,18 @@
             // 
             // txtHex
             // 
-            this.txtHex.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.rtfHexViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHex.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHex.Font = new System.Drawing.Font("Courier New", 9.75F);
-            this.txtHex.HideSelection = false;
-            this.txtHex.Location = new System.Drawing.Point(3, 3);
-            this.txtHex.Name = "txtHex";
-            this.txtHex.ReadOnly = true;
-            this.txtHex.Size = new System.Drawing.Size(573, 150);
-            this.txtHex.TabIndex = 16;
-            this.txtHex.Text = "";
+            this.rtfHexViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.rtfHexViewer.HideSelection = false;
+            this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
+            this.rtfHexViewer.Name = "txtHex";
+            this.rtfHexViewer.ReadOnly = true;
+            this.rtfHexViewer.Size = new System.Drawing.Size(573, 150);
+            this.rtfHexViewer.TabIndex = 16;
+            this.rtfHexViewer.Text = "";
             // 
             // imageListResult
             // 
@@ -393,7 +393,7 @@
 		private System.Windows.Forms.SplitContainer splitRight;
 		private System.Windows.Forms.CheckBox chkInfo;
 		private System.Windows.Forms.TabPage tpLogical;
-		private System.Windows.Forms.RichTextBox txtHex;
+		private HexViewer rtfHexViewer;
         private PhysicalTreeListView tlvPhysical;
         private LogicalTreeListView tlvLogical;
     }

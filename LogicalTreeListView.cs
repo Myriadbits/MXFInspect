@@ -116,17 +116,11 @@ namespace Myriadbits.MXFInspect
 
         public void RevealAndSelectObject(MXFLogicalObject objToSelect)
         {
-            //if(this.Objects.OfType<MXF>)
-            //var logicalObj = this.Objects.OfType<MXFLogicalObject>().FirstOrDefault(o => o.Object == objToSelect);
-            //this.Objects.
             if (objToSelect != null)
             {
-                // Open entire parent tree
-                // Open entire parent tree and select object
+                // Expand entire parent tree and select object
                 this.Reveal(objToSelect, true);
-
                 this.EnsureModelVisible(objToSelect);
-                this.RefreshObject(objToSelect);
             }
         }
 

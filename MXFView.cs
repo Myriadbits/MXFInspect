@@ -29,7 +29,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -147,14 +146,14 @@ namespace Myriadbits.MXFInspect
                     // Try to select this object in the logical list as well
                     m_fDoNotSelectOther = true;
                     this.tlvLogical.RevealAndSelectObject(logicalObj);
-                    m_fDoNotSelectOther = false;
+                    
+                    // Display the mxfobject as hex dump
+                    rtfHexViewer.SetObject(PhysicalTreeSelectedObject);
 
-                    // Display the hex data
-                    ReadData(PhysicalTreeSelectedObject);
+                    m_fDoNotSelectOther = false;
                 }
             }
             this.btnNext.Enabled = this.btnPrevious.Enabled = (PhysicalTreeSelectedObject != null);
-            // TODO this could case the glitch
             ParentMainForm.UpdateMenu();
         }
 
@@ -179,79 +178,14 @@ namespace Myriadbits.MXFInspect
                         // Try to select this item in the main list as well
                         m_fDoNotSelectOther = true;
                         this.tlvPhysical.RevealAndSelectObject(obj);
+                        // Display the mxfobject as hex dump
+                        rtfHexViewer.SetObject(obj);
                         m_fDoNotSelectOther = false;
-
-                        // Display the hex data
-                        ReadData(obj);
                     }
                 }
                 this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
             }
-            // TODO this could case the glitch
             ParentMainForm.UpdateMenu();
-        }
-
-        /// <summary>
-        /// Read the data and display it in the hex window
-        /// </summary>
-        /// <param name="obj"></param>
-        public void ReadData(MXFObject obj)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            // Cast to KLV
-            long readerOffset = obj.Offset;
-            long len = (int)obj.Length;
-            MXFKLV klv = obj as MXFKLV;
-            if (klv != null)
-            {
-                // Determine real length including BER + Key
-                len = (klv.DataOffset - readerOffset) + klv.Length;
-            }
-            MXFLocalTag lt = obj as MXFLocalTag;
-            if (lt != null)
-            {
-                len = (lt.DataOffset - readerOffset) + lt.Size;
-            }
-
-            const int dataLength = 16;
-            if (len > 0)
-            {
-                byte[] data = new byte[len];
-                using (MXFReader reader = new MXFReader(this.Filename))
-                {
-                    reader.Seek(readerOffset);
-                    data = reader.ReadArray(reader.ReadByte, data.Length);
-                }
-
-                long lines = (len + (dataLength - 1)) / dataLength;
-                long offset = 0;
-                byte[] dataString = new byte[dataLength + 1];
-                for (int n = 0; n < lines; n++)
-                {
-                    long cnt = dataLength;
-                    if (len - offset < dataLength)
-                        cnt = len - offset;
-                    string hex = BitConverter.ToString(data, (int)offset, (int)cnt).Replace('-', ' ');
-                    hex = hex.PadRight(dataLength * 3);
-
-                    for (int m = 0; m < cnt; m++)
-                        dataString[m] = data[offset + m];
-                    string ascii = System.Text.Encoding.ASCII.GetString(dataString);
-                    string asciisafe = "";
-                    for (int m = 0; m < cnt && m < ascii.Length; m++)
-                    {
-                        if (ascii[m] < 0x20)
-                            asciisafe += ' ';
-                        else
-                            asciisafe += ascii[m];
-                    }
-
-                    sb.AppendLine(string.Format("{0:0000000000}  {1}  {2}", readerOffset + (n * dataLength), hex, asciisafe));
-                    offset += dataLength;
-                }
-            }
-            this.txtHex.Text = sb.ToString();
         }
 
         /// <summary>
