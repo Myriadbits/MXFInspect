@@ -476,7 +476,15 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         public void CollapseAll()
         {
-            this.tlvPhysical.CollapseAndSelectFirstPartition();
+            if (this.PhysicalViewShown)
+            {
+                this.tlvPhysical.CollapseAll();
+            }
+            else
+            {
+                this.tlvLogical.CollapseAll();
+            }
+            
         }
 
 

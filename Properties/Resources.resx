@@ -118,26 +118,29 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ChildIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Icons\Index_8287.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="License" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\License.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="FilteredObject_13400_14x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FilteredObject_13400_14x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="FindNext_13243" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FindNext_13243.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FindPrevious_13244" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FindPrevious_13244.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HideMember_6755" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HideMember_6755.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Open_6529" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Open_6529.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\MXF\SMPTE\Groups.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Types" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\MXF\SMPTE\Types.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FilteredObject_13400_14x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FilteredObject_13400_14x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Labels" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\MXF\SMPTE\Labels.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FindPrevious_13244" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FindPrevious_13244.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="License" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\License.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="RSReport_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RSReport_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,13 +148,13 @@
   <data name="Elements" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\MXF\SMPTE\Elements.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\MXF\SMPTE\Groups.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Open_6529" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Open_6529.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Labels" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\MXF\SMPTE\Labels.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="ChildIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\Index_8287.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Types" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\MXF\SMPTE\Types.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="CollapseAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\CollapseAll.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

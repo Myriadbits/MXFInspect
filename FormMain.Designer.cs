@@ -64,6 +64,7 @@
             this.tsbFilterCurrentType = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbShowFillers = new System.Windows.Forms.ToolStripButton();
+            this.tsbCollapseAll = new System.Windows.Forms.ToolStripButton();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.menuMain.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -220,21 +221,22 @@
             // 
             // tsmiCollapseAll
             // 
+            this.tsmiCollapseAll.Image = global::Myriadbits.MXFInspect.Properties.Resources.CollapseAll;
             this.tsmiCollapseAll.Name = "tsmiCollapseAll";
             this.tsmiCollapseAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.tsmiCollapseAll.Size = new System.Drawing.Size(176, 22);
+            this.tsmiCollapseAll.Size = new System.Drawing.Size(180, 22);
             this.tsmiCollapseAll.Text = "Collapse all";
             this.tsmiCollapseAll.Click += new System.EventHandler(this.tsmiCollapseAll_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings...";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -270,7 +272,8 @@
             this.tsbFindPreviousItem,
             this.tsbFilterCurrentType,
             this.toolStripSeparator6,
-            this.tsbShowFillers});
+            this.tsbShowFillers,
+            this.tsbCollapseAll});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -353,6 +356,16 @@
             this.tsbShowFillers.Text = "Show Fillers";
             this.tsbShowFillers.Click += new System.EventHandler(this.showFillersToolStripMenuItem_Click);
             // 
+            // tsbCollapseAll
+            // 
+            this.tsbCollapseAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCollapseAll.Image = global::Myriadbits.MXFInspect.Properties.Resources.CollapseAll;
+            this.tsbCollapseAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCollapseAll.Name = "tsbCollapseAll";
+            this.tsbCollapseAll.Size = new System.Drawing.Size(23, 22);
+            this.tsbCollapseAll.Text = "Collapse all";
+            this.tsbCollapseAll.Click += new System.EventHandler(this.tsmiCollapseAll_Click);
+            // 
             // tabMain
             // 
             this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -430,6 +443,7 @@
 		private System.Windows.Forms.ToolStripMenuItem tsmiCollapseAll;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton tsbCollapseAll;
     }
 }
 

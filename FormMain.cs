@@ -292,6 +292,7 @@ namespace Myriadbits.MXFInspect
                 this.tsmiClose.Enabled = false;
 
                 this.tsmiCollapseAll.Enabled = false;
+                this.tsbCollapseAll.Enabled = false;
 
                 this.tsmiFindNextItem.Enabled = false;
                 this.tsbFindNextItem.Enabled = false;
@@ -311,12 +312,14 @@ namespace Myriadbits.MXFInspect
                 this.tsbShowFillers.Enabled = false;
                 this.tsbShowFillers.Checked = false;
                 this.tsmiShowFillers.Checked = false;
+
             }
             else
             {
                 this.tsmiClose.Enabled = true;
 
                 this.tsmiCollapseAll.Enabled = true;
+                this.tsbCollapseAll.Enabled = true;
 
                 this.tsmiFindNextItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null; 
                 this.tsbFindNextItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
@@ -395,7 +398,6 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// // TODO move method to physical treelistview
         private void tsmiCollapseAll_Click(object sender, EventArgs e)
         {
             if (this.ActiveView != null)

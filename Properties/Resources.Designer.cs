@@ -71,6 +71,16 @@ namespace Myriadbits.MXFInspect.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CollapseAll {
+            get {
+                object obj = ResourceManager.GetObject("CollapseAll", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;!-- ************************************* --&gt;
         ///&lt;!-- ************************************* --&gt;
         ///&lt;!-- ************************************* --&gt;
