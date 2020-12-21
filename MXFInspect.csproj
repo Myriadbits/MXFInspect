@@ -133,6 +133,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -196,11 +197,8 @@
     <None Include="Icons\RSReport_16xLG.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Icons\CollapseAll.png" />
     <Content Include="MXFInspect.ico" />
-    <Content Include="Resources\Elements.xml" />
-    <Content Include="Resources\Groups.xml" />
-    <Content Include="Resources\Labels.xml" />
-    <Content Include="Resources\Types.xml" />
     <None Include="MXF\SMPTE\Types.xml" />
     <None Include="MXF\SMPTE\Labels.xml" />
     <None Include="MXF\SMPTE\Groups.xml" />
