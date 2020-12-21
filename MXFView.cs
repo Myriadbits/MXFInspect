@@ -79,7 +79,7 @@ namespace Myriadbits.MXFInspect
             this.Text = fileName;
             this.FillerHidden = true;
             this.MainPanel = this.mainPanel; // Do this AFTER the InitializeComponent call!!!
-            
+
         }
 
         /// <summary>
@@ -146,11 +146,7 @@ namespace Myriadbits.MXFInspect
 
                     // Try to select this object in the logical list as well
                     m_fDoNotSelectOther = true;
-                    //var logicalObj = this.File.LogicalBase.Descendants().FirstOrDefault(o => o.Object == PhysicalTreeSelectedObject);
-                    if (this.tlvLogical.SelectedObject != logicalObj)
-                    {
-                        this.tlvLogical.RevealAndSelectObject(logicalObj);
-                    }
+                    this.tlvLogical.RevealAndSelectObject(logicalObj);
                     m_fDoNotSelectOther = false;
 
                     // Display the hex data
@@ -182,11 +178,7 @@ namespace Myriadbits.MXFInspect
 
                         // Try to select this item in the main list as well
                         m_fDoNotSelectOther = true;
-                        if (this.tlvPhysical.SelectedObject != obj)
-                        {
-                            this.tlvPhysical.RevealAndSelectObject(obj);
-                        }
-
+                        this.tlvPhysical.RevealAndSelectObject(obj);
                         m_fDoNotSelectOther = false;
 
                         // Display the hex data
@@ -500,7 +492,7 @@ namespace Myriadbits.MXFInspect
         private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.PhysicalViewShown = tabMain.SelectedTab == tpPhysical;
-            (this.MdiParent as FormMain).UpdateMenu();
+            this.ParentMainForm.UpdateMenu();
         }
     }
 }
