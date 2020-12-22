@@ -31,7 +31,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [x] GPITrigger [1/1]
                 - [x] CommentMarker [1/1]
                     - [x] DescriptiveMarker [5/5]
-                      - [ ] DynamicMarker
+                      - [x] DynamicMarker [3/3]
                         - [ ] DynamicClip
             - [x] Filler [0/0] *(is this the B11 MXFFiller.cs?)* :question:
             - [ ] OperationGroup 
