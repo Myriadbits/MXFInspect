@@ -280,7 +280,7 @@ namespace Myriadbits.MXFInspect
 
 
         /// <summary>
-        /// Update the menu staye
+        /// Update the menu based on the current active view
         /// </summary>
         public void UpdateMenu()
         {
@@ -394,7 +394,7 @@ namespace Myriadbits.MXFInspect
         }
 
         /// <summary>
-        /// Collapse all except the partitions
+        /// Collapse all
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -435,6 +435,30 @@ namespace Myriadbits.MXFInspect
                     mxfview.ApplyUserSettings();
                 }
             }
+        }
+
+        private void FormMain_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+                // allow only one mxf file to be dropped
+
+                if (fileNames.Length == 1)
+                {
+                    e.Effect = DragDropEffects.All;
+                }
+            }
+
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void FormMain_DragDrop(object sender, DragEventArgs e)
+        {
+            var fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            OpenFile(fileNames[0]);
         }
     }
 }

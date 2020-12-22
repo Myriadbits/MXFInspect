@@ -224,19 +224,19 @@
             this.tsmiCollapseAll.Image = global::Myriadbits.MXFInspect.Properties.Resources.CollapseAll;
             this.tsmiCollapseAll.Name = "tsmiCollapseAll";
             this.tsmiCollapseAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.tsmiCollapseAll.Size = new System.Drawing.Size(180, 22);
+            this.tsmiCollapseAll.Size = new System.Drawing.Size(176, 22);
             this.tsmiCollapseAll.Text = "Collapse all";
             this.tsmiCollapseAll.Click += new System.EventHandler(this.tsmiCollapseAll_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(173, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.settingsToolStripMenuItem.Text = "Settings...";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -382,6 +382,7 @@
             // 
             // FormMain
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1337, 657);
@@ -397,6 +398,8 @@
             this.Text = "MXFInspect";
             this.Load += new System.EventHandler(this.Main_Load);
             this.MdiChildActivate += new System.EventHandler(this.FormMain_MdiChildActivate);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormMain_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FormMain_DragEnter);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
