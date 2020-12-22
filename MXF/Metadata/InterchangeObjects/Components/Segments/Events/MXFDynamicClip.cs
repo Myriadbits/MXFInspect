@@ -26,19 +26,26 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFDynamicMarker : MXFDescriptiveMarker
+    public class MXFDynamicClip : MXFDynamicMarker
     {
-        [CategoryAttribute("DynamicMarker"), Description("")]
-        public MXFToleranceModeType ToleranceMode { get; set; }
-        [CategoryAttribute("DynamicMarker"), Description("")]
+        [CategoryAttribute("DynamicClip"), Description("")]
+        public MXFUMID DynamicSourcePackageID { get; set; }
+
+        [CategoryAttribute("DynamicClip"), Description("")]
+        public UInt32[] DynamicSourceTrackIDs { get; set; }
 
         //TODO this is of type "indirect"
-        public object ToleranceWindow { get; set; }
+        [CategoryAttribute("DynamicClip"), Description("")]
+        public object SourceIndex { get; set; }
 
-        public MXFDynamicMarker(MXFReader reader, MXFKLV headerKLV)
+        //TODO this is of type "indirect"
+        [CategoryAttribute("DynamicClip"), Description("")]
+        public object SourceSpecies { get; set; }
+
+        public MXFDynamicClip(MXFReader reader, MXFKLV headerKLV)
         : base(reader, headerKLV)
         {
-            this.MetaDataName = "DynamicMarker";
+            this.MetaDataName = "DynamicClip";
         }
 
         /// <summary>
@@ -49,13 +56,14 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x5701: this.ToleranceMode = (MXFToleranceModeType)reader.ReadByte(); return true;
+                case 0x5801: this.DynamicSourcePackageID = reader.ReadUMIDKey(); return true;
+                case 0x5802: reader.ReadArray(reader.ReadUInt32, localTag.Size); return true;
+
+                // TODO 
+                case 0x5803: return true;
 
                 // TODO
-                case 0x5703:  return true;
-
-                // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
-                case 0x5702: ReadReference<MXFObject>(reader, "InterpolationDefinition"); return true;
+                case 0x5804: return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
