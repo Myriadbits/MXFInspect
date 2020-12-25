@@ -21,36 +21,28 @@
 //
 #endregion
 
-using System;
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
-	public class MXFEvent : MXFSegment
-	{
-		[CategoryAttribute("Event"), Description("0601")]
-		public UInt64? EventPosition { get; set; }
-		[CategoryAttribute("Event"), Description("0602")]
-		public string EventComment { get; set; }
+    public class MXFSelector : MXFSegment
+    {
+        public MXFSelector(MXFReader reader, MXFKLV headerKLV, string metadataName)
+            : base(reader, headerKLV, "Selector")
+        {
+        }
 
-		public MXFEvent(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, "Event")
-		{
-		}
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.Tag)
+            {
+                case 0x0F01: this.ReadReference<MXFSegment>(reader, "SelectedSegment"); return true;
+                case 0x0F02: this.ReadReferenceSet<MXFSegment>(reader, "AlternateSegments", "AlternateSegment"); return true;
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x0601: this.EventPosition = reader.ReadUInt64(); return true;
-				case 0x0602: this.EventComment = reader.ReadUTF16String(localTag.Size); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
-
-	}
+    }
 }

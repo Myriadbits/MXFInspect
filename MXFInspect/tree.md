@@ -38,7 +38,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] NestedScope 
             - [ ] Pulldown
             - [ ] ScopeReference 
-            - [ ] Selector
+            - [x] Selector [2/2]
             - [x] Sequence [1/1]
             - [x] SourceReference [4/4] *(abstract)*
                 - [x] SourceClip [1/5] :hammer: :scroll:
