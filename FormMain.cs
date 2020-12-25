@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -130,11 +131,22 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         private void menuOpenRecentFile_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            if (tsmi != null)
+            if (sender is ToolStripMenuItem tsmi)
             {
-                // Open the file when valid
-                OpenFile(tsmi.Tag as string);
+                if(tsmi.Tag is string path)
+                {
+                    if (File.Exists(path))
+                    {
+                        // Open the file when valid
+                        OpenFile(path);
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Format("The path \"{0}\" does not seem to exist anymore on disk.", path), "Open recent file ...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.m_mru.Remove(path);
+                        FillMRU();
+                    }
+                }
             }
         }
 
