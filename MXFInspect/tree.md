@@ -36,7 +36,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [x] Filler [0/0] *(abstract)* *(is this the B11 MXFFiller.cs?)* :question:
             - [x] OperationGroup [5/5]
             - [x] NestedScope [1/1]
-            - [ ] Pulldown [0/4]
+            - [x] Pulldown [4/4]
             - [x] ScopeReference [2/2]
             - [x] Selector [2/2]
             - [x] Sequence [1/1]
@@ -105,7 +105,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] AuxiliaryDescriptor :scroll: :dart: 
     - [X] Preface :hammer:
     - [x] Identification [9/9]
-    - [x] Locator [0] *(abstract)*
+    - [x] Locator [0/0] *(abstract)*
         - [x] NetworkLocator [1/1]
         - [x] TextLocator [1/1]
     - [x] Package [4/9] *(abstract)* :scroll: 

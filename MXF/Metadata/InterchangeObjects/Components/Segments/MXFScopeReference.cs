@@ -29,9 +29,9 @@ namespace Myriadbits.MXF
 	public class MXFScopeReference : MXFSegment
 	{
 		[CategoryAttribute("ScopeReference"), Description("0E01")]
-		public UInt32 RelativeScope { get; set; }
+		public UInt32? RelativeScope { get; set; }
 		[CategoryAttribute("ScopeReference"), Description("0E02")]
-		public UInt32 RelativeTrack { get; set; }
+		public UInt32? RelativeTrack { get; set; }
 		
 		public MXFScopeReference(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, "ScopeReference")
