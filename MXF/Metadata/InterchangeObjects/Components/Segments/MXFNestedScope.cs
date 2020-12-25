@@ -21,20 +21,12 @@
 //
 #endregion
 
-using System;
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
-	public class MXFEventTrack : MXFGenericTrack
+	public class MXFNestedScope : MXFSegment
 	{
-		[CategoryAttribute("EventTrack"), Description("4901")]
-		public MXFRational EventTrackEditRate { get; set; }
-		[CategoryAttribute("EventTrack"), Description("4902")]
-		public MXFPositionType? EventTrackOrigin { get; set; }
-
-		public MXFEventTrack(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Event Track")
+		public MXFNestedScope(MXFReader reader, MXFKLV headerKLV, string metadataName)
+			: base(reader, headerKLV, metadataName)
 		{
 		}
 
@@ -44,11 +36,11 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
 		{
-			switch (localTag.Tag)
-			{
-				case 0x4901: this.EventTrackEditRate = reader.ReadRational(); return true;
-				case 0x4902: this.EventTrackOrigin = reader.ReadUInt64(); return true;
+            switch (localTag.Tag)
+            {
+				case 0x0C01: this.ReadReferenceSet<MXFSegment>(reader, "NestedScopeTracks", "NestedScopeTrack"); return true;
 			}
+			
 			return base.ParseLocalTag(reader, localTag); 
 		}
 

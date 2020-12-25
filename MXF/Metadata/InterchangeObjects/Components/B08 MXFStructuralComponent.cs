@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
 		public MXFKey DataDefinition { get; set; }
 
 		[CategoryAttribute("StructuralComponent"), Description("0202")]
-		public UInt64? Duration { get; set; }
+		public MXFLengthType? Duration { get; set; }
 
 		[CategoryAttribute("StructuralComponent"), Description("0204")]
 

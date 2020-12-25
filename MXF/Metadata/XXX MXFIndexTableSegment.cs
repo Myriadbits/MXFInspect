@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("IndexTableSegment"), Description("3F0C")]
 		public UInt64? IndexStartPosition { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F0D")]
-		public UInt64? IndexDuration { get; set; }
+		public MXFPositionType? IndexDuration { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F08")]
 		public byte? SliceCount { get; set; }
 		[CategoryAttribute("IndexTableSegment"), Description("3F0E")]

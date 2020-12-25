@@ -33,11 +33,11 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                     - [x] DescriptiveMarker [5/5]
                       - [x] DynamicMarker [3/3]
                         - [x] DynamicClip [4/4]
-            - [x] Filler [0/0] *(is this the B11 MXFFiller.cs?)* :question:
-            - [ ] OperationGroup 
-            - [ ] NestedScope 
-            - [ ] Pulldown
-            - [ ] ScopeReference 
+            - [x] Filler [0/0] *(abstract)* *(is this the B11 MXFFiller.cs?)* :question:
+            - [ ] OperationGroup [0/5]
+            - [x] NestedScope [1/1]
+            - [ ] Pulldown [0/4]
+            - [ ] ScopeReference [0/2]
             - [x] Selector [2/2]
             - [x] Sequence [1/1]
             - [x] SourceReference [4/4] *(abstract)*
@@ -46,9 +46,9 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [ ] TextClip [0] *(abstract)*
                     - [ ] HTMLClip :scroll: :dart:
             - [x] Timecode [3/3]
-            - [ ] TimecodeStream [3] *(abstract)* :scroll: :dart:
-                - [ ] TimecodeStream12M :scroll: :dart:
-            - [ ] Transition :scroll:
+            - [ ] TimecodeStream [0/3] :scroll: :dart:
+                - [ ] TimecodeStream12M [0/1] :scroll: :dart:
+            - [ ] Transition [0/2] :scroll:
     - [x] ContentStorage [2/2] :scroll: :hammer:
     - [ ] ControlPoint :scroll:
     - [ ] DefinitionObject [3] *(abstract)* :scroll:
@@ -105,7 +105,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] AuxiliaryDescriptor :scroll: :dart: 
     - [X] Preface :hammer:
     - [x] Identification [9/9]
-    - [ ] Locator [0] *(abstract)*
+    - [x] Locator [0] *(abstract)*
         - [x] NetworkLocator [1/1]
         - [x] TextLocator [1/1]
     - [x] Package [4/9] *(abstract)* :scroll: 

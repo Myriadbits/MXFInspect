@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("FileDescriptor"), Description("3001")]
 		public MXFRational SampleRate { get; set; }
 		[CategoryAttribute("FileDescriptor"), Description("3002")]
-		public UInt64? ContainerDuration { get; set; }
+		public MXFLengthType? ContainerDuration { get; set; }
 		[CategoryAttribute("FileDescriptor"), Description("3004")]
 		public MXFKey EssenceContainer { get; set; }
 		[CategoryAttribute("FileDescriptor"), Description("3005")]

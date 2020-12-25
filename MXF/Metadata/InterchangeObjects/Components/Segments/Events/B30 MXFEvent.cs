@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 	public class MXFEvent : MXFSegment
 	{
 		[CategoryAttribute("Event"), Description("0601")]
-		public UInt64? EventPosition { get; set; }
+		public MXFPositionType? EventPosition { get; set; }
 		[CategoryAttribute("Event"), Description("0602")]
 		public string EventComment { get; set; }
 

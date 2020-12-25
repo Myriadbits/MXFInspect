@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 	public class MXFTimecodeComponent : MXFSegment
 	{
 		[CategoryAttribute("TimecodeComponent"), Description("1501")]
-		public UInt64? StartTimecode { get; set; }
+		public MXFPositionType? StartTimecode { get; set; }
 		[CategoryAttribute("TimecodeComponent"), Description("1502")]
 		public UInt16? RoundedTimecodeBase { get; set; }
 		[CategoryAttribute("TimecodeComponent"), Description("1503")]

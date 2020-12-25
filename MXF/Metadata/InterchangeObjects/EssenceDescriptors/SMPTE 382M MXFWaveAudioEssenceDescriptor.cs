@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2E")]
         public UInt32? PeakFrames { get; set; }
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2F")]
-        public UInt64? PeakOfPeaksPosition { get; set; }
+        public MXFPositionType? PeakOfPeaksPosition { get; set; }
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D30")]
         public DateTime? PeakEnvelopeTimestamp { get; set; }
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D31")]
