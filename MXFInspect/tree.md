@@ -23,7 +23,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [ ] DMCVTApp3Set 
     - [ ] DMCVTApp4Set
 - [x] InterchangeObject [(3+1)/4] *(abstract)* :hammer: :scroll:
-    - [x] Component [5/5]*(abstract)* (= Structural Component):hammer: :scroll:
+    - [x] Component [5/5]*(abstract)* (= Structural Component)
         - [x] Segment [0/0] *(abstract)*
             - [x] EdgeCode [4/4]
             - [x] EssenceGroup [2/2]
@@ -48,8 +48,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [x] Timecode [3/3]
             - [ ] TimecodeStream [0/3] :scroll: :dart:
                 - [ ] TimecodeStream12M [0/1] :scroll: :dart:
-            - [ ] Transition [0/2] :scroll:
-    - [x] ContentStorage [2/2] :scroll: :hammer:
+            - [x] Transition [2/2] 
+    - [x] ContentStorage [2/2]
     - [ ] ControlPoint :scroll:
     - [ ] DefinitionObject [3] *(abstract)* :scroll:
         - [ ] DataDefinition :scroll:
