@@ -34,7 +34,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                       - [x] DynamicMarker [3/3]
                         - [x] DynamicClip [4/4]
             - [x] Filler [0/0] *(abstract)* *(is this the B11 MXFFiller.cs?)* :question:
-            - [ ] OperationGroup [0/5]
+            - [x] OperationGroup [5/5]
             - [x] NestedScope [1/1]
             - [ ] Pulldown [0/4]
             - [x] ScopeReference [2/2]
