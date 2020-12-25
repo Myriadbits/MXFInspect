@@ -21,37 +21,14 @@
 //
 #endregion
 
-using System;
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
-	public class MXFDescriptiveClip : MXFSourceClip
-	{
-		[CategoryAttribute("DescriptiveClip"), Description("6103")]
-		[TypeConverter(typeof(IntegerArrayConverter))]
-		public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
-        
-        public MXFDescriptiveClip(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV)
-		{
-			this.MetaDataName = "DescriptiveClip";
-		}
-
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x6103: this.DescriptiveClipDescribedTrackIDs = 
-						reader.ReadArray(reader.ReadUInt32, localTag.Size / sizeof(UInt32)); 
-					return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
-
-	}
+    public class MXFTextClip : MXFSourceReference
+    {
+        public MXFTextClip(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV)
+        {
+            this.MetaDataName = "TextClip";
+        }
+    }
 }
