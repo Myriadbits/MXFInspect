@@ -46,8 +46,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [x] TextClip [0/0] *(abstract)*
                     - [x] HTMLClip [2/2]
             - [x] Timecode [3/3]
-            - [ ] TimecodeStream [0/3] :scroll: :dart:
-                - [ ] TimecodeStream12M [0/1] :scroll: :dart:
+            - [x] TimecodeStream [3/3] 
+                - [x] TimecodeStream12M [1/1]
             - [x] Transition [2/2] 
     - [x] ContentStorage [2/2]
     - [ ] ControlPoint :scroll:
