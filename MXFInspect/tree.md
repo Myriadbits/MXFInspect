@@ -41,7 +41,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [x] Selector [2/2]
             - [x] Sequence [1/1]
             - [x] SourceReference [4/4] *(abstract)*
-                - [x] SourceClip [1/5] :hammer: :scroll:
+                - [x] SourceClip [5/5]
                     - [x] DescriptiveClip [1/1]
                 - [ ] TextClip [0] *(abstract)*
                     - [ ] HTMLClip :scroll: :dart:
