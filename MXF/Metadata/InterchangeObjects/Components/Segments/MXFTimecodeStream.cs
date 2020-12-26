@@ -34,8 +34,7 @@ namespace Myriadbits.MXF
         public MXFTCSource? TimecodeSource { get; private set; }
 
         [CategoryAttribute("TimecodeStream"), Description("1602")]
-        // TODO of type Stream, but what is that type ???
-        public object TimecodeStreamData { get; private set; }
+        public byte[] TimecodeStreamData { get; private set; }
 
         public MXFTimecodeStream(MXFReader reader, MXFKLV headerKLV, string metadataName)
             : base(reader, headerKLV, "TimecodeStream")
@@ -52,7 +51,7 @@ namespace Myriadbits.MXF
             {
                 case 0x1601: this.TimecodeStreamSampleRate = reader.ReadRational(); return true;
                 case 0x1603: this.TimecodeSource = (MXFTCSource?)reader.ReadByte(); return true;
-                // case 0x1602: this.TimecodeStreamData = reader.ReadUInt32(); return true;
+                case 0x1602: this.TimecodeStreamData = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
             }
 
             return base.ParseLocalTag(reader, localTag);

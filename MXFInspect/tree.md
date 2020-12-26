@@ -64,7 +64,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] OPDefinition :scroll:
         - [ ] CompressionDefinition :scroll:
     - [ ] Dictionary :scroll:
-    - [ ] EssenceData [3/9] *(A05 EssenceContainerData)* :hammer: :scroll:
+    - [ ] EssenceData [9/9] *(A05 EssenceContainerData)*
     - [x] EssenceDescriptor [2/2] *(abstract)* *(B02 GenericDescriptor)*
         - [x] FileDescriptor [5/5] *(abstract)*
             - [x] AIFCDescriptor [1/1]
@@ -94,7 +94,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [ ] EventTextDescriptor [2] *(abstract)*
                     - [ ] STLDescriptor
                 - [ ] AuxDataEssenceDescriptor
-            - [X] MultipleDescriptor [1/1]
+            - [x] MultipleDescriptor [1/1]
             - [ ] DateTimeDescriptor :scroll: :dart:
         - [ ] FilmDescriptor :scroll: :dart:
         - [ ] TapeDescriptor :scroll:
