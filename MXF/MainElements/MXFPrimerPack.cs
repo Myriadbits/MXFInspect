@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 {
 	public class MXFPrimerPack : MXFKLV
 	{		
-		[CategoryAttribute("PrimerPack"), ReadOnly(true)] 
+		[CategoryAttribute("PrimerPack")] 
 		public UInt32 LocalTagCount { get; set; }
 
 		[Browsable(false)]

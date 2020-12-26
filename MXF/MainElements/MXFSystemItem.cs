@@ -70,37 +70,37 @@ namespace Myriadbits.MXF
 
 	public class MXFSystemItem : MXFKLV
 	{
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemBitmap SystemBitmap { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public double PackageRate { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemStreamStatus StreamStatus { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public bool LowLatencyMode { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemTransferMode TransferMode { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public SystemTimingMode TimingMode { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public UInt16 ChannelHandle { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public UInt16 ContinuityCount { get; set; }
 
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
-		public MXFRefKey SMPTE { get; set; }
+		[CategoryAttribute("SystemItem")]
+		public MXFKey SMPTE { get; set; }
 
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public string CreationDate { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public MXFTimeStamp UserDate { get; set; }
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public string UserDateFullFrameNb { get; set; }
 
 		[Browsable(false)]
 		public bool Indexed { get; set; }
 
-		[CategoryAttribute("SystemItem"), ReadOnly(true)]
+		[CategoryAttribute("SystemItem")]
 		public long EssenceOffset
 		{
 			get
@@ -145,7 +145,7 @@ namespace Myriadbits.MXF
 			this.ChannelHandle = reader.ReadUInt16();
 			this.ContinuityCount = reader.ReadUInt16();
 
-			this.SMPTE = new MXFRefKey(reader, 16, "SMPTE"); // Always read even if zero
+			this.SMPTE = reader.ReadKey(); // Always read even if zero
 
 			MXFTimeStamp creationTimeStamp = reader.ReadBCDTimeCode(this.PackageRate);
 			this.CreationDate = creationTimeStamp.ToString();

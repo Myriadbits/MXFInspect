@@ -1,0 +1,60 @@
+﻿#region license
+//
+// MXF - Myriadbits .NET MXF library. 
+// Read MXF Files.
+// Copyright (C) 2015 Myriadbits, Jochem Bakker
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+// For more information, contact me at: info@myriadbits.com
+//
+#endregion
+
+using System.ComponentModel;
+using System.Text;
+
+namespace Myriadbits.MXF
+{
+    public class MXFUUID : MXFIdentifier
+    {
+        /// <summary>
+        /// Create a new UMID by reading 32 bytes from the current file location
+        /// </summary>
+        /// <param name="firstPart"></param>
+        /// <param name="reader"></param>
+        public MXFUUID(MXFReader reader)
+            : base(reader, 16)
+        {
+            //a UMID is 32 bytes long by definition
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            var bytes = this.GetByteArray();
+            sb.Append("UUID - { ");
+            for (int n = 0; n < this.Length; n++)
+            {
+                if (n == 4 || n == 6 || n == 8 || n == 10)
+                {
+                    sb.Append("-");
+                }
+
+                sb.Append(string.Format("{0:X2}", bytes[n]));
+            }
+            sb.Append(" }");
+            return sb.ToString();
+        }
+    }
+}

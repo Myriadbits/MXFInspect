@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -37,46 +38,49 @@ namespace Myriadbits.MXF
 
 	public class MXFPartition : MXFKLV
 	{		
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public PartitionType PartitionType { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public bool Closed { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public bool Complete { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)]
-		public MXFVersion Version { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt16 MajorVersion { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+        [CategoryAttribute("PartitionHeader")]
+        public UInt16 MinorVersion { get; set; }
+
+        [CategoryAttribute("PartitionHeader")] 
 		public UInt32 KagSize { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 ThisPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 PreviousPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 FooterPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 HeaderByteCount { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 IndexByteCount { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt32 IndexSID { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt64 BodyOffset { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public UInt32 BodySID { get; set; }
 
-		[CategoryAttribute("PartitionHeader"), ReadOnly(true)] 
+		[CategoryAttribute("PartitionHeader")] 
 		public MXFKey OP { get; set; }
 
 		[Browsable(false)]
@@ -99,6 +103,7 @@ namespace Myriadbits.MXF
 			: base(headerKLV, "Partition", KeyType.Partition)
 		{
 			this.m_eType = MXFObjectType.Partition;
+			this.IsLoaded = false;
 
 			// Determine the partition type
 			switch (this.Key[13])
@@ -118,8 +123,8 @@ namespace Myriadbits.MXF
 			// Make sure we read at the data position
 			reader.Seek(this.DataOffset);
 
-			//reader.ReadD(); // Skip 4 bytes
-			this.Version = reader.ReadVersion();
+			this.MajorVersion = reader.ReadUInt16();
+			this.MinorVersion = reader.ReadUInt16();
 
 			this.KagSize = reader.ReadUInt32();
 			this.ThisPartition = reader.ReadUInt64();
@@ -133,7 +138,7 @@ namespace Myriadbits.MXF
 
 			this.OP = new MXFKey(reader, 16);
 
-			MXFObject essenceContainers = reader.ReadKeyList("Essence Containers", "Essence Container");
+			MXFObject essenceContainers = reader.ReadAUIDSet("Essence Containers", "Essence Container");
 			this.AddChild(essenceContainers);
 		}
 
@@ -169,7 +174,7 @@ namespace Myriadbits.MXF
 					if (klv.Key.Type == KeyType.Partition || klv.Key.Type == KeyType.RIP || klv.Key.Type == KeyType.PrimerPack)
 						break; // Next partition or other segment, quit reading							
 
-					if (!this.ChildExists(klv))
+					if (!this.Children.Any(a => a.Offset == klv.Offset))
 					{
 						// Normal, just add the new child
 						this.AddChild(klv);

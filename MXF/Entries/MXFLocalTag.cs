@@ -29,19 +29,19 @@ namespace Myriadbits.MXF
 {
 	public class MXFLocalTag : MXFObject
 	{
-		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		[CategoryAttribute("LocalTag")]
 		public long DataOffset { get; set; }
-		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		[CategoryAttribute("LocalTag")]
 		public UInt16 Tag { get; set; }
-		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		[CategoryAttribute("LocalTag")]
 		public UInt16 Size { get; set; }
-		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		[CategoryAttribute("LocalTag")]
 		public string Name { get; set; }
-		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		[CategoryAttribute("LocalTag")]
 		public MXFKey Key { get; set; }
-		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		[CategoryAttribute("LocalTag")]
 		public object Value { get; set; }
-		[CategoryAttribute("LocalTag"), ReadOnly(true)]
+		[CategoryAttribute("LocalTag")]
 		public object ValueString { get; set; }
 
 		public MXFLocalTag(MXFReader reader)

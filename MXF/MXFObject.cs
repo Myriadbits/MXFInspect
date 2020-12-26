@@ -29,422 +29,207 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	public enum MXFObjectType
-	{
-		Normal,
-		Partition,
-		Index,
-		SystemItem,
-		Essence,
-		Meta,
-		RIP,
-		Filler,
-		Special
-	};
+    public enum MXFObjectType
+    {
+        Normal,
+        Partition,
+        Index,
+        SystemItem,
+        Essence,
+        Meta,
+        RIP,
+        Filler,
+        Special
+    };
 
-	public enum MXFLogType
-	{
-		Info,
-		Warning,
-		Error
-	};
+    public enum MXFLogType
+    {
+        Info,
+        Warning,
+        Error
+    };
 
-	public class MXFObject
-	{
-		private long m_lOffset = long.MaxValue;	// Offset in bytes from the beginning of the file
-		private long m_lLength = -1;			// Length in bytes of this object
-		protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
+    [TypeConverter(typeof(ExpandableObjectConverter))]
+    public abstract class MXFObject : Node<MXFObject>
+    {
+        private long m_lLength = -1;            // Length in bytes of this object
+        protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
 
-		[CategoryAttribute("Object"), ReadOnly(true)]
-		public long Offset
-		{
-			get
-			{				
-				return m_lOffset;
-			}
-			set 
-			{
-				m_lOffset = value;
-			}
-		}
+        [CategoryAttribute("KLV")]
+        public long Offset { get; set; } = long.MaxValue;
 
-		[CategoryAttribute("Object"), ReadOnly(true)]
-		public long Length
-		{
-			get
-			{
-				if (m_lLength == -1)
-				{
-					// Not set, try to get the parent length
-					if (this.Parent != null)
-						return this.Parent.Length + this.Parent.Offset - this.Offset;
-					return 0; // Unknown
-				}
-				else
-					return m_lLength;
-			}
-			set
-			{
-				m_lLength = value;
-			}
-		}
+        [CategoryAttribute("KLV")]
+        public long Length
+        {
+            get
+            {
+                if (m_lLength == -1)
+                {
+                    // Not set, try to get the parent length
+                    if (this.Parent != null)
+                        return this.Parent.Length + this.Parent.Offset - this.Offset;
+                    return 0; // Unknown
+                }
+                else
+                    return m_lLength;
+            }
+            set
+            {
+                m_lLength = value;
+            }
+        }
 
-		[Browsable(false)]
-		public MXFObjectType Type
-		{
-			get
-			{
-				return m_eType;
-			}
-		}
+        [Browsable(false)]
+        public MXFObjectType Type
+        {
+            get
+            {
+                return m_eType;
+            }
+        }
 
-		[Browsable(false)]		
-		public List<MXFObject> Children { get; set; }
+        [Browsable(false)]
+        // TODO extract Loaded/Load to an interface
+        public bool IsLoaded { get; set; } = true;
 
-		[Browsable(false)]
-		public MXFObject Parent { get; set; }
+       
+        [Browsable(false)]
+        // TODO find better name
+        public MXFLogicalObject LogicalWrapper { get; private set; }
 
-		[Browsable(false)]
-		public bool IsLoaded { get; set; }
+        /// <summary>
+        ///Default constructor needed for derived classes such as MXFFile, ...
+        /// </summary>
+        protected MXFObject()
+        {
+        }
 
-		/// <summary>
-		///Default constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFObject()
-		{
-		}
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFObject(MXFReader reader)
-		{
-			this.Offset = reader.Position;
-		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="reader"></param>
+        protected MXFObject(MXFReader reader)
+        {
+            this.Offset = reader.Position;
+        }
 
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFObject(long offset)
-		{
-			this.Offset = offset;
-		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="reader"></param>
+        protected MXFObject(long offset)
+        {
+            this.Offset = offset;
+        }
 
-		/// <summary>
-		/// Add a child
-		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
-		[Browsable(false)]		
-		public bool HasChildren
-		{
-			get
-			{
-				if (this.Children == null)
-					return false;
-				return this.Children.Count > 0;
-			}
-		}
+        /// <summary>
+        /// Adds a child an sets reference of parent to this
+        /// </summary>
+        /// <param name="child"></param>
+        /// <returns></returns>
+        public override void AddChild(MXFObject child)
+        {
+            base.AddChild(child);
+            if (child.Offset < this.Offset)
+                this.Offset = child.Offset;
+        }
 
-		/// <summary>
-		/// Returns the number of children
-		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
-		[Browsable(false)]
-		public int ChildCount
-		{
-			get
-			{
-				if (this.Children == null)
-					return 0;
-				return this.Children.Count;
-			}
-		}
+        public MXFObject FindNextObjectOfType(Type typeToFind, bool skipFillers)
+        {
+            var flatList = this.Root()
+                                .Descendants()
+                                .Where(o => o.GetType() == typeToFind && o.Offset > this.Offset)
+                                .OrderBy(o => o.Offset)
+                                .ToList();
 
-		/// <summary>
-		/// Add a child
-		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
-		public MXFObject AddChild(MXFObject child)
-		{
-			if (this.Children == null)
-				this.Children = new List<MXFObject>();
-			child.Parent = this;
-			this.Children.Add(child);
-			if (child.Offset < this.m_lOffset)
-				this.m_lOffset = child.Offset;
-			return child;
-		}
+            if (skipFillers) {
+                flatList = flatList.Where(o => o.Type != MXFObjectType.Filler).ToList();
+            }
 
-		/// <summary>
-		/// Find the top level parent
-		/// </summary>
-		/// <returns>The top level parent</returns>
-		[Browsable(false)]
-		public MXFObject TopParent
-		{
-			get 
-			{
-				if (this.Parent != null)
-					return this.Parent.TopParent;
-				return this;
-			}
-		}
+            return flatList.FirstOrDefault();
+        }
 
-		public IEnumerable<MXFObject> Descendants()
-		{
-			if (this.HasChildren)
-			{
-				var nodes = new Stack<MXFObject>(this.Children);
-				while (nodes.Any())
-				{
-					MXFObject node = nodes.Pop();
-					yield return node;
-					if (node.HasChildren)
-					{
-						foreach (var n in node.Children)
-						{
-							nodes.Push(n);
-						}
-					}
+        public MXFObject FindPreviousObjectOfType(Type typeToFind, bool skipFillers)
+        {
+            var flatList = this.Root()
+                                .Descendants()
+                                .Where(o => o.GetType() == typeToFind && o.Offset < this.Offset)
+                                .OrderByDescending(o => o.Offset)
+                                .ToList();
 
-				}
-			}
-			else yield break;
-		}
+            if (skipFillers)
+            {
+                flatList = flatList.Where(o => o.Type != MXFObjectType.Filler).ToList();
+            }
 
-		public void LogInfo(string format, params object[] args) { this.Log(MXFLogType.Info, format, args); }
-		public void LogWarning(string format, params object[] args) { this.Log(MXFLogType.Warning, format, args); }
-		public void LogError(string format, params object[] args) { this.Log(MXFLogType.Error, format, args); }
+            return flatList.FirstOrDefault();
+        }
+
+        public void LogInfo(string format, params object[] args) { this.Log(MXFLogType.Info, format, args); }
+        public void LogWarning(string format, params object[] args) { this.Log(MXFLogType.Warning, format, args); }
+        public void LogError(string format, params object[] args) { this.Log(MXFLogType.Error, format, args); }
+
+        /// <summary>
+        /// Generic log message
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="args"></param>
+        public void Log(MXFLogType type, string format, params object[] args)
+        {
+            string s = string.Format("{0}: {1}", type.ToString(), string.Format(format, args));
+            Debug.WriteLine(s);
+        }
+
+        /// <summary>
+        /// Some output
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (this.Children.Any())
+                return this.Offset.ToString();
+            return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
+        }
 
 
+        /// <summary>
+        /// Is this object visible?
+        /// </summary>
+        /// <param name="skipFiller"></param>
+        /// <returns></returns>
+        public bool IsVisible(bool skipFiller)
+        {
+            if (skipFiller && this.Type == MXFObjectType.Filler)
+                return false;
+            return true;
+        }
 
-		/// <summary>
-		/// Generic log message
-		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="args"></param>
-		public void Log(MXFLogType type, string format, params object[] args)
-		{			
-			string s = string.Format("{0}: {1}",  type.ToString(), string.Format(format, args));
-			Debug.WriteLine(s);
-		}
+        /// <summary>
+        /// Load the entire object from disk (when not yet loaded)
+        /// </summary>
+        public void Load()
+        {
+            if (!this.IsLoaded)
+            {
+                this.OnLoad();
+                this.IsLoaded = true;
+            }
+        }
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (this.Children == null)
-				return this.Offset.ToString();
-			return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
-		}
+        /// <summary>
+        /// Load the entire partition from disk override in derived classes when delay loading is supported
+        /// </summary>
+        public virtual void OnLoad()
+        {
+        }
 
-
-		/// <summary>
-		/// Is this object visible?
-		/// </summary>
-		/// <param name="skipFiller"></param>
-		/// <returns></returns>
-		public bool IsVisible(bool skipFiller)
-		{
-			if (skipFiller && this.Type == MXFObjectType.Filler)
-				return false;
-			return true;
-		}
-
-		/// <summary>
-		/// Find the next object of a specific type
-		/// </summary>
-		/// <param name="currentObject"></param>
-		/// <returns></returns>
-		public MXFObject FindNextSibling(Type typeToFind, bool skipFillers)
-		{
-			MXFObject found = null;
-			if (this.Parent != null && this.Parent.HasChildren)
-			{
-				int index = this.Parent.Children.FindIndex(a => a == this);
-				if (index >= 0 && index < this.Parent.Children.Count - 1)
-				{
-					for (int n = index + 1; n < this.Parent.Children.Count; n++)
-					{
-						MXFObject child = this.Parent.Children[n];
-						if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
-						{
-							// Yes found next sibling of the same type
-							return this.Parent.Children[n];
-						}
-
-						// Not the correct type, try its children
-						found = this.Parent.Children[n].FindChild(typeToFind, skipFillers);
-						if (found != null)
-							return found;
-					}
-				}
-
-				// Hmm still not found, try our grand-parent:
-				found = this.Parent.FindNextSibling(typeToFind, skipFillers);
-			}
-			return found;
-		}
-
-		/// <summary>
-		/// Find the next object of a specific type
-		/// </summary>
-		/// <param name="currentObject"></param>
-		/// <returns></returns>
-		public MXFObject FindPreviousSibling(Type typeToFind, bool skipFillers)
-		{
-			MXFObject found = null;
-			if (this.Parent != null && this.Parent.HasChildren)
-			{
-				int index = this.Parent.Children.FindIndex(a => a == this);
-				if (index > 0)
-				{
-					for (int n = index - 1; n >= 0; n--)
-					{
-						MXFObject child = this.Parent.Children[n];
-						if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
-						{
-							// Yes found next sibling of the same type
-							return this.Parent.Children[n];
-						}
-
-						// Not the correct type, try its children
-						found = this.Parent.Children[n].FindChildReverse(typeToFind, skipFillers);
-						if (found != null)
-							return found;
-					}
-				}
-
-				// Hmm still not found, try our grand-parent:
-				found = this.Parent.FindPreviousSibling(typeToFind, skipFillers);
-			}
-			return found;
-		}
-
-
-		/// <summary>
-		/// Find the first child of a specific type
-		/// </summary>
-		/// <param name="currentObject"></param>
-		/// <returns></returns>
-		public MXFObject FindChild(Type typeToFind, bool skipFillers)
-		{
-			if (this.Children != null)
-			{
-				MXFObject found = null;
-				foreach(MXFObject child in this.Children)
-				{
-					if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
-						return child;
-					if (child.HasChildren)
-					{
-						found = child.FindChild(typeToFind, skipFillers);
-						if (found != null)
-							return found;
-					}
-				}
-				return null;
-			}
-			return null;
-		}
-
-
-		/// <summary>
-		/// Find the first child of a specific type
-		/// </summary>
-		/// <param name="currentObject"></param>
-		/// <returns></returns>
-		public MXFObject FindChildReverse(Type typeToFind, bool skipFillers)
-		{
-			if (this.Children != null)
-			{
-				MXFObject found = null;
-				for (int n = this.Children.Count - 1; n >= 0; n--)
-				{
-					MXFObject child = this.Children[n];
-					if (child.GetType() == typeToFind && child.IsVisible(skipFillers))
-						return child;
-					if (child.HasChildren)
-					{
-						found = child.FindChildReverse(typeToFind, skipFillers);
-						if (found != null)
-							return found;
-					}
-				}
-				return null;
-			}
-			return null;
-		}
-
-
-		/// <summary>
-		/// Add this object and all children to the list (recursive)
-		/// </summary>
-		/// <param name="currentObject"></param>
-		/// <returns></returns>
-		public void AddToList(List<MXFObject> list)
-		{
-			list.Add(this);
-			if (this.Children != null)
-			{
-				foreach (MXFObject child in this.Children)
-					child.AddToList(list);
-			}
-		}
-
-		/// <summary>
-		/// Returns a specific child
-		/// </summary>
-		/// <param name="child"></param>
-		/// <returns></returns>
-		public MXFObject GetChild(int index)
-		{
-			if (this.Children == null)
-				return null;
-			if (index >= 0 && index < this.Children.Count)
-				return this.Children[index];
-			return null;
-		}
-
-
-		/// <summary>
-		/// Returns true if a child with a certain offset already exists
-		/// </summary>
-		/// <param name="currentObject"></param>
-		/// <returns></returns>
-		public bool ChildExists(MXFObject child)
-		{
-			if (this.Children != null && child != null)
-				return this.Children.Exists(a => a.Offset == child.Offset);
-			return false;
-		}
-
-		/// <summary>
-		/// Load the entire object from disk (when not yet loaded)
-		/// </summary>
-		public void Load()
-		{
-			if (!this.IsLoaded)
-			{
-				this.OnLoad();
-				this.IsLoaded = true;
-			}
-		}
-
-		/// <summary>
-		/// Load the entire partition from disk override in derived classes when delay loading is supported
-		/// </summary>
-		public virtual void OnLoad()
-		{
-		}
-	}
+        // TODO find better name, maybe Wrap
+        public MXFLogicalObject CreateLogicalObject()
+        {
+            var wrapper = new MXFLogicalObject(this, this.ToString());
+            this.LogicalWrapper = wrapper;
+            return wrapper;
+        }
+    }
 }

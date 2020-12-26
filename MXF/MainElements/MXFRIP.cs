@@ -22,6 +22,8 @@
 #endregion
 
 
+using System.Linq;
+
 namespace Myriadbits.MXF
 {	
 	public class MXFRIP : MXFKLV
@@ -49,14 +51,14 @@ namespace Myriadbits.MXF
 
 		public override string ToString()
 		{
-			if (this.Children == null)
+			if (!this.Children.Any())
 				return string.Format("RIP [0 items]");
 			return string.Format("RIP [{0} items]", this.Children.Count);
 		}
 
 		public MXFEntryRIP GetPartition(int partitionIndex)
 		{
-			return this.GetChild(partitionIndex) as MXFEntryRIP;
+			return this.Children.ElementAtOrDefault(partitionIndex) as MXFEntryRIP;
 		}
 	}
 }

@@ -1,3 +1,5 @@
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+
 # Preface
 This is a fork of the wonderful project [MXF Inspect](https://github.com/Myriadbits/MXFInspect) created by Jochem Bakker. Unfortunately he is not responding to merge requests anymore and the original project seems to be dead :cry:. This fork tries to keep the project alive, as I have implemented a couple of improvements w.r.t. the original.
 
@@ -78,15 +80,15 @@ Some screenshots:
 
 Report screen showing the new ‘Execute all tests’ button
 
-![Report screen showing the new ‘Execute all tests’ button](https://www.myriadbits.com/wp-content/uploads/2015/01/Report1.png)
+![Report screen showing the new ‘Execute all tests’ button](doc/screenshots/Report.png)
 
 Logical view
 
-![Logical view](https://www.myriadbits.com/wp-content/uploads/2015/01/Logical.png)
+![Logical view](doc/screenshots/Logical.png)
 
 MXF file tree (with 'syntax' coloring)
 
-![MXF file tree (with 'syntax' coloring)](https://www.myriadbits.com/wp-content/uploads/2015/01/WholeFile2.png)
+![MXF file tree (with 'syntax' coloring)](doc/screenshots/WholeFile2.png)
 
 
 ## Future work

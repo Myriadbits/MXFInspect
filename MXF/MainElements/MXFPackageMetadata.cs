@@ -79,7 +79,9 @@ namespace Myriadbits.MXF
 				long startPos = reader.Position;
 				if (m_itemTypes.ContainsKey(type))
 				{
-					this.AddChild(new MXFData(m_itemTypes[type], reader, size));
+					var obj = new MXFKLVFactory().CreateObject(reader, this.Partition);
+					this.AddChild(obj);
+					//this.AddChild(new MXFData(m_itemTypes[type], reader, size));
 				}
 				reader.Seek(startPos + size);
 			}

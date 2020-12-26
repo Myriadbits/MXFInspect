@@ -23,176 +23,131 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	public class MXFKLV : MXFObject
-	{
-		private static MXFKey s_MxfKlvKey = new MXFKey(0x06, 0x0e, 0x2b, 0x34);
+    public class MXFKLV : MXFObject
+    {
+        private byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
-		[CategoryAttribute("KLV"), ReadOnly(true)]
-		public MXFKey Key { get; set; }
+        [CategoryAttribute("KLV")]
+        public MXFKey Key { get; set; }
 
-		[CategoryAttribute("KLV"), ReadOnly(true)]
-		public long DataOffset { get; set; } // Points just after the KLV
-		
-		[Browsable(false)]
-		public MXFPartition Partition { get; set; }
+        [CategoryAttribute("KLV")]
+        public long DataOffset { get; set; } // Points just after the KLV
 
-		/// <summary>
-		/// Create the KLV key
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFKLV(MXFReader reader)
-			: base(reader)
-		{
-			this.Key = CreateAndValidateKey(reader);
-			this.Length = DecodeBerLength(reader);
-			this.DataOffset = reader.Position;
-		}
+        [Browsable(false)]
+        public MXFPartition Partition { get; set; }
 
-		/// <summary>
-		/// Create the KLV key
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFKLV(MXFReader reader, MXFKey key)
-			: base(reader)
-		{
-			this.Key = CreateAndValidateKey(reader);
-			this.Length = DecodeBerLength(reader);
-			this.DataOffset = reader.Position;
-		}
+        [CategoryAttribute("KLV")]
+        public MXFBER BER { get; set; }
 
-		/// <summary>
-		/// Copy constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFKLV(MXFKLV klv)
-		{
-			this.Offset = klv.Offset;
-			this.Key = klv.Key;
-			this.Length = klv.Length;
-			this.DataOffset = klv.DataOffset;
-			this.Partition = klv.Partition;
-		}
+        /// <summary>
+        /// Create the KLV key
+        /// </summary>
+        /// <param name="reader"></param>
+        public MXFKLV(MXFReader reader)
+            : base(reader)
+        {
+            this.Key = CreateAndValidateKey(reader);
+            this.BER = DecodeBerLength(reader);
+            this.Length = this.BER.Size;
+            this.DataOffset = reader.Position;
+        }
 
-		/// <summary>
-		/// Copy constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFKLV(MXFKLV klv, string name, KeyType type)
-		{
-			this.Offset = klv.Offset;
-			this.Key = klv.Key;
-			this.Key.Name = name;
-			this.Key.Type = type;
-			this.Length = klv.Length;
-			this.DataOffset = klv.DataOffset;
-			this.Partition = klv.Partition;
-		}
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="reader"></param>
+        public MXFKLV(MXFKLV klv, string name, KeyType type)
+        {
+            this.Offset = klv.Offset;
+            this.Key = klv.Key;
+            this.Key.Name = name;
+            this.Key.Type = type;
+            this.BER = klv.BER;
+            this.Length = klv.Length;
+            this.DataOffset = klv.DataOffset;
+            this.Partition = klv.Partition;
+        }
 
-		
-		/// <summary>
-		/// Validate if the current position is a valid SMPTE key
-		/// </summary>
-		private MXFKey CreateAndValidateKey(MXFReader reader)
-		{
-			byte iso = reader.ReadByte();
-			byte len = reader.ReadByte();
-			byte smp = 0, te = 0;
-			bool valid = false;
-			if (iso == 0x06 ) // Do not check length when not iso
-			{
-				smp = reader.ReadByte();
-				te = reader.ReadByte();
-				valid = (smp == 0x2B && te == 0x34); // SMPTE define
-			}
-			if (!valid)
-			{
-				//throw new ApplicationException(string.Format("Invalid SMPTE Key found at offset {0}! Incorrect MXF file!", reader.Position - 4));
-				MXFKey key = new MXFKey(iso, len, smp, te, reader);
-				LogError("Invalid SMPTE Key found at offset {0}! Key: {1}", reader.Position - 4, key.Name);
-				return key;
-			}
-			else
-			{
-				return new MXFKey(iso, len, smp, te, reader);
-			}
-		}
 
-		/// <summary>
-		/// Decode the length
-		/// </summary>
-		/// <param name="reader"></param>
-		private long DecodeBerLength(MXFReader reader)
-		{
-			long size = reader.ReadByte();
-			if ((size & 0x80) != 0)
-			{ 
-				// long form
-				int bytes_num = (int)(size & 0x7F);
-				// SMPTE 379M 5.3.4 guarantee that bytes_num must not exceed 8 bytes
-				if (bytes_num > 8)
-				{
-					//throw new ArgumentException("KLV length more then 8 bytes!");
-					LogWarning("KLV length more then 8 bytes (not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
-				}
-				size = 0;
-				while ( (bytes_num--) != 0)
-					size = size << 8 | reader.ReadByte();
-			}
-			return size;
-		}
+        /// <summary>
+        /// Validate if the current position is a valid SMPTE key
+        /// </summary>
+        private MXFKey CreateAndValidateKey(MXFReader reader)
+        {
+            long originalPos = reader.Position;
+            
+            byte[] prefix = reader.ReadArray(reader.ReadByte, 4);
+            bool valid = prefix.SequenceEqual(validULPrefix);
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (this.Children != null && this.Children.Count > 0)
-				return string.Format("{0} [len {1}]", this.Key.Name, this.Children.Count);
-			return string.Format("{0} [len {1}]", this.Key.Name, this.Length);
-		}
-		
-		/// <summary>
-		/// Returns true if the parent is a specific type
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		public bool IsParentOfType(KeyType type)
-		{
-			MXFKLV klvParent = this.Parent as MXFKLV;
-			if (klvParent == null) return false;
-			return (klvParent.Key.Type == type);
-		}
+            // TODO does this really make sense checking key length if not valid whenever not equal to 16 bytes?
+            // read the other bytes of the UL (length is defined in second byte minus two already read bytes)
+            byte[] other = reader.ReadArray(reader.ReadByte, prefix[1] - 2);
+            byte[] keyBytes = prefix.Concat(other).ToArray();
+            MXFKey key = new MXFKey(keyBytes);
 
-		/// <summary>
-		/// Returns true if the grandparent is a specific type
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		public bool IsGrandParentOfType(KeyType type)
-		{
-			if (this.Parent == null) return false;
-			MXFKLV klvGrandParent = this.Parent.Parent as MXFKLV;
-			if (klvGrandParent == null) return false;
-			return (klvGrandParent.Key.Type == type);
-		}
+            // TODO the responsibility for checking the key should be moved to file MXFKey???
+            // TODO check that none of the bytes excceds value 7F = 127 according to SMPTE298M
+            if (!valid)
+            {
+                //throw new ApplicationException(string.Format("Invalid SMPTE Key found at offset {0}! Incorrect MXF file!", reader.Position - 4));
+                LogError("Invalid SMPTE Key found at offset {0}! Key: {1}", reader.Position - 4, key.Name);
+                //throw new Exception(string.Format("Invalid SMPTE UL found at @{0}! Key: {1}", originalPos, key.ToString()));
+            }
+            return key;
+        }
 
-		/// <summary>
-		/// Returns true if the grandparent is a specific type
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		public bool IsParentOrGrandParentOfType(KeyType type)
-		{
-			MXFKLV klvParent = this.Parent as MXFKLV;
-			if (klvParent == null) return false;
-			if (klvParent.Key.Type == type) return true;
-			MXFKLV klvGrandParent = this.Parent.Parent as MXFKLV;
-			if (klvGrandParent == null) return false;
-			return (klvGrandParent.Key.Type == type);
-		}
-	}
+        /// <summary>
+        /// Decode the length
+        /// </summary>
+        /// <param name="reader"></param>
+        private MXFBER DecodeBerLength(MXFReader reader)
+        {
+            long size = reader.ReadByte();
+
+            if (size <= 0x7F)
+            {
+                // short form, size = length
+                return new MXFBER(0, size);
+            }
+            else if (size > 0x80)
+            {
+                // long form: size is number of octets following, 1 + x octets
+                int additionalOctets = (int)size - 0x80;
+
+                // SMPTE 379M 5.3.4 guarantee that additional octets must not exceed 8 bytes
+                if (additionalOctets > 8)
+                {
+                    LogWarning("KLV length has more than 8 octets (not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
+                }
+                size = 0;
+                for (int i = 0; i < additionalOctets; i++)
+                {
+                    size = size << 8 | reader.ReadByte();
+                }
+
+                return new MXFBER(additionalOctets, size);
+            }
+            else
+            {
+                // size is 0x80, which means indefinite
+                LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
+                return new MXFBER(-1, -1);
+            };
+        }
+
+        /// <summary>
+        /// Some output
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (this.Children != null && this.Children.Count > 0)
+                return string.Format("{0} [len {1}]", this.Key.Name, this.Children.Count);
+            return string.Format("{0} [len {1}]", this.Key.Name, this.Length);
+        }
+    }
 }

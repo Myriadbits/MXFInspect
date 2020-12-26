@@ -23,89 +23,75 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace Myriadbits.MXF
-{	
-	/// <summary>
-	/// Meta data class (might) consists of multiple local tags
-	/// </summary>
-	public class MXFMetadataBaseclass : MXFKLV
-	{
-		[CategoryAttribute("Metadata"), ReadOnly(true)]
-		public string MetaDataName { get; set; }
-		[CategoryAttribute("Metadata"), Description("3C0A")]
-		public MXFKey InstanceUID { get; set; }
+{
+    /// <summary>
+    /// Meta data class (might) consists of multiple local tags
+    /// </summary>
+    public class MXFMetadataBaseclass : MXFKLV
+    {
+        [CategoryAttribute("Metadata")]
+        public string MetaDataName { get; set; }
 
-		
-		public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)
-			: base(headerKLV, "MetaData", KeyType.MetaData)
-		{
-			this.m_eType = MXFObjectType.Meta;
-			this.MetaDataName = "<unknown>";
-			Initialize(reader);
-		}
+        public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)
+            : base(headerKLV, "MetaData", KeyType.MetaData)
+        {
+            this.m_eType = MXFObjectType.Meta;
+            this.MetaDataName = "<unknown>";
+            Initialize(reader);
+        }
 
-		public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV, string metaDataName)
-			: base(headerKLV, "MetaData", KeyType.MetaData)
-		{
-			this.m_eType = MXFObjectType.Meta;
-			this.MetaDataName = metaDataName;
-			this.Key.Name = metaDataName; // TODO Correct??
-			Initialize(reader);
-		}
+        public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV, string metaDataName)
+            : base(headerKLV, "MetaData", KeyType.MetaData)
+        {
+            this.m_eType = MXFObjectType.Meta;
+            this.MetaDataName = metaDataName;
+            this.Key.Name = metaDataName; // TODO Correct??
+            Initialize(reader);
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="reader"></param>
-		private void Initialize(MXFReader reader)
-		{		
-			// Make sure we read at the data position
-			reader.Seek(this.DataOffset);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        private void Initialize(MXFReader reader)
+        {
+            // Make sure we read at the data position
+            reader.Seek(this.DataOffset);
 
-			// Read all local tags
-			long klvEnd = this.DataOffset + this.Length;
-			while (reader.Position + 4 < klvEnd)
-			{
-				MXFLocalTag tag = new MXFLocalTag(reader);
-				long next = tag.DataOffset + tag.Size;
-				AddRefKeyFromPrimerPack(tag);
+            // Read all local tags
+            long klvEnd = this.DataOffset + this.Length;
+            while (reader.Position + 4 < klvEnd)
+            {
+                MXFLocalTag tag = new MXFLocalTag(reader);
+                long next = tag.DataOffset + tag.Size;
+                AddRefKeyFromPrimerPack(tag);
 
-				if (tag.Tag == 0x3C0A)
-				{
-					// Generic instance UID
-					this.InstanceUID = reader.ReadKey();
-				}
-				else
-				{
-					if (tag.Tag > 0x7FFF)
-                    {
-                        //AddRefKeyFromPrimerPack(tag);
-                    }
+                // Allow derived classes to handle the data
+                if (!ParseLocalTag(reader, tag))
+                {
+                    // Not processed, use default
+                    tag.Parse(reader);
 
-                    // Allow derived classes to handle the data
-                    if (!ParseLocalTag(reader, tag))
-					{
-						// Not processed, use default
-						tag.Parse(reader);
+                    // Add to the collection
+                    AddChild(tag);
+                }
 
-						// Add to the collection
-						AddChild(tag);
-					}
-				}
-				
-				reader.Seek(next);
-			}
+                reader.Seek(next);
+            }
 
-			// Allow derived classes to do some final work
-			PostInitialize();
-		}
+            // Allow derived classes to do some final work
+            PostInitialize();
+        }
 
-		/// <summary>
-		///	Tries to find the local tag in the primer pack and if so,
-		///	adds the referring key to the tag.
-		/// </summary>
-		/// <param name="tag"></param>
+        /// <summary>
+        ///	Tries to find the local tag in the primer pack and if so,
+        ///	adds the referring key to the tag.
+        /// </summary>
+        /// <param name="tag"></param>
         private void AddRefKeyFromPrimerPack(MXFLocalTag tag)
         {
             if (this.Partition != null && this.Partition.PrimerKeys != null)
@@ -114,7 +100,7 @@ namespace Myriadbits.MXF
                 {
                     MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
                     tag.Key = entry.AliasUID.Key;
-                    tag.Name = entry.AliasUID.Key.Name;
+                    //tag.Name = entry.AliasUID.Key.Name;
                 }
             }
         }
@@ -124,9 +110,9 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="localTag"></param>
         protected virtual bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			return false;
-		}
+        {
+            return false;
+        }
 
 
 		/// <summary>
@@ -137,30 +123,47 @@ namespace Myriadbits.MXF
 		{
 		}
 
-		/// <summary>
-		/// Read a list of keys
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="categoryName"></param>
-		/// <returns></returns>
-		protected UInt32 ReadKeyList(MXFReader reader, string categoryName, string singleItem)
-		{
-			MXFObject keylist = reader.ReadKeyList(categoryName, singleItem);
-			this.AddChild(keylist);
-			return (UInt32) keylist.ChildCount;
-		}
+        protected int ReadReferenceSet<T>(MXFReader reader, string referringSetName, string singleItemName) where T : MXFObject
+        {
+            UInt32 nofItems = reader.ReadUInt32();
+            UInt32 objectSize = reader.ReadUInt32(); // useless size of objects, always 16 according to specs
 
+            MXFObject referenceSet = new MXFNamedObject(referringSetName, reader.Position, objectSize);
 
-		/// <summary>
-		/// Display some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (string.IsNullOrEmpty(this.MetaDataName))
-				return string.Format("MetaData: {0} [len {1}]", this.MetaDataName, this.Length);
-			else
-				return string.Format("{0} [len {1}]", this.MetaDataName, this.Length);
-		}
-	}
+            // TODO what if this condition is not met? should we throw an exception?
+            if (nofItems < UInt32.MaxValue)
+            {
+                for (int n = 0; n < nofItems; n++)
+                {
+                    var reference = new MXFReference<T>(reader, singleItemName);
+                    referenceSet.AddChild(reference);
+                }
+            }
+
+            this.AddChild(referenceSet);
+            return referenceSet.Children.Count;
+        }
+
+        /// <summary>
+        /// Reads a strong reference
+        /// </summary>
+        /// <param name="reader"></param>
+        protected void ReadReference<T>(MXFReader reader, string referringItemName) where T : MXFObject
+        {
+            MXFReference<T> reference = new MXFReference<T>(reader, referringItemName);
+            this.AddChild(reference);
+        }
+
+        /// <summary>
+        /// Display some output
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(this.MetaDataName))
+                return string.Format("MetaData: {0} [len {1}]", this.MetaDataName, this.Length);
+            else
+                return string.Format("{0} [len {1}]", this.MetaDataName, this.Length);
+        }
+    }
 }

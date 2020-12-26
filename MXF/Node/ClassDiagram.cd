@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Myriadbits.MXF.Node&lt;T&gt;">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAECAAAAAEQAAAAAAAAAAAIAAAAAEAAAA=</HashCode>
+      <FileName>Node\Node.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFLogicalObject">
+    <Position X="4.5" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAkAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MXFLogicalObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFObject">
+    <Position X="7.5" Y="6.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAgAAAAAAAEAAMAAAAAABCIAgIAAAAgQAAAAABgAQ=</HashCode>
+      <FileName>MXFObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFKLV">
+    <Position X="7.5" Y="12.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAEAACAABQEAAAAAAACAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MXFKLV.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Myriadbits.MXF.INode&lt;T&gt;">
+    <Position X="4" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAECAAAAAEQAAAAAAAAAAAIAAAAAEAAAA=</HashCode>
+      <FileName>Node\INode.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Myriadbits.MXF.IReference&lt;T&gt;">
+    <Position X="1.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Identifiers\IReference.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Myriadbits.MXF.IResolvable">
+    <Position X="1.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Identifiers\IResolvable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -59,23 +59,23 @@ namespace Myriadbits.MXF
 	{
 		protected static Dictionary<UInt16, string> m_DIDDescription; 
 
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)] 
+		[CategoryAttribute("ANC Packet")] 
 		public UInt16 LineNumber { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public MXFANCWrappingType WrappingType { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public MXFANCPayloadCoding PayloadSamplingCoding { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public UInt16 PayloadSampleCount { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public byte DID { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public byte SDID { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public byte Size { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public byte[] Payload { get; set; }
-		[CategoryAttribute("ANC Packet"), ReadOnly(true)]
+		[CategoryAttribute("ANC Packet")]
 		public string ContentDescription { get; set; }
 
 		/// <summary>
@@ -162,8 +162,7 @@ namespace Myriadbits.MXF
 						break;
 					default:
 						// Read the real payload without the did/sdid/size
-						this.Payload = new byte[this.Length - 3];
-						reader.Read(this.Payload, this.Length - 3);
+						this.Payload = reader.ReadArray(reader.ReadByte, (int)(this.Length - 3));
 						break;
 				}
 			}

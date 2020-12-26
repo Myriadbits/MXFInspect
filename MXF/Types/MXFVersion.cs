@@ -29,17 +29,11 @@ namespace Myriadbits.MXF
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class MXFVersion : IEquatable<MXFVersion>
     {
-        [CategoryAttribute("Version"), ReadOnly(true)]
+        [CategoryAttribute("Version")]
         public UInt16 Major { get; set; }
 
-        [CategoryAttribute("Version"), ReadOnly(true)]
+        [CategoryAttribute("Version")]
         public UInt16 Minor { get; set; }
-
-
-        public MXFVersion()
-        {
-
-        }
 
         public MXFVersion(UInt16 major, UInt16 minor)
         {
