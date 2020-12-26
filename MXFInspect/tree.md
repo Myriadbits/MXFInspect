@@ -67,7 +67,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [ ] EssenceData [3/9] *(A05 EssenceContainerData)* :hammer: :scroll:
     - [x] EssenceDescriptor [1/2] *(abstract)* *(B02 GenericDescriptor)* :hammer: :scroll:
         - [x] FileDescriptor [5/5] *(abstract)*
-            - [ ] AIFCDescriptor :scroll: :dart:
+            - [x] AIFCDescriptor [1/1]
             - [x] PictureDescriptor [35/35] *(abstract)*
                 - [x] CDCIDescriptor [10/10]
                     - [x] MPEGVideoDescriptor [10/10]
