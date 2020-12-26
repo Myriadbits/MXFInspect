@@ -166,10 +166,6 @@
       <Project>{b01e7474-6a0c-4815-9c33-28b70df95b2e}</Project>
       <Name>MXF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ObjectListView\ObjectListView2012.csproj">
-      <Project>{18feda0c-d147-4286-b39a-01204808106a}</Project>
-      <Name>ObjectListView2012</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\Open_6529.png" />
@@ -232,6 +228,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ObjectListView.Official">
+      <Version>2.9.2-alpha2</Version>
+    </PackageReference>
     <PackageReference Include="System.Memory">
       <Version>4.5.4</Version>
     </PackageReference>

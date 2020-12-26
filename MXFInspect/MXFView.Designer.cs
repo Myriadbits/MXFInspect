@@ -42,7 +42,7 @@
             this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
-            this.rtfHexViewer = new HexViewer();
+            this.rtfHexViewer = new Myriadbits.MXFInspect.HexViewer();
             this.imageListResult = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtOverall = new System.Windows.Forms.TextBox();
@@ -121,17 +121,16 @@
             this.tlvPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tlvPhysical.FullRowSelect = true;
             this.tlvPhysical.HideSelection = false;
-            this.tlvPhysical.HighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
             this.tlvPhysical.Location = new System.Drawing.Point(6, 6);
             this.tlvPhysical.MultiSelect = false;
             this.tlvPhysical.Name = "tlvPhysical";
-            this.tlvPhysical.OwnerDraw = true;
             this.tlvPhysical.RowHeight = 19;
+            this.tlvPhysical.SelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvPhysical.ShowGroups = false;
             this.tlvPhysical.Size = new System.Drawing.Size(503, 507);
             this.tlvPhysical.TabIndex = 15;
             this.tlvPhysical.TintSortColumn = true;
-            this.tlvPhysical.UnfocusedHighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.tlvPhysical.UnfocusedSelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvPhysical.UseAlternatingBackColors = true;
             this.tlvPhysical.UseCellFormatEvents = true;
             this.tlvPhysical.UseCompatibleStateImageBehavior = false;
@@ -151,7 +150,7 @@
             this.tpLogical.Text = "Logical";
             this.tpLogical.UseVisualStyleBackColor = true;
             // 
-            // treeListViewLogical
+            // tlvLogical
             // 
             this.tlvLogical.AlternateRowBackColor = System.Drawing.Color.WhiteSmoke;
             this.tlvLogical.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -161,25 +160,22 @@
             this.tlvLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tlvLogical.FullRowSelect = true;
             this.tlvLogical.HideSelection = false;
-            this.tlvLogical.HighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
             this.tlvLogical.Location = new System.Drawing.Point(6, 6);
             this.tlvLogical.MultiSelect = false;
-            this.tlvLogical.Name = "treeListViewLogical";
-            this.tlvLogical.OwnerDraw = true;
+            this.tlvLogical.Name = "tlvLogical";
             this.tlvLogical.RowHeight = 19;
+            this.tlvLogical.SelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvLogical.ShowGroups = false;
             this.tlvLogical.Size = new System.Drawing.Size(503, 507);
             this.tlvLogical.TabIndex = 16;
             this.tlvLogical.TintSortColumn = true;
-            this.tlvLogical.UnfocusedHighlightBackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.tlvLogical.UnfocusedSelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvLogical.UseAlternatingBackColors = true;
             this.tlvLogical.UseCellFormatEvents = true;
             this.tlvLogical.UseCompatibleStateImageBehavior = false;
             this.tlvLogical.UseFiltering = true;
             this.tlvLogical.View = System.Windows.Forms.View.Details;
             this.tlvLogical.VirtualMode = true;
-            //this.treeListViewLogical.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.treeListViewPhysical_FormatCell);
-            //this.treeListViewLogical.SelectionChanged += new System.EventHandler(this.treeListViewLogical_SelectionChanged);
             // 
             // splitRight
             // 
@@ -270,16 +266,17 @@
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
-            // txtHex
+            // rtfHexViewer
             // 
             this.rtfHexViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfHexViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtfHexViewer.BytesPerLine = 16;
             this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.rtfHexViewer.HideSelection = false;
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
-            this.rtfHexViewer.Name = "txtHex";
+            this.rtfHexViewer.Name = "rtfHexViewer";
             this.rtfHexViewer.ReadOnly = true;
             this.rtfHexViewer.Size = new System.Drawing.Size(573, 150);
             this.rtfHexViewer.TabIndex = 16;
