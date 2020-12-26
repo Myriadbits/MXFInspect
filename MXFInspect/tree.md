@@ -65,7 +65,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] CompressionDefinition :scroll:
     - [ ] Dictionary :scroll:
     - [ ] EssenceData [3/9] *(A05 EssenceContainerData)* :hammer: :scroll:
-    - [x] EssenceDescriptor [1/2] *(abstract)* *(B02 GenericDescriptor)* :hammer: :scroll:
+    - [x] EssenceDescriptor [2/2] *(abstract)* *(B02 GenericDescriptor)*
         - [x] FileDescriptor [5/5] *(abstract)*
             - [x] AIFCDescriptor [1/1]
             - [x] PictureDescriptor [35/35] *(abstract)*
@@ -77,7 +77,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] HTMLDescriptor *(abstract class?)*
             - [ ] TIFFDescriptor [0/6]
             - [ ] WAVEDescriptor *(abstract class?)*
-            - [x] SoundDescriptor [8/10] :hammer: :scroll:
+            - [x] SoundDescriptor [10/10]
                 - [x] WAVEPCMDescriptor [13/13] *(=MXFWAVEAudioEssenceDescriptor.cs)*
                     - [x] AES3PCMDescriptor [7/7]
                 - [ ] DCPCMSoundDescriptor

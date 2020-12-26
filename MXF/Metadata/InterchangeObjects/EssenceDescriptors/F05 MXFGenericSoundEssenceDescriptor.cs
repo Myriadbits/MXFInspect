@@ -28,6 +28,9 @@ namespace Myriadbits.MXF
 {
     public class MXFGenericSoundEssenceDescriptor : MXFFileDescriptor
     {
+        private readonly MXFKey refImageEditRate_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x06, 0x00, 0x00, 0x00);
+        private readonly MXFKey refAudioAlignmentLevel = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x07, 0x00, 0x00, 0x00);
+
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D03")]
         public MXFRational AudioSamplingRate { get; set; }
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D02")]
@@ -44,9 +47,10 @@ namespace Myriadbits.MXF
         public sbyte? DialNorm { get; set; }
         [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D06")]
         public MXFKey SoundEssenceCoding { get; set; }
-
-        // TODO ReferenceImageEditRate
-        // TODO ReferenceAudioAlignmentLevel
+        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("")]
+        public MXFRational ReferenceImageEditRate { get; set; }
+        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("")]
+        public byte? ReferenceAudioAlignmentLevel { get; set; }
 
         /// <summary>
         /// Constructor, set the correct descriptor name
@@ -83,7 +87,9 @@ namespace Myriadbits.MXF
                 case 0x3D07: this.ChannelCount = reader.ReadUInt32(); return true;
                 case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
                 case 0x3D0C: this.DialNorm = reader.ReadSignedByte(); return true;
-                case 0x3D06: this.SoundEssenceCoding = reader.ReadULKey(); return true;
+                case 0x3D06: this.SoundEssenceCoding = reader.ReadKey(); return true;
+                case var a when localTag.Key == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
+                case var a when localTag.Key == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
