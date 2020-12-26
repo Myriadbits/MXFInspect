@@ -36,15 +36,15 @@ Some screenshots:
 
 Report screen showing the new ‘Execute all tests’ button
 
-![Report screen showing the new ‘Execute all tests’ button](https://www.myriadbits.com/wp-content/uploads/2015/01/Report1.png)
+![Report screen showing the new ‘Execute all tests’ button](doc/screenshots/Report.png)
 
 Logical view
 
-![Logical view](https://www.myriadbits.com/wp-content/uploads/2015/01/Logical.png)
+![Logical view](doc/screenshots/Logical.png)
 
 MXF file tree (with 'syntax' coloring)
 
-![MXF file tree (with 'syntax' coloring)](https://www.myriadbits.com/wp-content/uploads/2015/01/WholeFile2.png)
+![MXF file tree (with 'syntax' coloring)](doc/screenshots/WholeFile2.png)
 
 
 ## Future work
