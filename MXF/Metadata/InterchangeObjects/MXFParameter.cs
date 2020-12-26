@@ -26,13 +26,16 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFOperationGroup : MXFSegment
+    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 1)]
+    public class MXFParameter : MXFInterchangeObject
     {
-        [CategoryAttribute("OperationGroup"), Description("0B04")]
-        public UInt32 BypassOverride { get; private set; }
 
-        public MXFOperationGroup(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "OperationGroup")
+        [CategoryAttribute("Parameter"), Description("4C01")]
+        public MXFUUID ParameterDefinitionReference { get; set; }
+
+
+        public MXFParameter(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "Parameter")
         {
         }
 
@@ -44,12 +47,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                // TODO replace generic MXFObject with class OperationDefinition once implemented
-                case 0x0B01: this.ReadReference<MXFObject>(reader, "Operation"); return true;
-                case 0x0B04: this.BypassOverride = reader.ReadUInt32(); return true;
-                case 0x0B05: this.ReadReference<MXFSourceReference>(reader, "Rendering"); return true;
-                case 0x0B02: this.ReadReferenceSet<MXFSegment>(reader, "InputSegments", "InputSegment"); return true;
-                case 0x0B03: this.ReadReferenceSet<MXFParameter>(reader, "Parameters", "Parameter"); return true;
+                case 0x4C01: this.ParameterDefinitionReference = new MXFUUID(reader); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
