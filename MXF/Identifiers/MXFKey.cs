@@ -181,6 +181,8 @@ namespace Myriadbits.MXF
         public KeyType Type { get; set; }
         [Browsable(false)]
         public Type ObjectType { get; set; }
+        [Browsable(false)]
+        public bool IsKnown { get; set; } = false;
 
         /// <summary>
         /// The name of this key (if found in SMPTE RP210 or RP224)
@@ -247,6 +249,11 @@ namespace Myriadbits.MXF
             if (m_ULDescriptions.ContainsKey(skey))
             {
                 this.Name = m_ULDescriptions[skey][0];
+                IsKnown = true;
+            }
+            else
+            {
+                IsKnown = false;
             }
         }
 

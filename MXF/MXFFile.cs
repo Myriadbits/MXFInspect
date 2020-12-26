@@ -437,15 +437,17 @@ namespace Myriadbits.MXF
             this.m_results.Clear();
 
             // Execute validation tests
-            List<MXFValidator> allTest = new List<MXFValidator>();
-            allTest.Add(new MXFValidatorInfo());
-            allTest.Add(new MXFValidatorPartitions());
-            allTest.Add(new MXFValidatorRIP());
+            List<MXFValidator> allTests = new List<MXFValidator>();
+            allTests.Add(new MXFValidatorInfo());
+            allTests.Add(new MXFValidatorPartitions());
+            allTests.Add(new MXFValidatorRIP());
+            allTests.Add(new MXFValidatorKeys());
+
             if (extendedTest)
             {
-                allTest.Add(new MXFValidatorIndex());
+                allTests.Add(new MXFValidatorIndex());
             }
-            foreach (MXFValidator mxfTest in allTest)
+            foreach (MXFValidator mxfTest in allTests)
             {
                 mxfTest.Initialize(this, worker);
                 mxfTest.ExecuteTest(ref m_results);
