@@ -72,10 +72,10 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [x] CDCIDescriptor [10/10]
                     - [x] MPEGVideoDescriptor [10/10]
                     - [ ] VC1VideoDescriptor
-                - [X] RGBADescriptor [8/8] :scroll: :hammer: :dart:
-                - [ ] TIFFPictureEssenceDescriptor :scroll: :dart:
+                - [x] RGBADescriptor [8/8]
+                - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract)* 
             - [ ] HTMLDescriptor *(abstract class?)*
-            - [ ] TIFFDescriptor *(abstract class?)*
+            - [ ] TIFFDescriptor [0/6]
             - [ ] WAVEDescriptor *(abstract class?)*
             - [x] SoundDescriptor [8/10] :hammer: :scroll:
                 - [x] WAVEPCMDescriptor [13/13] *(=MXFWAVEAudioEssenceDescriptor.cs)*
@@ -103,7 +103,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [ ] BWFImportDescriptor :scroll:
             - [ ] RecordingDescriptor *(abstract class?)*
             - [ ] AuxiliaryDescriptor :scroll: :dart: 
-    - [X] Preface :hammer:
+    - [x] Preface :hammer:
     - [x] Identification [9/9]
     - [x] Locator [0/0] *(abstract)*
         - [x] NetworkLocator [1/1]
