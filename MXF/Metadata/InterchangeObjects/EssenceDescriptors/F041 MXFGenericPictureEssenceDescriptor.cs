@@ -28,6 +28,16 @@ namespace Myriadbits.MXF
 {
     public class MXFGenericPictureEssenceDescriptor : MXFFileDescriptor
     {
+        private readonly MXFKey altCenterCuts_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x03, 0x02, 0x0b, 0x00, 0x00, 0x00);
+        private readonly MXFKey activeHeight_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x13, 0x00, 0x00, 0x00);
+        private readonly MXFKey activeWidth_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x14, 0x00, 0x00, 0x00);
+        private readonly MXFKey activeXOffset_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x15, 0x00, 0x00, 0x00);
+        private readonly MXFKey activeYOffset_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x16, 0x00, 0x00, 0x00);
+        private readonly MXFKey displayPrimaries_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x01, 0x00, 0x00);
+        private readonly MXFKey displayWhitePointChromaticity_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x04, 0x20, 0x04, 0x01, 0x01, 0x02, 0x00, 0x00);
+        private readonly MXFKey displayMaxLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x03, 0x00, 0x00);
+        private readonly MXFKey displayMinLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x04, 0x00, 0x00);
+
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3215")]
         public MXFSignalStandard? SignalStandard { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320C")]
@@ -57,19 +67,18 @@ namespace Myriadbits.MXF
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3217")]
         public Int32? DisplayF2Offset { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320E")]
-        public MXFRational AspectRatio { get; set; }
+        public MXFRational ImageAspectRatio { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3218")]
         public byte? ActiveFormatDescriptor { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320D")]
         [TypeConverter(typeof(IntegerArrayConverter))]
         public Int32[] VideoLineMap { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320F")]
-
         public MXFAlphaTransparencyType? AlphaTransparency { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3210")]
-        public MXFKey TransferCharacteristics { get; set; }
+        public MXFKey TransferCharacteristic { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3211")]
-        public UInt32? ImageAlignmentOffset { get; set; }
+        public UInt32? ImageAlignmentFactor { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3213")]
         public UInt32? ImageStartOffset { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3214")]
@@ -77,11 +86,34 @@ namespace Myriadbits.MXF
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3212")]
         public MXFFieldNumber? FieldDominance { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3201")]
-        public MXFKey PictureEssenceCoding { get; set; }
+        public MXFKey PictureCompression { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("321A")]
         public MXFKey CodingEquations { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3219")]
         public MXFKey ColorPrimaries { get; set; }
+
+        // new ones
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public UInt32? ActiveHeight { get; set; }
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public UInt32? ActiveWidth { get; set; }
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public UInt32? ActiveXOffset { get; set; }
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public UInt32? ActiveYOffset { get; set; }
+        //[CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        //public UInt32? AlternativeCenterCuts { get; set; }
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public MXFColorPrimary[] MasteringDisplayPrimaries { get; set; }
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public MXFColorPrimary MasteringDisplayWhitePointChromaticity { get; set; }
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public UInt32? MasteringDisplayMaximumLuminance { get; set; }
+        [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
+        public UInt32? MasteringDisplayMinimumLuminance { get; set; }
+
+
+
 
         /// <summary>
         /// Constructor, set the correct descriptor name
@@ -125,26 +157,29 @@ namespace Myriadbits.MXF
                 case 0x320A: this.DisplayXOffset = reader.ReadInt32(); return true;
                 case 0x320B: this.DisplayYOffset = reader.ReadInt32(); return true;
                 case 0x3217: this.DisplayF2Offset = reader.ReadInt32(); return true;
-                case 0x320E: this.AspectRatio = reader.ReadRational(); return true;
+                case 0x320E: this.ImageAspectRatio = reader.ReadRational(); return true;
                 case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
                 case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
-                case 0x320F: this.AlphaTransparency = (MXFAlphaTransparencyType) reader.ReadByte(); return true;
-                case 0x3210: this.TransferCharacteristics = reader.ReadULKey(); return true;
-                case 0x3211: this.ImageAlignmentOffset = reader.ReadUInt32(); return true;
+                case 0x320F: this.AlphaTransparency = (MXFAlphaTransparencyType)reader.ReadByte(); return true;
+                case 0x3210: this.TransferCharacteristic = reader.ReadKey(); return true;
+                case 0x3211: this.ImageAlignmentFactor = reader.ReadUInt32(); return true;
                 case 0x3213: this.ImageStartOffset = reader.ReadUInt32(); return true;
                 case 0x3214: this.ImageEndOffset = reader.ReadUInt32(); return true;
                 case 0x3212: this.FieldDominance = (MXFFieldNumber)reader.ReadByte(); return true;
-                case 0x3201: this.PictureEssenceCoding = reader.ReadULKey(); return true;
-                case 0x321A: this.CodingEquations = reader.ReadULKey(); return true;
-                case 0x3219: this.ColorPrimaries = reader.ReadULKey(); return true;
+                case 0x3201: this.PictureCompression = reader.ReadKey(); return true;
+                case 0x321A: this.CodingEquations = reader.ReadKey(); return true;
+                case 0x3219: this.ColorPrimaries = reader.ReadKey(); return true;
+                case var a when localTag.Key == altCenterCuts_Key: this.AddChild(reader.ReadAUIDSet("AlternativeCenterCuts", "AlternativeCenterCut")); return true;
+                case var a when localTag.Key == activeHeight_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var a when localTag.Key == activeWidth_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var a when localTag.Key == activeXOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var a when localTag.Key == activeYOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var a when localTag.Key == displayPrimaries_Key: this.MasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3);  return true;
+                case var a when localTag.Key == displayWhitePointChromaticity_Key: this.MasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
+                case var a when localTag.Key == displayMaxLuminance_Key: this.MasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
+                case var a when localTag.Key == displayMinLuminance_Key: this.MasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
+
             }
-
-            //PropertyDescriptor prop = TypeDescriptor.GetProperties(typeof(MXFGenericPictureEssenceDescriptor))["StoredWidth"];
-            //DescriptionAttribute attr = prop.Attributes[typeof(DescriptionAttribute)] as DescriptionAttribute;
-            //FieldInfo fi = attr.GetType().GetField("description", BindingFlags.NonPublic | BindingFlags.Instance);
-            //if (fi != null)
-            //	fi.SetValue(attr, "DIT IS GELUKT!!!");
-
             return base.ParseLocalTag(reader, localTag);
         }
 
