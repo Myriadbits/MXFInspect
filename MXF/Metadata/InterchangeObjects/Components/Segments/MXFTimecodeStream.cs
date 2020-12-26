@@ -25,6 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 3)]
     public class MXFTimecodeStream : MXFSegment
     {
         [CategoryAttribute("TimecodeStream"), Description("1601")]

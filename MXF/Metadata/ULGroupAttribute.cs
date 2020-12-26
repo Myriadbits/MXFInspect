@@ -21,21 +21,17 @@
 //
 #endregion
 
+using System;
+
 namespace Myriadbits.MXF
 {
-	// http://www.smpte-ra.org/reg/395/2014/13/1/aaf 	
-	// urn:smpte:ul:060e2b34.027f0101.0d010101.01016900
-	public class MXFTIFFEssenceDescriptor : MXFGenericPictureEssenceDescriptor
-	{
+    // marker attribute for metadata groups that do not contain any property
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class ULGroupAttribute : Attribute
+    {
+        public bool Deprecated { get; set; } = false;
+        public bool IsConcrete { get; set; } = true;
+        public int NumberOfElements { get; set; }
 
-		/// <summary>
-		/// Constructor, set the correct descriptor name
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFTIFFEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "TIFFEssenceDescriptor")
-		{
-		}
-	}
+    }
 }

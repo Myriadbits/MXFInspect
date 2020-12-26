@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 2)]
 	public class MXFEvent : MXFSegment
 	{
 		[CategoryAttribute("Event"), Description("0601")]

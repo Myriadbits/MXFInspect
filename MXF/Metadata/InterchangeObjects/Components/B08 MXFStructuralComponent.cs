@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 5)]
 	public class MXFStructuralComponent : MXFInterchangeObject
 	{
 		// TODO this should be a UUID?

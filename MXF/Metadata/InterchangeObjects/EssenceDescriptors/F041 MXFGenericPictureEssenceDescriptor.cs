@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 35)]
     public class MXFGenericPictureEssenceDescriptor : MXFFileDescriptor
     {
         private readonly MXFKey altCenterCuts_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x03, 0x02, 0x0b, 0x00, 0x00, 0x00);

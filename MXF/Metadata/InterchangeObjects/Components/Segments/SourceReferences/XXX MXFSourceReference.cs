@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 4)]
     public class MXFSourceReference : MXFSegment
     {
         [CategoryAttribute("SourceReference"), Description("1101")]

@@ -27,6 +27,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 5)]
 	public class MXFFileDescriptor : MXFGenericDescriptor
 	{
 		// TODO remove this field, once all specialized subclasses have been implemented

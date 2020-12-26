@@ -23,13 +23,19 @@
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 0)]
-    public class MXFTextClip : MXFSourceReference
-    {
-        public MXFTextClip(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
-        {
-            this.MetaDataName = "TextClip";
-        }
-    }
+	// http://www.smpte-ra.org/reg/395/2014/13/1/aaf 	
+	// urn:smpte:ul:060e2b34.027f0101.0d010101.01016900
+	public class MXFTIFFPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
+	{
+
+		/// <summary>
+		/// Constructor, set the correct descriptor name
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <param name="headerKLV"></param>
+		public MXFTIFFPictureEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
+			: base(reader, headerKLV, "TIFFEssenceDescriptor")
+		{
+		}
+	}
 }

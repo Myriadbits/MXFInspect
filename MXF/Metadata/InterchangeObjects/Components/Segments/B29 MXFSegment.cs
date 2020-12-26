@@ -23,6 +23,7 @@
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 0)]
 	public class MXFSegment : MXFStructuralComponent
 	{
 		public MXFSegment(MXFReader reader, MXFKLV headerKLV, string metadataName)

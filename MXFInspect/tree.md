@@ -27,13 +27,13 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [x] Segment [0/0] *(abstract)*
             - [x] EdgeCode [4/4]
             - [x] EssenceGroup [2/2]
-            - [x] Event [2/2]
+            - [x] Event [2/2] *(abstract)*
                 - [x] GPITrigger [1/1]
                 - [x] CommentMarker [1/1]
                     - [x] DescriptiveMarker [5/5]
                       - [x] DynamicMarker [3/3]
                         - [x] DynamicClip [4/4]
-            - [x] Filler [0/0] *(abstract)* *(is this the B11 MXFFiller.cs?)* :question:
+            - [x] Filler [0/0] *(is this the B11 MXFFiller.cs?)* :question:
             - [x] OperationGroup [5/5]
             - [x] NestedScope [1/1]
             - [x] Pulldown [4/4]
@@ -46,7 +46,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [x] TextClip [0/0] *(abstract)*
                     - [x] HTMLClip [2/2]
             - [x] Timecode [3/3]
-            - [x] TimecodeStream [3/3] 
+            - [x] TimecodeStream [3/3] *(abstract)*
                 - [x] TimecodeStream12M [1/1]
             - [x] Transition [2/2] 
     - [x] ContentStorage [2/2]
@@ -73,36 +73,36 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                     - [x] MPEGVideoDescriptor [10/10]
                     - [ ] VC1VideoDescriptor
                 - [x] RGBADescriptor [8/8]
-                - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract)* 
-            - [ ] HTMLDescriptor *(abstract class?)*
+                - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract?)* 
+            - [ ] HTMLDescriptor [0/0]
             - [ ] TIFFDescriptor [0/6]
-            - [ ] WAVEDescriptor *(abstract class?)*
+            - [ ] WAVEDescriptor [0/1]
             - [x] SoundDescriptor [10/10]
                 - [x] WAVEPCMDescriptor [13/13] *(=MXFWAVEAudioEssenceDescriptor.cs)*
                     - [x] AES3PCMDescriptor [7/7]
-                - [ ] DCPCMSoundDescriptor
-                - [ ] MPEGAudioDescriptor
+                - [ ] DCPCMSoundDescriptor [0/0]
+                - [ ] MPEGAudioDescriptor [0/2]
             - [x] DataEssenceDescriptor [1/1] :hammer:
-                - [ ] ParsedTextDescriptor [1] *(abstract)*:scroll: :dart:
-                    - [ ] SGMLDescriptor [0] *(abstract)*
-                        - [ ] XMLDescriptor :scroll: :dart:
-                        - [ ] HTMLParsedTextDescriptor :scroll: :dart:
-                - [ ] RP217Descriptor :scroll: :dart:
-                - [ ] VBIDataDescriptor
-                - [ ] ANCDataDescriptor
+                - [ ] ParsedTextDescriptor [0/1] *(abstract)*:scroll: :dart:
+                    - [ ] SGMLDescriptor [0/0] *(abstract)*
+                        - [ ] XMLDescriptor [0/3] :scroll: :dart:
+                        - [ ] HTMLParsedTextDescriptor [0/1] :scroll: :dart:
+                - [ ] RP217Descriptor [0/2] :scroll: :dart:
+                - [ ] VBIDataDescriptor [0/0]
+                - [ ] ANCDataDescriptor [0/0]
                 - [x] DCTimedTextDescriptor [0/4] :hammer:
-                - [ ] EventTextDescriptor [2] *(abstract)*
-                    - [ ] STLDescriptor
-                - [ ] AuxDataEssenceDescriptor
+                - [ ] EventTextDescriptor [0/2] *(abstract)*
+                    - [ ] STLDescriptor [0/1]
+                - [ ] AuxDataEssenceDescriptor [0/0]
             - [x] MultipleDescriptor [1/1]
-            - [ ] DateTimeDescriptor :scroll: :dart:
-        - [ ] FilmDescriptor :scroll: :dart:
-        - [ ] TapeDescriptor :scroll:
-        - [ ] PhysicalDescriptor [0] *(abstract)*
-            - [ ] ImportDescriptor *(abstract class?)*
-                - [ ] BWFImportDescriptor :scroll:
-            - [ ] RecordingDescriptor *(abstract class?)*
-            - [ ] AuxiliaryDescriptor :scroll: :dart: 
+            - [ ] DateTimeDescriptor [0/4] :scroll: :dart:
+        - [ ] FilmDescriptor [0/8] :scroll: :dart:
+        - [ ] TapeDescriptor [0/8]:scroll:
+        - [ ] PhysicalDescriptor [0/0] *(abstract)*
+            - [ ] ImportDescriptor [0/0]
+                - [ ] BWFImportDescriptor [0/11]:scroll:
+            - [ ] RecordingDescriptor [0/0]
+            - [ ] AuxiliaryDescriptor [0/2]:scroll: :dart: 
     - [x] Preface [10/17]
     - [x] Identification [9/9]
     - [x] Locator [0/0] *(abstract)*
@@ -113,10 +113,10 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [x] MaterialPackage *abstract* [0/0]
         - [x] SourcePackage [1/1]
     - [x] Track [4/4] *(abstract)*
-        - [ ] EventTrack 
-        - [ ] StaticTrack 
+        - [ ] EventTrack [0/2]
+        - [ ] StaticTrack [0/0]
         - [x] TimelineTrack [7/7] 
-    - [ ] Parameter [1] *(abstract)*
+    - [ ] Parameter [0/1] *(abstract)*
         - [ ] ConstantValue 
         - [ ] VaryingValue 
     - [ ] TaggedValue 
