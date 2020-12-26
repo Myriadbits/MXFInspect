@@ -103,7 +103,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [ ] BWFImportDescriptor :scroll:
             - [ ] RecordingDescriptor *(abstract class?)*
             - [ ] AuxiliaryDescriptor :scroll: :dart: 
-    - [x] Preface :hammer:
+    - [x] Preface [10/17]
     - [x] Identification [9/9]
     - [x] Locator [0/0] *(abstract)*
         - [x] NetworkLocator [1/1]
@@ -112,10 +112,10 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] CompositionPackage [0/4] :hammer:
         - [x] MaterialPackage *abstract* [0/0]
         - [x] SourcePackage [1/1]
-    - [ ] Track [4] *(abstract)*
+    - [x] Track [4/4] *(abstract)*
         - [ ] EventTrack 
         - [ ] StaticTrack 
-        - [ ] TimelineTrack 
+        - [x] TimelineTrack [7/7] 
     - [ ] Parameter [1] *(abstract)*
         - [ ] ConstantValue 
         - [ ] VaryingValue 
