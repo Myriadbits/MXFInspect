@@ -102,10 +102,10 @@
             // tpPhysical
             // 
             this.tpPhysical.Controls.Add(this.tlvPhysical);
-            this.tpPhysical.Location = new System.Drawing.Point(4, 22);
+            this.tpPhysical.Location = new System.Drawing.Point(4, 24);
             this.tpPhysical.Name = "tpPhysical";
             this.tpPhysical.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPhysical.Size = new System.Drawing.Size(515, 519);
+            this.tpPhysical.Size = new System.Drawing.Size(515, 517);
             this.tpPhysical.TabIndex = 0;
             this.tpPhysical.Text = "Physical";
             this.tpPhysical.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tlvPhysical.Cursor = System.Windows.Forms.Cursors.Default;
             this.tlvPhysical.EmptyListMsg = "No items present";
-            this.tlvPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tlvPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tlvPhysical.FullRowSelect = true;
             this.tlvPhysical.HideSelection = false;
             this.tlvPhysical.Location = new System.Drawing.Point(6, 6);
@@ -127,7 +127,7 @@
             this.tlvPhysical.RowHeight = 19;
             this.tlvPhysical.SelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvPhysical.ShowGroups = false;
-            this.tlvPhysical.Size = new System.Drawing.Size(503, 507);
+            this.tlvPhysical.Size = new System.Drawing.Size(503, 505);
             this.tlvPhysical.TabIndex = 15;
             this.tlvPhysical.TintSortColumn = true;
             this.tlvPhysical.UnfocusedSelectedBackColor = System.Drawing.SystemColors.Highlight;
@@ -142,10 +142,10 @@
             // tpLogical
             // 
             this.tpLogical.Controls.Add(this.tlvLogical);
-            this.tpLogical.Location = new System.Drawing.Point(4, 22);
+            this.tpLogical.Location = new System.Drawing.Point(4, 24);
             this.tpLogical.Name = "tpLogical";
             this.tpLogical.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLogical.Size = new System.Drawing.Size(515, 519);
+            this.tpLogical.Size = new System.Drawing.Size(515, 517);
             this.tpLogical.TabIndex = 1;
             this.tpLogical.Text = "Logical";
             this.tpLogical.UseVisualStyleBackColor = true;
@@ -157,7 +157,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tlvLogical.EmptyListMsg = "No items present";
-            this.tlvLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tlvLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tlvLogical.FullRowSelect = true;
             this.tlvLogical.HideSelection = false;
             this.tlvLogical.Location = new System.Drawing.Point(6, 6);
@@ -166,7 +166,7 @@
             this.tlvLogical.RowHeight = 19;
             this.tlvLogical.SelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvLogical.ShowGroups = false;
-            this.tlvLogical.Size = new System.Drawing.Size(503, 507);
+            this.tlvLogical.Size = new System.Drawing.Size(503, 505);
             this.tlvLogical.TabIndex = 16;
             this.tlvLogical.TintSortColumn = true;
             this.tlvLogical.UnfocusedSelectedBackColor = System.Drawing.SystemColors.Highlight;
@@ -206,9 +206,9 @@
             this.chkInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkInfo.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkInfo.AutoSize = true;
-            this.chkInfo.Location = new System.Drawing.Point(493, 362);
+            this.chkInfo.Location = new System.Drawing.Point(492, 360);
             this.chkInfo.Name = "chkInfo";
-            this.chkInfo.Size = new System.Drawing.Size(19, 23);
+            this.chkInfo.Size = new System.Drawing.Size(20, 25);
             this.chkInfo.TabIndex = 16;
             this.chkInfo.Text = "i";
             this.chkInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -246,8 +246,7 @@
             // btnPrevious
             // 
             this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrevious.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
+            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnPrevious.Location = new System.Drawing.Point(550, 362);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(26, 23);
@@ -258,7 +257,6 @@
             // btnNext
             // 
             this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
             this.btnNext.Location = new System.Drawing.Point(518, 362);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(26, 23);
@@ -273,7 +271,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfHexViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtfHexViewer.BytesPerLine = 16;
-            this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtfHexViewer.HideSelection = false;
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
             this.rtfHexViewer.Name = "rtfHexViewer";
@@ -284,6 +282,7 @@
             // 
             // imageListResult
             // 
+            this.imageListResult.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageListResult.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListResult.ImageStream")));
             this.imageListResult.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListResult.Images.SetKeyName(0, "Error");

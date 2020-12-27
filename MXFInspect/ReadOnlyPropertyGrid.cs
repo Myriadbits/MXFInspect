@@ -64,18 +64,34 @@ namespace Myriadbits.MXFInspect
 		{
 			if (selectedObject != null)
 			{
+				//TypeDescriptor.GetProperties(this)["StringProperty"].SetReadOnlyAttribute(!editable);
+
 				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(selectedObject))
 				{
-					ReadOnlyAttribute attr = prop.Attributes[typeof(ReadOnlyAttribute)] as ReadOnlyAttribute;
-					if (attr != null)
-					{
-						FieldInfo fi = attr.GetType().GetField("isReadOnly", BindingFlags.NonPublic | BindingFlags.Instance);
-						if (fi != null)
-							fi.SetValue(attr, isReadOnly);
-					}
+					prop.SetReadOnlyAttribute(isReadOnly);
+					//ReadOnlyAttribute attr = prop.Attributes[typeof(ReadOnlyAttribute)] as ReadOnlyAttribute;
+					//if (attr != null)
+					//{
+					//	FieldInfo fi = attr.GetType().GetField("isReadOnly", BindingFlags.NonPublic | BindingFlags.Instance);
+					//	if (fi != null)
+					//		fi.SetValue(attr, isReadOnly);
+					//}
 				}
 				this.Refresh();
 			}
+		}
+	}
+
+	public static class PropertyDescriptorExtensions
+	{
+		public static void SetReadOnlyAttribute(this PropertyDescriptor p, bool value)
+		{
+			var attributes = p.Attributes.Cast<Attribute>()
+				.Where(x => !(x is ReadOnlyAttribute)).ToList();
+			attributes.Add(new ReadOnlyAttribute(value));
+			typeof(MemberDescriptor).GetProperty("AttributeArray",
+				BindingFlags.Instance | BindingFlags.NonPublic)
+				.SetValue((MemberDescriptor)p, attributes.ToArray());
 		}
 	}
 

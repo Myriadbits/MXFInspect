@@ -72,9 +72,10 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 635);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 727);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1337, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -94,7 +95,8 @@
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.MdiWindowListItem = this.menuWindow;
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(1337, 24);
+            this.menuMain.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuMain.Size = new System.Drawing.Size(1370, 24);
             this.menuMain.TabIndex = 14;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -111,10 +113,10 @@
             // 
             // menuOpenFile
             // 
-            this.menuOpenFile.Image = global::Myriadbits.MXFInspect.Properties.Resources.Open_6529;
+            this.menuOpenFile.Image = ((System.Drawing.Image)(resources.GetObject("menuOpenFile.Image")));
             this.menuOpenFile.Name = "menuOpenFile";
             this.menuOpenFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuOpenFile.Size = new System.Drawing.Size(155, 22);
+            this.menuOpenFile.Size = new System.Drawing.Size(157, 22);
             this.menuOpenFile.Text = "&Open...";
             this.menuOpenFile.Click += new System.EventHandler(this.menuOpenFile_Click);
             // 
@@ -122,20 +124,20 @@
             // 
             this.tsmiClose.Name = "tsmiClose";
             this.tsmiClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.tsmiClose.Size = new System.Drawing.Size(155, 22);
+            this.tsmiClose.Size = new System.Drawing.Size(157, 22);
             this.tsmiClose.Text = "&Close";
             this.tsmiClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -155,57 +157,57 @@
             // 
             // tsmValidationReport
             // 
-            this.tsmValidationReport.Image = global::Myriadbits.MXFInspect.Properties.Resources.RSReport_16xLG;
+            this.tsmValidationReport.Image = ((System.Drawing.Image)(resources.GetObject("tsmValidationReport.Image")));
             this.tsmValidationReport.Name = "tsmValidationReport";
-            this.tsmValidationReport.Size = new System.Drawing.Size(197, 22);
+            this.tsmValidationReport.Size = new System.Drawing.Size(248, 22);
             this.tsmValidationReport.Text = "&Validation report...";
             this.tsmValidationReport.Click += new System.EventHandler(this.tsmValidationReport_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(194, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(245, 6);
             // 
             // tsmiFindNextItem
             // 
-            this.tsmiFindNextItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
+            this.tsmiFindNextItem.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFindNextItem.Image")));
             this.tsmiFindNextItem.Name = "tsmiFindNextItem";
             this.tsmiFindNextItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.tsmiFindNextItem.Size = new System.Drawing.Size(197, 22);
+            this.tsmiFindNextItem.Size = new System.Drawing.Size(248, 22);
             this.tsmiFindNextItem.Text = "&Next item";
             this.tsmiFindNextItem.ToolTipText = "Select the next object in the MXF file";
             this.tsmiFindNextItem.Click += new System.EventHandler(this.nextItemToolStripMenuItem_Click);
             // 
             // tsmiFindPreviousItem
             // 
-            this.tsmiFindPreviousItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
+            this.tsmiFindPreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFindPreviousItem.Image")));
             this.tsmiFindPreviousItem.Name = "tsmiFindPreviousItem";
             this.tsmiFindPreviousItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F3)));
-            this.tsmiFindPreviousItem.Size = new System.Drawing.Size(197, 22);
+            this.tsmiFindPreviousItem.Size = new System.Drawing.Size(248, 22);
             this.tsmiFindPreviousItem.Text = "&Previous item";
             this.tsmiFindPreviousItem.ToolTipText = "Select the previous object in the MXF file";
             this.tsmiFindPreviousItem.Click += new System.EventHandler(this.previousItemToolStripMenuItem_Click);
             // 
             // tsmiFilterCurrentType
             // 
-            this.tsmiFilterCurrentType.Image = global::Myriadbits.MXFInspect.Properties.Resources.FilteredObject_13400_14x;
+            this.tsmiFilterCurrentType.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFilterCurrentType.Image")));
             this.tsmiFilterCurrentType.Name = "tsmiFilterCurrentType";
             this.tsmiFilterCurrentType.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.tsmiFilterCurrentType.Size = new System.Drawing.Size(197, 22);
+            this.tsmiFilterCurrentType.Size = new System.Drawing.Size(248, 22);
             this.tsmiFilterCurrentType.Text = "&Filter current type";
             this.tsmiFilterCurrentType.Click += new System.EventHandler(this.filterCurrentTypeToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(194, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(245, 6);
             // 
             // tsmiShowFillers
             // 
-            this.tsmiShowFillers.Image = global::Myriadbits.MXFInspect.Properties.Resources.HideMember_6755;
+            this.tsmiShowFillers.Image = ((System.Drawing.Image)(resources.GetObject("tsmiShowFillers.Image")));
             this.tsmiShowFillers.Name = "tsmiShowFillers";
             this.tsmiShowFillers.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.tsmiShowFillers.Size = new System.Drawing.Size(197, 22);
+            this.tsmiShowFillers.Size = new System.Drawing.Size(248, 22);
             this.tsmiShowFillers.Text = "&Show fillers";
             this.tsmiShowFillers.Click += new System.EventHandler(this.showFillersToolStripMenuItem_Click);
             // 
@@ -221,22 +223,22 @@
             // 
             // tsmiCollapseAll
             // 
-            this.tsmiCollapseAll.Image = global::Myriadbits.MXFInspect.Properties.Resources.CollapseAll;
+            this.tsmiCollapseAll.Image = ((System.Drawing.Image)(resources.GetObject("tsmiCollapseAll.Image")));
             this.tsmiCollapseAll.Name = "tsmiCollapseAll";
             this.tsmiCollapseAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.tsmiCollapseAll.Size = new System.Drawing.Size(176, 22);
+            this.tsmiCollapseAll.Size = new System.Drawing.Size(178, 22);
             this.tsmiCollapseAll.Text = "Collapse all";
             this.tsmiCollapseAll.Click += new System.EventHandler(this.tsmiCollapseAll_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(175, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.settingsToolStripMenuItem.Text = "Settings...";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -277,14 +279,14 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(1337, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1370, 25);
             this.toolStrip1.TabIndex = 16;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // tsbOpen
             // 
             this.tsbOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbOpen.Image = global::Myriadbits.MXFInspect.Properties.Resources.Open_6529;
+            this.tsbOpen.Image = ((System.Drawing.Image)(resources.GetObject("tsbOpen.Image")));
             this.tsbOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpen.Name = "tsbOpen";
             this.tsbOpen.Size = new System.Drawing.Size(23, 22);
@@ -314,7 +316,7 @@
             // tsbFindNextItem
             // 
             this.tsbFindNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbFindNextItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
+            this.tsbFindNextItem.Image = ((System.Drawing.Image)(resources.GetObject("tsbFindNextItem.Image")));
             this.tsbFindNextItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFindNextItem.Name = "tsbFindNextItem";
             this.tsbFindNextItem.Size = new System.Drawing.Size(23, 22);
@@ -324,7 +326,7 @@
             // tsbFindPreviousItem
             // 
             this.tsbFindPreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbFindPreviousItem.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
+            this.tsbFindPreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("tsbFindPreviousItem.Image")));
             this.tsbFindPreviousItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFindPreviousItem.Name = "tsbFindPreviousItem";
             this.tsbFindPreviousItem.Size = new System.Drawing.Size(23, 22);
@@ -334,7 +336,7 @@
             // tsbFilterCurrentType
             // 
             this.tsbFilterCurrentType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbFilterCurrentType.Image = global::Myriadbits.MXFInspect.Properties.Resources.FilteredObject_13400_14x;
+            this.tsbFilterCurrentType.Image = ((System.Drawing.Image)(resources.GetObject("tsbFilterCurrentType.Image")));
             this.tsbFilterCurrentType.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFilterCurrentType.Name = "tsbFilterCurrentType";
             this.tsbFilterCurrentType.Size = new System.Drawing.Size(23, 22);
@@ -349,7 +351,7 @@
             // tsbShowFillers
             // 
             this.tsbShowFillers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbShowFillers.Image = global::Myriadbits.MXFInspect.Properties.Resources.HideMember_6755;
+            this.tsbShowFillers.Image = ((System.Drawing.Image)(resources.GetObject("tsbShowFillers.Image")));
             this.tsbShowFillers.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbShowFillers.Name = "tsbShowFillers";
             this.tsbShowFillers.Size = new System.Drawing.Size(23, 22);
@@ -359,7 +361,7 @@
             // tsbCollapseAll
             // 
             this.tsbCollapseAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbCollapseAll.Image = global::Myriadbits.MXFInspect.Properties.Resources.CollapseAll;
+            this.tsbCollapseAll.Image = ((System.Drawing.Image)(resources.GetObject("tsbCollapseAll.Image")));
             this.tsbCollapseAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbCollapseAll.Name = "tsbCollapseAll";
             this.tsbCollapseAll.Size = new System.Drawing.Size(23, 22);
@@ -368,14 +370,12 @@
             // 
             // tabMain
             // 
-            this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabMain.Location = new System.Drawing.Point(0, 49);
             this.tabMain.Margin = new System.Windows.Forms.Padding(0);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(1337, 586);
+            this.tabMain.Size = new System.Drawing.Size(1370, 678);
             this.tabMain.TabIndex = 18;
             this.tabMain.Visible = false;
             this.tabMain.SelectedIndexChanged += new System.EventHandler(this.tabMain_SelectedIndexChanged);
@@ -383,9 +383,9 @@
             // FormMain
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1337, 657);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -393,9 +393,11 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuMain;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FormMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "MXFInspect";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Main_Load);
             this.MdiChildActivate += new System.EventHandler(this.FormMain_MdiChildActivate);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormMain_DragDrop);
