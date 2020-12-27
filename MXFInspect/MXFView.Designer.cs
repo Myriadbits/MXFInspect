@@ -96,10 +96,10 @@
             // tpPhysical
             // 
             this.tpPhysical.Controls.Add(this.tlvPhysical);
-            this.tpPhysical.Location = new System.Drawing.Point(4, 22);
+            this.tpPhysical.Location = new System.Drawing.Point(4, 24);
             this.tpPhysical.Name = "tpPhysical";
             this.tpPhysical.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPhysical.Size = new System.Drawing.Size(515, 519);
+            this.tpPhysical.Size = new System.Drawing.Size(515, 517);
             this.tpPhysical.TabIndex = 0;
             this.tpPhysical.Text = "Physical";
             this.tpPhysical.UseVisualStyleBackColor = true;
@@ -112,7 +112,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tlvPhysical.Cursor = System.Windows.Forms.Cursors.Default;
             this.tlvPhysical.EmptyListMsg = "No items present";
-            this.tlvPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tlvPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tlvPhysical.FullRowSelect = true;
             this.tlvPhysical.HideSelection = false;
             this.tlvPhysical.Location = new System.Drawing.Point(6, 6);
@@ -121,7 +121,7 @@
             this.tlvPhysical.RowHeight = 19;
             this.tlvPhysical.SelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvPhysical.ShowGroups = false;
-            this.tlvPhysical.Size = new System.Drawing.Size(503, 507);
+            this.tlvPhysical.Size = new System.Drawing.Size(503, 505);
             this.tlvPhysical.TabIndex = 15;
             this.tlvPhysical.TintSortColumn = true;
             this.tlvPhysical.UnfocusedSelectedBackColor = System.Drawing.SystemColors.Highlight;
@@ -136,10 +136,10 @@
             // tpLogical
             // 
             this.tpLogical.Controls.Add(this.tlvLogical);
-            this.tpLogical.Location = new System.Drawing.Point(4, 22);
+            this.tpLogical.Location = new System.Drawing.Point(4, 24);
             this.tpLogical.Name = "tpLogical";
             this.tpLogical.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLogical.Size = new System.Drawing.Size(515, 519);
+            this.tpLogical.Size = new System.Drawing.Size(515, 517);
             this.tpLogical.TabIndex = 1;
             this.tpLogical.Text = "Logical";
             this.tpLogical.UseVisualStyleBackColor = true;
@@ -151,7 +151,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tlvLogical.EmptyListMsg = "No items present";
-            this.tlvLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tlvLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tlvLogical.FullRowSelect = true;
             this.tlvLogical.HideSelection = false;
             this.tlvLogical.Location = new System.Drawing.Point(6, 6);
@@ -160,7 +160,7 @@
             this.tlvLogical.RowHeight = 19;
             this.tlvLogical.SelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvLogical.ShowGroups = false;
-            this.tlvLogical.Size = new System.Drawing.Size(503, 507);
+            this.tlvLogical.Size = new System.Drawing.Size(503, 505);
             this.tlvLogical.TabIndex = 16;
             this.tlvLogical.TintSortColumn = true;
             this.tlvLogical.UnfocusedSelectedBackColor = System.Drawing.SystemColors.Highlight;
@@ -192,6 +192,31 @@
             this.splitRight.SplitterWidth = 6;
             this.splitRight.TabIndex = 16;
             // 
+            // chkInfo
+            // 
+            this.chkInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkInfo.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkInfo.AutoSize = true;
+            this.chkInfo.Location = new System.Drawing.Point(492, 360);
+            this.chkInfo.Name = "chkInfo";
+            this.chkInfo.Size = new System.Drawing.Size(20, 25);
+            this.chkInfo.TabIndex = 16;
+            this.chkInfo.Text = "i";
+            this.chkInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkInfo.UseVisualStyleBackColor = true;
+            this.chkInfo.CheckedChanged += new System.EventHandler(this.chkInfo_CheckedChanged);
+            // 
+            // btnSelectReference
+            // 
+            this.btnSelectReference.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSelectReference.Location = new System.Drawing.Point(3, 362);
+            this.btnSelectReference.Name = "btnSelectReference";
+            this.btnSelectReference.Size = new System.Drawing.Size(103, 23);
+            this.btnSelectReference.TabIndex = 13;
+            this.btnSelectReference.Text = "Select Reference";
+            this.btnSelectReference.UseVisualStyleBackColor = true;
+            this.btnSelectReference.Click += new System.EventHandler(this.btnSelectReference_Click);
+            // 
             // propGrid
             // 
             this.propGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -208,6 +233,27 @@
             this.propGrid.ToolbarVisible = false;
             this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             // 
+            // btnPrevious
+            // 
+            this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPrevious.Location = new System.Drawing.Point(550, 362);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(26, 23);
+            this.btnPrevious.TabIndex = 14;
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNext.Location = new System.Drawing.Point(518, 362);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(26, 23);
+            this.btnNext.TabIndex = 14;
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
             // rtfHexViewer
             // 
             this.rtfHexViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -215,7 +261,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfHexViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtfHexViewer.BytesPerLine = 16;
-            this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtfHexViewer.HideSelection = false;
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
             this.rtfHexViewer.Name = "rtfHexViewer";
@@ -223,6 +269,21 @@
             this.rtfHexViewer.Size = new System.Drawing.Size(569, 146);
             this.rtfHexViewer.TabIndex = 16;
             this.rtfHexViewer.Text = "";
+            // 
+            // imageListResult
+            // 
+            this.imageListResult.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageListResult.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListResult.ImageStream")));
+            this.imageListResult.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListResult.Images.SetKeyName(0, "Error");
+            this.imageListResult.Images.SetKeyName(1, "Success");
+            this.imageListResult.Images.SetKeyName(2, "Warning");
+            this.imageListResult.Images.SetKeyName(3, "Info");
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // txtOverall
             // 
