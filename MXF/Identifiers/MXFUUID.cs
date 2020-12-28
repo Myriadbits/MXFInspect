@@ -28,15 +28,9 @@ namespace Myriadbits.MXF
 {
     public class MXFUUID : MXFIdentifier
     {
-        /// <summary>
-        /// Create a new UMID by reading 32 bytes from the current file location
-        /// </summary>
-        /// <param name="firstPart"></param>
-        /// <param name="reader"></param>
-        public MXFUUID(MXFReader reader)
-            : base(reader, 16)
+        public MXFUUID(params byte[] list) : base(list)
         {
-            //a UMID is 32 bytes long by definition
+            //a UUID is 16 bytes long by definition
         }
 
         public override string ToString()

@@ -65,12 +65,12 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == cryptoContextId_Key: this.CryptographicContextID = reader.ReadKey(); return true;
-                    case var a when localTag.Key == cipherAlgorithm_Key: this.CipherAlgorithm = reader.ReadKey(); return true;
-                    case var a when localTag.Key == cryptoKeyID_Key: this.CryptographicKeyID = reader.ReadKey(); return true;
-                    case var a when localTag.Key == mICAlgorithm_Key: this.MICAlgorithm = reader.ReadKey(); return true;
-                    case var a when localTag.Key == sourceContainerFormat_Key: this.SourceContainerFormat = reader.ReadKey(); return true;
-                    case var a when localTag.Key == mICCarriage_Key: this.MICCarriage = reader.ReadKey(); return true;
+                    case var a when localTag.Key == cryptoContextId_Key: this.CryptographicContextID = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == cipherAlgorithm_Key: this.CipherAlgorithm = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == cryptoKeyID_Key: this.CryptographicKeyID = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == mICAlgorithm_Key: this.MICAlgorithm = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == sourceContainerFormat_Key: this.SourceContainerFormat = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == mICCarriage_Key: this.MICCarriage = reader.ReadULKey(); return true;
 
                 }
             }

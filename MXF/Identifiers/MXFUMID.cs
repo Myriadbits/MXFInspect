@@ -26,18 +26,12 @@ using System.Text;
 
 namespace Myriadbits.MXF
 {
-	public class MXFUMID : MXFIdentifier
-	{
-		/// <summary>
-		/// Create a new UMID by reading 32 bytes from the current file location
-		/// </summary>
-		/// <param name="firstPart"></param>
-		/// <param name="reader"></param>
-		public MXFUMID(MXFReader reader)
-			: base(reader, 32)
-		{
+    public class MXFUMID : MXFIdentifier
+    {
+        public MXFUMID(params byte[] list) : base(list)
+        {
             //a UMID is 32 bytes long by definition
-		}
+        }
 
         public override string ToString()
         {

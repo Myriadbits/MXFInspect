@@ -96,7 +96,6 @@ namespace Myriadbits.MXF
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
     // TODO rename this class into SMPTEUL = Universal Label
-    // TODO reduce number of ctors as much as possible
     public class MXFKey : MXFIdentifier, IEquatable<MXFKey>
     {
         private static Dictionary<MXFShortKey, string[]> m_ULDescriptions;
@@ -209,34 +208,17 @@ namespace Myriadbits.MXF
             }
         }
 
-        /// <summary>
-        /// Create a new key
-        /// </summary>
-        /// <param name="list"></param>
+
         public MXFKey(params byte[] list) : base(list)
         {
             this.Type = KeyType.None;
             FindKeyName();
         }
 
-        /// <summary>
-        /// Create a new key
-        /// </summary>
-        /// <param name="list"></param>
+        // TODO remove ctor if possible
         public MXFKey(string name, params byte[] list) : this(list)
         {
             this.Name = name;
-            FindKeyName();
-        }
-
-        // TODO remove ctor if possible
-        /// <summary>
-        /// Create a new key by reading from the current file location with a fixed size
-        /// </summary>
-        /// <param name="firstPart"></param>
-        /// <param name="reader"></param>
-        public MXFKey(MXFReader reader, UInt32 length) : base(reader, length)
-        {
             FindKeyName();
         }
 

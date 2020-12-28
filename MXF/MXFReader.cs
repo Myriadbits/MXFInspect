@@ -282,20 +282,31 @@ namespace Myriadbits.MXF
 
         #region Identifiers
 
-        /// <summary>
-        /// Reads a normal (non-reference) key
-        /// </summary>
-        public MXFKey ReadKey()
+        public MXFKey ReadULKey()
         {
-            return new MXFKey(this, 16); // Always read 16 bytes for keys (is not completely according to spec, length is part of the key...)
+            // Always read 16 bytes for UL keys (is not completely according to spec, length is part of the key...)
+            byte[] byteArr = this.ReadArray(this.ReadByte, 16);
+            return new MXFKey(byteArr); 
         }
 
         /// <summary>
-        /// Reads a UMID key (with reference)
+        /// Reads a UMID key
         /// </summary>
         public MXFUMID ReadUMIDKey()
         {
-            return new MXFUMID(this); // Always read 32 bytes for UMID's 
+            // Always read 32 bytes for UMID's 
+            byte[] byteArr = this.ReadArray(this.ReadByte, 32);
+            return new MXFUMID(byteArr); 
+        }
+
+        /// <summary>
+        /// Reads a UUID key
+        /// </summary>
+        public MXFUUID ReadUUIDKey()
+        {
+            // Always read 16 bytes for UUIDs
+            byte[] byteArr = this.ReadArray(this.ReadByte, 16);
+            return new MXFUUID(byteArr);
         }
 
         /// <summary>
@@ -306,14 +317,14 @@ namespace Myriadbits.MXF
         public MXFObject ReadAUIDSet(string groupName, string singleItem)
         {
             UInt32 nofItems = this.ReadUInt32();
-            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
+            UInt32 objectSize = this.ReadUInt32(); // TODO useless size of objects, always 16 according to specs
 
             MXFObject auidGroup = new MXFNamedObject(groupName, this.Position, objectSize);
             if (nofItems < UInt32.MaxValue)
             {
                 for (int n = 0; n < nofItems; n++)
                 {
-                    MXFAUID auid = new MXFAUID(this, objectSize, singleItem);
+                    MXFAUID auid = new MXFAUID(this, singleItem);
                     auidGroup.AddChild(auid);
                 }
             }

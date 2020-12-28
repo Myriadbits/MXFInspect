@@ -34,11 +34,11 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("AUID")]
 		public MXFKey Key { get; set; }
 
-		public MXFAUID(MXFReader reader, UInt32 size, string name)
+		public MXFAUID(MXFReader reader, string name)
 			: base(reader.Position)
 		{
 			this.Name = name;
-			this.Key = new MXFKey(reader, size);
+			this.Key = reader.ReadULKey();
 			this.Length = this.Key.Length;
 		}
 

@@ -128,14 +128,14 @@ namespace Myriadbits.MXF
                 case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
                 case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
                 case 0x320F: this.AlphaTransparency = (MXFAlphaTransparencyType) reader.ReadByte(); return true;
-                case 0x3210: this.TransferCharacteristics = reader.ReadKey(); return true;
+                case 0x3210: this.TransferCharacteristics = reader.ReadULKey(); return true;
                 case 0x3211: this.ImageAlignmentOffset = reader.ReadUInt32(); return true;
                 case 0x3213: this.ImageStartOffset = reader.ReadUInt32(); return true;
                 case 0x3214: this.ImageEndOffset = reader.ReadUInt32(); return true;
                 case 0x3212: this.FieldDominance = (MXFFieldNumber)reader.ReadByte(); return true;
-                case 0x3201: this.PictureEssenceCoding = reader.ReadKey(); return true;
-                case 0x321A: this.CodingEquations = reader.ReadKey(); return true;
-                case 0x3219: this.ColorPrimaries = reader.ReadKey(); return true;
+                case 0x3201: this.PictureEssenceCoding = reader.ReadULKey(); return true;
+                case 0x321A: this.CodingEquations = reader.ReadULKey(); return true;
+                case 0x3219: this.ColorPrimaries = reader.ReadULKey(); return true;
             }
 
             //PropertyDescriptor prop = TypeDescriptor.GetProperties(typeof(MXFGenericPictureEssenceDescriptor))["StoredWidth"];

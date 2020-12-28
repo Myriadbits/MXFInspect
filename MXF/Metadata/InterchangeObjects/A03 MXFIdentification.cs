@@ -60,12 +60,12 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3C09: this.ThisGenerationUID = reader.ReadKey(); return true;
+				case 0x3C09: this.ThisGenerationUID = reader.ReadULKey(); return true;
 				case 0x3C01: this.CompanyName = reader.ReadUTF16String(localTag.Size); return true;
 				case 0x3C02: this.ProductName = reader.ReadUTF16String(localTag.Size); return true;
 				case 0x3C03: this.ProductVersion = reader.ReadProductVersion(); return true;
 				case 0x3C04: this.ProductVersionString = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x3C05: this.ProductUID = reader.ReadKey(); return true;
+				case 0x3C05: this.ProductUID = reader.ReadULKey(); return true;
 				case 0x3C06: this.ModificationDate = reader.ReadTimestamp(); return true;
 				case 0x3C07: this.ToolkitVersion = reader.ReadProductVersion(); return true;
 				case 0x3C08: this.Platform = reader.ReadUTF16String(localTag.Size); return true;

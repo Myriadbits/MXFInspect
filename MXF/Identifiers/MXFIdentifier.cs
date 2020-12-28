@@ -52,16 +52,6 @@ namespace Myriadbits.MXF
             }
         }
 
-        /// <summary>
-        /// Create a new identifier by reading from the current file location a given number of byter
-        /// </summary>
-        /// <param name="firstPart"></param>
-        /// <param name="reader"></param>
-        protected MXFIdentifier(MXFReader reader, UInt32 length)
-        {
-            this.byteArray = reader.ReadArray(reader.ReadByte, (int)length); 
-        }
-
         // TODO find a better name for this method, move to the only caller class???
         public bool HasSameBeginning(MXFIdentifier id)
         {

@@ -21,12 +21,8 @@
 //
 #endregion
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Myriadbits.MXF
 {
@@ -42,7 +38,7 @@ namespace Myriadbits.MXF
         public MXFReference(MXFReader reader, string name) : base(reader.Position)
         {
             Name = name;
-            Identifier = new MXFUUID(reader);
+            Identifier = reader.ReadUUIDKey();
             Length = Identifier.Length;
         }
 

@@ -83,7 +83,7 @@ namespace Myriadbits.MXF
                 case 0x3D07: this.ChannelCount = reader.ReadUInt32(); return true;
                 case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
                 case 0x3D0C: this.DialNorm = reader.ReadSignedByte(); return true;
-                case 0x3D06: this.SoundEssenceCoding = reader.ReadKey(); return true;
+                case 0x3D06: this.SoundEssenceCoding = reader.ReadULKey(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

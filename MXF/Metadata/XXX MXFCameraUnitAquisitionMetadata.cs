@@ -101,9 +101,9 @@ namespace Myriadbits.MXF
             {
                 case 0x8113: this.CameraSettingFileURI = reader.ReadUTF8String(localTag.Size); return true;
                 case 0x8114: this.CameraAttributes = reader.ReadUTF8String(localTag.Size); return true;
-                case 0x3210: this.TransferCharacteristic = reader.ReadKey(); return true;
+                case 0x3210: this.TransferCharacteristic = reader.ReadULKey(); return true;
                 case 0x8106: this.CaptureFrameRate = reader.ReadRational(); return true;
-                case 0x8100: this.AutoExposureMode = reader.ReadKey(); return true;
+                case 0x8100: this.AutoExposureMode = reader.ReadULKey(); return true;
                 case 0x8101: this.AutoFocusSensingAreaSetting = (MXFAutoFocusSensingAreaSetting) reader.ReadByte(); return true;
                 case 0x8102: this.ColorCorrectionFilterWheelSetting = (MXFColorCorrectionFilterWheelSetting)reader.ReadByte(); return true;
                 case 0x8103: this.NeutralDensityFilterWheelSetting = reader.ReadUInt16(); return true;

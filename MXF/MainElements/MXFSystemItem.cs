@@ -145,7 +145,7 @@ namespace Myriadbits.MXF
 			this.ChannelHandle = reader.ReadUInt16();
 			this.ContinuityCount = reader.ReadUInt16();
 
-			this.SMPTE = reader.ReadKey(); // Always read even if zero
+			this.SMPTE = reader.ReadULKey(); // Always read even if zero
 
 			MXFTimeStamp creationTimeStamp = reader.ReadBCDTimeCode(this.PackageRate);
 			this.CreationDate = creationTimeStamp.ToString();

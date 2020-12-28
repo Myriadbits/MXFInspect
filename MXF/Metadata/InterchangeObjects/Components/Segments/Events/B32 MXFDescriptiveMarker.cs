@@ -62,9 +62,9 @@ namespace Myriadbits.MXF
                     return true;
                 case 0x6101: ReadReference<MXFDescriptiveFramework>(reader, "DescriptiveFrameworkObject"); return true;
                 case var a when localTag.Key == metadataScheme_Key: 
-                    this.DescriptiveMetadataScheme = reader.ReadKey(); 
+                    this.DescriptiveMetadataScheme = reader.ReadULKey(); 
                     return true;
-                case var a when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = new MXFUUID(reader); return true;
+                case var a when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUIDKey(); return true;
                 case var a when localTag.Key == metadataApplicationEnvironmentID_Key: 
                     this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Size); 
                     return true;

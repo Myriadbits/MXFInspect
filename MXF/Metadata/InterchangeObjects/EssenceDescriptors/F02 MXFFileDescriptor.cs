@@ -97,8 +97,8 @@ namespace Myriadbits.MXF
 				case 0x3006: this.LinkedTrackId = reader.ReadUInt32(); return true;
 				case 0x3001: this.SampleRate = reader.ReadRational(); return true;
 				case 0x3002: this.ContainerDuration = reader.ReadUInt64(); return true;
-				case 0x3004: this.EssenceContainer = reader.ReadKey(); return true;
-				case 0x3005: this.Codec = reader.ReadKey(); return true;
+				case 0x3004: this.EssenceContainer = reader.ReadULKey(); return true;
+				case 0x3005: this.Codec = reader.ReadULKey(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

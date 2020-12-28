@@ -87,7 +87,7 @@ namespace Myriadbits.MXF
                 case 0x3D0A: this.BlockAlign = reader.ReadUInt16(); return true;
                 case 0x3D0B: this.SequenceOffset = reader.ReadByte(); return true;
                 case 0x3D09: this.AverageBytesPerSecond = reader.ReadUInt32(); return true;
-                case 0x3D32: this.ChannelAssignment = reader.ReadKey(); return true;
+                case 0x3D32: this.ChannelAssignment = reader.ReadULKey(); return true;
                 case 0x3D29: this.PeakEnvelopeVersion = reader.ReadUInt32(); return true;
                 case 0x3D2A: this.PeakEnvelopeFormat = reader.ReadUInt32(); return true;
                 case 0x3D2B: this.PointsPerPeakValue = reader.ReadUInt32(); return true;
