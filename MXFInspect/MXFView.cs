@@ -237,8 +237,7 @@ namespace Myriadbits.MXFInspect
             MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
             if (selectedObject != null)
             {
-                // TODO is the hidefillers boolean really needed?
-                MXFObject nextObject = selectedObject.FindNextObjectOfType(selectedObject.GetType(), this.FillerHidden);
+                MXFObject nextObject = selectedObject.FindNextObjectOfType(selectedObject.GetType());
 
                 if (nextObject != null)
                 {
@@ -258,8 +257,7 @@ namespace Myriadbits.MXFInspect
             MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
             if (selectedObject != null)
             {
-                // TODO is the hidefillers boolean really needed?
-                MXFObject prevObject = selectedObject.FindPreviousObjectOfType(selectedObject.GetType(), this.FillerHidden);
+                MXFObject prevObject = selectedObject.FindPreviousObjectOfType(selectedObject.GetType());
 
                 if (prevObject != null)
                 {

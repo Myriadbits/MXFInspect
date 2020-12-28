@@ -135,7 +135,7 @@ namespace Myriadbits.MXF
                 this.Offset = child.Offset;
         }
 
-        public MXFObject FindNextObjectOfType(Type typeToFind, bool skipFillers)
+        public MXFObject FindNextObjectOfType(Type typeToFind)
         {
             var flatList = this.Root()
                                 .Descendants()
@@ -143,25 +143,16 @@ namespace Myriadbits.MXF
                                 .OrderBy(o => o.Offset)
                                 .ToList();
 
-            if (skipFillers) {
-                flatList = flatList.Where(o => o.Type != MXFObjectType.Filler).ToList();
-            }
-
             return flatList.FirstOrDefault();
         }
 
-        public MXFObject FindPreviousObjectOfType(Type typeToFind, bool skipFillers)
+        public MXFObject FindPreviousObjectOfType(Type typeToFind)
         {
             var flatList = this.Root()
                                 .Descendants()
                                 .Where(o => o.GetType() == typeToFind && o.Offset < this.Offset)
                                 .OrderByDescending(o => o.Offset)
                                 .ToList();
-
-            if (skipFillers)
-            {
-                flatList = flatList.Where(o => o.Type != MXFObjectType.Filler).ToList();
-            }
 
             return flatList.FirstOrDefault();
         }
@@ -190,19 +181,6 @@ namespace Myriadbits.MXF
             if (this.Children.Any())
                 return this.Offset.ToString();
             return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
-        }
-
-
-        /// <summary>
-        /// Is this object visible?
-        /// </summary>
-        /// <param name="skipFiller"></param>
-        /// <returns></returns>
-        public bool IsVisible(bool skipFiller)
-        {
-            if (skipFiller && this.Type == MXFObjectType.Filler)
-                return false;
-            return true;
         }
 
         /// <summary>

@@ -136,7 +136,7 @@ namespace Myriadbits.MXF
                 // size is 0x80, which means indefinite
                 LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
                 return new MXFBER(-1, -1);
-            };
+            }
         }
 
         /// <summary>
