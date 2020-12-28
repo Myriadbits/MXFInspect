@@ -209,10 +209,10 @@ namespace Myriadbits.MXFInspect
     private void Tree_Expanding(object sender, TreeBranchExpandingEventArgs e)
     {
         MXFObject selObject = e.Model as MXFObject;
-        if (selObject != null && !selObject.IsLoaded)
+        if (selObject is ILazyLoadable loadable)
         {
             Cursor.Current = Cursors.WaitCursor;
-            selObject.Load();
+            loadable.Load();
             Cursor.Current = Cursors.Default;
         }
     }
@@ -243,13 +243,9 @@ namespace Myriadbits.MXFInspect
         {
             MXFObject obj = e.Model as MXFObject;
 
-            if (!obj.IsLoaded)
+            if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
             {
                 e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
-            }
-            else
-            {
-                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
             }
 
             switch (obj.Type)

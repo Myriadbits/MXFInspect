@@ -28,24 +28,24 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	public enum PartitionType
-	{
-		Unknown,
-		Header,
-		Body,
-		Footer
-	}
+    public enum PartitionType
+    {
+        Unknown,
+        Header,
+        Body,
+        Footer
+    }
 
-	public class MXFPartition : MXFKLV
-	{		
-		[CategoryAttribute("PartitionHeader")] 
-		public PartitionType PartitionType { get; set; }
+    public class MXFPartition : MXFKLV, ILazyLoadable
+    {
+        [CategoryAttribute("PartitionHeader")]
+        public PartitionType PartitionType { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public bool Closed { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public bool Closed { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public bool Complete { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public bool Complete { get; set; }
 
         [CategoryAttribute("PartitionHeader")]
         public UInt16 MajorVersion { get; set; }
@@ -53,137 +53,146 @@ namespace Myriadbits.MXF
         [CategoryAttribute("PartitionHeader")]
         public UInt16 MinorVersion { get; set; }
 
-        [CategoryAttribute("PartitionHeader")] 
-		public UInt32 KagSize { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt32 KagSize { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt64 ThisPartition { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt64 ThisPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt64 PreviousPartition { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt64 PreviousPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt64 FooterPartition { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt64 FooterPartition { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt64 HeaderByteCount { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt64 HeaderByteCount { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt64 IndexByteCount { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt64 IndexByteCount { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt32 IndexSID { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt32 IndexSID { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt64 BodyOffset { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt64 BodyOffset { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public UInt32 BodySID { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public UInt32 BodySID { get; set; }
 
-		[CategoryAttribute("PartitionHeader")] 
-		public MXFKey OP { get; set; }
+        [CategoryAttribute("PartitionHeader")]
+        public MXFKey OP { get; set; }
 
-		[Browsable(false)]
-		public MXFSystemItem FirstSystemItem { get; set; }
+        [Browsable(false)]
+        public MXFSystemItem FirstSystemItem { get; set; }
 
-		[Browsable(false)]
-		public MXFEssenceElement FirstPictureEssenceElement { get; set; }
+        [Browsable(false)]
+        public MXFEssenceElement FirstPictureEssenceElement { get; set; }
 
-		[Browsable(false)]
-		public Dictionary<UInt16, MXFEntryPrimer> PrimerKeys { get; set; }
+        [Browsable(false)]
+        public Dictionary<UInt16, MXFEntryPrimer> PrimerKeys { get; set; }
 
-		[Browsable(false)]
-		public MXFFile File { get; set; }
+        [Browsable(false)]
+        public MXFFile File { get; set; }
 
-		[Browsable(false)]
-		public int PartitionNumber { get; set; }
+        [Browsable(false)]
+        public int PartitionNumber { get; set; }
 
-
-		public MXFPartition(MXFReader reader, MXFKLV headerKLV)
-			: base(headerKLV, "Partition", KeyType.Partition)
-		{
-			this.m_eType = MXFObjectType.Partition;
-			this.IsLoaded = false;
-
-			// Determine the partition type
-			switch (this.Key[13])
-			{
-				case 2: this.PartitionType = PartitionType.Header; break;
-				case 3: this.PartitionType = PartitionType.Body; break;
-				case 4: this.PartitionType = PartitionType.Footer; break;
-				default:
-					this.PartitionType = PartitionType.Unknown;
-					Log(MXFLogType.Error, "unknown partition type");
-					break;
-			}
-
-			this.Closed = (this.PartitionType == PartitionType.Footer) || (this.Key[14] & 0x01) == 0x00;
-			this.Complete = (this.Key[14] > 2);
-
-			// Make sure we read at the data position
-			reader.Seek(this.DataOffset);
-
-			this.MajorVersion = reader.ReadUInt16();
-			this.MinorVersion = reader.ReadUInt16();
-
-			this.KagSize = reader.ReadUInt32();
-			this.ThisPartition = reader.ReadUInt64();
-			this.PreviousPartition = reader.ReadUInt64();
-			this.FooterPartition = reader.ReadUInt64();
-			this.HeaderByteCount = reader.ReadUInt64();
-			this.IndexByteCount = reader.ReadUInt64();
-			this.IndexSID = reader.ReadUInt32();
-			this.BodyOffset = reader.ReadUInt64();
-			this.BodySID = reader.ReadUInt32();
-
-			this.OP = reader.ReadULKey();
-
-			MXFObject essenceContainers = reader.ReadAUIDSet("Essence Containers", "Essence Container");
-			this.AddChild(essenceContainers);
-		}
+        [Browsable(false)]
+        public bool IsLoaded { get; set; }
 
 
-		public override string ToString()
-		{
-			if (this.PartitionType == PartitionType.Body)
-			{
-				if (this.FirstSystemItem != null)
-					return string.Format("Body Partition [{0}] - {1}", this.PartitionNumber, this.FirstSystemItem.UserDateFullFrameNb);
-				else
-					return string.Format("Body Partition [{0}]", this.PartitionNumber );
-			}
-			return string.Format("{0} Partition", Enum.GetName(typeof(PartitionType), this.PartitionType));
-		}
+        public MXFPartition(MXFReader reader, MXFKLV headerKLV)
+            : base(headerKLV, "Partition", KeyType.Partition)
+        {
+            this.m_eType = MXFObjectType.Partition;
+            this.IsLoaded = false;
+
+            // Determine the partition type
+            switch (this.Key[13])
+            {
+                case 2: this.PartitionType = PartitionType.Header; break;
+                case 3: this.PartitionType = PartitionType.Body; break;
+                case 4: this.PartitionType = PartitionType.Footer; break;
+                default:
+                    this.PartitionType = PartitionType.Unknown;
+                    Log(MXFLogType.Error, "unknown partition type");
+                    break;
+            }
+
+            this.Closed = (this.PartitionType == PartitionType.Footer) || (this.Key[14] & 0x01) == 0x00;
+            this.Complete = (this.Key[14] > 2);
+
+            // Make sure we read at the data position
+            reader.Seek(this.DataOffset);
+
+            this.MajorVersion = reader.ReadUInt16();
+            this.MinorVersion = reader.ReadUInt16();
+
+            this.KagSize = reader.ReadUInt32();
+            this.ThisPartition = reader.ReadUInt64();
+            this.PreviousPartition = reader.ReadUInt64();
+            this.FooterPartition = reader.ReadUInt64();
+            this.HeaderByteCount = reader.ReadUInt64();
+            this.IndexByteCount = reader.ReadUInt64();
+            this.IndexSID = reader.ReadUInt32();
+            this.BodyOffset = reader.ReadUInt64();
+            this.BodySID = reader.ReadUInt32();
+
+            this.OP = reader.ReadULKey();
+
+            MXFObject essenceContainers = reader.ReadAUIDSet("Essence Containers", "Essence Container");
+            this.AddChild(essenceContainers);
+        }
 
 
-		/// <summary>
-		/// Load the entire partition from disk (when not yet loaded)
-		/// </summary>
-		public override void OnLoad()
-		{
-			MXFKLVFactory klvFactory = new MXFKLVFactory();
-			using (MXFReader reader = new MXFReader(this.File.Filename))
-			{
-				// Seek just after this partition
-				reader.Seek(this.DataOffset + this.Length);
+        public override string ToString()
+        {
+            if (this.PartitionType == PartitionType.Body)
+            {
+                if (this.FirstSystemItem != null)
+                    return string.Format("Body Partition [{0}] - {1}", this.PartitionNumber, this.FirstSystemItem.UserDateFullFrameNb);
+                else
+                    return string.Format("Body Partition [{0}]", this.PartitionNumber);
+            }
+            return string.Format("{0} Partition", Enum.GetName(typeof(PartitionType), this.PartitionType));
+        }
 
-				while (!reader.EOF)
-				{
-					MXFKLV klv = klvFactory.CreateObject(reader, this);
 
-					if (klv.Key.Type == KeyType.Partition || klv.Key.Type == KeyType.RIP || klv.Key.Type == KeyType.PrimerPack)
-						break; // Next partition or other segment, quit reading							
+        /// <summary>
+        /// Load the entire partition from disk (when not yet loaded)
+        /// </summary>
+        public void Load()
+        {
+            if (!this.IsLoaded)
+            {
 
-					if (!this.Children.Any(a => a.Offset == klv.Offset))
-					{
-						// Normal, just add the new child
-						this.AddChild(klv);
-					}
+                MXFKLVFactory klvFactory = new MXFKLVFactory();
+                using (MXFReader reader = new MXFReader(this.File.Filename))
+                {
+                    // Seek just after this partition
+                    reader.Seek(this.DataOffset + this.Length);
 
-					// Next KLV please
-					reader.Seek(klv.DataOffset + klv.Length);
-				}			
-			}
-		}
-	}
+                    while (!reader.EOF)
+                    {
+                        MXFKLV klv = klvFactory.CreateObject(reader, this);
+
+                        if (klv.Key.Type == KeyType.Partition || klv.Key.Type == KeyType.RIP || klv.Key.Type == KeyType.PrimerPack)
+                            break; // Next partition or other segment, quit reading							
+
+                        if (!this.Children.Any(a => a.Offset == klv.Offset))
+                        {
+                            // Normal, just add the new child
+                            this.AddChild(klv);
+                        }
+
+                        // Next KLV please
+                        reader.Seek(klv.DataOffset + klv.Length);
+                    }
+                }
+
+                this.IsLoaded = true;
+            }
+        }
+    }
 }

@@ -50,7 +50,7 @@ namespace Myriadbits.MXF
     };
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public abstract class MXFObject : Node<MXFObject>
+    public abstract class MXFObject : Node<MXFObject> //ILazyLoadable
     {
         private long m_lLength = -1;            // Length in bytes of this object
         protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
@@ -88,11 +88,6 @@ namespace Myriadbits.MXF
             }
         }
 
-        [Browsable(false)]
-        // TODO extract Loaded/Load to an interface
-        public bool IsLoaded { get; set; } = true;
-
-       
         [Browsable(false)]
         // TODO find better name
         public MXFLogicalObject LogicalWrapper { get; private set; }
@@ -181,25 +176,6 @@ namespace Myriadbits.MXF
             if (this.Children.Any())
                 return this.Offset.ToString();
             return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
-        }
-
-        /// <summary>
-        /// Load the entire object from disk (when not yet loaded)
-        /// </summary>
-        public void Load()
-        {
-            if (!this.IsLoaded)
-            {
-                this.OnLoad();
-                this.IsLoaded = true;
-            }
-        }
-
-        /// <summary>
-        /// Load the entire partition from disk override in derived classes when delay loading is supported
-        /// </summary>
-        public virtual void OnLoad()
-        {
         }
 
         // TODO find better name, maybe Wrap

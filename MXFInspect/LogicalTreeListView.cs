@@ -186,10 +186,10 @@ namespace Myriadbits.MXFInspect
         private void Tree_Expanding(object sender, TreeBranchExpandingEventArgs e)
         {
             MXFObject selObject = e.Model as MXFObject;
-            if (selObject != null && !selObject.IsLoaded)
+            if (selObject is ILazyLoadable loadable)
             {
                 Cursor.Current = Cursors.WaitCursor;
-                selObject.Load();
+                loadable.Load();
                 Cursor.Current = Cursors.Default;
             }
         }

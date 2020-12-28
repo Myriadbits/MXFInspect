@@ -356,8 +356,11 @@ namespace Myriadbits.MXF
 		{
 			// LOAD the object (when not yet loaded)
 			// This may take some time!!!
-			current.Load();
-
+			if(current is ILazyLoadable loadable)
+            {
+				loadable.Load();
+			}
+			
 			MXFKLV klv = current as MXFKLV;
 			if (klv != null)
 			{
