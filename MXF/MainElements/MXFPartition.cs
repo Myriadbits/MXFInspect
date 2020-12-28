@@ -25,6 +25,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Myriadbits.MXF
 {
@@ -162,34 +164,37 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Load the entire partition from disk (when not yet loaded)
         /// </summary>
-        public void Load()
+        public async void Load()
         {
             if (!this.IsLoaded)
             {
-
-                MXFKLVFactory klvFactory = new MXFKLVFactory();
-                using (MXFReader reader = new MXFReader(this.File.Filename))
+                await Task.Run(() =>
                 {
-                    // Seek just after this partition
-                    reader.Seek(this.DataOffset + this.Length);
-
-                    while (!reader.EOF)
+                    MXFKLVFactory klvFactory = new MXFKLVFactory();
+                    using (MXFReader reader = new MXFReader(this.File.Filename))
                     {
-                        MXFKLV klv = klvFactory.CreateObject(reader, this);
+                        // Seek just after this partition
+                        reader.Seek(this.DataOffset + this.Length);
 
-                        if (klv.Key.Type == KeyType.Partition || klv.Key.Type == KeyType.RIP || klv.Key.Type == KeyType.PrimerPack)
-                            break; // Next partition or other segment, quit reading							
-
-                        if (!this.Children.Any(a => a.Offset == klv.Offset))
+                        while (!reader.EOF)
                         {
-                            // Normal, just add the new child
-                            this.AddChild(klv);
-                        }
+                            MXFKLV klv = klvFactory.CreateObject(reader, this);
 
-                        // Next KLV please
-                        reader.Seek(klv.DataOffset + klv.Length);
+                            if (klv.Key.Type == KeyType.Partition || klv.Key.Type == KeyType.RIP || klv.Key.Type == KeyType.PrimerPack)
+                                break; // Next partition or other segment, quit reading							
+
+                            if (!this.Children.Any(a => a.Offset == klv.Offset))
+                            {
+                                // Normal, just add the new child
+                                this.AddChild(klv);
+                            }
+
+                            // Next KLV please
+                            reader.Seek(klv.DataOffset + klv.Length);
+                        }
                     }
-                }
+                });
+
 
                 this.IsLoaded = true;
             }
