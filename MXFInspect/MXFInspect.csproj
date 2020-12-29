@@ -169,24 +169,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Icons\Open_6529.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\License.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ChildIcon.bmp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Icons\Index_8287.ico" />
-  </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Icons\FindNext_13243.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Icons\FindPrevious_13244.png" />
-  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FilteredObject_13400_14x.png" />
   </ItemGroup>
@@ -194,13 +182,9 @@
     <None Include="Resources\HideMember_6755.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Icons\RSReport_16xLG.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\showInfo.png" />
     <None Include="Resources\settings.png" />
     <None Include="Resources\CollapseAll.png" />
-    <None Include="Icons\CollapseAll.png" />
     <Content Include="MXFInspect.ico" />
     <None Include="Resources\RSReport_16xLG.png" />
     <None Include="Resources\Open_6529.png" />
