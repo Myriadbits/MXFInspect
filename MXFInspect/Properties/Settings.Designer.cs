@@ -12,7 +12,7 @@ namespace Myriadbits.MXFInspect.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -72,7 +72,7 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 32, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Blue")]
         public global::System.Drawing.Color Color_Partition {
             get {
                 return ((global::System.Drawing.Color)(this["Color_Partition"]));
@@ -84,7 +84,7 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("64, 64, 64")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MediumOrchid")]
         public global::System.Drawing.Color Color_Essence {
             get {
                 return ((global::System.Drawing.Color)(this["Color_Essence"]));
@@ -96,7 +96,7 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 64")]
+        [global::System.Configuration.DefaultSettingValueAttribute("OrangeRed")]
         public global::System.Drawing.Color Color_IndexTable {
             get {
                 return ((global::System.Drawing.Color)(this["Color_IndexTable"]));
@@ -108,7 +108,7 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("64, 0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Crimson")]
         public global::System.Drawing.Color Color_RIP {
             get {
                 return ((global::System.Drawing.Color)(this["Color_RIP"]));
@@ -120,25 +120,13 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("64, 0, 64")]
+        [global::System.Configuration.DefaultSettingValueAttribute("DarkGoldenrod")]
         public global::System.Drawing.Color Color_SystemItem {
             get {
                 return ((global::System.Drawing.Color)(this["Color_SystemItem"]));
             }
             set {
                 this["Color_SystemItem"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PartialLoadWarning {
-            get {
-                return ((bool)(this["PartialLoadWarning"]));
-            }
-            set {
-                this["PartialLoadWarning"] = value;
             }
         }
         
@@ -156,7 +144,7 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 32, 64")]
+        [global::System.Configuration.DefaultSettingValueAttribute("DarkGreen")]
         public global::System.Drawing.Color Color_MetaData {
             get {
                 return ((global::System.Drawing.Color)(this["Color_MetaData"]));
@@ -168,13 +156,25 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192, 0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("LightSeaGreen")]
         public global::System.Drawing.Color Color_Special {
             get {
                 return ((global::System.Drawing.Color)(this["Color_Special"]));
             }
             set {
                 this["Color_Special"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PartialLoadWarning {
+            get {
+                return ((bool)(this["PartialLoadWarning"]));
+            }
+            set {
+                this["PartialLoadWarning"] = value;
             }
         }
     }

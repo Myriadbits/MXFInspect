@@ -15,31 +15,31 @@
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="Color_Partition" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">0, 32, 0</Value>
+      <Value Profile="(Default)">Blue</Value>
     </Setting>
     <Setting Name="Color_Essence" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">64, 64, 64</Value>
+      <Value Profile="(Default)">MediumOrchid</Value>
     </Setting>
     <Setting Name="Color_IndexTable" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">0, 0, 64</Value>
+      <Value Profile="(Default)">OrangeRed</Value>
     </Setting>
     <Setting Name="Color_RIP" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">64, 0, 0</Value>
+      <Value Profile="(Default)">Crimson</Value>
     </Setting>
     <Setting Name="Color_SystemItem" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">64, 0, 64</Value>
-    </Setting>
-    <Setting Name="PartialLoadWarning" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">DarkGoldenrod</Value>
     </Setting>
     <Setting Name="Color_Filler" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Gray</Value>
     </Setting>
     <Setting Name="Color_MetaData" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">0, 32, 64</Value>
+      <Value Profile="(Default)">DarkGreen</Value>
     </Setting>
     <Setting Name="Color_Special" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">192, 0, 0</Value>
+      <Value Profile="(Default)">LightSeaGreen</Value>
+    </Setting>
+    <Setting Name="PartialLoadWarning" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
