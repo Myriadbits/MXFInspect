@@ -151,9 +151,9 @@ namespace Myriadbits.MXF
             if (this.PartitionType == PartitionType.Body)
             {
                 if (this.FirstSystemItem != null)
-                    return string.Format("Body Partition [{0}] - {1}", this.PartitionNumber, this.FirstSystemItem.UserDateFullFrameNb);
+                    return string.Format("Body Partition #{0} - {1}", this.PartitionNumber, this.FirstSystemItem.UserDateFullFrameNb);
                 else
-                    return string.Format("Body Partition [{0}]", this.PartitionNumber);
+                    return string.Format("Body Partition #{0}", this.PartitionNumber);
             }
             return string.Format("{0} Partition", Enum.GetName(typeof(PartitionType), this.PartitionType));
         }
