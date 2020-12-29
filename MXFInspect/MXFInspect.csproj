@@ -179,9 +179,7 @@
   <ItemGroup>
     <None Include="Icons\Index_8287.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Icons\FindNext_13243.png" />
   </ItemGroup>
@@ -201,10 +199,6 @@
     <None Include="Resources\CollapseAll.png" />
     <None Include="Icons\CollapseAll.png" />
     <Content Include="MXFInspect.ico" />
-    <None Include="MXF\SMPTE\Types.xml" />
-    <None Include="MXF\SMPTE\Labels.xml" />
-    <None Include="MXF\SMPTE\Groups.xml" />
-    <None Include="MXF\SMPTE\Elements.xml" />
     <None Include="Resources\RSReport_16xLG.png" />
     <None Include="Resources\Open_6529.png" />
     <None Include="Resources\FindPrevious_13244.png" />
