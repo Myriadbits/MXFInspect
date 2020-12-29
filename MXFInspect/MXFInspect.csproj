@@ -112,6 +112,11 @@
     <Compile Include="PhysicalTreeListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ReadOnlyPropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -139,6 +144,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
@@ -151,11 +157,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +197,8 @@
     <None Include="Icons\RSReport_16xLG.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\showInfo.png" />
+    <None Include="Resources\settings.png" />
     <None Include="Resources\CollapseAll.png" />
     <None Include="Icons\CollapseAll.png" />
     <Content Include="MXFInspect.ico" />
