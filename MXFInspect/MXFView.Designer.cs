@@ -39,8 +39,6 @@
             this.splitRight = new System.Windows.Forms.SplitContainer();
             this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
             this.rtfHexViewer = new Myriadbits.MXFInspect.HexViewer();
-            this.imageListResult = new System.Windows.Forms.ImageList(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtOverall = new System.Windows.Forms.TextBox();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.prbProcessing = new System.Windows.Forms.ProgressBar();
@@ -189,7 +187,7 @@
             // splitRight.Panel2
             // 
             this.splitRight.Panel2.Controls.Add(this.rtfHexViewer);
-            this.splitRight.Size = new System.Drawing.Size(580, 549);
+            this.splitRight.Size = new System.Drawing.Size(578, 549);
             this.splitRight.SplitterDistance = 388;
             this.splitRight.SplitterWidth = 6;
             this.splitRight.TabIndex = 16;
@@ -205,7 +203,7 @@
             this.propGrid.Name = "propGrid";
             this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
             this.propGrid.ReadOnly = true;
-            this.propGrid.Size = new System.Drawing.Size(571, 359);
+            this.propGrid.Size = new System.Drawing.Size(569, 359);
             this.propGrid.TabIndex = 1;
             this.propGrid.ToolbarVisible = false;
             this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -222,23 +220,9 @@
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
             this.rtfHexViewer.Name = "rtfHexViewer";
             this.rtfHexViewer.ReadOnly = true;
-            this.rtfHexViewer.Size = new System.Drawing.Size(571, 148);
+            this.rtfHexViewer.Size = new System.Drawing.Size(569, 146);
             this.rtfHexViewer.TabIndex = 16;
             this.rtfHexViewer.Text = "";
-            // 
-            // imageListResult
-            // 
-            this.imageListResult.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListResult.ImageStream")));
-            this.imageListResult.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListResult.Images.SetKeyName(0, "Error");
-            this.imageListResult.Images.SetKeyName(1, "Success");
-            this.imageListResult.Images.SetKeyName(2, "Warning");
-            this.imageListResult.Images.SetKeyName(3, "Info");
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // txtOverall
             // 
@@ -317,7 +301,6 @@
 		#endregion
 
 		private System.Windows.Forms.SplitContainer splitMain;
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.TextBox txtOverall;
 		private MXFInspect.ReadOnlyPropertyGrid propGrid;
 		private System.Windows.Forms.TabControl tabMain;
@@ -325,7 +308,6 @@
 		private System.Windows.Forms.Panel mainPanel;
 		private System.ComponentModel.BackgroundWorker bgwProcess;
 		private System.Windows.Forms.ProgressBar prbProcessing;
-		private System.Windows.Forms.ImageList imageListResult;
 		private System.Windows.Forms.SplitContainer splitRight;
 		private System.Windows.Forms.TabPage tpLogical;
 		private HexViewer rtfHexViewer;
