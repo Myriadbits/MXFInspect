@@ -26,15 +26,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public enum FileParseOptions
+    public enum FileParseMode
     {
-        Normal,
-        Fast,
+        Full,
+        Partial,
     }
 
 
@@ -90,7 +89,7 @@ namespace Myriadbits.MXF
         /// Create/open an MXF file
         /// </summary>
         /// <param name="fileName"></param>
-        public MXFFile(string fileName, BackgroundWorker worker, FileParseOptions options = FileParseOptions.Normal)
+        public MXFFile(string fileName, BackgroundWorker worker, FileParseMode options = FileParseMode.Full)
         {
             this.Filename = fileName;
             this.Partitions = new List<MXFPartition>();
@@ -99,11 +98,11 @@ namespace Myriadbits.MXF
 
             switch (options)
             {
-                case FileParseOptions.Normal:
+                case FileParseMode.Full:
                     ParseFull(worker);
                     break;
 
-                case FileParseOptions.Fast:
+                case FileParseMode.Partial:
                     ParsePartial(worker);
                     break;
             }

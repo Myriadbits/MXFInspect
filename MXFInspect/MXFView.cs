@@ -35,29 +35,13 @@ namespace Myriadbits.MXFInspect
 {
     public partial class MXFView : MyFormPage
     {
+        #region Public props
+
         public MXFObject PhysicalTreeSelectedObject { get; private set; }
         public MXFLogicalObject LogicalTreeSelectedObject { get; private set; }
-        public MXFObject SelectedObject { get; private set; }
-
-        private FormMain ParentMainForm { get; set; }
-
-        private MXFObject m_selectedObject = null;
-
-        private MXFObject m_currentReference = null;
-
-        private Stopwatch m_stopWatch = new Stopwatch();
-        private int m_lastPercentage = 0;
-
-
-        private bool m_fDoNotSelectOther = false;
-        private FileParseOptions m_eFileParseOptions = FileParseOptions.Normal;
-
-        private bool _fillerHidden = true;
-        public bool FillerHidden { get => _fillerHidden; set { this._fillerHidden = value; this.HideFiller(value); } }
-
         public bool PhysicalViewShown { get; set; } = true;
         public string Filename { get; set; }
-
+        
         private bool _currentTypeFiltered = false;
         public bool FilterCurrentType
         {
@@ -68,6 +52,35 @@ namespace Myriadbits.MXFInspect
                 this.SetTypeFilter(value);
             }
         }
+
+        private bool _fillerHidden = true;
+        public bool FillerHidden
+        {
+            get => _fillerHidden;
+            set
+            {
+                this._fillerHidden = value;
+                this.HideFiller(value);
+            }
+        }
+
+        #endregion
+
+        private FormMain ParentMainForm { get; set; }
+
+        private FileParseMode FileParseMode { get; set; } = FileParseMode.Full;
+
+        private MXFObject m_selectedObject = null;
+
+        private MXFObject m_currentReference = null;
+
+        private Stopwatch m_stopWatch = new Stopwatch();
+        private int m_lastPercentage = 0;
+        private bool m_fDoNotSelectOther = false;
+
+
+
+
 
         public MXFFile File { get; private set; }
 
@@ -113,23 +126,30 @@ namespace Myriadbits.MXFInspect
             this.tlvPhysical.SelectionChanged += PhysicalTree_SelectionChanged;
             this.tlvLogical.SelectionChanged += LogicalTree_SelectionChanged;
 
-            // Determine the filesize
-            m_eFileParseOptions = FileParseOptions.Normal;
-            long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
-            FileInfo f = new FileInfo(this.Filename);
-            if (f.Length > fileThreshold)
-            {
-                m_eFileParseOptions = FileParseOptions.Fast;
-                if (MXFInspect.Properties.Settings.Default.PartialLoadWarning)
-                {
-                    MessageBox.Show(string.Format("The file {0} is larger then the threshold and will be loaded partially.\nA partition will be loaded when expanding the partition in the tree.", this.Filename), "Partial loading active", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            this.FileParseMode = DetermineFileParseMode();
 
+            if (this.FileParseMode == FileParseMode.Partial && MXFInspect.Properties.Settings.Default.PartialLoadWarning)
+            {
+                MessageBox.Show(string.Format("The file {0} is larger then the threshold and will be loaded partially.\nA partition will be loaded when expanding the partition in the tree.", this.Filename), "Partial loading active", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             this.bgwProcess.RunWorkerAsync(this);
 
             ParentMainForm.EnableUI(false);
+        }
+
+        private FileParseMode DetermineFileParseMode()
+        {
+            // Determine the filesize
+            long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
+            FileInfo f = new FileInfo(this.Filename);
+
+            // if setting is no partial load at alle then threshold is negative
+            if (f.Length > fileThreshold && fileThreshold >= 0)
+            {
+                return FileParseMode.Partial;
+            }
+            else return FileParseMode.Full;
         }
 
         private void PhysicalTree_SelectionChanged(object sender, EventArgs e)
@@ -146,7 +166,7 @@ namespace Myriadbits.MXFInspect
                     // Try to select this object in the logical list as well
                     m_fDoNotSelectOther = true;
                     this.tlvLogical.RevealAndSelectObject(logicalObj);
-                    
+
                     // Display the mxfobject as hex dump
                     rtfHexViewer.SetObject(PhysicalTreeSelectedObject);
 
@@ -310,7 +330,7 @@ namespace Myriadbits.MXFInspect
             {
                 BackgroundWorker worker = sender as BackgroundWorker;
                 // Process the file
-                this.File = new MXFFile(this.Filename, worker, m_eFileParseOptions);
+                this.File = new MXFFile(this.Filename, worker, this.FileParseMode);
             }
             catch (Exception ex)
             {
@@ -416,7 +436,7 @@ namespace Myriadbits.MXFInspect
             {
                 this.tlvLogical.CollapseAll();
             }
-            
+
         }
 
 
