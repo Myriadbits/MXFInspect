@@ -145,9 +145,9 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public override string ToString()
         {
-            if (this.Children != null && this.Children.Count > 0)
-                return string.Format("{0} [len {1}]", this.Key.Name, this.Children.Count);
-            return string.Format("{0} [len {1}]", this.Key.Name, this.Length);
+            var name = this.Key.IsKnown ? this.Key.Name : this.Key.ToString();
+            var childrenOrLength = this.Children.Any() ? $"[{this.Children.Count}]" : $"[len {this.Length}]";
+            return $"{name} {childrenOrLength}";            
         }
     }
 }
