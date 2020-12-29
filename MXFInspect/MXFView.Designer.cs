@@ -46,7 +46,6 @@
             this.imageListResult = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtOverall = new System.Windows.Forms.TextBox();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.prbProcessing = new System.Windows.Forms.ProgressBar();
             this.bgwProcess = new System.ComponentModel.BackgroundWorker();
@@ -377,7 +376,6 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.TextBox txtOverall;
 		private MXFInspect.ReadOnlyPropertyGrid propGrid;
-		private System.ComponentModel.BackgroundWorker backgroundWorker;
 		private System.Windows.Forms.Button btnSelectReference;
 		private System.Windows.Forms.Button btnNext;
 		private System.Windows.Forms.Button btnPrevious;
