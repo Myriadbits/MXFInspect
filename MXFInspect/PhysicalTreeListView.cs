@@ -249,7 +249,7 @@ namespace Myriadbits.MXFInspect
             }
             else
             {
-                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
+                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
             }
 
             switch (obj.Type)
