@@ -21,7 +21,6 @@
 //
 #endregion
 
-using System.ComponentModel;
 using System.Text;
 
 namespace Myriadbits.MXF
@@ -30,7 +29,7 @@ namespace Myriadbits.MXF
     {
         public MXFUMID(params byte[] list) : base(list)
         {
-            //a UMID is 32 bytes long by definition
+            //a UMID is 32 bytes long (or 64 bytes if extended) by definition
         }
 
         public override string ToString()

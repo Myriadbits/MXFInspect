@@ -21,62 +21,23 @@
 //
 #endregion
 
-using System.ComponentModel;
 using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	/// <summary>
-	/// Named object type (collectionname)
-	/// </summary>
-	public class MXFNamedObject : MXFObject
-	{
-		[Browsable(false)]
-		public string Name { get; set; }
-
+	public class MXFWrapperObject<T> : MXFNamedObject
+	{		
+		public T Object { get; private set; }
 
 		/// <summary>
-		/// MXF Object constructor
+		///Default constructor
 		/// </summary>
 		/// <param name="reader"></param>
-		public MXFNamedObject(long offset)
-			: base(offset)
+		public MXFWrapperObject(T obj, string name, long offset, long length) : base(name, offset, length)
 		{
+			this.Object = obj;
 		}
-
-		
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string name, long offset)
-			: base(offset)
-		{
-			this.Name = name;
-		}
-
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string name, long offset, MXFObjectType type)
-			: base(offset)
-		{
-			this.Name = name;
-			this.m_eType = type;
-		}
-
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string name, long offset, long length)
-			: base(offset)
-		{
-			this.Name = name;
-			this.Length = length;
-		}
-
+			
 		/// <summary>
 		/// Some output
 		/// </summary>
@@ -84,8 +45,11 @@ namespace Myriadbits.MXF
 		public override string ToString()
 		{
 			if (!this.Children.Any())
-				return this.Name;
-			return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
+				return this.Object.ToString();
+			return string.Format("{0} [{1} items]", Object.ToString(), this.Children.Count);
 		}
+
+
+
 	}
 }
