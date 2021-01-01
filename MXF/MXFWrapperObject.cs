@@ -21,13 +21,15 @@
 //
 #endregion
 
+using System.ComponentModel;
 using System.Linq;
 
 namespace Myriadbits.MXF
 {
 	public class MXFWrapperObject<T> : MXFNamedObject
-	{		
-		public T Object { get; private set; }
+	{
+		[CategoryAttribute("Object")]
+		public T Object { get; set; }
 
 		/// <summary>
 		///Default constructor

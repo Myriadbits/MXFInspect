@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 
 namespace Myriadbits.MXF
 {
@@ -85,8 +86,19 @@ namespace Myriadbits.MXF
                     // UMID
                     case 0x83:
                         byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        var umid = new MXFUMID(byteArray);
-                        this.AddChild(new MXFWrapperObject<MXFUMID>(umid, "UMID", pos, tag.Size));
+                        if(tag.Size == 64)
+                        {
+                            var umid = new MXFExtendedUMID(byteArray);
+                            this.AddChild(new MXFWrapperObject<MXFExtendedUMID>(umid, "ExtendedUMID", pos, tag.Size));
+                        }
+                        else if(tag.Size == 32){
+                            var umid = new MXFUMID(byteArray);
+                            this.AddChild(new MXFWrapperObject<MXFUMID>(umid, "UMID", pos, tag.Size));
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Invalid tag size for UMID. Must be 32 bytes or 64 for extended UMID");
+                        }
                         break;
 
                     // MPEG-2 picture editing
