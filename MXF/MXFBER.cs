@@ -21,8 +21,6 @@
 //
 #endregion
 
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
     public enum BERForm
@@ -33,7 +31,6 @@ namespace Myriadbits.MXF
     }
 
 
-    [TypeConverter(typeof(ExpandableObjectConverter))]
     public class MXFBER
     {
         public BERForm Form { get; private set; }
@@ -56,7 +53,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return (AdditionalOctets > 0) ? $"{Form}, 1 + {AdditionalOctets} Octets" : $"{Form}";
+            return (AdditionalOctets > 0) ? $"{Form}, 1 + {AdditionalOctets} Octets ({Size})" : $"{Form} ({Size})";
         }
     }
 }
