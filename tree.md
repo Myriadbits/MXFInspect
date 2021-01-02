@@ -78,7 +78,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [x] TIFFDescriptor [6/6]
             - [ ] WAVEDescriptor [0/1]
             - [x] SoundDescriptor [10/10]
-                - [x] WAVEPCMDescriptor [13/13] *(=MXFWAVEAudioEssenceDescriptor.cs)*
+                - [x] WAVEPCMDescriptor [13/13] 
                     - [x] AES3PCMDescriptor [7/7]
                 - [ ] DCPCMSoundDescriptor [0/0]
                 - [ ] MPEGAudioDescriptor [0/2]

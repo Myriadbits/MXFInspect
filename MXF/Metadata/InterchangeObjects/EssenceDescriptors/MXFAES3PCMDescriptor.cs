@@ -26,22 +26,22 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFAES3AudioEssenceDescriptor : MXFWaveAudioEssenceDescriptor
+	public class MXFAES3PCMDescriptor : MXFWAVEPCMDescriptor
 	{
-		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D0D")]
+		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D0D")]
 		public MXFEmphasis? Emphasis { get; set; }
-		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D0F")]
+		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D0F")]
 		public UInt16? BlockStartOffset { get; set; }
-		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D08")]
+		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D08")]
 		public MXFAuxBitsMode? AuxiliaryBitsMode { get; set; }
-		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D10")]
+		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D10")]
 		public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
-		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D11")]
+		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D11")]
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] FixedChannelStatusData { get; set; }
-		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D12")]
+		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D12")]
 		public MXFUserDataMode[] UserDataMode { get; set; }
-		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D13")]
+		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D13")]
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] FixedUserData { get; set; }		
 		
@@ -50,8 +50,8 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="headerKLV"></param>
-		public MXFAES3AudioEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "AES3 Audio Essence Descriptor")
+		public MXFAES3PCMDescriptor(MXFReader reader, MXFKLV headerKLV)
+			: base(reader, headerKLV, "AES3 PCM Descriptor")
 		{
 		}
 

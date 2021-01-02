@@ -26,33 +26,33 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFWaveAudioEssenceDescriptor : MXFGenericSoundEssenceDescriptor
+    public class MXFWAVEPCMDescriptor : MXFGenericSoundEssenceDescriptor
     {
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D0A")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D0A")]
         public UInt16? BlockAlign { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D0B")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D0B")]
         public byte? SequenceOffset { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D09")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D09")]
         public UInt32? AverageBytesPerSecond { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D32")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D32")]
         public MXFKey ChannelAssignment { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D29")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D29")]
         public UInt32? PeakEnvelopeVersion { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2A")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2A")]
         public UInt32? PeakEnvelopeFormat { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2B")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2B")]
         public UInt32? PointsPerPeakValue { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2C")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2C")]
         public UInt32? PeakEnvelopeBlockSize { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2D")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2D")]
         public UInt32? PeakChannels { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2E")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2E")]
         public UInt32? PeakFrames { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2F")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2F")]
         public MXFPositionType? PeakOfPeaksPosition { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D30")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D30")]
         public DateTime? PeakEnvelopeTimestamp { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D31")]
+        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D31")]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] PeakEnvelopeData { get; set; }
 
@@ -62,8 +62,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="headerKLV"></param>
-        public MXFWaveAudioEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "Wave Audio Essence Descriptor")
+        public MXFWAVEPCMDescriptor(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "WAVE PCM Descriptor")
         {
         }
 
@@ -72,7 +72,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="headerKLV"></param>
-        public MXFWaveAudioEssenceDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
+        public MXFWAVEPCMDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
             : base(reader, headerKLV, metadataName)
         {
         }

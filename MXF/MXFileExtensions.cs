@@ -59,12 +59,12 @@ namespace Myriadbits.MXF
                     .SingleOrDefault();
         }
 
-        public static IEnumerable<MXFAES3AudioEssenceDescriptor> GetAudioEssenceDescriptorsInHeader(this MXFFile file)
+        public static IEnumerable<MXFAES3PCMDescriptor> GetAudioEssenceDescriptorsInHeader(this MXFFile file)
         {
             return file
                 .GetHeader()
                 .Children
-                .OfType<MXFAES3AudioEssenceDescriptor>();
+                .OfType<MXFAES3PCMDescriptor>();
         }
 
         public static bool IsKAGSizeOfAllPartitionsEqual(this MXFFile file, uint size)
