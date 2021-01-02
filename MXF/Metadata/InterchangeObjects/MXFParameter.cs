@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x4C01: this.ParameterDefinitionReference = new MXFUUID(reader); return true;
+                case 0x4C01: this.ParameterDefinitionReference = reader.ReadUUIDKey(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

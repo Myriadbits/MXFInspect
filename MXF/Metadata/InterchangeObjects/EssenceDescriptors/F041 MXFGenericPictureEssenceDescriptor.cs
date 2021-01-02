@@ -162,14 +162,14 @@ namespace Myriadbits.MXF
                 case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
                 case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
                 case 0x320F: this.AlphaTransparency = (MXFAlphaTransparencyType)reader.ReadByte(); return true;
-                case 0x3210: this.TransferCharacteristic = reader.ReadKey(); return true;
+                case 0x3210: this.TransferCharacteristic = reader.ReadULKey(); return true;
                 case 0x3211: this.ImageAlignmentFactor = reader.ReadUInt32(); return true;
                 case 0x3213: this.ImageStartOffset = reader.ReadUInt32(); return true;
                 case 0x3214: this.ImageEndOffset = reader.ReadUInt32(); return true;
                 case 0x3212: this.FieldDominance = (MXFFieldNumber)reader.ReadByte(); return true;
-                case 0x3201: this.PictureCompression = reader.ReadKey(); return true;
-                case 0x321A: this.CodingEquations = reader.ReadKey(); return true;
-                case 0x3219: this.ColorPrimaries = reader.ReadKey(); return true;
+                case 0x3201: this.PictureCompression = reader.ReadULKey(); return true;
+                case 0x321A: this.CodingEquations = reader.ReadULKey(); return true;
+                case 0x3219: this.ColorPrimaries = reader.ReadULKey(); return true;
                 case var a when localTag.Key == altCenterCuts_Key: this.AddChild(reader.ReadAUIDSet("AlternativeCenterCuts", "AlternativeCenterCut")); return true;
                 case var a when localTag.Key == activeHeight_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
                 case var a when localTag.Key == activeWidth_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
