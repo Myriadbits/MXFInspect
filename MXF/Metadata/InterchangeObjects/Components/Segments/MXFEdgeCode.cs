@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("EdgeCode"), Description("")]
         public MXFFilmType? EdgeCodeFilmFormat { get; set; }
 
-        public MXFEdgeCode(MXFReader reader, MXFKLV headerKLV, string metadataName)
+        public MXFEdgeCode(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV, "EdgeCode")
         {
         }

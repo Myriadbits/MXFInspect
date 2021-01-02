@@ -23,24 +23,11 @@
 
 namespace Myriadbits.MXF
 {
-	public class MCALabelSubDescriptor : MXFInterchangeObject
+	public class MCALabelSubDescriptor : MXFSubDescriptor
     {
 		public MCALabelSubDescriptor(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "MCALabelSubDescriptor")
 		{
-		}
-
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				//case 0x2F01: ReadKeyList(reader, "Locators", "Locator"); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
 		}
 
 	}

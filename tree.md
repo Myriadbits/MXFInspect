@@ -122,16 +122,16 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [ ] TaggedValue 
     - [ ] KLVData 
     - [ ] RIFFChunk 
-    - [ ] SubDescriptor [0] *(abstract)*
+    - [x] SubDescriptor [0/0] *(abstract)*
         - [x] JPEG2000SubDescriptor [14/14]
         - [ ] StereoscopicPictureSubDescriptor
         - [ ] DCTimedTextResourceSubDescriptor
         - [x] ContainerConstraintsSubDescriptor [0/0]
         - [ ] MPEG4VisualSubDescriptor 
         - [x] MCALabelSubDescriptor [0/14]
-            - [x] AudioChannelLabelSubDescriptor [0/1] *inheritance*
-            - [x] SoundfieldGroupLabelSubDescriptor [0/1] *inheritance*
-            - [x] GroupOfSoundfieldGroupsLabelSubDescriptor [0/0] *inheritance*
+            - [x] AudioChannelLabelSubDescriptor [0/1]
+            - [x] SoundfieldGroupLabelSubDescriptor [0/1]
+            - [x] GroupOfSoundfieldGroupsLabelSubDescriptor [0/0]
         - [x] AVCSubDescriptor [15/15]
         - [ ] STLSubDescriptor 
         - [ ] OperationsStereoscopicSubDescriptor
