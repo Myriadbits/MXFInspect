@@ -61,6 +61,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("3218")]
         public byte? ActiveFormatDescriptor { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320D")]
+        [TypeConverter(typeof(IntegerArrayConverter))]
         public Int32[] VideoLineMap { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("320F")]
 

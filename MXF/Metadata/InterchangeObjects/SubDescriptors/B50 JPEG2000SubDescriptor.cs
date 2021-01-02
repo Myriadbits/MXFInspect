@@ -65,10 +65,13 @@ namespace Myriadbits.MXF
         [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
         public UInt16? Csiz { get; set; }
         [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] PictureComponentSizing { get; set; }
         [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] CodingStyleDefault { get; set; }
         [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] QuantizationDefault { get; set; }
         [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
         public MXFRGBAComponent[] J2CLayout { get; set; }

@@ -79,6 +79,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("IndexEntry")]
         public UInt64? StreamOffset { get; set; }
         [CategoryAttribute("IndexEntry")]
+        [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] SliceOffsets { get; set; }
         [CategoryAttribute("IndexEntry")]
         public MXFRational[] PosTable { get; set; }

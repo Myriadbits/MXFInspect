@@ -30,6 +30,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("CDPFooter")]
 		public byte? SectionID { get; set; }
 		[CategoryAttribute("CDPFooter")]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }
 
 

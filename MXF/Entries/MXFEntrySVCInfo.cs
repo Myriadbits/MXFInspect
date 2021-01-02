@@ -30,6 +30,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("SVC Info")]
 		public byte? CaptionServiceNumber { get; set; }
 		[CategoryAttribute("SVC Info ")]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }
 		[CategoryAttribute("SVC Info ")]
 		public string DataString { get; set; }

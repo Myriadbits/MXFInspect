@@ -66,6 +66,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("Address"), Description("")]
 		public string PlaceName { get; set; }
 		[CategoryAttribute("Address"), Description("")]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] GeographicalCoordinates { get; set; }
 		[CategoryAttribute("Address"), Description("")]
 		public string AstronomicalBodyName { get; set; }

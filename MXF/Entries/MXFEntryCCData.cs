@@ -40,6 +40,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("CCData")]
 		public CCDataType? CCType { get; set; }
 		[CategoryAttribute("CCData")]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }		
 
 		public MXFEntryCCData(MXFReader reader)

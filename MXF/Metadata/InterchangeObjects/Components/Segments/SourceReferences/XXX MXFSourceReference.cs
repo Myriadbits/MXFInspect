@@ -33,8 +33,10 @@ namespace Myriadbits.MXF
         [CategoryAttribute("SourceReference"), Description("1102")]
         public UInt32? SourceTrackId { get; set; }
         [CategoryAttribute("SourceReference"), Description("1102")]
+        [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] ChannelIDs { get; set; }
         [CategoryAttribute("SourceReference"), Description("1102")]
+        [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] MonoSourceTrackIDs { get; set; }
 
         public MXFSourceReference(MXFReader reader, MXFKLV headerKLV)

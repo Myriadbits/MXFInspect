@@ -74,6 +74,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("ANC Packet")]
 		public byte Size { get; set; }
 		[CategoryAttribute("ANC Packet")]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Payload { get; set; }
 		[CategoryAttribute("ANC Packet")]
 		public string ContentDescription { get; set; }

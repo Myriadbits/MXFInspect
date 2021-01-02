@@ -22,11 +22,13 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
 	public class MXFDescriptiveClip : MXFSourceClip
 	{
+        [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
         
         public MXFDescriptiveClip(MXFReader reader, MXFKLV headerKLV)

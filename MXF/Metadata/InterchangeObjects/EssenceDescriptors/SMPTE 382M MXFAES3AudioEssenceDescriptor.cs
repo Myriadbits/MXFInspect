@@ -37,10 +37,12 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D10")]
 		public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D11")]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] FixedChannelStatusData { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D12")]
 		public MXFUserDataMode[] UserDataMode { get; set; }
 		[CategoryAttribute("AES3AudioEssenceDescriptor"), Description("3D13")]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] FixedUserData { get; set; }		
 		
 		/// <summary>

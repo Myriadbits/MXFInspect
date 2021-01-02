@@ -53,6 +53,7 @@ namespace Myriadbits.MXF
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D30")]
         public DateTime? PeakEnvelopeTimestamp { get; set; }
         [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D31")]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] PeakEnvelopeData { get; set; }
 
 
