@@ -76,7 +76,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract)* 
             - [x] HTMLDescriptor [0/0]
             - [x] TIFFDescriptor [6/6]
-            - [ ] WAVEDescriptor [0/1]
+            - [x] WAVEDescriptor [1/1]
             - [x] SoundDescriptor [10/10]
                 - [x] WAVEPCMDescriptor [13/13] 
                     - [x] AES3PCMDescriptor [7/7]
