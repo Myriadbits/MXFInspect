@@ -33,19 +33,13 @@ namespace Myriadbits.MXF
 		[Browsable(false)]
 		public MXFObject Object { get; private set; }
 
-
-		// TODO remove property
-		[Browsable(false)]
-		public string Name { get; set; }
-
 		/// <summary>
 		///Default constructor
 		/// </summary>
 		/// <param name="reader"></param>
-		public MXFLogicalObject(MXFObject obj, string name)
+		public MXFLogicalObject(MXFObject obj)
 		{
 			this.Object = obj;
-			this.Name = name;
 		}
 			
 		/// <summary>
@@ -55,8 +49,8 @@ namespace Myriadbits.MXF
 		public override string ToString()
 		{
 			if (!this.Children.Any())
-				return this.Name;
-			return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
+				return this.Object.ToString();
+			return string.Format("{0} [{1} items]", this.Object.ToString(), this.Children.Count);
 		}
 
 

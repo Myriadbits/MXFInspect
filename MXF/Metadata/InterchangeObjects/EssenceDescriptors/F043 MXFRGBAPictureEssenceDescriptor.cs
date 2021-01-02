@@ -40,8 +40,6 @@ namespace Myriadbits.MXF
 		public MXFScanningDirectionType? ScanningDirection { get; set; }
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3401")]
 		public MXFRGBAComponent[] PixelLayout { get; set; }
-		
-		// TODO is this the correct type?
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3403")]
 		public byte[] Palette { get; set; }
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3404")]

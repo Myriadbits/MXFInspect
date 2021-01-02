@@ -21,8 +21,6 @@
 //
 #endregion
 
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
 	// Locator http://www.smpte-ra.org/reg/395/2014/13/1/aaf 	

@@ -23,8 +23,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 
 namespace Myriadbits.MXF
 {
@@ -100,7 +98,6 @@ namespace Myriadbits.MXF
                 {
                     MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
                     tag.Key = entry.AliasUID.Key;
-                    //tag.Name = entry.AliasUID.Key.Name;
                 }
             }
         }

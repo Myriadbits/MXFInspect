@@ -313,8 +313,7 @@ namespace Myriadbits.MXF
                 case KeyType.PrimerPack:
                     if (currentPartition != null)
                     {
-                        MXFPrimerPack primer = klv as MXFPrimerPack;
-                        if (primer != null) // Just to be sure
+                        if (klv is MXFPrimerPack primer)
                         {
                             // Let the partition know all primer keys
                             allPrimerKeys = primer.AllKeys;
@@ -436,11 +435,13 @@ namespace Myriadbits.MXF
             this.m_results.Clear();
 
             // Execute validation tests
-            List<MXFValidator> allTests = new List<MXFValidator>();
-            allTests.Add(new MXFValidatorInfo());
-            allTests.Add(new MXFValidatorPartitions());
-            allTests.Add(new MXFValidatorRIP());
-            allTests.Add(new MXFValidatorKeys());
+            List<MXFValidator> allTests = new List<MXFValidator>
+            {
+                new MXFValidatorInfo(),
+                new MXFValidatorPartitions(),
+                new MXFValidatorRIP(),
+                new MXFValidatorKeys()
+            };
 
             if (extendedTest)
             {
@@ -457,8 +458,6 @@ namespace Myriadbits.MXF
                 MXFValidationResult valResult = new MXFValidationResult("Index Table");
                 this.m_results.Add(valResult);
                 valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
-                //MXFValidationResult valResult = new MXFValidationResult("Index Tables");				
-                //this.Results.Add(valResult); // And directly add the results
             }
         }
 
@@ -472,7 +471,7 @@ namespace Myriadbits.MXF
 
             LogicalAddChilds(this.LogicalBase);
 
-            this.LogicalBase.Children.OrderBy(c => c.Object.Offset);
+            this.LogicalBase.Children = this.LogicalBase.Children.OrderBy(c => c.Object.Offset).ToList();
         }
 
         /// <summary>

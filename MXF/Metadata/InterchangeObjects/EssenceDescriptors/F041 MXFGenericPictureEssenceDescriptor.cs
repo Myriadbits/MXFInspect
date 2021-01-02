@@ -102,8 +102,6 @@ namespace Myriadbits.MXF
         public UInt32? ActiveXOffset { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
         public UInt32? ActiveYOffset { get; set; }
-        //[CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
-        //public UInt32? AlternativeCenterCuts { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]
         public MXFColorPrimary[] MasteringDisplayPrimaries { get; set; }
         [CategoryAttribute("GenericPictureEssenceDescriptor"), Description("")]

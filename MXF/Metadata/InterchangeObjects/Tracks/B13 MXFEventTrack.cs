@@ -21,7 +21,6 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF

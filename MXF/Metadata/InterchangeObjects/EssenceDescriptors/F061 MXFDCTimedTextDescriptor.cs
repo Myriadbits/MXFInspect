@@ -21,8 +21,6 @@
 //
 #endregion
 
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
 	public class MXFDCTimedTextDescriptor : MXFGenericDataEssenceDescriptor
@@ -47,18 +45,5 @@ namespace Myriadbits.MXF
 			: base(reader, headerKLV, metadataName)
 		{
         }
-
-        /// <summary>
-        /// Overridden method to process local tags
-        /// </summary>
-        /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-			}
-			return base.ParseLocalTag(reader, localTag);
-		}
-
 	}
 }

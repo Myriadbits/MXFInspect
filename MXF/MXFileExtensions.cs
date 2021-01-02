@@ -80,12 +80,17 @@ namespace Myriadbits.MXF
 
         public static bool IsFooterClosedAndComplete(this MXFFile file)
         {
-            return file.GetFooter().Closed && file.GetFooter().Complete;
+            return file.GetFooter().IsPartitionClosedAndComplete();
         }
 
-        public static bool IsHeaderStatusValid(this MXFFile file)
+        public static bool IsHeaderStatusClosedAndComplete(this MXFFile file)
         {
-            return !(file.GetHeader().Closed == false && file.GetHeader().Complete == true);
+            return !(file.GetHeader().IsPartitionClosedAndComplete());
+        }
+
+        public static bool IsPartitionClosedAndComplete(this MXFPartition p)
+        {
+            return !(p.Closed && p.Complete);
         }
 
         public static bool AreEssencesInHeader(this MXFFile file)

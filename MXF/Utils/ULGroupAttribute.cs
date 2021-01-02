@@ -27,7 +27,7 @@ namespace Myriadbits.MXF
 {
     // marker attribute for metadata groups that do not contain any property
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class ULGroupAttribute : Attribute
+    public sealed class ULGroupAttribute : Attribute
     {
         public bool Deprecated { get; set; } = false;
         public bool IsConcrete { get; set; } = true;

@@ -25,7 +25,6 @@ using Myriadbits.MXF.Metadata;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 
 namespace Myriadbits.MXF
@@ -36,7 +35,7 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFKLVFactory
     {
-        static Dictionary<MXFKey, Type> dict = new Dictionary<MXFKey, Type>(new KeyPartialMatchComparer());
+        static readonly Dictionary<MXFKey, Type> dict = new Dictionary<MXFKey, Type>(new KeyPartialMatchComparer());
         static MXFKLVFactory()
         {
             #region Main Elements
@@ -59,11 +58,8 @@ namespace Myriadbits.MXF
             dict.Add(new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x02, 0x01, 0x01, 0x0d, 0x01, 0x03, 0x01, 0x16), typeof(MXFEssenceElement));
             dict.Add(new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x02, 0x01, 0x01, 0x0d, 0x01, 0x03, 0x01, 0x18), typeof(MXFEssenceElement));
 
-            // TODO disabled because key is not unique enough, adding to dictionary will thus cause exception.
-            //dict.Add(new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x02, 0x01, 0x01, 0x0e, 0x04, 0x03, 0x01),                       typeof(MXFAvidEssenceElement));
-
             // TODO cannot be found in SMPTE official registers ???
-            // closest one: OrganizationallyRegisteredasPrivate 	http://www.smpte-ra.org/reg/400/2012/14 	urn:smpte:ul:060e2b34.04010101.0e000000.00000000
+            // closest one: OrganizationallyRegisteredAsPrivate 	http://www.smpte-ra.org/reg/400/2012/14 	urn:smpte:ul:060e2b34.04010101.0e000000.00000000
             dict.Add(new MXFKey("SonyMpeg4ExtraData", 0x06, 0x0e, 0x2b, 0x34, 0x04, 0x01, 0x01, 0x01, 0x0e, 0x06, 0x06, 0x02, 0x02, 0x01, 0x00, 0x00), typeof(MXFKLV));
 
             dict.Add(new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x02, 0x01, 0x01, 0x0d, 0x01, 0x03, 0x01, 0x17), typeof(MXFANCFrameElement));
@@ -309,8 +305,7 @@ namespace Myriadbits.MXF
 
                 foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(type))
                 {
-                    DescriptionAttribute attr = prop.Attributes[typeof(DescriptionAttribute)] as DescriptionAttribute;
-                    if (attr != null)
+                    if (prop.Attributes[typeof(DescriptionAttribute)] is DescriptionAttribute attr)
                     {
                         if (!string.IsNullOrEmpty(attr.Description) && attr.Description.Length == 4)
                         {
@@ -343,7 +338,7 @@ namespace Myriadbits.MXF
         }
 
         // TODO should it be public or internal?
-        public class KeyPartialMatchComparer : IEqualityComparer<MXFKey>
+        internal class KeyPartialMatchComparer : IEqualityComparer<MXFKey>
         {
             // if the keys to compare are of the same category (meaning the same hash) compare
             // whether the byte sequence is equal

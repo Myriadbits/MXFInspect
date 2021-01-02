@@ -181,7 +181,7 @@ namespace Myriadbits.MXF
         // TODO find better name, maybe Wrap
         public MXFLogicalObject CreateLogicalObject()
         {
-            var wrapper = new MXFLogicalObject(this, this.ToString());
+            var wrapper = new MXFLogicalObject(this);
             this.LogicalWrapper = wrapper;
             return wrapper;
         }
