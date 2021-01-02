@@ -73,8 +73,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                     - [x] MPEGVideoDescriptor [10/10]
                     - [ ] VC1VideoDescriptor
                 - [x] RGBADescriptor [8/8]
-                - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract?)* 
-            - [ ] HTMLDescriptor [0/0]
+                - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract)* 
+            - [x] HTMLDescriptor [0/0]
             - [ ] TIFFDescriptor [0/6]
             - [ ] WAVEDescriptor [0/1]
             - [x] SoundDescriptor [10/10]
@@ -113,8 +113,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [x] MaterialPackage *abstract* [0/0]
         - [x] SourcePackage [1/1]
     - [x] Track [4/4] *(abstract)*
-        - [ ] EventTrack [0/2]
-        - [ ] StaticTrack [0/0]
+        - [x] EventTrack [2/2]
+        - [x] StaticTrack [0/0] *(abstract)*
         - [x] TimelineTrack [7/7] 
     - [x] Parameter [1/1] *(abstract)*
         - [ ] ConstantValue 
