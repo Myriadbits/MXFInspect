@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
 		
 		// TODO is this the correct type?
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3403")]
-		public string Palette { get; set; }
+		public byte[] Palette { get; set; }
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3404")]
 		public MXFRGBAComponent[] PaletteLayout { get; set; }
 
@@ -71,7 +71,7 @@ namespace Myriadbits.MXF
 				case 0x3409: this.AlphaMinRef = reader.ReadUInt32(); return true;
 				case 0x3405: this.ScanningDirection = (MXFScanningDirectionType) reader.ReadByte(); return true;
 				case 0x3401: this.PixelLayout = reader.ReadRGBALayout(); return true;
-				case 0x3403: this.Palette = reader.ReadUTF16String(localTag.Size); return true; 
+				case 0x3403: this.Palette = reader.ReadArray(reader.ReadByte, localTag.Size); return true; 
 				case 0x3404: this.PaletteLayout = reader.ReadRGBALayout(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
