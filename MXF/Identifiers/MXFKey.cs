@@ -56,49 +56,11 @@ namespace Myriadbits.MXF
         Label = 0x04
     }
 
-
-
-    // short keys implemented as struct, as there are loaded
-    // over 1000 in the static constructor => so better performance
-    public struct MXFShortKey
-    {
-        UInt64 Key1;
-        UInt64 Key2;
-
-        public MXFShortKey(UInt64 key1, UInt64 key2)
-        {
-            this.Key1 = key1;
-            this.Key2 = key2;
-        }
-
-        public MXFShortKey(byte[] data)
-        {
-            // TODO why changing this?
-            // Change endianess
-            this.Key1 = 0;
-            this.Key2 = 0;
-            if (data.Length == 16)
-            {
-                byte[] datar = new byte[16];
-                Array.Copy(data, datar, 16);
-                Array.Reverse(datar);
-                this.Key2 = BitConverter.ToUInt64(datar, 0);
-                this.Key1 = BitConverter.ToUInt64(datar, 8);
-            }
-        }
-
-        public override string ToString()
-        {
-            return string.Format(string.Format("{0:X16}.{1:X16}", this.Key1, this.Key2));
-        }
-
-    };
-
     [TypeConverter(typeof(ExpandableObjectConverter))]
     // TODO rename this class into SMPTEUL = Universal Label
     public class MXFKey : MXFIdentifier, IEquatable<MXFKey>
     {
-        private static Dictionary<MXFShortKey, string[]> knownKeys = KeyDictionary.GetKeys();
+        private static Dictionary<MXFShortKey, KeyDescription> knownKeys = KeyDictionary.GetKeys();
 
         [Browsable(false)]
         public KeyType Type { get; set; }
@@ -131,7 +93,6 @@ namespace Myriadbits.MXF
             }
         }
 
-
         public MXFKey(params byte[] list) : base(list)
         {
             this.Type = KeyType.None;
@@ -153,7 +114,7 @@ namespace Myriadbits.MXF
             MXFShortKey skey = this.GetShortKey();
             if (knownKeys.ContainsKey(skey))
             {
-                this.Name = knownKeys[skey][0];
+                this.Name = knownKeys[skey].Name;
                 IsKnown = true;
             }
             else
@@ -180,7 +141,7 @@ namespace Myriadbits.MXF
             {
                 MXFShortKey skey = this.GetShortKey();
                 if (knownKeys.ContainsKey(skey))
-                    return knownKeys[skey][1];
+                    return knownKeys[skey].Definition;
                 return string.Empty;
             }
         }
@@ -190,13 +151,16 @@ namespace Myriadbits.MXF
         /// Return a description if available
         /// </summary>
         [CategoryAttribute("Key")]
-        public string Information
+        public string Notes
         {
             get
             {
                 MXFShortKey skey = this.GetShortKey();
                 if (knownKeys.ContainsKey(skey))
-                    return knownKeys[skey][2];
+                {
+                    return knownKeys[skey].Notes;
+                }
+
                 return string.Empty;
             }
         }
@@ -206,7 +170,10 @@ namespace Myriadbits.MXF
             StringBuilder sb = new StringBuilder();
             var bytes = this.GetByteArray();
             if (!string.IsNullOrEmpty(this.Name))
+            {
                 sb.Append(this.Name + " - ");
+            }
+
             sb.Append("{ ");
             for (int n = 0; n < this.Length; n++)
             {

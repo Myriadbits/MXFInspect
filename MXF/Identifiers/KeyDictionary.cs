@@ -24,14 +24,15 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using System.Linq;
 
 namespace Myriadbits.MXF.Identifiers
 {
     public static class KeyDictionary
     {
-        public static Dictionary<MXFShortKey, string[]> GetKeys()
+        public static Dictionary<MXFShortKey, KeyDescription> GetKeys()
         {
-            var dict = new Dictionary<MXFShortKey, string[]>();
+            var dict = new Dictionary<MXFShortKey, KeyDescription>();
 
             //Parse SMPTE Labels register
 
@@ -51,36 +52,14 @@ namespace Myriadbits.MXF.Identifiers
 
             ns = "http://www.smpte-ra.org/ns/395/2016";
             regEntries = XElement.Parse(MXF.Properties.Resources.Groups);
+            AddEntries(dict, regEntries, ns);
 
-            foreach (var el in regEntries.Element(ns + "Entries").Elements(ns + "Entry"))
-            {
-                UInt64 value1 = 0;
-                UInt64 value2 = 0;
-                string UL_string = "";
-                string name_string = "";
-                string definition_string = "";
-                string notes_string = "";
-                var x = el.Element(ns + "UL");
-                if (x != null) UL_string = x.Value.Replace("urn:smpte:ul:", "").Replace(".", "");
-                else continue; // No UL --> ignore this entry
-                //Debug.WriteLine(UL_string);
-                value1 = Convert.ToUInt64(UL_string.Substring(0, 16), 16);
-                value2 = Convert.ToUInt64(UL_string.Substring(16, 16), 16);
-                MXFShortKey shortKey = new MXFShortKey(value1, value2);
-                x = el.Element(ns + "Name");
-                if (x != null) name_string = x.Value;
-                x = el.Element(ns + "Definition");
-                if (x != null) definition_string = x.Value;
-                x = el.Element(ns + "Notes");
-                if (x != null) notes_string = x.Value;
-                //Debug.WriteLine(shortKey.ToString() + name_string +  definition_string + defining_document_string);
-                dict.Add(shortKey, new string[] { name_string + " - " + definition_string, "", notes_string });
-            }
+            var values = dict.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
 
             return dict;
         }
 
-        private static void AddEntries(IDictionary<MXFShortKey, string[]> dict, XElement regEntries, XNamespace ns)
+        private static void AddEntries(IDictionary<MXFShortKey, KeyDescription> dict, XElement regEntries, XNamespace ns)
         {
             foreach (var e in regEntries.Descendants(ns + "Entry"))
             {
@@ -92,21 +71,28 @@ namespace Myriadbits.MXF.Identifiers
             }
         }
 
-        private static KeyValuePair<MXFShortKey, string[]>? ParseEntry(XNamespace ns, XElement e)
+        private static KeyValuePair<MXFShortKey, KeyDescription>? ParseEntry(XNamespace ns, XElement e)
         {
             var UL_string = (string)e.Element(ns + "UL") ?? "";
             if (!string.IsNullOrEmpty(UL_string))
             {
                 MXFShortKey shortKey = GetShortKeyFromSMPTEULString(UL_string);
-                string name = (string)e.Element(ns + "Name") ?? "";
-                string definition = (string)e.Element(ns + "Definition") ?? "";
-                string definingDocument = (string)e.Element(ns + "DefiningDocument") ?? "";
-                return new KeyValuePair<MXFShortKey, string[]>(shortKey, new string[] { name, definition, definingDocument });
+
+                var keyDescription = new KeyDescription
+                {
+                    Name = (string)e.Element(ns + "Name") ?? "",
+                    Definition = (string)e.Element(ns + "Definition") ?? "",
+                    DefiningDocument = (string)e.Element(ns + "DefiningDocument") ?? "",
+                    IsDeprecated = (string)e.Element(ns + "IsDeprecated") ?? "",
+                    Notes = (string)e.Element(ns + "Notes") ?? "",
+                };
+
+                return new KeyValuePair<MXFShortKey, KeyDescription>(shortKey, keyDescription);
             }
             return null;
         }
 
-        private static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
+        public static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
         {
             const int hexBase = 16;
             string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");

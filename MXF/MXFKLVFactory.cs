@@ -21,10 +21,13 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.Metadata;
+using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace Myriadbits.MXF
@@ -36,6 +39,9 @@ namespace Myriadbits.MXF
     public class MXFKLVFactory
     {
         static readonly Dictionary<MXFKey, Type> dict = new Dictionary<MXFKey, Type>(new KeyPartialMatchComparer());
+
+        static readonly Dictionary<MXFShortKey, KeyDescription> knownKeys = KeyDictionary.GetKeys();
+
         static MXFKLVFactory()
         {
             #region Main Elements
@@ -285,14 +291,10 @@ namespace Myriadbits.MXF
         /// </summary>
         public static void UpdateAllTypeDescriptions(Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
-            //foreach (MXFKey key in dict.Keys)
-            //{
-            //    UpdateTypeDescriptions(key.ObjectType, allPrimerKeys);
-            //}
-
             foreach (var type in dict.Values)
             {
                 UpdateTypeDescriptions(type, allPrimerKeys);
+                SetTypeDescriptions(type);
             }
         }
 
@@ -339,7 +341,37 @@ namespace Myriadbits.MXF
                     }
                 }
             }
+
         }
+
+        public static void SetTypeDescriptions(Type type)
+        {
+            // recursive calls up to the inheritance chain
+
+            if (type.BaseType != null)
+            {
+                SetTypeDescriptions(type.BaseType);
+            }
+
+            // iterate through all properties
+
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(type))
+            {
+                // get the short key of the property, marked via the ULAttribute 
+
+                var shortKey = prop.Attributes.OfType<ULAttribute>().FirstOrDefault()?.ShortKey;
+
+                if (shortKey != null)
+                {
+                    if (knownKeys.TryGetValue(shortKey.Value, out var keyDescription))
+                    {
+                        prop.AddAttribute(new DescriptionAttribute(keyDescription.Definition));
+                    }
+
+                }
+            }
+        }
+
 
         // TODO should it be public or internal?
         internal class KeyPartialMatchComparer : IEqualityComparer<MXFKey>
