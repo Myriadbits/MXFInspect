@@ -285,10 +285,14 @@ namespace Myriadbits.MXF
         /// </summary>
         public static void UpdateAllTypeDescriptions(Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
-            // Start by setting all properties of all these classes to readonly
-            foreach (MXFKey key in dict.Keys)
+            //foreach (MXFKey key in dict.Keys)
+            //{
+            //    UpdateTypeDescriptions(key.ObjectType, allPrimerKeys);
+            //}
+
+            foreach (var type in dict.Values)
             {
-                UpdateTypeDescriptions(key.ObjectType, allPrimerKeys);
+                UpdateTypeDescriptions(type, allPrimerKeys);
             }
         }
 
@@ -320,7 +324,7 @@ namespace Myriadbits.MXF
                                 if (allPrimerKeys.ContainsKey(localTag))
                                 {
                                     MXFEntryPrimer prime = allPrimerKeys[localTag];
-                                    newDescription = prime.AliasUID.Key.Name;
+                                    newDescription = prime.AliasUID.Key.Description;
                                 }
 
                                 FieldInfo fi = attr.GetType().GetField("description", BindingFlags.NonPublic | BindingFlags.Instance);

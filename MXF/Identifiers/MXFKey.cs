@@ -21,12 +21,12 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -98,88 +98,11 @@ namespace Myriadbits.MXF
     // TODO rename this class into SMPTEUL = Universal Label
     public class MXFKey : MXFIdentifier, IEquatable<MXFKey>
     {
-        private static Dictionary<MXFShortKey, string[]> m_ULDescriptions;
-
-        // TODO move this to new static class "KeyDictionary"
-        static MXFKey()
-        {
-            m_ULDescriptions = new Dictionary<MXFShortKey, string[]>();
-
-            //Parse SMPTE Labels register
-
-            XElement regEntries;
-            XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
-
-            regEntries = XElement.Parse(MXF.Properties.Resources.Labels);
-            ParseEntries(regEntries, ns);
-
-            // Parse SMPTE Elements register
-
-            ns = "http://www.smpte-ra.org/schemas/335/2012";
-            regEntries = XElement.Parse(MXF.Properties.Resources.Elements);
-            ParseEntries(regEntries, ns);
-
-            //Parse SMPTE Groups register
-
-            ns = "http://www.smpte-ra.org/ns/395/2016";
-            regEntries = XElement.Parse(MXF.Properties.Resources.Groups);
-
-            foreach (var el in regEntries.Element(ns + "Entries").Elements(ns + "Entry"))
-            {
-                UInt64 value1 = 0;
-                UInt64 value2 = 0;
-                string UL_string = "";
-                string name_string = "";
-                string definition_string = "";
-                string notes_string = "";
-                var x = el.Element(ns + "UL");
-                if (x != null) UL_string = x.Value.Replace("urn:smpte:ul:", "").Replace(".", "");
-                else continue; // No UL --> ignore this entry
-                //Debug.WriteLine(UL_string);
-                value1 = Convert.ToUInt64(UL_string.Substring(0, 16), 16);
-                value2 = Convert.ToUInt64(UL_string.Substring(16, 16), 16);
-                MXFShortKey shortKey = new MXFShortKey(value1, value2);
-                x = el.Element(ns + "Name");
-                if (x != null) name_string = x.Value;
-                x = el.Element(ns + "Definition");
-                if (x != null) definition_string = x.Value;
-                x = el.Element(ns + "Notes");
-                if (x != null) notes_string = x.Value;
-                //Debug.WriteLine(shortKey.ToString() + name_string +  definition_string + defining_document_string);
-                m_ULDescriptions.Add(shortKey, new string[] { name_string + " - " + definition_string, "", notes_string });
-            }
-        }
-
-        private static void ParseEntries(XElement regEntries, XNamespace ns)
-        {
-            foreach (var e in regEntries.Descendants(ns + "Entry"))
-            {
-                var UL_string = (string)e.Element(ns + "UL") ?? "";
-                if (!string.IsNullOrEmpty(UL_string))
-                {
-                    MXFShortKey shortKey = GetShortKeyFromSMPTEULString(UL_string);
-                    string name = (string)e.Element(ns + "Name") ?? "";
-                    string definition = (string)e.Element(ns + "Definition") ?? "";
-                    string definingDocument = (string)e.Element(ns + "DefiningDocument") ?? "";
-                    m_ULDescriptions.Add(shortKey, new string[] { name, definition, definingDocument });
-                }
-
-            }
-        }
-
-        private static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
-        {
-            const int hexBase = 16;
-            string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
-            UInt64 value1 = Convert.ToUInt64(byteString.Substring(0, 16), hexBase);
-            UInt64 value2 = Convert.ToUInt64(byteString.Substring(16, 16), hexBase);
-            return new MXFShortKey(value1, value2);
-        }
+        private static Dictionary<MXFShortKey, string[]> knownKeys = KeyDictionary.GetKeys();
 
         [Browsable(false)]
         public KeyType Type { get; set; }
-        [Browsable(false)]
-        public Type ObjectType { get; set; }
+
         [Browsable(false)]
         public bool IsKnown { get; set; } = false;
 
@@ -227,10 +150,10 @@ namespace Myriadbits.MXF
         /// </summary>
         private void FindKeyName()
         {
-            MXFShortKey skey = this.ShortKey;
-            if (m_ULDescriptions.ContainsKey(skey))
+            MXFShortKey skey = this.GetShortKey();
+            if (knownKeys.ContainsKey(skey))
             {
-                this.Name = m_ULDescriptions[skey][0];
+                this.Name = knownKeys[skey][0];
                 IsKnown = true;
             }
             else
@@ -241,12 +164,9 @@ namespace Myriadbits.MXF
 
 
         [CategoryAttribute("Key")]
-        public MXFShortKey ShortKey
+        public MXFShortKey GetShortKey()
         {
-            get
-            {
-                return new MXFShortKey(this.GetByteArray().ToArray());
-            }
+            return new MXFShortKey(this.GetByteArray().ToArray());
         }
 
 
@@ -258,9 +178,9 @@ namespace Myriadbits.MXF
         {
             get
             {
-                MXFShortKey skey = this.ShortKey;
-                if (m_ULDescriptions.ContainsKey(skey))
-                    return m_ULDescriptions[skey][1];
+                MXFShortKey skey = this.GetShortKey();
+                if (knownKeys.ContainsKey(skey))
+                    return knownKeys[skey][1];
                 return string.Empty;
             }
         }
@@ -274,32 +194,32 @@ namespace Myriadbits.MXF
         {
             get
             {
-                MXFShortKey skey = this.ShortKey;
-                if (m_ULDescriptions.ContainsKey(skey))
-                    return m_ULDescriptions[skey][2];
+                MXFShortKey skey = this.GetShortKey();
+                if (knownKeys.ContainsKey(skey))
+                    return knownKeys[skey][2];
                 return string.Empty;
             }
         }
 
         public override string ToString()
         {
-                StringBuilder sb = new StringBuilder();
-                var bytes = this.GetByteArray();
-                if (!string.IsNullOrEmpty(this.Name))
-                    sb.Append(this.Name + " - ");
-                sb.Append("{ ");
-                for (int n = 0; n < this.Length; n++)
+            StringBuilder sb = new StringBuilder();
+            var bytes = this.GetByteArray();
+            if (!string.IsNullOrEmpty(this.Name))
+                sb.Append(this.Name + " - ");
+            sb.Append("{ ");
+            for (int n = 0; n < this.Length; n++)
+            {
+                if (n > 0)
                 {
-                    if (n > 0)
-                    {
-                        sb.Append(".");
-                    }
-                        
-                    sb.Append(string.Format("{0:X2}", bytes[n]));
+                    sb.Append(".");
                 }
-                sb.Append(" }");
-                return sb.ToString();
+
+                sb.Append(string.Format("{0:X2}", bytes[n]));
             }
+            sb.Append(" }");
+            return sb.ToString();
+        }
 
 
         #region Equals
