@@ -42,7 +42,7 @@ namespace Myriadbits.MXF
         Unknown,
         UsingRIP,
         Backwards,
-        Full,
+        //Full,
     }
 
 
@@ -122,7 +122,7 @@ namespace Myriadbits.MXF
             MXFPartition currentPartition = null;
             int previousPercentage = 0;
             Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
-            int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
+            //int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
             using (m_reader = new MXFReader(this.Filename))
             {
                 this.Filesize = m_reader.Size;
@@ -134,9 +134,9 @@ namespace Myriadbits.MXF
                 {
                     MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
 
-                    // Update overall counters
-                    if (klv.Key.Type == KeyType.None)
-                        counters[(int)klv.Key.Type]++;
+                    //// Update overall counters
+                    //if (klv.Key.Type == KeyType.None)
+                    //    counters[(int)klv.Key.Type]++;
 
                     // Process the new KLV
                     ProcessKLVObject(klv, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
