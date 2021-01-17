@@ -71,7 +71,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [x] PictureDescriptor [35/35] *(abstract)*
                 - [x] CDCIDescriptor [10/10]
                     - [x] MPEGVideoDescriptor [10/10]
-                    - [ ] VC1VideoDescriptor [0/10]
+                    - [x] VC1VideoDescriptor [10/10]
                 - [x] RGBADescriptor [8/8]
                 - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract)* 
             - [x] HTMLDescriptor [0/0]
