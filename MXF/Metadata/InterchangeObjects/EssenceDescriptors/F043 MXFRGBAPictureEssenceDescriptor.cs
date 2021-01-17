@@ -41,6 +41,7 @@ namespace Myriadbits.MXF
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3401")]
 		public MXFRGBAComponent[] PixelLayout { get; set; }
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3403")]
+		[TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Palette { get; set; }
 		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3404")]
 		public MXFRGBAComponent[] PaletteLayout { get; set; }

@@ -30,12 +30,16 @@ namespace Myriadbits.MXF
     {
         public readonly MXFKey appPluginObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x06, 0x01, 0x01, 0x04, 0x02, 0x0e, 0x00, 0x00);
 
-        [CategoryAttribute("InterchangeObject"), Description("3C0A")]
+        [Category("InterchangeObject")]
+        [UL("urn:smpte:ul:060e2b34.01010101.01011502.00000000")]
         public MXFUUID InstanceID { get; set; }
 
-        [CategoryAttribute("InterchangeObject"), Description("0101")]
+        [Category("InterchangeObject")]
+        [UL("urn:smpte:ul:060e2b34.01010102.06010104.01010000")]
         public MXFKey ObjectClass { get; set; }
-        [CategoryAttribute("InterchangeObject"), Description("0102")]
+
+        [Category("InterchangeObject")]
+        [UL("urn:smpte:ul:060e2b34.01010102.05200701.08000000")]
         public MXFUUID LinkedGenerationID { get; set; }
 
         public MXFInterchangeObject(MXFReader reader, MXFKLV headerKLV, string metadataName)

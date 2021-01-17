@@ -33,7 +33,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                     - [x] DescriptiveMarker [5/5]
                       - [x] DynamicMarker [3/3]
                         - [x] DynamicClip [4/4]
-            - [x] Filler [0/0] *(is this the B11 MXFFiller.cs?)* :question:
+            - [x] Filler [0/0]
             - [x] OperationGroup [5/5]
             - [x] NestedScope [1/1]
             - [x] Pulldown [4/4]
@@ -71,7 +71,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [x] PictureDescriptor [35/35] *(abstract)*
                 - [x] CDCIDescriptor [10/10]
                     - [x] MPEGVideoDescriptor [10/10]
-                    - [ ] VC1VideoDescriptor
+                    - [ ] VC1VideoDescriptor [0/10]
                 - [x] RGBADescriptor [8/8]
                 - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract)* 
             - [x] HTMLDescriptor [0/0]

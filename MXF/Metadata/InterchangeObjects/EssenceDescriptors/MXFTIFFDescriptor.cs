@@ -29,6 +29,7 @@ namespace Myriadbits.MXF
     public class MXFTIFFDescriptor : MXFFileDescriptor
     {
         [CategoryAttribute("TIFFDescriptor"), Description("")]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] TIFFSummary { get; set; }
 
         [CategoryAttribute("TIFFDescriptor"), Description("")]

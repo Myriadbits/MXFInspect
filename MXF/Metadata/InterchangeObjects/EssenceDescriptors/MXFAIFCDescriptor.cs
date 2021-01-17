@@ -28,6 +28,7 @@ namespace Myriadbits.MXF
 	public class MXFAIFCDescriptor : MXFFileDescriptor
 	{
 		[CategoryAttribute("AIFCDescriptor"), Description("3101")]
+		[TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] AIFCSummary { get; set; }
 
 

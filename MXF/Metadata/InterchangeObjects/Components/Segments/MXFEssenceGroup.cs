@@ -21,9 +21,6 @@
 //
 #endregion
 
-using System.ComponentModel;
-using System;
-
 namespace Myriadbits.MXF
 {
     public class MXFEssenceGroup : MXFSegment

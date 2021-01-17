@@ -27,11 +27,13 @@ namespace Myriadbits.MXF
 {
     public class MXFDynamicMarker : MXFDescriptiveMarker
     {
-        [CategoryAttribute("DynamicMarker"), Description("")]
+        [Category("DynamicMarker"), Description("")]
+        [UL("urn:smpte:ul:060e2b34.01010109.07020501.00000000")]
         public MXFToleranceModeType ToleranceMode { get; set; }
-        [CategoryAttribute("DynamicMarker"), Description("")]
 
         //TODO this is of type "indirect"
+        [Category("DynamicMarker"), Description("")]
+        [UL("urn:smpte:ul:060e2b34.01010109.07020502.00000000")]
         public object ToleranceWindow { get; set; }
 
         public MXFDynamicMarker(MXFReader reader, MXFKLV headerKLV)
@@ -49,10 +51,7 @@ namespace Myriadbits.MXF
             switch (localTag.Tag)
             {
                 case 0x5701: this.ToleranceMode = (MXFToleranceModeType)reader.ReadByte(); return true;
-
-                // TODO
-                case 0x5703:  return true;
-
+                case 0x5703: this.ToleranceWindow = reader.ReadArray<byte>(reader.ReadByte, localTag.Size); return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
                 case 0x5702: ReadReference<MXFObject>(reader, "InterpolationDefinition"); return true;
             }

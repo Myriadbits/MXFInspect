@@ -30,13 +30,13 @@ namespace Myriadbits.MXF
 	public class MXFStructuralComponent : MXFInterchangeObject
 	{
 		// TODO this should be a UUID?
-		[CategoryAttribute("StructuralComponent"), Description("0201")]
+		[Category("StructuralComponent")]
+		[UL("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
 		public MXFKey DataDefinition { get; set; }
 
-		[CategoryAttribute("StructuralComponent"), Description("0202")]
+		[Category("StructuralComponent")]
+		[UL("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
 		public MXFLengthType? Duration { get; set; }
-
-		[CategoryAttribute("StructuralComponent"), Description("0204")]
 
 		public MXFStructuralComponent(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, metadataName)

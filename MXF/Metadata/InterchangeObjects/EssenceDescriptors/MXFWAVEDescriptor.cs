@@ -21,10 +21,13 @@
 //
 #endregion
 
+using System.ComponentModel;
+
 namespace Myriadbits.MXF
 {
     public class MXFWAVEDescriptor : MXFFileDescriptor
     {
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] WaveSummary { get; set; }
         
         public MXFWAVEDescriptor(MXFReader reader, MXFKLV headerKLV)

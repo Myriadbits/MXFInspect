@@ -28,7 +28,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFDescriptiveClip : MXFSourceClip
 	{
-		[CategoryAttribute("DescriptiveClip"), Description("6103")]
+		[Category("DescriptiveClip")]
+		[UL("urn:smpte:ul:060e2b34.01010105.01070106.00000000")]
 		[TypeConverter(typeof(IntegerArrayConverter))]
 		public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
         

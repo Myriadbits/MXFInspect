@@ -27,10 +27,12 @@ namespace Myriadbits.MXF
 {
     public class MXFHTMLClip : MXFTextClip
     {
-        [CategoryAttribute("HTMLClip"), Description("1401")]
+        [Category("HTMLClip")]
+        [UL("urn:smpte:ul:060e2b34.01010102.05300601.01000000")]
         public string BeginAnchor { get; set; }
 
-        [CategoryAttribute("HTMLClip"), Description("1402")]
+        [Category("HTMLClip")]
+        [UL("urn:smpte:ul:060e2b34.01010102.05300602.01000000")]
         public string EndAnchor { get; set; }
 
 

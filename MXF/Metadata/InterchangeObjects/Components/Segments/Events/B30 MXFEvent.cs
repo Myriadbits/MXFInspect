@@ -21,7 +21,6 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
@@ -29,9 +28,12 @@ namespace Myriadbits.MXF
 	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 2)]
 	public class MXFEvent : MXFSegment
 	{
-		[CategoryAttribute("Event"), Description("0601")]
+		[Category("Event")]
+		[UL("urn:smpte:ul:060e2b34.01010102.07020103.03030000")]
 		public MXFPositionType? EventPosition { get; set; }
-		[CategoryAttribute("Event"), Description("0602")]
+
+		[Category("Event")]
+		[UL("urn:smpte:ul:060e2b34.01010102.05300404.01000000")]
 		public string EventComment { get; set; }
 
 		public MXFEvent(MXFReader reader, MXFKLV headerKLV, string metadataName)

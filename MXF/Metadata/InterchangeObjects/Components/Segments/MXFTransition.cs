@@ -28,7 +28,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFTransition : MXFSegment
 	{
-		[CategoryAttribute("Transition"), Description("1802")]
+		[Category("Transition")]
+		[UL("urn:smpte:ul:060e2b34.01010102.07020103.01060000")]
 		public MXFPositionType? CutPoint { get; set; }
 		
 		public MXFTransition(MXFReader reader, MXFKLV headerKLV, string metadataName)

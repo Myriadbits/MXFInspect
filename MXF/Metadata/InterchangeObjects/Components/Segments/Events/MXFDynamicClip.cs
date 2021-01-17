@@ -28,18 +28,22 @@ namespace Myriadbits.MXF
 {
     public class MXFDynamicClip : MXFDynamicMarker
     {
-        [CategoryAttribute("DynamicClip"), Description("")]
+        [Category("DynamicClip")]
+        [UL("urn:smpte:ul:060e2b34.01010109.06010103.09000000")]
         public MXFUMID DynamicSourcePackageID { get; set; }
 
-        [CategoryAttribute("DynamicClip"), Description("")]
+        [Category("DynamicClip")]
+        [UL("urn:smpte:ul:060e2b34.01010109.06010103.0a000000")]
         public UInt32[] DynamicSourceTrackIDs { get; set; }
 
         //TODO this is of type "indirect"
-        [CategoryAttribute("DynamicClip"), Description("")]
+        [Category("DynamicClip")]
+        [UL("urn:smpte:ul:060e2b34.01010109.06010103.0b000000")]
         public object SourceIndex { get; set; }
 
         //TODO this is of type "indirect"
-        [CategoryAttribute("DynamicClip"), Description("")]
+        [Category("DynamicClip")]
+        [UL("urn:smpte:ul:060e2b34.01010109.06010103.0c000000")]
         public object SourceSpecies { get; set; }
 
         public MXFDynamicClip(MXFReader reader, MXFKLV headerKLV)
@@ -58,12 +62,8 @@ namespace Myriadbits.MXF
             {
                 case 0x5801: this.DynamicSourcePackageID = reader.ReadUMIDKey(); return true;
                 case 0x5802: reader.ReadArray(reader.ReadUInt32, localTag.Size); return true;
-
-                // TODO 
-                case 0x5803: return true;
-
-                // TODO
-                case 0x5804: return true;
+                case 0x5803: this.SourceIndex = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+                case 0x5804: this.SourceSpecies = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

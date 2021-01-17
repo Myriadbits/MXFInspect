@@ -48,8 +48,10 @@ namespace Myriadbits.MXF
         [CategoryAttribute("EssenceContainerData"), Description("")]
         public bool? SingularPartitionUsage { get; set; }
         [CategoryAttribute("EssenceContainerData"), Description("")]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] EssenceStream { get; set; }
         [CategoryAttribute("EssenceContainerData"), Description("")]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] SampleIndex { get; set; }
 
 

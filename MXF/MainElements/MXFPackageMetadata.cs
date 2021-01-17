@@ -151,9 +151,14 @@ namespace Myriadbits.MXF
             byte tag = reader.ReadByte();
             UInt32 size = 0;
             if (nofSizeSize == 2)
+            {
                 size = reader.ReadUInt16();
+            }
             else
+            {
                 size = reader.ReadUInt32();
+            }
+                
 
             return (tag, size);
         }
