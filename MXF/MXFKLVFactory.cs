@@ -359,7 +359,7 @@ namespace Myriadbits.MXF
             {
                 // get the short key of the property, marked via the ULAttribute 
 
-                var shortKey = prop.Attributes.OfType<ULAttribute>().FirstOrDefault()?.ShortKey;
+                var shortKey = prop.Attributes.OfType<ULElementAttribute>().FirstOrDefault()?.ShortKey;
 
                 if (shortKey != null)
                 {

@@ -28,7 +28,7 @@ namespace Myriadbits.MXF
     public class MXFTimecodeStream12M : MXFTimecodeStream
     {
         [Category("TimecodeStream12M")]
-        [UL("urn:smpte:ul:060e2b34.01010101.04040101.04000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04040101.04000000")]
         public bool? IncludeSync { get; set; }
 
         public MXFTimecodeStream12M(MXFReader reader, MXFKLV headerKLV, string metadataName)

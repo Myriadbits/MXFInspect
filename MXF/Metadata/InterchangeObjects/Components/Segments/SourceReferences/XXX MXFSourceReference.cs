@@ -30,20 +30,20 @@ namespace Myriadbits.MXF
     public class MXFSourceReference : MXFSegment
     {
         [Category("SourceReference")]
-        [UL("urn:smpte:ul:060e2b34.01010102.06010103.01000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010103.01000000")]
         public MXFUMID SourcePackageID { get; set; }
 
         [Category("SourceReference")]
-        [UL("urn:smpte:ul:060e2b34.01010102.06010103.02000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010103.02000000")]
         public UInt32? SourceTrackId { get; set; }
         
         [Category("SourceReference")]
-        [UL("urn:smpte:ul:060e2b34.01010107.06010103.07000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010107.06010103.07000000")]
         [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] ChannelIDs { get; set; }
         
         [Category("SourceReference")]
-        [UL("urn:smpte:ul:060e2b34.01010108.06010103.08000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.06010103.08000000")]
         [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] MonoSourceTrackIDs { get; set; }
 

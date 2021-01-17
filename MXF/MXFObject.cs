@@ -55,10 +55,12 @@ namespace Myriadbits.MXF
         private long m_lLength = -1;            // Length in bytes of this object
         protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
 
-        [CategoryAttribute("Object")]
+        [Category("Object")]
+        [Description("Offset from the beginning of file in terms of bytes")]
         public long Offset { get; set; } = long.MaxValue;
 
-        [CategoryAttribute("Object")]
+        [Category("Object")]
+        [Description("Length of KLV in bytes")]
         public long Length
         {
             get

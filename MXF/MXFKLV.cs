@@ -31,16 +31,16 @@ namespace Myriadbits.MXF
     {
         private byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
-        [CategoryAttribute("KLV")]
+        [Category("KLV")]
         public MXFKey Key { get; set; }
 
-        [CategoryAttribute("KLV")]
+        [Category("KLV")]
         public long DataOffset { get; set; } // Points just after the KLV
 
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-        [CategoryAttribute("KLV")]
+        [Category("KLV")]
         public MXFBER BER { get; set; }
 
         /// <summary>

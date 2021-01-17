@@ -38,61 +38,61 @@ namespace Myriadbits.MXF
 
     public class MXFPartition : MXFKLV, ILazyLoadable
     {
-        [CategoryAttribute("PartitionHeader")]
+        [Category("PartitionHeader")]
         public PartitionType PartitionType { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
+        [Category("PartitionHeader")]
         public bool Closed { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
+        [Category("PartitionHeader")]
         public bool Complete { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.03010201.06000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.03010201.06000000")]
         public UInt16 MajorVersion { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.03010201.07000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.03010201.07000000")]
         public UInt16 MinorVersion { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010105.03010201.09000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.03010201.09000000")]
         public UInt32 KagSize { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.06101003.01000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.06101003.01000000")]
         public UInt64 ThisPartition { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.06101002.01000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.06101002.01000000")]
         public UInt64 PreviousPartition { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.06101005.01000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.06101005.01000000")]
         public UInt64 FooterPartition { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.04060901.00000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.04060901.00000000")]
         public UInt64 HeaderByteCount { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.04060902.00000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.04060902.00000000")]
         public UInt64 IndexByteCount { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.01030405.00000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.01030405.00000000")]
         public UInt32 IndexSID { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.06080102.01030000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.06080102.01030000")]
         public UInt64 BodyOffset { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010104.01030404.00000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.01030404.00000000")]
         public UInt32 BodySID { get; set; }
 
-        [CategoryAttribute("PartitionHeader")]
-        [UL("urn:smpte:ul:060e2b34.01010105.01020203.00000000")]
+        [Category("PartitionHeader")]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.01020203.00000000")]
         public MXFKey OP { get; set; }
 
         [Browsable(false)]

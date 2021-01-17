@@ -32,43 +32,43 @@ namespace Myriadbits.MXF
         private readonly MXFKey refAudioAlignmentLevel = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x07, 0x00, 0x00, 0x00);
 
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010105.04020301.01010000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020301.01010000")]
         public MXFRational AudioSamplingRate { get; set; }
 
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010104.04020301.04000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.04020301.04000000")]
         public bool? Locked { get; set; }
         
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010101.04020101.03000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04020101.03000000")]
         public sbyte? AudioRefLevel { get; set; }
 
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010101.04020101.01000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04020101.01000000")]
         public MXFElectroSpatialFormulation? ElectroSpatialFormulation { get; set; }
         
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010105.04020101.04000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020101.04000000")]
         public UInt32? ChannelCount { get; set; }
 
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010104.04020303.04000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.04020303.04000000")]
         public UInt32? QuantizationBits { get; set; }
         
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010105.04020701.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020701.00000000")]
         public sbyte? DialNorm { get; set; }
         
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.01010102.04020402.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04020402.00000000")]
         public MXFKey SoundEssenceCoding { get; set; }
         
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.0101010e.04020101.06000000")]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04020101.06000000")]
         public MXFRational ReferenceImageEditRate { get; set; }
         
         [Category("GenericSoundEssenceDescriptor")]
-        [UL("urn:smpte:ul:060e2b34.0101010e.04020101.07000000")]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04020101.07000000")]
         public byte? ReferenceAudioAlignmentLevel { get; set; }
 
         /// <summary>

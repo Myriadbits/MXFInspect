@@ -29,21 +29,21 @@ namespace Myriadbits.MXF
     public class MXFDynamicClip : MXFDynamicMarker
     {
         [Category("DynamicClip")]
-        [UL("urn:smpte:ul:060e2b34.01010109.06010103.09000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.06010103.09000000")]
         public MXFUMID DynamicSourcePackageID { get; set; }
 
         [Category("DynamicClip")]
-        [UL("urn:smpte:ul:060e2b34.01010109.06010103.0a000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.06010103.0a000000")]
         public UInt32[] DynamicSourceTrackIDs { get; set; }
 
         //TODO this is of type "indirect"
         [Category("DynamicClip")]
-        [UL("urn:smpte:ul:060e2b34.01010109.06010103.0b000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.06010103.0b000000")]
         public object SourceIndex { get; set; }
 
         //TODO this is of type "indirect"
         [Category("DynamicClip")]
-        [UL("urn:smpte:ul:060e2b34.01010109.06010103.0c000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.06010103.0c000000")]
         public object SourceSpecies { get; set; }
 
         public MXFDynamicClip(MXFReader reader, MXFKLV headerKLV)

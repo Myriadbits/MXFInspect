@@ -29,15 +29,15 @@ namespace Myriadbits.MXF
     public class MXFTimecodeStream : MXFSegment
     {
         [Category("TimecodeStream")]
-        [UL("urn:smpte:ul:060e2b34.01010102.04040101.02010000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04040101.02010000")]
         public MXFRational TimecodeStreamSampleRate { get; private set; }
 
         [Category("TimecodeStream")]
-        [UL("urn:smpte:ul:060e2b34.01010101.04040201.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04040201.00000000")]
         public MXFTCSource? TimecodeSource { get; private set; }
 
         [Category("TimecodeStream")]
-        [UL("urn:smpte:ul:060e2b34.01010102.04070300.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04070300.00000000")]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] TimecodeStreamData { get; private set; }
 

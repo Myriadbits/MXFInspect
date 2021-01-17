@@ -29,11 +29,11 @@ namespace Myriadbits.MXF
 	public class MXFEvent : MXFSegment
 	{
 		[Category("Event")]
-		[UL("urn:smpte:ul:060e2b34.01010102.07020103.03030000")]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.03030000")]
 		public MXFPositionType? EventPosition { get; set; }
 
 		[Category("Event")]
-		[UL("urn:smpte:ul:060e2b34.01010102.05300404.01000000")]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.05300404.01000000")]
 		public string EventComment { get; set; }
 
 		public MXFEvent(MXFReader reader, MXFKLV headerKLV, string metadataName)

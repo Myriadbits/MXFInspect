@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
     public class MXFOperationGroup : MXFSegment
     {
         [Category("OperationGroup")]
-        [UL("urn:smpte:ul:060e2b34.01010102.0530050c.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.0530050c.00000000")]
         public UInt32 BypassOverride { get; private set; }
 
         public MXFOperationGroup(MXFReader reader, MXFKLV headerKLV, string metadataName)

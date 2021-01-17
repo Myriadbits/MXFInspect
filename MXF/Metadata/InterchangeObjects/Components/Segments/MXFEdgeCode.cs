@@ -28,20 +28,20 @@ namespace Myriadbits.MXF
     public class MXFEdgeCode : MXFSegment
     {
         [Category("EdgeCode")]
-        [UL("urn:smpte:ul:060e2b34.01010102.01030201.02000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.01030201.02000000")]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] EdgeCodeHeader { get; set; }
 
         [Category("EdgeCode")]
-        [UL("urn:smpte:ul:060e2b34.01010102.01040901.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.01040901.00000000")]
         public MXFPositionType? EdgeCodeStart { get; set; }
 
         [Category("EdgeCode")]
-        [UL("urn:smpte:ul:060e2b34.01010101.04100103.01020000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04100103.01020000")]
         public MXFEdgeType? EdgeCodeFormat { get; set; }
 
         [Category("EdgeCode")]
-        [UL("urn:smpte:ul:060e2b34.01010102.04100103.01090000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04100103.01090000")]
         public MXFFilmType? EdgeCodeFilmFormat { get; set; }
 
         public MXFEdgeCode(MXFReader reader, MXFKLV headerKLV)

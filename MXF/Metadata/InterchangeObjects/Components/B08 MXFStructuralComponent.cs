@@ -31,11 +31,11 @@ namespace Myriadbits.MXF
 	{
 		// TODO this should be a UUID?
 		[Category("StructuralComponent")]
-		[UL("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
 		public MXFKey DataDefinition { get; set; }
 
 		[Category("StructuralComponent")]
-		[UL("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
 		public MXFLengthType? Duration { get; set; }
 
 		public MXFStructuralComponent(MXFReader reader, MXFKLV headerKLV, string metadataName)

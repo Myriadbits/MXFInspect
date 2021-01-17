@@ -29,11 +29,11 @@ namespace Myriadbits.MXF
 	public class MXFScopeReference : MXFSegment
 	{
 		[Category("ScopeReference")]
-		[UL("urn:smpte:ul:060e2b34.01010102.06010103.03000000")]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.06010103.03000000")]
 		public UInt32? RelativeScope { get; set; }
 
 		[Category("ScopeReference")]
-		[UL("urn:smpte:ul:060e2b34.01010102.06010103.04000000")]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.06010103.04000000")]
 		public UInt32? RelativeTrack { get; set; }
 		
 		public MXFScopeReference(MXFReader reader, MXFKLV headerKLV, string metadataName)

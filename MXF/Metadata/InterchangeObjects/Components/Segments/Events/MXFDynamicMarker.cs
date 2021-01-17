@@ -28,12 +28,12 @@ namespace Myriadbits.MXF
     public class MXFDynamicMarker : MXFDescriptiveMarker
     {
         [Category("DynamicMarker"), Description("")]
-        [UL("urn:smpte:ul:060e2b34.01010109.07020501.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.07020501.00000000")]
         public MXFToleranceModeType ToleranceMode { get; set; }
 
         //TODO this is of type "indirect"
         [Category("DynamicMarker"), Description("")]
-        [UL("urn:smpte:ul:060e2b34.01010109.07020502.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.07020502.00000000")]
         public object ToleranceWindow { get; set; }
 
         public MXFDynamicMarker(MXFReader reader, MXFKLV headerKLV)

@@ -29,23 +29,23 @@ namespace Myriadbits.MXF
     public class MXFSourceClip : MXFSourceReference
     {
         [Category("SourceClip")]
-        [UL("urn:smpte:ul:060e2b34.01010102.07020103.01040000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01040000")]
         public MXFPositionType? StartPosition { get; set; }
 
         [Category("SourceClip")]
-        [UL("urn:smpte:ul:060e2b34.01010102.07020201.01050200")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01050200")]
         public MXFLengthType? FadeInLength { get; set; }
 
         [Category("SourceClip")]
-        [UL("urn:smpte:ul:060e2b34.01010101.05300501.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.05300501.00000000")]
         public MXFFadeType? FadeInType { get; set; }
 
         [Category("SourceClip")]
-        [UL("urn:smpte:ul:060e2b34.01010102.07020201.01050300")]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01050300")]
         public MXFLengthType? FadeOutLength { get; set; }
 
         [Category("SourceClip")]
-        [UL("urn:smpte:ul:060e2b34.01010101.05300502.00000000")]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.05300502.00000000")]
         public MXFFadeType? FadeOutType { get; set; }
 
         public MXFSourceClip(MXFReader reader, MXFKLV headerKLV)
