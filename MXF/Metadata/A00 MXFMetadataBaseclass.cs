@@ -31,7 +31,9 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFMetadataBaseclass : MXFKLV
     {
-        [Category("Metadata")]
+        private const string CATEGORYNAME = "Metadata";
+
+        [Category(CATEGORYNAME)]
         [Description("Type of metadata node")]
         public string MetaDataName { get; set; }
 

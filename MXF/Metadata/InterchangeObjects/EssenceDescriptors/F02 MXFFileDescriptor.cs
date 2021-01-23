@@ -27,21 +27,35 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 5)]
+	[ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01012500", 
+		Deprecated = false, 
+		IsConcrete = false, 
+		NumberOfElements = 5)]
 	public class MXFFileDescriptor : MXFGenericDescriptor
 	{
+		private const string CATEGORYNAME = "FileDescriptor";
+
 		// TODO remove this field, once all specialized subclasses have been implemented
 		private static Dictionary<int, string> m_metaTypes = new Dictionary<int, string>();
 
-		[CategoryAttribute("FileDescriptor"), Description("3006")]
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010105.06010103.05000000")]
 		public UInt32? LinkedTrackId { get; set; }
-		[CategoryAttribute("FileDescriptor"), Description("3001")]
+
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010101.04060101.00000000")]
 		public MXFRational SampleRate { get; set; }
-		[CategoryAttribute("FileDescriptor"), Description("3002")]
+
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010101.04060102.00000000")]
 		public MXFLengthType? ContainerDuration { get; set; }
-		[CategoryAttribute("FileDescriptor"), Description("3004")]
+
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01020000")]
 		public MXFKey EssenceContainer { get; set; }
-		[CategoryAttribute("FileDescriptor"), Description("3005")]
+
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01030000")]
 		public MXFKey Codec { get; set; }
 
 		/// <summary>

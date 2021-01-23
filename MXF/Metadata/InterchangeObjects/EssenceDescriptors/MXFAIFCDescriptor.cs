@@ -25,9 +25,14 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01012600",
+		IsConcrete = true, 
+		NumberOfElements = 1, 
+		Deprecated = false)]
 	public class MXFAIFCDescriptor : MXFFileDescriptor
 	{
-		[CategoryAttribute("AIFCDescriptor"), Description("3101")]
+		[Category("AIFCDescriptor")]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.03030302.02000000")]
 		[TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] AIFCSummary { get; set; }
 

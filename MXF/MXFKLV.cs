@@ -29,18 +29,20 @@ namespace Myriadbits.MXF
 {
     public class MXFKLV : MXFObject
     {
+        private const string CATEGORYNAME = "KLV";
+
         private byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
-        [Category("KLV")]
+        [Category(CATEGORYNAME)]
         public MXFKey Key { get; set; }
 
-        [Category("KLV")]
+        [Category(CATEGORYNAME)]
         public long DataOffset { get; set; } // Points just after the KLV
 
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-        [Category("KLV")]
+        [Category(CATEGORYNAME)]
         public MXFBER BER { get; set; }
 
         /// <summary>

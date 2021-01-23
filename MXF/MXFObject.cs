@@ -52,14 +52,16 @@ namespace Myriadbits.MXF
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public abstract class MXFObject : Node<MXFObject> //ILazyLoadable
     {
+        private const string CATEGORYNAME = "Object";
+
         private long m_lLength = -1;            // Length in bytes of this object
         protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
 
-        [Category("Object")]
+        [Category(CATEGORYNAME)]
         [Description("Offset from the beginning of file in terms of bytes")]
         public long Offset { get; set; } = long.MaxValue;
 
-        [Category("Object")]
+        [Category(CATEGORYNAME)]
         [Description("Length of KLV in bytes")]
         public long Length
         {
