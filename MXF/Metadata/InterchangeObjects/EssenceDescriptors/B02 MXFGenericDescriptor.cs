@@ -44,8 +44,7 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x2F01: ReadReferenceSet<MXFLocator>(reader, "Locators", "Locator"); return true;
-				// TODO replace generic MXFObject with class SubDescriptor once implemented
-				case var a when localTag.Key == subDescriptorKey: ReadReferenceSet<MXFObject>(reader, "SubDescriptors", "SubDescriptor"); return true;
+				case var a when localTag.Key == subDescriptorKey: ReadReferenceSet<MXFSubDescriptor>(reader, "SubDescriptors", "SubDescriptor"); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

@@ -28,7 +28,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFWrapperObject<T> : MXFNamedObject
 	{
-		[CategoryAttribute("Object")]
+		private const string CATEGORYNAME = "ObjectWrapper";
+
+		[Category(CATEGORYNAME)]
 		public T Object { get; set; }
 
 		/// <summary>

@@ -28,22 +28,31 @@ namespace Myriadbits.MXF
 {
 	public class MXFRGBAPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
 	{
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3406")]
+		private const string CATEGORYNAME = "RGBAPictureEssenceDescriptor";
+
+		[Category(CATEGORYNAME)]
 		public UInt32? ComponentMaxRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3407")]
+
+		[Category(CATEGORYNAME)]
 		public UInt32? ComponentMinRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3408")]
+
+		[Category(CATEGORYNAME)]
 		public UInt32? AlphaMaxRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3409")]
+
+		[Category(CATEGORYNAME)]
 		public UInt32? AlphaMinRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3405")]
+
+		[Category(CATEGORYNAME)]
 		public MXFScanningDirectionType? ScanningDirection { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3401")]
+
+		[Category(CATEGORYNAME)]
 		public MXFRGBAComponent[] PixelLayout { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3403")]
+
+		[Category(CATEGORYNAME)]
 		[TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Palette { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3404")]
+
+		[Category(CATEGORYNAME)]
 		public MXFRGBAComponent[] PaletteLayout { get; set; }
 
 		/// <summary>

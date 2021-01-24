@@ -31,7 +31,9 @@ namespace Myriadbits.MXF
 		Deprecated = false)]
 	public class MXFAIFCDescriptor : MXFFileDescriptor
 	{
-		[Category("AIFCDescriptor")]
+		private const string CATEGORYNAME = "AIFCDescriptor";
+
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.03030302.02000000")]
 		[TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] AIFCSummary { get; set; }

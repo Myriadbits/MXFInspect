@@ -27,10 +27,11 @@ namespace Myriadbits.MXF
 {
     public class MXFThesaurus : MXFDescriptiveObject
     {
+        private const string CATEGORYNAME = "Thesaurus";
 
         public readonly MXFKey thesaurusName_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x04, 0x03, 0x02, 0x01, 0x02, 0x02, 0x01, 0x00, 0x00);
 
-        [CategoryAttribute("Thesaurus"), Description("")]
+        [Category(CATEGORYNAME)]
         public string ThesaurusName { get; set; }
 
         public MXFThesaurus(MXFReader reader, MXFKLV headerKLV)

@@ -28,25 +28,27 @@ namespace Myriadbits.MXF
 {
     public class MXFDescriptiveMarker : MXFCommentMarker
     {
+        private const string CATEGORYNAME = "DescriptiveMarker";
+
         public readonly MXFKey metadataScheme_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x06, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00);
         public readonly MXFKey metadataPlugInID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x0e, 0x00, 0x00, 0x00);
         public readonly MXFKey metadataApplicationEnvironmentID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x10, 0x00, 0x00, 0x00);
 
-        [Category("DescriptiveMarker"), Description("6102")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01070105.00000000")]
         [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] DescribedTrackIDs { get; set; }
 
         // TODO should this be UUID or AUID or UL?
-        [CategoryAttribute("DescriptiveMarker"), Description("")]
+        [CategoryAttribute(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04060804.00000000")]
         public MXFKey DescriptiveMetadataScheme { get; set; }
 
-        [Category("DescriptiveMarker")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.05200701.0e000000")]
         public MXFUUID DescriptiveMetadataPlugInID { get; set; }
 
-        [Category("DescriptiveMarker")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.05200701.10000000")]
         public string DescriptiveMetadataApplicationEnvironmentID { get; set; }
 

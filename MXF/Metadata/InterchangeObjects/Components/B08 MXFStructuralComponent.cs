@@ -29,12 +29,14 @@ namespace Myriadbits.MXF
 	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 5)]
 	public class MXFStructuralComponent : MXFInterchangeObject
 	{
+		private const string CATEGORYNAME = "StructuralComponent";
+
 		// TODO this should be a UUID?
-		[Category("StructuralComponent")]
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
 		public MXFKey DataDefinition { get; set; }
 
-		[Category("StructuralComponent")]
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
 		public MXFLengthType? Duration { get; set; }
 

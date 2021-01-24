@@ -28,11 +28,13 @@ namespace Myriadbits.MXF
 {
 	public class MXFScopeReference : MXFSegment
 	{
-		[Category("ScopeReference")]
+		private const string CATEGORYNAME = "ScopeReference";
+
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.06010103.03000000")]
 		public UInt32? RelativeScope { get; set; }
 
-		[Category("ScopeReference")]
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.06010103.04000000")]
 		public UInt32? RelativeTrack { get; set; }
 		

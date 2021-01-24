@@ -27,7 +27,9 @@ namespace Myriadbits.MXF.Metadata
 {
     public class MXFXMLDocumentText_Indirect : MXFKLV
     {
-        [Category("XML Document Text (Indirect)")]
+        private const string CATEGORYNAME = "XML Document Text(Indirect)";
+
+        [Category(CATEGORYNAME)]
         public string Text { get; set; }
 
         public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV headerKLV)

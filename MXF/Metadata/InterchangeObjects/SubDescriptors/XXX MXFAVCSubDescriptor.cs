@@ -28,6 +28,8 @@ namespace Myriadbits.MXF
 {
     public class MXFAVCSubDescriptor : MXFSubDescriptor
     {
+        private const string CATEGORYNAME = "AVCSubDescriptor";
+
         private readonly MXFKey constantBPictureFlag_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x06, 0x01, 0x03, 0x00, 0x00);
         private readonly MXFKey codedContentKind_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x06, 0x01, 0x04, 0x00, 0x00);
         private readonly MXFKey closedGOPIndicator_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x06, 0x01, 0x06, 0x00, 0x00);
@@ -45,35 +47,49 @@ namespace Myriadbits.MXF
         private readonly MXFKey averageBitRate_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x06, 0x01, 0x14, 0x00, 0x00);
 
 
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public bool? AVCConstantBPictureFlag { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFAVCContentScanning? AVCCodedContentKind { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public bool? AVCClosedGOPIndicator { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public bool? AVCIdenticalGOPIndicator { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt16? AVCMaximumGOPSize { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt16? AVCMaximumBPictureCount { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public byte? AVCProfile { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? AVCMaximumBitRate { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public byte? AVCProfileConstraint { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public byte? AVCLevel { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public byte? AVCDecodingDelay { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public byte? AVCMaximumRefFrames { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public byte? AVCSequenceParameterSetFlag { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public byte? AVCPictureParameterSetFlag { get; set; }
-        [CategoryAttribute("AVCSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? AVCAverageBitRate { get; set; }
 
 

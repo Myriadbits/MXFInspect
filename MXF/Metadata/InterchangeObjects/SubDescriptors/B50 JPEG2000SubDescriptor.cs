@@ -28,6 +28,8 @@ namespace Myriadbits.MXF
 {
     public class JPEG2000SubDescriptor : MXFSubDescriptor
     {
+        private const string CATEGORYNAME = "JPEG2000SubDescriptor";
+
         private readonly MXFKey rsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x01, 0x00, 0x00, 0x00);
         private readonly MXFKey xsiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x02, 0x00, 0x00, 0x00);
         private readonly MXFKey ysiz = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x01, 0x06, 0x03, 0x03, 0x00, 0x00, 0x00);
@@ -44,36 +46,49 @@ namespace Myriadbits.MXF
         private readonly MXFKey j2CLayout = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x03, 0x0e, 0x00, 0x00, 0x00);
 
 
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? Rsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? Xsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? Ysiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? XOsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? YOsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? XTsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? YTsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? XTOsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? YTOsiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt16? Csiz { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] PictureComponentSizing { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] CodingStyleDefault { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] QuantizationDefault { get; set; }
-        [CategoryAttribute("JPEG2000SubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFRGBAComponent[] J2CLayout { get; set; }
 
 

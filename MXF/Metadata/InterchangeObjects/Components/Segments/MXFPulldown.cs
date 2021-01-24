@@ -28,15 +28,17 @@ namespace Myriadbits.MXF
 {
     public class MXFPulldown : MXFSegment
     {
-        [Category("Pulldown")]
+        private const string CATEGORYNAME = "Pulldown";
+
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.01000000")]
         public MXFPulldownDirection? PulldownDirection { get; set; }
 
-        [Category("Pulldown")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.02000000")]
         public MXFPulldownKind? PulldownKind { get; set; }
 
-        [Category("Pulldown")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.03000000")]
         public UInt32? PhaseFrame { get; set; }
 

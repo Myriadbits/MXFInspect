@@ -27,6 +27,9 @@ namespace Myriadbits.MXF
 {
     public class MXFWAVEDescriptor : MXFFileDescriptor
     {
+        private const string CATEGORYNAME = "WAVEDescriptor";
+
+        [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] WaveSummary { get; set; }
         

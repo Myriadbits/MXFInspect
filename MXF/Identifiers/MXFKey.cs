@@ -60,6 +60,8 @@ namespace Myriadbits.MXF
     // TODO rename this class into SMPTEUL = Universal Label
     public class MXFKey : MXFIdentifier, IEquatable<MXFKey>
     {
+        private const string CATEGORYNAME = "Key";
+
         private static Dictionary<MXFShortKey, KeyDescription> knownKeys = KeyDictionary.GetKeys();
 
         [Browsable(false)]
@@ -71,13 +73,13 @@ namespace Myriadbits.MXF
         /// <summary>
         /// The name of this key (if found in SMPTE RP210 or RP224)
         /// </summary>
-        [CategoryAttribute("Key")]
+        [Category(CATEGORYNAME)]
         public string Name { get; set; }
 
         /// <summary>
         /// Keyfield, describes the type of data
         /// </summary>
-        [CategoryAttribute("Key")]
+        [Category(CATEGORYNAME)]
         public KeyCategory Category
         {
             get
@@ -124,7 +126,7 @@ namespace Myriadbits.MXF
         }
 
 
-        [CategoryAttribute("Key")]
+        [Category(CATEGORYNAME)]
         public MXFShortKey GetShortKey()
         {
             return new MXFShortKey(this.GetByteArray().ToArray());
@@ -134,7 +136,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Return a description if available
         /// </summary>
-        [CategoryAttribute("Key")]
+        [Category(CATEGORYNAME)]
         public string Description
         {
             get
@@ -150,7 +152,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Return a description if available
         /// </summary>
-        [CategoryAttribute("Key")]
+        [Category(CATEGORYNAME)]
         public string Notes
         {
             get

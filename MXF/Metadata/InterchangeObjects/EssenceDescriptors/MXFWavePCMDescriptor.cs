@@ -28,31 +28,45 @@ namespace Myriadbits.MXF
 {
     public class MXFWAVEPCMDescriptor : MXFGenericSoundEssenceDescriptor
     {
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D0A")]
+        private const string CATEGORYNAME = "WAVE PCM Descriptor";
+
+        [Category(CATEGORYNAME)]
         public UInt16? BlockAlign { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D0B")]
+
+        [Category(CATEGORYNAME)]
         public byte? SequenceOffset { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D09")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? AverageBytesPerSecond { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D32")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey ChannelAssignment { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D29")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakEnvelopeVersion { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2A")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakEnvelopeFormat { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2B")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PointsPerPeakValue { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2C")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakEnvelopeBlockSize { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2D")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakChannels { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2E")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakFrames { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D2F")]
+
+        [Category(CATEGORYNAME)]
         public MXFPositionType? PeakOfPeaksPosition { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D30")]
+
+        [Category(CATEGORYNAME)]
         public DateTime? PeakEnvelopeTimestamp { get; set; }
-        [CategoryAttribute("WAVE PCM Descriptor"), Description("3D31")]
+
+        [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] PeakEnvelopeData { get; set; }
 

@@ -68,20 +68,22 @@ namespace Myriadbits.MXF
 
     public class MXFEntryIndex : MXFObject
     {
-        [CategoryAttribute("IndexEntry")]
+        private const string CATEGORYNAME = "IndexEntry";
+
+        [Category(CATEGORYNAME)]
         public UInt64 Index { get; set; }
-        [CategoryAttribute("IndexEntry")]
+        [Category(CATEGORYNAME)]
         public sbyte? TemporalOffset { get; set; }
-        [CategoryAttribute("IndexEntry")]
+        [Category(CATEGORYNAME)]
         public sbyte? KeyFrameOffset { get; set; }
-        [CategoryAttribute("IndexEntry")]
+        [Category(CATEGORYNAME)]
         public IndexEntryFlags Flags { get; set; }
-        [CategoryAttribute("IndexEntry")]
+        [Category(CATEGORYNAME)]
         public UInt64? StreamOffset { get; set; }
-        [CategoryAttribute("IndexEntry")]
+        [Category(CATEGORYNAME)]
         [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] SliceOffsets { get; set; }
-        [CategoryAttribute("IndexEntry")]
+        [Category(CATEGORYNAME)]
         public MXFRational[] PosTable { get; set; }
 
         public MXFEntryIndex(UInt64 index, MXFReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)

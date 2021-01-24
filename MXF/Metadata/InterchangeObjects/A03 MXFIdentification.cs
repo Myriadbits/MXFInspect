@@ -28,23 +28,33 @@ namespace Myriadbits.MXF
 {
 	public class MXFIdentification : MXFInterchangeObject
 	{
-		[CategoryAttribute("Identification"), Description("3C01")]
+		private const string CATEGORYNAME = "Identification";
+
+		[Category(CATEGORYNAME)]
 		public string CompanyName { get; set; }
-		[CategoryAttribute("Identification"), Description("3C02")]
+
+		[Category(CATEGORYNAME)]
 		public string ProductName { get; set; }
-		[CategoryAttribute("Identification"), Description("3C03")]
+
+		[Category(CATEGORYNAME)]
 		public MXFProductVersion ProductVersion { get; set; }
-		[CategoryAttribute("Identification"), Description("3C04")]
+
+		[Category(CATEGORYNAME)]
 		public string ProductVersionString { get; set; }
-		[CategoryAttribute("Identification"), Description("3C05")]
+
+		[Category(CATEGORYNAME)]
 		public MXFKey ProductUID { get; set; }
-		[CategoryAttribute("Identification"), Description("3C06")]
+
+		[Category(CATEGORYNAME)]
 		public DateTime? ModificationDate { get; set; }
-		[CategoryAttribute("Identification"), Description("3C07")]
+
+		[Category(CATEGORYNAME)]
 		public MXFProductVersion ToolkitVersion { get; set; }
-		[CategoryAttribute("Identification"), Description("3C08")]
+
+		[Category(CATEGORYNAME)]
 		public string Platform { get; set; }
-		[CategoryAttribute("Identification"), Description("3C09")]
+
+		[Category(CATEGORYNAME)]
 		public MXFKey ThisGenerationUID { get; set; }
 
 		public MXFIdentification(MXFReader reader, MXFKLV headerKLV)

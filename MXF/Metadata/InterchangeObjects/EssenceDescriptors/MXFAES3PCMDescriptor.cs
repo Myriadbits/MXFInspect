@@ -28,20 +28,28 @@ namespace Myriadbits.MXF
 {
 	public class MXFAES3PCMDescriptor : MXFWAVEPCMDescriptor
 	{
-		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D0D")]
+		private const string CATEGORYNAME = "AES3 PCM Descriptor";
+
+		[CategoryAttribute(CATEGORYNAME)]
 		public MXFEmphasis? Emphasis { get; set; }
-		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D0F")]
+
+		[CategoryAttribute(CATEGORYNAME)]
 		public UInt16? BlockStartOffset { get; set; }
-		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D08")]
+
+		[CategoryAttribute(CATEGORYNAME)]
 		public MXFAuxBitsMode? AuxiliaryBitsMode { get; set; }
-		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D10")]
+
+		[CategoryAttribute(CATEGORYNAME)]
 		public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
-		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D11")]
+
+		[CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] FixedChannelStatusData { get; set; }
-		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D12")]
+
+		[CategoryAttribute(CATEGORYNAME)]
 		public MXFUserDataMode[] UserDataMode { get; set; }
-		[CategoryAttribute("AES3 PCM Descriptor"), Description("3D13")]
+
+		[CategoryAttribute(CATEGORYNAME), Description("3D13")]
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] FixedUserData { get; set; }		
 		

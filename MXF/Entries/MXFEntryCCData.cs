@@ -35,11 +35,13 @@ namespace Myriadbits.MXF
 
 	public class MXFEntryCCData : MXFObject
 	{
-		[CategoryAttribute("CCData")] 
+		private const string CATEGORYNAME = "CCData";
+
+		[Category(CATEGORYNAME)] 
 		public bool? Valid { get; set; }
-		[CategoryAttribute("CCData")]
+		[Category(CATEGORYNAME)]
 		public CCDataType? CCType { get; set; }
-		[CategoryAttribute("CCData")]
+		[Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }		
 

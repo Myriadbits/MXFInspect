@@ -28,17 +28,23 @@ namespace Myriadbits.MXF
 {
     public class MXFPreface : MXFInterchangeObject
     {
+        private const string CATEGORYNAME = "Preface";
+
         private readonly MXFKey isRIPPresent_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x04, 0x05, 0x03, 0x00, 0x00, 0x00, 0x00);
 
-		[CategoryAttribute("Preface"), Description("3B02")]
+		[Category(CATEGORYNAME)]
         public DateTime? LastModificationDate { get; set; }
-        [CategoryAttribute("Preface"), Description("3B03")]
+
+        [Category(CATEGORYNAME)]
         public MXFVersion Version { get; set; }
-        [CategoryAttribute("Preface"), Description("3B07")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? ObjectModelVersion { get; set; }
-        [CategoryAttribute("Preface"), Description("3B08")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey OperationalPattern { get; set; }
-        [CategoryAttribute("Preface"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public bool? IsRIPPresent { get; set; }
 
 

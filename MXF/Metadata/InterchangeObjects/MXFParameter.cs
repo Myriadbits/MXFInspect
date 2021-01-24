@@ -21,7 +21,6 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
@@ -29,8 +28,8 @@ namespace Myriadbits.MXF
     [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 1)]
     public class MXFParameter : MXFInterchangeObject
     {
-
-        [CategoryAttribute("Parameter"), Description("4C01")]
+        private const string CATEGORYNAME = "Parameter";
+        [Category(CATEGORYNAME)]
         public MXFUUID ParameterDefinitionReference { get; set; }
 
 

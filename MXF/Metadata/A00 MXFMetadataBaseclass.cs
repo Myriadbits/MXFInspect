@@ -35,6 +35,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [Description("Type of metadata node")]
+        [Browsable(false)]
         public string MetaDataName { get; set; }
 
         public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)

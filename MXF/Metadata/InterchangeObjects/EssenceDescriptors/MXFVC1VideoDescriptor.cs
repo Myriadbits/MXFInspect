@@ -28,6 +28,8 @@ namespace Myriadbits.MXF
 {
     public class MXFVC1VideoDescriptor : MXFCDCIPictureEssenceDescriptor
     {
+        private const string CATEGORYNAME = "VC1 Video Descriptor";
+
         private readonly MXFKey initMetadata_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x01, 0x06, 0x04, 0x01, 0x00, 0x00, 0x00);
         private readonly MXFKey singleSequence_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x01, 0x06, 0x04, 0x02, 0x00, 0x00, 0x00);
         private readonly MXFKey codedContent_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x01, 0x06, 0x04, 0x03, 0x00, 0x00, 0x00);
@@ -40,43 +42,43 @@ namespace Myriadbits.MXF
         private readonly MXFKey level_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x01, 0x06, 0x04, 0x0a, 0x00, 0x00, 0x00);
 
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.01000000")]
         public object VC1InitializationMetadata { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.02000000")]
         public bool? VC1SingleSequence { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.03000000")]
         public MXFCodedContentScanning VC1CodedContentType { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.04000000")]
         public bool? VC1IdenticalGOP { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.05000000")]
         public UInt16? VC1MaxGOP { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.06000000")]
         public UInt16? VC1BPictureCount { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.07000000")]
         public UInt32? VC1AverageBitRate { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.08000000")]
         public UInt32? VC1MaximumBitRate { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.09000000")]
         public byte? VC1Profile { get; set; }
 
-        [Category("VC1 Video Descriptor")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04010604.0a000000")]
         public byte? VC1Level { get; set; }
 

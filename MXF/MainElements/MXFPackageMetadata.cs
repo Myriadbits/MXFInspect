@@ -59,41 +59,41 @@ namespace Myriadbits.MXF
 
             while (reader.Position < end)
             {
-                var tag = GetTag(reader);
+                var (Tag, Size) = GetTag(reader);
                 var pos = reader.Position;
 
-                switch (tag.Tag)
+                switch (Tag)
                 {
 
                     // Metadata link
                     case 0x80:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Metadata link", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Metadata link", pos, Size));
                         break;
 
                     // SMPTE 12M time-code
                     case 0x81:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 12M time-code", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 12M time-code", pos, Size));
                         break;
 
                     // SMPTE 309M date-time stamp
                     case 0x82:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 309M date-time stamp", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 309M date-time stamp", pos, Size));
                         break;
 
                     // UMID
                     case 0x83:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        if(tag.Size == 64)
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        if(Size == 64)
                         {
                             var umid = new MXFExtendedUMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<MXFExtendedUMID>(umid, "ExtendedUMID", pos, tag.Size));
+                            this.AddChild(new MXFWrapperObject<MXFExtendedUMID>(umid, "ExtendedUMID", pos, Size));
                         }
-                        else if(tag.Size == 32){
+                        else if(Size == 32){
                             var umid = new MXFUMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<MXFUMID>(umid, "UMID", pos, tag.Size));
+                            this.AddChild(new MXFWrapperObject<MXFUMID>(umid, "UMID", pos, Size));
                         }
                         else
                         {
@@ -103,26 +103,26 @@ namespace Myriadbits.MXF
 
                     // MPEG-2 picture editing
                     case 0x84:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG-2 picture editing", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG-2 picture editing", pos, Size));
                         break;
 
                     // 8-channel AES3 editing
                     case 0x85:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "8-channel AES3 editing", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "8-channel AES3 editing", pos, Size));
                         break;
 
                     // Picture bit-stream splicing
                     case 0x86:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Picture bit-stream splicing", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Picture bit-stream splicing", pos, Size));
                         break;
 
                     // MPEG decoder buffer delay
                     case 0x87:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG decoder buffer delay", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG decoder buffer delay", pos, Size));
                         break;
 
                     // KLV metadata
@@ -133,8 +133,8 @@ namespace Myriadbits.MXF
 
                     // AES3 non-audio metadata
                     case 0x89:
-                        byteArray = reader.ReadArray(reader.ReadByte, (int)tag.Size);
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "AES3 non-audio metadata", pos, tag.Size));
+                        byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "AES3 non-audio metadata", pos, Size));
                         break;
 
                     default:
@@ -142,7 +142,7 @@ namespace Myriadbits.MXF
                 }
 
                 // seek to next tag position
-                reader.Seek(pos + tag.Size);
+                reader.Seek(pos + Size);
             }
         }
 

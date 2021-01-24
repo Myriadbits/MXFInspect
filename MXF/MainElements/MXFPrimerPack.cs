@@ -28,8 +28,10 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
 	public class MXFPrimerPack : MXFKLV
-	{		
-		[CategoryAttribute("PrimerPack")] 
+	{
+		private const string CATEGORYNAME = "PrimerPack";
+
+		[Category(CATEGORYNAME)] 
 		public UInt32 LocalTagCount { get; set; }
 
 		[Browsable(false)]

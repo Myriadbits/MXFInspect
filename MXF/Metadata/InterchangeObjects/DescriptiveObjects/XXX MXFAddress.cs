@@ -27,6 +27,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFAddress : MXFDescriptiveObject
 	{
+		private const string CATEGORYNAME = "Address";
+
 		public readonly MXFKey commObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x18, 0x00);
 		public readonly MXFKey addrNameValueObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x07, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x1f, 0x04);
 		public readonly MXFKey roomSuiteNumber_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x03, 0x07, 0x01, 0x20, 0x01, 0x04, 0x01, 0x01, 0x01);
@@ -43,32 +45,32 @@ namespace Myriadbits.MXF
 		public readonly MXFKey geoCoordinates_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x07, 0x07, 0x01, 0x20, 0x01, 0x04, 0x01, 0x15, 0x00);
 		public readonly MXFKey astroBodyName_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x07, 0x07, 0x01, 0x20, 0x01, 0x04, 0x01, 0x16, 0x01);
 
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string RoomSuiteNumber { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string StreetNumber { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string StreetName { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string PostalTown { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string City { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string StateProvinceCounty { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string PostalCode { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string Country { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string RoomSuiteName { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string BuildingName { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string PlaceName { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] GeographicalCoordinates { get; set; }
-		[CategoryAttribute("Address"), Description("")]
+		[Category(CATEGORYNAME)]
 		public string AstronomicalBodyName { get; set; }
 
 		public MXFAddress(MXFReader reader, MXFKLV headerKLV)

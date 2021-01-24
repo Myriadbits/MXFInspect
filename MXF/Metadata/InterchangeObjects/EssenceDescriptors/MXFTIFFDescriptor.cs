@@ -28,23 +28,25 @@ namespace Myriadbits.MXF
 {
     public class MXFTIFFDescriptor : MXFFileDescriptor
     {
-        [CategoryAttribute("TIFFDescriptor"), Description("")]
+        private const string CATEGORYNAME = "TIFFDescriptor";
+
+        [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] TIFFSummary { get; set; }
 
-        [CategoryAttribute("TIFFDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public Int32? LeadingLines { get; set; }
 
-        [CategoryAttribute("TIFFDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public Int32? TrailingLines { get; set; }
 
-        [CategoryAttribute("TIFFDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public bool IsUniform { get; set; }
 
-        [CategoryAttribute("TIFFDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public Int32? JPEGTableID { get; set; }
 
-        [CategoryAttribute("TIFFDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public bool IsContiguous { get; set; }
 
         public MXFTIFFDescriptor(MXFReader reader, MXFKLV headerKLV)

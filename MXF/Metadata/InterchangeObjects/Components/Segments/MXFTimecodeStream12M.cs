@@ -27,7 +27,9 @@ namespace Myriadbits.MXF
 {
     public class MXFTimecodeStream12M : MXFTimecodeStream
     {
-        [Category("TimecodeStream12M")]
+        private const string CATEGORYNAME = "TimecodeStream12M";
+
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04040101.04000000")]
         public bool? IncludeSync { get; set; }
 

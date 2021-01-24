@@ -21,14 +21,15 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
 	public class MXFGPITrigger : MXFEvent
 	{
-		[Category("GPITrigger")]
+		private const string CATEGORYNAME = "GPITrigger";
+
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010101.05300401.00000000")]
 		public bool? ActiveState { get; set; }
 

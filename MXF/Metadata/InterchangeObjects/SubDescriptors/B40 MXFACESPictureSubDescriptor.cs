@@ -28,21 +28,27 @@ namespace Myriadbits.MXF
 {
     public class ACESPictureSubDescriptor : MXFSubDescriptor
     {
+        private const string CATEGORYNAME = "ACESPictureSubDescriptor";
+
         private readonly MXFKey aCESAuthoringInformation_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x01, 0x00, 0x00, 0x00);
         private readonly MXFKey aCESMasteringDisplayPrimaries_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x02, 0x00, 0x00, 0x00);
         private readonly MXFKey aCESMasteringDisplayWhitePointChromaticity_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x03, 0x00, 0x00, 0x00);
         private readonly MXFKey aCESMasteringDisplayMaximumLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x04, 0x00, 0x00, 0x00);
         private readonly MXFKey aCESMasteringDisplayMinimumLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x05, 0x00, 0x00, 0x00);
 
-        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+        [Category(CATEGORYNAME)]
         public string ACESAuthoringInformation { get; set; }
-        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFColorPrimary[] ACESMasteringDisplayPrimaries { get; set; }
-        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFColorPrimary ACESMasteringDisplayWhitePointChromaticity { get; set; }
-        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? ACESMasteringDisplayMaximumLuminance { get; set; }
-        [CategoryAttribute("ACESPictureSubDescriptor"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
         public ACESPictureSubDescriptor(MXFReader reader, MXFKLV headerKLV)

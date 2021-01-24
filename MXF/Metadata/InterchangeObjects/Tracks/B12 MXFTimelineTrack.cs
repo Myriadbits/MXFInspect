@@ -28,19 +28,21 @@ namespace Myriadbits.MXF
 {
 	public class MXFTimelineTrack : MXFGenericTrack
 	{
-		[CategoryAttribute("TimelineTrack"), Description("4B01")]
+		private const string CATEGORYNAME = "TimeLineTrack";
+
+		[Category(CATEGORYNAME)]
 		public MXFRational EditRate { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B02")]
+		[Category(CATEGORYNAME)]
 		public MXFPositionType? Origin { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B02")]
+		[Category(CATEGORYNAME)]
 		public MXFPositionType? MarkIn { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B03")]
+		[Category(CATEGORYNAME)]
 		public MXFPositionType? UserPosition { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B05")]
+		[Category(CATEGORYNAME)]
 		public MXFPositionType? PackageMarkInPosition { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B06")]
+		[Category(CATEGORYNAME)]
 		public MXFPositionType? MarkOut { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B07")]
+		[Category(CATEGORYNAME)]
 		public MXFPositionType? PackageMarkOutPosition { get; set; }
 
 		public MXFTimelineTrack(MXFReader reader, MXFKLV headerKLV)

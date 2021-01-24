@@ -27,9 +27,11 @@ namespace Myriadbits.MXF
 {
 	public class MXFEventTrack : MXFGenericTrack
 	{
-		[CategoryAttribute("EventTrack"), Description("4901")]
+		private const string CATEGORYNAME = "EventTrack";
+
+		[Category(CATEGORYNAME)]
 		public MXFRational EventTrackEditRate { get; set; }
-		[CategoryAttribute("EventTrack"), Description("4902")]
+		[Category(CATEGORYNAME)]
 		public MXFPositionType? EventTrackOrigin { get; set; }
 
 		public MXFEventTrack(MXFReader reader, MXFKLV headerKLV)

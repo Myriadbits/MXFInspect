@@ -32,45 +32,47 @@ namespace Myriadbits.MXF
         Deprecated = false)]
     public class MXFEssenceContainerData : MXFInterchangeObject
     {
+        private const string CATEGORYNAME = "EssenceContainerData";
+
         private readonly MXFKey precedingIndexTable_Key = new MXFKey(0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x09, 0x06, 0x01, 0x01, 0x04, 0x06, 0x10, 0x00, 0x00);
         private readonly MXFKey followingIndexTable_Key = new MXFKey(0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x09, 0x06, 0x01, 0x01, 0x04, 0x06, 0x10, 0x00, 0x00);
         private readonly MXFKey isSparse_Key = new MXFKey(0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x09, 0x06, 0x01, 0x01, 0x04, 0x06, 0x10, 0x00, 0x00);
         private readonly MXFKey singularPartitionUsage_Key = new MXFKey(0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x09, 0x06, 0x01, 0x01, 0x04, 0x06, 0x10, 0x00, 0x00);
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010106.01000000")]
         public MXFUMID LinkedPackageID { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01030405.00000000")]
         public UInt32? IndexSID { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01030404.00000000")]
         public UInt32? EssenceSID { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04040504.00000000")]
         public bool? PrecedingIndexTable { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04040505.00000000")]
         public bool? FollowingIndexTable { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04040506.00000000")]
         public bool? IsSparse { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04060207.00000000")]
         public bool? SingularPartitionUsage { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04070200.00000000")]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] EssenceStream { get; set; }
 
-        [Category("EssenceContainerData")]
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010102.01000000")]
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] SampleIndex { get; set; }

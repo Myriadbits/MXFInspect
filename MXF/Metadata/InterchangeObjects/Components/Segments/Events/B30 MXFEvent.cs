@@ -28,11 +28,13 @@ namespace Myriadbits.MXF
 	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 2)]
 	public class MXFEvent : MXFSegment
 	{
-		[Category("Event")]
+		private const string CATEGORYNAME = "Event";
+
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.03030000")]
 		public MXFPositionType? EventPosition { get; set; }
 
-		[Category("Event")]
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.05300404.01000000")]
 		public string EventComment { get; set; }
 

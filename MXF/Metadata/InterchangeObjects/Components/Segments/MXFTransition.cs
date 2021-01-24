@@ -28,7 +28,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFTransition : MXFSegment
 	{
-		[Category("Transition")]
+		private const string CATEGORYNAME = "Transition";
+
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01060000")]
 		public MXFPositionType? CutPoint { get; set; }
 		

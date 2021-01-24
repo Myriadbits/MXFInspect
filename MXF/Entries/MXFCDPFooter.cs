@@ -28,9 +28,11 @@ namespace Myriadbits.MXF
 {
 	public class MXFCDPFooter : MXFObject
 	{
-		[CategoryAttribute("CDPFooter")] 
+		private const string CATEGORYNAME = "CDPFooter";
+
+		[Category(CATEGORYNAME)] 
 		public UInt16? SequenceCounter { get; set; }
-		[CategoryAttribute("CDPFooter")]
+		[Category(CATEGORYNAME)]
 		public byte? PacketChecksum { get; set; }
 
 

@@ -28,15 +28,17 @@ namespace Myriadbits.MXF
 {
 	public class MXFTimecodeComponent : MXFSegment
 	{
-		[Category("TimecodeComponent")]
+		private const string CATEGORYNAME = "TimecodeComponent";
+
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01050000")]
 		public MXFPositionType? StartTimecode { get; set; }
 		
-		[Category("TimecodeComponent")]
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.04040101.02060000")]
 		public UInt16? FramesPerSecond { get; set; }
 		
-		[Category("TimecodeComponent")]
+		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010101.04040101.05000000")]
 		public bool? DropFrame { get; set; }
 
