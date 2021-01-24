@@ -59,7 +59,7 @@ namespace Myriadbits.MXF
                     Debug.WriteLine(string.Format("Reference resolved: {0} -> {1}", this.ToString(), Reference.ToString()));
                     return true;
                 }
-                Debug.WriteLine(string.Format("Reference not resolveable as types don't match: {0} -> {1}", this.GetType(), Reference.GetType()));
+                Debug.WriteLine(string.Format("Reference not resolveable as types don't match: {0} -> {1}", this.GetType(), obj.GetType()));
             }
             return false;
         }

@@ -23,7 +23,7 @@
 
 namespace Myriadbits.MXF
 {
-	public class TargetFrameSubDescriptor : MXFInterchangeObject
+	public class TargetFrameSubDescriptor : MXFSubDescriptor
 	{
 		public TargetFrameSubDescriptor(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "TargetFrameSubDescriptor")
