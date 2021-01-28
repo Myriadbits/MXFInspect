@@ -27,11 +27,14 @@ namespace Myriadbits.MXF
 {
 	public class MXFEntrySVCInfo : MXFObject
 	{
-		[CategoryAttribute("SVC Info")]
+		private const string CATEGORYNAME = "SVC Info";
+
+		[Category(CATEGORYNAME)]
 		public byte? CaptionServiceNumber { get; set; }
-		[CategoryAttribute("SVC Info ")]
+		[Category(CATEGORYNAME)]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }
-		[CategoryAttribute("SVC Info ")]
+		[Category(CATEGORYNAME)]
 		public string DataString { get; set; }
 
 		public MXFEntrySVCInfo(MXFReader reader)

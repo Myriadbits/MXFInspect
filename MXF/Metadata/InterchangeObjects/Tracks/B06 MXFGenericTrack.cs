@@ -28,13 +28,17 @@ namespace Myriadbits.MXF
 {
 	public class MXFGenericTrack : MXFInterchangeObject
 	{
-		[CategoryAttribute("GenericTrack"), Description("4801")]
+		private const string CATEGORYNAME = "GenericTrack";
+
+		[Category(CATEGORYNAME)]
 		public UInt32? TrackID { get; set; }
-		[CategoryAttribute("GenericTrack"), Description("4802")]
+
+		[Category(CATEGORYNAME)]
 		public UInt32? TrackNumber { get; set; }
-		[CategoryAttribute("GenericTrack"), Description("4803")]
+
+		[Category(CATEGORYNAME)]
 		public string TrackName { get; set; }
-		[CategoryAttribute("GenericTrack"), Description("4804")]
+
 
 		public MXFGenericTrack(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Generic Track")

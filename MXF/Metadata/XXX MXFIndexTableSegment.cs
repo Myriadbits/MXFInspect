@@ -32,31 +32,33 @@ namespace Myriadbits.MXF
 	/// </summary>
 	public class MXFIndexTableSegment : MXFInterchangeObject
 	{
-		[CategoryAttribute("IndexTableSegment"), Description("3F05")]
+		private const string CATEGORYNAME = "IndexTableSegment";
+
+		[Category(CATEGORYNAME)]
 		public UInt32? EditUnitByteCount { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F06")]
+		[Category(CATEGORYNAME)]
 		public UInt32? IndexSID { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F07")]
+		[Category(CATEGORYNAME)]
 		public UInt32? BodySID { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F0B")]
+		[Category(CATEGORYNAME)]
 		public MXFRational IndexEditRate { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F0C")]
+		[Category(CATEGORYNAME)]
 		public UInt64? IndexStartPosition { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F0D")]
-		public UInt64? IndexDuration { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F08")]
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? IndexDuration { get; set; }
+		[Category(CATEGORYNAME)]
 		public byte? SliceCount { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F0E")]
+		[Category(CATEGORYNAME)]
 		public byte? PosTableCount { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F11")]
+		[Category(CATEGORYNAME)]
 		public bool? SingleIndexLocation { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F13")]
+		[Category(CATEGORYNAME)]
 		public bool? ForwardIndexDirection { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F0F")]
+		[Category(CATEGORYNAME)]
 		public UInt64? ExtStartOffset { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F10")]
+		[Category(CATEGORYNAME)]
 		public UInt64? VBEByteCount { get; set; }
-		[CategoryAttribute("IndexTableSegment"), Description("3F12")]
+		[Category(CATEGORYNAME)]
 		public bool? SingleEssenceLocation { get; set; }
 
 

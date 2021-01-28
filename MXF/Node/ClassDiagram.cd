@@ -18,9 +18,10 @@
   <Class Name="Myriadbits.MXF.MXFObject">
     <Position X="7.5" Y="6.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IgAAgAAAAAAAEAAMAAAAAABCIAgIAAAAgQAAAAABgAQ=</HashCode>
+      <HashCode>IgAAgAAAAAAAEAAMAAIAAABCIAgIABAAgQAAAAABgAQ=</HashCode>
       <FileName>MXFObject.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.MXFKLV">
     <Position X="7.5" Y="12.25" Width="2.5" />
@@ -48,6 +49,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Identifiers\IResolvable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Myriadbits.MXF.ILazyLoadable">
+    <Position X="9.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAIAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ILazyLoadable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

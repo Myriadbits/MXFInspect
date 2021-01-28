@@ -217,7 +217,7 @@ namespace Myriadbits.MXF
 
 
 		/// <summary>
-		/// Parse a SMNTE12M timecode
+		/// Parse a SMPTE12M timecode
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="frameRate"></param>

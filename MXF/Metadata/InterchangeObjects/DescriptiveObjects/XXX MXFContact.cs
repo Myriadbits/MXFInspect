@@ -27,11 +27,13 @@ namespace Myriadbits.MXF
 {
     public class MXFContact : MXFThesaurus
     {
+        private const string CATEGORYNAME = "Contact";
+
         public readonly MXFKey contactID_Key = new MXFKey(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x08,0x01,0x01,0x15,0x40,0x01,0x02,0x00,0x00);
         public readonly MXFKey addressObjects_Key = new MXFKey(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x05,0x06,0x01,0x01,0x04,0x05,0x40,0x17,0x00);
         public readonly MXFKey nameValueObjects_Key = new MXFKey(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x05,0x06,0x01,0x01,0x04,0x05,0x40,0x1f,0x02);
 
-        [CategoryAttribute("Contact"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFUUID ContactID { get; set; }
 
         public MXFContact(MXFReader reader, MXFKLV headerKLV)
@@ -50,7 +52,7 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == contactID_Key: this.ContactID = new MXFUUID(reader); return true;
+                    case var a when localTag.Key == contactID_Key: this.ContactID = reader.ReadUUIDKey() ; return true;
                     case var a when localTag.Key == addressObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "Address Objects", "Address Object"); return true;
                     // TODO replace generic MXFObject with class NameValue once implemented
                     case var a when localTag.Key == nameValueObjects_Key: ReadReferenceSet<MXFObject>(reader, "NameValue Objects", "NameValue Object"); return true;

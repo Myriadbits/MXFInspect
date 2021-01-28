@@ -23,8 +23,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 
 namespace Myriadbits.MXF
 {
@@ -33,7 +31,11 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFMetadataBaseclass : MXFKLV
     {
-        [CategoryAttribute("Metadata")]
+        private const string CATEGORYNAME = "Metadata";
+
+        [Category(CATEGORYNAME)]
+        [Description("Type of metadata node")]
+        [Browsable(false)]
         public string MetaDataName { get; set; }
 
         public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)
@@ -100,7 +102,6 @@ namespace Myriadbits.MXF
                 {
                     MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
                     tag.Key = entry.AliasUID.Key;
-                    //tag.Name = entry.AliasUID.Key.Name;
                 }
             }
         }

@@ -26,16 +26,19 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 5)]
 	public class MXFStructuralComponent : MXFInterchangeObject
 	{
+		private const string CATEGORYNAME = "StructuralComponent";
+
 		// TODO this should be a UUID?
-		[CategoryAttribute("StructuralComponent"), Description("0201")]
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
 		public MXFKey DataDefinition { get; set; }
 
-		[CategoryAttribute("StructuralComponent"), Description("0202")]
-		public UInt64? Duration { get; set; }
-
-		[CategoryAttribute("StructuralComponent"), Description("0204")]
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
+		public MXFLengthType? Duration { get; set; }
 
 		public MXFStructuralComponent(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, metadataName)
@@ -50,7 +53,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x0201: this.DataDefinition = reader.ReadKey(); return true;
+				case 0x0201: this.DataDefinition = reader.ReadULKey(); return true;
 				case 0x0202: this.Duration = reader.ReadUInt64(); return true;
 				// TODO replace generic MXFObject with class KLVData once implemented
 				case 0x0203: ReadReferenceSet<MXFObject>(reader, "KLV Data", "KLV Data"); return true;

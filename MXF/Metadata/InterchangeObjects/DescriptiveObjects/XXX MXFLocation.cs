@@ -27,13 +27,16 @@ namespace Myriadbits.MXF
 {
     public class MXFLocation : MXFContact
     {
+        private const string CATEGORYNAME = "Location";
+
         public readonly MXFKey locDescription_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x04, 0x07, 0x01, 0x20, 0x02, 0x02, 0x01, 0x00, 0x00);
         public readonly MXFKey locKind_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x04, 0x07, 0x01, 0x20, 0x02, 0x03, 0x01, 0x00, 0x00);
 
 
-        [CategoryAttribute("Location"), Description("")]
+        [Category(CATEGORYNAME)]
         public string LocationDescription { get; set; }
-        [CategoryAttribute("Location"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public string LocationKind { get; set; }
 
         public MXFLocation(MXFReader reader, MXFKLV headerKLV)

@@ -28,17 +28,23 @@ namespace Myriadbits.MXF
 {
     public class MXFPreface : MXFInterchangeObject
     {
+        private const string CATEGORYNAME = "Preface";
+
         private readonly MXFKey isRIPPresent_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x04, 0x05, 0x03, 0x00, 0x00, 0x00, 0x00);
 
-		[CategoryAttribute("Preface"), Description("3B02")]
+		[Category(CATEGORYNAME)]
         public DateTime? LastModificationDate { get; set; }
-        [CategoryAttribute("Preface"), Description("3B03")]
+
+        [Category(CATEGORYNAME)]
         public MXFVersion Version { get; set; }
-        [CategoryAttribute("Preface"), Description("3B07")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? ObjectModelVersion { get; set; }
-        [CategoryAttribute("Preface"), Description("3B08")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey OperationalPattern { get; set; }
-        [CategoryAttribute("Preface"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public bool? IsRIPPresent { get; set; }
 
 
@@ -62,7 +68,7 @@ namespace Myriadbits.MXF
                 case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
                 case 0x3B03: ReadReference<MXFContentStorage>(reader, "ContentStorage"); return true;
                 case 0x3B08: ReadReference<MXFGenericPackage>(reader, "PrimaryPackage"); return true;
-                case 0x3B09: this.OperationalPattern = new MXFKey(reader, 16); return true;
+                case 0x3B09: this.OperationalPattern = reader.ReadULKey(); return true;
                 case 0x3B06: ReadReferenceSet<MXFIdentification>(reader, "Identifications", "Identification"); return true;
                 case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
                     // TODO review how the metadataschemes are read (especially if there are no schemes present)

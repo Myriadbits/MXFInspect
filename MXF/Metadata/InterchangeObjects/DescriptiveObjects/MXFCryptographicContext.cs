@@ -27,6 +27,8 @@ namespace Myriadbits.MXF
 {
     public class MXFCryptographicContext : MXFDescriptiveObject
     {
+        private const string CATEGORYNAME = "CryptographicContext";
+
         public readonly MXFKey cryptoContextId_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x09, 0x01, 0x01, 0x15, 0x11, 0x00, 0x00, 0x00, 0x00);
         public readonly MXFKey cipherAlgorithm_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x09, 0x02, 0x09, 0x03, 0x01, 0x01, 0x00, 0x00, 0x00);
         public readonly MXFKey cryptoKeyID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x09, 0x02, 0x09, 0x03, 0x01, 0x02, 0x00, 0x00, 0x00);
@@ -34,17 +36,22 @@ namespace Myriadbits.MXF
         public readonly MXFKey sourceContainerFormat_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x09, 0x06, 0x01, 0x01, 0x02, 0x02, 0x00, 0x00, 0x00);
         public readonly MXFKey mICCarriage_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x01, 0x0d, 0x0e, 0x01, 0x01, 0x07, 0x04, 0x03, 0x00);
 
-        [CategoryAttribute("CryptographicContext"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFKey CryptographicContextID { get; set; }
-        [CategoryAttribute("CryptographicContext"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey CipherAlgorithm { get; set; }
-        [CategoryAttribute("CryptographicContext"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey CryptographicKeyID { get; set; }
-        [CategoryAttribute("CryptographicContext"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey MICAlgorithm { get; set; }
-        [CategoryAttribute("CryptographicContext"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey SourceContainerFormat { get; set; }
-        [CategoryAttribute("CryptographicContext"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey MICCarriage { get; set; }
 
 
@@ -65,12 +72,12 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == cryptoContextId_Key: this.CryptographicContextID = reader.ReadKey(); return true;
-                    case var a when localTag.Key == cipherAlgorithm_Key: this.CipherAlgorithm = reader.ReadKey(); return true;
-                    case var a when localTag.Key == cryptoKeyID_Key: this.CryptographicKeyID = reader.ReadKey(); return true;
-                    case var a when localTag.Key == mICAlgorithm_Key: this.MICAlgorithm = reader.ReadKey(); return true;
-                    case var a when localTag.Key == sourceContainerFormat_Key: this.SourceContainerFormat = reader.ReadKey(); return true;
-                    case var a when localTag.Key == mICCarriage_Key: this.MICCarriage = reader.ReadKey(); return true;
+                    case var a when localTag.Key == cryptoContextId_Key: this.CryptographicContextID = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == cipherAlgorithm_Key: this.CipherAlgorithm = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == cryptoKeyID_Key: this.CryptographicKeyID = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == mICAlgorithm_Key: this.MICAlgorithm = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == sourceContainerFormat_Key: this.SourceContainerFormat = reader.ReadULKey(); return true;
+                    case var a when localTag.Key == mICCarriage_Key: this.MICCarriage = reader.ReadULKey(); return true;
 
                 }
             }

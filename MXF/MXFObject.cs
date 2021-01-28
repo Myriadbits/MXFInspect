@@ -50,15 +50,19 @@ namespace Myriadbits.MXF
     };
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public abstract class MXFObject : Node<MXFObject>
+    public abstract class MXFObject : Node<MXFObject> //ILazyLoadable
     {
+        private const string CATEGORYNAME = "Object";
+
         private long m_lLength = -1;            // Length in bytes of this object
         protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
 
-        [CategoryAttribute("KLV")]
+        [Category(CATEGORYNAME)]
+        [Description("Offset from the beginning of file in terms of bytes")]
         public long Offset { get; set; } = long.MaxValue;
 
-        [CategoryAttribute("KLV")]
+        [Category(CATEGORYNAME)]
+        [Description("Length of KLV in bytes")]
         public long Length
         {
             get
@@ -88,11 +92,6 @@ namespace Myriadbits.MXF
             }
         }
 
-        [Browsable(false)]
-        // TODO extract Loaded/Load to an interface
-        public bool IsLoaded { get; set; } = true;
-
-       
         [Browsable(false)]
         // TODO find better name
         public MXFLogicalObject LogicalWrapper { get; private set; }
@@ -135,7 +134,7 @@ namespace Myriadbits.MXF
                 this.Offset = child.Offset;
         }
 
-        public MXFObject FindNextObjectOfType(Type typeToFind, bool skipFillers)
+        public MXFObject FindNextObjectOfType(Type typeToFind)
         {
             var flatList = this.Root()
                                 .Descendants()
@@ -143,25 +142,16 @@ namespace Myriadbits.MXF
                                 .OrderBy(o => o.Offset)
                                 .ToList();
 
-            if (skipFillers) {
-                flatList = flatList.Where(o => o.Type != MXFObjectType.Filler).ToList();
-            }
-
             return flatList.FirstOrDefault();
         }
 
-        public MXFObject FindPreviousObjectOfType(Type typeToFind, bool skipFillers)
+        public MXFObject FindPreviousObjectOfType(Type typeToFind)
         {
             var flatList = this.Root()
                                 .Descendants()
                                 .Where(o => o.GetType() == typeToFind && o.Offset < this.Offset)
                                 .OrderByDescending(o => o.Offset)
                                 .ToList();
-
-            if (skipFillers)
-            {
-                flatList = flatList.Where(o => o.Type != MXFObjectType.Filler).ToList();
-            }
 
             return flatList.FirstOrDefault();
         }
@@ -192,42 +182,10 @@ namespace Myriadbits.MXF
             return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
         }
 
-
-        /// <summary>
-        /// Is this object visible?
-        /// </summary>
-        /// <param name="skipFiller"></param>
-        /// <returns></returns>
-        public bool IsVisible(bool skipFiller)
-        {
-            if (skipFiller && this.Type == MXFObjectType.Filler)
-                return false;
-            return true;
-        }
-
-        /// <summary>
-        /// Load the entire object from disk (when not yet loaded)
-        /// </summary>
-        public void Load()
-        {
-            if (!this.IsLoaded)
-            {
-                this.OnLoad();
-                this.IsLoaded = true;
-            }
-        }
-
-        /// <summary>
-        /// Load the entire partition from disk override in derived classes when delay loading is supported
-        /// </summary>
-        public virtual void OnLoad()
-        {
-        }
-
         // TODO find better name, maybe Wrap
         public MXFLogicalObject CreateLogicalObject()
         {
-            var wrapper = new MXFLogicalObject(this, this.ToString());
+            var wrapper = new MXFLogicalObject(this);
             this.LogicalWrapper = wrapper;
             return wrapper;
         }

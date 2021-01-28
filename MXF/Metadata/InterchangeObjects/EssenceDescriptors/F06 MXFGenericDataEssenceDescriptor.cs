@@ -27,7 +27,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFGenericDataEssenceDescriptor : MXFFileDescriptor
 	{
-		[CategoryAttribute("GenericDataEssenceDescriptor"), Description("3E01")]
+		private const string CATEGORYNAME = "GenericDataEssenceDescriptor";
+
+		[Category(CATEGORYNAME)]
 		public MXFKey DataEssenceCoding { get; set; }
 		
 		
@@ -64,7 +66,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3E01: this.DataEssenceCoding = reader.ReadKey();	return true;
+				case 0x3E01: this.DataEssenceCoding = reader.ReadULKey();	return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

@@ -32,55 +32,57 @@ namespace Myriadbits.MXF
     // TODO add InstanceID property and check the inheritance tree, does it really derive from metadatabase class?
     public class MXFCameraUnitAquisitionMetadata : MXFMetadataBaseclass
     {
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        private const string CATEGORYNAME = "CameraUnitAquisitionMetadata";
+
+        [Category(CATEGORYNAME)]
         public string CameraSettingFileURI { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")] 
+        [Category(CATEGORYNAME)] 
         public string CameraAttributes { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFKey TransferCharacteristic { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFRational CaptureFrameRate { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFKey AutoExposureMode { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFAutoFocusSensingAreaSetting? AutoFocusSensingAreaSetting { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFColorCorrectionFilterWheelSetting? ColorCorrectionFilterWheelSetting { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? NeutralDensityFilterWheelSetting { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? ImageSensorDimensionEffectiveWidth { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? ImageSensorDimensionEffectiveHeight { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFImageSensorReadoutMode? ImageSensorReadoutMode { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt32? ShutterSpeedAngle { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFRational ShutterSpeedTime { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public Int16? CameraMasterGainAdjustment { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? ISOSensitivity { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? ElectricalExtenderMagnification { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? ExposureIndexOfPhotoMeter { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFRational[] ColorMatrix { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public MXFAutoWhiteBalanceMode? AutoWhiteBalanceMode { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? WhiteBalance { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public Int16? CameraMasterBlackLevel { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? CameraKneePoint { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? CameraKneeSlope { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? CameraLuminanceDynamicRange { get; set; }
-        [CategoryAttribute("CameraUnitAcquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public byte? GammaForCDL { get; set; }
         
 
@@ -101,9 +103,9 @@ namespace Myriadbits.MXF
             {
                 case 0x8113: this.CameraSettingFileURI = reader.ReadUTF8String(localTag.Size); return true;
                 case 0x8114: this.CameraAttributes = reader.ReadUTF8String(localTag.Size); return true;
-                case 0x3210: this.TransferCharacteristic = reader.ReadKey(); return true;
+                case 0x3210: this.TransferCharacteristic = reader.ReadULKey(); return true;
                 case 0x8106: this.CaptureFrameRate = reader.ReadRational(); return true;
-                case 0x8100: this.AutoExposureMode = reader.ReadKey(); return true;
+                case 0x8100: this.AutoExposureMode = reader.ReadULKey(); return true;
                 case 0x8101: this.AutoFocusSensingAreaSetting = (MXFAutoFocusSensingAreaSetting) reader.ReadByte(); return true;
                 case 0x8102: this.ColorCorrectionFilterWheelSetting = (MXFColorCorrectionFilterWheelSetting)reader.ReadByte(); return true;
                 case 0x8103: this.NeutralDensityFilterWheelSetting = reader.ReadUInt16(); return true;

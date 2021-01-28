@@ -26,33 +26,48 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFWaveAudioEssenceDescriptor : MXFGenericSoundEssenceDescriptor
+    public class MXFWAVEPCMDescriptor : MXFGenericSoundEssenceDescriptor
     {
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D0A")]
+        private const string CATEGORYNAME = "WAVE PCM Descriptor";
+
+        [Category(CATEGORYNAME)]
         public UInt16? BlockAlign { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D0B")]
+
+        [Category(CATEGORYNAME)]
         public byte? SequenceOffset { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D09")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? AverageBytesPerSecond { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D32")]
+
+        [Category(CATEGORYNAME)]
         public MXFKey ChannelAssignment { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D29")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakEnvelopeVersion { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2A")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakEnvelopeFormat { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2B")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PointsPerPeakValue { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2C")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakEnvelopeBlockSize { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2D")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakChannels { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2E")]
+
+        [Category(CATEGORYNAME)]
         public UInt32? PeakFrames { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D2F")]
-        public UInt64? PeakOfPeaksPosition { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D30")]
+
+        [Category(CATEGORYNAME)]
+        public MXFPositionType? PeakOfPeaksPosition { get; set; }
+
+        [Category(CATEGORYNAME)]
         public DateTime? PeakEnvelopeTimestamp { get; set; }
-        [CategoryAttribute("WaveAudioEssenceDescriptor"), Description("3D31")]
+
+        [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] PeakEnvelopeData { get; set; }
 
 
@@ -61,8 +76,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="headerKLV"></param>
-        public MXFWaveAudioEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "Wave Audio Essence Descriptor")
+        public MXFWAVEPCMDescriptor(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "WAVE PCM Descriptor")
         {
         }
 
@@ -71,7 +86,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="headerKLV"></param>
-        public MXFWaveAudioEssenceDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
+        public MXFWAVEPCMDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
             : base(reader, headerKLV, metadataName)
         {
         }
@@ -87,7 +102,7 @@ namespace Myriadbits.MXF
                 case 0x3D0A: this.BlockAlign = reader.ReadUInt16(); return true;
                 case 0x3D0B: this.SequenceOffset = reader.ReadByte(); return true;
                 case 0x3D09: this.AverageBytesPerSecond = reader.ReadUInt32(); return true;
-                case 0x3D32: this.ChannelAssignment = reader.ReadKey(); return true;
+                case 0x3D32: this.ChannelAssignment = reader.ReadULKey(); return true;
                 case 0x3D29: this.PeakEnvelopeVersion = reader.ReadUInt32(); return true;
                 case 0x3D2A: this.PeakEnvelopeFormat = reader.ReadUInt32(); return true;
                 case 0x3D2B: this.PointsPerPeakValue = reader.ReadUInt32(); return true;

@@ -32,29 +32,31 @@ namespace Myriadbits.MXF
     // TODO add InstanceID property and check the inheritance tree, does it really derive from metadatabase class?
     public class MXFLensUnitAquisitionMetadata : MXFMetadataBaseclass
     {
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        private const string CATEGORYNAME = "LensUnitAquisitionMetadata";
+
+        [Category(CATEGORYNAME)]
         public string LensAttributes { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")] 
+        [Category(CATEGORYNAME)] 
         public UInt16? IrisFNumber { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? FocusPositionFromImagePlane { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? FocusPositionFromFrontLensVertex { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public bool? MacroSetting { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? LensZoom35mmStillCameraEquivalent { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? LensZoomActualFocalLength { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? OpticalExtenderMagnification { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? IrisTNumber { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? IrisRingPosition { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? FocusRingPosition { get; set; }
-        [CategoryAttribute("LensUnitAquisitionMetadata"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt16? ZoomRingPosition { get; set; }
 
 

@@ -70,37 +70,39 @@ namespace Myriadbits.MXF
 
 	public class MXFSystemItem : MXFKLV
 	{
-		[CategoryAttribute("SystemItem")]
+		private const string CATEGORYNAME = "SystemItem";
+
+		[Category(CATEGORYNAME)]
 		public SystemBitmap SystemBitmap { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public double PackageRate { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public SystemStreamStatus StreamStatus { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public bool LowLatencyMode { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public SystemTransferMode TransferMode { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public SystemTimingMode TimingMode { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public UInt16 ChannelHandle { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public UInt16 ContinuityCount { get; set; }
 
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public MXFKey SMPTE { get; set; }
 
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public string CreationDate { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public MXFTimeStamp UserDate { get; set; }
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public string UserDateFullFrameNb { get; set; }
 
 		[Browsable(false)]
 		public bool Indexed { get; set; }
 
-		[CategoryAttribute("SystemItem")]
+		[Category(CATEGORYNAME)]
 		public long EssenceOffset
 		{
 			get
@@ -145,7 +147,7 @@ namespace Myriadbits.MXF
 			this.ChannelHandle = reader.ReadUInt16();
 			this.ContinuityCount = reader.ReadUInt16();
 
-			this.SMPTE = reader.ReadKey(); // Always read even if zero
+			this.SMPTE = reader.ReadULKey(); // Always read even if zero
 
 			MXFTimeStamp creationTimeStamp = reader.ReadBCDTimeCode(this.PackageRate);
 			this.CreationDate = creationTimeStamp.ToString();

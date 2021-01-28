@@ -21,16 +21,21 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 2)]
 	public class MXFEvent : MXFSegment
 	{
-		[CategoryAttribute("Event"), Description("0601")]
-		public UInt64? EventStartPosition { get; set; }
-		[CategoryAttribute("Event"), Description("0602")]
+		private const string CATEGORYNAME = "Event";
+
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.03030000")]
+		public MXFPositionType? EventPosition { get; set; }
+
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.05300404.01000000")]
 		public string EventComment { get; set; }
 
 		public MXFEvent(MXFReader reader, MXFKLV headerKLV, string metadataName)
@@ -46,7 +51,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x0601: this.EventStartPosition = reader.ReadUInt64(); return true;
+				case 0x0601: this.EventPosition = reader.ReadUInt64(); return true;
 				case 0x0602: this.EventComment = reader.ReadUTF16String(localTag.Size); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 

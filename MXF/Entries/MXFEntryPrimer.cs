@@ -28,9 +28,11 @@ namespace Myriadbits.MXF
 {
 	public class MXFEntryPrimer : MXFObject
 	{
-		[CategoryAttribute("PrimerEntry")]
+		private const string CATEGORYNAME = "PrimerEntry";
+
+		[Category(CATEGORYNAME)]
 		public UInt16 LocalTag { get; set; }
-		[CategoryAttribute("PrimerEntry")]
+		[Category(CATEGORYNAME)]
 		// TODO smpte specs request an AUID, but 
 		// probably a MXFKey = UL would make more sense here, so can we change this safely?
 		public MXFAUID AliasUID { get; set; }
@@ -40,8 +42,8 @@ namespace Myriadbits.MXF
 		{
 			this.Offset = reader.Position;
 			this.LocalTag = reader.ReadUInt16();
-			this.AliasUID = new MXFAUID(reader, 16, "AliasUID");
-			this.Length = 20; // Fixed length
+			this.AliasUID = new MXFAUID(reader, "AliasUID");
+			this.Length = 20; // Fixed length (16 bytes key + 4 bytes local tag)
 		}
 
 		/// <summary>

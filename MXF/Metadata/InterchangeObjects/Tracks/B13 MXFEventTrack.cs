@@ -21,17 +21,18 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
 	public class MXFEventTrack : MXFGenericTrack
 	{
-		[CategoryAttribute("EventTrack"), Description("4B01")]
-		public MXFRational EventEditRate { get; set; }
-		[CategoryAttribute("EventTrack"), Description("4B02")]
-		public UInt64? EventOrigin { get; set; }
+		private const string CATEGORYNAME = "EventTrack";
+
+		[Category(CATEGORYNAME)]
+		public MXFRational EventTrackEditRate { get; set; }
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? EventTrackOrigin { get; set; }
 
 		public MXFEventTrack(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Event Track")
@@ -46,8 +47,8 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4B01: this.EventEditRate = reader.ReadRational(); return true;
-				case 0x4B02: this.EventOrigin = reader.ReadUInt64(); return true;
+				case 0x4901: this.EventTrackEditRate = reader.ReadRational(); return true;
+				case 0x4902: this.EventTrackOrigin = reader.ReadUInt64(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

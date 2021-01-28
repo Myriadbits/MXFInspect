@@ -28,20 +28,22 @@ namespace Myriadbits.MXF
 {	
 	public class MXFEssenceElement : MXFKLV
 	{
+		private const string CATEGORYNAME = "EssenceElement";
+
 		private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>();
 
-		[CategoryAttribute("EssenceElement")]
+		[Category(CATEGORYNAME)]
 		public string ItemType { get; set; }
-		[CategoryAttribute("EssenceElement")]
+		[Category(CATEGORYNAME)]
 		public byte ElementCount { get; set; }
-		[CategoryAttribute("EssenceElement")]
+		[Category(CATEGORYNAME)]
 		public byte ElementType { get; set; }
-		[CategoryAttribute("EssenceElement")]
+		[Category(CATEGORYNAME)]
 		public byte ElementNumber { get; set; }
 		[Browsable(false)]
 		public bool IsPicture { get; set; }
 
-		[CategoryAttribute("EssenceElement")]
+		[Category(CATEGORYNAME)]
 		public long EssenceOffset
 		{
 			get

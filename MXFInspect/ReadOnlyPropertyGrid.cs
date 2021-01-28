@@ -25,15 +25,14 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-	/// <summary>
-	/// <see cref="https://www.csharp-examples.net/readonly-propertygrid/"/>
-	/// </summary>
-	public class ReadOnlyPropertyGrid : PropertyGrid
+    /// <summary>
+    /// <see cref="https://www.csharp-examples.net/readonly-propertygrid/"/>
+    /// </summary>
+    public class ReadOnlyPropertyGrid : PropertyGrid
 	{
         public ReadOnlyPropertyGrid() : base()
         {
@@ -64,19 +63,26 @@ namespace Myriadbits.MXFInspect
 		{
 			if (selectedObject != null)
 			{
-				foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(selectedObject))
+				// add a global read only attribute, which works for most of the properties (propgrid showing in non-bold)
+				TypeDescriptor.AddAttributes(selectedObject, new ReadOnlyAttribute(isReadOnly));
+
+				// for some properties and child properties add readonly attribute additionally in this way
+				var propList = TypeDescriptor.GetProperties(selectedObject)
+										.Cast<PropertyDescriptor>()
+										.Where(prop => prop.IsBrowsable);
+
+				var childpropList = propList.SelectMany(o => o.GetChildProperties().Cast<PropertyDescriptor>())
+										.Where(prop => prop.IsBrowsable);
+
+				var entireList = propList.Concat(childpropList).Distinct();
+
+				foreach (PropertyDescriptor pd in entireList)
 				{
-					ReadOnlyAttribute attr = prop.Attributes[typeof(ReadOnlyAttribute)] as ReadOnlyAttribute;
-					if (attr != null)
-					{
-						FieldInfo fi = attr.GetType().GetField("isReadOnly", BindingFlags.NonPublic | BindingFlags.Instance);
-						if (fi != null)
-							fi.SetValue(attr, isReadOnly);
-					}
+					pd.SetReadOnlyAttribute(true);
 				}
+
 				this.Refresh();
 			}
 		}
 	}
-
 }

@@ -57,25 +57,28 @@ namespace Myriadbits.MXF
 
 	public class MXFANCPacket : MXFObject
 	{
+		private const string CATEGORYNAME = "ANCPacket";
+
 		protected static Dictionary<UInt16, string> m_DIDDescription; 
 
-		[CategoryAttribute("ANC Packet")] 
+		[Category(CATEGORYNAME)] 
 		public UInt16 LineNumber { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
 		public MXFANCWrappingType WrappingType { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
 		public MXFANCPayloadCoding PayloadSamplingCoding { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
 		public UInt16 PayloadSampleCount { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
 		public byte DID { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
 		public byte SDID { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
 		public byte Size { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Payload { get; set; }
-		[CategoryAttribute("ANC Packet")]
+		[Category(CATEGORYNAME)]
 		public string ContentDescription { get; set; }
 
 		/// <summary>

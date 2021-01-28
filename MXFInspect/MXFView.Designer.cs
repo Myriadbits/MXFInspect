@@ -37,16 +37,9 @@
             this.tpLogical = new System.Windows.Forms.TabPage();
             this.tlvLogical = new Myriadbits.MXFInspect.LogicalTreeListView();
             this.splitRight = new System.Windows.Forms.SplitContainer();
-            this.chkInfo = new System.Windows.Forms.CheckBox();
-            this.btnSelectReference = new System.Windows.Forms.Button();
             this.propGrid = new Myriadbits.MXFInspect.ReadOnlyPropertyGrid();
-            this.btnPrevious = new System.Windows.Forms.Button();
-            this.btnNext = new System.Windows.Forms.Button();
             this.rtfHexViewer = new Myriadbits.MXFInspect.HexViewer();
-            this.imageListResult = new System.Windows.Forms.ImageList(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtOverall = new System.Windows.Forms.TextBox();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.prbProcessing = new System.Windows.Forms.ProgressBar();
             this.bgwProcess = new System.ComponentModel.BackgroundWorker();
@@ -83,6 +76,7 @@
             this.splitMain.Panel2.Controls.Add(this.splitRight);
             this.splitMain.Size = new System.Drawing.Size(1108, 548);
             this.splitMain.SplitterDistance = 525;
+            this.splitMain.SplitterWidth = 6;
             this.splitMain.TabIndex = 0;
             // 
             // tabMain
@@ -188,43 +182,15 @@
             // 
             // splitRight.Panel1
             // 
-            this.splitRight.Panel1.Controls.Add(this.chkInfo);
-            this.splitRight.Panel1.Controls.Add(this.btnSelectReference);
             this.splitRight.Panel1.Controls.Add(this.propGrid);
-            this.splitRight.Panel1.Controls.Add(this.btnPrevious);
-            this.splitRight.Panel1.Controls.Add(this.btnNext);
             // 
             // splitRight.Panel2
             // 
             this.splitRight.Panel2.Controls.Add(this.rtfHexViewer);
-            this.splitRight.Size = new System.Drawing.Size(582, 549);
+            this.splitRight.Size = new System.Drawing.Size(578, 549);
             this.splitRight.SplitterDistance = 388;
+            this.splitRight.SplitterWidth = 6;
             this.splitRight.TabIndex = 16;
-            // 
-            // chkInfo
-            // 
-            this.chkInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkInfo.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkInfo.AutoSize = true;
-            this.chkInfo.Location = new System.Drawing.Point(493, 362);
-            this.chkInfo.Name = "chkInfo";
-            this.chkInfo.Size = new System.Drawing.Size(19, 23);
-            this.chkInfo.TabIndex = 16;
-            this.chkInfo.Text = "i";
-            this.chkInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.chkInfo.UseVisualStyleBackColor = true;
-            this.chkInfo.CheckedChanged += new System.EventHandler(this.chkInfo_CheckedChanged);
-            // 
-            // btnSelectReference
-            // 
-            this.btnSelectReference.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSelectReference.Location = new System.Drawing.Point(3, 362);
-            this.btnSelectReference.Name = "btnSelectReference";
-            this.btnSelectReference.Size = new System.Drawing.Size(103, 23);
-            this.btnSelectReference.TabIndex = 13;
-            this.btnSelectReference.Text = "Select Reference";
-            this.btnSelectReference.UseVisualStyleBackColor = true;
-            this.btnSelectReference.Click += new System.EventHandler(this.btnSelectReference_Click);
             // 
             // propGrid
             // 
@@ -233,38 +199,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.propGrid.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.propGrid.HelpVisible = false;
-            this.propGrid.Location = new System.Drawing.Point(3, 32);
+            this.propGrid.Location = new System.Drawing.Point(3, 26);
             this.propGrid.Name = "propGrid";
             this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
             this.propGrid.ReadOnly = true;
-            this.propGrid.Size = new System.Drawing.Size(573, 324);
+            this.propGrid.Size = new System.Drawing.Size(569, 359);
             this.propGrid.TabIndex = 1;
             this.propGrid.ToolbarVisible = false;
             this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.propGrid.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propGrid_SelectedGridItemChanged);
-            // 
-            // btnPrevious
-            // 
-            this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrevious.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindPrevious_13244;
-            this.btnPrevious.Location = new System.Drawing.Point(550, 362);
-            this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(26, 23);
-            this.btnPrevious.TabIndex = 14;
-            this.btnPrevious.UseVisualStyleBackColor = true;
-            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Image = global::Myriadbits.MXFInspect.Properties.Resources.FindNext_13243;
-            this.btnNext.Location = new System.Drawing.Point(518, 362);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(26, 23);
-            this.btnNext.TabIndex = 14;
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // rtfHexViewer
             // 
@@ -278,23 +220,9 @@
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
             this.rtfHexViewer.Name = "rtfHexViewer";
             this.rtfHexViewer.ReadOnly = true;
-            this.rtfHexViewer.Size = new System.Drawing.Size(573, 150);
+            this.rtfHexViewer.Size = new System.Drawing.Size(569, 146);
             this.rtfHexViewer.TabIndex = 16;
             this.rtfHexViewer.Text = "";
-            // 
-            // imageListResult
-            // 
-            this.imageListResult.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListResult.ImageStream")));
-            this.imageListResult.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListResult.Images.SetKeyName(0, "Error");
-            this.imageListResult.Images.SetKeyName(1, "Success");
-            this.imageListResult.Images.SetKeyName(2, "Warning");
-            this.imageListResult.Images.SetKeyName(3, "Info");
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // txtOverall
             // 
@@ -361,7 +289,6 @@
             this.tpLogical.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tlvLogical)).EndInit();
             this.splitRight.Panel1.ResumeLayout(false);
-            this.splitRight.Panel1.PerformLayout();
             this.splitRight.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitRight)).EndInit();
             this.splitRight.ResumeLayout(false);
@@ -374,21 +301,14 @@
 		#endregion
 
 		private System.Windows.Forms.SplitContainer splitMain;
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.TextBox txtOverall;
 		private MXFInspect.ReadOnlyPropertyGrid propGrid;
-		private System.ComponentModel.BackgroundWorker backgroundWorker;
-		private System.Windows.Forms.Button btnSelectReference;
-		private System.Windows.Forms.Button btnNext;
-		private System.Windows.Forms.Button btnPrevious;
 		private System.Windows.Forms.TabControl tabMain;
 		private System.Windows.Forms.TabPage tpPhysical;
 		private System.Windows.Forms.Panel mainPanel;
 		private System.ComponentModel.BackgroundWorker bgwProcess;
 		private System.Windows.Forms.ProgressBar prbProcessing;
-		private System.Windows.Forms.ImageList imageListResult;
 		private System.Windows.Forms.SplitContainer splitRight;
-		private System.Windows.Forms.CheckBox chkInfo;
 		private System.Windows.Forms.TabPage tpLogical;
 		private HexViewer rtfHexViewer;
         private PhysicalTreeListView tlvPhysical;

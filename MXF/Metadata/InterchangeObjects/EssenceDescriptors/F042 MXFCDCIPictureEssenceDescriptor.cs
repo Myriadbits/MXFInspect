@@ -26,43 +26,59 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01012800",
+        IsConcrete = true,
+        NumberOfElements = 10,
+        Deprecated = false)]
     public class MXFCDCIPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
     {
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3301")]
+        private const string CATEGORYNAME = "CDCIPictureEssenceDescriptor";
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.0a000000")]
         public UInt32? ComponentDepth { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3302")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.05000000")]
         public UInt32? HorizontalSubsampling { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3308")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010501.10000000")]
         public UInt32? VerticalSubsampling { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3303")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.06000000")]
         public MXFColorSiting? ColorSiting { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("330B")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.03010201.0a000000")]
         public bool? ReversedByteOrder { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3307")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04180104.00000000")]
         public Int16? PaddingBits { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3309")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.07000000")]
         public UInt32? AlphaSampleDepth { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3304")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04010503.03000000")]
         public UInt32? BlackRefLevel { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3305")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04010503.04000000")]
         public UInt32? WhiteRefLevel { get; set; }
-        [CategoryAttribute("CDCIPictureEssenceDescriptor"), Description("3306")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.05000000")]
         public UInt32? ColorRange { get; set; }
 
-        /// <summary>
-        /// Constructor, set the correct descriptor name
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
         public MXFCDCIPictureEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV, "CDCI Picture Essence Descriptor")
         {
         }
 
-        /// <summary>
-        /// Overridden method to process local tags
-        /// </summary>
-        /// <param name="localTag"></param>
         protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)

@@ -30,12 +30,12 @@ namespace Myriadbits.MXF
     //urn:smpte:ul:060e2b34.027f0101.0d010401.04020100
     public class MXFGenericStreamTextBasedSet : MXFTextBasedObject
     {
+        private const string CATEGORYNAME = "GenericStreamTextBasedSet";
+
         public readonly MXFKey genericStreamID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x01, 0x03, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00);
 
-        [CategoryAttribute("GenericStreamTextBasedSet"), Description("")]
+        [Category(CATEGORYNAME)]
         public UInt32 GenericStreamID { get; set; }
-
-
 
         public MXFGenericStreamTextBasedSet(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV)

@@ -48,29 +48,31 @@ namespace Myriadbits.MXF
 
 	public class MXFCDPPacket : MXFObject
 	{
+		private const string CATEGORYNAME = "CDPPacket";
+
 		private MXFCDFFrameRate FrameRateE { get; set; }
 
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public double? FrameRate { get; set; }
 
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public bool TimeCodePresent { get; set; }
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public bool CCDataPresent { get; set; }
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public bool SVCInfoPresent { get; set; }
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public bool SVCInfoStart { get; set; }
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public bool SVCInfoChange { get; set; }
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public bool SVCInfoComplete { get; set; }
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public bool CaptionServiceActive { get; set; }
-		[CategoryAttribute("CDP Header")]
+		[Category(CATEGORYNAME)]
 		public UInt16 SequenceCounter { get; set; }
 
-		[CategoryAttribute("CDP TimeCode")]
+		[Category(CATEGORYNAME)]
 		public MXFTimeStamp TimeCode { get; set; }
 		
 

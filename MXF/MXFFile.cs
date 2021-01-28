@@ -26,15 +26,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public enum FileParseOptions
+    public enum FileParseMode
     {
-        Normal,
-        Fast,
+        Full,
+        Partial,
     }
 
 
@@ -43,7 +42,7 @@ namespace Myriadbits.MXF
         Unknown,
         UsingRIP,
         Backwards,
-        Full,
+        //Full,
     }
 
 
@@ -90,7 +89,7 @@ namespace Myriadbits.MXF
         /// Create/open an MXF file
         /// </summary>
         /// <param name="fileName"></param>
-        public MXFFile(string fileName, BackgroundWorker worker, FileParseOptions options = FileParseOptions.Normal)
+        public MXFFile(string fileName, BackgroundWorker worker, FileParseMode options = FileParseMode.Full)
         {
             this.Filename = fileName;
             this.Partitions = new List<MXFPartition>();
@@ -99,11 +98,11 @@ namespace Myriadbits.MXF
 
             switch (options)
             {
-                case FileParseOptions.Normal:
+                case FileParseMode.Full:
                     ParseFull(worker);
                     break;
 
-                case FileParseOptions.Fast:
+                case FileParseMode.Partial:
                     ParsePartial(worker);
                     break;
             }
@@ -123,7 +122,7 @@ namespace Myriadbits.MXF
             MXFPartition currentPartition = null;
             int previousPercentage = 0;
             Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
-            int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
+            //int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
             using (m_reader = new MXFReader(this.Filename))
             {
                 this.Filesize = m_reader.Size;
@@ -135,9 +134,9 @@ namespace Myriadbits.MXF
                 {
                     MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
 
-                    // Update overall counters
-                    if (klv.Key.Type == KeyType.None)
-                        counters[(int)klv.Key.Type]++;
+                    //// Update overall counters
+                    //if (klv.Key.Type == KeyType.None)
+                    //    counters[(int)klv.Key.Type]++;
 
                     // Process the new KLV
                     ProcessKLVObject(klv, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
@@ -314,8 +313,7 @@ namespace Myriadbits.MXF
                 case KeyType.PrimerPack:
                     if (currentPartition != null)
                     {
-                        MXFPrimerPack primer = klv as MXFPrimerPack;
-                        if (primer != null) // Just to be sure
+                        if (klv is MXFPrimerPack primer)
                         {
                             // Let the partition know all primer keys
                             allPrimerKeys = primer.AllKeys;
@@ -437,11 +435,13 @@ namespace Myriadbits.MXF
             this.m_results.Clear();
 
             // Execute validation tests
-            List<MXFValidator> allTests = new List<MXFValidator>();
-            allTests.Add(new MXFValidatorInfo());
-            allTests.Add(new MXFValidatorPartitions());
-            allTests.Add(new MXFValidatorRIP());
-            allTests.Add(new MXFValidatorKeys());
+            List<MXFValidator> allTests = new List<MXFValidator>
+            {
+                new MXFValidatorInfo(),
+                new MXFValidatorPartitions(),
+                new MXFValidatorRIP(),
+                new MXFValidatorKeys()
+            };
 
             if (extendedTest)
             {
@@ -458,8 +458,6 @@ namespace Myriadbits.MXF
                 MXFValidationResult valResult = new MXFValidationResult("Index Table");
                 this.m_results.Add(valResult);
                 valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
-                //MXFValidationResult valResult = new MXFValidationResult("Index Tables");				
-                //this.Results.Add(valResult); // And directly add the results
             }
         }
 
@@ -473,7 +471,7 @@ namespace Myriadbits.MXF
 
             LogicalAddChilds(this.LogicalBase);
 
-            this.LogicalBase.Children.OrderBy(c => c.Object.Offset);
+            this.LogicalBase.Children = this.LogicalBase.Children.OrderBy(c => c.Object.Offset).ToList();
         }
 
         /// <summary>

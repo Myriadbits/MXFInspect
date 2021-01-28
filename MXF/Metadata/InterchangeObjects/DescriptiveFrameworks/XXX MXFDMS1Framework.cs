@@ -27,6 +27,8 @@ namespace Myriadbits.MXF
 {
     public class MXFDMS1Framework : MXFDescriptiveFramework
     {
+        private const string CATEGORYNAME = "DMS1Framework";
+
         public readonly MXFKey frameworkTitle_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x01, 0x05, 0x0f, 0x01, 0x00, 0x00, 0x00, 0x00);
         public readonly MXFKey extTextLanguageCode_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x07, 0x03, 0x01, 0x01, 0x02, 0x02, 0x13, 0x00, 0x00);
         public readonly MXFKey primExtSpokenLanguageCode_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x07, 0x03, 0x01, 0x01, 0x02, 0x03, 0x11, 0x00, 0x00);
@@ -40,19 +42,23 @@ namespace Myriadbits.MXF
         public readonly MXFKey participantObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x13, 0x00);
         public readonly MXFKey metadataServerLocators_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x06, 0x0c, 0x00, 0x00);
 
-        [CategoryAttribute("DMS1Framework"), Description("")]
+        [Category(CATEGORYNAME)]
         public string FrameworkTitle { get; set; }
-        [CategoryAttribute("DMS1Framework"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public string FrameworkExtendedTextLanguageCode { get; set; }
-        [CategoryAttribute("DMS1Framework"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public string PrimaryExtendedSpokenLanguageCode { get; set; }
-        [CategoryAttribute("DMS1Framework"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public string SecondaryExtendedSpokenLanguageCode { get; set; }
-        [CategoryAttribute("DMS1Framework"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public string OriginalExtendedSpokenLanguageCode { get; set; }
-        [CategoryAttribute("DMS1Framework"), Description("")]
+
+        [Category(CATEGORYNAME)]
         public string FrameworkThesaurusName { get; set; }
-        [CategoryAttribute("DMS1Framework"), Description("")]
 
         public MXFDMS1Framework(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV)

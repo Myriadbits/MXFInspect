@@ -27,7 +27,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFNetworkLocator : MXFLocator
 	{
-		[CategoryAttribute("NetworkLocator"), Description("4001")]
+		private const string CATEGORYNAME = "NetworkLocator";
+
+		[Category(CATEGORYNAME)]
 		public string URLString { get; set; }
 
 		public MXFNetworkLocator(MXFReader reader, MXFKLV headerKLV)

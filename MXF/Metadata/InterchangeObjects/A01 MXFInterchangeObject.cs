@@ -25,39 +25,46 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFInterchangeObject : MXFMetadataBaseclass, IUUIDIdentifiable
-	{
-		public readonly MXFKey appPluginObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x06, 0x01, 0x01, 0x04, 0x02, 0x0e, 0x00, 0x00);
+    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 4)]
+    public class MXFInterchangeObject : MXFMetadataBaseclass, IUUIDIdentifiable
+    {
+        private const string CATEGORYNAME = "InterchangeObject";
 
-		[CategoryAttribute("InterchangeObject"), Description("3C0A")]
-		public MXFUUID InstanceID { get; set; }
+        public readonly MXFKey appPluginObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x06, 0x01, 0x01, 0x04, 0x02, 0x0e, 0x00, 0x00);
 
-		[CategoryAttribute("InterchangeObject"), Description("0101")]
-		public MXFKey ObjectClass { get; set; }
-		[CategoryAttribute("InterchangeObject"), Description("0102")]
-		public MXFUUID LinkedGenerationID { get; set; }
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.01011502.00000000")]
+        public MXFUUID InstanceID { get; set; }
 
-		public MXFInterchangeObject(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
-		{
-		}
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01010000")]
+        public MXFKey ObjectClass { get; set; }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x3C0A: this.InstanceID = new MXFUUID(reader); return true;
-				case 0x0102: this.LinkedGenerationID = new MXFUUID(reader); return true;
-				case 0x0101: this.ObjectClass = reader.ReadKey(); return true;
-				// TODO replace generic MXFObject with class ApplicationPluginObject once implemented
-				case var a when localTag.Key == appPluginObjects_Key: ReadReferenceSet<MXFObject>(reader, "Application Plugin Objects", "Application Plugin Object");  return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.08000000")]
+        public MXFUUID LinkedGenerationID { get; set; }
+
+        public MXFInterchangeObject(MXFReader reader, MXFKLV headerKLV, string metadataName)
+            : base(reader, headerKLV, metadataName)
+        {
+        }
+
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.Tag)
+            {
+                case 0x3C0A: this.InstanceID = reader.ReadUUIDKey(); return true;
+                case 0x0102: this.LinkedGenerationID = reader.ReadUUIDKey(); return true;
+                case 0x0101: this.ObjectClass = reader.ReadULKey(); return true;
+                // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
+                case var a when localTag.Key == appPluginObjects_Key: ReadReferenceSet<MXFObject>(reader, "Application Plugin Objects", "Application Plugin Object"); return true;
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
 
         public MXFUUID GetUUID()
         {

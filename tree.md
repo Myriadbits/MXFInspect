@@ -7,7 +7,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
 | ------------- | ------------------------------------------------- |
 | :hammer:      | not fully implemented                             |
 | :interrobang: | more investigation required to remove uncertainty |
-| :question:    | unclear about what  this  group shouldrepresent   |
+| :question:    | unclear about what  this  group should represent   |
 | :scroll:      | properties defined by local tags                  |
 | :dart:        | easy to implement                                 |
 
@@ -17,41 +17,41 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
 
 <font size="-1">
 
-- [ ] DMCVTGenericSet1 :question:
+- [ ] DMCVTGenericSet1 [12] *(abstract)* :question:
     - [ ] DMCVTApp1Set 
     - [ ] DMCVTApp2Set 
     - [ ] DMCVTApp3Set 
     - [ ] DMCVTApp4Set
-- [x] InterchangeObject :hammer: :scroll:
-    - [x] Component :hammer: :scroll:
-        - [x] Segment *(abstract class?)*
-            - [ ] EdgeCode
-            - [ ] EssenceGroup 
-            - [x] Event
-                - [ ] GPITrigger 
-                - [ ] CommentMarker
-                    - [ ] DescriptiveMarker
-                      - [ ] DynamicMarker
-                        - [ ] DynamicClip
-            - [x] Filler *(is this the B11 MXFFiller.cs?)* :question:
-            - [ ] OperationGroup 
-            - [ ] NestedScope 
-            - [ ] Pulldown
-            - [ ] ScopeReference 
-            - [ ] Selector
-            - [x] Sequence :hammer: *(ComponentObjects missing)* :scroll:
-            - [ ] SourceReference
-                - [x] SourceClip :hammer: :scroll: *(some properties missing)* 
-                    - [ ] DescriptiveClip :scroll: :dart:
-                - [ ] TextClip *(abstract class?)*
-                    - [ ] HTMLClip :scroll: :dart:
-            - [x] Timecode
-            - [ ] TimecodeStream :scroll: :dart:
-                - [ ] TimecodeStream12M :scroll: :dart:
-            - [ ] Transition :scroll:
-    - [x] ContentStorage :scroll: :hammer:
+- [x] InterchangeObject [4/4] *(abstract)*
+    - [x] Component [5/5]*(abstract)* (= Structural Component)
+        - [x] Segment [0/0] *(abstract)*
+            - [x] EdgeCode [4/4]
+            - [x] EssenceGroup [2/2]
+            - [x] Event [2/2] *(abstract)*
+                - [x] GPITrigger [1/1]
+                - [x] CommentMarker [1/1]
+                    - [x] DescriptiveMarker [5/5]
+                      - [x] DynamicMarker [3/3]
+                        - [x] DynamicClip [4/4]
+            - [x] Filler [0/0]
+            - [x] OperationGroup [5/5]
+            - [x] NestedScope [1/1]
+            - [x] Pulldown [4/4]
+            - [x] ScopeReference [2/2]
+            - [x] Selector [2/2]
+            - [x] Sequence [1/1]
+            - [x] SourceReference [4/4] *(abstract)*
+                - [x] SourceClip [5/5]
+                    - [x] DescriptiveClip [1/1]
+                - [x] TextClip [0/0] *(abstract)*
+                    - [x] HTMLClip [2/2]
+            - [x] Timecode [3/3]
+            - [x] TimecodeStream [3/3] *(abstract)*
+                - [x] TimecodeStream12M [1/1]
+            - [x] Transition [2/2] 
+    - [x] ContentStorage [2/2]
     - [ ] ControlPoint :scroll:
-    - [ ] DefinitionObject :scroll:
+    - [ ] DefinitionObject [3] *(abstract)* :scroll:
         - [ ] DataDefinition :scroll:
         - [ ] OperationDefinition :scroll:
         - [ ] ParameterDefinition :scroll:
@@ -64,76 +64,75 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] OPDefinition :scroll:
         - [ ] CompressionDefinition :scroll:
     - [ ] Dictionary :scroll:
-    - [ ] EssenceData *(A05 EssenceContainerData)* :hammer: :scroll:
-    - [x] EssenceDescriptor *(B02 GenericDescriptor)* :hammer: :scroll:
-        - [x] FileDescriptor :scroll:
-            - [ ] AIFCDescriptor :scroll: :dart:
-            - [x] PictureDescriptor :scroll: :hammer:
-                - [x] CDCIDescriptor :scroll:
-                    - [x] MPEGVideoDescriptor
-                    - [ ] VC1VideoDescriptor
-                - [X] RGBADescriptor :scroll: :hammer: :dart:
-                - [ ] TIFFPictureEssenceDescriptor :scroll: :dart:
-            - [ ] HTMLDescriptor *(abstract class?)*
-            - [ ] TIFFDescriptor *(abstract class?)*
-            - [ ] WAVEDescriptor *(abstract class?)*
-            - [x] SoundDescriptor :hammer: :scroll:
-                - [X] WAVEPCMDescriptor *(MXFWAVEAudioEssenceDescriptor.cs)*
-                    - [X] AES3PCMDescriptor *(1 property missing in online register)*
-                - [ ] DCPCMSoundDescriptor
-                - [ ] MPEGAudioDescriptor
-            - [X] DataEssenceDescriptor
-                - [ ] ParsedTextDescriptor :scroll: :dart:
-                    - [ ] SGMLDescriptor
-                        - [ ] XMLDescriptor :scroll: :dart:
-                        - [ ] HTMLParsedTextDescriptor :scroll: :dart:
-                - [ ] RP217Descriptor :scroll: :dart:
-                - [ ] VBIDataDescriptor
-                - [ ] ANCDataDescriptor
-                - [ ] DCTimedTextDescriptor
-                - [ ] EventTextDescriptor
-                    - [ ] STLDescriptor
-                - [ ] AuxDataEssenceDescriptor
-            - [X] MultipleDescriptor 
-            - [ ] DateTimeDescriptor :scroll: :dart:
-        - [ ] FilmDescriptor :scroll: :dart:
-        - [ ] TapeDescriptor :scroll:
-        - [ ] PhysicalDescriptor *(abstract class?)*
-            - [ ] ImportDescriptor *(abstract class?)*
-                - [ ] BWFImportDescriptor :scroll:
-            - [ ] RecordingDescriptor *(abstract class?)*
-            - [ ] AuxiliaryDescriptor :scroll: :dart: 
-    - [X] Preface :hammer:
-    - [x] Identification 
-    - [ ] Locator
-        - [ ] NetworkLocator :dart: :scroll:
-        - [ ] TextLocator :dart: :scroll:
-        - [ ] FROM HERE ON THE LIST IS NOT UPDATED
-    - [ ] Package :scroll: 
-        - [ ] CompositionPackage 
-        - [ ] MaterialPackage 
-        - [ ] SourcePackage 
-    - [ ] Track
-        - [ ] EventTrack 
-        - [ ] StaticTrack 
-        - [ ] TimelineTrack 
-    - [ ] Parameter
+    - [x] EssenceData [9/9] *(A05 EssenceContainerData)*
+    - [x] EssenceDescriptor [2/2] *(abstract)* *(B02 GenericDescriptor)*
+        - [x] FileDescriptor [5/5] *(abstract)*
+            - [x] AIFCDescriptor [1/1]
+            - [x] PictureDescriptor [35/35] *(abstract)*
+                - [x] CDCIDescriptor [10/10]
+                    - [x] MPEGVideoDescriptor [10/10]
+                    - [x] VC1VideoDescriptor [10/10]
+                - [x] RGBADescriptor [8/8]
+                - [x] TIFFPictureEssenceDescriptor [0/0] *(abstract)* 
+            - [x] HTMLDescriptor [0/0]
+            - [x] TIFFDescriptor [6/6]
+            - [x] WAVEDescriptor [1/1]
+            - [x] SoundDescriptor [10/10]
+                - [x] WAVEPCMDescriptor [13/13] 
+                    - [x] AES3PCMDescriptor [7/7]
+                - [ ] DCPCMSoundDescriptor [0/0]
+                - [ ] MPEGAudioDescriptor [0/2]
+            - [x] DataEssenceDescriptor [1/1] :hammer:
+                - [ ] ParsedTextDescriptor [0/1] *(abstract)*:scroll: :dart:
+                    - [ ] SGMLDescriptor [0/0] *(abstract)*
+                        - [ ] XMLDescriptor [0/3] :scroll: :dart:
+                        - [ ] HTMLParsedTextDescriptor [0/1] :scroll: :dart:
+                - [ ] RP217Descriptor [0/2] :scroll: :dart:
+                - [ ] VBIDataDescriptor [0/0]
+                - [ ] ANCDataDescriptor [0/0]
+                - [x] DCTimedTextDescriptor [0/4] :hammer:
+                - [ ] EventTextDescriptor [0/2] *(abstract)*
+                    - [ ] STLDescriptor [0/1]
+                - [ ] AuxDataEssenceDescriptor [0/0]
+            - [x] MultipleDescriptor [1/1]
+            - [ ] DateTimeDescriptor [0/4] :scroll: :dart:
+        - [ ] FilmDescriptor [0/8] :scroll: :dart:
+        - [ ] TapeDescriptor [0/8]:scroll:
+        - [ ] PhysicalDescriptor [0/0] *(abstract)*
+            - [ ] ImportDescriptor [0/0]
+                - [ ] BWFImportDescriptor [0/11]:scroll:
+            - [ ] RecordingDescriptor [0/0]
+            - [ ] AuxiliaryDescriptor [0/2]:scroll: :dart: 
+    - [x] Preface [10/17]
+    - [x] Identification [9/9]
+    - [x] Locator [0/0] *(abstract)*
+        - [x] NetworkLocator [1/1]
+        - [x] TextLocator [1/1]
+    - [x] Package [4/9] *(abstract)* :scroll: 
+        - [ ] CompositionPackage [0/4] :hammer:
+        - [x] MaterialPackage *abstract* [0/0]
+        - [x] SourcePackage [1/1]
+    - [x] Track [4/4] *(abstract)*
+        - [x] EventTrack [2/2]
+        - [x] StaticTrack [0/0] *(abstract)*
+        - [x] TimelineTrack [7/7] 
+    - [x] Parameter [1/1] *(abstract)*
         - [ ] ConstantValue 
         - [ ] VaryingValue 
     - [ ] TaggedValue 
     - [ ] KLVData 
     - [ ] RIFFChunk 
-    - [ ] SubDescriptor
-        - [ ] JPEG2000SubDescriptor 
+    - [x] SubDescriptor [0/0] *(abstract)*
+        - [x] JPEG2000SubDescriptor [14/14]
         - [ ] StereoscopicPictureSubDescriptor
         - [ ] DCTimedTextResourceSubDescriptor
-        - [ ] ContainerConstraintsSubDescriptor
+        - [x] ContainerConstraintsSubDescriptor [0/0]
         - [ ] MPEG4VisualSubDescriptor 
-        - [ ] MCALabelSubDescriptor
-            - [ ] AudioChannelLabelSubDescriptor
-            - [ ] SoundfieldGroupLabelSubDescriptor
-            - [ ] GroupOfSoundfieldGroupsLabelSubDescriptor
-        - [ ] AVCSubDescriptor 
+        - [x] MCALabelSubDescriptor [0/14]
+            - [x] AudioChannelLabelSubDescriptor [0/1]
+            - [x] SoundfieldGroupLabelSubDescriptor [0/1]
+            - [x] GroupOfSoundfieldGroupsLabelSubDescriptor [0/0]
+        - [x] AVCSubDescriptor [15/15]
         - [ ] STLSubDescriptor 
         - [ ] OperationsStereoscopicSubDescriptor
         - [ ] VC2SubDescriptor 
@@ -141,29 +140,29 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] VC5BayerPictureEssenceSubDescriptor
         - [ ] VC5CDCIPictureEssenceSubDescriptor
         - [ ] AACSubDescriptor 
-        - [ ] ACESPictureSubDescriptor 
-        - [ ] TargetFrameSubDescriptor 
+        - [x] ACESPictureSubDescriptor [5/5]
+        - [x] TargetFrameSubDescriptor [0/10] :hammer:
         - [ ] AS_07_TimecodeLabelSubdescriptor
     - [ ] PackageMarker 
     - [ ] ApplicationObject
         - [ ] ApplicationPlugInObject 
         - [ ] ApplicationReferencedObject 
-    - [ ] DescriptiveObject
-        - [ ] DMS1Object
+    - [x] DescriptiveObject [1] *(abstract)*
+        - [ ] DMS1Object [0] *(abstract)*
             - [ ] Publication 
-            - [ ] ContactsList 
-            - [ ] Address 
+            - [x] ContactsList [3/3]
+            - [x] Address [15/15]
             - [ ] Communications 
             - [ ] PictureFormat 
             - [ ] NameValue 
             - [ ] Processing 
             - [ ] Project 
-            - [ ] TextLanguage
+            - [ ] TextLanguage [0] *(abstract)*
                 - [ ] Titles 
                 - [ ] Branding
                 - [ ] Shot 
                 - [ ] CueWords
-                - [ ] Thesaurus
+                - [x] Thesaurus [1/1] *(abstract)*
                     - [ ] DMS1Identification
                     - [ ] GroupRelationship
                     - [ ] DMS1Event
@@ -178,19 +177,19 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                     - [ ] Contract
                     - [ ] Rights
                     - [ ] DeviceParameters
-                    - [ ] Contact
+                    - [x] Contact [3/3] *(abstract)*
                         - [ ] Person
                         - [ ] Organization
-                        - [ ] Location
+                        - [x] Location [2/2]
         - [ ] CryptographicContext 
-        - [ ] TextBasedObject
-            - [ ] GenericStreamTextBasedSet
+        - [x] TextBasedObject [4/4]
+            - [x] GenericStreamTextBasedSet [1/1]
                 - [ ] AS_07_GSP_DMS_Object
             - [ ] UTF8TextBasedSet 
             - [ ] UTF16TextBasedSet 
-        - [ ] AS_12_DescriptiveObject
+        - [ ] AS_12_DescriptiveObject [0] *(abstract)*
             - [ ] DMS_AS_12_AdID_Slate
-        - [ ] EBUCoreObject
+        - [ ] EBUCoreObject [0] *(abstract)*
             - [ ] coreMetadata 
             - [ ] metadataSchemaInformation
             - [ ] identifier 
@@ -271,7 +270,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] part 
             - [ ] partMetadata 
             - [ ] hash 
-            - [ ] locator 
+            - [ ] locator
             - [ ] containerFormat 
             - [ ] audioFormatExtended
             - [ ] audioProgramme 
@@ -312,22 +311,22 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] affiliation 
         - [ ] AS_07_DMS_Device 
         - [ ] AS_07_DMS_Identifier 
-    - [ ] DescriptiveFramework
-        - [ ] DMS1Framework
+    - [x] DescriptiveFramework [1/1] *(abstract)*
+        - [x] DMS1Framework [12/12] *(abstract)*
             - [ ] SceneFramework 
-            - [ ] ProductionClipFramework
-                - [ ] ProductionFramework
+            - [x] ProductionClipFramework [4/4] *(abstract)*
+                - [x] ProductionFramework [7/7]
                 - [ ] ClipFramework
         - [ ] CryptographicFramework 
         - [ ] DMS_AS_03_Framework 
-        - [ ] TextBasedFramework
+        - [x] TextBasedFramework
             - [ ] AS_07_GSP_DMS_Framework
                 - [ ] AS_07_GSP_BD_DMS_Framework
                 - [ ] AS_07_GSP_TD_DMS_Framework
         - [ ] EIDRFramework 
-        - [ ] DM_Segmentation_Framework
+        - [ ] DM_Segmentation_Framework [0] *(abstract)*
             - [ ] DM_AS_11_Segmentation_Framework
-            - [ ] AS_07_Segmentation_DMS_Framework
+            - [ ] AS_07_Segmentation_DMS_Framework 
         - [ ] DMS_AS_10_Core_Framework 
         - [ ] DM_AS_11_Core_Framework 
         - [ ] DMS_AS_12_Framework 
@@ -339,10 +338,10 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] APP_TimecodeBreakFramework 
         - [ ] DM_AS_11_UKDPP_Framework 
         - [ ] AS_07_Core_DMS_Framework 
-- [ ] MetaDefinition
+- [ ] MetaDefinition *(abstract)*
     - [ ] ClassDefinition 
-    - [ ] PropertyDefinition 
-    - [ ] TypeDefinition
+    - [ ] PropertyDefinition
+    - [ ] TypeDefinition [0] *(abstract)*
         - [ ] TypeDefinitionInteger 
         - [ ] TypeDefinitionStrongObjectReference
         - [ ] TypeDefinitionWeakObjectReference
@@ -358,19 +357,19 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] TypeDefinitionIndirect
             - [ ] TypeDefinitionOpaque
         - [ ] TypeDefinitionCharacter
-- [ ] PartitionPack
-    - [ ] HeaderPartitionPack
+- [ ] PartitionPack [13] *(abstract)*
+    - [ ] HeaderPartitionPack [0] *(abstract)*
         - [ ] HeaderPartitionOpenIncomplete 
         - [ ] HeaderPartitionClosedIncomplete
         - [ ] HeaderPartitionOpenComplete 
         - [ ] HeaderPartitionClosedComplete 
-    - [ ] BodyPartitionPack
+    - [ ] BodyPartitionPack [0]*(abstract)*
         - [ ] BodyPartitionOpenIncomplete 
         - [ ] BodyPartitionClosedIncomplete 
         - [ ] BodyPartitionOpenComplete 
         - [ ] BodyPartitionClosedComplete 
         - [ ] GenericStreamPartition 
-    - [ ] FooterPartitionPack
+    - [ ] FooterPartitionPack [0] *(abstract)*
         - [ ] FooterPartitionClosedIncomplete
-        - [ ] FooterPartitionClosedComplete 
+        - [ ] FooterPartitionClosedComplete *
 </font>

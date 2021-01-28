@@ -28,11 +28,18 @@ namespace Myriadbits.MXF
 {
 	public class MXFTimecodeComponent : MXFSegment
 	{
-		[CategoryAttribute("TimecodeComponent"), Description("1501")]
-		public UInt64? StartTimecode { get; set; }
-		[CategoryAttribute("TimecodeComponent"), Description("1502")]
-		public UInt16? RoundedTimecodeBase { get; set; }
-		[CategoryAttribute("TimecodeComponent"), Description("1503")]
+		private const string CATEGORYNAME = "TimecodeComponent";
+
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01050000")]
+		public MXFPositionType? StartTimecode { get; set; }
+		
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.04040101.02060000")]
+		public UInt16? FramesPerSecond { get; set; }
+		
+		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010101.04040101.05000000")]
 		public bool? DropFrame { get; set; }
 
 		public MXFTimecodeComponent(MXFReader reader, MXFKLV headerKLV)
@@ -54,7 +61,7 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x1501: this.StartTimecode = reader.ReadUInt64(); return true;
-				case 0x1502: this.RoundedTimecodeBase = reader.ReadUInt16(); return true;
+				case 0x1502: this.FramesPerSecond = reader.ReadUInt16(); return true;
 				case 0x1503: this.DropFrame = (reader.ReadByte() != 0); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 

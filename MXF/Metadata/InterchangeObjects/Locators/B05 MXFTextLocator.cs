@@ -27,7 +27,9 @@ namespace Myriadbits.MXF
 {
 	public class MXFTextLocator : MXFLocator
 	{
-		[CategoryAttribute("TexLocator"), Description("4101")]
+		private const string CATEGORYNAME = "TextLocator";
+
+		[Category("TextLocator")]
 		public string LocationName { get; set; }
 
 		public MXFTextLocator(MXFReader reader, MXFKLV headerKLV)

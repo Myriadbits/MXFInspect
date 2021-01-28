@@ -35,29 +35,13 @@ namespace Myriadbits.MXFInspect
 {
     public partial class MXFView : MyFormPage
     {
+        #region Public props
+
         public MXFObject PhysicalTreeSelectedObject { get; private set; }
         public MXFLogicalObject LogicalTreeSelectedObject { get; private set; }
-        public MXFObject SelectedObject { get; private set; }
-
-        private FormMain ParentMainForm { get; set; }
-
-        private MXFObject m_selectedObject = null;
-
-        private MXFObject m_currentReference = null;
-
-        private Stopwatch m_stopWatch = new Stopwatch();
-        private int m_lastPercentage = 0;
-
-
-        private bool m_fDoNotSelectOther = false;
-        private FileParseOptions m_eFileParseOptions = FileParseOptions.Normal;
-
-        private bool _fillerHidden = true;
-        public bool FillerHidden { get => _fillerHidden; set { this._fillerHidden = value; this.HideFiller(value); } }
-
         public bool PhysicalViewShown { get; set; } = true;
         public string Filename { get; set; }
-
+        
         private bool _currentTypeFiltered = false;
         public bool FilterCurrentType
         {
@@ -68,6 +52,42 @@ namespace Myriadbits.MXFInspect
                 this.SetTypeFilter(value);
             }
         }
+
+        private bool _fillerHidden = true;
+        public bool FillerHidden
+        {
+            get => _fillerHidden;
+            set
+            {
+                this._fillerHidden = value;
+                this.HideFiller(value);
+            }
+        }
+
+        private bool _showPropInfo = false;
+        public bool ShowPropertyInfo
+        {
+            get => _showPropInfo;
+            set
+            {
+                this._showPropInfo = value;
+                this.ShowPropInfo(value);
+            }
+        }
+
+        #endregion
+
+        private FormMain ParentMainForm { get; set; }
+
+        private FileParseMode FileParseMode { get; set; } = FileParseMode.Full;
+
+        private Stopwatch m_stopWatch = new Stopwatch();
+        private int m_lastPercentage = 0;
+        private bool m_fDoNotSelectOther = false;
+
+
+
+
 
         public MXFFile File { get; private set; }
 
@@ -92,9 +112,6 @@ namespace Myriadbits.MXFInspect
 
             ObjectListView.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
             this.Text = this.Filename;
-            this.btnSelectReference.Enabled = false;
-            this.btnNext.Enabled = false;
-            this.btnPrevious.Enabled = false;
 
             this.MinimizeBox = false;
             this.MaximizeBox = false;
@@ -102,34 +119,60 @@ namespace Myriadbits.MXFInspect
             this.splitMain.Visible = false;
             this.prbProcessing.Visible = true;
 
-            //bug that means you have to set the desired icon again otherwise it reverts to default when child form is maximised
+            // bug that means you have to set the desired icon again otherwise it reverts to default when child form is maximised
             this.Icon = Myriadbits.MXFInspect.Properties.Resources.ChildIcon;
-
-            this.chkInfo.Checked = true;
-            this.propGrid.HelpVisible = this.chkInfo.Checked;
-
 
             // wiring treelistviews with selectionchanged event
             this.tlvPhysical.SelectionChanged += PhysicalTree_SelectionChanged;
             this.tlvLogical.SelectionChanged += LogicalTree_SelectionChanged;
 
-            // Determine the filesize
-            m_eFileParseOptions = FileParseOptions.Normal;
-            long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
-            FileInfo f = new FileInfo(this.Filename);
-            if (f.Length > fileThreshold)
-            {
-                m_eFileParseOptions = FileParseOptions.Fast;
-                if (MXFInspect.Properties.Settings.Default.PartialLoadWarning)
-                {
-                    MessageBox.Show(string.Format("The file {0} is larger then the threshold and will be loaded partially.\nA partition will be loaded when expanding the partition in the tree.", this.Filename), "Partial loading active", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            // TODO move this up the calling tree (i.e. to mainform) where we perform the check
+            this.FileParseMode = DetermineFileParseMode();
 
+            if (this.FileParseMode == FileParseMode.Partial && MXFInspect.Properties.Settings.Default.PartialLoadWarning)
+            {
+                MessageBox.Show(string.Format("The file {0} is larger then the threshold and will be loaded partially.\nA partition will be loaded when expanding the partition in the tree.", this.Filename), "Partial loading active", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             this.bgwProcess.RunWorkerAsync(this);
 
             ParentMainForm.EnableUI(false);
+        }
+
+        private FileParseMode DetermineFileParseMode()
+        {
+            // Determine the filesize
+            long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
+            FileInfo f = new FileInfo(this.Filename);
+
+            // if setting is no partial load at alle then threshold is negative
+            if (f.Length > fileThreshold && fileThreshold >= 0)
+            {
+                return FileParseMode.Partial;
+            }
+            else return FileParseMode.Full;
+        }
+
+        /// <summary>
+        /// Fill the tree
+        /// </summary>
+        private void FillTree()
+        {
+            try
+            {
+                this.tlvPhysical.FillTree(this.File.Children.OrderBy(c => c.Offset));
+                this.tlvPhysical.HideFillers(this.FillerHidden);
+
+                var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
+                this.tlvLogical.FillTree(logicalList);
+
+                this.txtOverall.Text = string.Format("Total objects: {0}", this.File.Descendants().Count());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error while populating the trees");
+                this.Close();
+            }
         }
 
         private void PhysicalTree_SelectionChanged(object sender, EventArgs e)
@@ -146,14 +189,13 @@ namespace Myriadbits.MXFInspect
                     // Try to select this object in the logical list as well
                     m_fDoNotSelectOther = true;
                     this.tlvLogical.RevealAndSelectObject(logicalObj);
-                    
+
                     // Display the mxfobject as hex dump
                     rtfHexViewer.SetObject(PhysicalTreeSelectedObject);
 
                     m_fDoNotSelectOther = false;
                 }
             }
-            this.btnNext.Enabled = this.btnPrevious.Enabled = (PhysicalTreeSelectedObject != null);
             ParentMainForm.UpdateMenu();
         }
 
@@ -183,90 +225,14 @@ namespace Myriadbits.MXFInspect
                         m_fDoNotSelectOther = false;
                     }
                 }
-                this.btnNext.Enabled = this.btnPrevious.Enabled = (obj != null);
             }
             ParentMainForm.UpdateMenu();
         }
 
-        /// <summary>
-        /// If the newly selected item is of type referenceKey, allow jump on double click
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void propGrid_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
+        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            m_selectedObject = e.NewSelection.Value as MXFObject;
-
-            m_currentReference = null;
-            if (m_selectedObject != null)
-            {
-                // Select the reference itself by default
-                m_currentReference = m_selectedObject;
-
-                if (m_selectedObject is IResolvable resolvable)
-                {
-                    if (resolvable.GetReference() != null)
-                        m_currentReference = resolvable.GetReference();
-                    else
-                        m_currentReference = null; // Reset ?? dumb logic?
-                }
-            }
-            this.btnSelectReference.Enabled = (m_currentReference != null);
-        }
-
-        /// <summary>
-        /// Select the reference
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSelectReference_Click(object sender, EventArgs e)
-        {
-            if (m_currentReference != null)
-            {
-                this.tlvPhysical.RevealAndSelectObject(m_currentReference);
-            }
-        }
-
-        /// <summary>
-        /// Find the next item with the same key
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void SelectNextObject()
-        {
-            MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
-            if (selectedObject != null)
-            {
-                // TODO is the hidefillers boolean really needed?
-                MXFObject nextObject = selectedObject.FindNextObjectOfType(selectedObject.GetType(), this.FillerHidden);
-
-                if (nextObject != null)
-                {
-                    this.tlvPhysical.RevealAndSelectObject(nextObject);
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// Find the previous item in this parent
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void SelectPreviousObject()
-        {
-            MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
-            if (selectedObject != null)
-            {
-                // TODO is the hidefillers boolean really needed?
-                MXFObject prevObject = selectedObject.FindPreviousObjectOfType(selectedObject.GetType(), this.FillerHidden);
-
-                if (prevObject != null)
-                {
-                    this.tlvPhysical.RevealAndSelectObject(prevObject);
-                }
-
-            }
+            this.PhysicalViewShown = tabMain.SelectedTab == tpPhysical;
+            this.ParentMainForm.UpdateMenu();
         }
 
         private void SetTypeFilter(bool filtered)
@@ -281,24 +247,70 @@ namespace Myriadbits.MXFInspect
         }
 
         /// <summary>
-        /// Find the next item with the same key
+        /// Show/hide property info help
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnNext_Click(object sender, EventArgs e)
+        private void ShowPropInfo(bool showInfo)
         {
-            SelectNextObject();
+            this.propGrid.HelpVisible = showInfo;
+        }
+
+        public void SelectNextObject()
+        {
+            MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
+            if (selectedObject != null)
+            {
+                MXFObject nextObject = selectedObject.FindNextObjectOfType(selectedObject.GetType());
+
+                if (nextObject != null)
+                {
+                    this.tlvPhysical.RevealAndSelectObject(nextObject);
+                }
+
+            }
+        }
+
+        public void SelectPreviousObject()
+        {
+            MXFObject selectedObject = this.tlvPhysical.SelectedObject as MXFObject;
+            if (selectedObject != null)
+            {
+                MXFObject prevObject = selectedObject.FindPreviousObjectOfType(selectedObject.GetType());
+
+                if (prevObject != null)
+                {
+                    this.tlvPhysical.RevealAndSelectObject(prevObject);
+                }
+
+            }
+        }
+
+
+
+        public void CollapseAll()
+        {
+            if (this.PhysicalViewShown)
+            {
+                this.tlvPhysical.CollapseAll();
+            }
+            else
+            {
+                this.tlvLogical.CollapseAll();
+            }
+
         }
 
         /// <summary>
-        /// Find the previous item in this parent
+        /// Apply all user settings
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnPrevious_Click(object sender, EventArgs e)
+        public void ApplyUserSettings()
         {
-            SelectPreviousObject();
+            this.tlvPhysical.Refresh();
+            this.tlvLogical.Refresh();
         }
+
+        #region backgroundworker
 
         /// <summary>
         /// Worker thread!
@@ -312,33 +324,11 @@ namespace Myriadbits.MXFInspect
             {
                 BackgroundWorker worker = sender as BackgroundWorker;
                 // Process the file
-                this.File = new MXFFile(this.Filename, worker, m_eFileParseOptions);
+                this.File = new MXFFile(this.Filename, worker, this.FileParseMode);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error while opening the file");
-            }
-        }
-
-        /// <summary>
-        /// Fill the tree
-        /// </summary>
-        private void FillTree()
-        {
-            try
-            {
-                this.tlvPhysical.FillTree(this.File.Children.OrderBy(c => c.Offset));
-                this.tlvPhysical.HideFillers(this.FillerHidden);
-
-                var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
-                this.tlvLogical.FillTree(logicalList);
-
-                this.txtOverall.Text = string.Format("Total objects: {0}", this.File.Descendants().Count());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error while populating the trees");
-                this.Close();
             }
         }
 
@@ -372,7 +362,6 @@ namespace Myriadbits.MXFInspect
             this.prbProcessing.Value = e.ProgressPercentage;
         }
 
-
         /// <summary>
         /// Finished processing
         /// </summary>
@@ -392,49 +381,6 @@ namespace Myriadbits.MXFInspect
             fr.ShowDialog(ParentMainForm);
         }
 
-
-        /// <summary>
-        /// Show/hide help
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkInfo_CheckedChanged(object sender, EventArgs e)
-        {
-            this.propGrid.HelpVisible = this.chkInfo.Checked;
-        }
-
-        /// <summary>
-        /// Collapse all except the partitions
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void CollapseAll()
-        {
-            if (this.PhysicalViewShown)
-            {
-                this.tlvPhysical.CollapseAll();
-            }
-            else
-            {
-                this.tlvLogical.CollapseAll();
-            }
-            
-        }
-
-
-        /// <summary>
-        /// Apply all user settings
-        /// </summary>
-        public void ApplyUserSettings()
-        {
-            this.tlvPhysical.Refresh();
-            this.tlvLogical.Refresh();
-        }
-
-        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.PhysicalViewShown = tabMain.SelectedTab == tpPhysical;
-            this.ParentMainForm.UpdateMenu();
-        }
+        #endregion
     }
 }

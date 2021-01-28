@@ -23,14 +23,6 @@
 
 using Myriadbits.MXFInspect.Properties;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -67,6 +59,9 @@ namespace Myriadbits.MXFInspect
                     break;
                 case 10*1000:
                     this.cmbThreshold.SelectedIndex = 5;
+                    break;
+                case -1:
+                    this.cmbThreshold.SelectedIndex = 6;
                     break;
                 default:
                     this.cmbThreshold.SelectedIndex = 0;
@@ -124,6 +119,9 @@ namespace Myriadbits.MXFInspect
                     break;
                 case 5:
                     settings.PartialLoadThresholdMB = 10 * 1000;
+                    break;
+                case 6:
+                    settings.PartialLoadThresholdMB = -1;
                     break;
                 default:
                     settings.PartialLoadThresholdMB = 0;

@@ -49,20 +49,20 @@ namespace Myriadbits.MXF
 		/// MXF Object constructor
 		/// </summary>
 		/// <param name="reader"></param>
-		public MXFNamedObject(string collectionName, long offset)
+		public MXFNamedObject(string name, long offset)
 			: base(offset)
 		{
-			this.Name = collectionName;
+			this.Name = name;
 		}
 
 		/// <summary>
 		/// MXF Object constructor
 		/// </summary>
 		/// <param name="reader"></param>
-		public MXFNamedObject(string collectionName, long offset, MXFObjectType type)
+		public MXFNamedObject(string name, long offset, MXFObjectType type)
 			: base(offset)
 		{
-			this.Name = collectionName;
+			this.Name = name;
 			this.m_eType = type;
 		}
 
@@ -70,10 +70,10 @@ namespace Myriadbits.MXF
 		/// MXF Object constructor
 		/// </summary>
 		/// <param name="reader"></param>
-		public MXFNamedObject(string collectionName, long offset, long length)
+		public MXFNamedObject(string name, long offset, long length)
 			: base(offset)
 		{
-			this.Name = collectionName;
+			this.Name = name;
 			this.Length = length;
 		}
 

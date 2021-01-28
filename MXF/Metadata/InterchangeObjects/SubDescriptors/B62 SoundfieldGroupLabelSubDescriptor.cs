@@ -23,25 +23,12 @@
 
 namespace Myriadbits.MXF
 {
-	public class SoundfieldGroupLabelSubDescriptor : MXFInterchangeObject
+	public class SoundfieldGroupLabelSubDescriptor : MCALabelSubDescriptor
     {
 		public SoundfieldGroupLabelSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "SoundfieldGroupLabelSubDescriptor")
+			: base(reader, headerKLV)
 		{
+			this.MetaDataName = "SoundfieldGroupLabelSubDescriptor";
 		}
-
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				//case 0x2F01: ReadKeyList(reader, "Locators", "Locator"); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
-
 	}
 }

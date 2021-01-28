@@ -28,20 +28,22 @@ namespace Myriadbits.MXF
 {
 	public class MXFTimelineTrack : MXFGenericTrack
 	{
-		[CategoryAttribute("TimelineTrack"), Description("4B01")]
+		private const string CATEGORYNAME = "TimeLineTrack";
+
+		[Category(CATEGORYNAME)]
 		public MXFRational EditRate { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B02")]
-		public UInt64? Origin { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B02")]
-		public UInt64? MarkIn { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B03")]
-		public UInt64? UserPosition { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B05")]
-		public UInt64? PackageMarkInPosition { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B06")]
-		public UInt64? MarkOut { get; set; }
-		[CategoryAttribute("TimelineTrack"), Description("4B07")]
-		public UInt64? PackageMarkOutPosition { get; set; }
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? Origin { get; set; }
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? MarkIn { get; set; }
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? UserPosition { get; set; }
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? PackageMarkInPosition { get; set; }
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? MarkOut { get; set; }
+		[Category(CATEGORYNAME)]
+		public MXFPositionType? PackageMarkOutPosition { get; set; }
 
 		public MXFTimelineTrack(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Timeline Track")

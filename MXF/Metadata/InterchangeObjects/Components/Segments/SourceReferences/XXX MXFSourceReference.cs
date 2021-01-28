@@ -26,15 +26,27 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 4)]
     public class MXFSourceReference : MXFSegment
     {
-        [CategoryAttribute("SourceReference"), Description("1101")]
+        private const string CATEGORYNAME = "SourceReference";
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010103.01000000")]
         public MXFUMID SourcePackageID { get; set; }
-        [CategoryAttribute("SourceReference"), Description("1102")]
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010103.02000000")]
         public UInt32? SourceTrackId { get; set; }
-        [CategoryAttribute("SourceReference"), Description("1102")]
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010107.06010103.07000000")]
+        [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] ChannelIDs { get; set; }
-        [CategoryAttribute("SourceReference"), Description("1102")]
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.06010103.08000000")]
+        [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] MonoSourceTrackIDs { get; set; }
 
         public MXFSourceReference(MXFReader reader, MXFKLV headerKLV)

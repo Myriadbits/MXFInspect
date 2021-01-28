@@ -25,7 +25,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 
 namespace Myriadbits.MXF
@@ -44,26 +43,14 @@ namespace Myriadbits.MXF
         /// Create a new identifier
         /// </summary>
         /// <param name="list"></param>
-        public MXFIdentifier(params byte[] list)
+        protected MXFIdentifier(params byte[] list)
         {
             this.byteArray = new byte[list.Length];
             for (int n = 0; n < list.Length; n++)
             {
-                byteArray[n] = (byte)list[n];
+                byteArray[n] = list[n];
             }
         }
-
-        /// <summary>
-        /// Create a new identifier by reading from the current file location a given number of byter
-        /// </summary>
-        /// <param name="firstPart"></param>
-        /// <param name="reader"></param>
-        public MXFIdentifier(MXFReader reader, UInt32 length)
-        {
-            this.byteArray = reader.ReadArray(reader.ReadByte, (int)length); 
-        }
-
-        private MXFIdentifier() { }
 
         // TODO find a better name for this method, move to the only caller class???
         public bool HasSameBeginning(MXFIdentifier id)

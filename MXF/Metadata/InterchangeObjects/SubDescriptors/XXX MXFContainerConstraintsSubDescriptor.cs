@@ -21,14 +21,11 @@
 //
 #endregion
 
-using System;
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
 	// namespace: http://www.smpte-ra.org/reg/395/2014/13/1/aaf 	
 	// urn:smpte:ul:060e2b34.027f0101.0d010101.01016700
-	public class MXFContainerConstraintsSubDescriptor : MXFInterchangeObject
+	public class MXFContainerConstraintsSubDescriptor : MXFSubDescriptor
 	{
 		public MXFContainerConstraintsSubDescriptor(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "ContainerConstraintsSubDescriptor")

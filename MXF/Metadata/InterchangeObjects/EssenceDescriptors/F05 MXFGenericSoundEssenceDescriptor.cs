@@ -28,25 +28,50 @@ namespace Myriadbits.MXF
 {
     public class MXFGenericSoundEssenceDescriptor : MXFFileDescriptor
     {
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D03")]
-        public MXFRational AudioSamplingRate { get; set; }
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D02")]
-        public bool? Locked { get; set; }
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D04")]
-        public sbyte? AudioRefLevel { get; set; }
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D05")]
-        public MXFElectroSpatialFormulation? ElectroSpatialFormulation { get; set; }
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D07")]
-        public UInt32? ChannelCount { get; set; }
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D01")]
-        public UInt32? QuantizationBits { get; set; }
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D0C")]
-        public sbyte? DialNorm { get; set; }
-        [CategoryAttribute("GenericSoundEssenceDescriptor"), Description("3D06")]
-        public MXFKey SoundEssenceCoding { get; set; }
+        private const string CATEGORYNAME = "GenericSoundEssenceDescriptor";
 
-        // TODO ReferenceImageEditRate
-        // TODO ReferenceAudioAlignmentLevel
+        private readonly MXFKey refImageEditRate_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x06, 0x00, 0x00, 0x00);
+        private readonly MXFKey refAudioAlignmentLevel = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x07, 0x00, 0x00, 0x00);
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020301.01010000")]
+        public MXFRational AudioSamplingRate { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.04020301.04000000")]
+        public bool? Locked { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04020101.03000000")]
+        public sbyte? AudioRefLevel { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04020101.01000000")]
+        public MXFElectroSpatialFormulation? ElectroSpatialFormulation { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020101.04000000")]
+        public UInt32? ChannelCount { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.04020303.04000000")]
+        public UInt32? QuantizationBits { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020701.00000000")]
+        public sbyte? DialNorm { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04020402.00000000")]
+        public MXFKey SoundEssenceCoding { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04020101.06000000")]
+        public MXFRational ReferenceImageEditRate { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04020101.07000000")]
+        public byte? ReferenceAudioAlignmentLevel { get; set; }
 
         /// <summary>
         /// Constructor, set the correct descriptor name
@@ -83,7 +108,9 @@ namespace Myriadbits.MXF
                 case 0x3D07: this.ChannelCount = reader.ReadUInt32(); return true;
                 case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
                 case 0x3D0C: this.DialNorm = reader.ReadSignedByte(); return true;
-                case 0x3D06: this.SoundEssenceCoding = reader.ReadKey(); return true;
+                case 0x3D06: this.SoundEssenceCoding = reader.ReadULKey(); return true;
+                case var a when localTag.Key == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
+                case var a when localTag.Key == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

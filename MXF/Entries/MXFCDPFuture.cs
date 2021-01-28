@@ -27,9 +27,12 @@ namespace Myriadbits.MXF
 {
 	public class MXFCDPFuture : MXFObject
 	{
-		[CategoryAttribute("CDPFooter")]
+		private const string CATEGORYNAME = "CDPFuture";
+
+		[Category(CATEGORYNAME)]
 		public byte? SectionID { get; set; }
-		[CategoryAttribute("CDPFooter")]
+		[Category(CATEGORYNAME)]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }
 
 

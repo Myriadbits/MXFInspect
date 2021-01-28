@@ -28,7 +28,7 @@ namespace Myriadbits.MXF
 {
     public class MXFMPEGPictureEssenceDescriptor : MXFCDCIPictureEssenceDescriptor
     {
-        private static readonly int[] firstKey = new int[] { 0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05 };
+        private const string CATEGORYNAME = "MPEGPictureEssenceDescriptor";
 
         private readonly MXFKey bitRate_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x04, 0x01, 0x06, 0x02, 0x01, 0x0b, 0x00, 0x00);
         private readonly MXFKey identicalGOPIndicator_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x04, 0x01, 0x06, 0x02, 0x01, 0x07, 0x00, 0x00);
@@ -41,34 +41,34 @@ namespace Myriadbits.MXF
         private readonly MXFKey closedGOP_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x04, 0x01, 0x06, 0x02, 0x01, 0x06, 0x00, 0x00);
         private readonly MXFKey lowDelay_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x04, 0x01, 0x06, 0x02, 0x01, 0x05, 0x00, 0x00);
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public bool? SingleSequenceFlag { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public bool? LowDelayIndicator { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public UInt32? BitRate { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public bool? IdenticalGOPIndicator { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public bool? ConstantBPictureFlag { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public bool? ClosedGOPIndicator { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public UInt16? MaximumGOPSize { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public UInt16? MaximumBPictureCount { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public byte? ProfileAndLevel { get; set; }
 
-        [CategoryAttribute("MPEGPictureEssenceDescriptor"), Description("x")]
+        [Category(CATEGORYNAME)]
         public MXFCodedContentScanning? CodedContentScanningKind { get; set; }
 
 

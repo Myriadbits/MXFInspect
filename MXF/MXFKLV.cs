@@ -29,18 +29,20 @@ namespace Myriadbits.MXF
 {
     public class MXFKLV : MXFObject
     {
+        private const string CATEGORYNAME = "KLV";
+
         private byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
-        [CategoryAttribute("KLV")]
+        [Category(CATEGORYNAME)]
         public MXFKey Key { get; set; }
 
-        [CategoryAttribute("KLV")]
+        [Category(CATEGORYNAME)]
         public long DataOffset { get; set; } // Points just after the KLV
 
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-        [CategoryAttribute("KLV")]
+        [Category(CATEGORYNAME)]
         public MXFBER BER { get; set; }
 
         /// <summary>
@@ -136,7 +138,7 @@ namespace Myriadbits.MXF
                 // size is 0x80, which means indefinite
                 LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
                 return new MXFBER(-1, -1);
-            };
+            }
         }
 
         /// <summary>
@@ -145,9 +147,9 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public override string ToString()
         {
-            if (this.Children != null && this.Children.Count > 0)
-                return string.Format("{0} [len {1}]", this.Key.Name, this.Children.Count);
-            return string.Format("{0} [len {1}]", this.Key.Name, this.Length);
+            var name = this.Key.IsKnown ? this.Key.Name : this.Key.ToString();
+            var childrenOrLength = this.Children.Any() ? $"[{this.Children.Count}]" : $"[len {this.Length}]";
+            return $"{name} {childrenOrLength}";            
         }
     }
 }

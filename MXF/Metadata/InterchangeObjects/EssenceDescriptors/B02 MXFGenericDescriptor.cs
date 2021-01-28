@@ -23,6 +23,10 @@
 
 namespace Myriadbits.MXF
 {
+	[ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01012400", 
+		Deprecated = false, 
+		IsConcrete = false, 
+		NumberOfElements = 2)]
 	public class MXFGenericDescriptor : MXFInterchangeObject
 	{
 		private readonly MXFKey subDescriptorKey = new MXFKey(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x09,0x06,0x01,0x01,0x04,0x06,0x10,0x00,0x00);
@@ -40,8 +44,7 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				case 0x2F01: ReadReferenceSet<MXFLocator>(reader, "Locators", "Locator"); return true;
-				// TODO replace generic MXFObject with class SubDescriptor once implemented
-				case var a when localTag.Key == subDescriptorKey: ReadReferenceSet<MXFObject>(reader, "SubDescriptors", "SubDescriptor"); return true;
+				case var a when localTag.Key == subDescriptorKey: ReadReferenceSet<MXFSubDescriptor>(reader, "SubDescriptors", "SubDescriptor"); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

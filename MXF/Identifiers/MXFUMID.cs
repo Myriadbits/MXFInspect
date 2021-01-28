@@ -21,23 +21,37 @@
 //
 #endregion
 
+using System;
 using System.ComponentModel;
 using System.Text;
 
+
 namespace Myriadbits.MXF
 {
-	public class MXFUMID : MXFIdentifier
-	{
-		/// <summary>
-		/// Create a new UMID by reading 32 bytes from the current file location
-		/// </summary>
-		/// <param name="firstPart"></param>
-		/// <param name="reader"></param>
-		public MXFUMID(MXFReader reader)
-			: base(reader, 32)
-		{
-            //a UMID is 32 bytes long by definition
-		}
+    [TypeConverter(typeof(ExpandableObjectConverter))]
+    public class MXFUMID : MXFIdentifier
+    {
+        [TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] UL { get; set; }
+        public byte UMIDLength { get; set; }
+
+        [TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] InstanceNumber { get; set; }
+
+        [TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] MaterialNumber { get; set; }
+
+        public MXFUMID(params byte[] list) : base(list)
+        {
+            if (this.Length == 32)
+            {
+                UL = new ReadOnlySpan<byte>(list, 0, 12).ToArray();
+                UMIDLength = list[12];
+                InstanceNumber = new ReadOnlySpan<byte>(list, 13, 3).ToArray();
+                MaterialNumber = new ReadOnlySpan<byte>(list, 16, 16).ToArray();
+            }
+            else throw new ArgumentException("Number of bytes must be 32", "list");
+        }
 
         public override string ToString()
         {

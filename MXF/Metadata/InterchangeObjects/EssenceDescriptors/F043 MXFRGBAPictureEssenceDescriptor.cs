@@ -28,21 +28,31 @@ namespace Myriadbits.MXF
 {
 	public class MXFRGBAPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
 	{
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3406")]
+		private const string CATEGORYNAME = "RGBAPictureEssenceDescriptor";
+
+		[Category(CATEGORYNAME)]
 		public UInt32? ComponentMaxRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3407")]
+
+		[Category(CATEGORYNAME)]
 		public UInt32? ComponentMinRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3408")]
+
+		[Category(CATEGORYNAME)]
 		public UInt32? AlphaMaxRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3409")]
+
+		[Category(CATEGORYNAME)]
 		public UInt32? AlphaMinRef { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3405")]
+
+		[Category(CATEGORYNAME)]
 		public MXFScanningDirectionType? ScanningDirection { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3401")]
+
+		[Category(CATEGORYNAME)]
 		public MXFRGBAComponent[] PixelLayout { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3403")]
-		public string Palette { get; set; }
-		[CategoryAttribute("RGBAPictureEssenceDescriptor"), Description("3404")]
+
+		[Category(CATEGORYNAME)]
+		[TypeConverter(typeof(ByteArrayConverter))]
+		public byte[] Palette { get; set; }
+
+		[Category(CATEGORYNAME)]
 		public MXFRGBAComponent[] PaletteLayout { get; set; }
 
 		/// <summary>
@@ -69,7 +79,7 @@ namespace Myriadbits.MXF
 				case 0x3409: this.AlphaMinRef = reader.ReadUInt32(); return true;
 				case 0x3405: this.ScanningDirection = (MXFScanningDirectionType) reader.ReadByte(); return true;
 				case 0x3401: this.PixelLayout = reader.ReadRGBALayout(); return true;
-				case 0x3403: this.Palette = reader.ReadUTF16String(localTag.Size); return true; 
+				case 0x3403: this.Palette = reader.ReadArray(reader.ReadByte, localTag.Size); return true; 
 				case 0x3404: this.PaletteLayout = reader.ReadRGBALayout(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

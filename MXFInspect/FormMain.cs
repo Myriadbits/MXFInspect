@@ -59,7 +59,7 @@ namespace Myriadbits.MXFInspect
         public void EnableUI(bool enable)
         {
             this.MainMenuStrip.Enabled = enable;
-            this.toolStrip1.Enabled = enable;
+            this.toolStrip.Enabled = enable;
         }
 
         /// <summary>
@@ -68,21 +68,21 @@ namespace Myriadbits.MXFInspect
         protected void FillMRU()
         {
             // Start by clearing all menu items we added 
-            for (int n = this.menuFile.DropDownItems.Count - 1; n >= 0; n--)
+            for (int n = this.tsmiFile.DropDownItems.Count - 1; n >= 0; n--)
             {
-                ToolStripItem tsdi = this.menuFile.DropDownItems[n];
+                ToolStripItem tsdi = this.tsmiFile.DropDownItems[n];
                 if (tsdi.Tag != null)
-                    this.menuFile.DropDownItems.Remove(tsdi);
+                    this.tsmiFile.DropDownItems.Remove(tsdi);
             }
 
             if (this.m_mru != null)
             {
-                int startIndex = this.menuFile.DropDownItems.Count - 1; // Start just before the exit
+                int startIndex = this.tsmiFile.DropDownItems.Count - 1; // Start just before the exit
                 if (m_mru.Count > 0)
                 {
                     ToolStripSeparator tsms = new ToolStripSeparator();
                     tsms.Tag = -1; // Set the tag so it will be removed
-                    this.menuFile.DropDownItems.Insert(startIndex, tsms);
+                    this.tsmiFile.DropDownItems.Insert(startIndex, tsms);
                     for (int n = 0; n < m_mru.Count; n++)
                     {
                         ToolStripMenuItem tsmi = new ToolStripMenuItem(string.Format("&{0} {1}", n + 1, m_mru[n]));
@@ -95,7 +95,7 @@ namespace Myriadbits.MXFInspect
                         }
                         tsmi.Click += menuOpenRecentFile_Click;
                         tsmi.Tag = m_mru[n];
-                        this.menuFile.DropDownItems.Insert(startIndex, tsmi);
+                        this.tsmiFile.DropDownItems.Insert(startIndex, tsmi);
                         startIndex++;
                     }
                 }
@@ -133,7 +133,7 @@ namespace Myriadbits.MXFInspect
         {
             if (sender is ToolStripMenuItem tsmi)
             {
-                if(tsmi.Tag is string path)
+                if (tsmi.Tag is string path)
                 {
                     if (File.Exists(path))
                     {
@@ -155,7 +155,7 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuOpenFile_Click(object sender, EventArgs e)
+        private void tsmiOpenFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "MXF files (.mxf)|*.mxf|All Files (*.*)|*.*";
@@ -189,7 +189,7 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuClose_Click(object sender, EventArgs e)
+        private void tsmiClose_Click(object sender, EventArgs e)
         {
             this.ActiveMdiChild.Close();
         }
@@ -200,7 +200,7 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuAbout_Click(object sender, EventArgs e)
+        private void tsmiAbout_Click(object sender, EventArgs e)
         {
             AboutForm about = new AboutForm();
             about.ShowDialog();
@@ -240,10 +240,6 @@ namespace Myriadbits.MXFInspect
                 {
                     MyTabPage mtp = this.ActiveMdiChild.Tag as MyTabPage;
                     this.tabMain.SelectedTab = mtp;
-
-                    //this.ActiveView.HideFillers = !tsmiShowFillers.Checked;
-                    //this.ActiveView.SetTypeFilter(this.tsmiFilterCurrentType.Checked);
-                    //this.ActiveView.Prepare();
                 }
             }
             this.UpdateMenu();
@@ -270,7 +266,7 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-        private void tsmValidationReport_Click(object sender, EventArgs e)
+        private void tsmiValidationReport_Click(object sender, EventArgs e)
         {
             if (this.ActiveView != null)
             {
@@ -285,7 +281,7 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmiExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -296,7 +292,6 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         public void UpdateMenu()
         {
-
             if (this.ActiveView == null)
             {
                 // meaning no file open
@@ -312,7 +307,7 @@ namespace Myriadbits.MXFInspect
                 this.tsbFindPreviousItem.Enabled = false;
                 this.tsmiFindPreviousItem.Enabled = false;
 
-                this.tsmValidationReport.Enabled = false;
+                this.tsmiValidationReport.Enabled = false;
                 this.tsbValidationReport.Enabled = false;
 
                 this.tsmiFilterCurrentType.Enabled = false;
@@ -325,6 +320,8 @@ namespace Myriadbits.MXFInspect
                 this.tsbShowFillers.Checked = false;
                 this.tsmiShowFillers.Checked = false;
 
+                this.tsmiShowPropInfo.Enabled = false;
+                this.tsbShowPropInfo.Enabled = false;
             }
             else
             {
@@ -339,7 +336,7 @@ namespace Myriadbits.MXFInspect
                 this.tsbFindPreviousItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
                 this.tsmiFindPreviousItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
 
-                this.tsmValidationReport.Enabled = true;
+                this.tsmiValidationReport.Enabled = true;
                 this.tsbValidationReport.Enabled = true;
 
 
@@ -352,6 +349,12 @@ namespace Myriadbits.MXFInspect
                 this.tsbShowFillers.Enabled = true;
                 this.tsbShowFillers.Checked = !this.ActiveView.FillerHidden;
                 this.tsmiShowFillers.Checked = !this.ActiveView.FillerHidden;
+
+                this.tsmiShowPropInfo.Enabled = true;
+                this.tsbShowPropInfo.Enabled = true;
+                
+                this.tsmiShowPropInfo.Checked = this.ActiveView.ShowPropertyInfo;
+                this.tsbShowPropInfo.Checked = this.ActiveView.ShowPropertyInfo;
             }
 
         }
@@ -382,10 +385,10 @@ namespace Myriadbits.MXFInspect
         /// Buttons/command that are forwarded to the current active view
         /// </summary>
 
-        private void nextItemToolStripMenuItem_Click(object sender, EventArgs e) { if (this.ActiveView != null) this.ActiveView.SelectNextObject(); }
-        private void previousItemToolStripMenuItem_Click(object sender, EventArgs e) { if (this.ActiveView != null) this.ActiveView.SelectPreviousObject(); }
+        private void tsmiFindNextItem_Click(object sender, EventArgs e) { if (this.ActiveView != null) this.ActiveView.SelectNextObject(); }
+        private void tsmiFindPreviousItem_Click(object sender, EventArgs e) { if (this.ActiveView != null) this.ActiveView.SelectPreviousObject(); }
 
-        private void filterCurrentTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmiFilterCurrentType_Click(object sender, EventArgs e)
         {
             if (this.ActiveView != null)
             {
@@ -419,11 +422,26 @@ namespace Myriadbits.MXFInspect
         }
 
         /// <summary>
+        /// Show/Hide property info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiShowPropInfo_Click(object sender, EventArgs e)
+        {
+            if (this.ActiveView != null)
+            {
+                this.tsmiShowPropInfo.Checked = !tsmiShowPropInfo.Checked;
+                this.tsbShowPropInfo.Checked = this.tsmiShowPropInfo.Checked;
+                this.ActiveView.ShowPropertyInfo = tsmiShowPropInfo.Checked;
+            }
+        }
+
+        /// <summary>
         /// Show the settings dialog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmiSettings_Click(object sender, EventArgs e)
         {
             FormSettings formSettings = new FormSettings();
             if (formSettings.ShowDialog() == System.Windows.Forms.DialogResult.OK)

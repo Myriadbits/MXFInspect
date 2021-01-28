@@ -21,28 +21,26 @@
 //
 #endregion
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Myriadbits.MXF
 {
     public class MXFReference<T> : MXFObject, IReference<T> where T: MXFObject
     {
-        [CategoryAttribute("Reference")]
+        private const string CATEGORYNAME = "Reference";
+
+        [Category(CATEGORYNAME)]
         public string Name { get; set; }
-        [CategoryAttribute("Reference")]
+        [Category(CATEGORYNAME)]
         public T Reference { get; set; }
-        [CategoryAttribute("Reference")]
+        [Category(CATEGORYNAME)]
         public MXFUUID Identifier { get; set; }
 
         public MXFReference(MXFReader reader, string name) : base(reader.Position)
         {
             Name = name;
-            Identifier = new MXFUUID(reader);
+            Identifier = reader.ReadUUIDKey();
             Length = Identifier.Length;
         }
 
@@ -61,7 +59,7 @@ namespace Myriadbits.MXF
                     Debug.WriteLine(string.Format("Reference resolved: {0} -> {1}", this.ToString(), Reference.ToString()));
                     return true;
                 }
-                Debug.WriteLine(string.Format("Reference not resolveable as types don't match: {0} -> {1}", this.GetType(), Reference.GetType()));
+                Debug.WriteLine(string.Format("Reference not resolveable as types don't match: {0} -> {1}", this.GetType(), obj.GetType()));
             }
             return false;
         }
