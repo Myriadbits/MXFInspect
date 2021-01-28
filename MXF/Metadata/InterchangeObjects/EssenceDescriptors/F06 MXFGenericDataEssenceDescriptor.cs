@@ -33,6 +33,8 @@ namespace Myriadbits.MXF
 		public MXFKey DataEssenceCoding { get; set; }
 		
 		
+
+		
 		/// <summary>
 		/// Constructor, set the correct descriptor name
 		/// </summary>
@@ -41,6 +43,7 @@ namespace Myriadbits.MXF
 		public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Generic Data Essence Descriptor")
 		{
+			// TODO remove code, once implemented the subclasses
 			if (headerKLV.Key[14] == 0x5B)
 				this.Key.Name = "VBI Data Descriptor";
 			if (headerKLV.Key[14] == 0x5C)
