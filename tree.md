@@ -81,8 +81,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [x] WAVEPCMDescriptor [13/13] 
                     - [x] AES3PCMDescriptor [7/7]
                 - [x] DCPCMSoundDescriptor [0/0]
-                - [ ] MPEGAudioDescriptor [0/2]
-            - [x] DataEssenceDescriptor [1/1] :hammer:
+                - [x] MPEGAudioDescriptor [2/2]
+            - [x] DataEssenceDescriptor [1/1] 
                 - [ ] ParsedTextDescriptor [0/1] *(abstract)*:scroll: :dart:
                     - [ ] SGMLDescriptor [0/0] *(abstract)*
                         - [ ] XMLDescriptor [0/3] :scroll: :dart:
