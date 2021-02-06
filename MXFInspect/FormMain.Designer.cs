@@ -280,7 +280,10 @@
             this.tsbFilterCurrentType,
             this.toolStripSeparator6,
             this.tsbShowFillers,
-            this.tsbCollapseAll});
+            this.tsbCollapseAll,
+            this.tsbShowPropInfo,
+            this.toolStripSeparator7,
+            this.tsbSettings});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -376,6 +379,7 @@
             // tsbShowPropInfo
             // 
             this.tsbShowPropInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbShowPropInfo.Image = ((System.Drawing.Image)(resources.GetObject("tsbShowPropInfo.Image")));
             this.tsbShowPropInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbShowPropInfo.Name = "tsbShowPropInfo";
             this.tsbShowPropInfo.Size = new System.Drawing.Size(23, 22);
@@ -390,6 +394,7 @@
             // tsbSettings
             // 
             this.tsbSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbSettings.Image = ((System.Drawing.Image)(resources.GetObject("tsbSettings.Image")));
             this.tsbSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSettings.Name = "tsbSettings";
             this.tsbSettings.Size = new System.Drawing.Size(23, 22);
