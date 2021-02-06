@@ -191,31 +191,31 @@
             this.splitRight.SplitterDistance = 388;
             this.splitRight.SplitterWidth = 6;
             this.splitRight.TabIndex = 16;
-            // 
-            // chkInfo
-            // 
-            this.chkInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkInfo.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkInfo.AutoSize = true;
-            this.chkInfo.Location = new System.Drawing.Point(492, 360);
-            this.chkInfo.Name = "chkInfo";
-            this.chkInfo.Size = new System.Drawing.Size(20, 25);
-            this.chkInfo.TabIndex = 16;
-            this.chkInfo.Text = "i";
-            this.chkInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.chkInfo.UseVisualStyleBackColor = true;
-            this.chkInfo.CheckedChanged += new System.EventHandler(this.chkInfo_CheckedChanged);
-            // 
-            // btnSelectReference
-            // 
-            this.btnSelectReference.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSelectReference.Location = new System.Drawing.Point(3, 362);
-            this.btnSelectReference.Name = "btnSelectReference";
-            this.btnSelectReference.Size = new System.Drawing.Size(103, 23);
-            this.btnSelectReference.TabIndex = 13;
-            this.btnSelectReference.Text = "Select Reference";
-            this.btnSelectReference.UseVisualStyleBackColor = true;
-            this.btnSelectReference.Click += new System.EventHandler(this.btnSelectReference_Click);
+            //// 
+            //// chkInfo
+            //// 
+            //this.chkInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            //this.chkInfo.Appearance = System.Windows.Forms.Appearance.Button;
+            //this.chkInfo.AutoSize = true;
+            //this.chkInfo.Location = new System.Drawing.Point(492, 360);
+            //this.chkInfo.Name = "chkInfo";
+            //this.chkInfo.Size = new System.Drawing.Size(20, 25);
+            //this.chkInfo.TabIndex = 16;
+            //this.chkInfo.Text = "i";
+            //this.chkInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //this.chkInfo.UseVisualStyleBackColor = true;
+            //this.chkInfo.CheckedChanged += new System.EventHandler(this.chkInfo_CheckedChanged);
+            //// 
+            //// btnSelectReference
+            //// 
+            //this.btnSelectReference.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            //this.btnSelectReference.Location = new System.Drawing.Point(3, 362);
+            //this.btnSelectReference.Name = "btnSelectReference";
+            //this.btnSelectReference.Size = new System.Drawing.Size(103, 23);
+            //this.btnSelectReference.TabIndex = 13;
+            //this.btnSelectReference.Text = "Select Reference";
+            //this.btnSelectReference.UseVisualStyleBackColor = true;
+            //this.btnSelectReference.Click += new System.EventHandler(this.btnSelectReference_Click);
             // 
             // propGrid
             // 
@@ -233,26 +233,26 @@
             this.propGrid.ToolbarVisible = false;
             this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             // 
-            // btnPrevious
-            // 
-            this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPrevious.Location = new System.Drawing.Point(550, 362);
-            this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(26, 23);
-            this.btnPrevious.TabIndex = 14;
-            this.btnPrevious.UseVisualStyleBackColor = true;
-            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Location = new System.Drawing.Point(518, 362);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(26, 23);
-            this.btnNext.TabIndex = 14;
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            //// btnPrevious
+            //// 
+            //this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            //this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            //this.btnPrevious.Location = new System.Drawing.Point(550, 362);
+            //this.btnPrevious.Name = "btnPrevious";
+            //this.btnPrevious.Size = new System.Drawing.Size(26, 23);
+            //this.btnPrevious.TabIndex = 14;
+            //this.btnPrevious.UseVisualStyleBackColor = true;
+            //this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            //// 
+            //// btnNext
+            //// 
+            //this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            //this.btnNext.Location = new System.Drawing.Point(518, 362);
+            //this.btnNext.Name = "btnNext";
+            //this.btnNext.Size = new System.Drawing.Size(26, 23);
+            //this.btnNext.TabIndex = 14;
+            //this.btnNext.UseVisualStyleBackColor = true;
+            //this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // rtfHexViewer
             // 
@@ -272,18 +272,18 @@
             // 
             // imageListResult
             // 
-            this.imageListResult.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageListResult.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListResult.ImageStream")));
-            this.imageListResult.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListResult.Images.SetKeyName(0, "Error");
-            this.imageListResult.Images.SetKeyName(1, "Success");
-            this.imageListResult.Images.SetKeyName(2, "Warning");
-            this.imageListResult.Images.SetKeyName(3, "Info");
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            //this.imageListResult.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            //this.imageListResult.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListResult.ImageStream")));
+            //this.imageListResult.TransparentColor = System.Drawing.Color.Transparent;
+            //this.imageListResult.Images.SetKeyName(0, "Error");
+            //this.imageListResult.Images.SetKeyName(1, "Success");
+            //this.imageListResult.Images.SetKeyName(2, "Warning");
+            //this.imageListResult.Images.SetKeyName(3, "Info");
+            //// 
+            //// contextMenuStrip1
+            //// 
+            //this.contextMenuStrip1.Name = "contextMenuStrip1";
+            //this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // txtOverall
             // 

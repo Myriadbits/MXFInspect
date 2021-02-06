@@ -47,6 +47,7 @@
             this.tsmiShowFillers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiView = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCollapseAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowPropInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWindow = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,19 +68,18 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSettings = new System.Windows.Forms.ToolStripButton();
             this.tabMain = new System.Windows.Forms.TabControl();
-            this.tsmiShowPropInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 727);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
-            this.statusStrip1.TabIndex = 9;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 727);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1370, 22);
+            this.statusStrip.TabIndex = 9;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // menuMain
             // 
@@ -110,12 +110,12 @@
             // 
             // tsmiOpenFile
             // 
-            this.menuOpenFile.Image = ((System.Drawing.Image)(resources.GetObject("menuOpenFile.Image")));
-            this.menuOpenFile.Name = "menuOpenFile";
-            this.menuOpenFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuOpenFile.Size = new System.Drawing.Size(157, 22);
-            this.menuOpenFile.Text = "&Open...";
-            this.menuOpenFile.Click += new System.EventHandler(this.menuOpenFile_Click);
+            this.tsmiOpenFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiOpenFile.Image")));
+            this.tsmiOpenFile.Name = "tsmiOpenFile";
+            this.tsmiOpenFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.tsmiOpenFile.Size = new System.Drawing.Size(157, 22);
+            this.tsmiOpenFile.Text = "&Open...";
+            this.tsmiOpenFile.Click += new System.EventHandler(this.tsmiOpenFile_Click);
             // 
             // tsmiClose
             // 
@@ -127,16 +127,16 @@
             // 
             // tsSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
+            this.tsSeparator1.Name = "tsSeparator1";
+            this.tsSeparator1.Size = new System.Drawing.Size(154, 6);
             // 
             // tsmiExit
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.tsmiExit.Name = "tsmiExit";
+            this.tsmiExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.tsmiExit.Size = new System.Drawing.Size(157, 22);
+            this.tsmiExit.Text = "E&xit";
+            this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
             // tsmiMXF
             // 
@@ -154,16 +154,16 @@
             // 
             // tsmiValidationReport
             // 
-            this.tsmValidationReport.Image = ((System.Drawing.Image)(resources.GetObject("tsmValidationReport.Image")));
-            this.tsmValidationReport.Name = "tsmValidationReport";
-            this.tsmValidationReport.Size = new System.Drawing.Size(248, 22);
-            this.tsmValidationReport.Text = "&Validation report...";
-            this.tsmValidationReport.Click += new System.EventHandler(this.tsmValidationReport_Click);
+            this.tsmiValidationReport.Image = ((System.Drawing.Image)(resources.GetObject("tsmiValidationReport.Image")));
+            this.tsmiValidationReport.Name = "tsmiValidationReport";
+            this.tsmiValidationReport.Size = new System.Drawing.Size(248, 22);
+            this.tsmiValidationReport.Text = "&Validation report...";
+            this.tsmiValidationReport.Click += new System.EventHandler(this.tsmiValidationReport_Click);
             // 
             // tsSeparator4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(245, 6);
+            this.tsSeparator4.Name = "tsSeparator4";
+            this.tsSeparator4.Size = new System.Drawing.Size(245, 6);
             // 
             // tsmiFindNextItem
             // 
@@ -196,8 +196,8 @@
             // 
             // tsSeparator5
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(245, 6);
+            this.tsSeparator5.Name = "tsSeparator5";
+            this.tsSeparator5.Size = new System.Drawing.Size(245, 6);
             // 
             // tsmiShowFillers
             // 
@@ -228,17 +228,24 @@
             this.tsmiCollapseAll.Text = "Collapse all";
             this.tsmiCollapseAll.Click += new System.EventHandler(this.tsmiCollapseAll_Click);
             // 
+            // tsmiShowPropInfo
+            // 
+            this.tsmiShowPropInfo.Name = "tsmiShowPropInfo";
+            this.tsmiShowPropInfo.Size = new System.Drawing.Size(178, 22);
+            this.tsmiShowPropInfo.Text = "Show property info";
+            this.tsmiShowPropInfo.Click += new System.EventHandler(this.tsmiShowPropInfo_Click);
+            // 
             // tsSeparator8
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(175, 6);
+            this.tsSeparator8.Name = "tsSeparator8";
+            this.tsSeparator8.Size = new System.Drawing.Size(175, 6);
             // 
             // tsmiSettings
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.settingsToolStripMenuItem.Text = "Settings...";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.tsmiSettings.Name = "tsmiSettings";
+            this.tsmiSettings.Size = new System.Drawing.Size(178, 22);
+            this.tsmiSettings.Text = "Settings...";
+            this.tsmiSettings.Click += new System.EventHandler(this.tsmiSettings_Click);
             // 
             // tsmiWindow
             // 
@@ -274,12 +281,12 @@
             this.toolStripSeparator6,
             this.tsbShowFillers,
             this.tsbCollapseAll});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(1370, 25);
-            this.toolStrip1.TabIndex = 16;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip.Name = "toolStrip";
+            this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStrip.Size = new System.Drawing.Size(1370, 25);
+            this.toolStrip.TabIndex = 16;
+            this.toolStrip.Text = "toolStrip1";
             // 
             // tsbOpen
             // 
@@ -369,7 +376,6 @@
             // tsbShowPropInfo
             // 
             this.tsbShowPropInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbShowPropInfo.Image = global::Myriadbits.MXFInspect.Properties.Resources.showInfo;
             this.tsbShowPropInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbShowPropInfo.Name = "tsbShowPropInfo";
             this.tsbShowPropInfo.Size = new System.Drawing.Size(23, 22);
@@ -384,7 +390,6 @@
             // tsbSettings
             // 
             this.tsbSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbSettings.Image = global::Myriadbits.MXFInspect.Properties.Resources.settings;
             this.tsbSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSettings.Name = "tsbSettings";
             this.tsbSettings.Size = new System.Drawing.Size(23, 22);
@@ -402,14 +407,6 @@
             this.tabMain.TabIndex = 18;
             this.tabMain.Visible = false;
             this.tabMain.SelectedIndexChanged += new System.EventHandler(this.tabMain_SelectedIndexChanged);
-            // 
-            // tsmiShowPropInfo
-            // 
-            this.tsmiShowPropInfo.Image = global::Myriadbits.MXFInspect.Properties.Resources.showInfo;
-            this.tsmiShowPropInfo.Name = "tsmiShowPropInfo";
-            this.tsmiShowPropInfo.Size = new System.Drawing.Size(180, 22);
-            this.tsmiShowPropInfo.Text = "Show property info";
-            this.tsmiShowPropInfo.Click += new System.EventHandler(this.tsmiShowPropInfo_Click);
             // 
             // FormMain
             // 
