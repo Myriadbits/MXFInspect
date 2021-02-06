@@ -119,7 +119,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [x] Parameter [1/1] *(abstract)*
         - [ ] ConstantValue 
         - [ ] VaryingValue 
-    - [ ] TaggedValue 
+    - [x] TaggedValue [2/2]
     - [ ] KLVData 
     - [ ] RIFFChunk 
     - [x] SubDescriptor [0/0] *(abstract)*
