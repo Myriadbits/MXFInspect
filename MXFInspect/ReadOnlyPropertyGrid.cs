@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
@@ -57,6 +58,7 @@ namespace Myriadbits.MXFInspect
 		{
 			this.SetObjectAsReadOnly(this.SelectedObject, this._readOnly);
 			base.OnSelectedObjectsChanged(e);
+
 		}
 
 		private void SetObjectAsReadOnly(object selectedObject, bool isReadOnly)
