@@ -33,9 +33,11 @@ namespace Myriadbits.MXFInspect
     public class HexViewer : RichTextBox
     {
         public int BytesPerLine { get; set; } = 16;
+
+        public long MaxDisplayableBytes { get; set; } = 1000000;
+
         public HexViewer()
         {
-            BytesPerLine = 16;
         }
 
         /// <summary>
@@ -46,35 +48,39 @@ namespace Myriadbits.MXFInspect
         {
             this.Clear();
 
-            // Cast to KLV
-            long readerOffset = obj.Offset;
-            long len = (int)obj.Length;
-            MXFKLV klv = obj as MXFKLV;
-            if (klv != null)
-            {
-                // Determine real length including BER + Key
-                len = (klv.DataOffset - readerOffset) + klv.Length;
-            }
-            MXFLocalTag lt = obj as MXFLocalTag;
-            if (lt != null)
-            {
-                len = (lt.DataOffset - readerOffset) + lt.Size;
-            }
 
-            if (len > 0)
+            long len = GetObjectLength(obj);
+
+            if (len > MaxDisplayableBytes)
+            {
+                // TODO Hexdump should be truncated and not entirely omitted 
+                this.Text = "Hexdump not shown due to packet size";
+            }
+            else if (len > 0)
             {
                 byte[] data = new byte[len];
                 using (MXFReader reader = new MXFReader((obj.Root() as MXFFile).Filename))
                 {
-                    reader.Seek(readerOffset);
+                    reader.Seek(obj.Offset);
                     data = reader.ReadArray(reader.ReadByte, data.Length);
                 }
 
-                this.Text = GetHexDump(readerOffset, len, BytesPerLine, data);
+                this.Text = GetHexDump(obj.Offset, len, BytesPerLine, data);
             }
-            else
+        }
+
+        private long GetObjectLength(MXFObject obj)
+        {
+            switch (obj)
             {
-                this.Text = "";
+                case MXFKLV klv:
+                    return klv.DataOffset - klv.Offset + klv.Length;
+
+                case MXFLocalTag tag:
+                    return tag.DataOffset - tag.Offset + tag.Size;
+
+                default:
+                    return obj.Length;
             }
         }
 
@@ -96,7 +102,7 @@ namespace Myriadbits.MXFInspect
                 string hex = GetHexValues(slice.ToArray()).PadRight(bytesPerLine * 3);
                 string asciisafe = GetASCIISafeString(slice.ToArray());
 
-                // TODO: padding of offset not hardcoded
+                // TODO: padding of offset should not be hardcoded
                 sb.AppendLine(string.Format("{0:0000000000}  {1}  {2}", startOffset + currOffset, hex, asciisafe));
             }
 
