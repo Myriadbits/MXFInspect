@@ -31,9 +31,13 @@ namespace Myriadbits.MXF
     Deprecated = false,
     IsConcrete = false,
     NumberOfElements = 3)]
-    public class MXFMetaDefinition : MXFMetadataBaseclass
+    public class MXFMetaDefinition : MXFMetadataBaseclass, IUUIDIdentifiable
     {
         private const string CATEGORYNAME = "MetaDefinition";
+
+        // TODO is not really part of MetaDefinition
+        [Category(CATEGORYNAME)]
+        public MXFUUID InstanceId { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.03020401.02010000")]
@@ -57,11 +61,17 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
+                case 0x3c0a: InstanceId = reader.ReadUUIDKey(); return true;
                 case 0x0006: MetaDefinitionName = reader.ReadUTF16String(localTag.Size); return true;
                 case 0x0005: MetaDefinitionIdentification = reader.ReadULKey(); return true;
                 case 0x0007: MetaDefinitionDescription = reader.ReadUTF16String(localTag.Size); return true;
             }
             return base.ParseLocalTag(reader, localTag);
+        }
+
+        public MXFUUID GetUUID()
+        {
+            return this.InstanceId;
         }
     }
 }
