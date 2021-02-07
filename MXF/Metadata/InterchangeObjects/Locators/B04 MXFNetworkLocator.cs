@@ -35,6 +35,7 @@ namespace Myriadbits.MXF
 		public MXFNetworkLocator(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Network Locator")
 		{
+			this.MetaDataName = "Network Locator";
 		}
 
 		/// <summary>
