@@ -36,31 +36,42 @@ namespace Myriadbits.MXF
 
 		[Category(CATEGORYNAME)]
 		public UInt32? EditUnitByteCount { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public UInt32? IndexSID { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public UInt32? BodySID { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public MXFRational IndexEditRate { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public UInt64? IndexStartPosition { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public MXFPositionType? IndexDuration { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public byte? SliceCount { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public byte? PosTableCount { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public bool? SingleIndexLocation { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public bool? ForwardIndexDirection { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public UInt64? ExtStartOffset { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public UInt64? VBEByteCount { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public bool? SingleEssenceLocation { get; set; }
-
 
 		[Browsable(false)]
 		public List<MXFEntryIndex> IndexEntries { get; set; }
