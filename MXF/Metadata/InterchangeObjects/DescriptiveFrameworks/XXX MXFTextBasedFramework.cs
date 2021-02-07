@@ -45,7 +45,9 @@ namespace Myriadbits.MXF
 			{
 				switch (localTag.Key)
 				{
-					case var a when localTag.Key == textBasedObject_Key: ReadReference<MXFTextBasedObject>(reader, "TextBasedObject"); return true;
+					case var a when localTag.Key == textBasedObject_Key:
+						this.AddChild(reader.ReadReference<MXFTextBasedObject>("TextBasedObject")); 
+						return true;
 				}
 			}
 

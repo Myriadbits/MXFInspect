@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
 			{
 				case 0x4801: this.TrackID = reader.ReadUInt32(); return true;
 				case 0x4802: this.TrackName = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x4803: ReadReference<MXFSegment>(reader, "Segment"); return true;
+				case 0x4803: this.AddChild(reader.ReadReference<MXFSegment>("Segment")); return true;
 				case 0x4804: this.TrackNumber = reader.ReadUInt32(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 

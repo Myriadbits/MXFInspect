@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x0901: ReadReference<MXFSourceReference>(reader, "AnnotationSource"); return true;
+                case 0x0901: this.AddChild(reader.ReadReference<MXFSourceReference>("AnnotationSource")); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

@@ -22,47 +22,46 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPulldown : MXFSegment
+    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.02240000",
+    Deprecated = false,
+    IsConcrete = false,
+    NumberOfElements = 3)]
+    public class MXFMetaDefinition : MXFMetadataBaseclass
     {
-        private const string CATEGORYNAME = "Pulldown";
+        private const string CATEGORYNAME = "MetaDefinition";
 
         [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.01000000")]
-        public MXFPulldownDirection? PulldownDirection { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.03020401.02010000")]
+        public string MetaDefinitionName { get; set; }
 
         [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.02000000")]
-        public MXFPulldownKind? PulldownKind { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.13000000")]
+        public MXFKey MetaDefinitionIdentification { get; set; }
 
         [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.03000000")]
-        public UInt32? PhaseFrame { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.14010000")]
+        public string MetaDefinitionDescription { get; set; }
 
-        public MXFPulldown(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "Pulldown")
+        public MXFMetaDefinition(MXFReader reader, MXFKLV headerKLV, string metadataName)
+            : base(reader, headerKLV, "MetaDefinition")
         {
+
         }
 
-        /// <summary>
-        /// Overridden method to process local tags
-        /// </summary>
-        /// <param name="localTag"></param>
         protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
-                case 0x0D03: this.PulldownDirection = (MXFPulldownDirection?)reader.ReadByte(); return true;
-                case 0x0D02: this.PulldownKind = (MXFPulldownKind?)reader.ReadByte(); return true;
-                case 0x0D04: this.PhaseFrame = reader.ReadUInt32(); return true;
-                case 0x0D01: this.AddChild(reader.ReadReference<MXFSegment>("InputSegment")); return true;
+                case 0x0006: MetaDefinitionName = reader.ReadUTF16String(localTag.Size); return true;
+                case 0x0005: MetaDefinitionIdentification = reader.ReadULKey(); return true;
+                case 0x0007: MetaDefinitionDescription = reader.ReadUTF16String(localTag.Size); return true;
             }
-
             return base.ParseLocalTag(reader, localTag);
         }
-
     }
 }

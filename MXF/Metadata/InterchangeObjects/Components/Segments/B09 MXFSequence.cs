@@ -44,7 +44,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x1001: ReadReferenceSet<MXFStructuralComponent>(reader, "StructuralComponents", "StructuralComponent"); return true;
+				case 0x1001: this.AddChild(reader.ReadReferenceSet<MXFStructuralComponent>("StructuralComponents", "StructuralComponent")); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

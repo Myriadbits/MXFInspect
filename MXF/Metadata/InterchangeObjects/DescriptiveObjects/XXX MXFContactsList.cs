@@ -47,9 +47,15 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == personObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "PersonObjects", "PersonObject"); return true;
-                    case var a when localTag.Key == organizationObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "OrganizationObjects", "OrganizationObject"); return true;
-                    case var a when localTag.Key == locationObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "LocationObjects", "LocationObject"); return true;
+                    case var a when localTag.Key == personObjects_Key:
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("PersonObjects", "PersonObject")); 
+                        return true;
+                    case var a when localTag.Key == organizationObjects_Key: 
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("OrganizationObjects", "OrganizationObject")); 
+                        return true;
+                    case var a when localTag.Key == locationObjects_Key: 
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("LocationObjects", "LocationObject")); 
+                        return true;
                 }
             }
 

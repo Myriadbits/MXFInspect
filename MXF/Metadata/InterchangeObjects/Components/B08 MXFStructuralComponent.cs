@@ -56,9 +56,9 @@ namespace Myriadbits.MXF
 				case 0x0201: this.DataDefinition = reader.ReadULKey(); return true;
 				case 0x0202: this.Duration = reader.ReadUInt64(); return true;
 				// TODO replace generic MXFObject with class KLVData once implemented
-				case 0x0203: ReadReferenceSet<MXFObject>(reader, "KLV Data", "KLV Data"); return true;
-				case 0x0204: ReadReferenceSet<MXFTaggedValue>(reader, "User Comments", "User Comment"); return true;
-				case 0x0205: ReadReferenceSet<MXFTaggedValue>(reader, "Attributes", "Attribute"); return true;
+				case 0x0203: this.AddChild(reader.ReadReferenceSet<MXFObject>("KLV Data", "KLV Data")); return true;
+				case 0x0204: this.AddChild(reader.ReadReferenceSet<MXFTaggedValue>("User Comments", "User Comment")); return true;
+				case 0x0205: this.AddChild(reader.ReadReferenceSet<MXFTaggedValue>("Attributes", "Attribute")); return true;
             }
 			return base.ParseLocalTag(reader, localTag); 
 		}

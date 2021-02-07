@@ -62,7 +62,8 @@ namespace Myriadbits.MXF
 			{
 				case 0x4401: this.PackageID = reader.ReadUMIDKey(); return true;
 				case 0x4402: this.PackageName = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x4403: ReadReferenceSet<MXFGenericTrack>(reader, "Tracks", "Track"); return true;
+				//case 0x4403: ReadReferenceSet<MXFGenericTrack>(reader, "Tracks", "Track"); return true;
+				case 0x4403: this.AddChild(reader.ReadReferenceSet<MXFGenericTrack>("Tracks", "Track")); return true;
 				case 0x4404: this.ModifiedDate = reader.ReadTimestamp(); return true;
 				case 0x4405: this.CreationDate = reader.ReadTimestamp(); return true;
 			}

@@ -97,7 +97,7 @@ namespace Myriadbits.MXF
             {
                 //throw new ApplicationException(string.Format("Invalid SMPTE Key found at offset {0}! Incorrect MXF file!", reader.Position - 4));
                 LogError("Invalid SMPTE Key found at offset {0}! Key: {1}", reader.Position - 4, key.Name);
-                //throw new Exception(string.Format("Invalid SMPTE UL found at @{0}! Key: {1}", originalPos, key.ToString()));
+                throw new Exception(string.Format("Invalid SMPTE UL found at @{0}! Key: {1}", originalPos, key.ToString()));
             }
             return key;
         }

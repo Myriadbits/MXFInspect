@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 		{
             switch (localTag.Tag)
             {
-				case 0x1801: this.ReadReference<MXFOperationGroup>(reader, "TransitionOperation"); return true;
+				case 0x1801: this.AddChild(reader.ReadReference<MXFOperationGroup>("TransitionOperation")); return true;
 				case 0x1802: this.CutPoint = reader.ReadUInt64(); return true;
 			}
 			

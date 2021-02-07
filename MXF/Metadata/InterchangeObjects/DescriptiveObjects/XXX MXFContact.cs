@@ -52,10 +52,15 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == contactID_Key: this.ContactID = reader.ReadUUIDKey() ; return true;
-                    case var a when localTag.Key == addressObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "Address Objects", "Address Object"); return true;
+                    case var a when localTag.Key == contactID_Key: 
+                        this.ContactID = reader.ReadUUIDKey() ; return true;
+                    case var a when localTag.Key == addressObjects_Key:
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("Address Objects", "Address Object")); 
+                        return true;
                     // TODO replace generic MXFObject with class NameValue once implemented
-                    case var a when localTag.Key == nameValueObjects_Key: ReadReferenceSet<MXFObject>(reader, "NameValue Objects", "NameValue Object"); return true;
+                    case var a when localTag.Key == nameValueObjects_Key: 
+                        this.AddChild(reader.ReadReferenceSet<MXFObject>("NameValue Objects", "NameValue Object")); 
+                        return true;
                 }
             }
 

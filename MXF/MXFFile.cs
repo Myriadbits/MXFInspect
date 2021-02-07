@@ -132,17 +132,26 @@ namespace Myriadbits.MXF
                 int partitionNumber = 0; // For easy partition identification
                 while (!m_reader.EOF)
                 {
-                    MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
+                    try
+                    {
+                        MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
+                        
+                        //// Update overall counters
+                        //if (klv.Key.Type == KeyType.None)
+                        //    counters[(int)klv.Key.Type]++;
 
-                    //// Update overall counters
-                    //if (klv.Key.Type == KeyType.None)
-                    //    counters[(int)klv.Key.Type]++;
+                        // Process the new KLV
+                        ProcessKLVObject(klv, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
 
-                    // Process the new KLV
-                    ProcessKLVObject(klv, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
+                        // Next KLV please
+                        m_reader.Seek(klv.DataOffset + klv.Length);
+                    }
+                    catch (Exception e)
+                    {
+                        m_reader.SeekForNextPotentialKey();
+                    }
 
-                    // Next KLV please
-                    m_reader.Seek(klv.DataOffset + klv.Length);
+
 
                     // Only report progress when the percentage has changed
                     int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);

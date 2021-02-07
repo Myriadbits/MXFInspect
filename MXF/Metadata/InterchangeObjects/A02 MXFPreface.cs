@@ -66,10 +66,10 @@ namespace Myriadbits.MXF
                 case 0x3B02: this.LastModificationDate = reader.ReadTimestamp(); return true;
                 case 0x3B05: this.Version = reader.ReadVersion(); return true;
                 case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
-                case 0x3B03: ReadReference<MXFContentStorage>(reader, "ContentStorage"); return true;
-                case 0x3B08: ReadReference<MXFGenericPackage>(reader, "PrimaryPackage"); return true;
+                case 0x3B03: this.AddChild(reader.ReadReference<MXFContentStorage>("ContentStorage")); return true;
+                case 0x3B08: this.AddChild(reader.ReadReference<MXFGenericPackage>("PrimaryPackage")); return true;
                 case 0x3B09: this.OperationalPattern = reader.ReadULKey(); return true;
-                case 0x3B06: ReadReferenceSet<MXFIdentification>(reader, "Identifications", "Identification"); return true;
+                case 0x3B06: this.AddChild(reader.ReadReferenceSet<MXFIdentification>("Identifications", "Identification")); return true;
                 case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
                     // TODO review how the metadataschemes are read (especially if there are no schemes present)
                 case 0x3B0B: this.AddChild(reader.ReadAUIDSet("Descriptive Metadata Schemes", "DM scheme")); return true;

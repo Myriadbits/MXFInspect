@@ -124,37 +124,6 @@ namespace Myriadbits.MXF
 		{
 		}
 
-        protected int ReadReferenceSet<T>(MXFReader reader, string referringSetName, string singleItemName) where T : MXFObject
-        {
-            UInt32 nofItems = reader.ReadUInt32();
-            UInt32 objectSize = reader.ReadUInt32(); // useless size of objects, always 16 according to specs
-
-            MXFObject referenceSet = new MXFNamedObject(referringSetName, reader.Position, objectSize);
-
-            // TODO what if this condition is not met? should we throw an exception?
-            if (nofItems < UInt32.MaxValue)
-            {
-                for (int n = 0; n < nofItems; n++)
-                {
-                    var reference = new MXFReference<T>(reader, singleItemName);
-                    referenceSet.AddChild(reference);
-                }
-            }
-
-            this.AddChild(referenceSet);
-            return referenceSet.Children.Count;
-        }
-
-        /// <summary>
-        /// Reads a strong reference
-        /// </summary>
-        /// <param name="reader"></param>
-        protected void ReadReference<T>(MXFReader reader, string referringItemName) where T : MXFObject
-        {
-            MXFReference<T> reference = new MXFReference<T>(reader, referringItemName);
-            this.AddChild(reference);
-        }
-
         /// <summary>
         /// Display some output
         /// </summary>

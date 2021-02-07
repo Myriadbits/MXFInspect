@@ -44,7 +44,8 @@ namespace Myriadbits.MXF
 			{
 				switch (localTag.Key)
 				{
-					case var a when localTag.Key == linkedDMPluginID_Key: ReadReference<MXFDescriptiveMarker>(reader, "LinkedDescriptiveFrameworkPluginID"); return true;
+					case var a when localTag.Key == linkedDMPluginID_Key: 
+						this.AddChild(reader.ReadReference<MXFDescriptiveMarker>("LinkedDescriptiveFrameworkPluginID")); return true;
 				}
 			}
 

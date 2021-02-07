@@ -286,7 +286,7 @@ namespace Myriadbits.MXF
         {
             // Always read 16 bytes for UL keys (is not completely according to spec, length is part of the key...)
             byte[] byteArr = this.ReadArray(this.ReadByte, 16);
-            return new MXFKey(byteArr); 
+            return new MXFKey(byteArr);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Myriadbits.MXF
         {
             // Always read 32 bytes for UMID's 
             byte[] byteArr = this.ReadArray(this.ReadByte, 32);
-            return new MXFUMID(byteArr); 
+            return new MXFUMID(byteArr);
         }
 
         /// <summary>
@@ -473,7 +473,34 @@ namespace Myriadbits.MXF
             return retval;
         }
 
+        public MXFObject ReadReferenceSet<T>(string referringSetName, string singleItemName) where T : MXFObject
+        {
+            UInt32 nofItems = this.ReadUInt32();
+            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
+
+            MXFObject referenceSet = new MXFNamedObject(referringSetName, this.Position, objectSize);
+
+            // TODO what if this condition is not met? should we throw an exception?
+            if (nofItems < UInt32.MaxValue)
+            {
+                for (int n = 0; n < nofItems; n++)
+                {
+                    var reference = new MXFReference<T>(this, singleItemName);
+                    referenceSet.AddChild(reference);
+                }
+            }
+
+            return referenceSet;
+        }
+
+        /// <summary>
+        /// Reads a strong reference
+        /// </summary>
+        /// <param name="reader"></param>
+        public MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject
+        {
+            return new MXFReference<T>(this, referringItemName);
+        }
         #endregion
     }
-
 }

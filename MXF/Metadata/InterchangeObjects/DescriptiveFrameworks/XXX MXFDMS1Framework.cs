@@ -76,18 +76,42 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == frameworkTitle_Key: this.FrameworkTitle = reader.ReadUTF16String(localTag.Size); return true;
-                    case var a when localTag.Key == extTextLanguageCode_Key: this.FrameworkExtendedTextLanguageCode = reader.ReadUTF8String(localTag.Size); return true;
-                    case var a when localTag.Key == primExtSpokenLanguageCode_Key: this.PrimaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); return true;
-                    case var a when localTag.Key == secExtSpokenLanguageCode_Key: this.SecondaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); return true;
-                    case var a when localTag.Key == orgExtSpokenLanguageCode_Key: this.OriginalExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); return true;
-                    case var a when localTag.Key == thesaurusName_Key: this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Size); return true;
-                    case var a when localTag.Key == contactsListObject_Key: ReadReference<MXFContactsList>(reader, "ContactsList Object"); return true;
-                    case var a when localTag.Key == locations_Key: ReadReferenceSet<MXFLocation>(reader, "LocationObjects", "LocationObject"); return true;
-                    case var a when localTag.Key == titlesObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "Titles Objects", "TitlesObject"); return true;
-                    case var a when localTag.Key == annotationObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "AnnotationObjects", "AnnotationObject"); return true;
-                    case var a when localTag.Key == participantObjects_Key: ReadReferenceSet<MXFDescriptiveObject>(reader, "ParticipantObjects", "ParticipantObjects"); return true;
-                    case var a when localTag.Key == metadataServerLocators_Key: ReadReferenceSet<MXFLocator>(reader, "MetadataServerLocators", "MetadataServerLocator"); return true;
+                    case var a when localTag.Key == frameworkTitle_Key: 
+                        this.FrameworkTitle = reader.ReadUTF16String(localTag.Size); 
+                        return true;
+                    case var a when localTag.Key == extTextLanguageCode_Key: 
+                        this.FrameworkExtendedTextLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                        return true;
+                    case var a when localTag.Key == primExtSpokenLanguageCode_Key: 
+                        this.PrimaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                        return true;
+                    case var a when localTag.Key == secExtSpokenLanguageCode_Key: 
+                        this.SecondaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                        return true;
+                    case var a when localTag.Key == orgExtSpokenLanguageCode_Key: 
+                        this.OriginalExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                        return true;
+                    case var a when localTag.Key == thesaurusName_Key: 
+                        this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Size); 
+                        return true;
+                    case var a when localTag.Key == contactsListObject_Key:
+                        this.AddChild(reader.ReadReference<MXFContactsList>("ContactsList Object")); 
+                        return true;
+                    case var a when localTag.Key == locations_Key:
+                        this.AddChild(reader.ReadReferenceSet<MXFLocation>("LocationObjects", "LocationObject")); 
+                        return true;
+                    case var a when localTag.Key == titlesObjects_Key:
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("Titles Objects", "TitlesObject")); 
+                        return true;
+                    case var a when localTag.Key == annotationObjects_Key:
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("AnnotationObjects", "AnnotationObject")); 
+                        return true;
+                    case var a when localTag.Key == participantObjects_Key:
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ParticipantObjects", "ParticipantObjects")); 
+                        return true;
+                    case var a when localTag.Key == metadataServerLocators_Key:
+                        this.AddChild(reader.ReadReferenceSet<MXFLocator>("MetadataServerLocators", "MetadataServerLocator")); 
+                        return true;
                 }
             }
 

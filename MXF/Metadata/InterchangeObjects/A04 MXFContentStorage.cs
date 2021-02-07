@@ -38,8 +38,8 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x1901: ReadReferenceSet<MXFGenericPackage>(reader, "Packages", "Package"); return true;
-				case 0x1902: ReadReferenceSet<MXFEssenceContainerData>(reader, "EssenceContainer data", "Essencecontainer data"); return true;
+				case 0x1901: this.AddChild(reader.ReadReferenceSet<MXFGenericPackage>("Packages", "Package")); return true;
+				case 0x1902: this.AddChild(reader.ReadReferenceSet<MXFEssenceContainerData>("EssenceContainer data", "Essencecontainer data")); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

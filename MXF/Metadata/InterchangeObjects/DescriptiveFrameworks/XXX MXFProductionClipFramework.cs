@@ -49,16 +49,16 @@ namespace Myriadbits.MXF
                 switch (localTag.Key)
                 {
                     case var a when localTag.Key == pictureFormatObject_Key:
-                        ReadReference<MXFDescriptiveObject>(reader, "PictureFormatObject");
+                        this.AddChild(reader.ReadReference<MXFDescriptiveObject>("PictureFormatObject"));
                         return true;
                     case var a when localTag.Key == projectObject_Key:
-                        ReadReference<MXFDescriptiveObject>(reader, "ProjectObject");
+                        this.AddChild(reader.ReadReference<MXFDescriptiveObject>("ProjectObject"));
                         return true;
                     case var a when localTag.Key == captionsDescriptionObjects_Key:
-                        ReadReferenceSet<MXFDescriptiveObject>(reader, "CaptionsDescriptionObjects", "CaptionsDescriptionObject");
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("CaptionsDescriptionObjects", "CaptionsDescriptionObject"));
                         return true;
                     case var a when localTag.Key == contractObjects_Key:
-                        ReadReferenceSet<MXFDescriptiveObject>(reader, "ContractObjects", "ContractObject");
+                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ContractObjects", "ContractObject"));
                         return true;
                 }
             }

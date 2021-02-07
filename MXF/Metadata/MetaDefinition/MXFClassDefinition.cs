@@ -26,36 +26,36 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFOperationGroup : MXFSegment
+    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.02010000",
+    Deprecated = false,
+    IsConcrete = true,
+    NumberOfElements = 3)]
+    public class MXFClassDefinition : MXFMetaDefinition
     {
-        private const string CATEGORYNAME = "OperationGroup";
+        private const string CATEGORYNAME = "ClassDefinition";
 
         [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010102.0530050c.00000000")]
-        public UInt32 BypassOverride { get; private set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.03000000")]
+        public bool IsConcrete { get; set; }
 
-        public MXFOperationGroup(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "OperationGroup")
+        public MXFClassDefinition(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "ClassDefinition")
         {
+            this.MetaDataName = "ClassDefinition";
         }
 
-        /// <summary>
-        /// Overridden method to process local tags
-        /// </summary>
-        /// <param name="localTag"></param>
+
         protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
-                // TODO replace generic MXFObject with class OperationDefinition once implemented
-                case 0x0B01: this.AddChild(reader.ReadReference<MXFObject>("Operation")); return true;
-                case 0x0B04: this.BypassOverride = reader.ReadUInt32(); return true;
-                case 0x0B05: this.AddChild(reader.ReadReference<MXFSourceReference>("Rendering")); return true;
-                case 0x0B02: this.AddChild(reader.ReadReferenceSet<MXFSegment>("InputSegments", "InputSegment")); return true;
-                case 0x0B03: this.AddChild(reader.ReadReferenceSet<MXFParameter>("Parameters", "Parameter")); return true;
+                case 0x0008:
+                    this.AddChild(reader.ReadReference<MXFClassDefinition>("ParentClass")); return true;
+                case 0x0009:
+                    this.AddChild(reader.ReadReferenceSet<MXFPropertyDefinition>("Properties", "Property")); return true;
+                case 0x000a: IsConcrete = reader.ReadBool(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
-
     }
 }

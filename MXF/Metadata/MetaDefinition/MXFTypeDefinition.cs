@@ -21,29 +21,19 @@
 //
 #endregion
 
-using System.ComponentModel;
-
 namespace Myriadbits.MXF
 {
-	public class MXFSourcePackage : MXFGenericPackage
-	{
-		public MXFSourcePackage(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Source Package")
-		{
-		}
+    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.02030000",
+    Deprecated = false,
+    IsConcrete = false,
+    NumberOfElements = 0)]
+    public class MXFTypeDefinition : MXFMetaDefinition
+    {
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x4701: this.AddChild(reader.ReadReference<MXFGenericDescriptor>("EssenceDescription")); return true;
-			}
-			return base.ParseLocalTag(reader, localTag); 
-		}
-
-	}
+        public MXFTypeDefinition(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV, "TypeDefinition")
+        {
+            this.MetaDefinitionName = "TypeDefinition";
+        }
+    }
 }

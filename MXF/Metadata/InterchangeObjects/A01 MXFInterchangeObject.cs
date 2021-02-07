@@ -42,7 +42,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.08000000")]
-        public MXFUUID LinkedGenerationID { get; set; }
+        public MXFKey LinkedGenerationID { get; set; }
 
         public MXFInterchangeObject(MXFReader reader, MXFKLV headerKLV, string metadataName)
             : base(reader, headerKLV, metadataName)
@@ -58,10 +58,12 @@ namespace Myriadbits.MXF
             switch (localTag.Tag)
             {
                 case 0x3C0A: this.InstanceID = reader.ReadUUIDKey(); return true;
-                case 0x0102: this.LinkedGenerationID = reader.ReadUUIDKey(); return true;
+                case 0x0102: this.LinkedGenerationID = reader.ReadULKey(); return true;
                 case 0x0101: this.ObjectClass = reader.ReadULKey(); return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
-                case var a when localTag.Key == appPluginObjects_Key: ReadReferenceSet<MXFObject>(reader, "Application Plugin Objects", "Application Plugin Object"); return true;
+                case var a when localTag.Key == appPluginObjects_Key: 
+                    this.AddChild(reader.ReadReferenceSet<MXFObject>("Application Plugin Objects", "Application Plugin Object")); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
