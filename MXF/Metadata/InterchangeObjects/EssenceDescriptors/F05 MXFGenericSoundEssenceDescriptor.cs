@@ -109,8 +109,8 @@ namespace Myriadbits.MXF
                 case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
                 case 0x3D0C: this.DialNorm = reader.ReadSignedByte(); return true;
                 case 0x3D06: this.SoundEssenceCoding = reader.ReadULKey(); return true;
-                case var a when localTag.Key == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
-                case var a when localTag.Key == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
+                case var _ when localTag.Key == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
+                case var _ when localTag.Key == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

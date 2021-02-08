@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
                 case 0x0102: this.LinkedGenerationID = reader.ReadULKey(); return true;
                 case 0x0101: this.ObjectClass = reader.ReadULKey(); return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
-                case var a when localTag.Key == appPluginObjects_Key: 
+                case var _ when localTag.Key == appPluginObjects_Key: 
                     this.AddChild(reader.ReadReferenceSet<MXFObject>("Application Plugin Objects", "Application Plugin Object")); 
                     return true;
             }

@@ -70,11 +70,11 @@ namespace Myriadbits.MXF
                     this.DescribedTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Size / sizeof(UInt32));
                     return true;
                 case 0x6101: this.AddChild(reader.ReadReference<MXFDescriptiveFramework>("DescriptiveFrameworkObject")); return true;
-                case var a when localTag.Key == metadataScheme_Key: 
+                case var _ when localTag.Key == metadataScheme_Key:
                     this.DescriptiveMetadataScheme = reader.ReadULKey(); 
                     return true;
-                case var a when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUIDKey(); return true;
-                case var a when localTag.Key == metadataApplicationEnvironmentID_Key: 
+                case var _ when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUIDKey(); return true;
+                case var _ when localTag.Key == metadataApplicationEnvironmentID_Key: 
                     this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Size); 
                     return true;
             }

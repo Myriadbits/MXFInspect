@@ -107,26 +107,26 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == rsiz: this.Rsiz = reader.ReadUInt16(); return true;
-                    case var a when localTag.Key == xsiz: this.Xsiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == ysiz: this.Ysiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == xOsiz: this.XOsiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == yOsiz: this.YOsiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == xTsiz: this.XTsiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == yTsiz: this.YTsiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == xTOsiz: this.XTOsiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == yTOsiz: this.YTOsiz = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == csiz: this.Csiz = reader.ReadUInt16(); return true;
-                    case var a when localTag.Key == pictureComponentSizing:
+                    case var _ when localTag.Key == rsiz: this.Rsiz = reader.ReadUInt16(); return true;
+                    case var _ when localTag.Key == xsiz: this.Xsiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == ysiz: this.Ysiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == xOsiz: this.XOsiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == yOsiz: this.YOsiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == xTsiz: this.XTsiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == yTsiz: this.YTsiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == xTOsiz: this.XTOsiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == yTOsiz: this.YTOsiz = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == csiz: this.Csiz = reader.ReadUInt16(); return true;
+                    case var _ when localTag.Key == pictureComponentSizing:
                         this.PictureComponentSizing = reader.ReadArray(reader.ReadByte, localTag.Size);
                         return true;
-                    case var a when localTag.Key == codingStyleDefault:
+                    case var _ when localTag.Key == codingStyleDefault:
                         this.CodingStyleDefault = reader.ReadArray(reader.ReadByte, localTag.Size);
                         return true;
-                    case var a when localTag.Key == quantizationDefault:
+                    case var _ when localTag.Key == quantizationDefault:
                         this.QuantizationDefault = reader.ReadArray(reader.ReadByte, localTag.Size);
                         return true;
-                    case var a when localTag.Key == j2CLayout:
+                    case var _ when localTag.Key == j2CLayout:
                         this.J2CLayout = reader.ReadRGBALayout();
                         return true;
                 }

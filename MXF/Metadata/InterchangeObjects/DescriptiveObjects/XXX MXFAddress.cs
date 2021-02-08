@@ -89,50 +89,50 @@ namespace Myriadbits.MXF
 			{
 				switch (localTag.Key)
 				{
-					case var a when localTag.Key == commObjects_Key:
+					case var _ when localTag.Key == commObjects_Key:
 						this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("CommunicationObjects", "CommunicationObject")); 
 						return true;
 					// TODO replace generic MXFObject with class NameValue once implemented
-					case var a when localTag.Key == addrNameValueObjects_Key: 
+					case var _ when localTag.Key == addrNameValueObjects_Key: 
 						this.AddChild(reader.ReadReferenceSet<MXFObject>("AddressNameValueObjects", "AddressNameValueObject")); 
 						return true;
-					case var a when localTag.Key == roomSuiteNumber_Key: 
+					case var _ when localTag.Key == roomSuiteNumber_Key: 
 						this.RoomSuiteNumber = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == streetNumber_Key: 
+					case var _ when localTag.Key == streetNumber_Key: 
 						this.StreetNumber = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == streetName_Key: 
+					case var _ when localTag.Key == streetName_Key: 
 						this.StreetNumber = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == postalTown_Key: 
+					case var _ when localTag.Key == postalTown_Key: 
 						this.PostalTown = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == city_Key: 
+					case var _ when localTag.Key == city_Key: 
 						this.City = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == stateProvinceCountry_Key: 
+					case var _ when localTag.Key == stateProvinceCountry_Key: 
 						this.StateProvinceCounty = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == postalCode_Key: 
+					case var _ when localTag.Key == postalCode_Key: 
 						this.PostalCode = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == country_Key: 
+					case var _ when localTag.Key == country_Key: 
 						this.Country = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == roomSuiteName_Key: 
+					case var _ when localTag.Key == roomSuiteName_Key: 
 						this.RoomSuiteName = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == buildingName_Key: 
+					case var _ when localTag.Key == buildingName_Key: 
 						this.BuildingName = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == placeName_Key: 
+					case var _ when localTag.Key == placeName_Key: 
 						this.PlaceName = reader.ReadUTF16String(localTag.Size); 
 						return true;
-					case var a when localTag.Key == geoCoordinates_Key: 
+					case var _ when localTag.Key == geoCoordinates_Key: 
 						this.GeographicalCoordinates = reader.ReadArray(reader.ReadByte, 12); 
 						return true;
-					case var a when localTag.Key == astroBodyName_Key: 
+					case var _ when localTag.Key == astroBodyName_Key: 
 						this.AstronomicalBodyName = reader.ReadUTF16String(localTag.Size); 
 						return true;
 				}

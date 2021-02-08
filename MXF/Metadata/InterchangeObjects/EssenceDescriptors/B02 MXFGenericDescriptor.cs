@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
 				case 0x2F01:
 					this.AddChild(reader.ReadReferenceSet<MXFLocator>("Locators", "Locator")); 
 					return true;
-				case var a when localTag.Key == subDescriptorKey: 
+				case var _ when localTag.Key == subDescriptorKey: 
 					this.AddChild(reader.ReadReferenceSet<MXFSubDescriptor>("SubDescriptors", "SubDescriptor")); 
 					return true;
 			}

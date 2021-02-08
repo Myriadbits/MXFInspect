@@ -104,16 +104,16 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == initMetadata_Key: this.VC1InitializationMetadata = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
-                    case var a when localTag.Key == singleSequence_Key: this.VC1SingleSequence = reader.ReadBool(); return true;
-                    case var a when localTag.Key == codedContent_Key: this.VC1CodedContentType = (MXFCodedContentScanning)reader.ReadByte(); return true;
-                    case var a when localTag.Key == identicalGOP_Key: this.VC1IdenticalGOP = reader.ReadBool(); return true;
-                    case var a when localTag.Key == maxGOP_Key: this.VC1MaxGOP = reader.ReadUInt16(); return true;
-                    case var a when localTag.Key == pictureCount_Key: this.VC1BPictureCount = reader.ReadUInt16(); return true;
-                    case var a when localTag.Key == avgBitRate_Key: this.VC1AverageBitRate = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == maxBitRate_Key: this.VC1MaximumBitRate = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == profile_Key: this.VC1Profile = reader.ReadByte(); return true;
-                    case var a when localTag.Key == level_Key: this.VC1Level = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == initMetadata_Key: this.VC1InitializationMetadata = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+                    case var _ when localTag.Key == singleSequence_Key: this.VC1SingleSequence = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == codedContent_Key: this.VC1CodedContentType = (MXFCodedContentScanning)reader.ReadByte(); return true;
+                    case var _ when localTag.Key == identicalGOP_Key: this.VC1IdenticalGOP = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == maxGOP_Key: this.VC1MaxGOP = reader.ReadUInt16(); return true;
+                    case var _ when localTag.Key == pictureCount_Key: this.VC1BPictureCount = reader.ReadUInt16(); return true;
+                    case var _ when localTag.Key == avgBitRate_Key: this.VC1AverageBitRate = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == maxBitRate_Key: this.VC1MaximumBitRate = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == profile_Key: this.VC1Profile = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == level_Key: this.VC1Level = reader.ReadByte(); return true;
                 }
             }
 

@@ -66,11 +66,11 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == aCESAuthoringInformation_Key: this.ACESAuthoringInformation = reader.ReadUTF16String(localTag.Size); return true;
-                    case var a when localTag.Key == aCESMasteringDisplayPrimaries_Key: this.ACESMasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3); return true;
-                    case var a when localTag.Key == aCESMasteringDisplayWhitePointChromaticity_Key: this.ACESMasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
-                    case var a when localTag.Key == aCESMasteringDisplayMaximumLuminance_Key: this.ACESMasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == aCESMasteringDisplayMinimumLuminance_Key: this.ACESMasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == aCESAuthoringInformation_Key: this.ACESAuthoringInformation = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == aCESMasteringDisplayPrimaries_Key: this.ACESMasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3); return true;
+                    case var _ when localTag.Key == aCESMasteringDisplayWhitePointChromaticity_Key: this.ACESMasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
+                    case var _ when localTag.Key == aCESMasteringDisplayMaximumLuminance_Key: this.ACESMasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == aCESMasteringDisplayMinimumLuminance_Key: this.ACESMasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
                 }
             }
             return base.ParseLocalTag(reader, localTag);

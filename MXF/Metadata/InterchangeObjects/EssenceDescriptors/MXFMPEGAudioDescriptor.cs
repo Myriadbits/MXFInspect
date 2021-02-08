@@ -60,8 +60,8 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case var a when localTag.Key == audioBitRate_Key: this.MPEGAudioBitRate = reader.ReadUInt32(); return true;
-                case var a when localTag.Key == channelAssignment_Key: this.MPEGAudioChannelAssignment = reader.ReadULKey(); return true;
+                case var _ when localTag.Key == audioBitRate_Key: this.MPEGAudioBitRate = reader.ReadUInt32(); return true;
+                case var _ when localTag.Key == channelAssignment_Key: this.MPEGAudioChannelAssignment = reader.ReadULKey(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

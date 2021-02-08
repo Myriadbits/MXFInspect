@@ -76,40 +76,40 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == frameworkTitle_Key: 
+                    case var _ when localTag.Key == frameworkTitle_Key: 
                         this.FrameworkTitle = reader.ReadUTF16String(localTag.Size); 
                         return true;
-                    case var a when localTag.Key == extTextLanguageCode_Key: 
+                    case var _ when localTag.Key == extTextLanguageCode_Key: 
                         this.FrameworkExtendedTextLanguageCode = reader.ReadUTF8String(localTag.Size); 
                         return true;
-                    case var a when localTag.Key == primExtSpokenLanguageCode_Key: 
+                    case var _ when localTag.Key == primExtSpokenLanguageCode_Key: 
                         this.PrimaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
                         return true;
-                    case var a when localTag.Key == secExtSpokenLanguageCode_Key: 
+                    case var _ when localTag.Key == secExtSpokenLanguageCode_Key: 
                         this.SecondaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
                         return true;
-                    case var a when localTag.Key == orgExtSpokenLanguageCode_Key: 
+                    case var _ when localTag.Key == orgExtSpokenLanguageCode_Key: 
                         this.OriginalExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
                         return true;
-                    case var a when localTag.Key == thesaurusName_Key: 
+                    case var _ when localTag.Key == thesaurusName_Key: 
                         this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Size); 
                         return true;
-                    case var a when localTag.Key == contactsListObject_Key:
+                    case var _ when localTag.Key == contactsListObject_Key:
                         this.AddChild(reader.ReadReference<MXFContactsList>("ContactsList Object")); 
                         return true;
-                    case var a when localTag.Key == locations_Key:
+                    case var _ when localTag.Key == locations_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFLocation>("LocationObjects", "LocationObject")); 
                         return true;
-                    case var a when localTag.Key == titlesObjects_Key:
+                    case var _ when localTag.Key == titlesObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("Titles Objects", "TitlesObject")); 
                         return true;
-                    case var a when localTag.Key == annotationObjects_Key:
+                    case var _ when localTag.Key == annotationObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("AnnotationObjects", "AnnotationObject")); 
                         return true;
-                    case var a when localTag.Key == participantObjects_Key:
+                    case var _ when localTag.Key == participantObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ParticipantObjects", "ParticipantObjects")); 
                         return true;
-                    case var a when localTag.Key == metadataServerLocators_Key:
+                    case var _ when localTag.Key == metadataServerLocators_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFLocator>("MetadataServerLocators", "MetadataServerLocator")); 
                         return true;
                 }

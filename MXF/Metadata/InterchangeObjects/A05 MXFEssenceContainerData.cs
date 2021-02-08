@@ -96,10 +96,10 @@ namespace Myriadbits.MXF
                 case 0x3F07: this.EssenceSID = reader.ReadUInt32(); return true;
                 case 0x2702: this.EssenceStream = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
                 case 0x2B01: this.SampleIndex = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
-                case var a when localTag.Key == precedingIndexTable_Key: this.PrecedingIndexTable = reader.ReadBool(); return true;
-                case var a when localTag.Key == followingIndexTable_Key: this.FollowingIndexTable = reader.ReadBool(); return true;
-                case var a when localTag.Key == isSparse_Key: this.IsSparse = reader.ReadBool(); return true;
-                case var a when localTag.Key == singularPartitionUsage_Key: this.SingularPartitionUsage = reader.ReadBool(); return true;
+                case var _ when localTag.Key == precedingIndexTable_Key: this.PrecedingIndexTable = reader.ReadBool(); return true;
+                case var _ when localTag.Key == followingIndexTable_Key: this.FollowingIndexTable = reader.ReadBool(); return true;
+                case var _ when localTag.Key == isSparse_Key: this.IsSparse = reader.ReadBool(); return true;
+                case var _ when localTag.Key == singularPartitionUsage_Key: this.SingularPartitionUsage = reader.ReadBool(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

@@ -108,21 +108,21 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == constantBPictureFlag_Key: this.AVCConstantBPictureFlag = reader.ReadBool(); return true;
-                    case var a when localTag.Key == codedContentKind_Key: this.AVCCodedContentKind = (MXFAVCContentScanning)reader.ReadByte(); return true;
-                    case var a when localTag.Key == closedGOPIndicator_Key: this.AVCClosedGOPIndicator = reader.ReadBool(); return true;
-                    case var a when localTag.Key == identicalGOPIndicator_Key: this.AVCIdenticalGOPIndicator = reader.ReadBool(); return true;
-                    case var a when localTag.Key == maximumGOPSize_Key: this.AVCMaximumGOPSize = reader.ReadUInt16(); return true;
-                    case var a when localTag.Key == maximumBPictureCount_Key: this.AVCMaximumBPictureCount = reader.ReadUInt16(); return true;
-                    case var a when localTag.Key == profile_Key: this.AVCProfile = reader.ReadByte(); return true;
-                    case var a when localTag.Key == maximumBitRate_Key: this.AVCMaximumBitRate = reader.ReadUInt32(); return true;
-                    case var a when localTag.Key == profileConstraint_Key: this.AVCProfileConstraint = reader.ReadByte(); return true;
-                    case var a when localTag.Key == level_Key: this.AVCLevel = reader.ReadByte(); return true;
-                    case var a when localTag.Key == decodingDelay_Key: this.AVCDecodingDelay = reader.ReadByte(); return true;
-                    case var a when localTag.Key == maximumRefFrames_Key: this.AVCMaximumRefFrames = reader.ReadByte(); return true;
-                    case var a when localTag.Key == sequenceParameterSetFlag_Key: this.AVCSequenceParameterSetFlag = reader.ReadByte(); return true;
-                    case var a when localTag.Key == pictureParameterSetFlag_Key: this.AVCPictureParameterSetFlag = reader.ReadByte(); return true;
-                    case var a when localTag.Key == averageBitRate_Key: this.AVCAverageBitRate = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == constantBPictureFlag_Key: this.AVCConstantBPictureFlag = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == codedContentKind_Key: this.AVCCodedContentKind = (MXFAVCContentScanning)reader.ReadByte(); return true;
+                    case var _ when localTag.Key == closedGOPIndicator_Key: this.AVCClosedGOPIndicator = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == identicalGOPIndicator_Key: this.AVCIdenticalGOPIndicator = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == maximumGOPSize_Key: this.AVCMaximumGOPSize = reader.ReadUInt16(); return true;
+                    case var _ when localTag.Key == maximumBPictureCount_Key: this.AVCMaximumBPictureCount = reader.ReadUInt16(); return true;
+                    case var _ when localTag.Key == profile_Key: this.AVCProfile = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == maximumBitRate_Key: this.AVCMaximumBitRate = reader.ReadUInt32(); return true;
+                    case var _ when localTag.Key == profileConstraint_Key: this.AVCProfileConstraint = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == level_Key: this.AVCLevel = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == decodingDelay_Key: this.AVCDecodingDelay = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == maximumRefFrames_Key: this.AVCMaximumRefFrames = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == sequenceParameterSetFlag_Key: this.AVCSequenceParameterSetFlag = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == pictureParameterSetFlag_Key: this.AVCPictureParameterSetFlag = reader.ReadByte(); return true;
+                    case var _ when localTag.Key == averageBitRate_Key: this.AVCAverageBitRate = reader.ReadByte(); return true;
                 }
             }
             return base.ParseLocalTag(reader, localTag);

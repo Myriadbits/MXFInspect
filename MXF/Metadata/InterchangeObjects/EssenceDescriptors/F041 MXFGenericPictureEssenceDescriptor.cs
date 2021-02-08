@@ -240,15 +240,15 @@ namespace Myriadbits.MXF
                 case 0x3201: this.PictureCompression = reader.ReadULKey(); return true;
                 case 0x321A: this.CodingEquations = reader.ReadULKey(); return true;
                 case 0x3219: this.ColorPrimaries = reader.ReadULKey(); return true;
-                case var a when localTag.Key == altCenterCuts_Key: this.AddChild(reader.ReadAUIDSet("AlternativeCenterCuts", "AlternativeCenterCut")); return true;
-                case var a when localTag.Key == activeHeight_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var a when localTag.Key == activeWidth_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var a when localTag.Key == activeXOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var a when localTag.Key == activeYOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var a when localTag.Key == displayPrimaries_Key: this.MasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3);  return true;
-                case var a when localTag.Key == displayWhitePointChromaticity_Key: this.MasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
-                case var a when localTag.Key == displayMaxLuminance_Key: this.MasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
-                case var a when localTag.Key == displayMinLuminance_Key: this.MasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
+                case var _ when localTag.Key == altCenterCuts_Key: this.AddChild(reader.ReadAUIDSet("AlternativeCenterCuts", "AlternativeCenterCut")); return true;
+                case var _ when localTag.Key == activeHeight_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var _ when localTag.Key == activeWidth_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var _ when localTag.Key == activeXOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var _ when localTag.Key == activeYOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
+                case var _ when localTag.Key == displayPrimaries_Key: this.MasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3);  return true;
+                case var _ when localTag.Key == displayWhitePointChromaticity_Key: this.MasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
+                case var _ when localTag.Key == displayMaxLuminance_Key: this.MasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
+                case var _ when localTag.Key == displayMinLuminance_Key: this.MasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
 
             }
             return base.ParseLocalTag(reader, localTag);

@@ -73,7 +73,7 @@ namespace Myriadbits.MXF
                 case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
                     // TODO review how the metadataschemes are read (especially if there are no schemes present)
                 case 0x3B0B: this.AddChild(reader.ReadAUIDSet("Descriptive Metadata Schemes", "DM scheme")); return true;
-                case var a when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBool(); return true;
+                case var _ when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBool(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

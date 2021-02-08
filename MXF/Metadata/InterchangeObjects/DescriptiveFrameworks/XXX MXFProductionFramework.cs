@@ -56,23 +56,23 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == integrationIndication_Key: this.IntegrationIndication = reader.ReadUTF16String(localTag.Size); return true;
-                    case var a when localTag.Key == groupRelationshipObjects_Key:
+                    case var _ when localTag.Key == integrationIndication_Key: this.IntegrationIndication = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == groupRelationshipObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("GroupRelationshipObjects", "GroupRelationshipObject")); 
                         return true;
-                    case var a when localTag.Key == identificationObjects_Key:
+                    case var _ when localTag.Key == identificationObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("IdentificationObjects", "IdentificationObject"));
                         return true;
-                    case var a when localTag.Key == brandingObjects_Key:
+                    case var _ when localTag.Key == brandingObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("BrandingObjects", "BrandingObject"));
                         return true;
-                    case var a when localTag.Key == eventObjects_Key:
+                    case var _ when localTag.Key == eventObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("EventObjects", "EventObject"));
                         return true;
-                    case var a when localTag.Key == awardObjects_Key:
+                    case var _ when localTag.Key == awardObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("AwardObjects", "AwardObject"));
                         return true;
-                    case var a when localTag.Key == prodSettingPerObjects_Key:
+                    case var _ when localTag.Key == prodSettingPerObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ProductionSettingPeriodObjects", "ProductionSettingPeriodObject"));
                         return true;
                 }

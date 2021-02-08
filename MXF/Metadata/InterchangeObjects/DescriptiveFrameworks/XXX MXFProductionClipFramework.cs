@@ -48,16 +48,16 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == pictureFormatObject_Key:
+                    case var _ when localTag.Key == pictureFormatObject_Key:
                         this.AddChild(reader.ReadReference<MXFDescriptiveObject>("PictureFormatObject"));
                         return true;
-                    case var a when localTag.Key == projectObject_Key:
+                    case var _ when localTag.Key == projectObject_Key:
                         this.AddChild(reader.ReadReference<MXFDescriptiveObject>("ProjectObject"));
                         return true;
-                    case var a when localTag.Key == captionsDescriptionObjects_Key:
+                    case var _ when localTag.Key == captionsDescriptionObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("CaptionsDescriptionObjects", "CaptionsDescriptionObject"));
                         return true;
-                    case var a when localTag.Key == contractObjects_Key:
+                    case var _ when localTag.Key == contractObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ContractObjects", "ContractObject"));
                         return true;
                 }

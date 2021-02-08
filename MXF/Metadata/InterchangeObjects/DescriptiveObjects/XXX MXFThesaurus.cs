@@ -50,7 +50,7 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == thesaurusName_Key: this.ThesaurusName = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == thesaurusName_Key: this.ThesaurusName = reader.ReadUTF16String(localTag.Size); return true;
                 }
             }
 

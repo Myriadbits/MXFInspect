@@ -67,10 +67,10 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.Key)
                 {
-                    case var a when localTag.Key == rfc5646TextLanguageCode_Key: this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Size); return true;
-                    case var a when localTag.Key == textDataDescription_Key: this.TextDataDescription = reader.ReadUTF16String(localTag.Size); return true;
-                    case var a when localTag.Key == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadUUIDKey(); return true;
-                    case var a when localTag.Key == textMIMEMediaType_Key: this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == rfc5646TextLanguageCode_Key: this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == textDataDescription_Key: this.TextDataDescription = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadUUIDKey(); return true;
+                    case var _ when localTag.Key == textMIMEMediaType_Key: this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Size); return true;
                 }
             }
 
