@@ -32,7 +32,7 @@ namespace Myriadbits.MXFInspect
     {
         protected StringCollection m_mru = new StringCollection(); // Most Recently Used Files
 
-        static int m_maxMRU = 9;
+        static readonly int m_maxMRU = 9;
 
         public FormMain()
         {
