@@ -50,6 +50,7 @@ namespace Myriadbits.MXFInspect
             this.m_mru = Properties.Settings.Default.MRU;
             FillMRU();
             this.UpdateMenu();
+            this.tslVersion.Text = string.Format("Version: {0}", typeof(FormMain).Assembly.GetName().Version.ToString());
         }
 
         /// <summary>
