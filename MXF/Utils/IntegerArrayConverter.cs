@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
     /// Provides a type converter based on the array converter, that shows a int array
     /// as hex string (e.g. { 312, 21, 0, 7, ...} )
     /// </summary>
-    public class IntegerArrayConverter : ArrayConverter
+    public class IntegerArrayConverter : CustomArrayConverter
     {
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
@@ -40,31 +40,20 @@ namespace Myriadbits.MXF
             {
                 if (value is UInt32[] uint_array)
                 {
-                    return IntegerArrayToString<UInt32>(uint_array);
+                    return ArrayToString(uint_array, ',', FormatInteger);
                 }
                 else if (value is Int32[] int_array)
                 {
-                    return IntegerArrayToString<Int32>(int_array);
+                    return ArrayToString(int_array, ',', FormatInteger);
                 }
 
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
-        private string IntegerArrayToString<T>(T[] array)
+        private string FormatInteger(object value)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("{ ");
-            for (int n = 0; n < array.Length; n++)
-            {
-                if (n > 0)
-                {
-                    sb.Append(", ");
-                }
-                sb.Append(array[n]);
-            }
-            sb.Append(" }");
-            return sb.ToString();
+            return string.Format("{0:00}", value);
         }
     }
 }

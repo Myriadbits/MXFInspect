@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -32,27 +33,23 @@ namespace Myriadbits.MXF
     /// Provides a type converter based on the array converter, that shows a byte array
     /// as hex string (e.g. { 00.0A.C1...} )
     /// </summary>
-    public class ByteArrayConverter : ArrayConverter
+    public class ByteArrayConverter : CustomArrayConverter
     {
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
-        {
+        { 
             if (destinationType == typeof(string) && value != null && (value is byte[] arr))
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("{ ");
-                for (int n = 0; n < arr.Length; n++)
-                {
-                    if (n > 0)
-                    {
-                        sb.Append(".");
-                    }
-
-                    sb.Append(string.Format("{0:X2}", arr[n]));
-                }
-                sb.Append(" }");
-                return sb.ToString();
+                return ArrayToString(arr, '.', FormatByte);
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }
+
+
+        private string FormatByte(object value)
+        {
+            return string.Format("{0:X2}", value);
+        }
+        
+
     }
 }
