@@ -24,6 +24,7 @@
 using Myriadbits.MXF;
 using Myriadbits.MXF.Utils;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
@@ -52,43 +53,52 @@ namespace Myriadbits.MXFInspect
 			set
 			{
 				_readOnly = value;
-				this.SetObjectAsReadOnly(this.SelectedObject, _readOnly);
+				this.CustomizeObjectAttributes(this.SelectedObject, _readOnly);
 			}
 		}
 
 		protected override void OnSelectedObjectsChanged(EventArgs e)
 		{
-			this.SetObjectAsReadOnly(this.SelectedObject, this._readOnly);
+			this.CustomizeObjectAttributes(this.SelectedObject, this._readOnly);
 			base.OnSelectedObjectsChanged(e);
 
 		}
 
-		private void SetObjectAsReadOnly(object selectedObject, bool isReadOnly)
+		private void CustomizeObjectAttributes(object selectedObject, bool isReadOnly)
 		{
 			if (selectedObject != null)
-			{
-				// get props and child props
-				var propList = TypeDescriptor.GetProperties(selectedObject)
-										.Cast<PropertyDescriptor>()
-										.Where(prop => prop.IsBrowsable);
+            {
+                IEnumerable<PropertyDescriptor> entireList = GetProperties(selectedObject);
 
-				var childpropList = propList.SelectMany(o => o.GetChildProperties().Cast<PropertyDescriptor>())
-										.Where(prop => prop.IsBrowsable);
+                foreach (PropertyDescriptor pd in entireList)
+                {
+                    // add readonly to all properties
+                    pd.AddReadOnlyAttribute(isReadOnly);
 
-				var entireList = propList.Concat(childpropList).Distinct();
-
-				foreach (PropertyDescriptor pd in entireList)
-				{
-					pd.AddReadOnlyAttribute(isReadOnly);
-
+                    // if marker attribute multiline found -> add a string editor attribute
                     if (pd.HasAttribute<MultiLineAttribute>())
                     {
-						pd.AddAttribute(new EditorAttribute(typeof(StringEditor), typeof(UITypeEditor)));
+                        pd.AddAttribute(new EditorAttribute(typeof(StringEditor), typeof(UITypeEditor)));
                     }
-				}
+                }
 
-				this.Refresh();
-			}
-		}
+                this.Refresh();
+            }
+        }
+
+        // get props and child props
+        private static IEnumerable<PropertyDescriptor> GetProperties(object selectedObject)
+        {
+
+            var propList = TypeDescriptor.GetProperties(selectedObject)
+                                    .Cast<PropertyDescriptor>()
+                                    .Where(prop => prop.IsBrowsable);
+
+            var childpropList = propList.SelectMany(o => o.GetChildProperties().Cast<PropertyDescriptor>())
+                                    .Where(prop => prop.IsBrowsable);
+
+            var entireList = propList.Concat(childpropList).Distinct();
+            return entireList;
+        }
 	}
 }
