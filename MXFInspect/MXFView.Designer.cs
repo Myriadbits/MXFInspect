@@ -187,7 +187,7 @@
             // splitRight.Panel2
             // 
             this.splitRight.Panel2.Controls.Add(this.rtfHexViewer);
-            this.splitRight.Size = new System.Drawing.Size(576, 549);
+            this.splitRight.Size = new System.Drawing.Size(574, 549);
             this.splitRight.SplitterDistance = 388;
             this.splitRight.SplitterWidth = 6;
             this.splitRight.TabIndex = 16;
@@ -202,8 +202,8 @@
             this.propGrid.Location = new System.Drawing.Point(3, 26);
             this.propGrid.Name = "propGrid";
             this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propGrid.ReadOnly = false;
-            this.propGrid.Size = new System.Drawing.Size(567, 359);
+            this.propGrid.ReadOnly = true;
+            this.propGrid.Size = new System.Drawing.Size(565, 359);
             this.propGrid.TabIndex = 1;
             this.propGrid.ToolbarVisible = false;
             this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -218,9 +218,10 @@
             this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtfHexViewer.HideSelection = false;
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
+            this.rtfHexViewer.MaxDisplayableBytes = ((long)(1000000));
             this.rtfHexViewer.Name = "rtfHexViewer";
             this.rtfHexViewer.ReadOnly = true;
-            this.rtfHexViewer.Size = new System.Drawing.Size(567, 144);
+            this.rtfHexViewer.Size = new System.Drawing.Size(565, 142);
             this.rtfHexViewer.TabIndex = 16;
             this.rtfHexViewer.Text = "";
             // 

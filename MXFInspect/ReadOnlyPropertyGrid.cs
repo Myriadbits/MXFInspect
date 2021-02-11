@@ -21,10 +21,12 @@
 //
 #endregion
 
+using Myriadbits.MXF;
+using Myriadbits.MXF.Utils;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -65,10 +67,7 @@ namespace Myriadbits.MXFInspect
 		{
 			if (selectedObject != null)
 			{
-				// add a global read only attribute, which works for most of the properties (propgrid showing in non-bold)
-				TypeDescriptor.AddAttributes(selectedObject, new ReadOnlyAttribute(isReadOnly));
-
-				// for some properties and child properties add readonly attribute additionally in this way
+				// get props and child props
 				var propList = TypeDescriptor.GetProperties(selectedObject)
 										.Cast<PropertyDescriptor>()
 										.Where(prop => prop.IsBrowsable);
@@ -80,7 +79,12 @@ namespace Myriadbits.MXFInspect
 
 				foreach (PropertyDescriptor pd in entireList)
 				{
-					pd.SetReadOnlyAttribute(true);
+					pd.AddReadOnlyAttribute(isReadOnly);
+
+                    if (pd.HasAttribute<MultiLineAttribute>())
+                    {
+						pd.AddAttribute(new EditorAttribute(typeof(StringEditor), typeof(UITypeEditor)));
+                    }
 				}
 
 				this.Refresh();

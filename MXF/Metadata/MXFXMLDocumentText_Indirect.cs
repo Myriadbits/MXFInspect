@@ -30,6 +30,7 @@ namespace Myriadbits.MXF.Metadata
         private const string CATEGORYNAME = "XML Document Text(Indirect)";
 
         [Category(CATEGORYNAME)]
+        [MultiLine]
         public string Text { get; set; }
 
         public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV headerKLV)

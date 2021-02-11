@@ -1,7 +1,7 @@
 ﻿#region license
 //
-// MXFInspect - Myriadbits MXF Viewer. 
-// Inspect MXF Files.
+// MXF - Myriadbits .NET MXF library. 
+// Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
 //
 // This program is free software: you can redistribute it and/or modify
@@ -22,20 +22,13 @@
 #endregion
 
 using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 
-namespace Myriadbits.MXFInspect
+namespace Myriadbits.MXF
 {
-    public static class PropertyDescriptorExtensions
-	{
-		public static void SetReadOnlyAttribute(this PropertyDescriptor p, bool value)
-		{
-			var attributes = p.Attributes.Cast<Attribute>().Where(x => !(x is ReadOnlyAttribute)).ToList();
-			attributes.Add(new ReadOnlyAttribute(value));
-			var pi = typeof(MemberDescriptor).GetProperty("AttributeArray", BindingFlags.Instance | BindingFlags.NonPublic);
-			pi.SetValue(p, attributes.ToArray());
-		}
-	}
+    /// <summary>
+    /// Marker attribute that can be used for string properties containing long text.
+    /// </summary>
+    public class MultiLineAttribute : Attribute
+    {
+    }
 }
