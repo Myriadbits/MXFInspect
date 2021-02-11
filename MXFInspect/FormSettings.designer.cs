@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.bntOk = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.chkPartialLoadMsg = new System.Windows.Forms.CheckBox();
@@ -72,17 +72,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbColorPartition)).BeginInit();
             this.SuspendLayout();
             // 
-            // bntOk
+            // btnOk
             // 
-            this.bntOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bntOk.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bntOk.Location = new System.Drawing.Point(356, 227);
-            this.bntOk.Name = "bntOk";
-            this.bntOk.Size = new System.Drawing.Size(75, 23);
-            this.bntOk.TabIndex = 7;
-            this.bntOk.Text = "Ok";
-            this.bntOk.UseVisualStyleBackColor = true;
-            this.bntOk.Click += new System.EventHandler(this.bntOk_Click);
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnOk.Location = new System.Drawing.Point(415, 262);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(88, 27);
+            this.btnOk.TabIndex = 7;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.bntOk_Click);
             // 
             // tabControl1
             // 
@@ -91,10 +92,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabGeneral);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(13, 13);
+            this.tabControl1.Location = new System.Drawing.Point(15, 15);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(499, 208);
+            this.tabControl1.Size = new System.Drawing.Size(582, 240);
             this.tabControl1.TabIndex = 8;
             // 
             // tabGeneral
@@ -106,10 +108,11 @@
             this.tabGeneral.Controls.Add(this.cmbThreshold);
             this.tabGeneral.Controls.Add(this.label4);
             this.tabGeneral.Controls.Add(this.label1);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 24);
+            this.tabGeneral.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(491, 182);
+            this.tabGeneral.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabGeneral.Size = new System.Drawing.Size(574, 212);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -117,10 +120,11 @@
             // chkPartialLoadMsg
             // 
             this.chkPartialLoadMsg.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkPartialLoadMsg.Location = new System.Drawing.Point(4, 36);
+            this.chkPartialLoadMsg.Location = new System.Drawing.Point(5, 42);
+            this.chkPartialLoadMsg.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chkPartialLoadMsg.Name = "chkPartialLoadMsg";
             this.chkPartialLoadMsg.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.chkPartialLoadMsg.Size = new System.Drawing.Size(214, 19);
+            this.chkPartialLoadMsg.Size = new System.Drawing.Size(250, 22);
             this.chkPartialLoadMsg.TabIndex = 4;
             this.chkPartialLoadMsg.Text = "Show partial loading message";
             this.chkPartialLoadMsg.UseVisualStyleBackColor = true;
@@ -128,9 +132,10 @@
             // label9
             // 
             this.label9.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label9.Location = new System.Drawing.Point(6, 58);
+            this.label9.Location = new System.Drawing.Point(7, 67);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(479, 35);
+            this.label9.Size = new System.Drawing.Size(559, 40);
             this.label9.TabIndex = 3;
             this.label9.Text = "Files that are larger than the threshold will be partially loaded. A partition wi" +
     "ll be loaded when it is expanded in the tree.";
@@ -138,10 +143,11 @@
             // chkShowLines
             // 
             this.chkShowLines.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkShowLines.Location = new System.Drawing.Point(4, 151);
+            this.chkShowLines.Location = new System.Drawing.Point(5, 174);
+            this.chkShowLines.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chkShowLines.Name = "chkShowLines";
             this.chkShowLines.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.chkShowLines.Size = new System.Drawing.Size(214, 19);
+            this.chkShowLines.Size = new System.Drawing.Size(250, 22);
             this.chkShowLines.TabIndex = 2;
             this.chkShowLines.Text = "Show grid lines in list";
             this.chkShowLines.UseVisualStyleBackColor = true;
@@ -166,9 +172,10 @@
             "1500",
             "2000",
             "2500"});
-            this.cmbTopNumber.Location = new System.Drawing.Point(204, 122);
+            this.cmbTopNumber.Location = new System.Drawing.Point(238, 141);
+            this.cmbTopNumber.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cmbTopNumber.Name = "cmbTopNumber";
-            this.cmbTopNumber.Size = new System.Drawing.Size(133, 21);
+            this.cmbTopNumber.Size = new System.Drawing.Size(154, 23);
             this.cmbTopNumber.TabIndex = 1;
             this.cmbTopNumber.Visible = false;
             // 
@@ -184,18 +191,20 @@
             "5 GB",
             "10 GB",
             "No files"});
-            this.cmbThreshold.Location = new System.Drawing.Point(204, 9);
+            this.cmbThreshold.Location = new System.Drawing.Point(238, 10);
+            this.cmbThreshold.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cmbThreshold.Name = "cmbThreshold";
-            this.cmbThreshold.Size = new System.Drawing.Size(133, 21);
+            this.cmbThreshold.Size = new System.Drawing.Size(154, 23);
             this.cmbThreshold.TabIndex = 1;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Enabled = false;
-            this.label4.Location = new System.Drawing.Point(6, 125);
+            this.label4.Location = new System.Drawing.Point(7, 144);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(182, 13);
+            this.label4.Size = new System.Drawing.Size(209, 15);
             this.label4.TabIndex = 0;
             this.label4.Text = "Number of files to show in the top list:";
             this.label4.Visible = false;
@@ -203,9 +212,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 12);
+            this.label1.Location = new System.Drawing.Point(7, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 13);
+            this.label1.Size = new System.Drawing.Size(119, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Partial load threshold";
             // 
@@ -228,10 +238,11 @@
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.pbColorPartition);
             this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(491, 182);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage2.Size = new System.Drawing.Size(574, 212);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Colors";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -240,9 +251,10 @@
             // 
             this.pbColorSpecial.BackColor = System.Drawing.Color.Red;
             this.pbColorSpecial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorSpecial.Location = new System.Drawing.Point(122, 141);
+            this.pbColorSpecial.Location = new System.Drawing.Point(142, 163);
+            this.pbColorSpecial.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorSpecial.Name = "pbColorSpecial";
-            this.pbColorSpecial.Size = new System.Drawing.Size(112, 13);
+            this.pbColorSpecial.Size = new System.Drawing.Size(130, 15);
             this.pbColorSpecial.TabIndex = 13;
             this.pbColorSpecial.TabStop = false;
             this.pbColorSpecial.Click += new System.EventHandler(this.pbColorSpecial_Click);
@@ -250,9 +262,10 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 141);
+            this.label12.Location = new System.Drawing.Point(4, 163);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(68, 13);
+            this.label12.Size = new System.Drawing.Size(74, 15);
             this.label12.TabIndex = 12;
             this.label12.Text = "Special color";
             // 
@@ -260,9 +273,10 @@
             // 
             this.pbColorFiller.BackColor = System.Drawing.Color.Red;
             this.pbColorFiller.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorFiller.Location = new System.Drawing.Point(122, 120);
+            this.pbColorFiller.Location = new System.Drawing.Point(142, 138);
+            this.pbColorFiller.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorFiller.Name = "pbColorFiller";
-            this.pbColorFiller.Size = new System.Drawing.Size(112, 13);
+            this.pbColorFiller.Size = new System.Drawing.Size(130, 15);
             this.pbColorFiller.TabIndex = 11;
             this.pbColorFiller.TabStop = false;
             this.pbColorFiller.Click += new System.EventHandler(this.pbColorFiller_Click);
@@ -270,9 +284,10 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 120);
+            this.label11.Location = new System.Drawing.Point(4, 138);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(54, 13);
+            this.label11.Size = new System.Drawing.Size(62, 15);
             this.label11.TabIndex = 10;
             this.label11.Text = "Filler color";
             // 
@@ -280,9 +295,10 @@
             // 
             this.pbColorMeta.BackColor = System.Drawing.Color.Red;
             this.pbColorMeta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorMeta.Location = new System.Drawing.Point(122, 101);
+            this.pbColorMeta.Location = new System.Drawing.Point(142, 117);
+            this.pbColorMeta.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorMeta.Name = "pbColorMeta";
-            this.pbColorMeta.Size = new System.Drawing.Size(112, 13);
+            this.pbColorMeta.Size = new System.Drawing.Size(130, 15);
             this.pbColorMeta.TabIndex = 9;
             this.pbColorMeta.TabStop = false;
             this.pbColorMeta.Click += new System.EventHandler(this.pbColorMeta_Click);
@@ -290,9 +306,10 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 101);
+            this.label10.Location = new System.Drawing.Point(4, 117);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(81, 13);
+            this.label10.Size = new System.Drawing.Size(90, 15);
             this.label10.TabIndex = 8;
             this.label10.Text = "Meta data color";
             // 
@@ -300,9 +317,10 @@
             // 
             this.pbColorSystemItem.BackColor = System.Drawing.Color.Red;
             this.pbColorSystemItem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorSystemItem.Location = new System.Drawing.Point(122, 82);
+            this.pbColorSystemItem.Location = new System.Drawing.Point(142, 95);
+            this.pbColorSystemItem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorSystemItem.Name = "pbColorSystemItem";
-            this.pbColorSystemItem.Size = new System.Drawing.Size(112, 13);
+            this.pbColorSystemItem.Size = new System.Drawing.Size(130, 15);
             this.pbColorSystemItem.TabIndex = 7;
             this.pbColorSystemItem.TabStop = false;
             this.pbColorSystemItem.Click += new System.EventHandler(this.pbColorSystemItem_Click);
@@ -310,9 +328,10 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 82);
+            this.label8.Location = new System.Drawing.Point(4, 95);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(90, 13);
+            this.label8.Size = new System.Drawing.Size(102, 15);
             this.label8.TabIndex = 6;
             this.label8.Text = "System Item color";
             // 
@@ -320,9 +339,10 @@
             // 
             this.pbColorRIP.BackColor = System.Drawing.Color.Red;
             this.pbColorRIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorRIP.Location = new System.Drawing.Point(122, 63);
+            this.pbColorRIP.Location = new System.Drawing.Point(142, 73);
+            this.pbColorRIP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorRIP.Name = "pbColorRIP";
-            this.pbColorRIP.Size = new System.Drawing.Size(112, 13);
+            this.pbColorRIP.Size = new System.Drawing.Size(130, 15);
             this.pbColorRIP.TabIndex = 5;
             this.pbColorRIP.TabStop = false;
             this.pbColorRIP.Click += new System.EventHandler(this.pbColorRIP_Click);
@@ -330,9 +350,10 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 63);
+            this.label5.Location = new System.Drawing.Point(4, 73);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.Size = new System.Drawing.Size(54, 15);
             this.label5.TabIndex = 4;
             this.label5.Text = "RIP color";
             // 
@@ -340,9 +361,10 @@
             // 
             this.pbColorIndex.BackColor = System.Drawing.Color.Red;
             this.pbColorIndex.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorIndex.Location = new System.Drawing.Point(122, 44);
+            this.pbColorIndex.Location = new System.Drawing.Point(142, 51);
+            this.pbColorIndex.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorIndex.Name = "pbColorIndex";
-            this.pbColorIndex.Size = new System.Drawing.Size(112, 13);
+            this.pbColorIndex.Size = new System.Drawing.Size(130, 15);
             this.pbColorIndex.TabIndex = 3;
             this.pbColorIndex.TabStop = false;
             this.pbColorIndex.Click += new System.EventHandler(this.pbColorIndex_Click);
@@ -351,9 +373,10 @@
             // 
             this.pbColorEssence.BackColor = System.Drawing.Color.Red;
             this.pbColorEssence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorEssence.Location = new System.Drawing.Point(122, 25);
+            this.pbColorEssence.Location = new System.Drawing.Point(142, 29);
+            this.pbColorEssence.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorEssence.Name = "pbColorEssence";
-            this.pbColorEssence.Size = new System.Drawing.Size(112, 13);
+            this.pbColorEssence.Size = new System.Drawing.Size(130, 15);
             this.pbColorEssence.TabIndex = 3;
             this.pbColorEssence.TabStop = false;
             this.pbColorEssence.Click += new System.EventHandler(this.pbColorEssence_Click);
@@ -362,27 +385,30 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label7.Location = new System.Drawing.Point(6, 166);
+            this.label7.Location = new System.Drawing.Point(7, 192);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(194, 13);
+            this.label7.Size = new System.Drawing.Size(216, 15);
             this.label7.TabIndex = 2;
             this.label7.Text = "Click on the colors to change the colors";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 44);
+            this.label6.Location = new System.Drawing.Point(4, 51);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(85, 13);
+            this.label6.Size = new System.Drawing.Size(95, 15);
             this.label6.TabIndex = 2;
             this.label6.Text = "Index table color";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 25);
+            this.label3.Location = new System.Drawing.Point(4, 29);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 13);
+            this.label3.Size = new System.Drawing.Size(78, 15);
             this.label3.TabIndex = 2;
             this.label3.Text = "Essence color";
             // 
@@ -390,9 +416,10 @@
             // 
             this.pbColorPartition.BackColor = System.Drawing.Color.Red;
             this.pbColorPartition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorPartition.Location = new System.Drawing.Point(122, 6);
+            this.pbColorPartition.Location = new System.Drawing.Point(142, 7);
+            this.pbColorPartition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorPartition.Name = "pbColorPartition";
-            this.pbColorPartition.Size = new System.Drawing.Size(112, 13);
+            this.pbColorPartition.Size = new System.Drawing.Size(130, 15);
             this.pbColorPartition.TabIndex = 1;
             this.pbColorPartition.TabStop = false;
             this.pbColorPartition.Click += new System.EventHandler(this.pbColorPartition_Click);
@@ -400,9 +427,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 6);
+            this.label2.Location = new System.Drawing.Point(4, 7);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.Size = new System.Drawing.Size(82, 15);
             this.label2.TabIndex = 0;
             this.label2.Text = "Partition color";
             // 
@@ -410,18 +438,20 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(437, 227);
+            this.btnCancel.Location = new System.Drawing.Point(510, 262);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(88, 27);
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(13, 227);
+            this.btnReset.Location = new System.Drawing.Point(15, 262);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(112, 23);
+            this.btnReset.Size = new System.Drawing.Size(131, 27);
             this.btnReset.TabIndex = 8;
             this.btnReset.Text = "Reset to default";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -429,15 +459,16 @@
             // 
             // FormSettings
             // 
-            this.AcceptButton = this.bntOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AcceptButton = this.btnOk;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(524, 262);
+            this.ClientSize = new System.Drawing.Size(611, 302);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.bntOk);
+            this.Controls.Add(this.btnOk);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSettings";
@@ -465,7 +496,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button bntOk;
+		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabGeneral;
 		private System.Windows.Forms.ComboBox cmbThreshold;
