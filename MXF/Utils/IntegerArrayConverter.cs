@@ -40,11 +40,11 @@ namespace Myriadbits.MXF
             {
                 if (value is UInt32[] uint_array)
                 {
-                    return ArrayToString(uint_array, ',', FormatInteger);
+                    return ArrayToString(uint_array, ", ", FormatInteger);
                 }
                 else if (value is Int32[] int_array)
                 {
-                    return ArrayToString(int_array, ',', FormatInteger);
+                    return ArrayToString(int_array, ", ", FormatInteger);
                 }
 
             }

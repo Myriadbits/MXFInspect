@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
         { 
             if (destinationType == typeof(string) && value != null && (value is byte[] arr))
             {
-                return ArrayToString(arr, '.', FormatByte);
+                return ArrayToString(arr, ".", FormatByte);
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }

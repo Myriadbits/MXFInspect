@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
             return props;
         }
 
-        protected string ArrayToString<T>(T[] array, char separator, Func<object, string> formatFunction)
+        protected string ArrayToString<T>(T[] array, string separator, Func<object, string> formatFunction)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{ ");
@@ -55,7 +55,7 @@ namespace Myriadbits.MXF
             {
                 if (n > 0)
                 {
-                    sb.Append(separator + " ");
+                    sb.Append(separator);
                 }
                 sb.Append(formatFunction(array[n]));
             }
