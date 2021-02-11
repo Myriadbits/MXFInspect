@@ -21,30 +21,27 @@
 //
 #endregion
 
+using Myriadbits.MXFInspect.Properties;
 using System;
-using System.ComponentModel;
-using System.Drawing.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace Myriadbits.MXFInspect
 {
-    public class StringEditor : UITypeEditor
+    public partial class FormMultiLineStringShowDlg : Form
     {
-        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        public string MultiLineText
         {
-            return UITypeEditorEditStyle.Modal;
-        }
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-        {
-            var svc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-            if (svc != null)
+            get
             {
-
-                using var frm = new FormMultiLineStringShowDlg(value as string);
-                svc.ShowDialog(frm);
+                return this.textBox1.Text;
             }
-            return value;
+            set { this.textBox1.Text = value; }
+        }
+
+        public FormMultiLineStringShowDlg(string text)
+        {
+            InitializeComponent();
+            MultiLineText = text;
         }
     }
 }
