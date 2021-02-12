@@ -29,6 +29,7 @@ namespace Myriadbits.MXF
     public class MXFParameter : MXFInterchangeObject
     {
         private const string CATEGORYNAME = "Parameter";
+
         [Category(CATEGORYNAME)]
         public MXFUUID ParameterDefinitionReference { get; set; }
 

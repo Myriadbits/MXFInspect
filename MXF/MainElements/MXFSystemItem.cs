@@ -74,18 +74,25 @@ namespace Myriadbits.MXF
 
 		[Category(CATEGORYNAME)]
 		public SystemBitmap SystemBitmap { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public double PackageRate { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public SystemStreamStatus StreamStatus { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public bool LowLatencyMode { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public SystemTransferMode TransferMode { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public SystemTimingMode TimingMode { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public UInt16 ChannelHandle { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public UInt16 ContinuityCount { get; set; }
 
@@ -94,8 +101,10 @@ namespace Myriadbits.MXF
 
 		[Category(CATEGORYNAME)]
 		public string CreationDate { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public MXFTimeStamp UserDate { get; set; }
+		
 		[Category(CATEGORYNAME)]
 		public string UserDateFullFrameNb { get; set; }
 
