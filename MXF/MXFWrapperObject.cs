@@ -26,6 +26,7 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
+	// TODO check wether the logical object can be merged into this wrapper class
 	public class MXFWrapperObject<T> : MXFNamedObject
 	{
 		private const string CATEGORYNAME = "ObjectWrapper";

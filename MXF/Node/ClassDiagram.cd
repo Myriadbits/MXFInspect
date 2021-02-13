@@ -11,23 +11,36 @@
   <Class Name="Myriadbits.MXF.MXFLogicalObject">
     <Position X="4.5" Y="6.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAkAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MXFLogicalObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFObject">
     <Position X="7.5" Y="6.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IgAAgAAAAAAAEAAMAAIAAABCIAgIABAAgQAAAAABgAQ=</HashCode>
+      <HashCode>IgAAAAAAAAAAGAAEAAIAAABAIAgIABAAiQAAAAABgAQ=</HashCode>
       <FileName>MXFObject.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.MXFKLV">
-    <Position X="7.5" Y="12.25" Width="2.5" />
+    <Position X="4.5" Y="12.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAEAACAABQEAAAAAAACAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAIAEAACACBQEAAAAAAACAAAAQAAACAAAAAAAAAA=</HashCode>
       <FileName>MXFKLV.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFWrapperObject&lt;T&gt;">
+    <Position X="9.5" Y="15" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>MXFWrapperObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFNamedObject">
+    <Position X="9.5" Y="12.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MXFNamedObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Myriadbits.MXF.INode&lt;T&gt;">
@@ -54,7 +67,7 @@
   <Interface Name="Myriadbits.MXF.ILazyLoadable">
     <Position X="9.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAAAAAAIAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ILazyLoadable.cs</FileName>
     </TypeIdentifier>
   </Interface>
