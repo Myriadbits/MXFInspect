@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 
@@ -29,30 +30,31 @@ namespace Myriadbits.MXF
 	public class MXFRGBAPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
 	{
 		private const string CATEGORYNAME = "RGBAPictureEssenceDescriptor";
+		private const int CATEGORYPOS = 3;
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public UInt32? ComponentMaxRef { get; set; }
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public UInt32? ComponentMinRef { get; set; }
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public UInt32? AlphaMaxRef { get; set; }
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public UInt32? AlphaMinRef { get; set; }
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public MXFScanningDirectionType? ScanningDirection { get; set; }
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public MXFRGBAComponent[] PixelLayout { get; set; }
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		[TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Palette { get; set; }
 
-		[Category(CATEGORYNAME)]
+		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public MXFRGBAComponent[] PaletteLayout { get; set; }
 
 		/// <summary>

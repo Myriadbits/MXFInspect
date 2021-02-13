@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 
@@ -33,6 +34,7 @@ namespace Myriadbits.MXF
     public class MXFGenericPictureEssenceDescriptor : MXFFileDescriptor
     {
         private const string CATEGORYNAME = "GenericPictureEssenceDescriptor";
+        private const int CATEGORYPOS = 4;
 
         private readonly MXFKey altCenterCuts_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x03, 0x02, 0x0b, 0x00, 0x00, 0x00);
         private readonly MXFKey activeHeight_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x13, 0x00, 0x00, 0x00);
@@ -45,140 +47,140 @@ namespace Myriadbits.MXF
         private readonly MXFKey displayMinLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x04, 0x00, 0x00);
 
         #region properties
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04050113.00000000")]
         public MXFSignalStandard? SignalStandard { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010301.04000000")]
         public MXFFrameLayout? FrameLayout { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010502.02000000")]
         public UInt32? StoredWidth { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010502.01000000")]
         public UInt32? StoredHeight { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04010302.08000000")]
         public Int32? StoredF2Offset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.08000000")]
         public UInt32? SampledWidth { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.07000000")]
         public UInt32? SampledHeight { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.09000000")]
         public Int32? SampledXOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.0a000000")]
         public Int32? SampledYOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.0b000000")]
         public UInt32? DisplayHeight { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.0c000000")]
         public UInt32? DisplayWidth { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.0d000000")]
         public Int32? DisplayXOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.0e000000")]
         public Int32? DisplayYOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04010302.07000000")]
         public Int32? DisplayF2Offset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010101.01000000")]
         public MXFRational ImageAspectRatio { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04010302.09000000")]
         public byte? ActiveFormatDescriptor { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010302.05000000")]
         [TypeConverter(typeof(IntegerArrayConverter))]
         public Int32[] VideoLineMap { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200102.00000000")]
         public MXFAlphaTransparencyType? AlphaTransparency { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010201.01010200")]
         public MXFKey TransferCharacteristic { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04180101.00000000")]
         public UInt32? ImageAlignmentFactor { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04180102.00000000")]
         public UInt32? ImageStartOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04180103.00000000")]
         public UInt32? ImageEndOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010301.06000000")]
         public MXFFieldNumber? FieldDominance { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010601.00000000")]
         public MXFKey PictureCompression { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010201.01030100")]
         public MXFKey CodingEquations { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010109.04010201.01060100")]
         public MXFKey ColorPrimaries { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04010501.13000000")]
         public UInt32? ActiveHeight { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04010501.14000000")]
         public UInt32? ActiveWidth { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04010501.15000000")]
         public UInt32? ActiveXOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04010501.16000000")]
         public UInt32? ActiveYOffset { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200401.01010000")]
         public MXFColorPrimary[] MasteringDisplayPrimaries { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200401.01020000")]
         public MXFColorPrimary MasteringDisplayWhitePointChromaticity { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200401.01030000")]
         public UInt32? MasteringDisplayMaximumLuminance { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200401.01040000")]
         public UInt32? MasteringDisplayMinimumLuminance { get; set; }
 

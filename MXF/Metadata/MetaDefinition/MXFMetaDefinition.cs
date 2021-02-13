@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,20 +35,21 @@ namespace Myriadbits.MXF
     public class MXFMetaDefinition : MXFMetadataBaseclass, IUUIDIdentifiable
     {
         private const string CATEGORYNAME = "MetaDefinition";
+        private const int CATEGORYPOS = 2;
 
         // TODO is not really part of MetaDefinition
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public MXFUUID InstanceId { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.03020401.02010000")]
         public string MetaDefinitionName { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.13000000")]
         public MXFKey MetaDefinitionIdentification { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.14010000")]
         public string MetaDefinitionDescription { get; set; }
 

@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
@@ -29,18 +30,19 @@ namespace Myriadbits.MXF
     public class MXFInterchangeObject : MXFMetadataBaseclass, IUUIDIdentifiable
     {
         private const string CATEGORYNAME = "InterchangeObject";
+        private const int CATEGORYPOS = 2;
 
         public readonly MXFKey appPluginObjects_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x06, 0x01, 0x01, 0x04, 0x02, 0x0e, 0x00, 0x00);
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.01011502.00000000")]
         public MXFUUID InstanceID { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01010000")]
         public MXFKey ObjectClass { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.08000000")]
         public MXFKey LinkedGenerationID { get; set; }
 

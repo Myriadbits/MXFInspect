@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 
@@ -33,44 +34,45 @@ namespace Myriadbits.MXF
     public class MXFCDCIPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
     {
         private const string CATEGORYNAME = "CDCIPictureEssenceDescriptor";
+        private const int CATEGORYPOS = 4;
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.0a000000")]
         public UInt32? ComponentDepth { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.05000000")]
         public UInt32? HorizontalSubsampling { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010501.10000000")]
         public UInt32? VerticalSubsampling { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010501.06000000")]
         public MXFColorSiting? ColorSiting { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.03010201.0a000000")]
         public bool? ReversedByteOrder { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04180104.00000000")]
         public Int16? PaddingBits { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.07000000")]
         public UInt32? AlphaSampleDepth { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010503.03000000")]
         public UInt32? BlackRefLevel { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04010503.04000000")]
         public UInt32? WhiteRefLevel { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.05000000")]
         public UInt32? ColorRange { get; set; }
 

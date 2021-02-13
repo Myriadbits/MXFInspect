@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,15 +54,16 @@ namespace Myriadbits.MXF
     public abstract class MXFObject : Node<MXFObject> //ILazyLoadable
     {
         private const string CATEGORYNAME = "Object";
+        private const int CATEGORYPOS = 0;
 
         private long m_lLength = -1;            // Length in bytes of this object
         protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Offset from the beginning of file in terms of bytes")]
         public long Offset { get; set; } = long.MaxValue;
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length of KLV in bytes")]
         public long Length
         {

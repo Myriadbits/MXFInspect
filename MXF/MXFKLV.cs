@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -30,19 +31,20 @@ namespace Myriadbits.MXF
     public class MXFKLV : MXFObject
     {
         private const string CATEGORYNAME = "KLV";
+        private const int CATEGORYPOS = 1;
 
         private byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME,CATEGORYPOS)]
         public MXFKey Key { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public long DataOffset { get; set; } // Points just after the KLV
 
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-        [Category(CATEGORYNAME)]
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public MXFBER BER { get; set; }
 
         /// <summary>
