@@ -23,7 +23,7 @@
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 0)]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011000")]
     public class MXFTextClip : MXFSourceReference
     {
         public MXFTextClip(MXFReader reader, MXFKLV headerKLV)

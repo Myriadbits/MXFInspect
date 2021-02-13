@@ -25,10 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01015200",
-        Deprecated = false,
-        IsConcrete = true,
-        NumberOfElements = 1)]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01015200")]
     public class MXFParsedTextDescriptor : MXFGenericDataEssenceDescriptor
     {
         private const string CATEGORYNAME = "ParsedTextDescriptor";

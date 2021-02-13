@@ -25,7 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 1)]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013c00")]
     public class MXFParameter : MXFInterchangeObject
     {
         private const string CATEGORYNAME = "Parameter";

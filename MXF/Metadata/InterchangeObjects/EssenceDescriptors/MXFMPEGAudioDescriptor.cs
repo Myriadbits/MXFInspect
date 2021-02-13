@@ -26,10 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01015e00",
-    Deprecated = false,
-    IsConcrete = true,
-    NumberOfElements = 2)]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01015e00")]
     public class MXFMPEGAudioDescriptor : MXFGenericSoundEssenceDescriptor
     {
         private const string CATEGORYNAME = "MPEG AudioDescriptor";

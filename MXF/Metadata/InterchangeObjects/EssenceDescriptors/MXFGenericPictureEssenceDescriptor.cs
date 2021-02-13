@@ -27,10 +27,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01012700", 
-        Deprecated = false, 
-        IsConcrete = true, 
-        NumberOfElements = 35)]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012700")]
     public class MXFGenericPictureEssenceDescriptor : MXFFileDescriptor
     {
         private const string CATEGORYNAME = "GenericPictureEssenceDescriptor";

@@ -1,4 +1,5 @@
-﻿#region license
+﻿using Myriadbits.MXF.Identifiers;
+#region license
 //
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
@@ -21,23 +22,14 @@
 //
 #endregion
 
-using Myriadbits.MXF.Identifiers;
 using System;
 
 namespace Myriadbits.MXF
 {
-    // marker attribute for metadata groups that do not contain any property
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public sealed class ULGroupAttribute : ULBaseAttribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public abstract class ULBaseAttribute : Attribute
     {
-        public bool Deprecated { get; set; } = false;
-        public bool IsConcrete { get; set; } = true;
-        public int NumberOfElements { get; set; }
-
-        public ULGroupAttribute(string smpteULString)
-        {
-            SMPTEULString = smpteULString;
-            ShortKey = KeyDictionary.GetShortKeyFromSMPTEULString(smpteULString);
-        }
+        public string SMPTEULString { get; set; }
+        public MXFShortKey ShortKey { get; protected set; }
     }
 }

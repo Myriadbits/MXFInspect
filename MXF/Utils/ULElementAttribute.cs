@@ -26,12 +26,9 @@ using System;
 
 namespace Myriadbits.MXF
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class ULElementAttribute : Attribute, IUniversalLabel
+    
+    public class ULElementAttribute : ULBaseAttribute
     {
-        public string SMPTEULString { get; set; }
-        public MXFShortKey ShortKey { get; private set; }
-
         public ULElementAttribute(string smpteULString)
         {
             SMPTEULString = smpteULString;

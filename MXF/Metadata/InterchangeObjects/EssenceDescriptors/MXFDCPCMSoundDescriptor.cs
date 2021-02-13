@@ -26,10 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.01015d00",
-	Deprecated = false,
-	IsConcrete = false,
-	NumberOfElements = 0)]
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01015d00")]
 	public class MXFDCPCMSoundDescriptor : MXFGenericSoundEssenceDescriptor
 	{
 

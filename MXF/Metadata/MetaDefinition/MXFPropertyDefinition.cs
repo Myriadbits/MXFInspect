@@ -26,10 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(SMPTEULString = "urn:smpte:ul:060e2b34.027f0101.0d010101.02020000",
-    Deprecated = false,
-    IsConcrete = true,
-    NumberOfElements = 4)]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.02020000")]
     public class MXFPropertyDefinition : MXFMetaDefinition
     {
         private const string CATEGORYNAME = "PropertyDefinition";

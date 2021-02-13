@@ -25,7 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup(Deprecated = false, IsConcrete = false, NumberOfElements = 3)]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011500")]
     public class MXFTimecodeStream : MXFSegment
     {
         private const string CATEGORYNAME = "TimecodeStream";
