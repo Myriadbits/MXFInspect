@@ -26,7 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class JPEG2000SubDescriptor : MXFSubDescriptor
+    public class MXFJPEG2000SubDescriptor : MXFSubDescriptor
     {
         private const string CATEGORYNAME = "JPEG2000SubDescriptor";
 
@@ -92,7 +92,7 @@ namespace Myriadbits.MXF
         public MXFRGBAComponent[] J2CLayout { get; set; }
 
 
-        public JPEG2000SubDescriptor(MXFReader reader, MXFKLV headerKLV)
+        public MXFJPEG2000SubDescriptor(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV, "JPEG2000SubDescriptor")
         {
         }

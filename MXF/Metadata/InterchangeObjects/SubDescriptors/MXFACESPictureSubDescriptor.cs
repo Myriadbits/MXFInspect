@@ -26,7 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class ACESPictureSubDescriptor : MXFSubDescriptor
+    public class MXFACESPictureSubDescriptor : MXFSubDescriptor
     {
         private const string CATEGORYNAME = "ACESPictureSubDescriptor";
 
@@ -51,7 +51,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
-        public ACESPictureSubDescriptor(MXFReader reader, MXFKLV headerKLV)
+        public MXFACESPictureSubDescriptor(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV, "ACESPictureSubDescriptor")
         {
         }
