@@ -57,61 +57,11 @@ namespace Myriadbits.MXFInspect
             this.Expanding += Tree_Expanding;
         }
 
-        public void HideFillers(bool hide)
-        {
-            // save object so it can be reselected, once the filter has been applied
-            var obj = this.SelectedObject;
-            this.FillersHidden = hide;
-
-            if (!FilteredByType)
-            {
-                this.ModelFilter = hide ? new ExcludeFillerFilter() : null;
-            }
-
-            this.SelectObject(obj);
-            this.EnsureModelVisible(obj);
-        }
-
-        public void SetTypeFilter(bool filtered)
-        {
-            var selObj = this.SelectedObject as MXFObject;
-            FilteredByType = filtered;
-
-            if (filtered)
-            {
-                if (selObj != null)
-                {
-                    this.ModelFilter = new TypeFilter(selObj.GetType(), false);
-                }
-            }
-            else
-            {
-                this.ModelFilter = this.FillersHidden ? new ExcludeFillerFilter() : null;
-
-            }
-
-            this.SelectObject(selObj);
-            this.EnsureModelVisible(selObj);
-        }
-
         public void FillTree(IEnumerable<object> objects)
         {
             // Clear tree and set objects
             this.Items.Clear();
             this.SetObjects(objects);
-        }
-
-        public MXFObject GetFirstPartition()
-        {
-            var mxfObjects = this.Objects.OfType<MXFObject>();
-            return mxfObjects
-                        .FirstOrDefault()?
-                        .Root()
-                        .Descendants()
-                        .OfType<MXFPartition>()
-                        .OrderBy(p => p.Offset)
-                        .FirstOrDefault();
-
         }
 
         public void RevealAndSelectObject(MXFLogicalObject objToSelect)
