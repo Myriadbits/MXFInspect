@@ -485,9 +485,9 @@ namespace Myriadbits.MXFInspect
         private void RefreshStatusStrip()
         {
             tslPartialLoading.Text =
-                Properties.Settings.Default.PartialLoadThresholdMB > 0 ?
-                $"Partial loading: enabled (>={Properties.Settings.Default.PartialLoadThresholdMB:N0}MB)" :
-                "Partial loading: disabled";
+                Properties.Settings.Default.PartialLoadThresholdMB >= 0 ?
+                $"Partial loading enabled (>={Properties.Settings.Default.PartialLoadThresholdMB:N0}MB)" :
+                "Partial loading disabled";
 
             tslOffsetStyle.Text =
                 Properties.Settings.Default.ShowOffsetAsHex ?

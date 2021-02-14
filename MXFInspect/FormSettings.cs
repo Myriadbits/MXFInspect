@@ -45,6 +45,9 @@ namespace Myriadbits.MXFInspect
 
             switch (settings.PartialLoadThresholdMB)
             {
+                case 0:
+                    this.cmbThreshold.SelectedIndex = 0;
+                    break;
                 case 100:
                     this.cmbThreshold.SelectedIndex = 1;
                     break;
@@ -106,6 +109,9 @@ namespace Myriadbits.MXFInspect
 
             switch (cmbThreshold.SelectedIndex)
             {
+                case 0:
+                    settings.PartialLoadThresholdMB = 0;
+                    break;
                 case 1:
                     settings.PartialLoadThresholdMB = 100;
                     break;
