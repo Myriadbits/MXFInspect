@@ -81,7 +81,7 @@ namespace Myriadbits.MXFInspect
 
         private FormMain ParentMainForm { get; set; }
 
-        private FileParseMode FileParseMode { get; set; } = FileParseMode.Full;
+        private FileParseMode FileParseMode { get; set; }
 
         private Stopwatch m_stopWatch = new Stopwatch();
         private int m_lastPercentage = 0;
@@ -89,10 +89,11 @@ namespace Myriadbits.MXFInspect
 
 
 
-        public MXFView(string fileName)
+        public MXFView(string fileName, FileParseMode fileParseMode)
         {
             InitializeComponent();
             this.Filename = fileName;
+            this.FileParseMode = fileParseMode;
             this.Text = fileName;
             this.FillerHidden = true;
             this.MainPanel = this.mainPanel; // Do this AFTER the InitializeComponent call!!!
@@ -124,14 +125,6 @@ namespace Myriadbits.MXFInspect
             this.tlvPhysical.SelectionChanged += PhysicalTree_SelectionChanged;
             this.tlvLogical.SelectionChanged += LogicalTree_SelectionChanged;
 
-            // TODO move this up the calling tree (i.e. to mainform) where we perform the check
-            this.FileParseMode = DetermineFileParseMode();
-
-            if (this.FileParseMode == FileParseMode.Partial && MXFInspect.Properties.Settings.Default.PartialLoadWarning)
-            {
-                MessageBox.Show(string.Format("The file {0} is larger then the threshold and will be loaded partially.\nA partition will be loaded when expanding the partition in the tree.", this.Filename), "Partial loading active", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
             this.bgwProcess.RunWorkerAsync(this);
             
             this.ApplyUserSettings();
@@ -139,19 +132,6 @@ namespace Myriadbits.MXFInspect
             ParentMainForm.EnableUI(false);
         }
 
-        private FileParseMode DetermineFileParseMode()
-        {
-            // Determine the filesize
-            long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
-            FileInfo f = new FileInfo(this.Filename);
-
-            // if setting is no partial load at all then threshold is negative
-            if (f.Length > fileThreshold && fileThreshold >= 0)
-            {
-                return FileParseMode.Partial;
-            }
-            else return FileParseMode.Full;
-        }
 
         /// <summary>
         /// Fill the tree
@@ -286,8 +266,6 @@ namespace Myriadbits.MXFInspect
 
             }
         }
-
-
 
         public void CollapseAll()
         {

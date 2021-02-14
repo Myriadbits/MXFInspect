@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF;
 using System;
 using System.Collections.Specialized;
 using System.IO;
@@ -179,9 +180,34 @@ namespace Myriadbits.MXFInspect
             // Update the MRU
             AddFileToMRU(fileName);
 
-            MXFView newView = new MXFView(fileName);
+            var fileParseMode = DetermineFileParseMode(fileName);
+
+            if (fileParseMode == FileParseMode.Partial && MXFInspect.Properties.Settings.Default.PartialLoadWarning)
+            {
+                MessageBox.Show(string.Format("The file {0} is larger then the threshold and will be loaded partially." +
+                    "\nA partition will be loaded when expanding the partition in the tree.", fileName), 
+                    "Partial loading active", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
+            }
+
+            MXFView newView = new MXFView(fileName, fileParseMode);
             newView.MdiParent = this;
             newView.Show();
+        }
+
+        private FileParseMode DetermineFileParseMode(string fileName)
+        {
+            // Determine the filesize
+            long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
+            FileInfo f = new FileInfo(fileName);
+
+            // if setting is no partial load at all then threshold is negative
+            if (f.Length > fileThreshold && fileThreshold >= 0)
+            {
+                return FileParseMode.Partial;
+            }
+            else return FileParseMode.Full;
         }
 
 
