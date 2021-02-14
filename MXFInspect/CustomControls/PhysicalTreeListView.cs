@@ -31,19 +31,14 @@ using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-    public class PhysicalTreeListView : TreeListView
+    public class PhysicalTreeListView : TreeListViewBase<MXFObject>
     {
         public bool FillersHidden { get; private set; } = true;
 
         public bool FilteredByType { get; private set; } = false;
 
-        public OLVColumn ColumnOffset { get; set; } = new OLVColumn();
-        public OLVColumn ColumnMXFObject { get; set; } = new OLVColumn();
-
         public PhysicalTreeListView() : base()
         {
-            SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-
             SetupColumns();
 
             // setup hyperlink style
@@ -59,14 +54,7 @@ namespace Myriadbits.MXFInspect
                 },
             };
 
-            // Set tree delegates
-            this.CanExpandGetter = TreeNode_HasChildren;
-            this.ChildrenGetter = TreeNode_ChildGetter;
-            this.ParentGetter = TreeNode_ParentGetter;
-
-            // Set Event Handlers
-            this.FormatCell += Tree_FormatCell;
-            this.Expanding += Tree_Expanding;
+            //// Set tree delegates / event handlers
             this.HyperlinkClicked += Tree_HyperlinkClicked;
             this.IsHyperlink += Tree_IsHyperlink;
 
@@ -108,22 +96,9 @@ namespace Myriadbits.MXFInspect
             this.SelectObject(selObj);
             this.EnsureModelVisible(selObj);
         }
-
-        public void FillTree(IEnumerable<object> objects)
-        {
-            // Clear tree and set objects
-            this.Items.Clear();
-            this.SetObjects(objects);
-            this.RevealAndSelectObject(GetFirstPartition());
-
-        }
-
-        public void CollapseAndSelectFirstPartition()
-        {
-            this.CollapseAll();
-            this.RevealAndSelectObject(GetFirstPartition());
-        }
-
+        
+        // TODO should this method really remain here? move it to the extensions class?
+        // TODO what if there are no partitions at all?
         public MXFObject GetFirstPartition()
         {
             var mxfObjects = this.Objects.OfType<MXFObject>();
@@ -137,102 +112,7 @@ namespace Myriadbits.MXFInspect
 
         }
 
-        public void RevealAndSelectObject(MXFObject objToSelect)
-        {
-            if (objToSelect != null)
-            {
-                // Expand entire parent tree and select object
-                this.Reveal(objToSelect, true);
-                this.EnsureModelVisible(objToSelect);
-            }
-        }
-
-        #region private methods
-
-        private void SetupColumns()
-        {
-            this.AllColumns.Add(ColumnOffset);
-            this.AllColumns.Add(ColumnMXFObject);
-
-            this.Columns.AddRange(new ColumnHeader[] { ColumnOffset, ColumnMXFObject });
-
-            // Set the column styles
-            // 
-            // olvColumn1
-            // 
-            this.ColumnOffset.AspectName = "Offset";
-            this.ColumnOffset.Text = "Offset";
-            this.ColumnOffset.Width = 84;
-            this.ColumnOffset.Renderer = null;
-            // 
-            // olvColumn2
-            // 
-            this.ColumnMXFObject.AspectName = "ToString";
-            this.ColumnMXFObject.FillsFreeSpace = true;
-            this.ColumnMXFObject.Hyperlink = true;
-            this.ColumnMXFObject.Text = "Name";
-            this.ColumnMXFObject.Width = 276;
-            this.ColumnMXFObject.Renderer = TreeColumnRenderer;
-
-            Pen pen = new Pen(Color.Black, 1.001f);
-            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            this.TreeColumnRenderer.LinePen = pen;
-        }
-
-        private bool TreeNode_HasChildren(object x)
-        {
-            if (x is MXFObject obj)
-            {
-                return obj.Children.Any();
-            }
-            return false;
-        }
-
-        private IEnumerable TreeNode_ChildGetter(object x)
-        {
-            if (x is MXFObject obj)
-            {
-                return obj.Children;
-            }
-            return null;
-        }
-
-        private object TreeNode_ParentGetter(object model)
-        {
-            if (model is MXFObject obj)
-            {
-                return obj.Parent;
-            }
-            return null;
-        }
-
-        private void Tree_Expanding(object sender, TreeBranchExpandingEventArgs e)
-        {
-            MXFObject selObject = e.Model as MXFObject;
-            if (selObject is ILazyLoadable loadable && !loadable.IsLoaded)
-            {
-                Cursor.Current = Cursors.WaitCursor;
-                loadable.Load();
-                Cursor.Current = Cursors.Default;
-            }
-        }
-
-        private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
-        {
-            if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
-            {
-                e.IsHyperlink = true;
-            }
-            else e.IsHyperlink = false;
-        }
-
-        private void Tree_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
-        {
-            var resolvable = e.Model as IResolvable;
-            this.RevealAndSelectObject(resolvable.GetReference());
-        }
-
-        private void Tree_FormatCell(object sender, FormatCellEventArgs e)
+        protected override void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
             if (e.Column == ColumnOffset)
             {
@@ -280,6 +160,50 @@ namespace Myriadbits.MXFInspect
                         break;
                 }
             }
+        }
+
+        #region private methods
+
+        private void SetupColumns()
+        {
+            // Set the column styles
+            // 
+            // olvColumn1
+            // 
+            this.ColumnOffset.AspectName = "Offset";
+            this.ColumnOffset.Text = "Offset";
+            this.ColumnOffset.Width = 84;
+            this.ColumnOffset.Renderer = null;
+            // 
+            // olvColumn2
+            // 
+            this.ColumnMXFObject.AspectName = "ToString";
+            this.ColumnMXFObject.FillsFreeSpace = true;
+            this.ColumnMXFObject.Hyperlink = true;
+            this.ColumnMXFObject.Text = "Name";
+            this.ColumnMXFObject.Width = 276;
+            this.ColumnMXFObject.Renderer = TreeColumnRenderer;
+
+            Pen pen = new Pen(Color.Black, 1.001f);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            this.TreeColumnRenderer.LinePen = pen;
+
+            this.RebuildColumns();
+        }
+
+        private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
+        {
+            if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
+            {
+                e.IsHyperlink = true;
+            }
+            else e.IsHyperlink = false;
+        }
+
+        private void Tree_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
+        {
+            var resolvable = e.Model as IResolvable;
+            this.RevealAndSelectObject(resolvable.GetReference());
         }
 
         #endregion

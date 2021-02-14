@@ -78,6 +78,7 @@ namespace Myriadbits.MXFInspect
             this.pbColorSpecial.BackColor = settings.Color_Special;
 
             this.chkPartialLoadMsg.Checked = settings.PartialLoadWarning;
+            this.chkOffsetAsHex.Checked = settings.ShowOffsetAsHex;
         }
 
         private void ChangeColor(PictureBox pb)
@@ -129,6 +130,7 @@ namespace Myriadbits.MXFInspect
             }
 
             settings.PartialLoadWarning = this.chkPartialLoadMsg.Checked;
+            settings.ShowOffsetAsHex = this.chkOffsetAsHex.Checked;
 
             MXFInspect.Properties.Settings.Default.Save();
             this.DialogResult = System.Windows.Forms.DialogResult.OK;

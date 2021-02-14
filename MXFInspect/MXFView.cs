@@ -36,7 +36,9 @@ namespace Myriadbits.MXFInspect
     public partial class MXFView : MyFormPage
     {
         #region Public props
-
+        
+        public MXFFile File { get; private set; }
+        
         public MXFObject PhysicalTreeSelectedObject { get; private set; }
         public MXFLogicalObject LogicalTreeSelectedObject { get; private set; }
         public bool PhysicalViewShown { get; set; } = true;
@@ -87,10 +89,6 @@ namespace Myriadbits.MXFInspect
 
 
 
-
-
-        public MXFFile File { get; private set; }
-
         public MXFView(string fileName)
         {
             InitializeComponent();
@@ -122,7 +120,7 @@ namespace Myriadbits.MXFInspect
             // bug that means you have to set the desired icon again otherwise it reverts to default when child form is maximised
             this.Icon = Myriadbits.MXFInspect.Properties.Resources.ChildIcon;
 
-            // wiring treelistviews with selectionchanged event
+            // wiring treelist selectionchanged events
             this.tlvPhysical.SelectionChanged += PhysicalTree_SelectionChanged;
             this.tlvLogical.SelectionChanged += LogicalTree_SelectionChanged;
 
@@ -135,6 +133,8 @@ namespace Myriadbits.MXFInspect
             }
 
             this.bgwProcess.RunWorkerAsync(this);
+            
+            this.ApplyUserSettings();
 
             ParentMainForm.EnableUI(false);
         }
@@ -145,7 +145,7 @@ namespace Myriadbits.MXFInspect
             long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
             FileInfo f = new FileInfo(this.Filename);
 
-            // if setting is no partial load at alle then threshold is negative
+            // if setting is no partial load at all then threshold is negative
             if (f.Length > fileThreshold && fileThreshold >= 0)
             {
                 return FileParseMode.Partial;
@@ -156,11 +156,12 @@ namespace Myriadbits.MXFInspect
         /// <summary>
         /// Fill the tree
         /// </summary>
-        private void FillTree()
+        private void FillTrees()
         {
             try
             {
                 this.tlvPhysical.FillTree(this.File.Children.OrderBy(c => c.Offset));
+                this.tlvPhysical.RevealAndSelectObject(this.tlvPhysical.GetFirstPartition());
                 this.tlvPhysical.HideFillers(this.FillerHidden);
 
                 var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
@@ -306,8 +307,9 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         public void ApplyUserSettings()
         {
-            this.tlvPhysical.Refresh();
-            this.tlvLogical.Refresh();
+            this.tlvLogical.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
+            this.tlvPhysical.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
+            this.rtfHexViewer.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
         }
 
         #region backgroundworker
@@ -373,7 +375,7 @@ namespace Myriadbits.MXFInspect
             this.prbProcessing.Visible = false;
             this.splitMain.Visible = true;
 
-            FillTree();
+            FillTrees();
 
             this.tabMain.SelectedIndex = 0;
 

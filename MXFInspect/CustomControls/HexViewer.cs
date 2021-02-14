@@ -34,7 +34,11 @@ namespace Myriadbits.MXFInspect
     {
         public int BytesPerLine { get; set; } = 16;
 
-        public long MaxDisplayableBytes { get; set; } = 1000000;
+        public long DisplayableBytesThreshold { get; set; } = 1000000;
+
+        public bool ShowOffsetAsHex { get; private set; } = false;
+
+        protected MXFObject ObjectToShow { get; set; }
 
         public HexViewer()
         {
@@ -46,12 +50,13 @@ namespace Myriadbits.MXFInspect
         /// <param name="obj"></param>
         public void SetObject(MXFObject obj)
         {
+            this.ObjectToShow = obj;
             this.Clear();
 
 
             long len = GetObjectLength(obj);
 
-            if (len > MaxDisplayableBytes)
+            if (len > DisplayableBytesThreshold)
             {
                 // TODO Hexdump should be truncated and not entirely omitted 
                 this.Text = "Hexdump not shown due to packet size";
@@ -64,9 +69,25 @@ namespace Myriadbits.MXFInspect
                     reader.Seek(obj.Offset);
                     data = reader.ReadArray(reader.ReadByte, data.Length);
                 }
+                int maxNumOfDigits = obj.GetMaxOffsetDigitCount();
 
-                this.Text = GetHexDump(obj.Offset, len, BytesPerLine, data);
+                this.Text = GetHexDump(obj.Offset, len, maxNumOfDigits, BytesPerLine, data);
             }
+        }
+
+        public void RefreshView()
+        {
+            if (ObjectToShow != null)
+            {
+                SetObject(ObjectToShow);
+            }
+
+        }
+
+        public void SetOffsetStyle(bool showOffsetAsHex)
+        {
+            this.ShowOffsetAsHex = showOffsetAsHex;
+            this.RefreshView();
         }
 
         private long GetObjectLength(MXFObject obj)
@@ -84,7 +105,7 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-        private string GetHexDump(long startOffset, long len, int bytesPerLine, byte[] data)
+        private string GetHexDump(long startOffset, long len, int maxNumOfDigits, int bytesPerLine, byte[] data)
         {
             StringBuilder sb = new StringBuilder();
             for (long currOffset = 0; currOffset < len; currOffset += bytesPerLine)
@@ -101,9 +122,9 @@ namespace Myriadbits.MXFInspect
 
                 string hex = GetHexValues(slice.ToArray()).PadRight(bytesPerLine * 3);
                 string asciisafe = GetASCIISafeString(slice.ToArray());
+                string address = FormatAddress(startOffset + currOffset, maxNumOfDigits, ShowOffsetAsHex);
 
-                // TODO: padding of offset should not be hardcoded
-                sb.AppendLine(string.Format("{0:0000000000}  {1}  {2}", startOffset + currOffset, hex, asciisafe));
+                sb.AppendLine(string.Format("{0}  {1}  {2}", address, hex, asciisafe));
             }
 
             return sb.ToString();
@@ -120,5 +141,21 @@ namespace Myriadbits.MXFInspect
             return BitConverter.ToString(data).Replace('-', ' ');
         }
 
+        private string FormatAddress(long addrValue, int maxNumOfDigits, bool showOffsetAsHex)
+        {
+            string address;
+            if (showOffsetAsHex)
+            {
+                address = string.Format("{0:X}", addrValue);
+                address = "0x" + address.PadLeft(maxNumOfDigits, '0');
+            }
+            else
+            {
+                address = string.Format("{0:D}", addrValue);
+                address = address.PadLeft(maxNumOfDigits, '0');
+            }
+
+            return address;
+        }
     }
 }

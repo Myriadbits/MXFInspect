@@ -32,57 +32,15 @@ using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-    public class LogicalTreeListView : TreeListView
+    public class LogicalTreeListView : TreeListViewBase<MXFLogicalObject>
     {
-        public bool FillersHidden { get; private set; } = true;
-
-        public bool FilteredByType { get; private set; } = false;
-
-        public OLVColumn ColumnOffset { get; set; } = new OLVColumn();
-        public OLVColumn ColumnMXFLogicalObject { get; set; } = new OLVColumn();
-
         public LogicalTreeListView() : base()
         {
-            SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-
             SetupColumns();
-
-            // Set tree delegates
-            this.CanExpandGetter = TreeNode_HasChildren;
-            this.ChildrenGetter = TreeNode_ChildGetter;
-            this.ParentGetter = TreeNode_ParentGetter;
-
-            // Set Event Handlers
-            this.FormatCell += Tree_FormatCell;
-            this.Expanding += Tree_Expanding;
         }
-
-        public void FillTree(IEnumerable<object> objects)
-        {
-            // Clear tree and set objects
-            this.Items.Clear();
-            this.SetObjects(objects);
-        }
-
-        public void RevealAndSelectObject(MXFLogicalObject objToSelect)
-        {
-            if (objToSelect != null)
-            {
-                // Expand entire parent tree and select object
-                this.Reveal(objToSelect, true);
-                this.EnsureModelVisible(objToSelect);
-            }
-        }
-
-        #region private methods
 
         private void SetupColumns()
         {
-            this.AllColumns.Add(ColumnOffset);
-            this.AllColumns.Add(ColumnMXFLogicalObject);
-
-            this.Columns.AddRange(new ColumnHeader[] { ColumnOffset, ColumnMXFLogicalObject });
-
             // Set the column styles
             // 
             // olvColumn1
@@ -94,64 +52,29 @@ namespace Myriadbits.MXFInspect
             // 
             // olvColumn2
             // 
-            this.ColumnMXFLogicalObject.AspectName = "ToString";
-            this.ColumnMXFLogicalObject.FillsFreeSpace = true;
-            this.ColumnMXFLogicalObject.Hyperlink = true;
-            this.ColumnMXFLogicalObject.Text = "Name";
-            this.ColumnMXFLogicalObject.Width = 276;
-            this.ColumnMXFLogicalObject.Renderer = TreeColumnRenderer;
+            this.ColumnMXFObject.AspectName = "ToString";
+            this.ColumnMXFObject.FillsFreeSpace = true;
+            this.ColumnMXFObject.Hyperlink = true;
+            this.ColumnMXFObject.Text = "Name";
+            this.ColumnMXFObject.Width = 276;
+            this.ColumnMXFObject.Renderer = TreeColumnRenderer;
 
             Pen pen = new Pen(Color.Black, 1.001f);
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
             this.TreeColumnRenderer.LinePen = pen;
+
+            this.RebuildColumns();
         }
 
-        private bool TreeNode_HasChildren(object x)
+        protected override void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
-            if (x is MXFLogicalObject obj)
-            {
-                return obj.Children.Any();
-            }
-            return false;
-        }
 
-        private IEnumerable TreeNode_ChildGetter(object x)
-        {
-            if (x is MXFLogicalObject obj)
-            {
-                return obj.Children;
-            }
-            return null;
-        }
-
-        private object TreeNode_ParentGetter(object model)
-        {
-            if (model is MXFLogicalObject obj)
-            {
-                return obj.Parent;
-            }
-            return null;
-        }
-
-        private void Tree_Expanding(object sender, TreeBranchExpandingEventArgs e)
-        {
-            MXFObject selObject = e.Model as MXFObject;
-            if (selObject is ILazyLoadable loadable)
-            {
-                Cursor.Current = Cursors.WaitCursor;
-                loadable.Load();
-                Cursor.Current = Cursors.Default;
-            }
-        }
-
-        private void Tree_FormatCell(object sender, FormatCellEventArgs e)
-        {
             if (e.Column == ColumnOffset)
             {
                 // Physical Address/Offset
                 e.SubItem.ForeColor = Color.Gray;
             }
-            else if (e.Column == ColumnMXFLogicalObject)
+            else if (e.Column == ColumnMXFObject)
             {
                 MXFLogicalObject obj = e.Model as MXFLogicalObject;
 
@@ -183,8 +106,7 @@ namespace Myriadbits.MXFInspect
                         break;
                 }
             }
-        }
 
-        #endregion
+        }
     }
 }

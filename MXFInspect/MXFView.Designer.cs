@@ -218,7 +218,7 @@
             this.rtfHexViewer.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtfHexViewer.HideSelection = false;
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
-            this.rtfHexViewer.MaxDisplayableBytes = ((long)(1000000));
+            this.rtfHexViewer.DisplayableBytesThreshold = ((long)(1000000));
             this.rtfHexViewer.Name = "rtfHexViewer";
             this.rtfHexViewer.ReadOnly = true;
             this.rtfHexViewer.Size = new System.Drawing.Size(565, 142);

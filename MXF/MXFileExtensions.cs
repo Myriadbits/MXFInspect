@@ -171,5 +171,16 @@ namespace Myriadbits.MXF
             return lObjs.Select(o => o.Object as T);
         }
 
+        public static int GetMaxOffsetDigitCount(this MXFObject obj)
+        {
+                // get the object with the greatest offset value
+                long maxOffset = obj.Root().Descendants().Max(o => o.Offset);
+
+                // count the digits
+                int digits = 1;
+                while ((maxOffset /= 10) != 0) ++digits;
+                return digits;
+        }
+
     }
 }

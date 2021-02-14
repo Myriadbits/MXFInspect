@@ -177,5 +177,17 @@ namespace Myriadbits.MXFInspect.Properties {
                 this["PartialLoadWarning"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowOffsetAsHex {
+            get {
+                return ((bool)(this["ShowOffsetAsHex"]));
+            }
+            set {
+                this["ShowOffsetAsHex"] = value;
+            }
+        }
     }
 }

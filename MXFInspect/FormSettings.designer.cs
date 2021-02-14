@@ -59,6 +59,7 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.chkOffsetAsHex = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -101,6 +102,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.chkOffsetAsHex);
             this.tabGeneral.Controls.Add(this.chkPartialLoadMsg);
             this.tabGeneral.Controls.Add(this.label9);
             this.tabGeneral.Controls.Add(this.chkShowLines);
@@ -457,6 +459,18 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // chkOffsetAsHex
+            // 
+            this.chkOffsetAsHex.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkOffsetAsHex.Location = new System.Drawing.Point(5, 110);
+            this.chkOffsetAsHex.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.chkOffsetAsHex.Name = "chkOffsetAsHex";
+            this.chkOffsetAsHex.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.chkOffsetAsHex.Size = new System.Drawing.Size(250, 22);
+            this.chkOffsetAsHex.TabIndex = 5;
+            this.chkOffsetAsHex.Text = "Show byte offsets as hex values";
+            this.chkOffsetAsHex.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AcceptButton = this.btnOk;
@@ -527,5 +541,6 @@
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.PictureBox pbColorMeta;
 		private System.Windows.Forms.Label label10;
-	}
+        private System.Windows.Forms.CheckBox chkOffsetAsHex;
+    }
 }
