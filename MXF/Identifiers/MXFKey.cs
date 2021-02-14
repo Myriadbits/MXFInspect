@@ -46,14 +46,30 @@ namespace Myriadbits.MXF
         RIP
     }
 
-
-    public enum KeyCategory
+    public enum ULCategories
     {
-        Unknown = 0x00,
-        Dictionary_Element = 0x01,
-        Group = 0x02,
-        Container_Wrapper = 0x03,
-        Label = 0x04
+        Elements = 0x01,
+        Groups = 0x02,
+        ContainersAndWrappers = 0x03,
+        Labels = 0x04
+    }
+
+    public enum ULRegistries
+    {
+        MetadataDictionaries,
+        EssenceDictionaries,
+        ControlDictionaries,
+        TypesDictionaries,
+
+        UniversalSet,
+        GlobalSet,
+        LocalSet,
+        VariableLengthPacks,
+        DefinedLengthPacks,
+        Reserved,
+
+        SimpleWrappersAndContainers,
+        ComplexWrappersAndContainers,
     }
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
@@ -64,48 +80,135 @@ namespace Myriadbits.MXF
 
         private static Dictionary<MXFShortKey, KeyDescription> knownKeys = KeyDictionary.GetKeys();
 
+        #region properties
+
         [Browsable(false)]
         public KeyType Type { get; set; }
 
+        /// <summary>
+        /// True if found in SMPTE RP210 or RP224
+        /// </summary>
         [Browsable(false)]
         public bool IsKnown { get; set; } = false;
 
-        /// <summary>
-        /// The name of this key (if found in SMPTE RP210 or RP224)
-        /// </summary>
         [Category(CATEGORYNAME)]
+        [Description("The name of this key (if found in SMPTE RP210 or RP224)")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Keyfield, describes the type of data
-        /// </summary>
         [Category(CATEGORYNAME)]
-        public KeyCategory Category
-        {
-            get
-            {
-                if (this.Length > 4)
-                {
-                    return (KeyCategory)this[4];
-                }
-                else
-                {
-                    return KeyCategory.Unknown;
-                }
-            }
-        }
+        [Description("16-byte size of the UL")]
+        public int ULLength { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Identifies the category of registry described(e.g.Dictionaries)")]
+        public ULCategories? CategoryDesignator { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Identifies the specific register in a category (e.g. Metadata Dictionaries)")]
+        public ULRegistries? RegistryDesignator { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Designator of the structure variant within the given registry designator")]
+        public byte? StructureDesignator { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Version of the given register which first defines the item specified by the Item Designator")]
+        public byte? VersionNumber { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Unique identification of the particular item within the context of the UL Designator")]
+        [TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] ItemDesignator { get; private set; }
+
+        #endregion
 
         public MXFKey(params byte[] list) : base(list)
         {
             this.Type = KeyType.None;
             FindKeyName();
-        }
 
-        // TODO remove ctor if possible
-        public MXFKey(string name, params byte[] list) : this(list)
-        {
-            this.Name = name;
-            FindKeyName();
+            ULLength = this.Length;
+
+            if (this.Length > 5)
+            {
+                switch (this[4])
+                {
+                    case 0x01:
+                        CategoryDesignator = ULCategories.Elements;
+                        switch (this[5])
+                        {
+                            case 0x01:
+                                RegistryDesignator = ULRegistries.MetadataDictionaries;
+                                break;
+                            case 0x02:
+                                RegistryDesignator = ULRegistries.EssenceDictionaries;
+                                break;
+                            case 0x03:
+                                RegistryDesignator = ULRegistries.ControlDictionaries;
+                                break;
+                            case 0x04:
+                                RegistryDesignator = ULRegistries.TypesDictionaries;
+                                break;
+                            default:
+                                RegistryDesignator = null;
+                                break;
+                        }
+                        break;
+
+                    case 0x02:
+                        CategoryDesignator = ULCategories.Groups;
+                        switch (this[5])
+                        {
+                            case 0x01:
+                                RegistryDesignator = ULRegistries.UniversalSet;
+                                break;
+                            case 0x02:
+                                RegistryDesignator = ULRegistries.GlobalSet;
+                                break;
+                            case 0x03:
+                                RegistryDesignator = ULRegistries.LocalSet;
+                                break;
+                            case 0x04:
+                                RegistryDesignator = ULRegistries.VariableLengthPacks;
+                                break;
+                            case 0x05:
+                                RegistryDesignator = ULRegistries.DefinedLengthPacks;
+                                break;
+                            case 0x06:
+                                RegistryDesignator = ULRegistries.Reserved;
+                                break;
+                            default:
+                                RegistryDesignator = null;
+                                break;
+                        }
+                        break;
+
+                    case 0x03:
+                        CategoryDesignator = ULCategories.ContainersAndWrappers;
+                        switch (this[5])
+                        {
+                            case 0x01:
+                                RegistryDesignator = ULRegistries.SimpleWrappersAndContainers;
+                                break;
+                            case 0x02:
+                                RegistryDesignator = ULRegistries.ComplexWrappersAndContainers;
+                                break;
+                        }
+                        break;
+
+                    case 0x04:
+                        CategoryDesignator = ULCategories.Labels;
+                        break;
+
+                    default:
+                        CategoryDesignator = null;
+                        break;
+                }
+            }
+
+            StructureDesignator = this.Length > 6 ? this[6] : null;
+            VersionNumber = this.Length > 7 ? this[7] : null;
+            ItemDesignator = this.Length > 8 ? this.GetByteArray().Skip(8).ToArray() : null;
         }
 
         /// <summary>
@@ -143,7 +246,9 @@ namespace Myriadbits.MXF
             {
                 MXFShortKey skey = this.GetShortKey();
                 if (knownKeys.ContainsKey(skey))
+                {
                     return knownKeys[skey].Definition;
+                }
                 return string.Empty;
             }
         }
@@ -227,4 +332,6 @@ namespace Myriadbits.MXF
 
         #endregion
     }
+
 }
+
