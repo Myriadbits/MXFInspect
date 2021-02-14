@@ -72,216 +72,216 @@ namespace Myriadbits.MXFInspect
 
         }
 
-    public void HideFillers(bool hide)
-    {
-        // save object so it can be reselected, once the filter has been applied
-        var obj = this.SelectedObject;
-        this.FillersHidden = hide;
-
-        if (!FilteredByType)
+        public void HideFillers(bool hide)
         {
-            this.ModelFilter = hide ? new ExcludeFillerFilter() : null;
-        }
+            // save object so it can be reselected, once the filter has been applied
+            var obj = this.SelectedObject;
+            this.FillersHidden = hide;
 
-        this.SelectObject(obj);
-        this.EnsureModelVisible(obj);
-    }
-
-    public void SetTypeFilter(bool filtered)
-    {
-        var selObj = this.SelectedObject as MXFObject;
-        FilteredByType = filtered;
-
-        if (filtered)
-        {
-            if (selObj != null)
+            if (!FilteredByType)
             {
-                this.ModelFilter = new TypeFilter(selObj.GetType(), false);
+                this.ModelFilter = hide ? new ExcludeFillerFilter() : null;
             }
-        }
-        else
-        {
-            this.ModelFilter = this.FillersHidden ? new ExcludeFillerFilter() : null;
 
+            this.SelectObject(obj);
+            this.EnsureModelVisible(obj);
         }
 
-        this.SelectObject(selObj);
-        this.EnsureModelVisible(selObj);
-    }
-
-    public void FillTree(IEnumerable<object> objects)
-    {
-        // Clear tree and set objects
-        this.Items.Clear();
-        this.SetObjects(objects);
-        this.RevealAndSelectObject(GetFirstPartition());
-
-    }
-
-    public void CollapseAndSelectFirstPartition()
-    {
-        this.CollapseAll();
-        this.RevealAndSelectObject(GetFirstPartition());
-    }
-
-    public MXFObject GetFirstPartition()
-    {
-        var mxfObjects = this.Objects.OfType<MXFObject>();
-        return mxfObjects
-                    .FirstOrDefault()?
-                    .Root()
-                    .Descendants()
-                    .OfType<MXFPartition>()
-                    .OrderBy(p => p.Offset)
-                    .FirstOrDefault();
-
-    }
-
-    public void RevealAndSelectObject(MXFObject objToSelect)
-    {
-        if (objToSelect != null)
+        public void SetTypeFilter(bool filtered)
         {
-            // Expand entire parent tree and select object
-            this.Reveal(objToSelect, true);
-            this.EnsureModelVisible(objToSelect);
-        }
-    }
+            var selObj = this.SelectedObject as MXFObject;
+            FilteredByType = filtered;
 
-    #region private methods
-
-    private void SetupColumns()
-    {
-        this.AllColumns.Add(ColumnOffset);
-        this.AllColumns.Add(ColumnMXFObject);
-
-        this.Columns.AddRange(new ColumnHeader[] { ColumnOffset, ColumnMXFObject });
-
-        // Set the column styles
-        // 
-        // olvColumn1
-        // 
-        this.ColumnOffset.AspectName = "Offset";
-        this.ColumnOffset.Text = "Offset";
-        this.ColumnOffset.Width = 84;
-        this.ColumnOffset.Renderer = null;
-        // 
-        // olvColumn2
-        // 
-        this.ColumnMXFObject.AspectName = "ToString";
-        this.ColumnMXFObject.FillsFreeSpace = true;
-        this.ColumnMXFObject.Hyperlink = true;
-        this.ColumnMXFObject.Text = "Name";
-        this.ColumnMXFObject.Width = 276;
-        this.ColumnMXFObject.Renderer = TreeColumnRenderer;
-
-        Pen pen = new Pen(Color.Black, 1.001f);
-        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-        this.TreeColumnRenderer.LinePen = pen;
-    }
-
-    private bool TreeNode_HasChildren(object x)
-    {
-        if (x is MXFObject obj)
-        {
-            return obj.Children.Any();
-        }
-        return false;
-    }
-
-    private IEnumerable TreeNode_ChildGetter(object x)
-    {
-        if (x is MXFObject obj)
-        {
-            return obj.Children;
-        }
-        return null;
-    }
-
-    private object TreeNode_ParentGetter(object model)
-    {
-        if (model is MXFObject obj)
-        {
-            return obj.Parent;
-        }
-        return null;
-    }
-
-    private void Tree_Expanding(object sender, TreeBranchExpandingEventArgs e)
-    {
-        MXFObject selObject = e.Model as MXFObject;
-        if (selObject is ILazyLoadable loadable && !loadable.IsLoaded)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            loadable.Load();
-            Cursor.Current = Cursors.Default;
-        }
-    }
-
-    private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
-    {
-        if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
-        {
-            e.IsHyperlink = true;
-        }
-        else e.IsHyperlink = false;
-    }
-
-    private void Tree_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
-    {
-        var resolvable = e.Model as IResolvable;
-        this.RevealAndSelectObject(resolvable.GetReference());
-    }
-
-    private void Tree_FormatCell(object sender, FormatCellEventArgs e)
-    {
-        if (e.Column == ColumnOffset)
-        {
-            // Physical Address/Offset
-            e.SubItem.ForeColor = Color.Gray;
-        }
-        else if (e.Column == ColumnMXFObject)
-        {
-            MXFObject obj = e.Model as MXFObject;
-
-            if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
+            if (filtered)
             {
-                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
+                if (selObj != null)
+                {
+                    this.ModelFilter = new TypeFilter(selObj.GetType(), false);
+                }
             }
             else
             {
-                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
+                this.ModelFilter = this.FillersHidden ? new ExcludeFillerFilter() : null;
+
             }
 
-            switch (obj.Type)
+            this.SelectObject(selObj);
+            this.EnsureModelVisible(selObj);
+        }
+
+        public void FillTree(IEnumerable<object> objects)
+        {
+            // Clear tree and set objects
+            this.Items.Clear();
+            this.SetObjects(objects);
+            this.RevealAndSelectObject(GetFirstPartition());
+
+        }
+
+        public void CollapseAndSelectFirstPartition()
+        {
+            this.CollapseAll();
+            this.RevealAndSelectObject(GetFirstPartition());
+        }
+
+        public MXFObject GetFirstPartition()
+        {
+            var mxfObjects = this.Objects.OfType<MXFObject>();
+            return mxfObjects
+                        .FirstOrDefault()?
+                        .Root()
+                        .Descendants()
+                        .OfType<MXFPartition>()
+                        .OrderBy(p => p.Offset)
+                        .FirstOrDefault();
+
+        }
+
+        public void RevealAndSelectObject(MXFObject objToSelect)
+        {
+            if (objToSelect != null)
             {
-                case MXFObjectType.Partition:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_Partition;
-                    break;
-                case MXFObjectType.Essence:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_Essence;
-                    break;
-                case MXFObjectType.Index:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_IndexTable;
-                    break;
-                case MXFObjectType.SystemItem:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_SystemItem;
-                    break;
-                case MXFObjectType.RIP:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_RIP;
-                    break;
-                case MXFObjectType.Meta:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_MetaData;
-                    break;
-                case MXFObjectType.Filler:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_Filler;
-                    break;
-                case MXFObjectType.Special:
-                    e.SubItem.ForeColor = Properties.Settings.Default.Color_Special;
-                    break;
+                // Expand entire parent tree and select object
+                this.Reveal(objToSelect, true);
+                this.EnsureModelVisible(objToSelect);
             }
         }
-    }
 
-    #endregion
-}
+        #region private methods
+
+        private void SetupColumns()
+        {
+            this.AllColumns.Add(ColumnOffset);
+            this.AllColumns.Add(ColumnMXFObject);
+
+            this.Columns.AddRange(new ColumnHeader[] { ColumnOffset, ColumnMXFObject });
+
+            // Set the column styles
+            // 
+            // olvColumn1
+            // 
+            this.ColumnOffset.AspectName = "Offset";
+            this.ColumnOffset.Text = "Offset";
+            this.ColumnOffset.Width = 84;
+            this.ColumnOffset.Renderer = null;
+            // 
+            // olvColumn2
+            // 
+            this.ColumnMXFObject.AspectName = "ToString";
+            this.ColumnMXFObject.FillsFreeSpace = true;
+            this.ColumnMXFObject.Hyperlink = true;
+            this.ColumnMXFObject.Text = "Name";
+            this.ColumnMXFObject.Width = 276;
+            this.ColumnMXFObject.Renderer = TreeColumnRenderer;
+
+            Pen pen = new Pen(Color.Black, 1.001f);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            this.TreeColumnRenderer.LinePen = pen;
+        }
+
+        private bool TreeNode_HasChildren(object x)
+        {
+            if (x is MXFObject obj)
+            {
+                return obj.Children.Any();
+            }
+            return false;
+        }
+
+        private IEnumerable TreeNode_ChildGetter(object x)
+        {
+            if (x is MXFObject obj)
+            {
+                return obj.Children;
+            }
+            return null;
+        }
+
+        private object TreeNode_ParentGetter(object model)
+        {
+            if (model is MXFObject obj)
+            {
+                return obj.Parent;
+            }
+            return null;
+        }
+
+        private void Tree_Expanding(object sender, TreeBranchExpandingEventArgs e)
+        {
+            MXFObject selObject = e.Model as MXFObject;
+            if (selObject is ILazyLoadable loadable && !loadable.IsLoaded)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                loadable.Load();
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
+        {
+            if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
+            {
+                e.IsHyperlink = true;
+            }
+            else e.IsHyperlink = false;
+        }
+
+        private void Tree_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
+        {
+            var resolvable = e.Model as IResolvable;
+            this.RevealAndSelectObject(resolvable.GetReference());
+        }
+
+        private void Tree_FormatCell(object sender, FormatCellEventArgs e)
+        {
+            if (e.Column == ColumnOffset)
+            {
+                // Physical Address/Offset
+                e.SubItem.ForeColor = Color.Gray;
+            }
+            else if (e.Column == ColumnMXFObject)
+            {
+                MXFObject obj = e.Model as MXFObject;
+
+                if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
+                {
+                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
+                }
+                else
+                {
+                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
+                }
+
+                switch (obj.Type)
+                {
+                    case MXFObjectType.Partition:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Partition;
+                        break;
+                    case MXFObjectType.Essence:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Essence;
+                        break;
+                    case MXFObjectType.Index:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_IndexTable;
+                        break;
+                    case MXFObjectType.SystemItem:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_SystemItem;
+                        break;
+                    case MXFObjectType.RIP:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_RIP;
+                        break;
+                    case MXFObjectType.Meta:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_MetaData;
+                        break;
+                    case MXFObjectType.Filler:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Filler;
+                        break;
+                    case MXFObjectType.Special:
+                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Special;
+                        break;
+                }
+            }
+        }
+
+        #endregion
+    }
 }
