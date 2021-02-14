@@ -52,6 +52,8 @@ namespace Myriadbits.MXFInspect
             FillMRU();
             this.UpdateMenu();
             this.tslVersion.Text = string.Format("Version: {0}", typeof(FormMain).Assembly.GetName().Version.ToString());
+
+            RefreshStatusStrip();
         }
 
         /// <summary>
@@ -185,9 +187,9 @@ namespace Myriadbits.MXFInspect
             if (fileParseMode == FileParseMode.Partial && MXFInspect.Properties.Settings.Default.PartialLoadWarning)
             {
                 MessageBox.Show(string.Format("The file {0} is larger then the threshold and will be loaded partially." +
-                    "\nA partition will be loaded when expanding the partition in the tree.", fileName), 
-                    "Partial loading active", 
-                    MessageBoxButtons.OK, 
+                    "\nA partition will be loaded when expanding the partition in the tree.", fileName),
+                    "Partial loading active",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
 
@@ -357,7 +359,7 @@ namespace Myriadbits.MXFInspect
                 this.tsmiCollapseAll.Enabled = true;
                 this.tsbCollapseAll.Enabled = true;
 
-                this.tsmiFindNextItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null; 
+                this.tsmiFindNextItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
                 this.tsbFindNextItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
 
                 this.tsbFindPreviousItem.Enabled = this.ActiveView.PhysicalViewShown && this.ActiveView.PhysicalTreeSelectedObject != null;
@@ -379,7 +381,7 @@ namespace Myriadbits.MXFInspect
 
                 this.tsmiShowPropInfo.Enabled = true;
                 this.tsbShowPropInfo.Enabled = true;
-                
+
                 this.tsmiShowPropInfo.Checked = this.ActiveView.ShowPropertyInfo;
                 this.tsbShowPropInfo.Checked = this.ActiveView.ShowPropertyInfo;
             }
@@ -473,9 +475,23 @@ namespace Myriadbits.MXFInspect
             FormSettings formSettings = new FormSettings();
             if (formSettings.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                RefreshStatusStrip();
+
                 // Refresh settings
                 LoadUserSettings();
             }
+        }
+
+        private void RefreshStatusStrip()
+        {
+            tslPartialLoading.Text =
+                Properties.Settings.Default.PartialLoadThresholdMB > 0 ?
+                $"Partial loading: enabled (>={Properties.Settings.Default.PartialLoadThresholdMB:N0}MB)" :
+                "Partial loading: disabled";
+
+            tslOffsetStyle.Text =
+                Properties.Settings.Default.ShowOffsetAsHex ?
+                "Offset style(hex)" : "Offset style(dec)";
         }
 
 
