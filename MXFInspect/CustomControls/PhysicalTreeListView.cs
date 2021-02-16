@@ -168,27 +168,25 @@ namespace Myriadbits.MXFInspect
         {
             // Set the column styles
             // 
-            // olvColumn1
+            // Offset column
             // 
             this.ColumnOffset.AspectName = "Offset";
             this.ColumnOffset.Text = "Offset";
             this.ColumnOffset.Width = 84;
             this.ColumnOffset.Renderer = null;
             // 
-            // olvColumn2
+            // MXFObject Column
             // 
             this.ColumnMXFObject.AspectName = "ToString";
             this.ColumnMXFObject.FillsFreeSpace = true;
             this.ColumnMXFObject.Hyperlink = true;
-            this.ColumnMXFObject.Text = "Name";
+            this.ColumnMXFObject.Text = "Object";
             this.ColumnMXFObject.Width = 276;
             this.ColumnMXFObject.Renderer = TreeColumnRenderer;
 
             Pen pen = new Pen(Color.Black, 1.001f);
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
             this.TreeColumnRenderer.LinePen = pen;
-
-            this.RebuildColumns();
         }
 
         private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)

@@ -35,16 +35,32 @@ namespace Myriadbits.MXFInspect
     public abstract class TreeListViewBase<T> : TreeListView where T : Node<T> 
     {
         public bool ShowOffsetAsHex { get; protected set; }
+
+        private OLVColumn ColumnFirst { get; set; } = new OLVColumn();
         public OLVColumn ColumnOffset { get; set; } = new OLVColumn();
         public OLVColumn ColumnMXFObject { get; set; } = new OLVColumn();
 
         protected TreeListViewBase() : base()
         {
             SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-            
+
+            // since after the migration to .NET5 a click on the 
+            // first column triggers an exception, we make a fake column 
+            // with its width equal to 0 (hack)
+            // TODO same hack is needed in report tree list
+            this.ColumnFirst.Text = "Index";
+            this.ColumnFirst.MaximumWidth = 0;
+            this.ColumnFirst.Width = 0;
+
+            this.AllColumns.Add(ColumnFirst);
             this.AllColumns.Add(ColumnOffset);
             this.AllColumns.Add(ColumnMXFObject);
-            this.Columns.AddRange(new ColumnHeader[] { ColumnOffset, ColumnMXFObject });
+
+            this.ColumnFirst.Hideable = false;
+            this.ColumnOffset.Hideable = false;
+            this.ColumnMXFObject.Hideable = false;
+
+            //this.Columns.AddRange(new ColumnHeader[] { ColumnFirst, ColumnOffset, ColumnMXFObject });
 
             // Set tree delegates
             this.CanExpandGetter = TreeNode_HasChildren;
