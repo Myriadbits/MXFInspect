@@ -195,14 +195,14 @@ namespace Myriadbits.MXFInspect.Properties {
         /// Everyone is permitted to copy and distribute verbatim copies
         /// of this license document, but changing it is not allowed.
         ///
-        ///                     GNU GENERAL PUBLIC LICENSE
-        ///   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        ///                            Preamble
         ///
-        ///  0. This License applies to any program or other wor [rest of string was truncated]&quot;;.
+        ///  The licenses for most software are designed to take away your
+        ///freedom to share and change it.  By contrast, the GNU General Publi [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string License {
+        internal static string LICENSE {
             get {
-                return ResourceManager.GetString("License", resourceCulture);
+                return ResourceManager.GetString("LICENSE", resourceCulture);
             }
         }
         

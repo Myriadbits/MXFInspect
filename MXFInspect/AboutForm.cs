@@ -53,7 +53,7 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.txtLicense.Text = MXFInspect.Properties.Resources.License;
+			this.txtLicense.Text = MXFInspect.Properties.Resources.LICENSE;
 
 			bool vis = true;
 			if (this.txtLicense.Visible)
