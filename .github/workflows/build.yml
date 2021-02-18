@@ -55,6 +55,4 @@ jobs:
            dotnet restore
            dotnet build --no-restore
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-          
-          steps:
 
