@@ -24,7 +24,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish (single file, self-contained, subfolder /publish)
-      run: dotnet publish MXFInspect -o publish -r win-x86 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true 
+      run: dotnet publish MXFInspect -o publish -r win7-x86 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true 
     - name: Zip publish result together with LICENSE file
       shell: bash
       run: |
