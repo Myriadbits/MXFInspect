@@ -1,0 +1,25 @@
+name: Sample Matrix Parallel
+
+on:
+  push:
+    branches:
+      - testaction
+
+jobs:
+  #setup:
+
+  testmatrix:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+          win-version: [x64, x86]
+    steps:
+        - name: 'Create a file'
+          run: echo ${{ matrix.win-version }} > my_file.txt
+        
+        - name: Upload multiple artifacts via multiple jobs
+          uses: actions/upload-artifact@v2
+          with:
+              name: my-artifact ${{ matrix.win-version }}
+              path: ${{ github.workspace }}
