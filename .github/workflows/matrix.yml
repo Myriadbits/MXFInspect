@@ -9,7 +9,6 @@ jobs:
   #setup:
 
   testmatrix:
-    needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
