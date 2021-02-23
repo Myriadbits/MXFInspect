@@ -20,6 +20,9 @@ jobs:
         - name: Get the tag string (cleaned)
           id: get_version
           run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+        
+        - name: Echo the tag (for debugging)
+          run: echo ${{ steps.get_version.outputs.VERSION }}
 
   create_builds:
     name: Build, Test & Publish
@@ -35,7 +38,7 @@ jobs:
         - name: Upload multiple artifacts via multiple jobs
           uses: actions/upload-artifact@v2
           with:
-              name: my-artifact-${{ matrix.win-version }}
+              name: MXFInspect-${{ needs.get_version.outputs.version }}-win${{ matrix.win-version }}
               path: ${{ github.workspace }}
 
         - name: Show Files
@@ -45,6 +48,8 @@ jobs:
       name: Create release
       needs: [get_version, create_builds]
       runs-on: ubuntu-latest
+      env: 
+        VERSION: "${{ needs.get_version.outputs.version }}"
       outputs:
         url: ${{ steps.create_release.outputs.upload_url }} # is this necessary?
       steps:
@@ -52,7 +57,10 @@ jobs:
           run: echo ${{ needs.get_version.outputs.version }}
        
         - name: Show the version tag (from the step)
-          run: echo ${{ needs.create_builds.steps.get_version.VERSION }}
+          run: echo ${{ needs.get_version.steps.get_version.VERSION }}
+
+        - name: Show the version tag (from the env variable)
+          run: echo $VERSION
           
         - name: Create a release
           id: create_release
