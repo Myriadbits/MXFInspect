@@ -28,6 +28,8 @@ jobs:
     name: Build, Test & Publish
     needs: get_version
     runs-on: ubuntu-latest
+    env: 
+        VERSION: "${{ needs.get_version.outputs.version }}"
     strategy:
       matrix:
           win-version: [x64, x86]
@@ -38,7 +40,7 @@ jobs:
         - name: Upload multiple artifacts via multiple jobs
           uses: actions/upload-artifact@v2
           with:
-              name: MXFInspect-${{ needs.get_version.outputs.version }}-win${{ matrix.win-version }}
+              name: MXFInspect-${{ env.VERSION }}-win${{ matrix.win-version }}
               path: ${{ github.workspace }}
 
         - name: Show Files
@@ -77,6 +79,9 @@ jobs:
       name: Upload release artifacts
       needs: do_release
       runs-on: ubuntu-latest
+      env: 
+        VERSION: "${{ needs.get_version.outputs.version }}"
+        UPLOAD_URL: "${{ needs.do_release.outputs.url }}"
       strategy:
         matrix:
           win-version: [x64, x86]
@@ -84,7 +89,7 @@ jobs:
         - name: Download build artifact        
           uses: actions/download-artifact@v2
           with:
-              name: my-artifact-${{ matrix.win-version }}
+              name: MXFInspect-${{ env.VERSION }}-win${{ matrix.win-version }}
 
         - name: Show path       
           run: echo ${{ github.workspace }}
@@ -98,7 +103,7 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            upload_url: ${{ needs.do_release.outputs.url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+            upload_url: ${{ env.UPLOAD_URL }} 
             asset_path: ./
             asset_name: my_file${{ matrix.win-version }}.txt
             asset_content_type: text/plain
