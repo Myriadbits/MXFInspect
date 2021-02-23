@@ -14,11 +14,19 @@ jobs:
       matrix:
           win-version: [x64, x86]
     steps:
-        - name: 'Create a file'
+        - name: Create a file
           run: echo ${{ matrix.win-version }} > my_file.txt
         
         - name: Upload multiple artifacts via multiple jobs
           uses: actions/upload-artifact@v2
           with:
-              name: my-artifact ${{ matrix.win-version }}
+              name: my-artifact-${{ matrix.win-version }}
               path: ${{ github.workspace }}
+
+            
+  download: 
+    runs-on: ubuntu-latest
+    steps:        
+        - uses: actions/download-artifact@v2
+        - name: Display structure of downloaded files
+          run: ls -R
