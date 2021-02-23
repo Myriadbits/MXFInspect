@@ -11,20 +11,24 @@ on:
       - '*'
 
 jobs:
-  #setup:
-
-  create_matrix:
+  get_version:
+    name: Get version tag
     runs-on: ubuntu-latest
     outputs:
-      tag_nome: ${{ steps.get_version.outputs.VERSION }}
+      version: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+        - name: Get the tag string (cleaned)
+          id: get_version
+          run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+  create_builds:
+    name: Build, Test & Publish
+    needs: get_version
+    runs-on: ubuntu-latest
     strategy:
       matrix:
           win-version: [x64, x86]
     steps:
-        - name: Get the version
-          id: get_version
-          run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
-
         - name: Create a file
           run: echo ${{ matrix.win-version }} > my_file${{ matrix.win-version }}.txt
         
@@ -38,16 +42,16 @@ jobs:
           run: ls -lr
   
   do_release:
-      needs: create_matrix
+      needs: [get_version, create_builds]
       runs-on: ubuntu-latest
       outputs:
-        url: ${{ steps.create_release.outputs.upload_url }}
+        url: ${{ steps.create_release.outputs.upload_url }} # is this necessary?
       steps:
-        - name: echo the tag name
-          run: echo ${{ needs.create_matrix.outputs.tag_nome }}
+        - name: Show the version tag (from the workflow output)
+          run: echo ${{ needs.get_version.outputs.version }}
        
-        - name: echo the tag name via set output
-          run: echo ${{ needs.create_matrix.get_version.VERSION }}
+        - name: Show the version tag (from the step)
+          run: echo ${{ needs.create_builds.get_version.VERSION }}
           
         - name: Create a release
           id: create_release
@@ -55,8 +59,8 @@ jobs:
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
           with:
-            tag_name: ${{ needs.create_matrix.outputs.tag_nome }}
-            release_name: Release ${{ needs.create_matrix.outputs.tag_nome }}
+            tag_name: ${{ needs.create_builds.outputs.version }}
+            release_name: Release ${{ needs.create_builds.outputs.version }}
             #release_name: ${{ steps.version.outputs.version }}
             #tag_name: ${{ github.ref }}
             #body_path: CHANGELOG.md
