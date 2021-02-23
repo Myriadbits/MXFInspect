@@ -54,7 +54,7 @@ jobs:
 #          run: echo ${{ do_release.create_release.outputs.upload_url }}
 
   download: 
-      needs: create_matrix
+      needs: do_release
       runs-on: ubuntu-latest
       strategy:
         matrix:
