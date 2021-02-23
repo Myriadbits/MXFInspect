@@ -63,7 +63,7 @@ jobs:
         - name: Create a file and zip it
           shell: bash
           run: |
-            7z a ${{ env.ARTIFACT_NAME }}.zip ./publish/*" LICENSE -bb
+            7z a ${{ env.ARTIFACT_NAME }}.zip ./publish/* LICENSE -bb
 
         - name: Upload multiple artifact
           uses: actions/upload-artifact@v2
