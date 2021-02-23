@@ -53,23 +53,17 @@ jobs:
       outputs:
         url: ${{ steps.create_release.outputs.upload_url }} # is this necessary?
       steps:
-        - name: Show the version tag (from the workflow output)
-          run: echo ${{ needs.get_version.outputs.version }}
-       
-        - name: Show the version tag (from the step)
-          run: echo ${{ needs.get_version.steps.get_version.VERSION }}
-
-        - name: Show the version tag (from the env variable)
-          run: echo $VERSION
-          
+        - name: Show the version tag (for debugging)
+          run: echo "VERSION = $VERSION"
+                
         - name: Create a release
           id: create_release
           uses: actions/create-release@v1
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
           with:
-            tag_name: ${{ needs.get_version.outputs.version }}
-            release_name: ${{ needs.get_version.outputs.version }} Release of MXFInspect
+            tag_name: $VERSION
+            release_name: $VERSION Release of MXFInspect
             #body_path: CHANGELOG.md
             body: |
               Changes in this Release
