@@ -27,7 +27,7 @@ jobs:
   create_builds:
     name: Build, Test & Publish
     needs: get_version
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env: 
         VERSION: "${{ needs.get_version.outputs.version }}"
         ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-win-${{ matrix.win-version }}"
@@ -35,11 +35,23 @@ jobs:
       matrix:
           win-version: [x64, x86]
     steps:
-        - name: Echo the environment variables (for debugging)
+        - uses: actions/checkout@v2
+        - name: Show environment variables (for debugging)
           run: |
             echo "VERSION = $VERSION"
             echo "ARTIFACT_NAME = $ARTIFACT_NAME"
 
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 5.0.x
+    
+        - name: Restore dependencies
+          run: dotnet restore
+    
+        - name: Build
+          run: dotnet build --no-restore
+        
         - name: Create a file and zip it
           run: |
             echo ${{ matrix.win-version }} > $ARTIFACT_NAME.txt
@@ -49,7 +61,7 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
               name: ${{ env.ARTIFACT_NAME }}
-              path: ./*.zip
+              path: ./${{ env.ARTIFACT_NAME }}.zip
 
   
   do_release:
@@ -73,10 +85,10 @@ jobs:
             tag_name: ${{ env.VERSION }}
             release_name: ${{ env.VERSION }} Release of MXFInspect
             #body_path: CHANGELOG.md
-            body: |
-              Changes in this Release
-              - First Change
-              - Second Change
+#           body: |
+#             Changes in this Release
+#             - First Change
+#             - Second Change
             draft: false
             prerelease: true
 
@@ -93,7 +105,7 @@ jobs:
         matrix:
           win-version: [x64, x86]
       steps:
-        - name: Echo environment variables (for debugging)       
+        - name: Show environment variables (for debugging)       
           run: |
               echo "VERSION = $VERSION"
               echo "ARTIFACT_NAME = $ARTIFACT_NAME"
