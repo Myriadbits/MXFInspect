@@ -48,10 +48,10 @@ jobs:
   
   do_release:
       name: Create release
-      needs: create_builds
+      needs: [get_version, create_builds]
       runs-on: ubuntu-latest
       env: 
-        VERSION: "${{ jobs.get_version.outputs.version }}"
+        VERSION: "${{ needs.get_version.outputs.version }}"
       outputs:
         url: ${{ steps.create_release.outputs.upload_url }} # is this necessary?
       steps:
@@ -77,15 +77,20 @@ jobs:
 
   upload_release: 
       name: Upload release artifacts
-      needs: do_release
+      needs: [get_version, do_release]
       runs-on: ubuntu-latest
       env: 
-        VERSION: "${{ jobs.get_version.outputs.version }}"
-        UPLOAD_URL: "${{ jobs.do_release.outputs.url }}"
+        VERSION: "${{ needs.get_version.outputs.version }}"
+        UPLOAD_URL: "${{ needs.do_release.outputs.url }}"
       strategy:
         matrix:
           win-version: [x64, x86]
       steps:
+        - name: Echo environment variables (for debugging)       
+          run: |
+              echo "VERSION = $VERSION"
+              echo "UPLOAD_URL = $UPLOAD_URL"
+
         - name: Download build artifact        
           uses: actions/download-artifact@v2
           with:
