@@ -43,3 +43,15 @@ jobs:
               - Second Change
             draft: false
             prerelease: false
+
+  download: 
+      needs: do_release
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          win-version: [x64, x86]
+      steps:
+        - name: Download build artifact        
+        - uses: actions/download-artifact@v2
+          with:
+              name: my-artifact-${{ matrix.win-version }}
