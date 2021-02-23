@@ -17,7 +17,7 @@ jobs:
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
-        - name: Get the tag string (cleaned)
+        - name: Get the (cleaned) tag string
           id: get_version
           run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
         
@@ -29,7 +29,7 @@ jobs:
     needs: get_version
     runs-on: windows-latest
     env: 
-        VERSION: "${{ needs.get_version.outputs.version }}"
+        VERSION_TAG: "${{ needs.get_version.outputs.version }}"
         ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-win-${{ matrix.win-version }}"
     strategy:
       matrix:
@@ -38,7 +38,7 @@ jobs:
         - uses: actions/checkout@v2
         - name: Show environment variables (for debugging)
           run: |
-            echo "VERSION = $VERSION"
+            echo "VERSION_TAG = $VERSION_TAG"
             echo "ARTIFACT_NAME = $ARTIFACT_NAME"
 
         - name: Setup .NET
