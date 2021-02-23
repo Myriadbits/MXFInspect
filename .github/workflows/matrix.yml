@@ -34,13 +34,15 @@ jobs:
       matrix:
           win-version: [x64, x86]
     steps:
-        - name: Create a file
-          run: echo ${{ matrix.win-version }} > my_file${{ matrix.win-version }}.txt
-        
+        - name: Create a file and zip it
+          run: |
+            echo ${{ matrix.win-version }} > MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.txt
+            7z a MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.zip -bb MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.txt
+
         - name: Upload multiple artifacts via multiple jobs
           uses: actions/upload-artifact@v2
           with:
-              name: MXFInspect-${{ env.VERSION }}-win${{ matrix.win-version }}
+              name: MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}
               path: ${{ github.workspace }}
 
         - name: Show Files
@@ -94,7 +96,7 @@ jobs:
         - name: Download build artifact        
           uses: actions/download-artifact@v2
           with:
-              name: MXFInspect-${{ env.VERSION }}-win${{ matrix.win-version }}
+              name: MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}
 
         - name: Show path       
           run: echo ${{ github.workspace }}
@@ -110,5 +112,5 @@ jobs:
           with:
             upload_url: ${{ env.UPLOAD_URL }} 
             asset_path: ./
-            asset_name: my_file${{ matrix.win-version }}.txt
-            asset_content_type: text/plain
+            asset_name: MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.zip
+            asset_content_type: application/zip
