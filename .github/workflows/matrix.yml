@@ -8,7 +8,7 @@ on:
 jobs:
   #setup:
 
-  testmatrix:
+  create_matrix:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,12 +22,31 @@ jobs:
           with:
               name: my-artifact-${{ matrix.win-version }}
               path: ${{ github.workspace }}
-
+  
+  do_release:
+      needs: create_matrix
+      runs-on: ubuntu-latest
+      steps:
+        - name: release
+          uses: actions/create-release@v1
+          id: create_release
+          with:
+            draft: false
+            prerelease: false
+            #release_name: ${{ steps.version.outputs.version }}
+            #tag_name: ${{ github.ref }}
+            #body_path: CHANGELOG.md
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
             
   download: 
-    needs: testmatrix
-    runs-on: ubuntu-latest
-    steps:        
+      needs: do_release
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          win-version: [x64, x86]
+      steps:
+        - name: Download build artifact        
         - uses: actions/download-artifact@v2
-        - name: Display structure of downloaded files
-          run: ls -R -l
+          with:
+              name: my-artifact-${{ matrix.win-version }}
