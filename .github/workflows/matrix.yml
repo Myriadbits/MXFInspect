@@ -26,8 +26,8 @@ jobs:
   do_release:
       needs: create_matrix
       runs-on: ubuntu-latest
-      #outputs:
-      #  output1: ${{ steps.release.outputs.test }}
+      outputs:
+        url: ${{ steps.create_release.outputs.upload_url }}
       steps:
         - name: release
           id: create_release
@@ -67,7 +67,7 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            upload_url: ${{ needs.do_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+            upload_url: ${{ needs.do_release.outputs.url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
             #asset_path: ./my-artifact.zip
             asset_name: my-artifact-${{ matrix.win-version }}
             #asset_content_type: application/zip
