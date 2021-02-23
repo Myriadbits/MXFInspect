@@ -25,7 +25,7 @@ jobs:
           run: echo ${{ steps.get_version.outputs.VERSION }}
 
   create_builds:
-    name: Build, Test & Publish
+    name: Build, test, publish & zip
     needs: get_version
     runs-on: windows-latest
     env: 
@@ -34,10 +34,12 @@ jobs:
     strategy:
       matrix:
           win-version: [x64, x86]
+          # fw-flavor: [selfcontained, dependent]
     steps:
         - uses: actions/checkout@v2
         - name: Show environment variables (for debugging)
           run: |
+          shell: bash
             echo "VERSION_TAG = $VERSION_TAG"
             echo "ARTIFACT_NAME = $ARTIFACT_NAME"
 
@@ -61,7 +63,7 @@ jobs:
         - name: Create a file and zip it
           shell: bash
           run: |
-            7z a ${{ env.ARTIFACT_NAME }}.zip $GITHUB_WORKSPACE"/publish/*" LICENSE -bb
+            7z a ${{ env.ARTIFACT_NAME }}.zip ./publish/*" LICENSE -bb
 
         - name: Upload multiple artifact
           uses: actions/upload-artifact@v2
