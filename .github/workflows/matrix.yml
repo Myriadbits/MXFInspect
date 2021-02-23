@@ -1,19 +1,30 @@
 name: Sample Matrix Parallel
 
+#on:
+#  push:
+#    branches:
+#      - testaction
+
 on:
   push:
-    branches:
-      - testaction
+    tags:
+      - '*'
 
 jobs:
   #setup:
 
   create_matrix:
     runs-on: ubuntu-latest
+    outputs:
+      tag_nome: ${GITHUB_REF#refs/tags/}
     strategy:
       matrix:
           win-version: [x64, x86]
     steps:
+        - name: Get the version
+          id: get_version
+          run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
         - name: Create a file
           run: echo ${{ matrix.win-version }} > my_file${{ matrix.win-version }}.txt
         
@@ -38,8 +49,8 @@ jobs:
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
           with:
-            tag_name: ${{ github.ref }}
-            release_name: Release ${{ github.ref }}
+            tag_name: ${GITHUB_REF#refs/tags/}
+            release_name: Release ${GITHUB_REF#refs/tags/}
             #release_name: ${{ steps.version.outputs.version }}
             #tag_name: ${{ github.ref }}
             #body_path: CHANGELOG.md
