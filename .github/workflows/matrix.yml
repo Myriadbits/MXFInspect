@@ -29,12 +29,17 @@ jobs:
       steps:
         - name: release
           uses: actions/create-release@v1
-          id: create_release
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
           with:
-            draft: false
-            prerelease: false
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref }}
             #release_name: ${{ steps.version.outputs.version }}
             #tag_name: ${{ github.ref }}
             #body_path: CHANGELOG.md
-          env:
-            GITHUB_TOKEN: ${{ github.token }}
+            body: |
+              Changes in this Release
+              - First Change
+              - Second Change
+            draft: false
+            prerelease: false
