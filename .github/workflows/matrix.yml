@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
         VERSION: "${{ needs.get_version.outputs.version }}"
-        ARTIFACT_NAME: "MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}"
+        ARTIFACT_NAME: "MXFInspect-$VERSION-win-${{ matrix.win-version }}"
     strategy:
       matrix:
           win-version: [x64, x86]
