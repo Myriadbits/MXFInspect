@@ -39,11 +39,11 @@ jobs:
             echo ${{ matrix.win-version }} > MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.txt
             7z a MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.zip -bb MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.txt
 
-        - name: Upload multiple artifacts via multiple jobs
+        - name: Upload multiple artifact
           uses: actions/upload-artifact@v2
           with:
               name: MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}
-              path: ${{ github.workspace }}
+              path: ${{ github.workspace }}/*.zip
 
         - name: Show Files
           run: ls -lr
@@ -111,6 +111,6 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
             upload_url: ${{ env.UPLOAD_URL }} 
-            asset_path: ./
+            asset_path: ./MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.zip
             asset_name: MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.zip
             asset_content_type: application/zip
