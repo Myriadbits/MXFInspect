@@ -30,11 +30,11 @@ jobs:
     runs-on: windows-latest
     env: 
         VERSION_TAG: "${{ needs.get_version.outputs.version }}"
-        ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-win-${{ matrix.win-version }}"
+        ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-${{ matrix.fw-flavor }}-win-${{ matrix.win-version }}"
     strategy:
       matrix:
           win-version: [x64, x86]
-          # fw-flavor: [selfcontained, dependent]
+          fw-flavor: [selfcontained, dependent]
     steps:
         - uses: actions/checkout@v2
         - name: Show environment variables (for debugging)
@@ -57,8 +57,13 @@ jobs:
         - name: Test
           run: dotnet test --no-build --verbosity normal
         
-        - name: Publish in subfolder
+        - name: Publish selfcontained in subfolder
+          if: ${{ matrix.fw-flavor == 'selfcontained' }}
           run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
+
+        - name: Publish dependent in subfolder
+          if: ${{ matrix.fw-flavor == 'dependent' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }}
         
         - name: Create a file and zip it
           shell: bash
@@ -107,11 +112,12 @@ jobs:
       runs-on: ubuntu-latest
       env: 
         VERSION: "${{ needs.get_version.outputs.version }}"
-        ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-win-${{ matrix.win-version }}"
+        ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-${{ matrix.fw-flavor }}-win-${{ matrix.win-version }}"
         UPLOAD_URL: "${{ needs.do_release.outputs.url }}"
       strategy:
         matrix:
           win-version: [x64, x86]
+          fw-flavor: [selfcontained, dependent]
       steps:
         - name: Show environment variables (for debugging)       
           run: |
