@@ -16,7 +16,7 @@ jobs:
   create_matrix:
     runs-on: ubuntu-latest
     outputs:
-      tag_nome: ${{ github.ref#refs/tags/ }}
+      tag_nome: ${{ steps.get_version.outputs.VERSION }}
     strategy:
       matrix:
           win-version: [x64, x86]
