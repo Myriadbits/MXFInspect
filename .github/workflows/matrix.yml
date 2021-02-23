@@ -22,6 +22,9 @@ jobs:
           with:
               name: my-artifact-${{ matrix.win-version }}
               path: ${{ github.workspace }}
+
+        - name: Show Files
+          run: ls -lr
   
   do_release:
       needs: create_matrix
@@ -29,7 +32,7 @@ jobs:
       outputs:
         url: ${{ steps.create_release.outputs.upload_url }}
       steps:
-        - name: release
+        - name: Create a release
           id: create_release
           uses: actions/create-release@v1
           env:
