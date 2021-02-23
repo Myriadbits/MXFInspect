@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
         VERSION: "${{ needs.get_version.outputs.version }}"
-        ARTIFACT_NAME: "MXFInspect-$VERSION-win-${{ matrix.win-version }}"
+        ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-win-${{ matrix.win-version }}"
     strategy:
       matrix:
           win-version: [x64, x86]
@@ -42,13 +42,13 @@ jobs:
 
         - name: Create a file and zip it
           run: |
-            echo ${{ matrix.win-version }} > MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.txt
-            7z a MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.zip -bb MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.txt
+            echo ${{ matrix.win-version }} > $ARTIFACT_NAME.txt
+            7z a $ARTIFACT_NAME.zip $ARTIFACT_NAME.txt -bb
 
         - name: Upload multiple artifact
           uses: actions/upload-artifact@v2
           with:
-              name: MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}
+              name: ${{ env.ARTIFACT_NAME }}
               path: ${{ github.workspace }}/*.zip
 
         - name: Show Files
