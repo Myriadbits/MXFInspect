@@ -43,6 +43,9 @@ jobs:
       outputs:
         url: ${{ steps.create_release.outputs.upload_url }}
       steps:
+        - name: echo the tag name
+          run: echo ${{ needs.create_matrix.outputs.tag_nome }}
+
         - name: Create a release
           id: create_release
           uses: actions/create-release@v1
@@ -61,8 +64,6 @@ jobs:
             draft: false
             prerelease: true
 
-#        - name: echo
-#          run: echo ${{ do_release.create_release.outputs.upload_url }}
 
   download: 
       needs: do_release
