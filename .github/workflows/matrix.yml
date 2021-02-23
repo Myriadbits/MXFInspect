@@ -62,8 +62,8 @@ jobs:
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
           with:
-            tag_name: $VERSION
-            release_name: $VERSION Release of MXFInspect
+            tag_name: ${{ env.VERSION }}
+            release_name: ${{ env.VERSION }} Release of MXFInspect
             #body_path: CHANGELOG.md
             body: |
               Changes in this Release
