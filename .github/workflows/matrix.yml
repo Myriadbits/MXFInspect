@@ -38,8 +38,8 @@ jobs:
     steps:
         - uses: actions/checkout@v2
         - name: Show environment variables (for debugging)
-          run: |
           shell: bash
+          run: |
             echo "VERSION_TAG = $VERSION_TAG"
             echo "ARTIFACT_NAME = $ARTIFACT_NAME"
 
