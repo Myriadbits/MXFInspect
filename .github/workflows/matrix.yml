@@ -16,7 +16,7 @@ jobs:
   create_matrix:
     runs-on: ubuntu-latest
     outputs:
-      tag_nome: ${GITHUB_REF#refs/tags/}
+      tag_nome: ${{ github.ref#refs/tags/ }}
     strategy:
       matrix:
           win-version: [x64, x86]
@@ -45,6 +45,9 @@ jobs:
       steps:
         - name: echo the tag name
           run: echo ${{ needs.create_matrix.outputs.tag_nome }}
+       
+        - name: echo the tag name via set output
+          run: echo ${{ needs.create_matrix.get_version.VERSION }}
           
         - name: Create a release
           id: create_release
