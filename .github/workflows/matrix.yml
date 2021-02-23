@@ -26,29 +26,29 @@ jobs:
         - name: Show Files
           run: ls -lr
   
-#  do_release:
-#      needs: create_matrix
-#      runs-on: ubuntu-latest
-#      outputs:
-#        url: ${{ steps.create_release.outputs.upload_url }}
-#      steps:
-#        - name: Create a release
-#          id: create_release
-#          uses: actions/create-release@v1
-#          env:
-#              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-#          with:
-#            tag_name: ${{ github.ref }}
-#            release_name: Release ${{ github.ref }}
-#            #release_name: ${{ steps.version.outputs.version }}
-#            #tag_name: ${{ github.ref }}
-#            #body_path: CHANGELOG.md
-#            body: |
-#              Changes in this Release
-#              - First Change
-#              - Second Change
-#            draft: false
-#            prerelease: true
+  do_release:
+      needs: create_matrix
+      runs-on: ubuntu-latest
+      outputs:
+        url: ${{ steps.create_release.outputs.upload_url }}
+      steps:
+        - name: Create a release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          with:
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref }}
+            #release_name: ${{ steps.version.outputs.version }}
+            #tag_name: ${{ github.ref }}
+            #body_path: CHANGELOG.md
+            body: |
+              Changes in this Release
+              - First Change
+              - Second Change
+            draft: false
+            prerelease: true
 
 #        - name: echo
 #          run: echo ${{ do_release.create_release.outputs.upload_url }}
