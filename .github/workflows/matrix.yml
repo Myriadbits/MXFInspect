@@ -30,10 +30,16 @@ jobs:
     runs-on: ubuntu-latest
     env: 
         VERSION: "${{ needs.get_version.outputs.version }}"
+        ARTIFACT_NAME: "MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}"
     strategy:
       matrix:
           win-version: [x64, x86]
     steps:
+        - name: Echo the environment variables (for debugging)
+          run: |
+            echo "VERSION = $VERSION"
+            echo "ARTIFACT_NAME = $ARTIFACT_NAME"
+
         - name: Create a file and zip it
           run: |
             echo ${{ matrix.win-version }} > MXFInspect-${{ env.VERSION }}-win-${{ matrix.win-version }}.txt
