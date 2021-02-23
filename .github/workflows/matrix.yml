@@ -34,7 +34,7 @@ jobs:
     strategy:
       matrix:
           win-version: [x64, x86]
-          fw-flavor: [selfcontained, dependent]
+          fw-flavor: [selfcontained, fwdependent]
     steps:
         - uses: actions/checkout@v2
         - name: Show environment variables (for debugging)
@@ -62,7 +62,7 @@ jobs:
           run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
 
         - name: Publish dependent in subfolder
-          if: ${{ matrix.fw-flavor == 'dependent' }}
+          if: ${{ matrix.fw-flavor == 'fwdependent' }}
           run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }}
         
         - name: Create a file and zip it
@@ -117,7 +117,7 @@ jobs:
       strategy:
         matrix:
           win-version: [x64, x86]
-          fw-flavor: [selfcontained, dependent]
+          fw-flavor: [selfcontained, fwdependent]
       steps:
         - name: Show environment variables (for debugging)       
           run: |
