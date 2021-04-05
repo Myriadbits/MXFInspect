@@ -1,0 +1,146 @@
+name: Create release from tag
+
+#on:
+#  push:
+#    branches:
+#      - testaction
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  get_version:
+    name: Get version tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+        - name: Get the (cleaned) tag string
+          id: get_version
+          run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+        
+        - name: Echo the tag (for debugging)
+          run: echo ${{ steps.get_version.outputs.VERSION }}
+
+  create_builds:
+    name: Build, test, publish & zip
+    needs: get_version
+    runs-on: windows-latest
+    env: 
+        VERSION_TAG: "${{ needs.get_version.outputs.version }}"
+        ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-${{ matrix.fw-flavor }}-win-${{ matrix.win-version }}"
+    strategy:
+      matrix:
+          win-version: [x64, x86]
+          fw-flavor: [selfcontained, fwdependent, includenativelibs]
+    steps:
+        - uses: actions/checkout@v2
+        - name: Show environment variables (for debugging)
+          shell: bash
+          run: |
+            echo "VERSION_TAG = $VERSION_TAG"
+            echo "ARTIFACT_NAME = $ARTIFACT_NAME"
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 5.0.x
+    
+        - name: Restore dependencies
+          run: dotnet restore
+    
+        - name: Build
+          run: dotnet build --no-restore
+        
+        - name: Test
+          run: dotnet test --no-build --verbosity normal
+        
+        - name: Publish selfcontained in subfolder
+          if: ${{ matrix.fw-flavor == 'selfcontained' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
+
+        - name: Publish selfcontained & includenativelibraries in subfolder
+          if: ${{ matrix.fw-flavor == 'includenativelibs' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+
+        - name: Publish dependent in subfolder
+          if: ${{ matrix.fw-flavor == 'fwdependent' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }}
+        
+        - name: Create a file and zip it
+          shell: bash
+          run: |
+            7z a ${{ env.ARTIFACT_NAME }}.zip ./publish/* LICENSE -bb
+
+        - name: Upload multiple artifact
+          uses: actions/upload-artifact@v2
+          with:
+              name: ${{ env.ARTIFACT_NAME }}
+              path: ./${{ env.ARTIFACT_NAME }}.zip
+
+
+  do_release:
+      name: Create release
+      needs: [get_version, create_builds]
+      runs-on: ubuntu-latest
+      env: 
+        VERSION: "${{ needs.get_version.outputs.version }}"
+      outputs:
+        url: ${{ steps.create_release.outputs.upload_url }}
+      steps:
+        - name: Show the version tag (for debugging)
+          run: echo "VERSION = $VERSION"
+                
+        - name: Create a release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          with:
+            tag_name: ${{ env.VERSION }}
+            release_name: ${{ env.VERSION }} Release of MXFInspect
+            #body_path: CHANGELOG.md
+#           body: |
+#             Changes in this Release
+#             - First Change
+#             - Second Change
+            draft: false
+            prerelease: true
+
+
+  upload_release: 
+      name: Upload release artifacts
+      needs: [get_version, do_release]
+      runs-on: ubuntu-latest
+      env: 
+        VERSION: "${{ needs.get_version.outputs.version }}"
+        ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-${{ matrix.fw-flavor }}-win-${{ matrix.win-version }}"
+        UPLOAD_URL: "${{ needs.do_release.outputs.url }}"
+      strategy:
+        matrix:
+          win-version: [x64, x86]
+          fw-flavor: [selfcontained, fwdependent, includenativelibs]
+      steps:
+        - name: Show environment variables (for debugging)       
+          run: |
+              echo "VERSION = $VERSION"
+              echo "ARTIFACT_NAME = $ARTIFACT_NAME"
+              echo "UPLOAD_URL = $UPLOAD_URL"
+
+        - name: Download build artifact        
+          uses: actions/download-artifact@v2
+          with:
+              name: ${{ env.ARTIFACT_NAME }}
+       
+        - name: Upload build artifacts to release
+          id: upload-release-asset 
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            upload_url: ${{ env.UPLOAD_URL }} 
+            asset_path: ./${{ env.ARTIFACT_NAME }}.zip
+            asset_name: ${{ env.ARTIFACT_NAME }}.zip
+            asset_content_type: application/zip
