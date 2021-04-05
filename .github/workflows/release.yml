@@ -34,7 +34,7 @@ jobs:
     strategy:
       matrix:
           win-version: [x64, x86]
-          fw-flavor: [selfcontained, fwdependent]
+          fw-flavor: [selfcontained, fwdependent, includenativelibs]
     steps:
         - uses: actions/checkout@v2
         - name: Show environment variables (for debugging)
@@ -60,6 +60,10 @@ jobs:
         - name: Publish selfcontained in subfolder
           if: ${{ matrix.fw-flavor == 'selfcontained' }}
           run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
+
+        - name: Publish selfcontained & includenativelibraries in subfolder
+          if: ${{ matrix.fw-flavor == 'includenativelibs' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
 
         - name: Publish dependent in subfolder
           if: ${{ matrix.fw-flavor == 'fwdependent' }}
@@ -117,7 +121,7 @@ jobs:
       strategy:
         matrix:
           win-version: [x64, x86]
-          fw-flavor: [selfcontained, fwdependent]
+          fw-flavor: [selfcontained, fwdependent, includenativelibs]
       steps:
         - name: Show environment variables (for debugging)       
           run: |
