@@ -33,8 +33,20 @@ jobs:
         ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-${{ matrix.fw-flavor }}-win-${{ matrix.win-version }}"
     strategy:
       matrix:
-          win-version: [x64, x86]
-          fw-flavor: [selfcontained, fwdependent, includenativelibs, includeallcontent]
+#        cfg:
+#        - { win-version: x64, fw-flavor: fwdependent}
+#        - { win-version: x86, fw-flavor: fwdependent}
+#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: no-singlefile}
+#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: no-singlefile}
+#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: singlefile}
+#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: singlefile}
+#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includenativelibs}
+#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includenativelibs}
+#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includeallcontent}
+#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includeallcontent}
+         win-version: [x64, x86]
+         fw-flavor: [fwdependent, selfcontained, selfcontained-singlefile, self-contained-includenativelibs, self-contained-includeallcontent]
+    
     steps:
         - uses: actions/checkout@v2
         - name: Show environment variables (for debugging)
@@ -57,22 +69,26 @@ jobs:
         - name: Test
           run: dotnet test --no-build --verbosity normal
         
-        - name: Publish selfcontained in subfolder
-          if: ${{ matrix.fw-flavor == 'selfcontained' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
-
-        - name: Publish selfcontained (includenativelibraries) in subfolder
-          if: ${{ matrix.fw-flavor == 'includenativelibs' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
-        
-        - name: Publish selfcontained (includeallcontent) in subfolder
-          if: ${{ matrix.fw-flavor == 'includeallcontent' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForselfExtract=true
-
-        - name: Publish dependent in subfolder
+        - name: Publish release (framework dependent) in subfolder 
           if: ${{ matrix.fw-flavor == 'fwdependent' }}
           run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }}
         
+        - name: Publish release (selfcontained) in subfolder 
+          if: ${{ matrix.fw-flavor == 'selfcontained' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true
+
+        - name: Publish release (selfcontained-singlefile) in subfolder
+          if: ${{ matrix.fw-flavor == 'selfcontained-singlefile' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
+
+        - name: Publish relase (selfcontained-includenativelibraries) in subfolder
+          if: ${{ matrix.fw-flavor == 'self-contained-includenativelibs' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+        
+        - name: Publish release (selfcontained-includeallcontent) in subfolder
+          if: ${{ matrix.fw-flavor == 'self-contained-includeallcontent' }}
+          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForselfExtract=true
+
         - name: Create a file and zip it
           shell: bash
           run: |
@@ -125,7 +141,7 @@ jobs:
       strategy:
         matrix:
           win-version: [x64, x86]
-          fw-flavor: [selfcontained, fwdependent, includenativelibs, includeallcontent]
+          fw-flavor: [fwdependent, selfcontained, selfcontained-singlefile, self-contained-includenativelibs, self-contained-includeallcontent]
       steps:
         - name: Show environment variables (for debugging)       
           run: |
