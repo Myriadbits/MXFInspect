@@ -51,8 +51,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [x] Transition [2/2] 
     - [x] ContentStorage [2/2]
     - [ ] ControlPoint :scroll:
-    - [ ] DefinitionObject [3] *(abstract)* :scroll:
-        - [ ] DataDefinition :scroll:
+    - [x] DefinitionObject [3/3] *(abstract)*
+        - [x] DataDefinition [0/0]
         - [ ] OperationDefinition :scroll:
         - [ ] ParameterDefinition :scroll:
         - [ ] PluginDefinition :scroll:
@@ -63,7 +63,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] KLVDataDefinition :scroll:
         - [ ] OPDefinition :scroll:
         - [ ] CompressionDefinition :scroll:
-    - [ ] Dictionary :scroll:
+    - [x] Dictionary [9/9]
     - [x] EssenceData [9/9] *(A05 EssenceContainerData)*
     - [x] EssenceDescriptor [2/2] *(abstract)* *(B02 GenericDescriptor)*
         - [x] FileDescriptor [5/5] *(abstract)*
