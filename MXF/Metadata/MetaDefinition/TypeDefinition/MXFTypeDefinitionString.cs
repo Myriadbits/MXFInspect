@@ -21,16 +21,30 @@
 //
 #endregion
 
+using System;
+using System.ComponentModel;
+
 namespace Myriadbits.MXF
 {
-    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.02030000")]
-    public class MXFTypeDefinition : MXFMetaDefinition
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.020b0000")]
+    public class MXFTypeDefinitionString : MXFTypeDefinition
     {
+        private const string CATEGORYNAME = "TypeDefinitionString";
 
-        public MXFTypeDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "TypeDefinition")
+        public MXFTypeDefinitionString(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV)
         {
-            this.MetaDataName = "TypeDefinition";
+            this.MetaDataName = "TypeDefinitionString";
+        }
+
+
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.Tag)
+            {
+                case 0x001a: this.AddChild(reader.ReadReference<MXFTypeDefinition>("StringElementType")); return true;
+            }
+            return base.ParseLocalTag(reader, localTag);
         }
     }
 }

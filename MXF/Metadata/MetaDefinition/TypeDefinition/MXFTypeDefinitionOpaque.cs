@@ -23,14 +23,13 @@
 
 namespace Myriadbits.MXF
 {
-    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.02030000")]
-    public class MXFTypeDefinition : MXFMetaDefinition
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.02220000")]
+    public class MXFTypeDefinitionOpaque : MXFTypeDefinitionIndirect
     {
-
-        public MXFTypeDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "TypeDefinition")
+        public MXFTypeDefinitionOpaque(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV)
         {
-            this.MetaDataName = "TypeDefinition";
+            this.MetaDataName = "TypeDefinitionOpaque";
         }
     }
 }
