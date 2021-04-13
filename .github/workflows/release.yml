@@ -59,6 +59,9 @@ jobs:
           uses: actions/setup-dotnet@v1
           with:
             dotnet-version: 5.0.x
+
+        - name: fix for messed up github virtual env 
+          run: Remove-Item $env:APPDATA\NuGet\NuGet.Config
     
         - name: Restore dependencies
           run: dotnet restore
