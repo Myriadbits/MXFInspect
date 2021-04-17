@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public MXFRational EventTrackEditRate { get; set; }
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? EventTrackOrigin { get; set; }
+		public MXFPosition? EventTrackOrigin { get; set; }
 
 		public MXFEventTrack(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Event Track")

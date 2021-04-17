@@ -26,16 +26,24 @@ using System;
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.02010128.00000000
-    public enum MXFScanningDirectionType
+    // urn:smpte:ul:060e2b34.01040101.01012002.00000000
+    public struct MXFLength
     {
-        LeftToRightTopToBottom = 0x00,
-        RightToLeftTopToBottom = 0x01,
-        LeftToRightBottomToTop = 0x02,
-        RightToLeftBottomToTop = 0x03,
-        TopToBottomLeftToRight = 0x04,
-        TopToBottomRightToLeft = 0x05,
-        BottomToTopLeftToRight = 0x06,
-        BottomToTopRightToLeft = 0x07,
+        private UInt64 _Value;
+
+        public static implicit operator MXFLength(UInt64 value)
+        {
+            return new MXFLength { _Value = value };
+        }
+
+        public static implicit operator UInt64(MXFLength value)
+        {
+            return value._Value;
+        }
+
+        public override string ToString()
+        {
+            return _Value.ToString();
+        }
     }
 }

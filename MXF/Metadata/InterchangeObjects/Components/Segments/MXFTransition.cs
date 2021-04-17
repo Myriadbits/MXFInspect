@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
 
 		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01060000")]
-		public MXFPositionType? CutPoint { get; set; }
+		public MXFPosition? CutPoint { get; set; }
 		
 		public MXFTransition(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, "Transition")

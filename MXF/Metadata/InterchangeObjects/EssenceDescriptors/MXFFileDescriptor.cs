@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04060102.00000000")]
-        public MXFLengthType? ContainerDuration { get; set; }
+        public MXFLength? ContainerDuration { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01020000")]

@@ -21,29 +21,16 @@
 //
 #endregion
 
-using System;
-
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.01012001.00000000
-    public struct MXFPositionType
+    // urn:smpte:ul:060e2b34.01040101.02010129.00000000  
+    public enum MXFToleranceMode
     {
-        private UInt64 _Value;
-
-        public static implicit operator MXFPositionType(UInt64 value)
-        {
-            return new MXFPositionType { _Value = value };
-        }
-
-        public static implicit operator UInt64(MXFPositionType value)
-        {
-            return value._Value;
-        }
-
-        public override string ToString()
-        {
-            return _Value.ToString();
-        }
+        ToleranceMode_Estimated = 0x00,
+        ToleranceMode_Assumed = 0x01,
+        ToleranceMode_Precise = 0x02,
+        ToleranceMode_Window = 0x03,
+        ToleranceMode_Interpolated = 0x04,
     }
 }

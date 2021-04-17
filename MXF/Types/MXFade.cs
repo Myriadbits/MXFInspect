@@ -21,29 +21,14 @@
 //
 #endregion
 
-using System;
-
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.01012002.00000000
-    public struct MXFLengthType
+    // urn:smpte:ul:060e2b34.01040101.02010107.00000000
+    public enum MXFFade
     {
-        private UInt64 _Value;
-
-        public static implicit operator MXFLengthType(UInt64 value)
-        {
-            return new MXFLengthType { _Value = value };
-        }
-
-        public static implicit operator UInt64(MXFLengthType value)
-        {
-            return value._Value;
-        }
-
-        public override string ToString()
-        {
-            return _Value.ToString();
-        }
+        FadeNone = 0x00,
+        FadeLinearAmp = 0x01,
+        FadeLinearPower = 0x02,
     }
 }

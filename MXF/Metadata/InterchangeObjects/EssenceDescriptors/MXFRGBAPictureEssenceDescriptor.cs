@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
 		public UInt32? AlphaMinRef { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public MXFScanningDirectionType? ScanningDirection { get; set; }
+		public MXFScanningDirection? ScanningDirection { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		public MXFRGBAComponent[] PixelLayout { get; set; }
@@ -79,7 +79,7 @@ namespace Myriadbits.MXF
 				case 0x3407: this.ComponentMinRef = reader.ReadUInt32(); return true;
 				case 0x3408: this.AlphaMaxRef = reader.ReadUInt32(); return true;
 				case 0x3409: this.AlphaMinRef = reader.ReadUInt32(); return true;
-				case 0x3405: this.ScanningDirection = (MXFScanningDirectionType) reader.ReadByte(); return true;
+				case 0x3405: this.ScanningDirection = (MXFScanningDirection) reader.ReadByte(); return true;
 				case 0x3401: this.PixelLayout = reader.ReadRGBALayout(); return true;
 				case 0x3403: this.Palette = reader.ReadArray(reader.ReadByte, localTag.Size); return true; 
 				case 0x3404: this.PaletteLayout = reader.ReadRGBALayout(); return true;

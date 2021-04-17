@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
 
 		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01050000")]
-		public MXFPositionType? StartTimecode { get; set; }
+		public MXFPosition? StartTimecode { get; set; }
 		
 		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.04040101.02060000")]

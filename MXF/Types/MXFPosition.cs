@@ -26,10 +26,24 @@ using System;
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.02010120.00000000    
-    public enum MXFAlphaTransparencyType
+    // urn:smpte:ul:060e2b34.01040101.01012001.00000000
+    public struct MXFPosition
     {
-        MinValueTransparent =0x00,
-        MaxValueTransparent =0x01,
+        private UInt64 _Value;
+
+        public static implicit operator MXFPosition(UInt64 value)
+        {
+            return new MXFPosition { _Value = value };
+        }
+
+        public static implicit operator UInt64(MXFPosition value)
+        {
+            return value._Value;
+        }
+
+        public override string ToString()
+        {
+            return _Value.ToString();
+        }
     }
 }

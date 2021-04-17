@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
-		public MXFLengthType? Duration { get; set; }
+		public MXFLength? Duration { get; set; }
 
 		public MXFStructuralComponent(MXFReader reader, MXFKLV headerKLV, string metadataName)
 			: base(reader, headerKLV, metadataName)

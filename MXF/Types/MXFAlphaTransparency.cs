@@ -26,13 +26,10 @@ using System;
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.0201010c.00000000
-    public enum MXFEdgeType
+    // urn:smpte:ul:060e2b34.01040101.02010120.00000000    
+    public enum MXFAlphaTransparency
     {
-        EtNull = 0x00,
-        EtKeycode = 0x01,
-        EtEdgenum4 = 0x02,
-        EtEdgenum5 = 0x03,
-        EtHeaderSize = 0x08,
+        MinValueTransparent = 0x00,
+        MaxValueTransparent = 0x01,
     }
 }

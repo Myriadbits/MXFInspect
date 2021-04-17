@@ -26,13 +26,13 @@ using System;
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.0201010d.00000000
-    public enum MXFFilmType
+    // urn:smpte:ul:060e2b34.01040101.0201010c.00000000
+    public enum MXFEdge
     {
-        FtNull = 0x00,
-        Ft35MM = 0x01,
-        Ft16MM = 0x02,
-        Ft8MM = 0x03,
-        Ft65MM = 0x04,
+        EtNull = 0x00,
+        EtKeycode = 0x01,
+        EtEdgenum4 = 0x02,
+        EtEdgenum5 = 0x03,
+        EtHeaderSize = 0x08,
     }
 }

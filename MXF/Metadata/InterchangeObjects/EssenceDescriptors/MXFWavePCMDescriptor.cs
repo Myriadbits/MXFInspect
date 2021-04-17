@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
         public UInt32? PeakFrames { get; set; }
 
         [Category(CATEGORYNAME)]
-        public MXFPositionType? PeakOfPeaksPosition { get; set; }
+        public MXFPosition? PeakOfPeaksPosition { get; set; }
 
         [Category(CATEGORYNAME)]
         public DateTime? PeakEnvelopeTimestamp { get; set; }

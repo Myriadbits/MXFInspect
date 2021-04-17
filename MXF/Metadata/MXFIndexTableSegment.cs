@@ -50,7 +50,7 @@ namespace Myriadbits.MXF
 		public UInt64? IndexStartPosition { get; set; }
 		
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? IndexDuration { get; set; }
+		public MXFPosition? IndexDuration { get; set; }
 		
 		[Category(CATEGORYNAME)]
 		public byte? SliceCount { get; set; }

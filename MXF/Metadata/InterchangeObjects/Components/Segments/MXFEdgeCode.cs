@@ -36,15 +36,15 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.01040901.00000000")]
-        public MXFPositionType? EdgeCodeStart { get; set; }
+        public MXFPosition? EdgeCodeStart { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04100103.01020000")]
-        public MXFEdgeType? EdgeCodeFormat { get; set; }
+        public MXFEdge? EdgeCodeFormat { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04100103.01090000")]
-        public MXFFilmType? EdgeCodeFilmFormat { get; set; }
+        public MXFFilm? EdgeCodeFilmFormat { get; set; }
 
         public MXFEdgeCode(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV, "EdgeCode")
@@ -61,8 +61,8 @@ namespace Myriadbits.MXF
             {
                 case 0x0404: this.EdgeCodeHeader = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
                 case 0x0401: this.EdgeCodeStart = reader.ReadUInt64(); return true;
-                case 0x0403: this.EdgeCodeFormat = (MXFEdgeType)reader.ReadUInt16(); return true;
-                case 0x0402: this.EdgeCodeFilmFormat = (MXFFilmType)reader.ReadUInt16(); return true;
+                case 0x0403: this.EdgeCodeFormat = (MXFEdge)reader.ReadUInt16(); return true;
+                case 0x0402: this.EdgeCodeFilmFormat = (MXFFilm)reader.ReadUInt16(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

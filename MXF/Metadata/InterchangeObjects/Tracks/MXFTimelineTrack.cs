@@ -33,17 +33,17 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public MXFRational EditRate { get; set; }
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? Origin { get; set; }
+		public MXFPosition? Origin { get; set; }
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? MarkIn { get; set; }
+		public MXFPosition? MarkIn { get; set; }
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? UserPosition { get; set; }
+		public MXFPosition? UserPosition { get; set; }
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? PackageMarkInPosition { get; set; }
+		public MXFPosition? PackageMarkInPosition { get; set; }
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? MarkOut { get; set; }
+		public MXFPosition? MarkOut { get; set; }
 		[Category(CATEGORYNAME)]
-		public MXFPositionType? PackageMarkOutPosition { get; set; }
+		public MXFPosition? PackageMarkOutPosition { get; set; }
 
 		public MXFTimelineTrack(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Timeline Track")

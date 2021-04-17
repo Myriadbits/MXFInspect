@@ -115,7 +115,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200102.00000000")]
-        public MXFAlphaTransparencyType? AlphaTransparency { get; set; }
+        public MXFAlphaTransparency? AlphaTransparency { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010201.01010200")]
@@ -230,7 +230,7 @@ namespace Myriadbits.MXF
                 case 0x320E: this.ImageAspectRatio = reader.ReadRational(); return true;
                 case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
                 case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
-                case 0x320F: this.AlphaTransparency = (MXFAlphaTransparencyType)reader.ReadByte(); return true;
+                case 0x320F: this.AlphaTransparency = (MXFAlphaTransparency)reader.ReadByte(); return true;
                 case 0x3210: this.TransferCharacteristic = reader.ReadULKey(); return true;
                 case 0x3211: this.ImageAlignmentFactor = reader.ReadUInt32(); return true;
                 case 0x3213: this.ImageStartOffset = reader.ReadUInt32(); return true;

@@ -21,14 +21,21 @@
 //
 #endregion
 
+using System;
+
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.02010107.00000000
-    public enum MXFFadeType
+    // urn:smpte:ul:060e2b34.01040101.02010128.00000000
+    public enum MXFScanningDirection
     {
-        FadeNone = 0x00,
-        FadeLinearAmp = 0x01,
-        FadeLinearPower = 0x02,
+        LeftToRightTopToBottom = 0x00,
+        RightToLeftTopToBottom = 0x01,
+        LeftToRightBottomToTop = 0x02,
+        RightToLeftBottomToTop = 0x03,
+        TopToBottomLeftToRight = 0x04,
+        TopToBottomRightToLeft = 0x05,
+        BottomToTopLeftToRight = 0x06,
+        BottomToTopRightToLeft = 0x07,
     }
 }

@@ -21,16 +21,18 @@
 //
 #endregion
 
+using System;
+
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.02010129.00000000  
-    public enum MXFToleranceModeType
+    // urn:smpte:ul:060e2b34.01040101.0201010d.00000000
+    public enum MXFFilm
     {
-        ToleranceMode_Estimated = 0x00,
-        ToleranceMode_Assumed = 0x01,
-        ToleranceMode_Precise = 0x02,
-        ToleranceMode_Window = 0x03,
-        ToleranceMode_Interpolated = 0x04,
+        FtNull = 0x00,
+        Ft35MM = 0x01,
+        Ft16MM = 0x02,
+        Ft8MM = 0x03,
+        Ft65MM = 0x04,
     }
 }

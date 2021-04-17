@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010109.07020501.00000000")]
-        public MXFToleranceModeType ToleranceMode { get; set; }
+        public MXFToleranceMode ToleranceMode { get; set; }
 
         //TODO this is of type "indirect"
         [Category(CATEGORYNAME)]
@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x5701: this.ToleranceMode = (MXFToleranceModeType)reader.ReadByte(); return true;
+                case 0x5701: this.ToleranceMode = (MXFToleranceMode)reader.ReadByte(); return true;
                 case 0x5703: this.ToleranceWindow = reader.ReadArray<byte>(reader.ReadByte, localTag.Size); return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
                 case 0x5702: this.AddChild(reader.ReadReference<MXFObject>("InterpolationDefinition")); return true;
