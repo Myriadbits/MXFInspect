@@ -26,7 +26,7 @@ using System.Diagnostics;
 
 namespace Myriadbits.MXF
 {
-    public class MXFReference<T> : MXFObject, IReference<T> where T: MXFObject
+    public class MXFReference<T> : MXFObject, IReference<T> where T : MXFObject
     {
         private const string CATEGORYNAME = "Reference";
 
@@ -51,9 +51,11 @@ namespace Myriadbits.MXF
 
         public bool ResolveReference(IUUIDIdentifiable obj)
         {
+            // TODO: save the resolve status (=i.e. the return value of this function) into a property,
+            // so that it can be checked by a validator later on (if there are unresolved ones.
             if (Identifier.Equals(obj.GetUUID()))
             {
-                if(obj is T)
+                if (obj is T)
                 {
                     Reference = (T)obj;
                     Debug.WriteLine(string.Format("Reference resolved: {0} -> {1}", this.ToString(), Reference.ToString()));
