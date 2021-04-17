@@ -53,13 +53,13 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [ ] ControlPoint :scroll:
     - [x] DefinitionObject [3/3] *(abstract)*
         - [x] DataDefinition [0/0]
-        - [ ] OperationDefinition :scroll:
-        - [ ] ParameterDefinition :scroll:
-        - [ ] PluginDefinition :scroll:
+        - [x] OperationDefinition [7/7]
+        - [x] ParameterDefinition [2/2]
+        - [ ] PluginDefinition [0/20]
         - [ ] CodecDefinition :scroll:
-        - [ ] ContainerDefinition :scroll:
+        - [x] ContainerDefinition [1/1]
         - [ ] InterpolationDefinition :scroll:
-        - [ ] TaggedValueDefinition :scroll:
+        - [x] TaggedValueDefinition [1/1]
         - [ ] KLVDataDefinition :scroll:
         - [ ] OPDefinition :scroll:
         - [ ] CompressionDefinition :scroll:

@@ -40,34 +40,36 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
         {
+            // TODO replace generic MXFObjects with specialized classes once implemented
+
             switch (localTag.Tag)
             {
                 case 0x2603:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("OperationDefinitions","OperationDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFOperationDefinition>("OperationDefinitions", "OperationDefinitions"));
                     return true;
                 case 0x2604:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("ParameterDefinitions","ParameterDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFParameterDefinition>("ParameterDefinitions", "ParameterDefinitions"));
                     return true;
                 case 0x2605:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("DataDefinitions",	"DataDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFDataDefinition>("DataDefinitions", "DataDefinitions"));
                     return true;
                 case 0x2606:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("PluginDefinitions","PluginDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFObject>("PluginDefinitions", "PluginDefinitions"));
                     return true;
                 case 0x2607:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("CodecDefinitions","CodecDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFObject>("CodecDefinitions", "CodecDefinitions"));
                     return true;
                 case 0x2608:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("ContainerDefinitions","ContainerDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFContainerDefinition>("ContainerDefinitions", "ContainerDefinitions"));
                     return true;
                 case 0x2609:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("InterpolationDefinitions","InterpolationDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFObject>("InterpolationDefinitions", "InterpolationDefinitions"));
                     return true;
                 case 0x260a:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("KLVDataDefinitions","KLVDataDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFObject>("KLVDataDefinitions", "KLVDataDefinitions"));
                     return true;
                 case 0x260b:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("TaggedValueDefinitions","TaggedValueDefinitions")); 
+                    this.AddChild(reader.ReadReferenceSet<MXFObject>("TaggedValueDefinitions", "TaggedValueDefinitions"));
                     return true;
 
             }

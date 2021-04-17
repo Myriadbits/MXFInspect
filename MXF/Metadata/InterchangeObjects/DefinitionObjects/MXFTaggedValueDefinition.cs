@@ -26,17 +26,13 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFOperationGroup : MXFSegment
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014c00")]
+    public class MXFTaggedValueDefinition : MXFDefinitionObject
     {
-        private const string CATEGORYNAME = "OperationGroup";
-
-        [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010102.0530050c.00000000")]
-        public UInt32 BypassOverride { get; private set; }
-
-        public MXFOperationGroup(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "OperationGroup")
+        public MXFTaggedValueDefinition(MXFReader reader, MXFKLV headerKLV)
+            : base(reader, headerKLV)
         {
+            this.MetaDataName = "TaggedValueDefinition";
         }
 
         /// <summary>
@@ -47,11 +43,9 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x0B01: this.AddChild(reader.ReadReference<MXFOperationDefinition>("Operation")); return true;
-                case 0x0B04: this.BypassOverride = reader.ReadUInt32(); return true;
-                case 0x0B05: this.AddChild(reader.ReadReference<MXFSourceReference>("Rendering")); return true;
-                case 0x0B02: this.AddChild(reader.ReadReferenceSet<MXFSegment>("InputSegments", "InputSegment")); return true;
-                case 0x0B03: this.AddChild(reader.ReadReferenceSet<MXFParameter>("Parameters", "Parameter")); return true;
+                case 0x260b:
+                    this.AddChild(reader.ReadReferenceSet<MXFPropertyDefinition>("TaggedValueParentProperties", "TaggedValueParentProperty")); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
