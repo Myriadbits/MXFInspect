@@ -27,83 +27,61 @@ using System.Text;
 
 namespace Myriadbits.MXF
 {
-	public class MXFLocalTag : MXFObject
-	{
-		private const string CATEGORYNAME = "LocalTag";
+    public class MXFLocalTag : MXFObject
+    {
+        private const string CATEGORYNAME = "LocalTag";
 
-		[Category(CATEGORYNAME)]
-		public long DataOffset { get; set; }
-		[Category(CATEGORYNAME)]
-		public UInt16 Tag { get; set; }
-		[Category(CATEGORYNAME)]
-		public UInt16 Size { get; set; }
-		[Category(CATEGORYNAME)]
-		public string Name { get; set; }
-		[Category(CATEGORYNAME)]
-		public MXFKey Key { get; set; }
-		[Category(CATEGORYNAME)]
-		public object Value { get; set; }
-		[Category(CATEGORYNAME)]
-		public object ValueString { get; set; }
+        [Category(CATEGORYNAME)]
+        public long DataOffset { get; set; }
 
-		public MXFLocalTag(MXFReader reader)
-			: base(reader)
-		{
-			this.Tag = reader.ReadUInt16();
-			this.Size = reader.ReadUInt16();
-			this.DataOffset = reader.Position;
-			this.Length = this.Size;
-		}
+        [Category(CATEGORYNAME)]
+        public UInt16 Tag { get; set; }
 
-		/// <summary>
-		/// Parse this tag
-		/// </summary>
-		/// <param name="reader"></param>
-		public void Parse(MXFReader reader)
-		{
-			if (this.Size == 1)
-				this.Value = reader.ReadByte();
-			else if (this.Size == 2)
-				this.Value = reader.ReadUInt16();
-			else if (this.Size == 4)
-				this.Value = reader.ReadUInt32();
-			else if (this.Size == 8)
-				this.Value = reader.ReadUInt64();
-			else
-			{
-				byte[] data = new byte[this.Size];
-				for (int n = 0; n < this.Size; n++)
-					data[n] = reader.ReadByte();
-				this.Value = data;
-			}
-		}
+        [Category(CATEGORYNAME)]
+        public UInt16 Size { get; set; }
 
-		public override string ToString()
-		{
-			string name = this.Name;
-			if (string.IsNullOrEmpty(name))
-				name = "<Unknown localtag>";
+        [Category(CATEGORYNAME)]
+        public MXFKey Key { get; set; }
 
-			if (this.Value != null)
-			{
-				Type valueType = this.Value.GetType();
-				if (valueType.IsArray)
-				{
-					byte[] data = this.Value as byte[];
-					StringBuilder hex = new StringBuilder();
-					foreach (byte b in data)
-						hex.AppendFormat("{0:x2}, ", b);
-					//this.ValueString = hex.ToString();
-					this.ValueString = System.Text.Encoding.BigEndianUnicode.GetString(data);
-					return string.Format("{0} 0x{1:X4} = {2}", name, this.Tag, hex.ToString());
-				}
-				else
-				{
-					return string.Format("{0} 0x{1:X4} = {2}", name, this.Tag, this.Value);
-				}
-			}
-			return string.Format("{0} 0x{1:X4} = {2}", name, this.Tag, this.Value);
-		}
+        [Category(CATEGORYNAME)]
+        public object Value { get; set; }
 
-	}
+
+        public MXFLocalTag(MXFReader reader)
+            : base(reader)
+        {
+            this.Tag = reader.ReadUInt16();
+            this.Size = reader.ReadUInt16();
+            this.DataOffset = reader.Position;
+            this.Length = this.Size;
+        }
+
+        /// <summary>
+        /// Parse this tag
+        /// </summary>
+        /// <param name="reader"></param>
+        public void Parse(MXFReader reader)
+        {
+            if (this.Size == 1)
+                this.Value = reader.ReadByte();
+            else if (this.Size == 2)
+                this.Value = reader.ReadUInt16();
+            else if (this.Size == 4)
+                this.Value = reader.ReadUInt32();
+            else if (this.Size == 8)
+                this.Value = reader.ReadUInt64();
+            else
+            {
+                this.Value = reader.ReadArray(reader.ReadByte, this.Size);
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"LocalTag 0x{this.Tag:X4} -> {this.Key.Name ?? "<Unknown tag>"} [len {this.Size}]");
+            return sb.ToString();
+        }
+
+    }
 }
