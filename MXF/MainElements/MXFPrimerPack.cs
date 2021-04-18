@@ -36,6 +36,7 @@ namespace Myriadbits.MXF
 
 		[Browsable(false)]
 		private Dictionary<UInt16, MXFEntryPrimer> m_PrimerKeys = null;
+		
 		[Browsable(false)]
 		public Dictionary<UInt16, MXFEntryPrimer> AllKeys { get { return m_PrimerKeys; } }
 
