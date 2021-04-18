@@ -63,7 +63,7 @@ namespace Myriadbits.MXF
                     this.AddChild(reader.ReadReferenceSet<MXFContainerDefinition>("ContainerDefinitions", "ContainerDefinitions"));
                     return true;
                 case 0x2609:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("InterpolationDefinitions", "InterpolationDefinitions"));
+                    this.AddChild(reader.ReadReferenceSet<MXFInterpolationDefinition>("InterpolationDefinitions", "InterpolationDefinitions"));
                     return true;
                 case 0x260a:
                     this.AddChild(reader.ReadReferenceSet<MXFObject>("KLVDataDefinitions", "KLVDataDefinitions"));

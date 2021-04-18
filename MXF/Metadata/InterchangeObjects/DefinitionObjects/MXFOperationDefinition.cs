@@ -69,8 +69,7 @@ namespace Myriadbits.MXF
                     return true;
                 case 0x1e06: OperationCategory = reader.ReadULKey(); return true;
                 case 0x1e09:
-                    // TODO replace generic MXFObject with class ParameterDefinition once implemented
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("OperationParametersDefined", "OperationParametersDefined"));
+                    this.AddChild(reader.ReadReferenceSet<MXFParameterDefinition>("OperationParametersDefined", "OperationParametersDefined"));
                     return true;
                 case 0x1e03:
                     // TODO replace generic MXFObject with class KLVData once implemented

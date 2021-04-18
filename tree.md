@@ -58,9 +58,9 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [ ] PluginDefinition [0/20]
         - [ ] CodecDefinition :scroll:
         - [x] ContainerDefinition [1/1]
-        - [ ] InterpolationDefinition :scroll:
+        - [x] InterpolationDefinition [0/0]
         - [x] TaggedValueDefinition [1/1]
-        - [ ] KLVDataDefinition :scroll:
+        - [x] KLVDataDefinition [2/2]
         - [ ] OPDefinition :scroll:
         - [ ] CompressionDefinition :scroll:
     - [x] Dictionary [9/9]
