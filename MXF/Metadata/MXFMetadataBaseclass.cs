@@ -39,19 +39,17 @@ namespace Myriadbits.MXF
         public string MetaDataName { get; set; }
 
         public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "MetaData", KeyType.MetaData)
+            : base(headerKLV, "", KeyType.MetaData)
         {
             this.m_eType = MXFObjectType.Meta;
-            this.MetaDataName = "<unknown>";
             Initialize(reader);
         }
 
         public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV, string metaDataName)
-            : base(headerKLV, "MetaData", KeyType.MetaData)
+            : base(headerKLV, "", KeyType.MetaData)
         {
             this.m_eType = MXFObjectType.Meta;
             this.MetaDataName = metaDataName;
-            this.Key.Name = metaDataName; // TODO Correct??
             Initialize(reader);
         }
 
@@ -96,7 +94,7 @@ namespace Myriadbits.MXF
         /// <param name="tag"></param>
         private void AddRefKeyFromPrimerPack(MXFLocalTag tag)
         {
-            if (this.Partition != null && this.Partition.PrimerKeys != null)
+            if (this.Partition?.PrimerKeys != null)
             {
                 if (this.Partition.PrimerKeys.ContainsKey(tag.Tag))
                 {
@@ -116,13 +114,13 @@ namespace Myriadbits.MXF
         }
 
 
-		/// <summary>
-		/// Called after all local tags have been processed
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected virtual void PostInitialize()
-		{
-		}
+        /// <summary>
+        /// Called after all local tags have been processed
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected virtual void PostInitialize()
+        {
+        }
 
         /// <summary>
         /// Display some output
@@ -130,10 +128,7 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(this.MetaDataName))
-                return string.Format("MetaData: {0} [len {1}]", this.MetaDataName, this.Length);
-            else
-                return string.Format("{0} [len {1}]", this.MetaDataName, this.Length);
+            return string.Format("{0} [len {1}]", this.MetaDataName, this.Length);
         }
     }
 }
