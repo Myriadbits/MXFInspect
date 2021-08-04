@@ -43,6 +43,20 @@
       <FileName>MXFNamedObject.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Myriadbits.MXF.MXFLocalSet">
+    <Position X="2.75" Y="17.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAEAAABAAAAgAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Metadata\MXFLocalSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFMetadataBaseclass">
+    <Position X="6.25" Y="17.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAABACAAAAAQAEAAABAAAAgAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Metadata\MXFMetadataBaseclass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="Myriadbits.MXF.INode&lt;T&gt;">
     <Position X="4" Y="1" Width="1.5" />
     <TypeIdentifier>
@@ -54,7 +68,7 @@
     <Position X="1.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Identifiers\IReference.cs</FileName>
+      <FileName>IReference.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Myriadbits.MXF.IResolvable">

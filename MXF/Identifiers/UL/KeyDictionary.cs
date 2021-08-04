@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
+using System.Text;
 
 namespace Myriadbits.MXF.Identifiers
 {
@@ -32,7 +33,7 @@ namespace Myriadbits.MXF.Identifiers
     {
         public static Dictionary<MXFShortKey, KeyDescription> GetKeys()
         {
-            var dict = new Dictionary<MXFShortKey, KeyDescription>();
+            var dict = new Dictionary<MXFShortKey, KeyDescription>(new ShortKeyComparer());
 
             //Parse SMPTE Labels register
 
@@ -64,9 +65,13 @@ namespace Myriadbits.MXF.Identifiers
             foreach (var e in regEntries.Descendants(ns + "Entry"))
             {
                 var entry = ParseEntry(ns, e);
-                if (entry.HasValue)
+                if (entry.HasValue )
                 {
-                    dict.Add(entry.Value);
+                    bool v = dict.TryAdd(entry.Value.Key, entry.Value.Value);
+                    if(v == false)
+                    {
+
+                    }
                 }
             }
         }
@@ -94,11 +99,38 @@ namespace Myriadbits.MXF.Identifiers
 
         public static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
         {
-            const int hexBase = 16;
-            string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
-            UInt64 value1 = Convert.ToUInt64(byteString.Substring(0, 16), hexBase);
-            UInt64 value2 = Convert.ToUInt64(byteString.Substring(16, 16), hexBase);
-            return new MXFShortKey(value1, value2);
+            var bytes = GetByteArrayFromSMPTEULString(smpteString);
+            return new MXFShortKey(bytes);
         }
+
+        public static byte[] GetByteArrayFromSMPTEULString(string smpteString)
+        {
+            const int hexBase = 16;
+            byte[] retVal = new byte[16];
+            string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
+            for (int i = 0, j = 0; j < byteString.Length - 2; i++, j += 2)
+            {
+                retVal[i] = Convert.ToByte(byteString.Substring(j, 2), hexBase);
+            }
+            return retVal;
+        }
+
+        public class ShortKeyComparer : IEqualityComparer<MXFShortKey>
+        {
+            // if the keys to compare are of the same category (meaning the same hash) compare
+            // whether the byte sequence is equal
+            public bool Equals(MXFShortKey x, MXFShortKey y)
+            {
+                return x == y;
+            }
+
+            public int GetHashCode(MXFShortKey obj)
+            {
+                return 5;
+            }
+        }
+
+
+
     }
 }
