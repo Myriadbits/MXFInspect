@@ -28,7 +28,7 @@ namespace Myriadbits.MXF
 {
     // LensUnitAcquisitionMetadata 
     // urn:smpte:ul:060e2b34.027f0101.0c020101.01010000
-
+    // TODO add ULGroup attribute
     // TODO add InstanceID property and check the inheritance tree, does it really derive from metadatabase class?
     public class MXFLensUnitAquisitionMetadata : MXFMetadataBaseclass
     {

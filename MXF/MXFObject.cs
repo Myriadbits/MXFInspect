@@ -43,6 +43,7 @@ namespace Myriadbits.MXF
         Special
     };
 
+    // TODO remove log type
     public enum MXFLogType
     {
         Info,
@@ -158,6 +159,7 @@ namespace Myriadbits.MXF
             return flatList.FirstOrDefault();
         }
 
+        // TODO remove log methods
         public void LogInfo(string format, params object[] args) { this.Log(MXFLogType.Info, format, args); }
         public void LogWarning(string format, params object[] args) { this.Log(MXFLogType.Warning, format, args); }
         public void LogError(string format, params object[] args) { this.Log(MXFLogType.Error, format, args); }
