@@ -210,5 +210,17 @@ namespace Myriadbits.MXFInspect
 
 			DisplayFileInfo();
 		}
-	}
+
+        private void tlvResults_SelectionChanged(object sender, EventArgs e)
+        {
+			var selResult = tlvResults.SelectedObject as MXFValidationResult;
+
+			if(selResult?.Object != null)
+            {
+				var frmMain = this.Owner as FormMain;
+				frmMain.ActiveView.RevealAndSelect(selResult?.Object);
+
+			}
+        }
+    }
 }

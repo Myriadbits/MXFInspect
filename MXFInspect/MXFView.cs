@@ -280,6 +280,19 @@ namespace Myriadbits.MXFInspect
 
         }
 
+        public void RevealAndSelect(MXFObject obj)
+        {
+
+            if (PhysicalViewShown)
+            {
+                tlvPhysical.RevealAndSelectObject(obj);
+            }
+            else
+            {
+                tlvLogical.RevealAndSelectObject(obj.LogicalWrapper);
+            }
+        }
+
         /// <summary>
         /// Apply all user settings
         /// </summary>

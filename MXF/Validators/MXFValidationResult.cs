@@ -54,8 +54,9 @@ namespace Myriadbits.MXF
 		public string Category { get; set; }
 		public MXFValidationState State { get; set; }
 		public string Result { get; set; }
+        public MXFObject Object { get; set; }
 
-		public MXFValidationResult(string category)
+        public MXFValidationResult(string category)
 		{
 			this.Category = category;
 		}

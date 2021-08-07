@@ -39,11 +39,12 @@ namespace Myriadbits.MXF
 											.Where(klv => klv is MXFLocalSet || klv.Key.IsKnown == false)
 											.OrderBy(klv => klv.Offset);
 
-			foreach (var unkownKLV in klvWithUnknownKeys)
+			foreach (var klvUnknownKey in klvWithUnknownKeys)
             {
 				MXFValidationResult valResult = new MXFValidationResult("Keys");
-                valResult.SetWarning(string.Format("Unknown key {0} @ {1}.", unkownKLV.Key, unkownKLV.Offset));
-				results.Add(valResult); // And directly add the results
+                valResult.SetWarning(string.Format("Unknown key {0} @ {1}.", klvUnknownKey.Key, klvUnknownKey.Offset));
+				valResult.Object = klvUnknownKey;
+				results.Add(valResult);
 			}
 
 			LogInfo("MXF Key check completed in {0} msec", sw.ElapsedMilliseconds);

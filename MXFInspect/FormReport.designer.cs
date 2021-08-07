@@ -32,9 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReport));
             this.bntClose = new System.Windows.Forms.Button();
             this.tlvResults = new BrightIdeasSoftware.TreeListView();
-            this.chState = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.chCategory = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.chResult = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.chState = new BrightIdeasSoftware.OLVColumn();
+            this.chCategory = new BrightIdeasSoftware.OLVColumn();
+            this.chResult = new BrightIdeasSoftware.OLVColumn();
             this.imageListResult = new System.Windows.Forms.ImageList(this.components);
             this.txtGeneralInfo = new System.Windows.Forms.TextBox();
             this.txtSum = new System.Windows.Forms.TextBox();
@@ -73,7 +73,6 @@
             this.tlvResults.HideSelection = false;
             this.tlvResults.Location = new System.Drawing.Point(12, 119);
             this.tlvResults.Name = "tlvResults";
-            this.tlvResults.OwnerDraw = true;
             this.tlvResults.RowHeight = 19;
             this.tlvResults.ShowGroups = false;
             this.tlvResults.ShowItemToolTips = true;
@@ -83,6 +82,7 @@
             this.tlvResults.UseCompatibleStateImageBehavior = false;
             this.tlvResults.View = System.Windows.Forms.View.Details;
             this.tlvResults.VirtualMode = true;
+            this.tlvResults.SelectionChanged += new System.EventHandler(this.tlvResults_SelectionChanged);
             // 
             // chState
             // 
@@ -105,6 +105,7 @@
             // 
             // imageListResult
             // 
+            this.imageListResult.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageListResult.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListResult.ImageStream")));
             this.imageListResult.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListResult.Images.SetKeyName(0, "Error");
