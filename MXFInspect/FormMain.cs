@@ -232,7 +232,7 @@ namespace Myriadbits.MXFInspect
         private void tsmiAbout_Click(object sender, EventArgs e)
         {
             AboutForm about = new AboutForm();
-            about.ShowDialog();
+            about.ShowDialog(this);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Myriadbits.MXFInspect
             if (this.ActiveView != null)
             {
                 FormReport fr = new FormReport(this.ActiveView.File);
-                fr.ShowDialog();
+                fr.ShowDialog(this);
             }
         }
 
