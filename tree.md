@@ -50,7 +50,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
                 - [x] TimecodeStream12M [1/1]
             - [x] Transition [2/2] 
     - [x] ContentStorage [2/2]
-    - [ ] ControlPoint :scroll:
+    - [x] ControlPoint [3/3]
     - [x] DefinitionObject [3/3] *(abstract)*
         - [x] DataDefinition [0/0]
         - [x] OperationDefinition [7/7]
