@@ -30,14 +30,15 @@ namespace Myriadbits.MXF.Identifiers
     // over 1000 in the static constructor => so better performance?
     public struct MXFShortKey
     {
-        readonly UInt64 Key1;
-        readonly UInt64 Key2;
+        public readonly UInt64 Key1;
+        public readonly UInt64 Key2;
+        public readonly byte[] array;
 
-        public MXFShortKey(UInt64 key1, UInt64 key2)
-        {
-            this.Key1 = key1;
-            this.Key2 = key2;
-        }
+        //public MXFShortKey(UInt64 key1, UInt64 key2)
+        //{
+        //    this.Key1 = key1;
+        //    this.Key2 = key2;
+        //}
 
         public MXFShortKey(byte[] data)
         {
@@ -45,6 +46,8 @@ namespace Myriadbits.MXF.Identifiers
             // Change endianess
             this.Key1 = 0;
             this.Key2 = 0;
+            this.array = data;
+
             if (data.Length == 16)
             {
                 byte[] datar = new byte[16];
@@ -58,6 +61,25 @@ namespace Myriadbits.MXF.Identifiers
         public override string ToString()
         {
             return string.Format(string.Format("{0:X16}.{1:X16}", this.Key1, this.Key2));
+        }
+
+        public static bool operator ==(MXFShortKey first, MXFShortKey second)
+        {
+            for (int i = 0; i < Math.Min(first.array.Length, second.array.Length); i++)
+            {
+                // TODO: not really good way to bypass klv syntaxes (i.e. 7F == 06 or 53)
+                if (i != 5 && first.array[i] != second.array[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator !=(MXFShortKey first, MXFShortKey second)
+        {
+            // or !Equals(first, second), but we want to reuse the existing comparison 
+            return !(first == second);
         }
 
     };
