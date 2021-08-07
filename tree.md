@@ -56,7 +56,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [x] OperationDefinition [7/7]
         - [x] ParameterDefinition [2/2]
         - [ ] PluginDefinition [0/20]
-        - [ ] CodecDefinition :scroll:
+        - [ ] CodecDefinition [0/2]
         - [x] ContainerDefinition [1/1]
         - [x] InterpolationDefinition [0/0]
         - [x] TaggedValueDefinition [1/1]
