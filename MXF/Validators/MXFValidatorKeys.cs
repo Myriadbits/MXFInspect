@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
 
 			var klvWithUnknownKeys = this.File.Descendants()
 											.OfType<MXFKLV>()
-											.Where(klv => string.IsNullOrEmpty(klv.Key.Name))
+											.Where(klv => klv is MXFLocalSet || klv.Key.IsKnown == false)
 											.OrderBy(klv => klv.Offset);
 
 			foreach (var unkownKLV in klvWithUnknownKeys)
