@@ -5,23 +5,28 @@ This is a fork of the wonderful project [MXF Inspect](https://github.com/Myriadb
 
 **Improvements:**
 
-- The MXF library project now uses .NET Standard 2.0, MXFInspect has been brought to .NET Framework 4.6.1
-- Addition of new metadata classes (e.g. MPEGPictureEssenceDescriptor, JPEG2000PictureSubDescriptor). A hierarchical inheritance tree of MXF classes can be found [here](https://registry.smpte-ra.org/view/published/Groups_inheritance_tree.html). See this [TODO list](/tree.md) for the classes that still have to be implemented. 
-- New MXF types (e.g. CodedContentScanningKind, ProductVersion, FrameLayout, Emphasis). A list of MXF types can be found [here](https://registry.smpte-ra.org/view/published/ul_hierarchy.html?rgr=t)
-- Parsing of MXF File Version (e.g. 1.2, 1.3)
+- The project has been migrated to .NET5, thus allowing MXFInspect to be shipped as a single-file-application without any dependencies on installed .NET frameworks
+- Further SMPTE Standards Implementation
+  - Addition of new metadata classes (e.g. MPEGPictureEssenceDescriptor, JPEG2000PictureSubDescriptor). A hierarchical inheritance tree of MXF classes can be found [here](https://registry.smpte-ra.org/view/published/Groups_inheritance_tree.html). See this [TODO list](/tree.md) for the classes that still have to be implemented. 
+  - New MXF types (e.g. CodedContentScanningKind, ProductVersion, FrameLayout, Emphasis). A list of MXF types can be found [here](https://registry.smpte-ra.org/view/published/ul_hierarchy.html?rgr=t)
+  - Parsing of MXF File Version (e.g. 1.2, 1.3)
+- drag and drop of MXF file in order to open it
+- show data offset in hexadecimal
+
 - Overall code improvement (using new C# language features)
+  - MXF library code refactoring
   - use of region statements (e.g. for license preface in source files)
   - use of linq whenever possibile
   - gentle use of extension methods
   - fix typos, inconsistencies, doc
   - code base clean up (clean *.csproj file, remove unused files, polish .gitignore)
-
-**Work in progress:**
-- implementation of validators, that check whether a MXF file conforms to the [ARD ZDF profiles](https://www.irt.de/en/publications/technical-guidelines/technical-guidelines-download/mxf)
-- drag and drop of MXF file in order to open it
-- show data offset in hexadecimal
-  
+ 
 However, there is still a long **TODO list:**
+- migration to the coming .NET6
+- implement additional/more thorough file checks/validations such as:
+  - Is KAG Size consistent?
+  - Is Edit Unit Size constant?
+- implementation of validators, that check whether a MXF file conforms to the [ARD ZDF profiles](https://www.irt.de/en/publications/technical-guidelines/technical-guidelines-download/mxf)
 - true MDI application, where multiple MXF files can be opened side-by-side
 - pimp up the property grid (colors, hyperlinks for UMIDs)
 - use a better control for the hex view 
@@ -33,10 +38,6 @@ However, there is still a long **TODO list:**
   - add general file info dialog
   - add report (in xml) for conformance check
   - add checksum to file
-- implement additional/more thorough file checks such as:
-  - Is KAG Size consistent?
-  - Is Edit Unit Size constant?
-  - ...
 - [Future Work](#Future-Work) of original project
 
 
