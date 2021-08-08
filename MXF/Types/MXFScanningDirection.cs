@@ -26,7 +26,7 @@ using System;
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.02010128.00000000
+    [ULType("urn:smpte:ul:060e2b34.01040101.02010128.00000000")]
     public enum MXFScanningDirection
     {
         LeftToRightTopToBottom = 0x00,

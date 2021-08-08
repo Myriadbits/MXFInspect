@@ -27,7 +27,7 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
 	//namespace: http://www.smpte-ra.org/reg/2003/2012 	
-	//urn:smpte:ul:060e2b34.01040101.02010101.00000000
+	[ULType("urn:smpte:ul:060e2b34.01040101.02010101.00000000")]
 
 	public enum MXFProductReleaseType
 	{
@@ -40,8 +40,8 @@ namespace Myriadbits.MXF
 	}
 
 	//namespace: http://www.smpte-ra.org/reg/2003/2012 	
-	//urn:smpte:ul:060e2b34.01040101.03010200.00000000
 	[TypeConverter(typeof(ExpandableObjectConverter))]
+	[ULType("urn:smpte:ul:060e2b34.01040101.03010200.00000000")]
 	public class MXFProductVersion 
 	{
 		private const string CATEGORYNAME = "ProductVersion";

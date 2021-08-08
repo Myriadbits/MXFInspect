@@ -26,7 +26,7 @@ using System;
 namespace Myriadbits.MXF
 {
 	//namespace: http://www.smpte-ra.org/reg/2003/2012 	
-	//urn:smpte:ul:060e2b34.01040101.03010100.00000000
+	[ULType("urn:smpte:ul:060e2b34.01040101.03010100.00000000")]
 	public class MXFRational : IEquatable<MXFRational>
 	{
 		public UInt32 Num { get; set; }

@@ -34,10 +34,8 @@ namespace Myriadbits.MXF
         public bool IsConcrete { get; set; } = true;
         public int NumberOfElements { get; set; }
 
-        public ULGroupAttribute(string smpteULString)
+        public ULGroupAttribute(string smpteULString) : base(smpteULString)
         {
-            SMPTEULString = smpteULString;
-            ShortKey = KeyDictionary.GetShortKeyFromSMPTEULString(smpteULString);
         }
     }
 }

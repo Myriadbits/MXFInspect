@@ -24,8 +24,7 @@
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.02010132.00000000
-
+    [ULType("urn:smpte:ul:060e2b34.01040101.02010132.00000000")]
     public enum MXFAutoFocusSensingAreaSetting
     {
         ManualFocusMode = 0x00,

@@ -26,7 +26,7 @@ using System;
 namespace Myriadbits.MXF
 {
     // http://www.smpte-ra.org/reg/2003/2012 	
-    // urn:smpte:ul:060e2b34.01040101.01012001.00000000
+    [ULType("urn:smpte:ul:060e2b34.01040101.01012001.00000000")]
     public struct MXFPosition
     {
         private UInt64 _Value;

@@ -21,20 +21,39 @@
 //
 #endregion
 
-using System;
 
 namespace Myriadbits.MXF
 {
     //namespace http://www.smpte-ra.org/reg/2003/2012 	
-    [ULType("urn:smpte:ul:060e2b34.01040101.03010400.00000000")]
-    public class MXFRGBAComponent
+    [ULType("urn:smpte:ul:060e2b34.01040101.0201010e.00000000")]
+    public enum MXFRGBAComponentKind
     {
-        public MXFRGBAComponentKind Code { get; set; }
-        public byte ComponentSize { get; set; }
-
-        public override string ToString()
-        {
-            return string.Format("({0} - {1})", Code, ComponentSize);
-        }
+        CompNone = 48,
+        CompAlpha = 65,
+        CompBlue = 66,
+        CompFill = 70,
+        CompGreen = 71,
+        CompPalette = 80,
+        CompRed = 82,
+        CompNull = 0,
+        CompRedLSBs = 114,
+        CompGreenLSBs = 103,
+        CompBlueLSBs = 98,
+        CompAlphaLSBs = 97,
+        CompColorDifferenceU = 85,
+        CompColorDifferenceV = 86,
+        CompComposite = 87,
+        CompNonCoSitedLuma = 88,
+        CompLuma = 89,
+        CompDepth = 90,
+        CompColorDifferenceULSBs = 117,
+        CompColorDifferenceVLSBs = 118,
+        CompCompositeLSBs = 119,
+        CompNonCoSitedLumaLSBs = 120,
+        CompLumaLSBs = 121,
+        CompDepthLSBs = 122,
+        CompColorX = 216,
+        CompColorY = 217,
+        CompColorZ = 218,
     }
 }

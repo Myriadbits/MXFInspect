@@ -29,10 +29,8 @@ namespace Myriadbits.MXF
     
     public class ULElementAttribute : ULBaseAttribute
     {
-        public ULElementAttribute(string smpteULString)
+        public ULElementAttribute(string smpteULString) : base(smpteULString)
         {
-            SMPTEULString = smpteULString;
-            ShortKey = KeyDictionary.GetShortKeyFromSMPTEULString(smpteULString);
         }
     }
 }

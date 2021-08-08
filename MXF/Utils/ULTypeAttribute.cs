@@ -21,20 +21,19 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 
 namespace Myriadbits.MXF
 {
-    // http://www.smpte-ra.org/reg/2003/2012 	
-    [ULType("urn:smpte:ul:060e2b34.01040101.03010c00.00000000")]
-    public class MXFColorPrimary
+    // marker attribute for metadata groups that do not contain any property
+    [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
+    public sealed class ULTypeAttribute : ULBaseAttribute
     {
-        public UInt16 XColorCoordinate { get; set; }
-        public UInt16 YColorCoordinate { get; set; }
+        public bool Deprecated { get; set; } = false;
 
-        public override string ToString()
+        public ULTypeAttribute(string smpteULString) : base(smpteULString)
         {
-            return string.Format("({0},{1})", XColorCoordinate, YColorCoordinate);
         }
     }
 }
