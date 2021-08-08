@@ -56,13 +56,13 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [x] OperationDefinition [7/7]
         - [x] ParameterDefinition [2/2]
         - [ ] PluginDefinition [0/20]
-        - [ ] CodecDefinition [0/2]
+        - [x] CodecDefinition [2/2]
         - [x] ContainerDefinition [1/1]
         - [x] InterpolationDefinition [0/0]
         - [x] TaggedValueDefinition [1/1]
         - [x] KLVDataDefinition [2/2]
-        - [ ] OPDefinition :scroll:
-        - [ ] CompressionDefinition :scroll:
+        - [x] OPDefinition [0/0]
+        - [x] CompressionDefinition [0/0]
     - [x] Dictionary [9/9]
     - [x] EssenceData [9/9] *(A05 EssenceContainerData)*
     - [x] EssenceDescriptor [2/2] *(abstract)* *(B02 GenericDescriptor)*

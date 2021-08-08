@@ -40,8 +40,6 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
         {
-            // TODO replace generic MXFObjects with specialized classes once implemented
-
             switch (localTag.Tag)
             {
                 case 0x2603:
@@ -57,7 +55,7 @@ namespace Myriadbits.MXF
                     this.AddChild(reader.ReadReferenceSet<MXFObject>("PluginDefinitions", "PluginDefinitions"));
                     return true;
                 case 0x2607:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("CodecDefinitions", "CodecDefinitions"));
+                    this.AddChild(reader.ReadReferenceSet<MXFCodecDefinition>("CodecDefinitions", "CodecDefinitions"));
                     return true;
                 case 0x2608:
                     this.AddChild(reader.ReadReferenceSet<MXFContainerDefinition>("ContainerDefinitions", "ContainerDefinitions"));
