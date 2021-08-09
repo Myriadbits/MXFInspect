@@ -325,7 +325,7 @@ namespace Myriadbits.MXF
                 klv.Key.RegistryDesignator == ULRegistries.LocalSet_2Bytes_2Bytes)
             {
                 // TODO we need something that make the object that is not found in dict distinctable 
-                return (MXFKLV)Activator.CreateInstance(typeof(MXFLocalSet), reader, klv); ;
+                return (MXFKLV)Activator.CreateInstance(typeof(MXFLocalSet), reader, klv);
             }
 
             return klv;
