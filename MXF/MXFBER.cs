@@ -30,7 +30,7 @@ namespace Myriadbits.MXF
         Indefinite
     }
 
-
+    // TODO consider using a struct. Needs benchmarking
     public class MXFBER
     {
         public BERForm Form { get; private set; }
