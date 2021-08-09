@@ -63,6 +63,17 @@ namespace Myriadbits.MXF.Identifiers
             return string.Format(string.Format("{0:X16}.{1:X16}", this.Key1, this.Key2));
         }
 
+
+        public override bool Equals(object obj)
+        {
+            return obj is MXFShortKey sk && sk == this;
+        }
+
+        public override int GetHashCode()
+        {
+            return 5;
+        }
+
         public static bool operator ==(MXFShortKey first, MXFShortKey second)
         {
             for (int i = 0; i < Math.Min(first.array.Length, second.array.Length); i++)
@@ -82,5 +93,4 @@ namespace Myriadbits.MXF.Identifiers
             return !(first == second);
         }
 
-    };
-}
+    }}
