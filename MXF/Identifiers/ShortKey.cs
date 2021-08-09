@@ -25,7 +25,7 @@ using System;
 
 namespace Myriadbits.MXF.Identifiers
 {
-    // TODO why as struct?
+    // TODO why as struct? Probably performance
     // short keys implemented as struct, as there are loaded
     // over 1000 in the static constructor => so better performance?
     public struct MXFShortKey
@@ -33,12 +33,6 @@ namespace Myriadbits.MXF.Identifiers
         public readonly UInt64 Key1;
         public readonly UInt64 Key2;
         public readonly byte[] array;
-
-        //public MXFShortKey(UInt64 key1, UInt64 key2)
-        //{
-        //    this.Key1 = key1;
-        //    this.Key2 = key2;
-        //}
 
         public MXFShortKey(byte[] data)
         {
@@ -78,8 +72,13 @@ namespace Myriadbits.MXF.Identifiers
         {
             for (int i = 0; i < Math.Min(first.array.Length, second.array.Length); i++)
             {
-                // TODO: not really good way to bypass klv syntaxes (i.e. 7F == 06 or 53)
-                if (i != 5 && first.array[i] != second.array[i])
+                // TODO: not really good way:
+                // bypass klv syntaxes (i.e. 7F == 06 or 53) and the UL version number 
+                if (i == 5 || i == 7)
+                {
+                    continue;
+                }
+                else if (first.array[i] != second.array[i])
                 {
                     return false;
                 }
@@ -93,4 +92,5 @@ namespace Myriadbits.MXF.Identifiers
             return !(first == second);
         }
 
-    }}
+    }
+}
