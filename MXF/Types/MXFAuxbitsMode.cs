@@ -26,7 +26,7 @@ using System;
 namespace Myriadbits.MXF
 {
     //namespace: http://www.smpte-ra.org/reg/2003/2012 	
-    [ULType("ul:060e2b34.01040101.02010124.00000000")]
+    [ULType("urn:smpte:ul:060e2b34.01040101.02010124.00000000")]
     public enum MXFAuxBitsMode
     {
         NotDefined = 0x00,
