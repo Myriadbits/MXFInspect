@@ -70,7 +70,7 @@ namespace Myriadbits.MXF.Identifiers
                     bool v = dict.TryAdd(entry.Value.Key, entry.Value.Value);
                     if(v == false)
                     {
-
+                        // TODO: raise an exception!
                     }
                 }
             }
