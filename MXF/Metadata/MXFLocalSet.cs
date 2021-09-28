@@ -33,19 +33,12 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFLocalSet : MXFKLV
     {
-        public MXFLocalSet(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "", KeyType.MetaData)
+        public MXFLocalSet(MXFReader reader, MXFKLV headerKLV, string metaDataName)
+            : base(headerKLV, metaDataName, KeyType.MetaData)
         {
             this.m_eType = MXFObjectType.Meta;
             ParseTags(reader);
         }
-
-        //public MXFLocalSet(MXFReader reader, MXFKLV headerKLV, string metaDataName)
-        //    : base(headerKLV, "", KeyType.PackageMetaDataSet)
-        //{
-        //    this.m_eType = MXFObjectType.Meta;
-        //    ParseTags(reader);
-        //}
 
         /// <summary>
         /// 
@@ -116,10 +109,6 @@ namespace Myriadbits.MXF
         {
         }
 
-        /// <summary>
-        /// Display some output
-        /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("{0} [len {1}]", this.Key, this.Length);

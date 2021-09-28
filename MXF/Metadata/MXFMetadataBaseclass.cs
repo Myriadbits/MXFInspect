@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
     /// <summary>
     /// Meta data class (might) consists of multiple local tags
     /// </summary>
-    public class MXFMetadataBaseclass : MXFKLV
+    public class MXFMetadataBaseclass : MXFLocalSet
     {
         private const string CATEGORYNAME = "Metadata";
 
@@ -38,94 +38,12 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public string MetaDataName { get; set; }
 
-        public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "", KeyType.MetaData)
-        {
-            this.m_eType = MXFObjectType.Meta;
-            Initialize(reader);
-        }
-
         public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV, string metaDataName)
-            : base(headerKLV, "", KeyType.MetaData)
+            : base(reader, headerKLV, metaDataName)
         {
-            this.m_eType = MXFObjectType.Meta;
             this.MetaDataName = metaDataName;
-            Initialize(reader);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="reader"></param>
-        private void Initialize(MXFReader reader)
-        {
-            // Make sure we read at the data position
-            reader.Seek(this.DataOffset);
-
-            // Read all local tags
-            long klvEnd = this.DataOffset + this.Length;
-            while (reader.Position + 4 < klvEnd)
-            {
-                MXFLocalTag tag = new MXFLocalTag(reader);
-                long next = tag.DataOffset + tag.Size;
-                AddRefKeyFromPrimerPack(tag);
-
-                // Allow derived classes to handle the data
-                if (!ParseLocalTag(reader, tag))
-                {
-                    // Not processed, use default
-                    tag.Parse(reader);
-
-                    // Add to the collection
-                    AddChild(tag);
-                }
-
-                reader.Seek(next);
-            }
-
-            // Allow derived classes to do some final work
-            PostInitialize();
-        }
-
-        /// <summary>
-        ///	Tries to find the local tag in the primer pack and if so,
-        ///	adds the referring key to the tag.
-        /// </summary>
-        /// <param name="tag"></param>
-        private void AddRefKeyFromPrimerPack(MXFLocalTag tag)
-        {
-            if (this.Partition?.PrimerKeys != null)
-            {
-                if (this.Partition.PrimerKeys.ContainsKey(tag.Tag))
-                {
-                    MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
-                    tag.Key = entry.AliasUID.Key;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Allow derived classes to process the local tag
-        /// </summary>
-        /// <param name="localTag"></param>
-        protected virtual bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-        {
-            return false;
-        }
-
-
-        /// <summary>
-        /// Called after all local tags have been processed
-        /// </summary>
-        /// <param name="localTag"></param>
-        protected virtual void PostInitialize()
-        {
-        }
-
-        /// <summary>
-        /// Display some output
-        /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("{0} [len {1}]", this.MetaDataName, this.Length);
