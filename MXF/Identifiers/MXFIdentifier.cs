@@ -76,9 +76,9 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("{");
+            sb.Append('{');
             sb.Append(string.Join("-", this.byteArray.Select(b => string.Format("{0:X2}", b))));
-            sb.Append("}");
+            sb.Append('}');
             return sb.ToString();
         }
 

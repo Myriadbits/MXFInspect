@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
             {
                 if (n == 4 || n == 6 || n == 8 || n == 10)
                 {
-                    sb.Append("-");
+                    sb.Append('-');
                 }
 
                 sb.Append(string.Format("{0:X2}", bytes[n]));

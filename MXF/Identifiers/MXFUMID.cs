@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
             {
                 if (n > 0)
                 {
-                    sb.Append(".");
+                    sb.Append('.');
                 }
 
                 sb.Append(string.Format("{0:X2}", bytes[n]));
