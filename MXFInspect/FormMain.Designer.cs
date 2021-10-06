@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tslActivity = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tslSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslOffsetStyle = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslPartialLoading = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslVersion = new System.Windows.Forms.ToolStripStatusLabel();
@@ -72,7 +73,6 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSettings = new System.Windows.Forms.ToolStripButton();
             this.tabMain = new System.Windows.Forms.TabControl();
-            this.tslSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip.SuspendLayout();
             this.menuMain.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -97,16 +97,22 @@
             this.tslActivity.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslActivity.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
             this.tslActivity.Name = "tslActivity";
-            this.tslActivity.Size = new System.Drawing.Size(327, 19);
+            this.tslActivity.Size = new System.Drawing.Size(319, 19);
             this.tslActivity.Spring = true;
             this.tslActivity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tslSpacer
+            // 
+            this.tslSpacer.Name = "tslSpacer";
+            this.tslSpacer.Size = new System.Drawing.Size(319, 19);
+            this.tslSpacer.Spring = true;
             // 
             // tslOffsetStyle
             // 
             this.tslOffsetStyle.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslOffsetStyle.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
             this.tslOffsetStyle.Name = "tslOffsetStyle";
-            this.tslOffsetStyle.Size = new System.Drawing.Size(327, 19);
+            this.tslOffsetStyle.Size = new System.Drawing.Size(319, 19);
             this.tslOffsetStyle.Spring = true;
             this.tslOffsetStyle.Text = "Offset style:";
             this.tslOffsetStyle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -116,7 +122,7 @@
             this.tslPartialLoading.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslPartialLoading.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
             this.tslPartialLoading.Name = "tslPartialLoading";
-            this.tslPartialLoading.Size = new System.Drawing.Size(327, 19);
+            this.tslPartialLoading.Size = new System.Drawing.Size(319, 19);
             this.tslPartialLoading.Spring = true;
             this.tslPartialLoading.Text = "PartialLoading";
             this.tslPartialLoading.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -461,12 +467,6 @@
             this.tabMain.TabIndex = 18;
             this.tabMain.Visible = false;
             this.tabMain.SelectedIndexChanged += new System.EventHandler(this.tabMain_SelectedIndexChanged);
-            // 
-            // tslSpacer
-            // 
-            this.tslSpacer.Name = "tslSpacer";
-            this.tslSpacer.Size = new System.Drawing.Size(327, 19);
-            this.tslSpacer.Spring = true;
             // 
             // FormMain
             // 

@@ -36,14 +36,14 @@ namespace Myriadbits.MXFInspect
     public partial class MXFView : MyFormPage
     {
         #region Public props
-        
+
         public MXFFile File { get; private set; }
-        
+
         public MXFObject PhysicalTreeSelectedObject { get; private set; }
         public MXFLogicalObject LogicalTreeSelectedObject { get; private set; }
         public bool PhysicalViewShown { get; set; } = true;
         public string Filename { get; set; }
-        
+
         private bool _currentTypeFiltered = false;
         public bool FilterCurrentType
         {
@@ -83,7 +83,7 @@ namespace Myriadbits.MXFInspect
 
         private FileParseMode FileParseMode { get; set; }
 
-        private Stopwatch m_stopWatch = new Stopwatch();
+        private Stopwatch sw = new Stopwatch();
         private int m_lastPercentage = 0;
         private bool m_fDoNotSelectOther = false;
 
@@ -126,7 +126,7 @@ namespace Myriadbits.MXFInspect
             this.tlvLogical.SelectionChanged += LogicalTree_SelectionChanged;
 
             this.bgwProcess.RunWorkerAsync(this);
-            
+
             this.ApplyUserSettings();
 
             ParentMainForm.EnableUI(false);
@@ -147,7 +147,7 @@ namespace Myriadbits.MXFInspect
                 var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
                 this.tlvLogical.FillTree(logicalList);
 
-                this.txtOverall.Text = string.Format("Total objects: {0}", this.File.Descendants().Count());
+                //this.txtOverall.Text = string.Format("Total objects: {0}", this.File.Descendants().Count());
             }
             catch (Exception ex)
             {
@@ -323,6 +323,7 @@ namespace Myriadbits.MXFInspect
             {
                 MessageBox.Show(ex.Message, "Error while opening the file");
             }
+
         }
 
         /// <summary>
@@ -334,9 +335,9 @@ namespace Myriadbits.MXFInspect
         {
             if (e.ProgressPercentage > 0)
             {
-                if (!m_stopWatch.IsRunning)
+                if (!sw.IsRunning)
                 {
-                    m_stopWatch.Start();
+                    sw.Start();
                     m_lastPercentage = e.ProgressPercentage;
                 }
                 else
@@ -346,7 +347,7 @@ namespace Myriadbits.MXFInspect
                     if (e.ProgressPercentage - m_lastPercentage > 0)
                     {
                         int estimate = 100 - e.ProgressPercentage;
-                        int msecPerPercentage = (int)(m_stopWatch.ElapsedMilliseconds / (e.ProgressPercentage - m_lastPercentage));
+                        int msecPerPercentage = (int)(sw.ElapsedMilliseconds / (e.ProgressPercentage - m_lastPercentage));
                         txtOverall.Text = string.Format("{0} - Estimated time: {1} s", currentTask, (estimate * msecPerPercentage) / 1000);
                     }
                     m_lastPercentage = e.ProgressPercentage;
@@ -366,6 +367,7 @@ namespace Myriadbits.MXFInspect
             this.prbProcessing.Visible = false;
             this.splitMain.Visible = true;
 
+            txtOverall.Text = string.Format("Finished parsing file '{0}' in {1:N0} ms", this.Filename, sw.ElapsedMilliseconds);
             FillTrees();
 
             this.tabMain.SelectedIndex = 0;
