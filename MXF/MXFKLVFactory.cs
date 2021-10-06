@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
     {
         static readonly Dictionary<MXFKey, Type> dict = new Dictionary<MXFKey, Type>(new KeyPartialMatchComparer());
 
-        static readonly Dictionary<MXFShortKey, KeyDescription> knownKeys = KeyDictionary.GetKeys();
+        static readonly Dictionary<MXFShortKey, KeyDescription> knownKeys = SMPTEULDictionary.GetEntries();
 
         static MXFKLVFactory()
         {
@@ -432,7 +432,7 @@ namespace Myriadbits.MXF
             public int GetHashCode(MXFKey obj)
             {
                 // hash only the first 5 bytes (prefix is 4 bytes + 5th byte = key category)
-                return obj.GetHashCode(5);
+                return obj.GetHashCode(8);
             }
         }
     }

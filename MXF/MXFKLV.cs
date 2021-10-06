@@ -30,10 +30,10 @@ namespace Myriadbits.MXF
 {
     public class MXFKLV : MXFObject
     {
+        private static readonly byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
+
         private const string CATEGORYNAME = "KLV";
         private const int CATEGORYPOS = 1;
-
-        private byte[] validULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
         [SortedCategory(CATEGORYNAME,CATEGORYPOS)]
         public MXFKey Key { get; set; }

@@ -22,39 +22,40 @@
 #endregion
 
 using System;
+using System.Linq;
 
 namespace Myriadbits.MXF.Identifiers
 {
     // TODO why as struct? Probably performance
     // short keys implemented as struct, as there are loaded
     // over 1000 in the static constructor => so better performance?
-    public struct MXFShortKey
+    public readonly struct MXFShortKey
     {
-        public readonly UInt64 Key1;
-        public readonly UInt64 Key2;
+        //public readonly UInt64 Key1;
+        //public readonly UInt64 Key2;
         public readonly byte[] array;
 
         public MXFShortKey(byte[] data)
         {
             // TODO why changing this?
             // Change endianess
-            this.Key1 = 0;
-            this.Key2 = 0;
+            //this.Key1 = 0;
+            //this.Key2 = 0;
             this.array = data;
 
             if (data.Length == 16)
             {
                 byte[] datar = new byte[16];
-                Array.Copy(data, datar, 16);
-                Array.Reverse(datar);
-                this.Key2 = BitConverter.ToUInt64(datar, 0);
-                this.Key1 = BitConverter.ToUInt64(datar, 8);
+                //Array.Copy(data, datar, 16);
+                //Array.Reverse(datar);
+                //this.Key2 = BitConverter.ToUInt64(datar, 0);
+                //this.Key1 = BitConverter.ToUInt64(datar, 8);
             }
         }
 
         public override string ToString()
         {
-            return string.Format(string.Format("{0:X16}.{1:X16}", this.Key1, this.Key2));
+            return string.Format(string.Format("{0:X16}.{1:X16}", BitConverter.ToUInt64(array, 8), BitConverter.ToUInt64(array, 8)));
         }
 
 
@@ -63,28 +64,57 @@ namespace Myriadbits.MXF.Identifiers
             return obj is MXFShortKey sk && sk == this;
         }
 
+        //public override int GetHashCode()
+        //{
+        //    return 5;
+        //}
+
         public override int GetHashCode()
         {
-            return 5;
+            unchecked
+            {
+                const int p = 16777619;
+                int hash = (int)2166136261;
+
+                for (int i = 0; i < array.Length; i++)
+                    hash = (hash ^ array[i]) * p;
+
+                hash += hash << 13;
+                hash ^= hash >> 7;
+                hash += hash << 3;
+                hash ^= hash >> 17;
+                hash += hash << 5;
+                return hash;
+            }
         }
+
+        //public static bool operator ==(MXFShortKey first, MXFShortKey second)
+        //{
+        //    for (int i = 0; i < Math.Min(first.array.Length, second.array.Length); i++)
+        //    {
+        //        // TODO: not really good way:
+        //        // bypass klv syntaxes (i.e. 7F == 06 or 53) and the UL version number 
+        //        if (i == 5 || i == 7)
+        //        {
+        //            continue;
+        //        }
+        //        else if (first.array[i] != second.array[i])
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
 
         public static bool operator ==(MXFShortKey first, MXFShortKey second)
         {
-            for (int i = 0; i < Math.Min(first.array.Length, second.array.Length); i++)
-            {
-                // TODO: not really good way:
-                // bypass klv syntaxes (i.e. 7F == 06 or 53) and the UL version number 
-                if (i == 5 || i == 7)
-                {
-                    continue;
-                }
-                else if (first.array[i] != second.array[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+            return first.array.SequenceEqual(second.array);
         }
+
+        //public static bool operator ==(MXFShortKey first, MXFShortKey second)
+        //{
+        //    return Array.Se
+        //}
 
         public static bool operator !=(MXFShortKey first, MXFShortKey second)
         {

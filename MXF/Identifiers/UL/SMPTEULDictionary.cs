@@ -26,38 +26,49 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Myriadbits.MXF.Identifiers
 {
-    public static class KeyDictionary
+    public static class SMPTEULDictionary
     {
-        public static Dictionary<MXFShortKey, KeyDescription> GetKeys()
+        private static Dictionary<MXFShortKey, KeyDescription> Dictionary { get; set; }
+
+        public static Dictionary<MXFShortKey, KeyDescription> GetEntries()
         {
-            var dict = new Dictionary<MXFShortKey, KeyDescription>(new ShortKeyComparer());
+            // if already initialized return it
+            if (Dictionary != null)
+            {
+                return Dictionary;
+            }
+            else
+            {
+                Dictionary = new Dictionary<MXFShortKey, KeyDescription>(new SMPTEULDictionaryComparer());
 
-            //Parse SMPTE Labels register
+                //Parse SMPTE Labels register
 
-            XElement regEntries;
-            XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
+                XElement regEntries;
+                XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
 
-            regEntries = XElement.Parse(MXF.Properties.Resources.Labels);
-            AddEntries(dict, regEntries, ns);
+                regEntries = XElement.Parse(MXF.Properties.Resources.Labels);
+                AddEntries(Dictionary, regEntries, ns);
 
-            // Parse SMPTE Elements register
+                // Parse SMPTE Elements register
 
-            ns = "http://www.smpte-ra.org/schemas/335/2012";
-            regEntries = XElement.Parse(MXF.Properties.Resources.Elements);
-            AddEntries(dict, regEntries, ns);
+                ns = "http://www.smpte-ra.org/schemas/335/2012";
+                regEntries = XElement.Parse(MXF.Properties.Resources.Elements);
+                AddEntries(Dictionary, regEntries, ns);
 
-            //Parse SMPTE Groups register
+                //Parse SMPTE Groups register
 
-            ns = "http://www.smpte-ra.org/ns/395/2016";
-            regEntries = XElement.Parse(MXF.Properties.Resources.Groups);
-            AddEntries(dict, regEntries, ns);
+                ns = "http://www.smpte-ra.org/ns/395/2016";
+                regEntries = XElement.Parse(MXF.Properties.Resources.Groups);
+                AddEntries(Dictionary, regEntries, ns);
 
-            var values = dict.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
+                var values = Dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
 
-            return dict;
+                return Dictionary;
+            }
         }
 
         private static void AddEntries(IDictionary<MXFShortKey, KeyDescription> dict, XElement regEntries, XNamespace ns)
@@ -65,12 +76,12 @@ namespace Myriadbits.MXF.Identifiers
             foreach (var e in regEntries.Descendants(ns + "Entry"))
             {
                 var entry = ParseEntry(ns, e);
-                if (entry.HasValue )
+                if (entry.HasValue)
                 {
-                    bool v = dict.TryAdd(entry.Value.Key, entry.Value.Value);
-                    if(v == false)
+                    if (dict.TryAdd(entry.Value.Key, entry.Value.Value) == false)
                     {
-                        // TODO: raise an exception!
+                        // TODO: raise an exception! (or at least log)
+                        Debug.WriteLine("Entry already present!");
                     }
                 }
             }
@@ -114,23 +125,5 @@ namespace Myriadbits.MXF.Identifiers
             }
             return retVal;
         }
-
-        public class ShortKeyComparer : IEqualityComparer<MXFShortKey>
-        {
-            // if the keys to compare are of the same category (meaning the same hash) compare
-            // whether the byte sequence is equal
-            public bool Equals(MXFShortKey x, MXFShortKey y)
-            {
-                return x == y;
-            }
-
-            public int GetHashCode(MXFShortKey obj)
-            {
-                return 5;
-            }
-        }
-
-
-
     }
 }

@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
         public ULBaseAttribute(string smpteULString)
         {
             SMPTEULString = smpteULString;
-            ShortKey = KeyDictionary.GetShortKeyFromSMPTEULString(smpteULString);
+            ShortKey = SMPTEULDictionary.GetShortKeyFromSMPTEULString(smpteULString);
         }
     }
 }

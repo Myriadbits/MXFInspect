@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "Key";
 
-        private static readonly Dictionary<MXFShortKey, KeyDescription> knownKeys = KeyDictionary.GetKeys();
+        private static readonly Dictionary<MXFShortKey, KeyDescription> knownKeys = SMPTEULDictionary.GetEntries();
 
         #region properties
 
