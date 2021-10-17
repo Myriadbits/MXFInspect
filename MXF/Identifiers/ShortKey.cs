@@ -31,31 +31,34 @@ namespace Myriadbits.MXF.Identifiers
     // over 1000 in the static constructor => so better performance?
     public readonly struct MXFShortKey
     {
-        //public readonly UInt64 Key1;
-        //public readonly UInt64 Key2;
         public readonly byte[] array;
+
+        public readonly UInt64 Key1;
+        public readonly UInt64 Key2;
+
 
         public MXFShortKey(byte[] data)
         {
             // TODO why changing this?
             // Change endianess
-            //this.Key1 = 0;
-            //this.Key2 = 0;
+            this.Key1 = 0;
+            this.Key2 = 0;
             this.array = data;
+
 
             if (data.Length == 16)
             {
                 byte[] datar = new byte[16];
-                //Array.Copy(data, datar, 16);
-                //Array.Reverse(datar);
-                //this.Key2 = BitConverter.ToUInt64(datar, 0);
-                //this.Key1 = BitConverter.ToUInt64(datar, 8);
+                Array.Copy(data, datar, 16);
+                Array.Reverse(datar);
+                this.Key2 = BitConverter.ToUInt64(datar, 0);
+                this.Key1 = BitConverter.ToUInt64(datar, 8);
             }
         }
 
         public override string ToString()
         {
-            return string.Format(string.Format("{0:X16}.{1:X16}", BitConverter.ToUInt64(array, 8), BitConverter.ToUInt64(array, 8)));
+            return string.Format(string.Format("{0:X16}.{1:X16}", this.Key1, this.Key2));
         }
 
 
@@ -64,10 +67,6 @@ namespace Myriadbits.MXF.Identifiers
             return obj is MXFShortKey sk && sk == this;
         }
 
-        //public override int GetHashCode()
-        //{
-        //    return 5;
-        //}
 
         public override int GetHashCode()
         {

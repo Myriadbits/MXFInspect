@@ -84,6 +84,8 @@ namespace Myriadbits.MXF.Identifiers
                         Debug.WriteLine("Entry already present!");
                     }
                 }
+                // TODO: heavy performance degrade on this debug statement!?
+                //Debug.WriteLine("Unable to parse entry!");
             }
         }
 
@@ -117,13 +119,31 @@ namespace Myriadbits.MXF.Identifiers
         public static byte[] GetByteArrayFromSMPTEULString(string smpteString)
         {
             const int hexBase = 16;
-            byte[] retVal = new byte[16];
+            byte[] byteArray = new byte[16];
             string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
-            for (int i = 0, j = 0; j < byteString.Length - 2; i++, j += 2)
+            var singleBytes = SplitString(byteString, 2).ToList();
+            for (int i = 0; i < singleBytes.Count; i++)
             {
-                retVal[i] = Convert.ToByte(byteString.Substring(j, 2), hexBase);
+                byteArray[i] = Convert.ToByte(singleBytes[i], hexBase);
             }
-            return retVal;
+            return byteArray;
+        }
+
+        private static IEnumerable<string> SplitString(string s, int count)
+        {
+            int index = 0;
+            while (index < s.Length)
+            {
+                if (s.Length - index >= count)
+                {
+                    yield return s.Substring(index, count);
+                }
+                else
+                {
+                    yield return s.Substring(index, s.Length - index);
+                }
+                index += count;
+            }
         }
     }
 }
