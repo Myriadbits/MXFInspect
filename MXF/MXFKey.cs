@@ -71,7 +71,7 @@ namespace Myriadbits.MXF
 			// Change endianess
 			this.Key1 = 0;
 			this.Key2 = 0;
-			if (data.Length == 16)
+			if ((data != null) && (data.Length == 16))
 			{
 				byte[] datar = new byte[16];
 				Array.Copy(data, datar, 16);

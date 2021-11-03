@@ -261,7 +261,9 @@ namespace Myriadbits.MXF
 			// Check system item range
 			if (this.m_systemItems.Count() > 0)
 			{
-				CheckUserDates(this.File, results);
+				if ((this.m_systemItems.First().SystemBitmap & MXF.SystemBitmap.UserDateTime) != 0)
+					CheckUserDates(this.File, results);
+
 				CheckContinuityCounter(this.File, results);
 			}
 			ReportProgress(100); 

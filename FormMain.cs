@@ -47,6 +47,11 @@ namespace Myriadbits.MXFInspect
 			this.m_mru = Properties.Settings.Default.MRU;
 			FillMRU();
 			this.UpdateMenu();
+
+			// Process command line argument
+			string[] cmdline = Environment.GetCommandLineArgs();
+			if (cmdline.Length > 1)
+				OpenFile(cmdline[1]);
 		}
 
 		/// <summary>
