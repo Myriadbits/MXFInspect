@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MXF Inspect"
-#define MyAppVersion "2.2.0.4"
+#define MyAppVersion "2.3.0.5"
 #define MyAppPublisher "Myriadbits"
-#define MyAppURL "http://www.myriadbits.come/"
+#define MyAppURL "http://www.myriadbits.com/"
 #define MyAppExeName "MXFInspect.exe"
-#define MySetupName "MXF_Setup_2_2_0_4"
+#define MySetupName "MXF_Setup_2_3_0_5"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -22,8 +22,8 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppPublisher}
 DefaultGroupName={#MyAppPublisher}
-LicenseFile=C:\Projects\MXFInspect\License.txt
-OutputDir=C:\Projects\MXFInspect\Publish
+LicenseFile=D:\Projects\MXFInspect\License.txt
+OutputDir=D:\Projects\MXFInspect\Publish
 OutputBaseFilename={#MySetupName}
 Compression=lzma
 SolidCompression=yes
@@ -36,9 +36,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Projects\MXFInspect\bin\Release\MXFInspect.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Projects\MXFInspect\bin\Release\Myriadbits.MXF.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Projects\MXFInspect\bin\Release\ObjectListView.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\MXFInspect\bin\Release\MXFInspect.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\MXFInspect\bin\Release\Myriadbits.MXF.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\MXFInspect\bin\Release\ObjectListView.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

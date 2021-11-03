@@ -54,7 +54,9 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-			}
+                default:
+                    break;
+            }
 			return base.ParseLocalTag(reader, localTag);
 		}
 

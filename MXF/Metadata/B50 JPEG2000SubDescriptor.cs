@@ -37,6 +37,8 @@ namespace Myriadbits.MXF
 			switch (localTag.Tag)
 			{
 				//case 0x2F01: ReadKeyList(reader, "Locators", "Locator"); return true;
+				default:
+					break;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}
