@@ -42,6 +42,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.label3 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -69,16 +70,16 @@
 			// lblVersion
 			// 
 			this.lblVersion.AutoSize = true;
-			this.lblVersion.Location = new System.Drawing.Point(35, 160);
+			this.lblVersion.Location = new System.Drawing.Point(35, 156);
 			this.lblVersion.Name = "lblVersion";
-			this.lblVersion.Size = new System.Drawing.Size(69, 13);
+			this.lblVersion.Size = new System.Drawing.Size(78, 13);
 			this.lblVersion.TabIndex = 4;
-			this.lblVersion.Text = "Version 1.0.0";
+			this.lblVersion.Text = "Version 2.3.0.5";
 			// 
 			// llMyriadbits
 			// 
 			this.llMyriadbits.AutoSize = true;
-			this.llMyriadbits.Location = new System.Drawing.Point(35, 186);
+			this.llMyriadbits.Location = new System.Drawing.Point(35, 200);
 			this.llMyriadbits.Name = "llMyriadbits";
 			this.llMyriadbits.Size = new System.Drawing.Size(103, 13);
 			this.llMyriadbits.TabIndex = 5;
@@ -89,11 +90,11 @@
 			// lblCopyright
 			// 
 			this.lblCopyright.AutoSize = true;
-			this.lblCopyright.Location = new System.Drawing.Point(35, 173);
+			this.lblCopyright.Location = new System.Drawing.Point(35, 170);
 			this.lblCopyright.Name = "lblCopyright";
 			this.lblCopyright.Size = new System.Drawing.Size(184, 13);
 			this.lblCopyright.TabIndex = 4;
-			this.lblCopyright.Text = "Copyright (c) 2015 by Jochem Bakker";
+			this.lblCopyright.Text = "Copyright (c) 2021 by Jochem Bakker";
 			// 
 			// label4
 			// 
@@ -175,13 +176,23 @@
 			this.linkLabel1.Text = "ObjectListView library";
 			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(35, 186);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(303, 13);
+			this.label3.TabIndex = 11;
+			this.label3.Text = "Contributors: Wolfgang Rupel, wsperandio and Nicolas Gaullier";
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.bntClose;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.bntClose;
-			this.ClientSize = new System.Drawing.Size(524, 282);
+			this.ClientSize = new System.Drawing.Size(524, 281);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.linkLabel1);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
@@ -226,5 +237,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.LinkLabel linkLabel1;
+		private System.Windows.Forms.Label label3;
 	}
 }
