@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Company>Myriadbits</Company>
     <Description>MXF .NET 5 Library</Description>
     <Copyright>Copyright © 2015 by Myriadbits.com</Copyright>
