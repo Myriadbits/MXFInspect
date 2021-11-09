@@ -64,11 +64,12 @@ namespace Myriadbits.MXF
         /// Copy constructor
         /// </summary>
         /// <param name="reader"></param>
+        /// TODO: remove copy ctor as it introduces hard to find bugs through the inheritance chain
         public MXFKLV(MXFKLV klv, string name, KeyType type)
         {
             this.Offset = klv.Offset;
             this.Key = klv.Key;
-            this.Key.Name = name;
+            this.Key.Name = string.IsNullOrWhiteSpace(klv.Key.Name) ? name : klv.Key.Name;
             this.Key.Type = type;
             this.BER = klv.BER;
             this.Length = klv.Length;
