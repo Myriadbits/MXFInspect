@@ -432,7 +432,7 @@ namespace Myriadbits.MXF
             public int GetHashCode(MXFKey obj)
             {
                 // hash only the first 5 bytes (prefix is 4 bytes + 5th byte = key category)
-                return obj.GetHashCode(8);
+                return obj.GetHashCode(12);
             }
         }
     }
