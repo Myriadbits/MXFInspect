@@ -10,8 +10,6 @@
     <PackageId>MXF Inspect Library</PackageId>
     <Authors>Jochem Bakker, rayden84</Authors>
     <Product>MXF Inspect</Product>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression></PackageLicenseExpression>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <FileVersion>3.0.0.0</FileVersion>
     <Version>3.0.0.0</Version>
