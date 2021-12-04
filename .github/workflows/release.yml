@@ -74,23 +74,23 @@ jobs:
         
         - name: Publish release (framework dependent) in subfolder 
           if: ${{ matrix.fw-flavor == 'fwdependent' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }}
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }}
         
         - name: Publish release (selfcontained) in subfolder 
           if: ${{ matrix.fw-flavor == 'selfcontained' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true
 
         - name: Publish release (selfcontained-singlefile) in subfolder
           if: ${{ matrix.fw-flavor == 'selfcontained-singlefile' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
 
         - name: Publish relase (selfcontained-includenativelibraries) in subfolder
           if: ${{ matrix.fw-flavor == 'self-contained-includenativelibs' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
         
         - name: Publish release (selfcontained-includeallcontent) in subfolder
           if: ${{ matrix.fw-flavor == 'self-contained-includeallcontent' }}
-          run: dotnet publish MXFInspect -o publish -r win7-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForselfExtract=true
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForselfExtract=true
 
         - name: Create a file and zip it
           shell: bash
