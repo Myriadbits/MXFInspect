@@ -90,13 +90,13 @@ namespace Myriadbits.MXF
 			
 			string allText = MXF.Properties.Resources.ANC_Identifiers;
 			string[] allLines = allText.Split('\n');
-			if (allLines.Count() > 0)
+			if (allLines.Length > 0)
 			{
-				for (int n = 1; n < allLines.Count(); n++ ) // Start at 1, skip the header
+				for (int n = 1; n < allLines.Length; n++ ) // Start at 1, skip the header
 				{
 					string line = allLines[n];
 					string[] parts = line.Split(';');
-					if (parts.Count() > 5)
+					if (parts.Length > 5)
 					{
 						try
 						{
