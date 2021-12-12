@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 	{
 		private const string CATEGORYNAME = "TextLocator";
 
-		[Category("TextLocator")]
+		[Category(CATEGORYNAME)]
 		public string LocationName { get; set; }
 
 		public MXFTextLocator(MXFReader reader, MXFKLV headerKLV)

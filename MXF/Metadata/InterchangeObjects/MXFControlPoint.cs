@@ -21,6 +21,8 @@
 //
 #endregion
 
+using System.ComponentModel;
+
 namespace Myriadbits.MXF
 {
 	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011900")]
@@ -29,6 +31,7 @@ namespace Myriadbits.MXF
 		private const string CATEGORYNAME = "ControlPoint";
 
 		[ULElement("urn:smpte:ul:060e2b34.01010102.05300508.00000000")]
+		[Category(CATEGORYNAME)]
 		public MXFEditHint EditHint { get; set; }
 
 		[ULElement("urn:smpte:ul:060e2b34.01010102.0530050d.00000000")]
