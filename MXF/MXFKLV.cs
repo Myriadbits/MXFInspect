@@ -36,16 +36,16 @@ namespace Myriadbits.MXF
         private const int CATEGORYPOS = 1;
 
         [SortedCategory(CATEGORYNAME,CATEGORYPOS)]
-        public MXFKey Key { get; set; }
+        public MXFKey Key { get; private set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        public long DataOffset { get; set; } // Points just after the KLV
+        public long DataOffset { get; private set; } // Points just after the KLV
 
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        public MXFBER BER { get; set; }
+        public MXFBER BER { get; private set; }
 
         /// <summary>
         /// Create the KLV key
