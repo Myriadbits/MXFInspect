@@ -544,7 +544,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiShowPropInfo;
         private System.Windows.Forms.ToolStripStatusLabel tslVersion;
         private System.Windows.Forms.ToolStripStatusLabel tslActivity;
-        private System.Windows.Forms.ToolStripStatusLabel tslTest1;
         private System.Windows.Forms.ToolStripStatusLabel tslOffsetStyle;
         private System.Windows.Forms.ToolStripStatusLabel tslPartialLoading;
         private System.Windows.Forms.ToolStripStatusLabel tslSpacer;
