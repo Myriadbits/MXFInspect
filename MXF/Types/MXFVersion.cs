@@ -79,10 +79,7 @@ namespace Myriadbits.MXF
 
         public override int GetHashCode()
         {
-            int hash = 13;
-            hash = (hash * 7) + Major.GetHashCode();
-            hash = (hash * 7) + Minor.GetHashCode();
-            return hash;
+            return HashCode.Combine(Major, Minor);
         }
     }
 }
