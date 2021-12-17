@@ -139,6 +139,49 @@ namespace Myriadbits.MXFInspect
             }
         }
 
+        
+        protected static Color GetColor(MXFObject obj)
+        {
+            switch (obj)
+            {
+                case MXFPartition:
+                    return Properties.Settings.Default.Color_Partition;
+
+                // filler is a subytpe of metadatabaseclass and therefore must be handled first
+                case MXFFiller:
+                    return Properties.Settings.Default.Color_Filler;
+
+                case MXFEssenceElement:
+                    return Properties.Settings.Default.Color_Essence;
+
+                case MXFIndexTableSegment:
+                case MXFEntryDelta:
+                case MXFEntryIndex:
+                    return Properties.Settings.Default.Color_IndexTable;
+
+                case MXFSystemItem:
+                    return Properties.Settings.Default.Color_SystemItem;
+
+                case MXFRIP:
+                case MXFEntryRIP:
+                    return Properties.Settings.Default.Color_RIP;
+
+                case MXFMetadataBaseclass:
+                case MXFPackageMetaData:
+                    return Properties.Settings.Default.Color_MetaData;
+
+                //case MXFObjectType.Special:
+                //    return Properties.Settings.Default.Color_Special;
+
+                default:
+                    // needed for the nodes that make up an index collection
+                    if (obj.Descendants().All(d => d is MXFEntryDelta || d is MXFEntryIndex))
+                        return Properties.Settings.Default.Color_IndexTable;
+
+                    return Color.FromArgb(0, 0, 0);
+            }
+        }
+
 
         #endregion
 

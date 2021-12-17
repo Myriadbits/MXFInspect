@@ -122,47 +122,26 @@ namespace Myriadbits.MXFInspect
             else if (e.Column == ColumnMXFObject)
             {
                 MXFObject obj = e.Model as MXFObject;
+                SetFontFormat(e, obj);
+                e.SubItem.ForeColor = GetColor(obj);
+            }
+        }
 
-                if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
-                {
-                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
-                }
-                else
-                {
-                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
-                }
-
-                switch (obj.Type)
-                {
-                    case MXFObjectType.Partition:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Partition;
-                        break;
-                    case MXFObjectType.Essence:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Essence;
-                        break;
-                    case MXFObjectType.Index:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_IndexTable;
-                        break;
-                    case MXFObjectType.SystemItem:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_SystemItem;
-                        break;
-                    case MXFObjectType.RIP:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_RIP;
-                        break;
-                    case MXFObjectType.Meta:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_MetaData;
-                        break;
-                    case MXFObjectType.Filler:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Filler;
-                        break;
-                    case MXFObjectType.Special:
-                        e.SubItem.ForeColor = Properties.Settings.Default.Color_Special;
-                        break;
-                }
+        private void SetFontFormat(FormatCellEventArgs e, MXFObject obj)
+        {
+            if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
+            {
+                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
+            }
+            else
+            {
+                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
             }
         }
 
         #region private methods
+
+
 
         private void SetupColumns()
         {
