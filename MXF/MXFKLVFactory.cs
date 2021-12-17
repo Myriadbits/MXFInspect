@@ -349,7 +349,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Update description of type with data from the primer pack
         /// </summary>
-        public static void UpdateTypeDescriptions(Type type, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
+        private static void UpdateTypeDescriptions(Type type, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
             if (type != null && allPrimerKeys != null)
             {
@@ -391,7 +391,7 @@ namespace Myriadbits.MXF
 
         }
 
-        public static void SetTypeDescriptions(Type type)
+        private static void SetTypeDescriptions(Type type)
         {
             // recursive calls up to the inheritance chain
 
