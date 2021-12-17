@@ -81,9 +81,7 @@ namespace Myriadbits.MXF
 
 		public override string ToString()
 		{
-			if (this.LocalTagCount == 0)
-				return "PrimerPack";
-			return string.Format("PrimerPack [{0} items]", this.LocalTagCount );
+			return (this.LocalTagCount == 0) ? "PrimerPack" : $"PrimerPack [{this.LocalTagCount} items]";
 		}
 	}
 }
