@@ -131,7 +131,7 @@ namespace Myriadbits.MXFInspect
         {
             if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
             {
-                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Italic);
+                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Bold);
             }
             else
             {
