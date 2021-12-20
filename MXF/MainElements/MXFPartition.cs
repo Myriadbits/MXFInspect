@@ -119,7 +119,6 @@ namespace Myriadbits.MXF
         public MXFPartition(MXFReader reader, MXFKLV headerKLV)
             : base(headerKLV, "Partition", KeyType.Partition)
         {
-            this.m_eType = MXFObjectType.Partition;
             this.IsLoaded = false;
 
             // Determine the partition type

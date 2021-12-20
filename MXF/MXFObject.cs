@@ -30,19 +30,6 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public enum MXFObjectType
-    {
-        Normal,
-        Partition,
-        Index,
-        SystemItem,
-        Essence,
-        Meta,
-        RIP,
-        Filler,
-        Special
-    };
-
     // TODO remove log type
     public enum MXFLogType
     {
@@ -58,7 +45,6 @@ namespace Myriadbits.MXF
         private const int CATEGORYPOS = 0;
 
         private long m_lLength = -1;            // Length in bytes of this object
-        protected MXFObjectType m_eType = MXFObjectType.Normal; // Default to normal type
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Offset from the beginning of file in terms of bytes")]
@@ -83,15 +69,6 @@ namespace Myriadbits.MXF
             set
             {
                 m_lLength = value;
-            }
-        }
-
-        [Browsable(false)]
-        public MXFObjectType Type
-        {
-            get
-            {
-                return m_eType;
             }
         }
 

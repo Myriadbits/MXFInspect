@@ -125,7 +125,6 @@ namespace Myriadbits.MXF
 		public MXFSystemItem(MXFReader reader, MXFKLV headerKLV)
 			: base(headerKLV, "SystemItem (CP)", KeyType.SystemItem)
 		{
-			this.m_eType = MXFObjectType.SystemItem;
 			if (this.Key[12] == 0x14)
 				this.Key.Name = "SystemItem (GC)";
 

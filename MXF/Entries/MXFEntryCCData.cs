@@ -57,12 +57,12 @@ namespace Myriadbits.MXF
 				this.Data = new byte[2];
 				this.Data[0] = reader.ReadByte();
 				this.Data[1] = reader.ReadByte();
-			}	
-			
+			}
+
 			// When this object is not valid, set the type to filler
 			// TODO: this does not seem to be the correct thing to do!
-			if (this.Valid.HasValue && !this.Valid.Value)
-				this.m_eType = MXFObjectType.Filler;			
+			if (this.Valid.HasValue && !this.Valid.Value) ;
+				//this.m_eType = MXFObjectType.Filler;			
 		}
 
 		/// <summary>

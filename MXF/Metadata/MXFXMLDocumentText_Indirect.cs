@@ -36,7 +36,6 @@ namespace Myriadbits.MXF.Metadata
         public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV headerKLV)
             : base(headerKLV, "XML Document Text (Indirect)", KeyType.MetaData)
         {
-            this.m_eType = MXFObjectType.Meta;
             Initialize(reader);
         }
 

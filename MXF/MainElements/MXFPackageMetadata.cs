@@ -33,7 +33,6 @@ namespace Myriadbits.MXF
         public MXFPackageMetaData(MXFReader reader, MXFKLV headerKLV)
             : base(headerKLV, "PackageMetadata", KeyType.PackageMetaDataSet)
         {
-            this.m_eType = MXFObjectType.Essence; // I will count this as essence data
             if (this.Key[5] == 0x63)
                 nofSizeSize = 4;
             switch (this.Key[14])

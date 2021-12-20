@@ -80,7 +80,6 @@ namespace Myriadbits.MXF
 		public MXFIndexTableSegment(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "IndexTableSegment") //base(headerKLV, "IndexTableSegment", KeyType.IndexSegment)
 		{
-			this.m_eType = MXFObjectType.Index;
 			this.Key.Type = KeyType.IndexSegment;
 		}
 
@@ -113,7 +112,7 @@ namespace Myriadbits.MXF
 						if (NbIndexEntries > 0)
 						{
 							this.IndexEntries = new List<MXFEntryIndex>();
-							MXFObject indexCollection = new MXFNamedObject("IndexEntries", reader.Position, MXFObjectType.Index);
+							MXFObject indexCollection = new MXFNamedObject("IndexEntries", reader.Position);
 
 							for (UInt64 i = 0; i < NbIndexEntries; i++)
 							{
@@ -138,7 +137,7 @@ namespace Myriadbits.MXF
 						UInt32 entryLength = reader.ReadUInt32();
 						if (NbDeltaEntries > 0)
 						{
-							MXFObject deltaCollection = new MXFNamedObject("DeltaEntries", reader.Position, MXFObjectType.Index);
+							MXFObject deltaCollection = new MXFNamedObject("DeltaEntries", reader.Position);
 							for (int i = 0; i < NbDeltaEntries; i++)
 							{
 								long next = reader.Position + entryLength;

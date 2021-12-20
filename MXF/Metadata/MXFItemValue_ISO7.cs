@@ -37,7 +37,6 @@ namespace Myriadbits.MXF
         public MXFItemValue_ISO7(MXFReader reader, MXFKLV headerKLV)
             : base(headerKLV, "Item Value ISO7", KeyType.MetaData)
         {
-            this.m_eType = MXFObjectType.Meta;
             Initialize(reader);
         }
 

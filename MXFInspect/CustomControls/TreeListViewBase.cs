@@ -173,11 +173,15 @@ namespace Myriadbits.MXFInspect
                 //case MXFObjectType.Special:
                 //    return Properties.Settings.Default.Color_Special;
 
+                case MXFKLV:
+                    return Color.FromArgb(0, 0, 0);
+
                 default:
                     // needed for the nodes that make up an index collection
                     if (obj.Descendants().All(d => d is MXFEntryDelta || d is MXFEntryIndex))
+                    {
                         return Properties.Settings.Default.Color_IndexTable;
-
+                    }
                     return Color.FromArgb(0, 0, 0);
             }
         }

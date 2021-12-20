@@ -28,8 +28,6 @@ namespace Myriadbits.MXF
 		public MXFFiller(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "Filler")
 		{
-			// Explicitly set the type to filler
-			this.m_eType = MXFObjectType.Filler;
 		}
 
 		/// <summary>

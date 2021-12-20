@@ -31,7 +31,6 @@ namespace Myriadbits.MXF
 		public MXFRIP(MXFReader reader, MXFKLV headerKLV)
 			: base(headerKLV, "RIP", KeyType.RIP)
 		{
-			this.m_eType = MXFObjectType.RIP;
 			Initialize(reader);
 		}
 

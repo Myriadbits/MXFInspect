@@ -36,7 +36,6 @@ namespace Myriadbits.MXF
         public MXFLocalSet(MXFReader reader, MXFKLV headerKLV, string metaDataName)
             : base(headerKLV, metaDataName, KeyType.MetaData)
         {
-            this.m_eType = MXFObjectType.Meta;
             ParseTags(reader);
         }
 

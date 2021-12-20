@@ -59,17 +59,6 @@ namespace Myriadbits.MXF
 		/// MXF Object constructor
 		/// </summary>
 		/// <param name="reader"></param>
-		public MXFNamedObject(string name, long offset, MXFObjectType type)
-			: base(offset)
-		{
-			this.Name = name;
-			this.m_eType = type;
-		}
-
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
 		public MXFNamedObject(string name, long offset, long length)
 			: base(offset)
 		{

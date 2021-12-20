@@ -40,8 +40,6 @@ namespace Myriadbits.MXF
 		public MXFEntryDelta(MXFReader reader, UInt32 length)
 			: base(reader)
 		{
-			this.m_eType = MXFObjectType.Index;
-
 			this.Length = length;
 			this.PosTableIndex = reader.ReadSignedByte();
 			this.Slice = reader.ReadByte();

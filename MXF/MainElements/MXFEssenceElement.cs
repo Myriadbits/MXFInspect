@@ -69,7 +69,6 @@ namespace Myriadbits.MXF
         public MXFEssenceElement(MXFReader reader, MXFKLV headerKLV)
             : base(headerKLV, "EssenceElement", KeyType.Essence)
         {
-            this.m_eType = MXFObjectType.Essence;
             if (m_itemTypes.ContainsKey(this.Key[12]))
                 this.ItemType = m_itemTypes[this.Key[12]];
             else

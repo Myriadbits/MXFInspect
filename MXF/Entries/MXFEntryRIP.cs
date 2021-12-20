@@ -38,7 +38,6 @@ namespace Myriadbits.MXF
 		public MXFEntryRIP(MXFReader reader)
 			: base(reader)
 		{
-			this.m_eType = MXFObjectType.RIP;
 			this.BodySID = reader.ReadUInt32();
 			this.PartitionOffset = reader.ReadUInt64();
 			this.Length = 12; // Fixed length
