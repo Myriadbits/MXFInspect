@@ -168,6 +168,7 @@ namespace Myriadbits.MXFInspect
 
                 case MXFMetadataBaseclass:
                 case MXFPackageMetaData:
+                case MXFPrimerPack:
                     return Properties.Settings.Default.Color_MetaData;
 
                 //case MXFObjectType.Special:
@@ -178,7 +179,8 @@ namespace Myriadbits.MXFInspect
 
                 default:
                     // needed for the nodes that make up an index collection
-                    if (obj.Descendants().All(d => d is MXFEntryDelta || d is MXFEntryIndex))
+                    if (obj.Descendants().Any() && 
+                        obj.Descendants().All(d => d is MXFEntryDelta || d is MXFEntryIndex))
                     {
                         return Properties.Settings.Default.Color_IndexTable;
                     }
