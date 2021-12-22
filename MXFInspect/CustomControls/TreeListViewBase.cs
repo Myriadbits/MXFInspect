@@ -32,7 +32,7 @@ using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-    public abstract class TreeListViewBase<T> : TreeListView where T : Node<T> 
+    public abstract class TreeListViewBase<T> : TreeListView where T : Node<T>
     {
         public bool ShowOffsetAsHex { get; protected set; }
 
@@ -139,55 +139,48 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-        
+
         protected static Color GetColor(MXFObject obj)
         {
-            switch (obj)
+            if (obj.IsPartition())
             {
-                case MXFPartition:
-                    return Properties.Settings.Default.Color_Partition;
-
+                return Properties.Settings.Default.Color_Partition;
+            }
+            else if (obj.IsFiller())
+            {
                 // filler is a subytpe of metadatabaseclass and therefore must be handled first
-                case MXFFiller:
-                    return Properties.Settings.Default.Color_Filler;
-
-                case MXFEssenceElement:
-                    return Properties.Settings.Default.Color_Essence;
-
-                case MXFIndexTableSegment:
-                case MXFEntryDelta:
-                case MXFEntryIndex:
-                    return Properties.Settings.Default.Color_IndexTable;
-
-                case MXFSystemItem:
-                    return Properties.Settings.Default.Color_SystemItem;
-
-                case MXFRIP:
-                case MXFEntryRIP:
-                    return Properties.Settings.Default.Color_RIP;
-
-                case MXFMetadataBaseclass:
-                case MXFPackageMetaData:
-                case MXFPrimerPack:
-                    return Properties.Settings.Default.Color_MetaData;
-
+                return Properties.Settings.Default.Color_Filler;
+            }
+            else if (obj.IsEssenceElement())
+            {
+                return Properties.Settings.Default.Color_Essence;
+            }
+            else if (obj.IsIndexLike() || obj.IsIndexCollection())
+            {
+                return Properties.Settings.Default.Color_IndexTable;
+            }
+            else if (obj.IsSystemItem())
+            {
+                return Properties.Settings.Default.Color_SystemItem;
+            }
+            else if (obj.IsRIPOrRIPEntry())
+            {
+                return Properties.Settings.Default.Color_RIP;
+            }
+            else if (obj.IsMetadataLike())
+            {
+                return Properties.Settings.Default.Color_MetaData;
+            }
+            else if (false)
+            {
                 //case MXFObjectType.Special:
                 //    return Properties.Settings.Default.Color_Special;
-
-                case MXFKLV:
-                    return Color.FromArgb(0, 0, 0);
-
-                default:
-                    // needed for the nodes that make up an index collection
-                    if (obj.Descendants().Any() && 
-                        obj.Descendants().All(d => d is MXFEntryDelta || d is MXFEntryIndex))
-                    {
-                        return Properties.Settings.Default.Color_IndexTable;
-                    }
-                    return Color.FromArgb(0, 0, 0);
             }
+            else
+            {
+                return Color.FromArgb(0, 0, 0);
+            };
         }
-
 
         #endregion
 
