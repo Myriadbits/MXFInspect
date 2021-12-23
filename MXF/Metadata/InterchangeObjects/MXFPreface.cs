@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
         public MXFPreface(MXFReader reader, MXFKLV headerKLV)
             : base(reader, headerKLV, "Preface")
         {
-            this.Key.Type = KeyType.Preface;
+            //this.Key.Type = KeyType.Preface;
         }
 
         /// <summary>

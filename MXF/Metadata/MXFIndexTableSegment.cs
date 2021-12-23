@@ -80,7 +80,7 @@ namespace Myriadbits.MXF
 		public MXFIndexTableSegment(MXFReader reader, MXFKLV headerKLV)
 			: base(reader, headerKLV, "IndexTableSegment") //base(headerKLV, "IndexTableSegment", KeyType.IndexSegment)
 		{
-			this.Key.Type = KeyType.IndexSegment;
+			//this.Key.Type = KeyType.IndexSegment;
 		}
 
 

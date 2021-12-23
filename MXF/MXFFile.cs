@@ -135,7 +135,7 @@ namespace Myriadbits.MXF
                     try
                     {
                         MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
-                        
+
                         //// Update overall counters
                         //if (klv.Key.Type == KeyType.None)
                         //    counters[(int)klv.Key.Type]++;
@@ -190,7 +190,7 @@ namespace Myriadbits.MXF
             MXFPartition currentPartition = null;
             int previousPercentage = 0;
             Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
-            int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
+
             PartialSeekMode seekMode = PartialSeekMode.Unknown;
             using (m_reader = new MXFReader(this.Filename))
             {
@@ -210,11 +210,8 @@ namespace Myriadbits.MXF
                 {
                     MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
 
-                    // Update overall counters
-                    if (klv.Key.Type == KeyType.None)
-                        counters[(int)klv.Key.Type]++;
 
-                    if (klv.Key.Type == KeyType.Partition && seekMode == PartialSeekMode.Backwards)
+                    if (klv is MXFPartition && seekMode == PartialSeekMode.Backwards)
                     {
                         if (this.Partitions.Exists(a => a.Offset == klv.Offset))
                         {
@@ -305,12 +302,13 @@ namespace Myriadbits.MXF
             worker.ReportProgress(100, "Finished");
         }
 
+
         private void ProcessKLVObject(MXFKLV klv, MXFObject partitions, ref MXFPartition currentPartition, ref int partitionNumber, ref Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
             // Is this a header, add to the partitions
-            switch (klv.Key.Type)
+            switch (klv)
             {
-                case KeyType.Partition:
+                case MXFPartition:
                     currentPartition = klv as MXFPartition;
                     currentPartition.File = this;
                     currentPartition.PartitionNumber = partitionNumber;
@@ -319,29 +317,27 @@ namespace Myriadbits.MXF
                     partitionNumber++;
                     break;
 
-                case KeyType.PrimerPack:
+                case MXFPrimerPack primer:
                     if (currentPartition != null)
                     {
-                        if (klv is MXFPrimerPack primer)
-                        {
-                            // Let the partition know all primer keys
-                            allPrimerKeys = primer.AllKeys;
-                            currentPartition.PrimerKeys = primer.AllKeys;
-                        }
+                        // Let the partition know all primer keys
+                        allPrimerKeys = primer.AllKeys;
+                        currentPartition.PrimerKeys = primer.AllKeys;
+
                         currentPartition.AddChild(klv); // Add the primer 
                     }
                     break;
 
-                case KeyType.RIP:
+                case MXFRIP rip:
                     // Only add the RIP when not yet present
                     if (this.RIP == null)
                     {
                         this.AddChild(klv);
-                        this.RIP = klv as MXFRIP;
+                        this.RIP = rip;
                     }
                     break;
 
-                case KeyType.SystemItem:
+                case MXFSystemItem:
                     if (currentPartition != null)
                     {
                         // Store the first system item for every partition
@@ -360,7 +356,7 @@ namespace Myriadbits.MXF
                     break;
 
 
-                case KeyType.Essence:
+                case MXFEssenceElement:
                     if (currentPartition != null)
                     {
                         // Store the first system item for every partition
@@ -374,7 +370,7 @@ namespace Myriadbits.MXF
                         this.AddChild(klv);
                     break;
 
-                case KeyType.Preface:
+                case MXFPreface:
                     this.LogicalBase = klv.CreateLogicalObject();
                     // Normal
                     if (currentPartition != null)
@@ -392,6 +388,94 @@ namespace Myriadbits.MXF
                     break;
             }
         }
+
+        //private void ProcessKLVObject(MXFKLV klv, MXFObject partitions, ref MXFPartition currentPartition, ref int partitionNumber, ref Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
+        //{
+        //    // Is this a header, add to the partitions
+        //    switch (klv.Key.Type)
+        //    {
+        //        case KeyType.Partition:
+        //            currentPartition = klv as MXFPartition;
+        //            currentPartition.File = this;
+        //            currentPartition.PartitionNumber = partitionNumber;
+        //            this.Partitions.Add(currentPartition);
+        //            partitions.AddChild(currentPartition);
+        //            partitionNumber++;
+        //            break;
+
+        //        case KeyType.PrimerPack:
+        //            if (currentPartition != null)
+        //            {
+        //                if (klv is MXFPrimerPack primer)
+        //                {
+        //                    // Let the partition know all primer keys
+        //                    allPrimerKeys = primer.AllKeys;
+        //                    currentPartition.PrimerKeys = primer.AllKeys;
+        //                }
+        //                currentPartition.AddChild(klv); // Add the primer 
+        //            }
+        //            break;
+
+        //        case KeyType.RIP:
+        //            // Only add the RIP when not yet present
+        //            if (this.RIP == null)
+        //            {
+        //                this.AddChild(klv);
+        //                this.RIP = klv as MXFRIP;
+        //            }
+        //            break;
+
+        //        case KeyType.SystemItem:
+        //            if (currentPartition != null)
+        //            {
+        //                // Store the first system item for every partition
+        //                // (required to calculate essence positions)
+        //                if (currentPartition.FirstSystemItem == null)
+        //                    currentPartition.FirstSystemItem = klv as MXFSystemItem;
+        //                currentPartition.AddChild(klv);
+        //            }
+        //            else
+        //                this.AddChild(klv);
+
+        //            // Store the first and the last system item
+        //            if (this.FirstSystemItem == null)
+        //                this.FirstSystemItem = klv as MXFSystemItem;
+        //            this.LastSystemItem = klv as MXFSystemItem;
+        //            break;
+
+
+        //        case KeyType.Essence:
+        //            if (currentPartition != null)
+        //            {
+        //                // Store the first system item for every partition
+        //                // (required to calculate essence positions)
+        //                MXFEssenceElement ee = klv as MXFEssenceElement;
+        //                if (ee.IsPicture && currentPartition.FirstPictureEssenceElement == null)
+        //                    currentPartition.FirstPictureEssenceElement = ee;
+        //                currentPartition.AddChild(klv);
+        //            }
+        //            else
+        //                this.AddChild(klv);
+        //            break;
+
+        //        case KeyType.Preface:
+        //            this.LogicalBase = klv.CreateLogicalObject();
+        //            // Normal
+        //            if (currentPartition != null)
+        //                currentPartition.AddChild(klv);
+        //            else
+        //                this.AddChild(klv);
+        //            break;
+
+        //        default:
+        //            // Normal
+        //            if (currentPartition != null)
+        //                currentPartition.AddChild(klv);
+        //            else
+        //                this.AddChild(klv);
+        //            break;
+        //    }
+        //}
 
         private void DoPostWork(BackgroundWorker worker, Stopwatch sw, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
@@ -426,11 +510,11 @@ namespace Myriadbits.MXF
                 {
                     m_reader.Seek(this.Filesize - ripSize);
                     MXFKLV klv = klvFactory.CreateObject(m_reader, null);
-                    if (klv.Key.Type == KeyType.RIP)
+                    if (klv is MXFRIP rip)
                     {
                         // Yes, RIP found
-                        this.AddChild(klv);
-                        this.RIP = klv as MXFRIP;
+                        this.AddChild(rip);
+                        this.RIP = rip;
                         return true;
                     }
                 }
@@ -499,7 +583,7 @@ namespace Myriadbits.MXF
                 {
                     // create and add the logical child
                     var refObj = r.GetReference();
-                    if(refObj != null)
+                    if (refObj != null)
                     {
                         MXFLogicalObject newLObj = refObj.CreateLogicalObject();
                         lObj.AddChild(newLObj);

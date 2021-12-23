@@ -120,7 +120,7 @@ namespace Myriadbits.MXF
             : base(headerKLV, "Partition", KeyType.Partition)
         {
             this.IsLoaded = false;
-
+ 
             // Determine the partition type
             switch (this.Key[13])
             {
@@ -189,9 +189,10 @@ namespace Myriadbits.MXF
                     {
                         MXFKLV klv = klvFactory.CreateObject(reader, this);
 
-                        if (klv.Key.Type == KeyType.Partition || klv.Key.Type == KeyType.RIP || klv.Key.Type == KeyType.PrimerPack)
-                            break; // Next partition or other segment, quit reading							
-
+                        if (klv is MXFPartition or MXFRIP or MXFPrimerPack)
+                        {
+                            break; // Next partition or end of file (RIP) other segment, quit reading							
+                        }
                         if (!this.Children.Any(a => a.Offset == klv.Offset))
                         {
                             // Normal, just add the new child

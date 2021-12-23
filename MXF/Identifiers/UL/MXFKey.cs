@@ -40,9 +40,9 @@ namespace Myriadbits.MXF
 
         #region properties
 
-        [Browsable(false)]
-        // TODO make a private setter for this prop
-        public KeyType Type { get; set; }
+        //TODO make a private setter for this prop
+        //[Browsable(false)]
+        //public KeyType Type { get; set; }
 
         /// <summary>
         /// True if found in SMPTE RP210 or RP224
@@ -86,7 +86,7 @@ namespace Myriadbits.MXF
 
         public MXFKey(params byte[] list) : base(list)
         {
-            this.Type = KeyType.None;
+            //this.Type = KeyType.None;
             FindKeyName();
 
             ULLength = this.Length;
