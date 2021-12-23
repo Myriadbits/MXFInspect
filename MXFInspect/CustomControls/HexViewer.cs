@@ -69,10 +69,23 @@ namespace Myriadbits.MXFInspect
                     reader.Seek(obj.Offset);
                     data = reader.ReadArray(reader.ReadByte, data.Length);
                 }
-                int maxNumOfDigits = obj.GetMaxOffsetDigitCount();
+                int maxNumOfDigits = GetDigitCountOfLastKLV(obj);
 
                 this.Text = GetHexDump(obj.Offset, len, maxNumOfDigits, BytesPerLine, data);
             }
+        }
+
+
+        // TODO: better move to file of the only caller 
+        private int GetDigitCountOfLastKLV(MXFObject obj)
+        {
+            // get the object with the greatest offset value
+            long maxOffset = obj.Root().Descendants().Max(o => o.Offset);
+
+            // count the digits
+            int digits = 1;
+            while ((maxOffset /= 10) != 0) ++digits;
+            return digits;
         }
 
         public void RefreshView()

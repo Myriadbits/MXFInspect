@@ -69,13 +69,13 @@ namespace Myriadbits.MXF
 
         public static bool IsKAGSizeOfAllPartitionsEqual(this MXFFile file, uint size)
         {
-            return file.Partitions.Select(p => p.KagSize).All(s => s == size);
+            return file.Partitions.All(p => p.KagSize == size);
         }
 
         public static bool AreAllPartitionsOP1a(this MXFFile file)
         {
             MXFKey op1a = new MXFKey(0x06, 0x0E, 0x2B, 0x34, 0x04, 0x01, 0x01, 0x01, 0x0D, 0x01, 0x02, 0x01, 0x01, 0x01, 0x09, 0x00);
-            return file.Partitions.Select(p => p.OP).Any(s => s == op1a);
+            return file.Partitions.All(p => p.OP == op1a);
         }
 
         public static bool IsFooterClosedAndComplete(this MXFFile file)
@@ -171,16 +171,19 @@ namespace Myriadbits.MXF
             return lObjs.Select(o => o.Object as T);
         }
 
-        // TODO: better move to file of the only caller 
-        public static int GetMaxOffsetDigitCount(this MXFObject obj)
-        {
-                // get the object with the greatest offset value
-                long maxOffset = obj.Root().Descendants().Max(o => o.Offset);
 
-                // count the digits
-                int digits = 1;
-                while ((maxOffset /= 10) != 0) ++digits;
-                return digits;
+        public static IEnumerable<T> GetDescendantsOfType<T>(this MXFFile file) where T : MXFObject
+        {
+            file.LoadAllParitions();
+            return file.Descendants().OfType<T>();
+        }
+
+        public static void LoadAllParitions(this MXFFile file)
+        {
+            foreach (MXFPartition p in file.Partitions)
+            {
+                p.Load();
+            }
         }
 
     }
