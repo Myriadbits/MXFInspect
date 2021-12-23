@@ -53,6 +53,7 @@ namespace Myriadbits.MXF
         public bool IsPicture { get; set; }
 
         [Category(CATEGORYNAME)]
+        // TODO helper property for indexvalidator that should be avoided
         public long EssenceOffset
         {
             get
@@ -64,6 +65,7 @@ namespace Myriadbits.MXF
         }
 
         [Browsable(false)]
+        // TODO helper property for indexvalidator that should be avoided
         public bool Indexed { get; set; }
 
         public MXFEssenceElement(MXFReader reader, MXFKLV headerKLV)

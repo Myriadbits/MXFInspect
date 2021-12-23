@@ -109,9 +109,11 @@ namespace Myriadbits.MXF
 		public string UserDateFullFrameNb { get; set; }
 
 		[Browsable(false)]
+		// TODO helper property for indexvalidator that should be avoided
 		public bool Indexed { get; set; }
 
 		[Category(CATEGORYNAME)]
+		// TODO helper property for indexvalidator that should be avoided
 		public long EssenceOffset
 		{
 			get
