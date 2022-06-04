@@ -70,7 +70,6 @@ namespace Myriadbits.MXF
             this.Offset = klv.Offset;
             this.Key = klv.Key;
             this.Key.Name = string.IsNullOrWhiteSpace(klv.Key.Name) ? name : klv.Key.Name;
-            //this.Key.Type = type;
             this.BER = klv.BER;
             this.Length = klv.Length;
             this.DataOffset = klv.DataOffset;
