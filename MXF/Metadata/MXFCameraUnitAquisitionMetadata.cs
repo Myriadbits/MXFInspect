@@ -87,9 +87,10 @@ namespace Myriadbits.MXF
         
 
 
-        public MXFCameraUnitAquisitionMetadata(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "CameraUnitAcquisitionMetadata")
+        public MXFCameraUnitAquisitionMetadata(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
+            this.MetaDataName = "MetaDictionary";
         }
 
 

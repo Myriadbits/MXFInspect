@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,17 +33,28 @@ namespace Myriadbits.MXF.KLV
     {
         private readonly byte[] theBytes = null;
 
-        //[Browsable(false)]
-        //public int Length => theBytes.Length;
+        [Browsable(false)]
+        public int ArrayLength => theBytes.Length;
 
         public byte this[int index] => theBytes[index];
 
         public ByteArray(params byte[] bytes)
         {
-            theBytes = new byte[bytes.Length];
-            for (int n = 0; n < bytes.Length; n++)
+            if (bytes == null)
             {
-                theBytes[n] = bytes[n];
+                throw new ArgumentNullException("bytes cannot be null");
+            }
+            else if (bytes.Length == 0)
+            {
+                throw new ArgumentException("There must at least be one byte");
+            }
+            else
+            {
+                theBytes = new byte[bytes.Length];
+                for (int n = 0; n < bytes.Length; n++)
+                {
+                    theBytes[n] = bytes[n];
+                }
             }
         }
 

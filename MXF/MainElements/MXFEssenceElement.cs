@@ -68,9 +68,10 @@ namespace Myriadbits.MXF
         // TODO helper property for indexvalidator that should be avoided
         public bool Indexed { get; set; }
 
-        public MXFEssenceElement(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "EssenceElement", KeyType.Essence)
+        public MXFEssenceElement(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
+            this.Key.Name ??= "EssenceElement";
             if (m_itemTypes.ContainsKey(this.Key[12]))
                 this.ItemType = m_itemTypes[this.Key[12]];
             else

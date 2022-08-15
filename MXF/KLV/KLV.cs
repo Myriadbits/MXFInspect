@@ -33,13 +33,30 @@ namespace Myriadbits.MXF.KLV
 
         public KLVValue Value { get; private set; }
 
+        /// <summary>
+        /// Offset from beginning of the file
+        /// </summary>
+        public long? Offset { get; private set; }
+
+
+        /// <summary>
+        /// Offset of the value(=data), i.e. where the payload begins.
+        /// </summary>
+        public long? ValueOffset { get; private set; }
 
 
         public KLV(KLVKey key, KLVLength length, KLVValue value)
         {
             Key = key;
             Length = length;
+            Value = value;
+            if (Offset.HasValue)
+            {
+                ValueOffset = Offset.Value + Key.ArrayLength + Length.ArrayLength;
+            }
         }
+
+
 
         //public KLV(KLVKey key, KLVLength length)
         //{
@@ -55,7 +72,7 @@ namespace Myriadbits.MXF.KLV
 
         public void test()
         {
-            b = new KLVKey(0x00);
+            var b = new KLVKey(0x00);
         }
     }
 

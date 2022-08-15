@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public MXFUUID InstanceId { get; set; }
 
-        public MXFMetaDictionary(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "MetaDictionary")
+        public MXFMetaDictionary(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
             this.MetaDataName = "MetaDictionary";
         }

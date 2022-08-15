@@ -52,6 +52,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length of KLV in bytes")]
+        //TODO this is not the length of KLV but the length of the object!!!
         public long Length
         {
             get

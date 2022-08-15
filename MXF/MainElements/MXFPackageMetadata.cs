@@ -30,8 +30,8 @@ namespace Myriadbits.MXF
     {
         private int nofSizeSize = 2;
 
-        public MXFPackageMetaData(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "PackageMetadata", KeyType.PackageMetaDataSet)
+        public MXFPackageMetaData(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
             if (this.Key[5] == 0x63)
                 nofSizeSize = 4;

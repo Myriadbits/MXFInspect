@@ -50,10 +50,10 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.14010000")]
         public string MetaDefinitionDescription { get; set; }
 
-        public MXFMetaDefinition(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "MetaDefinition")
+        public MXFMetaDefinition(MXFReader reader, MXFKLV klv, string metadataName)
+            : base(reader, klv)
         {
-
+            this.MetaDataName = "MetaDefinition";
         }
 
         protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)

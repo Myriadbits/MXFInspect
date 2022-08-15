@@ -36,12 +36,11 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         [Description("Type of metadata node")]
         [Browsable(false)]
-        public string MetaDataName { get; set; }
+        public string MetaDataName { get; protected set; }
 
-        public MXFMetadataBaseclass(MXFReader reader, MXFKLV headerKLV, string metaDataName)
-            : base(reader, headerKLV, metaDataName)
+        public MXFMetadataBaseclass(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
-            this.MetaDataName = metaDataName;
         }
 
         public override string ToString()

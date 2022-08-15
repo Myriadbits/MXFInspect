@@ -46,8 +46,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.08000000")]
         public MXFKey LinkedGenerationID { get; set; }
 
-        public MXFInterchangeObject(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+        public MXFInterchangeObject(MXFReader reader, MXFKLV klv, string metadataName)
+            : base(reader, klv)
         {
         }
 

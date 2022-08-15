@@ -42,12 +42,12 @@ namespace Myriadbits.MXF
 
 		/// <summary>
 		/// Primerpack constructor 
-		/// All keys will be passed to the partition and used in the metadatabase class to describe unkown/optional tags
+		/// All keys will be passed to the partition and used in the metadatabase class to describe unknown/optional tags
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="headerKLV"></param>
-		public MXFPrimerPack(MXFReader reader, MXFKLV headerKLV)
-			: base(headerKLV, "PrimerPack", KeyType.PrimerPack)
+		public MXFPrimerPack(MXFReader reader, MXFKLV klv)
+			: base(reader, klv)
 		{
 			this.LocalTagCount = ReadTagList(reader, "LocalTags");
 		}

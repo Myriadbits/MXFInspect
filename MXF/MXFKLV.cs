@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
@@ -44,8 +45,11 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
+        //[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        //public MXFBER BER { get; private set; }
+
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        public MXFBER BER { get; private set; }
+        public KLVLength KLVLength { get; private set; }
 
         /// <summary>
         /// Create the KLV key
@@ -55,27 +59,23 @@ namespace Myriadbits.MXF
             : base(reader)
         {
             this.Key = CreateAndValidateKey(reader);
-            this.BER = DecodeBerLength(reader);
-            this.Length = this.BER.Size;
+            this.KLVLength = KLVLengthParser.ParseKLVLength(reader, KLVLength.LengthEncodingEnum.BER);
+            this.Length = (long)this.KLVLength.LengthValue;
             this.DataOffset = reader.Position;
         }
 
-        /// <summary>
-        /// Copy constructor
-        /// </summary>
-        /// <param name="reader"></param>
-        /// TODO: remove copy ctor as it introduces hard to find bugs through the inheritance chain
-        public MXFKLV(MXFKLV klv, string name, KeyType type)
+        //copy ctor
+        public MXFKLV(MXFReader reader, MXFKLV klv)
         {
             this.Offset = klv.Offset;
             this.Key = klv.Key;
-            this.Key.Name = string.IsNullOrWhiteSpace(klv.Key.Name) ? name : klv.Key.Name;
-            this.BER = klv.BER;
+            //this.Key.Name = string.IsNullOrWhiteSpace(klv.Key.Name) ? name : klv.Key.Name;
+            //this.BER = klv.BER;
+            this.KLVLength = klv.KLVLength;
             this.Length = klv.Length;
             this.DataOffset = klv.DataOffset;
             this.Partition = klv.Partition;
         }
-
 
         /// <summary>
         /// Validate if the current position is a valid SMPTE key

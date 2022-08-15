@@ -33,8 +33,8 @@ namespace Myriadbits.MXF.Metadata
         [MultiLine]
         public string Text { get; set; }
 
-        public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "XML Document Text (Indirect)", KeyType.MetaData)
+        public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
             Initialize(reader);
         }

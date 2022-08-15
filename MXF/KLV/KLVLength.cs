@@ -22,65 +22,114 @@
 #endregion
 
 using System;
+using System.Linq;
 
 namespace Myriadbits.MXF.KLV
 {
     public class KLVLength : ByteArray
     {
-        public enum LengthEncoding
+        public enum LengthEncodingEnum
         {
             OneByte = 1,
             TwoBytes = 2,
             FourBytes = 4,
-            BER_ShortForm,
-            BER_LongForm,
-            BER_Indefinite
-
+            BER
         }
 
-        public KLVLength(LengthEncoding lengthEncoding, params byte[] bytes) : base(bytes)
+        public enum BERFormEnum
         {
-            switch (lengthEncoding)
+            ShortForm,
+            LongForm,
+            Indefinite // Not supported
+        }
+
+        public LengthEncodingEnum LengthEncoding { get; private set; }
+
+        public long LengthValue { get; private set; }
+
+        public BERFormEnum? BERForm { get; private set; }
+        public int? AdditionalOctets { get; private set; }
+
+        public KLVLength(LengthEncodingEnum lengthEncoding, long lengthValue, params byte[] bytes) : base(bytes)
+        {
+            LengthEncoding = lengthEncoding;
+            LengthValue = lengthValue;
+
+            switch (LengthEncoding)
             {
-                case LengthEncoding.OneByte:
-                case LengthEncoding.TwoBytes:
-                case LengthEncoding.FourBytes:
+                case LengthEncodingEnum.OneByte:
+                case LengthEncodingEnum.TwoBytes:
+                case LengthEncodingEnum.FourBytes:
+                    long calculatedLengthValue = KLVLengthParser.ToLong(bytes);
                     // TODO do we need to check if each byte does not exceed 0x7F?
-                    if (bytes.Length != (int)LengthEncoding.OneByte)
+                    if (bytes.Length != (int)lengthEncoding)
                     {
-                        throw new ArgumentException($"Array length ({bytes.Length}) does not correspond to given length encoding ({lengthEncoding})");
+                        throw new ArgumentException($"Declared length encoding ({lengthEncoding}) does not correspond to given array length ({bytes.Length})");
+                    }
+                    else if (calculatedLengthValue != LengthValue)
+                    {
+                        throw new ArgumentException($"Byte array value ({calculatedLengthValue}) does not match with given length value ({LengthValue})");
                     }
                     break;
 
-                case LengthEncoding.BER_ShortForm:
-                    if (bytes.Length != 1)
+                case LengthEncodingEnum.BER:
+                    switch (bytes[0])
                     {
-                        throw new ArgumentException($"Array must consist of one byte in BER Short Form");
-                    }
-                    else if (bytes.Length > 0x7F)
-                    {
-                        throw new ArgumentException($"Byte must not exceed 0x7F (127) in BER Short Form)");
+                        case > 0x80 when bytes.Length == 1:
+                            throw new ArgumentException($"First byte indicates BER Long Form, but byte array consists of only one byte");
+
+                        case > 0x80 when bytes.Length > 1:
+                            // TODO check value against array
+                            if (KLVLengthParser.ToLong(bytes.Skip(1).ToArray()) != LengthValue)
+                            {
+                                throw new ArgumentException($"Byte array value ({BitConverter.ToUInt32(bytes)}) does not match with given length value ({LengthValue})");
+                            }
+
+                            BERForm = BERFormEnum.LongForm;
+                            AdditionalOctets = bytes.Length - 1;
+                            break;
+
+                        case 0x80:
+                            //TODO is this the correct way to handle this?
+                            BERForm = BERFormEnum.Indefinite;
+                            throw new NotSupportedException("BER Indefinite Length is not supported");
+
+                        case <= 0x7F when bytes.Length > 1:
+                            throw new ArgumentException($"First byte indicates BER Long Form, but byte array consists of only one byte");
+
+                        case <= 0x7F when bytes.Length == 1:
+                            if (bytes[0] != LengthValue)
+                            {
+                                throw new ArgumentException($"Byte value ({bytes[0]}) does not match with given length value ({LengthValue})");
+                            }
+                            else
+                            {
+                                BERForm = BERFormEnum.ShortForm;
+                                AdditionalOctets = 0;
+                            }
+                            break;
                     }
                     break;
-
-                case LengthEncoding.BER_LongForm:
-                    if (bytes.Length <= 1)
-                    {
-                        throw new ArgumentException($"Array must consist of at least two bytes in BER Long Form");
-                    }
-                    else if (bytes[1] <= 0x80)
-                    {
-                        throw new ArgumentException($"Invalid first byte for BER Long Form. Must be greater than 0x80 (128)");
-                    }
-                    break;
-
-                case LengthEncoding.BER_Indefinite:
-                    //TODO is this the correct way to handle this?
-                    throw new NotSupportedException("BER Indefinite Length is not supported");
-
             }
+        }
 
+        public override string ToString()
+        {
+            if (LengthEncoding == LengthEncodingEnum.BER)
+            {
+                if (BERForm.Value == BERFormEnum.LongForm)
+                {
+                    return $"{LengthEncoding} {BERForm.Value}, 1 + {AdditionalOctets} Octets ({LengthValue})";
+                }
+                else
+                {
+                    return $"{LengthEncoding} {BERForm.Value}, ({LengthValue})";
+                }
+            }
+            else
+            {
+                return $"{LengthEncoding}, ({LengthValue})";
+            }
         }
     }
-
 }

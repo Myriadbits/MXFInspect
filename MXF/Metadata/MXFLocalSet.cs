@@ -33,9 +33,10 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFLocalSet : MXFKLV
     {
-        public MXFLocalSet(MXFReader reader, MXFKLV headerKLV, string metaDataName)
-            : base(headerKLV, metaDataName, KeyType.MetaData)
+        public MXFLocalSet(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
+            this.Key.Name ??= "LocalSet";
             ParseTags(reader);
         }
 

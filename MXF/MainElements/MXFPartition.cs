@@ -116,8 +116,8 @@ namespace Myriadbits.MXF
         public bool IsLoaded { get; set; }
 
 
-        public MXFPartition(MXFReader reader, MXFKLV headerKLV)
-            : base(headerKLV, "Partition", KeyType.Partition)
+        public MXFPartition(MXFReader reader, MXFKLV klv)
+            : base(reader, klv)
         {
             this.IsLoaded = false;
  

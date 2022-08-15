@@ -28,8 +28,8 @@ namespace Myriadbits.MXF
 {	
 	public class MXFRIP : MXFKLV
 	{
-		public MXFRIP(MXFReader reader, MXFKLV headerKLV)
-			: base(headerKLV, "RIP", KeyType.RIP)
+		public MXFRIP(MXFReader reader, MXFKLV klv)
+			: base(reader, klv)
 		{
 			Initialize(reader);
 		}
