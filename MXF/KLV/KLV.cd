@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Myriadbits.MXF.ByteArray">
+    <Position X="3" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAiQAAAAAAAAIQAKIEAAAAAAAAAiA=</HashCode>
+      <FileName>KLV\ByteArray.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Myriadbits.MXF.KLVKey">
+    <Position X="1" Y="5.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Myriadbits.MXF.KLVKey.KeyLengths" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>KLV\KLVKey.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KLV\KLVKey.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.KLVLength">
+    <Position X="3.75" Y="5.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Myriadbits.MXF.KLVLength.LengthEncodings" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>KLV\KLVLength.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Myriadbits.MXF.KLVLength.BERForms" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>KLV\KLVLength.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAEAAAAAAAAAEAAAAAAAAIAIAAAAAA=</HashCode>
+      <FileName>KLV\KLVLength.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.KLVValue">
+    <Position X="6.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KLV\KLVValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.UL">
+    <Position X="1" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>KLV\UL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.KLV.ByteArrayExtensions">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>KLV\ByteArrayExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

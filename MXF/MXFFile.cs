@@ -183,6 +183,7 @@ namespace Myriadbits.MXF
         /// </summary>
         protected void ParsePartial(BackgroundWorker worker)
         {
+
             Stopwatch sw = Stopwatch.StartNew();
 
             MXFKLVFactory klvFactory = new MXFKLVFactory();
@@ -197,6 +198,17 @@ namespace Myriadbits.MXF
                 this.Filesize = m_reader.Size;
                 MXFObject partitions = new MXFNamedObject("Partitions", 0);
                 this.AddChild(partitions);
+
+
+                // Test with new KLV
+                KLVParser parser = new KLVParser(m_reader);
+                List<KLVTriplet> list = new List<KLVTriplet>();
+                while (!m_reader.EOF)
+                {
+                    var klv = parser.GetNextKLV();
+                    list.Add(klv);
+                }
+
 
                 // Start with trying to find the RIP
                 bool ripFound = ReadRIP(klvFactory);

@@ -22,12 +22,13 @@
 #endregion
 
 using System;
+using System.Linq;
 
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
 {
     public class KLVKey : ByteArray
     {
-        public enum KeyLength
+        public enum KeyLengths
         {
 
             OneByte = 1,
@@ -36,16 +37,16 @@ namespace Myriadbits.MXF.KLV
             SixteenBytes = 16,
         }
 
-        public KLVKey(params byte[] bytes) : base(bytes)
+        public KeyLengths KeyLength { get; }
+
+        public KLVKey(KeyLengths keyLength, params byte[] bytes) : base(bytes)
         {
-            // check if valid key length
-            foreach (var keyLength in Enum.GetValues<KeyLength>())
+            // check if passed array length is contained in defined key lengths
+            if ((int)keyLength != bytes.Length)
             {
-                if ((int)keyLength != bytes.Length)
-                {
-                    throw new ArgumentException($"Key length of {bytes.Length} is not a valid key length");
-                }
+                throw new ArgumentException($"Key length of {bytes.Length} is not a valid key length");
             }
+            KeyLength = keyLength;
         }
     }
 

@@ -21,14 +21,15 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using System;
 using System.Linq;
 
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
 {
     public class KLVLength : ByteArray
     {
-        public enum LengthEncodingEnum
+        public enum LengthEncodings
         {
             OneByte = 1,
             TwoBytes = 2,
@@ -36,31 +37,31 @@ namespace Myriadbits.MXF.KLV
             BER
         }
 
-        public enum BERFormEnum
+        public enum BERForms
         {
             ShortForm,
             LongForm,
             Indefinite // Not supported
         }
 
-        public LengthEncodingEnum LengthEncoding { get; private set; }
+        public LengthEncodings LengthEncoding { get; }
 
-        public long LengthValue { get; private set; }
+        public long LengthValue { get; }
 
-        public BERFormEnum? BERForm { get; private set; }
-        public int? AdditionalOctets { get; private set; }
+        public BERForms? BERForm { get; }
+        public int? AdditionalOctets { get; }
 
-        public KLVLength(LengthEncodingEnum lengthEncoding, long lengthValue, params byte[] bytes) : base(bytes)
+        public KLVLength(LengthEncodings lengthEncoding, long lengthValue, params byte[] bytes) : base(bytes)
         {
             LengthEncoding = lengthEncoding;
             LengthValue = lengthValue;
 
             switch (LengthEncoding)
             {
-                case LengthEncodingEnum.OneByte:
-                case LengthEncodingEnum.TwoBytes:
-                case LengthEncodingEnum.FourBytes:
-                    long calculatedLengthValue = KLVLengthParser.ToLong(bytes);
+                case LengthEncodings.OneByte:
+                case LengthEncodings.TwoBytes:
+                case LengthEncodings.FourBytes:
+                    long calculatedLengthValue = bytes.ToLong();
                     // TODO do we need to check if each byte does not exceed 0x7F?
                     if (bytes.Length != (int)lengthEncoding)
                     {
@@ -72,7 +73,7 @@ namespace Myriadbits.MXF.KLV
                     }
                     break;
 
-                case LengthEncodingEnum.BER:
+                case LengthEncodings.BER:
                     switch (bytes[0])
                     {
                         case > 0x80 when bytes.Length == 1:
@@ -80,18 +81,18 @@ namespace Myriadbits.MXF.KLV
 
                         case > 0x80 when bytes.Length > 1:
                             // TODO check value against array
-                            if (KLVLengthParser.ToLong(bytes.Skip(1).ToArray()) != LengthValue)
+                            if (bytes.Skip(1).ToArray().ToLong() != LengthValue)
                             {
                                 throw new ArgumentException($"Byte array value ({BitConverter.ToUInt32(bytes)}) does not match with given length value ({LengthValue})");
                             }
 
-                            BERForm = BERFormEnum.LongForm;
+                            BERForm = BERForms.LongForm;
                             AdditionalOctets = bytes.Length - 1;
                             break;
 
                         case 0x80:
                             //TODO is this the correct way to handle this?
-                            BERForm = BERFormEnum.Indefinite;
+                            BERForm = BERForms.Indefinite;
                             throw new NotSupportedException("BER Indefinite Length is not supported");
 
                         case <= 0x7F when bytes.Length > 1:
@@ -104,7 +105,7 @@ namespace Myriadbits.MXF.KLV
                             }
                             else
                             {
-                                BERForm = BERFormEnum.ShortForm;
+                                BERForm = BERForms.ShortForm;
                                 AdditionalOctets = 0;
                             }
                             break;
@@ -115,9 +116,9 @@ namespace Myriadbits.MXF.KLV
 
         public override string ToString()
         {
-            if (LengthEncoding == LengthEncodingEnum.BER)
+            if (LengthEncoding == LengthEncodings.BER)
             {
-                if (BERForm.Value == BERFormEnum.LongForm)
+                if (BERForm.Value == BERForms.LongForm)
                 {
                     return $"{LengthEncoding} {BERForm.Value}, 1 + {AdditionalOctets} Octets ({LengthValue})";
                 }

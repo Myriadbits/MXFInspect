@@ -139,6 +139,7 @@ namespace Myriadbits.MXF
             byte[] validULPrefix = { 0x06, 0x0e, 0x2b, 0x34 };
             int foundBytes = 0;
 
+            // TODO implement Boyer-Moore algorithm
             while (!this.EOF)
             {
                 if (this.ReadByte() == validULPrefix[foundBytes])
@@ -463,7 +464,7 @@ namespace Myriadbits.MXF
             return (MXFUserDataMode)this.ReadByte();
         }
 
-        public T[] ReadArray<T>(Func<T> readFunction, int count)
+        public T[] ReadArray<T>(Func<T> readFunction, long count)
         {
             T[] retval = new T[count];
             for (int i = 0; i < count; i++)

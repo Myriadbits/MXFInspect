@@ -21,7 +21,6 @@
 //
 #endregion
 
-using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
@@ -59,7 +58,7 @@ namespace Myriadbits.MXF
             : base(reader)
         {
             this.Key = CreateAndValidateKey(reader);
-            this.KLVLength = KLVLengthParser.ParseKLVLength(reader, KLVLength.LengthEncodingEnum.BER);
+            this.KLVLength = KLVLengthParser.ParseKLVLength(reader, KLVLength.LengthEncodings.BER);
             this.Length = (long)this.KLVLength.LengthValue;
             this.DataOffset = reader.Position;
         }

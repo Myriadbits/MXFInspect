@@ -21,27 +21,20 @@
 //
 #endregion
 
-using System;
-using System.Linq;
+using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class UL : KLVKey
+    public static class KLVKeyParser
     {
-        // TODO static really needed?
-        public static readonly byte[] ValidULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
-
-        public UL(params byte[] bytes) : base(KeyLengths.SixteenBytes, bytes)
+        public static KLVKey ParseKLVKey(MXFReader reader, KeyLengths keyLength)
         {
-            if (bytes.Length != (int)KeyLengths.SixteenBytes)
-            {
-                throw new ArgumentException("Wrong number of bytes. A SMPTE Universal Label must consist of exactly 16 bytes");
-            }
-            else if (!bytes.Take(4).SequenceEqual(ValidULPrefix))
-            {
-                throw new ArgumentException("Wrong byte value. A SMPTE Universal Label must start with the following first 4-byte values: 0x06, 0x0e, 0x2b, 0x34");
-            }
+            return new KLVKey(keyLength, reader.ReadArray(reader.ReadByte, (int)keyLength));
+        }
+
+        public static UL ParseUL(MXFReader reader)
+        {
+            return new UL(reader.ReadArray(reader.ReadByte, 16));
         }
     }
-
 }

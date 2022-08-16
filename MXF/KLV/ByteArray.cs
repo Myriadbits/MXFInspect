@@ -27,7 +27,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
 {
     public abstract class ByteArray : IReadOnlyList<byte>, IEquatable<ByteArray>
     {

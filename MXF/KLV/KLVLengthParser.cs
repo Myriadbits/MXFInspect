@@ -22,27 +22,26 @@
 #endregion
 
 
+using Myriadbits.MXF.KLV;
 using System;
-using System.Drawing;
 using System.Linq;
-using System.Reflection.PortableExecutable;
-using static Myriadbits.MXF.KLV.KLVLength;
+using static Myriadbits.MXF.KLVLength;
 
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
 {
     public static class KLVLengthParser
     {
-        public static KLVLength ParseKLVLength(MXFReader reader, LengthEncodingEnum encoding)
+        public static KLVLength ParseKLVLength(MXFReader reader, LengthEncodings encoding)
         {
 
             switch (encoding)
             {
-                case LengthEncodingEnum.OneByte:
-                case LengthEncodingEnum.TwoBytes:
-                case LengthEncodingEnum.FourBytes:
+                case LengthEncodings.OneByte:
+                case LengthEncodings.TwoBytes:
+                case LengthEncodings.FourBytes:
                     return ParseSimpleKLVLength(reader, (int)encoding);
 
-                case LengthEncodingEnum.BER:
+                case LengthEncodings.BER:
                     return ParseBERKLVLength(reader);
 
                 default:
@@ -53,8 +52,8 @@ namespace Myriadbits.MXF.KLV
         private static KLVLength ParseSimpleKLVLength(MXFReader reader, int numOfBytes)
         {
             byte[] bytes = reader.ReadArray(reader.ReadByte, numOfBytes);
-            long lengthValue = ToLong(bytes);
-            return new KLVLength((LengthEncodingEnum)numOfBytes, lengthValue, bytes);
+            long lengthValue = bytes.ToLong();
+            return new KLVLength((LengthEncodings)numOfBytes, lengthValue, bytes);
         }
 
         private static KLVLength ParseBERKLVLength(MXFReader reader)
@@ -65,7 +64,7 @@ namespace Myriadbits.MXF.KLV
             {
                 case <= 0x7F:
                     // short form, size = length
-                    return new KLVLength(LengthEncodingEnum.BER, bytes[0], bytes);
+                    return new KLVLength(LengthEncodings.BER, bytes[0], bytes);
 
                 case 0x80:
                     // Indefinite form
@@ -85,20 +84,10 @@ namespace Myriadbits.MXF.KLV
                     }
 
                     byte[] additionalOctets = reader.ReadArray(reader.ReadByte, additionalOctetsCount);
-                    long lengthValue = ToLong(additionalOctets);
+                    long lengthValue = additionalOctets.ToLong();
                     bytes = bytes.Concat(additionalOctets).ToArray();
-                    return new KLVLength(LengthEncodingEnum.BER, lengthValue, bytes);
+                    return new KLVLength(LengthEncodings.BER, lengthValue, bytes);
             }
-        }
-
-        public static long ToLong(byte[] theBytes)
-        {
-            long lengthValue = 0;
-            for (int i = 0; i < theBytes.Length; i++)
-            {
-                lengthValue = lengthValue << 8 | theBytes[i];
-            }
-            return lengthValue;
         }
     }
 }
