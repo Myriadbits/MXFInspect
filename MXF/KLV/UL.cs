@@ -22,14 +22,43 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Myriadbits.MXF
 {
     public class UL : KLVKey
     {
-        // TODO static really needed?
+        private const string CATEGORYNAME = "Key";
+
         public static readonly byte[] ValidULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
+
+        #region properties
+
+        [Category(CATEGORYNAME)]
+        [Description("Identifies the category of registry described (e.g. Dictionaries)")]
+        [TypeConverter(typeof(EnumDescriptionConverter))]
+        public ULCategories? CategoryDesignator { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Identifies the specific register in a category (e.g. Metadata Dictionaries)")]
+        [TypeConverter(typeof(EnumDescriptionConverter))]
+        public ULRegistries? RegistryDesignator { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Designator of the structure variant within the given registry designator")]
+        public byte StructureDesignator { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Version of the given register which first defines the item specified by the Item Designator")]
+        public byte VersionNumber { get; private set; }
+
+        [Category(CATEGORYNAME)]
+        [Description("Unique identification of the particular item within the context of the UL Designator")]
+        [TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] ItemDesignator { get; private set; }
+        #endregion
+
 
         public UL(params byte[] bytes) : base(KeyLengths.SixteenBytes, bytes)
         {
@@ -40,6 +69,176 @@ namespace Myriadbits.MXF
             else if (!bytes.Take(4).SequenceEqual(ValidULPrefix))
             {
                 throw new ArgumentException("Wrong byte value. A SMPTE Universal Label must start with the following first 4-byte values: 0x06, 0x0e, 0x2b, 0x34");
+            }
+
+            SetCategoryAndRegistryDesignator();
+
+            StructureDesignator = this[6];
+            VersionNumber = this[7];
+            ItemDesignator = bytes.Skip(8).ToArray();
+        }
+
+        private void SetCategoryAndRegistryDesignator()
+        {
+            switch (this[4])
+            {
+                case 0x01:
+                    CategoryDesignator = ULCategories.Elements;
+                    switch (this[5])
+                    {
+                        case 0x01:
+                            RegistryDesignator = ULRegistries.MetadataDictionaries;
+                            break;
+                        case 0x02:
+                            RegistryDesignator = ULRegistries.EssenceDictionaries;
+                            break;
+                        case 0x03:
+                            RegistryDesignator = ULRegistries.ControlDictionaries;
+                            break;
+                        case 0x04:
+                            RegistryDesignator = ULRegistries.TypesDictionaries;
+                            break;
+                        default:
+                            RegistryDesignator = null;
+                            break;
+                    }
+                    break;
+
+                case 0x02:
+                    CategoryDesignator = ULCategories.Groups;
+                    switch (this[5])
+                    {
+                        // Universal sets
+
+                        case 0x01:
+                            RegistryDesignator = ULRegistries.UniversalSet;
+                            break;
+
+                        // Global sets
+
+                        case 0x02:
+                            RegistryDesignator = ULRegistries.GlobalSet_BER;
+                            break;
+                        case 0x22:
+                            RegistryDesignator = ULRegistries.GlobalSet_1Byte;
+                            break;
+                        case 0x42:
+                            RegistryDesignator = ULRegistries.GlobalSet_2Bytes;
+                            break;
+                        case 0x62:
+                            RegistryDesignator = ULRegistries.GlobalSet_4Bytes;
+                            break;
+
+                        // Local sets
+
+                        case 0x03:
+                            RegistryDesignator = ULRegistries.LocalSet_BER_1Byte;
+                            break;
+                        case 0x0b:
+                            RegistryDesignator = ULRegistries.LocalSet_BER_OIDBER;
+                            break;
+                        case 0x13:
+                            RegistryDesignator = ULRegistries.LocalSet_BER_2Bytes;
+                            break;
+                        case 0x1b:
+                            RegistryDesignator = ULRegistries.LocalSet_BER_4Bytes;
+                            break;
+                        case 0x23:
+                            RegistryDesignator = ULRegistries.LocalSet_1Byte_1Byte;
+                            break;
+                        case 0x2b:
+                            RegistryDesignator = ULRegistries.LocalSet_1Byte_OIDBER;
+                            break;
+                        case 0x33:
+                            RegistryDesignator = ULRegistries.LocalSet_1Byte_2Bytes;
+                            break;
+                        case 0x3b:
+                            RegistryDesignator = ULRegistries.LocalSet1_Byte_4Bytes;
+                            break;
+                        case 0x43:
+                            RegistryDesignator = ULRegistries.LocalSet_2Bytes_1Byte;
+                            break;
+                        case 0x4b:
+                            RegistryDesignator = ULRegistries.LocalSet_2Bytes_OIDBER;
+                            break;
+                        case 0x53:
+                            RegistryDesignator = ULRegistries.LocalSet_2Bytes_2Bytes;
+                            break;
+                        case 0x5b:
+                            RegistryDesignator = ULRegistries.LocalSet_2Bytes_4Bytes;
+                            break;
+                        case 0x63:
+                            RegistryDesignator = ULRegistries.LocalSet_4Bytes_1Byte;
+                            break;
+                        case 0x6b:
+                            RegistryDesignator = ULRegistries.LocalSet_4Bytes_OIDBER;
+                            break;
+                        case 0x73:
+                            RegistryDesignator = ULRegistries.LocalSet_4Bytes_2Bytes;
+                            break;
+                        case 0x7b:
+                            RegistryDesignator = ULRegistries.LocalSet_4Bytes_4Bytes;
+                            break;
+
+                        // Variable length packs
+
+                        case 0x04:
+                            RegistryDesignator = ULRegistries.VariableLengthPacks_BER;
+                            break;
+                        case 0x24:
+                            RegistryDesignator = ULRegistries.VariableLengthPacks_1Byte;
+                            break;
+                        case 0x44:
+                            RegistryDesignator = ULRegistries.VariableLengthPacks_2Bytes;
+                            break;
+                        case 0x64:
+                            RegistryDesignator = ULRegistries.VariableLengthPacks_4Bytes;
+                            break;
+
+                        // DefinedLengthPacks
+
+                        case 0x05:
+                            RegistryDesignator = ULRegistries.DefinedLengthPacks;
+                            break;
+
+                        case 0x06:
+                            RegistryDesignator = ULRegistries.Reserved;
+                            break;
+
+                        default:
+                            RegistryDesignator = null;
+                            break;
+                    }
+                    break;
+
+                case 0x03:
+                    CategoryDesignator = ULCategories.ContainersAndWrappers;
+                    switch (this[5])
+                    {
+                        case 0x01:
+                            RegistryDesignator = ULRegistries.SimpleWrappersAndContainers;
+                            break;
+                        case 0x02:
+                            RegistryDesignator = ULRegistries.ComplexWrappersAndContainers;
+                            break;
+                    }
+                    break;
+
+                case 0x04:
+                    CategoryDesignator = ULCategories.Labels;
+                    break;
+
+                case 0x05:
+                    CategoryDesignator = ULCategories.RegisteredPrivate;
+                    break;
+
+                case byte b when b >= 0x06 && b <= 0x7e:
+                    CategoryDesignator = ULCategories.Reserved;
+                    break;
+
+                default:
+                    CategoryDesignator = null;
+                    break;
             }
         }
     }

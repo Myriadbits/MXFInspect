@@ -47,18 +47,6 @@ namespace Myriadbits.MXF
         /// </summary>
         public long ValueOffset { get; }
 
-
-        public KLVTriplet(KLVKey key, KLVLength length, KLVValue value)
-        {
-            Key = key;
-            Length = length;
-            //Value = value;
-            //if (Offset.HasValue)
-            //{
-            //    ValueOffset = Offset.Value + Key.ArrayLength + Length.ArrayLength;
-            //}
-        }
-
         public KLVTriplet(KLVKey key, KLVLength length, long offset)
         {
             Key = key;

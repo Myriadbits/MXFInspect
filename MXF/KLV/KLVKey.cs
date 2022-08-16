@@ -22,7 +22,7 @@
 #endregion
 
 using System;
-using System.Linq;
+using System.Text;
 
 namespace Myriadbits.MXF
 {
@@ -48,6 +48,23 @@ namespace Myriadbits.MXF
             }
             KeyLength = keyLength;
         }
-    }
 
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{ ");
+            int separatorDistance = KeyLength == KeyLengths.SixteenBytes ? 4 : 2;
+            for (int n = 0; n < this.ArrayLength; n++)
+            {
+                if (n % separatorDistance == 0 && n > 0)
+                {
+                    sb.Append('.');
+                }
+
+                sb.Append(string.Format("{0:x2}", this[n]));
+            }
+            sb.Append(" }");
+            return sb.ToString();
+        }
+    }
 }
