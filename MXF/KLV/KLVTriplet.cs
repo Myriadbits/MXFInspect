@@ -32,9 +32,11 @@ namespace Myriadbits.MXF
 
         public KLVLength Length { get; }
 
-        public long TotalLength { get; }
+        public byte[] Value { get; }
 
-        public List<KLVTriplet> KLVSublist { get; private set; }
+        public List<KLVTriplet> KLVSublist { get; set; }
+
+        public long TotalLength { get; }
 
         /// <summary>
         /// Offset from beginning of the file (i.e. position of start of key within file)
@@ -47,19 +49,25 @@ namespace Myriadbits.MXF
         /// </summary>
         public long ValueOffset { get; }
 
+
         public KLVTriplet(KLVKey key, KLVLength length, long offset)
         {
             Key = key;
             Length = length;
             Offset = offset;
             ValueOffset = offset + (int)key.KeyLength + Length.ArrayLength;
-            TotalLength = (int)key.KeyLength + Length.ArrayLength + Length.LengthValue;
+            TotalLength = (int)key.KeyLength + Length.ArrayLength + Length.Value;
+        }
+
+        public KLVTriplet(KLVKey key, KLVLength length, long offset, byte[] value) : this(key, length, offset)
+        {
+            Value = value;
         }
 
         public KLVValue GetValue(MXFReader reader)
         {
             reader.Seek(ValueOffset);
-            return new KLVValue(reader.ReadArray(reader.ReadByte, Length.LengthValue));
+            return new KLVValue(reader.ReadArray(reader.ReadByte, Length.Value));
         }
     }
 

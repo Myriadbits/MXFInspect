@@ -22,6 +22,9 @@
 #endregion
 
 
+using System.Collections.Generic;
+using System.Linq;
+using static Myriadbits.MXF.KLVKey;
 using static Myriadbits.MXF.KLVLength;
 
 namespace Myriadbits.MXF
@@ -36,7 +39,7 @@ namespace Myriadbits.MXF
             _reader = reader;
         }
 
-        public KLVTriplet GetNextKLV1()
+        private KLVTriplet GetNextKLV1()
         {
             UL ul;
 
@@ -47,7 +50,7 @@ namespace Myriadbits.MXF
             catch (System.Exception)
             {
                 SeekForNextPotentialKey();
-                GetNextKLV();
+                GetNextMXFPack();
                 throw;
             }
             finally
@@ -59,18 +62,129 @@ namespace Myriadbits.MXF
             return null;
         }
 
-
-        public KLVTriplet GetNextKLV()
+        public KLVTriplet GetNextMXFPack()
         {
-            var ul = KLVKeyParser.ParseUL(_reader);
-            var length = KLVLengthParser.ParseKLVLength(_reader, LengthEncodings.BER);
-            var klv = new KLVTriplet(ul, length, actualOffset);
+            var klv = ParseMXFKLV(actualOffset);
+
+            // TODO really neccessary this type check?
+            if (klv.Key is UL ul)
+            {
+                if (ul.CategoryDesignator == ULCategories.Groups)
+                {
+                    switch (ul.RegistryDesignator)
+                    {
+                        //case ULRegistries.MetadataDictionaries:
+                        //    break;
+                        //case ULRegistries.EssenceDictionaries:
+                        //    break;
+                        //case ULRegistries.ControlDictionaries:
+                        //    break;
+                        //case ULRegistries.TypesDictionaries:
+                        //    break;
+                        //case ULRegistries.GlobalSet_1Byte:
+                        //    break;
+                        //case ULRegistries.GlobalSet_2Bytes:
+                        //    break;
+                        //case ULRegistries.GlobalSet_4Bytes:
+                        //    break;
+                        //case ULRegistries.LocalSet_BER_OIDBER:
+                        //    break;
+                        //case ULRegistries.LocalSet_BER_2Bytes:
+                        //    break;
+                        //case ULRegistries.LocalSet_BER_4Bytes:
+                        //    break;
+                        //case ULRegistries.LocalSet_1Byte_1Byte:
+                        //    break;
+                        //case ULRegistries.LocalSet_1Byte_OIDBER:
+                        //    break;
+                        //case ULRegistries.LocalSet1_Byte_4Bytes:
+                        //    break;
+                        //case ULRegistries.LocalSet_2Bytes_1Byte:
+                        //    break;
+                        //case ULRegistries.LocalSet_2Bytes_OIDBER:
+                        //    break;
+                        case ULRegistries.LocalSet_2Bytes_2Bytes:
+                            klv.KLVSublist = GetSubKLV(klv, KeyLengths.TwoBytes, LengthEncodings.TwoBytes);
+                            break;
+                        case ULRegistries.LocalSet_2Bytes_4Bytes:
+                            klv.KLVSublist = GetSubKLV(klv, KeyLengths.TwoBytes, LengthEncodings.FourBytes);
+                            break;
+                        case ULRegistries.LocalSet_4Bytes_1Byte:
+                            break;
+                        //case ULRegistries.LocalSet_4Bytes_OIDBER:
+                        //    break;
+                        //case ULRegistries.LocalSet_4Bytes_2Bytes:
+                        //    break;
+                        //case ULRegistries.LocalSet_4Bytes_4Bytes:
+                        //    break;
+                        //case ULRegistries.VariableLengthPacks_1Byte:
+                        //    break;
+                        //case ULRegistries.VariableLengthPacks_2Bytes:
+                        //    break;
+                        //case ULRegistries.VariableLengthPacks_4Bytes:
+                        //    break;
+                        //case ULRegistries.DefinedLengthPacks:
+                        //    break;
+                        //case ULRegistries.Reserved:
+                        //    break;
+                        //case ULRegistries.SimpleWrappersAndContainers:
+                        //    break;
+                        //case ULRegistries.ComplexWrappersAndContainers:
+                        //    break;
+                        case null:
+                            break;
+                    }
+                }
+            }
 
             // advance file position
             actualOffset = actualOffset + klv.TotalLength;
             _reader.Seek(actualOffset);
 
             return klv;
+        }
+
+        private List<KLVTriplet> GetSubKLV(KLVTriplet klv, KeyLengths keyLength, LengthEncodings encoding)
+        {
+            var subKLVList = new List<KLVTriplet>();
+            var offset = klv.ValueOffset;
+            long summedLength = 0;
+            while (summedLength < klv.Length.Value)
+            {
+                var subKLV = ParseKLV(keyLength, encoding, offset);
+
+                if (subKLV.Offset + subKLV.TotalLength > klv.Offset + klv.TotalLength)
+                {
+                    throw new System.Exception("SubKLV out range");
+                }
+                else {
+                    subKLVList.Add(subKLV);
+                    offset += subKLV.TotalLength;
+                    summedLength += subKLV.TotalLength;
+                }
+            }
+            return subKLVList;
+        }
+
+        private KLVTriplet ParseKLV(KeyLengths keyLength, LengthEncodings encoding, long offset)
+        {
+            // move to file pos
+            _reader.Seek(offset);
+
+            var key = KLVKeyParser.ParseKLVKey(_reader, keyLength);
+            var length = KLVLengthParser.ParseKLVLength(_reader, encoding);
+            var value = _reader.ReadArray(_reader.ReadByte, length.Value);
+            return new KLVTriplet(key, length, offset, value);
+        }
+
+        private KLVTriplet ParseMXFKLV(long offset)
+        {
+            // move to file pos
+            _reader.Seek(offset);
+
+            var ul = KLVKeyParser.ParseUL(_reader);
+            var length = KLVLengthParser.ParseKLVLength(_reader, LengthEncodings.BER);
+            return new KLVTriplet(ul, length, actualOffset);
         }
 
         private bool SeekForNextPotentialKey()

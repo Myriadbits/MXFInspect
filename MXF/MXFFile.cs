@@ -205,7 +205,7 @@ namespace Myriadbits.MXF
                 List<KLVTriplet> list = new List<KLVTriplet>();
                 while (!m_reader.EOF)
                 {
-                    var klv = parser.GetNextKLV();
+                    var klv = parser.GetNextMXFPack();
                     list.Add(klv);
                 }
 

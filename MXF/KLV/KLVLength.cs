@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
 
         public LengthEncodings LengthEncoding { get; }
 
-        public long LengthValue { get; }
+        public long Value { get; }
 
         public BERForms? BERForm { get; }
         public int? AdditionalOctets { get; }
@@ -54,7 +54,7 @@ namespace Myriadbits.MXF
         public KLVLength(LengthEncodings lengthEncoding, long lengthValue, params byte[] bytes) : base(bytes)
         {
             LengthEncoding = lengthEncoding;
-            LengthValue = lengthValue;
+            Value = lengthValue;
 
             switch (LengthEncoding)
             {
@@ -67,9 +67,9 @@ namespace Myriadbits.MXF
                     {
                         throw new ArgumentException($"Declared length encoding ({lengthEncoding}) does not correspond to given array length ({bytes.Length})");
                     }
-                    else if (calculatedLengthValue != LengthValue)
+                    else if (calculatedLengthValue != Value)
                     {
-                        throw new ArgumentException($"Byte array value ({calculatedLengthValue}) does not match with given length value ({LengthValue})");
+                        throw new ArgumentException($"Byte array value ({calculatedLengthValue}) does not match with given length value ({Value})");
                     }
                     break;
 
@@ -81,9 +81,9 @@ namespace Myriadbits.MXF
 
                         case > 0x80 when bytes.Length > 1:
                             // TODO check value against array
-                            if (bytes.Skip(1).ToArray().ToLong() != LengthValue)
+                            if (bytes.Skip(1).ToArray().ToLong() != Value)
                             {
-                                throw new ArgumentException($"Byte array value ({BitConverter.ToUInt32(bytes)}) does not match with given length value ({LengthValue})");
+                                throw new ArgumentException($"Byte array value ({BitConverter.ToUInt32(bytes)}) does not match with given length value ({Value})");
                             }
 
                             BERForm = BERForms.LongForm;
@@ -99,9 +99,9 @@ namespace Myriadbits.MXF
                             throw new ArgumentException($"First byte indicates BER Long Form, but byte array consists of only one byte");
 
                         case <= 0x7F when bytes.Length == 1:
-                            if (bytes[0] != LengthValue)
+                            if (bytes[0] != Value)
                             {
-                                throw new ArgumentException($"Byte value ({bytes[0]}) does not match with given length value ({LengthValue})");
+                                throw new ArgumentException($"Byte value ({bytes[0]}) does not match with given length value ({Value})");
                             }
                             else
                             {
@@ -120,16 +120,16 @@ namespace Myriadbits.MXF
             {
                 if (BERForm.Value == BERForms.LongForm)
                 {
-                    return $"{LengthEncoding} {BERForm.Value}, 1 + {AdditionalOctets} Octets ({LengthValue})";
+                    return $"{LengthEncoding} {BERForm.Value}, 1 + {AdditionalOctets} Octets ({Value})";
                 }
                 else
                 {
-                    return $"{LengthEncoding} {BERForm.Value}, ({LengthValue})";
+                    return $"{LengthEncoding} {BERForm.Value}, ({Value})";
                 }
             }
             else
             {
-                return $"{LengthEncoding}, ({LengthValue})";
+                return $"{LengthEncoding}, ({Value})";
             }
         }
     }

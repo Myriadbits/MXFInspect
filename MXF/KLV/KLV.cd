@@ -18,7 +18,7 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>KLV\KLVKey.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -51,7 +51,7 @@
   <Class Name="Myriadbits.MXF.UL">
     <Position X="1" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAABAAAAAAEAAAAAAAAAAAAAABAAAioAAAAAAAAA=</HashCode>
       <FileName>KLV\UL.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -60,6 +60,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>KLV\ByteArrayExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.KLVTriplet">
+    <Position X="10.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAQAAgAAAABAAAAAAAAQAAAEAAAAgAA=</HashCode>
+      <FileName>KLV\KLVTriplet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
