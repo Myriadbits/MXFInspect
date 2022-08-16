@@ -21,6 +21,7 @@
 //
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -61,6 +62,11 @@ namespace Myriadbits.MXF
 
         public KLVTriplet(KLVKey key, KLVLength length, long offset, byte[] value) : this(key, length, offset)
         {
+            // if passed value differs in length w.r.t to the declared length throw
+            if(value.LongLength != length.Value)
+            {
+                throw new ArgumentException($"Size of value ({value.LongLength}) does not match with declared length of KLV ({length.Value})");
+            }
             Value = value;
         }
 

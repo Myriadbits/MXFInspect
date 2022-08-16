@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
             : base(reader)
         {
             this.Key = CreateAndValidateKey(reader);
-            this.KLVLength = KLVLengthParser.ParseKLVLength(reader, KLVLength.LengthEncodings.BER);
+            //this.KLVLength = KLVLengthParser.ParseKLVLength(reader, KLVLength.LengthEncodings.BER);
             this.Length = (long)this.KLVLength.Value;
             this.DataOffset = reader.Position;
         }

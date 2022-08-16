@@ -22,6 +22,8 @@
 #endregion
 
 
+using Myriadbits.MXF.KLV;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Myriadbits.MXF.KLVKey;
@@ -39,28 +41,28 @@ namespace Myriadbits.MXF
             _reader = reader;
         }
 
-        private KLVTriplet GetNextKLV1()
-        {
-            UL ul;
+        //private KLVTriplet GetNextKLV1()
+        //{
+        //    UL ul;
 
-            try
-            {
-                ul = KLVKeyParser.ParseUL(_reader);
-            }
-            catch (System.Exception)
-            {
-                SeekForNextPotentialKey();
-                GetNextMXFPack();
-                throw;
-            }
-            finally
-            {
-                var length = KLVLengthParser.ParseKLVLength(_reader, LengthEncodings.BER);
-                //return new KLV(ul, length, null);
-            }
+        //    try
+        //    {
+        //        ul = ParseUL();
+        //    }
+        //    catch (System.Exception)
+        //    {
+        //        SeekForNextPotentialKey();
+        //        GetNextMXFPack();
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        var length = KLVLengthParser.ParseKLVLength(_reader, LengthEncodings.BER);
+        //        //return new KLV(ul, length, null);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         public KLVTriplet GetNextMXFPack()
         {
@@ -171,8 +173,8 @@ namespace Myriadbits.MXF
             // move to file pos
             _reader.Seek(offset);
 
-            var key = KLVKeyParser.ParseKLVKey(_reader, keyLength);
-            var length = KLVLengthParser.ParseKLVLength(_reader, encoding);
+            var key = ParseKLVKey(keyLength);
+            var length = ParseKLVLength(encoding);
             var value = _reader.ReadArray(_reader.ReadByte, length.Value);
             return new KLVTriplet(key, length, offset, value);
         }
@@ -182,8 +184,8 @@ namespace Myriadbits.MXF
             // move to file pos
             _reader.Seek(offset);
 
-            var ul = KLVKeyParser.ParseUL(_reader);
-            var length = KLVLengthParser.ParseKLVLength(_reader, LengthEncodings.BER);
+            var ul = ParseUL();
+            var length = ParseKLVLength(LengthEncodings.BER);
             return new KLVTriplet(ul, length, actualOffset);
         }
 
@@ -211,6 +213,75 @@ namespace Myriadbits.MXF
             }
             // TODO what does the caller have to do in this case?
             return false;
+        }
+
+        private KLVKey ParseKLVKey(KeyLengths keyLength)
+        {
+            return new KLVKey(keyLength, _reader.ReadArray(_reader.ReadByte, (int)keyLength));
+        }
+
+        private UL ParseUL()
+        {
+            return new UL(_reader.ReadArray(_reader.ReadByte, 16));
+        }
+
+        private KLVLength ParseKLVLength(LengthEncodings encoding)
+        {
+
+            switch (encoding)
+            {
+                case LengthEncodings.OneByte:
+                case LengthEncodings.TwoBytes:
+                case LengthEncodings.FourBytes:
+                    return ParseSimpleKLVLength((int)encoding);
+
+                case LengthEncodings.BER:
+                    return ParseBERKLVLength();
+
+                default:
+                    return null;
+            }
+        }
+
+        private KLVLength ParseSimpleKLVLength(int numOfBytes)
+        {
+            byte[] bytes = _reader.ReadArray(_reader.ReadByte, numOfBytes);
+            long lengthValue = bytes.ToLong();
+            return new KLVLength((LengthEncodings)numOfBytes, lengthValue, bytes);
+        }
+
+        private KLVLength ParseBERKLVLength()
+        {
+            byte[] bytes = new byte[] { _reader.ReadByte() };
+
+            switch (bytes[0])
+            {
+                case <= 0x7F:
+                    // short form, size = length
+                    return new KLVLength(LengthEncodings.BER, bytes[0], bytes);
+
+                case 0x80:
+                    // Indefinite form
+                    // LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
+                    // TODO is this the correct way to handle this?
+                    throw new NotSupportedException("BER Indefinite Form is not supported");
+
+                case > 0x80:
+
+                    // long form: size is number of octets following, 1 + x octets
+                    int additionalOctetsCount = bytes[0] - 0x80;
+
+                    // SMPTE 379M 5.3.4 guarantee that additional octets must not exceed 8 bytes
+                    if (additionalOctetsCount > 8)
+                    {
+                        throw new NotSupportedException($"BER Length exceeds 8 octets (not valid according to SMPTE 379M 5.3.4). Found at offset {_reader.Position}");
+                    }
+
+                    byte[] additionalOctets = _reader.ReadArray(_reader.ReadByte, additionalOctetsCount);
+                    long lengthValue = additionalOctets.ToLong();
+                    bytes = bytes.Concat(additionalOctets).ToArray();
+                    return new KLVLength(LengthEncodings.BER, lengthValue, bytes);
+            }
         }
 
     }
