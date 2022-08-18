@@ -44,8 +44,8 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-        //[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        //public MXFBER BER { get; private set; }
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        public MXFPack Pack { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public MXFBER BER { get; private set; }

@@ -222,6 +222,7 @@ namespace Myriadbits.MXF
                 {
                     MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
 
+                    klv.Pack = list.Single(p => p.Offset == klv.Offset);
 
                     if (klv is MXFPartition && seekMode == PartialSeekMode.Backwards)
                     {

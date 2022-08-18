@@ -23,10 +23,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Myriadbits.MXF
 {
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public class MXFPack : KLVTriplet
     {
         public override UL Key { get; }

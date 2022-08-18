@@ -22,7 +22,6 @@
 #endregion
 
 
-using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,6 @@ namespace Myriadbits.MXF
     {
         private readonly MXFReader _reader;
         private long actualOffset = 0;
-        //private readonly Dictionary<ByteArray, KeyDescription> smpteDictionary = SMPTEUL_Dictionary.GetEntries();
 
         public KLVParser(MXFReader reader)
         {
