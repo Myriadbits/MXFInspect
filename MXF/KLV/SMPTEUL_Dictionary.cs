@@ -27,14 +27,15 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.Collections;
 
 namespace Myriadbits.MXF.Identifiers
 {
-    public static class SMPTEULDictionary
+    public static class SMPTEUL_Dictionary
     {
-        private static Dictionary<MXFShortKey, KeyDescription> Dictionary { get; set; }
+        private static Dictionary<ByteArray, KeyDescription> Dictionary { get; set; }
 
-        public static Dictionary<MXFShortKey, KeyDescription> GetEntries()
+        public static Dictionary<ByteArray, KeyDescription> GetEntries()
         {
             // if already initialized return it
             if (Dictionary != null)
@@ -43,7 +44,7 @@ namespace Myriadbits.MXF.Identifiers
             }
             else
             {
-                Dictionary = new Dictionary<MXFShortKey, KeyDescription>(new SMPTEULDictionaryComparer());
+                Dictionary = new Dictionary<ByteArray, KeyDescription>(new SMPTEUL_DictionaryComparer());
 
                 //Parse SMPTE Labels register
 
@@ -71,7 +72,7 @@ namespace Myriadbits.MXF.Identifiers
             }
         }
 
-        private static void AddEntries(IDictionary<MXFShortKey, KeyDescription> dict, XElement regEntries, XNamespace ns)
+        private static void AddEntries(IDictionary<ByteArray, KeyDescription> dict, XElement regEntries, XNamespace ns)
         {
             foreach (var e in regEntries.Descendants(ns + "Entry"))
             {
@@ -89,61 +90,52 @@ namespace Myriadbits.MXF.Identifiers
             }
         }
 
-        private static KeyValuePair<MXFShortKey, KeyDescription>? ParseEntry(XNamespace ns, XElement e)
+        private static KeyValuePair<ByteArray, KeyDescription>? ParseEntry(XNamespace ns, XElement e)
         {
             var UL_string = (string)e.Element(ns + "UL") ?? "";
             if (!string.IsNullOrEmpty(UL_string))
             {
-                MXFShortKey shortKey = GetShortKeyFromSMPTEULString(UL_string);
+                var byteArray = GetByteArrayFromSMPTEULString(UL_string);
 
                 var keyDescription = new KeyDescription
                 {
-                    Name = (string)e.Element(ns + "Name") ?? "",
-                    Definition = (string)e.Element(ns + "Definition") ?? "",
-                    DefiningDocument = (string)e.Element(ns + "DefiningDocument") ?? "",
-                    IsDeprecated = (string)e.Element(ns + "IsDeprecated") ?? "",
-                    Notes = (string)e.Element(ns + "Notes") ?? "",
+                    Name = e.Element(ns + "Name")?.Value ?? "",
+                    Definition = e.Element(ns + "Definition")?.Value ?? "",
+                    DefiningDocument = e.Element(ns + "DefiningDocument")?.Value ?? "",
+                    IsDeprecated = e.Element(ns + "IsDeprecated")?.Value ?? "",
+                    Notes = e.Element(ns + "Notes")?.Value ?? "",
+                    Kind = e.Element(ns + "Kind")?.Value ?? "",
+                    IsConcrete = e.Element(ns + "IsConcrete")?.Value ?? "",
+                    Applications = e.Element(ns + "IsConcrete")?.Value ?? "",
                 };
 
-                return new KeyValuePair<MXFShortKey, KeyDescription>(shortKey, keyDescription);
+                return new KeyValuePair<ByteArray, KeyDescription>(byteArray, keyDescription);
             }
             return null;
         }
 
-        public static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
+        private static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
         {
-            var bytes = GetByteArrayFromSMPTEULString(smpteString);
+            var bytes = GetBytesFromSMPTEULString(smpteString);
             return new MXFShortKey(bytes);
         }
 
-        private static byte[] GetByteArrayFromSMPTEULString(string smpteString)
+        private static ByteArray GetByteArrayFromSMPTEULString(string smpteString)
         {
-            const int hexBase = 16;
-            byte[] byteArray = new byte[16];
-            string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
-            var singleBytes = SplitString(byteString, 2).ToList();
-            for (int i = 0; i < singleBytes.Count; i++)
-            {
-                byteArray[i] = Convert.ToByte(singleBytes[i], hexBase);
-            }
-            return byteArray;
+            var bytes = GetBytesFromSMPTEULString(smpteString);
+            return new ByteArray(bytes);
         }
 
-        private static IEnumerable<string> SplitString(string s, int count)
+        private static byte[] GetBytesFromSMPTEULString(string smpteString)
         {
-            int index = 0;
-            while (index < s.Length)
-            {
-                if (s.Length - index >= count)
-                {
-                    yield return s.Substring(index, count);
-                }
-                else
-                {
-                    yield return s.Substring(index, s.Length - index);
-                }
-                index += count;
+            int hexBase = 16;
+            var byteArray = new byte[hexBase];
+            string ulString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
+            for (int i = 0, j = 0; j < ulString.Length; i++, j += 2)
+            { 
+                byteArray[i] = Convert.ToByte(ulString.Substring(j, 2), hexBase);
             }
+            return byteArray;
         }
     }
 }

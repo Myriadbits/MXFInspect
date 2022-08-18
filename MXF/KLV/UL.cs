@@ -21,7 +21,9 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -30,7 +32,7 @@ namespace Myriadbits.MXF
     public class UL : KLVKey
     {
         private const string CATEGORYNAME = "Key";
-
+        private static readonly Dictionary<ByteArray, KeyDescription> smpteDictionary = SMPTEUL_Dictionary.GetEntries();
         public static readonly byte[] ValidULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
         #region properties
@@ -59,6 +61,9 @@ namespace Myriadbits.MXF
         public byte[] ItemDesignator { get; private set; }
         #endregion
 
+        [Category(CATEGORYNAME)]
+        [Description("SMPTE Information")]
+        public KeyDescription SMPTEInformation { get; set; }
 
         public UL(params byte[] bytes) : base(KeyLengths.SixteenBytes, bytes)
         {
@@ -71,11 +76,19 @@ namespace Myriadbits.MXF
                 throw new ArgumentException("Wrong byte value. A SMPTE Universal Label must start with the following first 4-byte values: 0x06, 0x0e, 0x2b, 0x34");
             }
 
+            // set properties 
             SetCategoryAndRegistryDesignator();
 
             StructureDesignator = this[6];
             VersionNumber = this[7];
             ItemDesignator = bytes.Skip(8).ToArray();
+
+            // get additional information from SMPTE registers
+            if (smpteDictionary.TryGetValue(this, out var keyDescription))
+            {
+                SMPTEInformation = keyDescription;
+            }
+
         }
 
         private void SetCategoryAndRegistryDesignator()
@@ -240,6 +253,16 @@ namespace Myriadbits.MXF
                     CategoryDesignator = null;
                     break;
             }
+        }
+
+        public override string ToString()
+        {
+            if (SMPTEInformation?.Name != null)
+            {
+                return $"{SMPTEInformation?.Name} - {base.ToString()}";
+            }
+
+            return base.ToString();
         }
     }
 

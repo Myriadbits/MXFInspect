@@ -279,6 +279,14 @@ namespace Myriadbits.MXF
         }
 
 
+        public byte[] ReadBytes(int length)
+        {
+            var b = new byte[length];
+            m_FileStream.Read(b, 0, length);
+            return b;
+        }
+
+
         #endregion
 
         #region Identifiers

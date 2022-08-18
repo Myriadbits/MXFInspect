@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
         //public MXFBER BER { get; private set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        public KLVLength KLVLength { get; private set; }
+        public MXFBER BER { get; private set; }
 
         /// <summary>
         /// Create the KLV key
@@ -58,8 +58,9 @@ namespace Myriadbits.MXF
             : base(reader)
         {
             this.Key = CreateAndValidateKey(reader);
+            this.BER = DecodeBerLength(reader);
             //this.KLVLength = KLVLengthParser.ParseKLVLength(reader, KLVLength.LengthEncodings.BER);
-            this.Length = (long)this.KLVLength.Value;
+            this.Length = (long)this.BER.Size;
             this.DataOffset = reader.Position;
         }
 
@@ -70,7 +71,7 @@ namespace Myriadbits.MXF
             this.Key = klv.Key;
             //this.Key.Name = string.IsNullOrWhiteSpace(klv.Key.Name) ? name : klv.Key.Name;
             //this.BER = klv.BER;
-            this.KLVLength = klv.KLVLength;
+            this.BER = klv.BER;
             this.Length = klv.Length;
             this.DataOffset = klv.DataOffset;
             this.Partition = klv.Partition;

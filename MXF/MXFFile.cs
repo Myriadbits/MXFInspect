@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -202,13 +203,12 @@ namespace Myriadbits.MXF
 
                 // Test with new KLV
                 KLVParser parser = new KLVParser(m_reader);
-                List<KLVTriplet> list = new List<KLVTriplet>();
+                List<MXFPack> list = new List<MXFPack>();
                 while (!m_reader.EOF)
                 {
-                    var klv = parser.GetNextMXFPack();
-                    list.Add(klv);
+                    var pack = parser.GetNextMXFPack();
+                    list.Add(pack);
                 }
-
 
                 // Start with trying to find the RIP
                 bool ripFound = ReadRIP(klvFactory);

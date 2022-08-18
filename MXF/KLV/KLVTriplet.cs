@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 {
     public class KLVTriplet
     {
-        public KLVKey Key { get; }
+        public virtual KLVKey Key { get; }
 
         public KLVLength Length { get; }
 

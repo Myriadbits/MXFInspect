@@ -29,7 +29,7 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public abstract class ByteArray : IReadOnlyList<byte>, IEquatable<ByteArray>
+    public class ByteArray : IReadOnlyList<byte>, IEquatable<ByteArray>
     {
         private readonly byte[] theBytes = null;
 

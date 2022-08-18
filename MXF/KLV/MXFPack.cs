@@ -21,24 +21,21 @@
 //
 #endregion
 
-namespace Myriadbits.MXF.Identifiers
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Myriadbits.MXF
 {
-    public class KeyDescription
+    public class MXFPack : KLVTriplet
     {
-        public string Name { get; set; }
+        public override UL Key { get; }
 
-        public string Definition { get; set; }
-
-        public string DefiningDocument { get; set; }
-
-        public string Notes { get; set; }
-
-        public string IsDeprecated { get; set; }
-
-        public string IsConcrete { get; set; }
-
-        public string Kind { get; set; }
-
-        public string Applications { get; set; }
+        public MXFPack(UL key, KLVLength length, long offset) : base(key, length, offset)
+        {
+            // TODO validate that Length encoding is BER
+            Key = key;
+        }
     }
+
 }
