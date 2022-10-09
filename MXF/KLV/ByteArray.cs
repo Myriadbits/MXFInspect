@@ -72,6 +72,21 @@ namespace Myriadbits.MXF
             return theBytes.GetEnumerator();
         }
 
+        public bool HasSameBeginning(ByteArray other)
+        {
+            int smallerLength = Math.Min(this.ArrayLength, other.ArrayLength);
+
+            for (int i = 0; i < smallerLength; i++)
+            {
+                if (this[i] != other[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+        
         #region Equals
         public bool Equals(ByteArray other)
         {

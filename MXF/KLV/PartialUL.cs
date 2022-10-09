@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,26 +29,25 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class MXFPack : KLVTriplet
+    public class PartialUL : ByteArray
     {
-        public override UL Key { get; }
-
-        // TODO should the length be overriden?
-        //public override KLVLength Key { get; }
-
-        [Browsable(false)]
-        public MXFPartition Partition { get; set; }
-        
-        public MXFPack(UL key, KLVLength length, long offset) : base(key, length, offset)
+        public PartialUL(params byte[] bytes) : base(bytes)
         {
-            // needed since it is overriden
-            Key = key;
+            ValidateByteArray(bytes);
         }
 
         public override string ToString()
         {
-            return $"{Key.SMPTEInformation?.Name} - PackLength: {this.TotalLength}";
+            return base.ToString();
+        }
+
+        private static void ValidateByteArray(byte[] bytes)
+        {
+            if (!UL.HasValidULPrefix(bytes))
+            {
+                throw new ArgumentException("Wrong byte value. A partial Universal Label must start with the following byte sequence: 0x06, 0x0e, 0x2b, 0x34");
+            }
         }
     }
+
 }

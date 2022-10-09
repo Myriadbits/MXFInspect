@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Myriadbits.MXF
@@ -31,10 +32,12 @@ namespace Myriadbits.MXF
     {
         public virtual KLVKey Key { get; }
 
-        public KLVLength Length { get; }
+        public virtual KLVLength Length { get; }
 
+        [Browsable(false)]
         public byte[] Value { get; }
 
+        [Browsable(false)]
         public List<KLVTriplet> KLVSublist { get; set; }
 
         public long TotalLength { get; }

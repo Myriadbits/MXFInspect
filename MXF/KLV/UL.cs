@@ -65,16 +65,10 @@ namespace Myriadbits.MXF
         [Description("SMPTE Information")]
         public KeyDescription SMPTEInformation { get; set; }
 
+
         public UL(params byte[] bytes) : base(KeyLengths.SixteenBytes, bytes)
         {
-            if (bytes.Length != (int)KeyLengths.SixteenBytes)
-            {
-                throw new ArgumentException("Wrong number of bytes. A SMPTE Universal Label must consist of exactly 16 bytes");
-            }
-            else if (!bytes.Take(4).SequenceEqual(ValidULPrefix))
-            {
-                throw new ArgumentException("Wrong byte value. A SMPTE Universal Label must start with the following first 4-byte values: 0x06, 0x0e, 0x2b, 0x34");
-            }
+            ValidateByteArray(bytes);
 
             // set properties 
             SetCategoryAndRegistryDesignator();
@@ -83,12 +77,40 @@ namespace Myriadbits.MXF
             VersionNumber = this[7];
             ItemDesignator = bytes.Skip(8).ToArray();
 
+            // TODO outsource this info gathering to another class?
             // get additional information from SMPTE registers
             if (smpteDictionary.TryGetValue(this, out var keyDescription))
             {
                 SMPTEInformation = keyDescription;
             }
 
+        }
+
+        public static bool HasValidULPrefix(params byte[] bytes)
+        {
+            return bytes.Length >= 4 && bytes.Take(4).SequenceEqual(ValidULPrefix);
+        }
+
+        public override string ToString()
+        {
+            if (SMPTEInformation?.Name != null)
+            {
+                return $"{SMPTEInformation?.Name} - {base.ToString()}";
+            }
+
+            return base.ToString();
+        }
+
+        private static void ValidateByteArray(byte[] bytes)
+        {
+            if (bytes.Length != (int)KeyLengths.SixteenBytes)
+            {
+                throw new ArgumentException("Wrong number of bytes. A SMPTE Universal Label must consist of exactly 16 bytes");
+            }
+            else if (!UL.HasValidULPrefix(bytes))
+            {
+                throw new ArgumentException("Wrong byte value. A SMPTE Universal Label must start with the following byte sequence: 0x06, 0x0e, 0x2b, 0x34");
+            }
         }
 
         private void SetCategoryAndRegistryDesignator()
@@ -255,15 +277,6 @@ namespace Myriadbits.MXF
             }
         }
 
-        public override string ToString()
-        {
-            if (SMPTEInformation?.Name != null)
-            {
-                return $"{SMPTEInformation?.Name} - {base.ToString()}";
-            }
-
-            return base.ToString();
-        }
     }
 
 }

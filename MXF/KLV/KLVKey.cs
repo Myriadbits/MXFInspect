@@ -22,10 +22,12 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Text;
 
 namespace Myriadbits.MXF
 {
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public class KLVKey : ByteArray
     {
         public enum KeyLengths

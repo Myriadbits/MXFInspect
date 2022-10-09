@@ -260,6 +260,12 @@ namespace Myriadbits.MXF
             ItemDesignator = this.Length > 8 ? this.GetByteArray().Skip(8).ToArray() : null;
         }
 
+
+        public MXFKey(UL ul) : base()
+        {
+            byte[] t = ul.ToArray();
+        }
+
         /// <summary>
         /// Locate the key name (if found)
         /// </summary>

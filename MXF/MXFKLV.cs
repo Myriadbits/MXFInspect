@@ -77,6 +77,18 @@ namespace Myriadbits.MXF
             this.Partition = klv.Partition;
         }
 
+        public MXFKLV(MXFReader reader, MXFPack pack)
+        {
+            this.Offset = pack.Offset;
+            this.Key = new MXFKey();
+            //this.Key.Name = string.IsNullOrWhiteSpace(klv.Key.Name) ? name : klv.Key.Name;
+            //this.BER = klv.BER;
+            //this.BER = pack.;
+            this.Length = pack.Length.Value;
+            this.DataOffset = pack.ValueOffset;
+            this.Partition = pack.Partition;
+        }
+
         /// <summary>
         /// Validate if the current position is a valid SMPTE key
         /// </summary>

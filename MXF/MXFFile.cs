@@ -210,6 +210,14 @@ namespace Myriadbits.MXF
                     list.Add(pack);
                 }
 
+                var f = new MXFPackFactory();
+
+                var newList = new List<MXFKLV>();
+                foreach (var p in list)
+                {
+                    newList.Add(f.CreateKLV(p, m_reader));
+                }
+
                 // Start with trying to find the RIP
                 bool ripFound = ReadRIP(klvFactory);
                 if (ripFound)
