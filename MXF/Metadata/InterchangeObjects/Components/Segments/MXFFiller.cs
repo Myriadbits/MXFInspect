@@ -25,8 +25,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFFiller : MXFSegment
 	{
-		public MXFFiller(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Filler")
+		public MXFFiller(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Filler")
 		{
 		}
 

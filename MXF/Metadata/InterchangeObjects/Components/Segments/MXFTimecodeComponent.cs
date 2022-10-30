@@ -42,13 +42,13 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010101.04040101.05000000")]
 		public bool? DropFrame { get; set; }
 
-		public MXFTimecodeComponent(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "TimeCodeComponent")
+		public MXFTimecodeComponent(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "TimeCodeComponent")
 		{
 		}
 
-		public MXFTimecodeComponent(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFTimecodeComponent(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 

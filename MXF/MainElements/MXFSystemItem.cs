@@ -68,7 +68,7 @@ namespace Myriadbits.MXF
 		Reserved = 3,
 	};
 
-	public class MXFSystemItem : MXFKLV
+	public class MXFSystemItem : MXFPack
 	{
 		private const string CATEGORYNAME = "SystemItem";
 
@@ -124,14 +124,14 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		public MXFSystemItem(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV)
-		{
+		public MXFSystemItem(MXFReader reader, MXFPack pack)
+			: base(pack.Key, pack.Length, pack.Offset)
+        {
 			this.Key.Name ??= "SystemItem (CP)";
 			if (this.Key[12] == 0x14)
 				this.Key.Name = "SystemItem (GC)";
 
-			reader.Seek(this.DataOffset); // Seek to the start of the data
+			reader.Seek(this.ValueOffset); // Seek to the start of the data
 
 			// Parse system bitmap
 			this.SystemBitmap = (SystemBitmap)reader.ReadByte();

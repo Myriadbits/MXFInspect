@@ -75,9 +75,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFWAVEPCMDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "WAVE PCM Descriptor")
+        /// <param name="pack"></param>
+        public MXFWAVEPCMDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "WAVE PCM Descriptor")
         {
         }
 
@@ -85,9 +85,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFWAVEPCMDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+        /// <param name="pack"></param>
+        public MXFWAVEPCMDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, metadataName)
         {
         }
 

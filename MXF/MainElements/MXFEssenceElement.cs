@@ -26,7 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFEssenceElement : MXFKLV
+    public class MXFEssenceElement : MXFPack
     {
         private const string CATEGORYNAME = "EssenceElement";
 
@@ -68,8 +68,8 @@ namespace Myriadbits.MXF
         // TODO helper property for indexvalidator that should be avoided
         public bool Indexed { get; set; }
 
-        public MXFEssenceElement(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+        public MXFEssenceElement(MXFReader reader, MXFPack pack)
+            : base(pack.Key,pack.Length,pack.Offset)
         {
             this.Key.Name ??= "EssenceElement";
             if (m_itemTypes.ContainsKey(this.Key[12]))
@@ -84,7 +84,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return string.Format("{0} Essence [len {1}]", this.ItemType, this.Length);
+            return string.Format("{0} Essence [len {1}]", this.ItemType, this.Length.Value);
         }
     }
 }

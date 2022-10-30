@@ -25,8 +25,8 @@ namespace Myriadbits.MXF
 {
     public class MXFGroupOfSoundfieldGroupsLabelSubDescriptor : MXFMCALabelSubDescriptor
     {
-		public MXFGroupOfSoundfieldGroupsLabelSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV)
+		public MXFGroupOfSoundfieldGroupsLabelSubDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack)
 		{
 			this.MetaDataName = "GroupOfSoundfieldGroupsLabelSubDescriptor";
 		}    

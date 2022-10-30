@@ -43,8 +43,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.0b000000")]
         public object ElementType { get; set; }
 
-        public MXFTypeDefinitionEnumeration(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTypeDefinitionEnumeration(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionEnumeration";
         }

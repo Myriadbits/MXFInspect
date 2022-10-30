@@ -76,9 +76,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFMPEGPictureEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        /// <param name="pack"></param>
+        public MXFMPEGPictureEssenceDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "MPEG Picture Essence Descriptor";
         }

@@ -42,13 +42,13 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public DateTime? CreationDate { get; set; }
 
-		public MXFGenericPackage(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Generic Package")
+		public MXFGenericPackage(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Generic Package")
 		{
 		}
 
-		public MXFGenericPackage(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFGenericPackage(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 

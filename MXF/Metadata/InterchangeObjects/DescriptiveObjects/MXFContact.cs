@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public MXFUUID ContactID { get; set; }
 
-        public MXFContact(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFContact(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "Contact";
         }

@@ -34,8 +34,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010108.04090401.00000000")]
         public string MIMEEncoding { get; set; }
         
-        public MXFParsedTextDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+        public MXFParsedTextDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, metadataName)
         {
         }
 

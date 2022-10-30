@@ -25,8 +25,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFTargetFrameSubDescriptor : MXFSubDescriptor
 	{
-		public MXFTargetFrameSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "TargetFrameSubDescriptor")
+		public MXFTargetFrameSubDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "TargetFrameSubDescriptor")
 		{
 		}
 	}

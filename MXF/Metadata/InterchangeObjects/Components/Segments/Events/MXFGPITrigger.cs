@@ -33,8 +33,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010101.05300401.00000000")]
 		public bool? ActiveState { get; set; }
 
-		public MXFGPITrigger(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, "GPITrigger")
+		public MXFGPITrigger(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, "GPITrigger")
 		{
 		}
 

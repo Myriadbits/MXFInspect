@@ -25,8 +25,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFStaticTrack : MXFGenericTrack
 	{
-		public MXFStaticTrack(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV)
+		public MXFStaticTrack(MXFReader reader, MXFPack pack)
+			: base(reader, pack)
 		{
 			this.MetaDataName = "Static Track";
 		}

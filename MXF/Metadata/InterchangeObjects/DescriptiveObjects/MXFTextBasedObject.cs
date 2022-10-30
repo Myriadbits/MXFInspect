@@ -51,8 +51,8 @@ namespace Myriadbits.MXF
         public string TextMIMEMediaType { get; set; }
 
 
-        public MXFTextBasedObject(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTextBasedObject(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "Text Based Object";
         }

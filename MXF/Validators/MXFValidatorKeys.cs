@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
 			Stopwatch sw = Stopwatch.StartNew();
 
 			var klvWithUnknownKeys = this.File.Descendants()
-											.OfType<MXFKLV>()
-											.Where(klv => klv.Key.IsKnown == false)
+											.OfType<MXFPack>()
+											.Where(klv => klv.Key.SMPTEInformation != null)
 											.OrderBy(klv => klv.Offset);
 
 			foreach (var klvUnknownKey in klvWithUnknownKeys)

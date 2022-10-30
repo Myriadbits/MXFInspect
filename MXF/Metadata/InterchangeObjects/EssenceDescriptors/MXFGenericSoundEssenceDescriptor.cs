@@ -77,9 +77,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFGenericSoundEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "Generic Sound Essence Descriptor")
+        /// <param name="pack"></param>
+        public MXFGenericSoundEssenceDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "Generic Sound Essence Descriptor")
         {
         }
 
@@ -87,9 +87,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFGenericSoundEssenceDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+        /// <param name="pack"></param>
+        public MXFGenericSoundEssenceDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, metadataName)
         {
         }
 

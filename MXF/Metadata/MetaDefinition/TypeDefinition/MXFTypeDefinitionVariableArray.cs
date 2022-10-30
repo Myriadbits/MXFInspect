@@ -31,8 +31,8 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "TypeDefinitionVariableArray";
 
-        public MXFTypeDefinitionVariableArray(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTypeDefinitionVariableArray(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionVariableArray";
         }

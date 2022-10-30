@@ -79,9 +79,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFFileDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "Descriptor")
+        /// <param name="pack"></param>
+        public MXFFileDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "Descriptor")
         {
             if (m_metaTypes.ContainsKey(this.Key[14]))
                 this.MetaDataName = m_metaTypes[this.Key[14]];
@@ -91,9 +91,9 @@ namespace Myriadbits.MXF
         /// Constructor when used as base class
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFFileDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+        /// <param name="pack"></param>
+        public MXFFileDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, metadataName)
         {
         }
 

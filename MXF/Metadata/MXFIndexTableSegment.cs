@@ -77,8 +77,8 @@ namespace Myriadbits.MXF
 		public List<MXFEntryIndex> IndexEntries { get; set; }
 
 
-		public MXFIndexTableSegment(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "IndexTableSegment") //base(headerKLV, "IndexTableSegment", KeyType.IndexSegment)
+		public MXFIndexTableSegment(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "IndexTableSegment") //base(pack, "IndexTableSegment", KeyType.IndexSegment)
 		{
 			//this.Key.Type = KeyType.IndexSegment;
 		}

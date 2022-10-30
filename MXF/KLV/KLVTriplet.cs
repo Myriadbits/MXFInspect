@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,11 +29,16 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public class KLVTriplet
+    public class KLVTriplet : MXFObject
     {
+        private const string CATEGORYNAME = "MXFPack";
+        private const int CATEGORYPOS = 1;
+
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public virtual KLVKey Key { get; }
 
-        public virtual KLVLength Length { get; }
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        public virtual KLVLengthBase Length { get; }
 
         [Browsable(false)]
         public byte[] Value { get; }
@@ -40,33 +46,44 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public List<KLVTriplet> KLVSublist { get; set; }
 
-        public long TotalLength { get; }
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        public override long TotalLength { get; set; }
 
         /// <summary>
         /// Offset from beginning of the file (i.e. position of start of key within file)
         /// </summary>
-        public long Offset { get; }
+        public override long Offset { get; protected set; }
 
 
         /// <summary>
         /// Offset of the value (=data), i.e. where the payload begins.
         /// </summary>
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public long ValueOffset { get; }
 
 
-        public KLVTriplet(KLVKey key, KLVLength length, long offset)
+        public KLVTriplet(KLVKey key, KLVLengthBase length, long offset)
         {
             Key = key;
             Length = length;
             Offset = offset;
             ValueOffset = offset + (int)key.KeyLength + Length.ArrayLength;
             TotalLength = (int)key.KeyLength + Length.ArrayLength + Length.Value;
+
+        }
+        public KLVTriplet(KLVKey key, KLVLength length, long offset)
+        {
+            Key = key;
+            Length = length;
+            Offset = offset;
+            ValueOffset = offset + (int)key.KeyLength + length.ArrayLength;
+            TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
         }
 
         public KLVTriplet(KLVKey key, KLVLength length, long offset, byte[] value) : this(key, length, offset)
         {
             // if passed value differs in length w.r.t to the declared length throw
-            if(value.LongLength != length.Value)
+            if (value.LongLength != length.Value)
             {
                 throw new ArgumentException($"Size of value ({value.LongLength}) does not match with declared length of KLV ({length.Value})");
             }

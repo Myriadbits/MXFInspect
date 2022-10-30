@@ -48,12 +48,12 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Offset from the beginning of file in terms of bytes")]
-        public long Offset { get; set; } = long.MaxValue;
+        public virtual long Offset { get; protected set; } = long.MaxValue;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length of KLV in bytes")]
         //TODO this is not the length of KLV but the length of the object!!!
-        public long Length
+        public virtual long TotalLength
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
                 {
                     // Not set, try to get the parent length
                     if (this.Parent != null)
-                        return this.Parent.Length + this.Parent.Offset - this.Offset;
+                        return this.Parent.TotalLength + this.Parent.Offset - this.Offset;
                     return 0; // Unknown
                 }
                 else

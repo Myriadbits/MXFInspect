@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
         Footer
     }
 
-    public class MXFPartition : MXFKLV, ILazyLoadable
+    public class MXFPartition : MXFPack, ILazyLoadable
     {
         private const string CATEGORYNAME = "PartitionHeader";
 
@@ -116,11 +116,11 @@ namespace Myriadbits.MXF
         public bool IsLoaded { get; set; }
 
 
-        public MXFPartition(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+        public MXFPartition(MXFReader reader, MXFPack pack)
+            : base(pack.Key, pack.Length, pack.Offset)
         {
             this.IsLoaded = false;
- 
+
             // Determine the partition type
             switch (this.Key[13])
             {
@@ -129,7 +129,8 @@ namespace Myriadbits.MXF
                 case 4: this.PartitionType = PartitionType.Footer; break;
                 default:
                     this.PartitionType = PartitionType.Unknown;
-                    Log(MXFLogType.Error, "unknown partition type");
+                    // TODO remove
+                    //Log(MXFLogType.Error, "unknown partition type");
                     break;
             }
 
@@ -137,7 +138,7 @@ namespace Myriadbits.MXF
             this.Complete = (this.Key[14] > 2);
 
             // Make sure we read at the data position
-            reader.Seek(this.DataOffset);
+            reader.Seek(this.ValueOffset);
 
             this.MajorVersion = reader.ReadUInt16();
             this.MinorVersion = reader.ReadUInt16();
@@ -177,34 +178,34 @@ namespace Myriadbits.MXF
         /// </summary>
         public void Load()
         {
-            if (!this.IsLoaded)
-            {
-                MXFKLVFactory klvFactory = new MXFKLVFactory();
-                using (MXFReader reader = new MXFReader(this.File.Filename))
-                {
-                    // Seek just after this partition
-                    reader.Seek(this.DataOffset + this.Length);
+            //if (!this.IsLoaded)
+            //{
+            //    MXFPackFactory klvFactory = new MXFPackFactory();
+            //    using (MXFReader reader = new MXFReader(this.File.Filename))
+            //    {
+            //        // Seek just after this partition
+            //        reader.Seek(this.ValueOffset + this.Length.Value);
 
-                    while (!reader.EOF)
-                    {
-                        MXFKLV klv = klvFactory.CreateObject(reader, this);
+            //        while (!reader.EOF)
+            //        {
+            //            MXFPack pack = klvFactory.CreatePack(reader, this);
 
-                        if (klv is MXFPartition or MXFRIP or MXFPrimerPack)
-                        {
-                            break; // Next partition or end of file (RIP) other segment, quit reading							
-                        }
-                        if (!this.Children.Any(a => a.Offset == klv.Offset))
-                        {
-                            // Normal, just add the new child
-                            this.AddChild(klv);
-                        }
+            //            if (pack is MXFPartition or MXFRIP or MXFPrimerPack)
+            //            {
+            //                break; // Next partition or end of file (RIP) other segment, quit reading							
+            //            }
+            //            if (!this.Children.Any(a => a.Offset == pack.Offset))
+            //            {
+            //                // Normal, just add the new child
+            //                this.AddChild(pack);
+            //            }
 
-                        // Next KLV please
-                        reader.Seek(klv.DataOffset + klv.Length);
-                    }
-                }
-                this.IsLoaded = true;
-            }
+            //            // Next KLV please
+            //            reader.Seek(pack.ValueOffset + pack.Length.Value);
+            //        }
+            //    }
+            //    this.IsLoaded = true;
+            //}
         }
     }
 }

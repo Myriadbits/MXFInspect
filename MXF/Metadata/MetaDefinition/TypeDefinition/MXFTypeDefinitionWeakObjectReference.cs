@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.0a000000")]
         public MXFKey WeakReferencedType { get; set; }
 
-        public MXFTypeDefinitionWeakObjectReference(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTypeDefinitionWeakObjectReference(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionWeakObjectReference ";
         }

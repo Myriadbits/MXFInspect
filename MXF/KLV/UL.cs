@@ -63,8 +63,10 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [Description("SMPTE Information")]
-        public KeyDescription SMPTEInformation { get; set; }
+        public KeyDescription SMPTEInformation { get; }
 
+        [Browsable(false)]
+        public string Name { get; set; }
 
         public UL(params byte[] bytes) : base(KeyLengths.SixteenBytes, bytes)
         {
@@ -82,6 +84,7 @@ namespace Myriadbits.MXF
             if (smpteDictionary.TryGetValue(this, out var keyDescription))
             {
                 SMPTEInformation = keyDescription;
+                Name = SMPTEInformation.Name;
             }
 
         }

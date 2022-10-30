@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
 		public MXFEntrySVCInfo(MXFReader reader)
 			: base(reader)
 		{
-			this.Length = 7; // Fixed
+			this.TotalLength = 7; // Fixed
 
 			byte b0 = reader.ReadByte();
 			if ((b0 & 0x40) != 0)

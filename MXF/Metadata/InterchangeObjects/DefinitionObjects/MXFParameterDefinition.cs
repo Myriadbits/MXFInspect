@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.05300503.00000000")]
         public string ParameterDisplayUnits { get; set; }
 
-        public MXFParameterDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFParameterDefinition(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "ParameterDefinition";
         }

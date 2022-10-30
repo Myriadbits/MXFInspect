@@ -37,8 +37,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UInt32 GenericStreamID { get; set; }
 
-        public MXFGenericStreamTextBasedSet(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFGenericStreamTextBasedSet(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "Generic Stream Text Based Object";
         }

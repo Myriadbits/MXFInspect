@@ -46,8 +46,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.04100103.01090000")]
         public MXFFilm? EdgeCodeFilmFormat { get; set; }
 
-        public MXFEdgeCode(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "EdgeCode")
+        public MXFEdgeCode(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "EdgeCode")
         {
         }
 

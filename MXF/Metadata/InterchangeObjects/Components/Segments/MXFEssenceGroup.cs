@@ -25,8 +25,8 @@ namespace Myriadbits.MXF
 {
     public class MXFEssenceGroup : MXFSegment
     {
-        public MXFEssenceGroup(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "EssenceGroup")
+        public MXFEssenceGroup(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "EssenceGroup")
         {
         }
 

@@ -33,8 +33,8 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] WaveSummary { get; set; }
         
-        public MXFWAVEDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "WAVEDescriptor")
+        public MXFWAVEDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "WAVEDescriptor")
         {
         }
 

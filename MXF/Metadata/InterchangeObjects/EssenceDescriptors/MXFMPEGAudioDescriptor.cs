@@ -47,9 +47,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFMPEGAudioDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "MPEG AudioDescriptor")
+        /// <param name="pack"></param>
+        public MXFMPEGAudioDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "MPEG AudioDescriptor")
         {
         }
 

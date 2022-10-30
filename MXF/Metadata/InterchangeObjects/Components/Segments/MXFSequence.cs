@@ -25,14 +25,14 @@ namespace Myriadbits.MXF
 {
 	public class MXFSequence : MXFSegment
 	{
-		public MXFSequence(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Sequence")
+		public MXFSequence(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Sequence")
 		{
 			this.MetaDataName = "Sequence";
 		}
 
-		public MXFSequence(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFSequence(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 

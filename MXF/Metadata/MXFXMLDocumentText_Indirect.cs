@@ -25,7 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF.Metadata
 {
-    public class MXFXMLDocumentText_Indirect : MXFKLV
+    public class MXFXMLDocumentText_Indirect : MXFPack
     {
         private const string CATEGORYNAME = "XML Document Text(Indirect)";
 
@@ -33,8 +33,8 @@ namespace Myriadbits.MXF.Metadata
         [MultiLine]
         public string Text { get; set; }
 
-        public MXFXMLDocumentText_Indirect(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+        public MXFXMLDocumentText_Indirect(MXFReader reader, MXFPack pack)
+            : base(pack.Key, pack.Length, pack.Offset)
         {
             Initialize(reader);
         }
@@ -42,8 +42,8 @@ namespace Myriadbits.MXF.Metadata
         private void Initialize(MXFReader reader)
         {
             // Make sure we read at the data position
-            reader.Seek(this.DataOffset);
-            Text = reader.ReadUTF8String((int)this.Length);
+            reader.Seek(this.ValueOffset);
+            Text = reader.ReadUTF8String((int)this.Length.Value);
         }
     }
 }

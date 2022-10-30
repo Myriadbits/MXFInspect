@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
 		{
 			this.Name = name;
 			this.Key = reader.ReadULKey();
-			this.Length = this.Key.Length;
+			this.TotalLength = this.Key.Length;
 		}
 
         /// <summary>

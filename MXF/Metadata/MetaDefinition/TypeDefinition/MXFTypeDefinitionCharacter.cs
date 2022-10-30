@@ -26,8 +26,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.02230000")]
     public class MXFTypeDefinitionCharacter : MXFTypeDefinitionIndirect
     {
-        public MXFTypeDefinitionCharacter(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTypeDefinitionCharacter(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionCharacter";
         }

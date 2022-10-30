@@ -34,8 +34,8 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public MXFPosition? EventTrackOrigin { get; set; }
 
-		public MXFEventTrack(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Event Track")
+		public MXFEventTrack(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Event Track")
 		{
 		}
 

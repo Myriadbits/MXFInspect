@@ -39,8 +39,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string LocationKind { get; set; }
 
-        public MXFLocation(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFLocation(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "Location";
         }

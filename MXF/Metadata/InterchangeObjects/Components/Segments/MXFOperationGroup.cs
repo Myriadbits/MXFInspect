@@ -34,8 +34,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.0530050c.00000000")]
         public UInt32 BypassOverride { get; private set; }
 
-        public MXFOperationGroup(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "OperationGroup")
+        public MXFOperationGroup(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "OperationGroup")
         {
         }
 

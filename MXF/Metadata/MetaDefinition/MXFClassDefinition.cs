@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.03000000")]
         public bool IsConcrete { get; set; }
 
-        public MXFClassDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "ClassDefinition")
+        public MXFClassDefinition(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "ClassDefinition")
         {
             this.MetaDataName = "ClassDefinition";
         }

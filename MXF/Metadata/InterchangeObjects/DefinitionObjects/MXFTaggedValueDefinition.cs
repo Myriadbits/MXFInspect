@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014c00")]
     public class MXFTaggedValueDefinition : MXFDefinitionObject
     {
-        public MXFTaggedValueDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTaggedValueDefinition(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TaggedValueDefinition";
         }

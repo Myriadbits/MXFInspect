@@ -32,8 +32,8 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public string LocationName { get; set; }
 
-		public MXFTextLocator(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Text Locator")
+		public MXFTextLocator(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Text Locator")
 		{
 		}
 

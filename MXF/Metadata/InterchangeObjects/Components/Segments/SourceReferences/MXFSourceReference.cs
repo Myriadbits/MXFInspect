@@ -49,8 +49,8 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(IntegerArrayConverter))]
         public UInt32[] MonoSourceTrackIDs { get; set; }
 
-        public MXFSourceReference(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "SourceReference")
+        public MXFSourceReference(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "SourceReference")
         {
         }
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Myriadbits.MXF.ByteArray">
-    <Position X="3" Y="0.5" Width="3" />
+    <Position X="5" Y="0.5" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAABiQAAAAAAAAIQAKIEAAAAAAAAAiA=</HashCode>
       <FileName>KLV\ByteArray.cs</FileName>
@@ -9,7 +9,10 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.KLVKey">
-    <Position X="1" Y="5.25" Width="1.5" />
+    <Position X="3" Y="5.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
       <Enum Name="Myriadbits.MXF.KLVKey.KeyLengths" Collapsed="true">
         <TypeIdentifier>
@@ -23,7 +26,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.KLVLength">
-    <Position X="5.5" Y="5.25" Width="1.5" />
+    <Position X="7.75" Y="7.25" Width="1.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -45,14 +48,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.KLVValue">
-    <Position X="7.5" Y="5.25" Width="1.5" />
+    <Position X="10.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>KLV\KLVValue.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.PartialUL">
-    <Position X="3" Y="5.25" Width="2" />
+    <Position X="5" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>KLV\PartialUL.cs</FileName>
@@ -60,28 +63,28 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.KLV.ByteArrayExtensions">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>KLV\ByteArrayExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.KLVTriplet">
-    <Position X="10.75" Y="0.75" Width="2.25" />
+    <Position X="12.75" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAQAAgAAAABAAAAAAAAQAAAkAAAAgAA=</HashCode>
+      <HashCode>AAAAAAAAIAAACAQAAgAAAABAAAAAAAAQCAAkAAAAgAA=</HashCode>
       <FileName>KLV\KLVTriplet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFPack">
-    <Position X="11" Y="5" Width="1.75" />
+    <Position X="13" Y="5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQEAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAACAQEAAAAAAAAAAAAQAAACAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFPack.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFPackFactory">
-    <Position X="14.25" Y="4.5" Width="2.75" />
+    <Position X="16.25" Y="4.5" Width="2.75" />
     <NestedTypes>
       <Class Name="Myriadbits.MXF.MXFPackFactory.KeyPartialMatchComparer" Collapsed="true">
         <TypeIdentifier>
@@ -91,8 +94,22 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFPackFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.UL">
+    <Position X="2.25" Y="8.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>BAQAAABAAgAAAEBEAAAAAIQAAAAABAAAioAAAAAAAAA=</HashCode>
+      <FileName>KLV\UL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.KLVLengthBase">
+    <Position X="7.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>KLVLengthBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

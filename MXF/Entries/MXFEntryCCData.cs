@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
 		public MXFEntryCCData(MXFReader reader)
 			: base(reader)
 		{
-			this.Length = 3; // Fixed
+			this.TotalLength = 3; // Fixed
 			byte b0 = reader.ReadByte();
 			if ((b0 & 0xF8) == 0xF8) // Valid marker bits?
 			{
@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
 
 			// When this object is not valid, set the type to filler
 			// TODO: this does not seem to be the correct thing to do!
-			if (this.Valid.HasValue && !this.Valid.Value) ;
+			if (this.Valid.HasValue && !this.Valid.Value);
 				//this.m_eType = MXFObjectType.Filler;			
 		}
 

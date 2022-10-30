@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.09000000")]
         public MXFKey ReferencedType { get; set; }
 
-        public MXFTypeDefinitionStrongObjectReference(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTypeDefinitionStrongObjectReference(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionStrongObjectReference ";
         }

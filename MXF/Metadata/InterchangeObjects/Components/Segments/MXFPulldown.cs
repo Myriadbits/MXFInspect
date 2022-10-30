@@ -42,8 +42,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.03000000")]
         public UInt32? PhaseFrame { get; set; }
 
-        public MXFPulldown(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "Pulldown")
+        public MXFPulldown(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, "Pulldown")
         {
         }
 

@@ -34,9 +34,9 @@ namespace Myriadbits.MXF
 		/// Constructor, set the correct descriptor name
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFDCPCMSoundDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "DC PCM Descriptor")
+		/// <param name="pack"></param>
+		public MXFDCPCMSoundDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "DC PCM Descriptor")
 		{
 		}
 	}

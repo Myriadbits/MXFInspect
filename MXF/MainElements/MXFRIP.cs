@@ -26,21 +26,21 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {	
-	public class MXFRIP : MXFKLV
+	public class MXFRIP : MXFPack
 	{
-		public MXFRIP(MXFReader reader, MXFKLV klv)
-			: base(reader, klv)
-		{
+		public MXFRIP(MXFReader reader, MXFPack pack)
+			: base(pack.Key, pack.Length, pack.Offset)
+        {
 			Initialize(reader);
 		}
 
 		private void Initialize(MXFReader reader)
 		{
 			// Make sure we read at the data position
-			reader.Seek(this.DataOffset);
+			reader.Seek(this.ValueOffset);
 
 			// Read all local tags
-			long klvEnd = this.DataOffset + this.Length;
+			long klvEnd = this.ValueOffset + this.Length.Value;
 			while (reader.Position + 12 < klvEnd)
 			{
 				// Add to the collection

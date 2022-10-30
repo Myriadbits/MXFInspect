@@ -25,13 +25,13 @@ namespace Myriadbits.MXF
 {
 	public class MXFSubDescriptor : MXFInterchangeObject
 	{
-		public MXFSubDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFSubDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 
-		public MXFSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "SubDescriptor")
+		public MXFSubDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "SubDescriptor")
 		{
 		}
 	}

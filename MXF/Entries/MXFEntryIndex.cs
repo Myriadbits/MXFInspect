@@ -89,7 +89,7 @@ namespace Myriadbits.MXF
         public MXFEntryIndex(UInt64 index, MXFReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)
             : base(reader)
         {
-            this.Length = length;
+            this.TotalLength = length;
             this.Index = index;
             this.TemporalOffset = reader.ReadSignedByte();
             this.KeyFrameOffset = reader.ReadSignedByte();

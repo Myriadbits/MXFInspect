@@ -32,8 +32,8 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public string URLString { get; set; }
 
-		public MXFNetworkLocator(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Network Locator")
+		public MXFNetworkLocator(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Network Locator")
 		{
 			this.MetaDataName = "Network Locator";
 		}

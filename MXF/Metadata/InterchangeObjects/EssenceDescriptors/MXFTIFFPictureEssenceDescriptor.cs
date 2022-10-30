@@ -32,9 +32,9 @@ namespace Myriadbits.MXF
 		/// Constructor, set the correct descriptor name
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFTIFFPictureEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "TIFFEssenceDescriptor")
+		/// <param name="pack"></param>
+		public MXFTIFFPictureEssenceDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "TIFFEssenceDescriptor")
 		{
 		}
 	}

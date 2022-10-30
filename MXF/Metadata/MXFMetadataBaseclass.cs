@@ -38,14 +38,15 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public string MetaDataName { get; protected set; }
 
-        public MXFMetadataBaseclass(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+        public MXFMetadataBaseclass(MXFReader reader, MXFPack pack, string metaDataName)
+            : base(reader, pack)
         {
+            MetaDataName = metaDataName;
         }
 
         public override string ToString()
         {
-            return string.Format("{0} [len {1}]", this.MetaDataName, this.Length);
+            return string.Format("{0} [len {1}]", this.MetaDataName, this.Length.Value);
         }
     }
 }

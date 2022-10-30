@@ -47,8 +47,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010d.06010107.20000000")]
         public bool IsUniqueIdentifier { get; set; }
 
-        public MXFPropertyDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "PropertyDefinition")
+        public MXFPropertyDefinition(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "PropertyDefinition")
         {
             this.MetaDataName = "PropertyDefinition";
         }

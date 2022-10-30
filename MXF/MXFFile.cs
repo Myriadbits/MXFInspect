@@ -21,8 +21,8 @@
 //
 #endregion
 
-using Myriadbits.MXF.Identifiers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -38,13 +38,13 @@ namespace Myriadbits.MXF
     }
 
 
-    public enum PartialSeekMode
-    {
-        Unknown,
-        UsingRIP,
-        Backwards,
-        //Full,
-    }
+    //public enum PartialSeekMode
+    //{
+    //    Unknown,
+    //    UsingRIP,
+    //    Backwards,
+    //    //Full,
+    //}
 
 
     /// <summary>
@@ -118,7 +118,7 @@ namespace Myriadbits.MXF
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            MXFKLVFactory klvFactory = new MXFKLVFactory();
+            MXFPackFactory mxfPackFactory = new MXFPackFactory();
 
             MXFPartition currentPartition = null;
             int previousPercentage = 0;
@@ -131,37 +131,37 @@ namespace Myriadbits.MXF
                 this.AddChild(partitions);
 
                 int partitionNumber = 0; // For easy partition identification
-                while (!m_reader.EOF)
-                {
-                    try
-                    {
-                        MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
+                //while (!m_reader.EOF)
+                //{
+                //    try
+                //    {
+                //        MXFPack pack = mxfPackFactory.CreatePack();
 
-                        //// Update overall counters
-                        //if (klv.Key.Type == KeyType.None)
-                        //    counters[(int)klv.Key.Type]++;
+                //        //// Update overall counters
+                //        //if (klv.Key.Type == KeyType.None)
+                //        //    counters[(int)klv.Key.Type]++;
 
-                        // Process the new KLV
-                        ProcessKLVObject(klv, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
+                //        // Process the new KLV
+                //        ProcessKLVObject(pack, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
 
-                        // Next KLV please
-                        m_reader.Seek(klv.DataOffset + klv.Length);
-                    }
-                    catch (Exception e)
-                    {
-                        m_reader.SeekForNextPotentialKey();
-                    }
+                //        // Next KLV please
+                //        m_reader.Seek(pack.ValueOffset + pack.Length.Value);
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        m_reader.SeekForNextPotentialKey();
+                //    }
 
 
 
-                    // Only report progress when the percentage has changed
-                    int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
-                    if (currentPercentage != previousPercentage)
-                    {
-                        worker.ReportProgress(currentPercentage, "Parsing MXF file");
-                        previousPercentage = currentPercentage;
-                    }
-                }
+                //    // Only report progress when the percentage has changed
+                //    int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
+                //    if (currentPercentage != previousPercentage)
+                //    {
+                //        worker.ReportProgress(currentPercentage, "Parsing MXF file");
+                //        previousPercentage = currentPercentage;
+                //    }
+                //}
             }
 
             Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
@@ -187,127 +187,125 @@ namespace Myriadbits.MXF
 
             Stopwatch sw = Stopwatch.StartNew();
 
-            MXFKLVFactory klvFactory = new MXFKLVFactory();
+            //MXFPackFactory mxfPackFactory = new MXFPackFactory();
 
-            MXFPartition currentPartition = null;
+            //MXFPartition currentPartition = null;
             int previousPercentage = 0;
             Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
 
-            PartialSeekMode seekMode = PartialSeekMode.Unknown;
+            //PartialSeekMode seekMode = PartialSeekMode.Unknown;
             using (m_reader = new MXFReader(this.Filename))
             {
                 this.Filesize = m_reader.Size;
-                MXFObject partitions = new MXFNamedObject("Partitions", 0);
-                this.AddChild(partitions);
+                MXFObject root = new MXFNamedObject("Partitions", 0);
+                this.AddChild(root);
 
+                MXFPartition currentPartition = null;
+                int partitionNumber = 0;
 
-                // Test with new KLV
+                // Test with new implementation
                 KLVParser parser = new KLVParser(m_reader);
-                List<MXFPack> list = new List<MXFPack>();
-                while (!m_reader.EOF)
+                List<MXFPack> packList = new List<MXFPack>();
+                while (parser.HasNext())
                 {
                     var pack = parser.GetNextMXFPack();
-                    list.Add(pack);
+                    Partition(pack, ref currentPartition);
+                    //packList.Add(pack);
                 }
 
-                var f = new MXFPackFactory();
+                // Partition the packs
+                // Partition(packList);
 
-                var newList = new List<MXFKLV>();
-                foreach (var p in list)
-                {
-                    newList.Add(f.CreateKLV(p, m_reader));
-                }
+                //// Start with trying to find the RIP
+                //bool ripFound = ReadRIP(mxfPackFactory);
+                //if (ripFound)
+                //    seekMode = PartialSeekMode.UsingRIP;
+                //m_reader.Seek(0); // Start at the beginning
 
-                // Start with trying to find the RIP
-                bool ripFound = ReadRIP(klvFactory);
-                if (ripFound)
-                    seekMode = PartialSeekMode.UsingRIP;
-                m_reader.Seek(0); // Start at the beginning
+                //// Start by reading the first partition
+                //int partitionNumber = 0; // For easy partition identification
+                //while (!m_reader.EOF && seekMode != PartialSeekMode.Backwards) // Eof and NOT searching backwards
+                //{
+                //    MXFPack pack = mxfPackFactory.CreatePack(m_reader, currentPartition);
 
-                // Start by reading the first partition
-                int partitionNumber = 0; // For easy partition identification
-                while (!m_reader.EOF && seekMode != PartialSeekMode.Backwards) // Eof and NOT searching backwards
-                {
-                    MXFKLV klv = klvFactory.CreateObject(m_reader, currentPartition);
+                //    pack.Pack = list.Single(p => p.Offset == pack.Offset);
 
-                    klv.Pack = list.Single(p => p.Offset == klv.Offset);
-
-                    if (klv is MXFPartition && seekMode == PartialSeekMode.Backwards)
-                    {
-                        if (this.Partitions.Exists(a => a.Offset == klv.Offset))
-                        {
-                            // A new partition has been found that we already found, quit the main loop
-                            break;
-                        }
-                    }
+                //    if (pack is MXFPartition && seekMode == PartialSeekMode.Backwards)
+                //    {
+                //        if (this.Partitions.Exists(a => a.Offset == pack.Offset))
+                //        {
+                //            // A new partition has been found that we already found, quit the main loop
+                //            break;
+                //        }
+                //    }
 
 
-                    // Process the new KLV
-                    ProcessKLVObject(klv, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
+                //    // Process the new KLV
+                //    ProcessKLVObject(pack, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
 
 
-                    // If we found the second partition 
-                    long nextSeekPosition = klv.DataOffset + klv.Length;
-                    if (partitionNumber >= 2) // Header fully read, now busy with the second partition
-                    {
-                        switch (seekMode)
-                        {
-                            case PartialSeekMode.UsingRIP: // And we already found the RIP
-                                if (currentPartition.FirstSystemItem != null) // And we found the first system item
-                                {
-                                    MXFEntryRIP ripEntry = this.RIP.GetPartition(partitionNumber);
-                                    if (ripEntry != null)
-                                    {
-                                        // Mark the current partition as not-completely read
-                                        currentPartition.IsLoaded = false;
+                //    // If we found the second partition 
+                //    long nextSeekPosition = pack.ValueOffset + pack.Length.Value;
+                //    if (partitionNumber >= 2) // Header fully read, now busy with the second partition
+                //    {
+                //        switch (seekMode)
+                //        {
+                //            case PartialSeekMode.UsingRIP: // And we already found the RIP
+                //                if (currentPartition.FirstSystemItem != null) // And we found the first system item
+                //                {
+                //                    MXFEntryRIP ripEntry = this.RIP.GetPartition(partitionNumber);
+                //                    if (ripEntry != null)
+                //                    {
+                //                        // Mark the current partition as not-completely read
+                //                        currentPartition.IsLoaded = false;
 
-                                        // Start at the next partition
-                                        nextSeekPosition = (long)ripEntry.PartitionOffset;
-                                    }
-                                }
-                                break;
+                //                        // Start at the next partition
+                //                        nextSeekPosition = (long)ripEntry.PartitionOffset;
+                //                    }
+                //                }
+                //                break;
 
-                            case PartialSeekMode.Backwards: // NO RIP, searching backwards
-                                                            // Backwards, jump to the PREVIOUS partition
-                                if (currentPartition.FirstSystemItem != null) // And we found the first system item
-                                {
-                                    // Jump to the previous partition
-                                    if (currentPartition.PreviousPartition != 0)
-                                    {
-                                        // And we haven't found this partition yet
-                                        if (!this.Partitions.Exists(a => a.ThisPartition == currentPartition.PreviousPartition))
-                                            nextSeekPosition = (long)currentPartition.PreviousPartition; // Jump to previous
-                                    }
-                                }
-                                break;
+                //            case PartialSeekMode.Backwards: // NO RIP, searching backwards
+                //                                            // Backwards, jump to the PREVIOUS partition
+                //                if (currentPartition.FirstSystemItem != null) // And we found the first system item
+                //                {
+                //                    // Jump to the previous partition
+                //                    if (currentPartition.PreviousPartition != 0)
+                //                    {
+                //                        // And we haven't found this partition yet
+                //                        if (!this.Partitions.Exists(a => a.ThisPartition == currentPartition.PreviousPartition))
+                //                            nextSeekPosition = (long)currentPartition.PreviousPartition; // Jump to previous
+                //                    }
+                //                }
+                //                break;
 
-                            case PartialSeekMode.Unknown: // No RIP....
-                                                          // Hmmm, RIP is not found, check if we have a footer partition somewhere
-                                MXFPartition part = this.Partitions.Where(a => a.FooterPartition != 0).FirstOrDefault();
-                                if (part != null)
-                                {
-                                    // If we are already at the footer, don't bother to seek
-                                    if (currentPartition.Offset != (long)part.FooterPartition)
-                                    {
-                                        nextSeekPosition = (long)part.FooterPartition; // Start at the footer
-                                        seekMode = PartialSeekMode.Backwards;
-                                    }
-                                }
-                                break;
-                        }
-                    }
+                //            case PartialSeekMode.Unknown: // No RIP....
+                //                                          // Hmmm, RIP is not found, check if we have a footer partition somewhere
+                //                MXFPartition part = this.Partitions.Where(a => a.FooterPartition != 0).FirstOrDefault();
+                //                if (part != null)
+                //                {
+                //                    // If we are already at the footer, don't bother to seek
+                //                    if (currentPartition.Offset != (long)part.FooterPartition)
+                //                    {
+                //                        nextSeekPosition = (long)part.FooterPartition; // Start at the footer
+                //                        seekMode = PartialSeekMode.Backwards;
+                //                    }
+                //                }
+                //                break;
+                //        }
+                //    }
 
-                    // Next KLV please
-                    m_reader.Seek(nextSeekPosition);
+                //    // Next KLV please
+                //    m_reader.Seek(nextSeekPosition);
 
-                    // Only report progress when the percentage has changed
-                    int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
-                    if (currentPercentage != previousPercentage)
-                    {
-                        worker.ReportProgress(currentPercentage, "Partial Parsing MXF file");
-                        previousPercentage = currentPercentage;
-                    }
-                }
+                //    // Only report progress when the percentage has changed
+                //    int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
+                //    if (currentPercentage != previousPercentage)
+                //    {
+                //        worker.ReportProgress(currentPercentage, "Partial Parsing MXF file");
+                //        previousPercentage = currentPercentage;
+                //    }
+                //}
             }
 
             Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
@@ -317,26 +315,117 @@ namespace Myriadbits.MXF
             DoPostWork(worker, sw, allPrimerKeys);
 
             // And Execute FAST tests
-            this.ExecuteValidationTest(worker, false);
+            //this.ExecuteValidationTest(worker, false);
 
             // Finished
             worker.ReportProgress(100, "Finished");
         }
 
+        private void Partition(List<MXFPack> packList)
+        {
+            MXFObject root = new MXFNamedObject("Partitions", 0);
+            this.AddChild(root);
 
-        private void ProcessKLVObject(MXFKLV klv, MXFObject partitions, ref MXFPartition currentPartition, ref int partitionNumber, ref Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
+            MXFPartition currentPartition = null;
+            int partitionNumber = 0;
+
+            foreach (var pack in packList)
+            {
+                switch (pack)
+                {
+                    case MXFPartition partition:
+                        currentPartition = partition;
+                        currentPartition.File = this;
+                        currentPartition.PartitionNumber = ++partitionNumber;
+                        root.AddChild(currentPartition);
+                        this.Partitions.Add(currentPartition);
+                        break;
+
+                    case MXFRIP rip:
+                        this.AddChild(rip);
+                        this.RIP = rip;
+                        break;
+
+                    case MXFPreface preface:
+                        this.LogicalBase = preface.CreateLogicalObject();
+                        if (currentPartition != null)
+                        {
+                            currentPartition.AddChild(pack);
+                        }
+                        break;
+
+                    case MXFPrimerPack primer:
+                        if (currentPartition != null)
+                        {
+                            // Let the partition know all primer keys
+                            //allPrimerKeys = primer.AllKeys;
+                            currentPartition.PrimerKeys = primer.AllKeys;
+                            currentPartition.AddChild(primer); // Add the primer 
+                        }
+                        break;
+
+                    default:
+                        currentPartition.AddChild(pack);
+                        break;
+                };
+            }
+        }
+
+        private void Partition(MXFPack pack, ref MXFPartition currentPartition)
+        {
+            switch (pack)
+            {
+                case MXFPartition partition:
+                    currentPartition = partition;
+                    currentPartition.File = this;
+                    //currentPartition.PartitionNumber = ++partitionNumber;
+                    this.AddChild(currentPartition);
+                    this.Partitions.Add(currentPartition);
+                    break;
+
+                case MXFRIP rip:
+                    this.AddChild(rip);
+                    this.RIP = rip;
+                    break;
+
+                case MXFPreface preface:
+                    this.LogicalBase = preface.CreateLogicalObject();
+                    if (currentPartition != null)
+                    {
+                        currentPartition.AddChild(pack);
+                    }
+                    break;
+
+                case MXFPrimerPack primer:
+                    if (currentPartition != null)
+                    {
+                        // Let the partition know all primer keys
+                        //allPrimerKeys = primer.AllKeys;
+                        currentPartition.PrimerKeys = primer.AllKeys;
+                        currentPartition.AddChild(primer); // Add the primer 
+                    }
+                    break;
+
+                default:
+                    currentPartition.AddChild(pack);
+                    break;
+
+            }
+        }
+
+        private void ProcessKLVObject(MXFPack klv, MXFObject partitions, ref MXFPartition currentPartition, ref int partitionNumber, ref Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
             // Is this a header, add to the partitions
             switch (klv)
             {
-                case MXFPartition:
-                    currentPartition = klv as MXFPartition;
-                    currentPartition.File = this;
-                    currentPartition.PartitionNumber = partitionNumber;
-                    this.Partitions.Add(currentPartition);
-                    partitions.AddChild(currentPartition);
-                    partitionNumber++;
-                    break;
+                //case MXFPartition:
+                //    currentPartition = klv as MXFPartition;
+                //    currentPartition.File = this;
+                //    currentPartition.PartitionNumber = partitionNumber;
+                //    this.Partitions.Add(currentPartition);
+                //    partitions.AddChild(currentPartition);
+                //    partitionNumber++;
+                //    break;
 
                 case MXFPrimerPack primer:
                     if (currentPartition != null)
@@ -349,14 +438,14 @@ namespace Myriadbits.MXF
                     }
                     break;
 
-                case MXFRIP rip:
-                    // Only add the RIP when not yet present
-                    if (this.RIP == null)
-                    {
-                        this.AddChild(klv);
-                        this.RIP = rip;
-                    }
-                    break;
+                //case MXFRIP rip:
+                //    // Only add the RIP when not yet present
+                //    if (this.RIP == null)
+                //    {
+                //        this.AddChild(klv);
+                //        this.RIP = rip;
+                //    }
+                //    break;
 
                 case MXFSystemItem:
                     if (currentPartition != null)
@@ -391,14 +480,14 @@ namespace Myriadbits.MXF
                         this.AddChild(klv);
                     break;
 
-                case MXFPreface:
-                    this.LogicalBase = klv.CreateLogicalObject();
-                    // Normal
-                    if (currentPartition != null)
-                        currentPartition.AddChild(klv);
-                    else
-                        this.AddChild(klv);
-                    break;
+                //case MXFPreface:
+                //    this.LogicalBase = klv.CreateLogicalObject();
+                //    // Normal
+                //    if (currentPartition != null)
+                //        currentPartition.AddChild(klv);
+                //    else
+                //        this.AddChild(klv);
+                //    break;
 
                 default:
                     // Normal
@@ -501,7 +590,7 @@ namespace Myriadbits.MXF
         private void DoPostWork(BackgroundWorker worker, Stopwatch sw, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
             // Update all type descriptions
-            MXFKLVFactory.UpdateAllTypeDescriptions(allPrimerKeys);
+            //MXFPackFactory.UpdateAllTypeDescriptions(allPrimerKeys);
 
             // Resolve the references
             sw.Restart();
@@ -520,7 +609,7 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Try to locate the RIP
         /// </summary>
-        private bool ReadRIP(MXFKLVFactory klvFactory)
+        private bool ReadRIP(MXFPackFactory mxfPackFactory)
         {
             if (this.RIP == null)
             {
@@ -530,8 +619,8 @@ namespace Myriadbits.MXF
                 if (ripSize < this.Filesize && ripSize >= 4) // At least 4 bytes
                 {
                     m_reader.Seek(this.Filesize - ripSize);
-                    MXFKLV klv = klvFactory.CreateObject(m_reader, null);
-                    if (klv is MXFRIP rip)
+                    MXFPack pack = mxfPackFactory.CreatePack(null, m_reader);
+                    if (pack is MXFRIP rip)
                     {
                         // Yes, RIP found
                         this.AddChild(rip);
@@ -626,7 +715,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="parent"></param>
         /// <returns>the number of successfully resolved references</returns>  
-        protected int ResolveReferences()
+        private int ResolveReferences()
         {
             // TODO optimize further, rethink solution
             var refs = this.Descendants().OfType<IResolvable>().ToList();

@@ -34,8 +34,8 @@ namespace Myriadbits.MXF
         public MXFUUID ParameterDefinitionReference { get; set; }
 
 
-        public MXFParameter(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "Parameter")
+        public MXFParameter(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "Parameter")
         {
         }
 

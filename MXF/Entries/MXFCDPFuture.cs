@@ -40,8 +40,8 @@ namespace Myriadbits.MXF
 			: base(reader)
 		{
 			this.SectionID = sectionID;
-			this.Length = reader.ReadByte();
-			this.Data = reader.ReadArray(reader.ReadByte, (int)this.Length);
+			this.TotalLength = reader.ReadByte();
+			this.Data = reader.ReadArray(reader.ReadByte, (int)this.TotalLength);
 		}
 
 		/// <summary>

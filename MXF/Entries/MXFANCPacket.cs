@@ -126,12 +126,12 @@ namespace Myriadbits.MXF
 			this.PayloadSamplingCoding = (MXFANCPayloadCoding) reader.ReadByte();
 			this.PayloadSampleCount = reader.ReadUInt16();
 
-			this.Length = this.PayloadSampleCount;
+			this.TotalLength = this.PayloadSampleCount;
 			if (this.PayloadSamplingCoding == MXFANCPayloadCoding.Coding_10_bit_luma_samples ||
 				this.PayloadSamplingCoding == MXFANCPayloadCoding.Coding_10_bit_color_difference_samples ||
 				this.PayloadSamplingCoding == MXFANCPayloadCoding.Coding_10_bit_luma_and_color_difference_samples)
 			{
-				this.Length = 4 * (this.PayloadSampleCount / 3); // 3 samples are stored in 4 bytes 
+				this.TotalLength = 4 * (this.PayloadSampleCount / 3); // 3 samples are stored in 4 bytes 
 			}
 
 			// Skip 8 bytes (seems to be data but cannot find any meaning in the spec!)
@@ -139,9 +139,9 @@ namespace Myriadbits.MXF
 			UInt32 unknownData2 = reader.ReadUInt32();
 
 			// Length Alignment
-			this.Length = 4 * ((this.Length + 3) / 4);
+			this.TotalLength = 4 * ((this.TotalLength + 3) / 4);
 
-			if (this.Length > 3)
+			if (this.TotalLength > 3)
 			{
 				// Read the DID
 				this.DID = reader.ReadByte();
@@ -165,7 +165,7 @@ namespace Myriadbits.MXF
 						break;
 					default:
 						// Read the real payload without the did/sdid/size
-						this.Payload = reader.ReadArray(reader.ReadByte, (int)(this.Length - 3));
+						this.Payload = reader.ReadArray(reader.ReadByte, (int)(this.TotalLength - 3));
 						break;
 				}
 			}

@@ -38,8 +38,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03020102.09010000")]
         public object IndirectValue { get; set; }
 
-        public MXFTaggedValue(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "TaggedValue")
+        public MXFTaggedValue(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "TaggedValue")
         {
         }
 

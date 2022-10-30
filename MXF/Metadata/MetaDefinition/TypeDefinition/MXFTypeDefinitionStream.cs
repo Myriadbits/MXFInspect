@@ -26,8 +26,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.020c0000")]
     public class MXFTypeDefinitionStream : MXFTypeDefinition
     {
-        public MXFTypeDefinitionStream(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTypeDefinitionStream(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionStream";
         }

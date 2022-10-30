@@ -57,8 +57,8 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public MXFKey ThisGenerationUID { get; set; }
 
-		public MXFIdentification(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Identification")
+		public MXFIdentification(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Identification")
 		{
 		}
 

@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014d00")]
     public class MXFKLVDataDefinition : MXFDefinitionObject
     {
-        public MXFKLVDataDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFKLVDataDefinition(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "KLVDataDefinition";
         }

@@ -27,7 +27,7 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public class KLVLength : ByteArray
+    public class KLVLength : KLVLengthBase
     {
         public enum LengthEncodings
         {
@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
 
         public LengthEncodings LengthEncoding { get; }
 
-        public long Value { get; }
+        //public long Value { get; }
 
         public BERForms? BERForm { get; }
         public int? AdditionalOctets { get; }
@@ -124,7 +124,7 @@ namespace Myriadbits.MXF
                 }
                 else
                 {
-                    return $"{LengthEncoding} {BERForm.Value}, ({Value})";
+                    return $"{LengthEncoding} {BERForm.Value} ({Value})";
                 }
             }
             else

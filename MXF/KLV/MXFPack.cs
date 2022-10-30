@@ -21,33 +21,38 @@
 //
 #endregion
 
-using System;
-using System.Collections.Generic;
+using Myriadbits.MXF.Utils;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Myriadbits.MXF
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class MXFPack : KLVTriplet
     {
+        private const string CATEGORYNAME = "MXFPack";
+        private const int CATEGORYPOS = 1;
+
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public override UL Key { get; }
 
-        // TODO should the length be overriden?
-        //public override KLVLength Key { get; }
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public override KLVLength Length { get; }
 
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
-        
+
+
         public MXFPack(UL key, KLVLength length, long offset) : base(key, length, offset)
         {
             // needed since it is overriden
             Key = key;
+            Length = length;
         }
 
         public override string ToString()
         {
-            return $"{Key.SMPTEInformation?.Name} - PackLength: {this.TotalLength}";
+            return $"{Key.SMPTEInformation?.Name ?? Key.Name} [len {this.TotalLength}]";
         }
     }
 }

@@ -189,9 +189,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFGenericPictureEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "Generic Picture Essence Descriptor")
+        /// <param name="pack"></param>
+        public MXFGenericPictureEssenceDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "Generic Picture Essence Descriptor")
         {
         }
 
@@ -199,9 +199,9 @@ namespace Myriadbits.MXF
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFGenericPictureEssenceDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, metadataName)
+        /// <param name="pack"></param>
+        public MXFGenericPictureEssenceDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, metadataName)
         {
         }
 

@@ -47,8 +47,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.0530050a.00000000")]
         public MXFKey OperationCategory { get; set; }
 
-        public MXFOperationDefinition(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFOperationDefinition(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "OperationDefinition";
         }

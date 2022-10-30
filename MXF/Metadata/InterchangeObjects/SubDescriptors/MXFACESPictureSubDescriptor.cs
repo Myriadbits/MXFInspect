@@ -51,8 +51,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
-        public MXFACESPictureSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "ACESPictureSubDescriptor")
+        public MXFACESPictureSubDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "ACESPictureSubDescriptor")
         {
         }
 

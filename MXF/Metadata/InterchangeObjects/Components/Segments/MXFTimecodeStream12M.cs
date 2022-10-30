@@ -33,8 +33,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.04040101.04000000")]
         public bool? IncludeSync { get; set; }
 
-        public MXFTimecodeStream12M(MXFReader reader, MXFKLV headerKLV, string metadataName)
-            : base(reader, headerKLV, "TimecodeStream12M")
+        public MXFTimecodeStream12M(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, "TimecodeStream12M")
         {
         }
 

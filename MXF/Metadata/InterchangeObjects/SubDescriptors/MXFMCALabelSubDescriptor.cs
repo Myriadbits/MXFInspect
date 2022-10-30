@@ -25,8 +25,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFMCALabelSubDescriptor : MXFSubDescriptor
     {
-		public MXFMCALabelSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "MCALabelSubDescriptor")
+		public MXFMCALabelSubDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "MCALabelSubDescriptor")
 		{
 		}
 

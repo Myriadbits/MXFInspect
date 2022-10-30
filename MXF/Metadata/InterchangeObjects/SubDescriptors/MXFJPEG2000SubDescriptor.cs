@@ -92,8 +92,8 @@ namespace Myriadbits.MXF
         public MXFRGBAComponent[] J2CLayout { get; set; }
 
 
-        public MXFJPEG2000SubDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "JPEG2000SubDescriptor")
+        public MXFJPEG2000SubDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "JPEG2000SubDescriptor")
         {
         }
 

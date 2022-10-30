@@ -42,8 +42,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
 		public MXFLength? Duration { get; set; }
 
-		public MXFStructuralComponent(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFStructuralComponent(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 

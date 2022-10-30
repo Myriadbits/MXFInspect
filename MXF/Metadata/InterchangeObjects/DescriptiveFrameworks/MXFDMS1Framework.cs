@@ -60,8 +60,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string FrameworkThesaurusName { get; set; }
 
-        public MXFDMS1Framework(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFDMS1Framework(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "DMS1Framework";
         }

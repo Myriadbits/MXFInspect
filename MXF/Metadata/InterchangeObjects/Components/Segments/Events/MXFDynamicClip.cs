@@ -48,8 +48,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010109.06010103.0c000000")]
         public object SourceSpecies { get; set; }
 
-        public MXFDynamicClip(MXFReader reader, MXFKLV headerKLV)
-        : base(reader, headerKLV)
+        public MXFDynamicClip(MXFReader reader, MXFPack pack)
+        : base(reader, pack)
         {
             this.MetaDataName = "DynamicClip";
         }

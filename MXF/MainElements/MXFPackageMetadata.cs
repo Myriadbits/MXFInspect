@@ -1,4 +1,4 @@
-﻿#region license
+﻿#region licenseBER ShortForm
 //
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
@@ -26,12 +26,12 @@ using System.Diagnostics;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPackageMetaData : MXFKLV
+    public class MXFPackageMetaData : MXFPack
     {
         private int nofSizeSize = 2;
 
-        public MXFPackageMetaData(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+        public MXFPackageMetaData(MXFReader reader, MXFPack pack)
+            : base(pack.Key, pack.Length, pack.Offset)
         {
             if (this.Key[5] == 0x63)
                 nofSizeSize = 4;
@@ -51,9 +51,9 @@ namespace Myriadbits.MXF
         // Add all meta data see spec: SMPTE ST 331:2011
         private void ParseElements(MXFReader reader)
         {
-            reader.Seek(this.DataOffset); // Seek to the start of the data
+            reader.Seek(this.ValueOffset); // Seek to the start of the data
 
-            long end = this.DataOffset + this.Length;
+            long end = this.ValueOffset + this.Length.Value;
             byte[] byteArray;
 
             while (reader.Position < end)
@@ -85,12 +85,13 @@ namespace Myriadbits.MXF
                     // UMID
                     case 0x83:
                         byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
-                        if(Size == 64)
+                        if (Size == 64)
                         {
                             var umid = new MXFExtendedUMID(byteArray);
                             this.AddChild(new MXFWrapperObject<MXFExtendedUMID>(umid, "ExtendedUMID", pos, Size));
                         }
-                        else if(Size == 32){
+                        else if (Size == 32)
+                        {
                             var umid = new MXFUMID(byteArray);
                             this.AddChild(new MXFWrapperObject<MXFUMID>(umid, "UMID", pos, Size));
                         }
@@ -126,8 +127,10 @@ namespace Myriadbits.MXF
 
                     // KLV metadata
                     case 0x88:
-                        var obj = new MXFKLVFactory().CreateObject(reader, this.Partition);
-                        this.AddChild(obj);
+                        var klvParser = new KLVParser(reader);
+                        klvParser.Seek(reader.Position);
+                        var pack = klvParser.GetNextMXFPack();
+                        this.AddChild(pack);
                         break;
 
                     // AES3 non-audio metadata
@@ -157,14 +160,9 @@ namespace Myriadbits.MXF
             {
                 size = reader.ReadUInt32();
             }
-                
+
 
             return (tag, size);
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0} [len {1}]", this.Key.Name, this.Length);
         }
     }
 }

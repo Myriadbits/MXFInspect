@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
 		{
 			this.BodySID = reader.ReadUInt32();
 			this.PartitionOffset = reader.ReadUInt64();
-			this.Length = 12; // Fixed length
+			this.TotalLength = 12; // Fixed length
 		}
 
 		/// <summary>

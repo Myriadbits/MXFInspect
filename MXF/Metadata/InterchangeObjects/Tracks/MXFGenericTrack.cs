@@ -40,14 +40,14 @@ namespace Myriadbits.MXF
 		public string TrackName { get; set; }
 
 
-		public MXFGenericTrack(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Generic Track")
+		public MXFGenericTrack(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Generic Track")
 		{
 		}
 
 
-		public MXFGenericTrack(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFGenericTrack(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 

@@ -63,7 +63,7 @@ namespace Myriadbits.MXF
 			: base(offset)
 		{
 			this.Name = name;
-			this.Length = length;
+			this.TotalLength = length;
 		}
 
 		/// <summary>

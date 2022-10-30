@@ -57,9 +57,9 @@ namespace Myriadbits.MXF
 		/// Constructor, set the correct descriptor name
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFAES3PCMDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "AES3 PCM Descriptor")
+		/// <param name="pack"></param>
+		public MXFAES3PCMDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "AES3 PCM Descriptor")
 		{
 		}
 

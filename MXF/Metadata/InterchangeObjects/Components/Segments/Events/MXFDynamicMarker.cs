@@ -38,8 +38,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010109.07020502.00000000")]
         public object ToleranceWindow { get; set; }
 
-        public MXFDynamicMarker(MXFReader reader, MXFKLV headerKLV)
-        : base(reader, headerKLV)
+        public MXFDynamicMarker(MXFReader reader, MXFPack pack)
+        : base(reader, pack)
         {
             this.MetaDataName = "DynamicMarker";
         }

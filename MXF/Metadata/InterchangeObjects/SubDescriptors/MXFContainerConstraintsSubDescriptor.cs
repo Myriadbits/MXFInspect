@@ -27,8 +27,8 @@ namespace Myriadbits.MXF
 	// urn:smpte:ul:060e2b34.027f0101.0d010101.01016700
 	public class MXFContainerConstraintsSubDescriptor : MXFSubDescriptor
 	{
-		public MXFContainerConstraintsSubDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "ContainerConstraintsSubDescriptor")
+		public MXFContainerConstraintsSubDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "ContainerConstraintsSubDescriptor")
 		{
 		}
 	}

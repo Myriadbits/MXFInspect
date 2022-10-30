@@ -61,10 +61,9 @@ namespace Myriadbits.MXF
 
 
 
-        public MXFLensUnitAquisitionMetadata(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+        public MXFLensUnitAquisitionMetadata(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "LensUnitAquisitionMetadata")
         {
-            this.MetaDataName = "LensUnitAquisitionMetadata";
         }
 
 

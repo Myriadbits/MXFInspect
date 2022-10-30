@@ -107,14 +107,14 @@ namespace Myriadbits.MXFInspect
         {
             switch (obj)
             {
-                case MXFKLV klv:
-                    return klv.DataOffset - klv.Offset + klv.Length;
+                case MXFPack pack:
+                    return pack.TotalLength;
 
                 case MXFLocalTag tag:
                     return tag.DataOffset - tag.Offset + tag.Size;
 
                 default:
-                    return obj.Length;
+                    return obj.TotalLength;
             }
         }
 

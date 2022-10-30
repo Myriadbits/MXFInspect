@@ -30,9 +30,9 @@ namespace Myriadbits.MXF
 	{
 		private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>();
 
-		public MXFANCFrameElement(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV)
-		{
+		public MXFANCFrameElement(MXFReader reader, MXFPack pack)
+			: base(reader, pack)
+        {
 			UInt16 nofPackets = reader.ReadUInt16();
 			for(int n = 0; n < nofPackets; n++)
 			{

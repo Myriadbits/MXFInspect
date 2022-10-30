@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012200")]
     public class MXFDictionary : MXFInterchangeObject
     {
-        public MXFDictionary(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "Dictionary")
+        public MXFDictionary(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "Dictionary")
         {
         }
 

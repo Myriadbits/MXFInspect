@@ -40,9 +40,9 @@ namespace Myriadbits.MXF
         /// Constructor when used as base class
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="headerKLV"></param>
-        public MXFAIFCDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "AIFCDescriptor")
+        /// <param name="pack"></param>
+        public MXFAIFCDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "AIFCDescriptor")
 		{
 		}
 

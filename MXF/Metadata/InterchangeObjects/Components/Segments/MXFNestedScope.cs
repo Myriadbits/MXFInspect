@@ -25,8 +25,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFNestedScope : MXFSegment
 	{
-		public MXFNestedScope(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		public MXFNestedScope(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 

@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03010203.06000000")]
         public string[] MemberNames { get; set; }
 
-        public MXFTypeDefinitionRecord(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFTypeDefinitionRecord(MXFReader reader, MXFPack pack)
+            : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionRecord";
         }

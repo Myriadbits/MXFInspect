@@ -27,15 +27,15 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFItemValue_ISO7 : MXFKLV
+	public class MXFItemValue_ISO7 : MXFPack
 	{
         private const string CATEGORYNAME = "Item Value ISO7";
 
         [Category(CATEGORYNAME)]
 		public string ItemValue_ISO7 { get; set; }
 
-        public MXFItemValue_ISO7(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV)
+        public MXFItemValue_ISO7(MXFReader reader, MXFPack pack)
+            : base(pack.Key, pack.Length, pack.Offset)
         {
             this.Key.Name ??= "Item Value ISO7";
             Initialize(reader);
@@ -44,8 +44,8 @@ namespace Myriadbits.MXF
         private void Initialize(MXFReader reader)
         {
             // Make sure we read at the data position
-            reader.Seek(this.DataOffset);
-            ItemValue_ISO7 = reader.ReadUTF8String((int)this.Length);
+            reader.Seek(this.ValueOffset);
+            ItemValue_ISO7 = reader.ReadUTF8String((int)this.Length.Value);
         }
     }
 }

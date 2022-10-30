@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
         {
             Name = name;
             Identifier = reader.ReadUUIDKey();
-            Length = Identifier.Length;
+            TotalLength = Identifier.Length;
         }
 
         public override string ToString()

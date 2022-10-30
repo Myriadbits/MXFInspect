@@ -39,14 +39,14 @@ namespace Myriadbits.MXF
 		/// Constructor, set the correct descriptor name
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Generic Data Essence Descriptor")
+		/// <param name="pack"></param>
+		public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Generic Data Essence Descriptor")
 		{
 			// TODO remove code, once implemented the subclasses
-			if (headerKLV.Key[14] == 0x5B)
+			if (pack.Key[14] == 0x5B)
 				this.Key.Name = "VBI Data Descriptor";
-			if (headerKLV.Key[14] == 0x5C)
+			if (pack.Key[14] == 0x5C)
 				this.Key.Name = "ANC Data Descriptor";
 			this.MetaDataName = this.Key.Name;
 		}
@@ -55,9 +55,9 @@ namespace Myriadbits.MXF
 		/// Constructor, set the correct descriptor name
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, metadataName)
+		/// <param name="pack"></param>
+		public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, metadataName)
 		{
 		}
 

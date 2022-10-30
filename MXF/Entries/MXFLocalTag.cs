@@ -53,7 +53,7 @@ namespace Myriadbits.MXF
             this.Tag = reader.ReadUInt16();
             this.Size = reader.ReadUInt16();
             this.DataOffset = reader.Position;
-            this.Length = this.Size;
+            this.TotalLength = this.Size;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"LocalTag 0x{this.Tag:X4} -> {this.Key.Name ?? "<Unknown tag>"} [len {this.Size}]");
+            sb.Append($"LocalTag 0x{this.Tag:X4} -> {this.Key?.Name ?? "<Unknown tag>"} [len {this.Size}]");
             return sb.ToString();
         }
 

@@ -61,9 +61,9 @@ namespace Myriadbits.MXF
 		/// Constructor, set the correct descriptor name
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFRGBAPictureEssenceDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "RGBA Picture Essence Descriptor")
+		/// <param name="pack"></param>
+		public MXFRGBAPictureEssenceDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "RGBA Picture Essence Descriptor")
 		{
 		}
 

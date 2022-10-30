@@ -27,8 +27,8 @@ namespace Myriadbits.MXF
 	// urn:smpte:ul:060e2b34.027f0101.0d010101.01013100
 	public class MXFLocator : MXFInterchangeObject
 	{
-		public MXFLocator(MXFReader reader, MXFKLV headerKLV, string metadataName)
-			: base(reader, headerKLV, "Locator")
+		public MXFLocator(MXFReader reader, MXFPack pack, string metadataName)
+			: base(reader, pack, "Locator")
 		{
 		}
 

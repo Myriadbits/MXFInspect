@@ -27,8 +27,8 @@ namespace Myriadbits.MXF
 {
 	public class MXFSourcePackage : MXFGenericPackage
 	{
-		public MXFSourcePackage(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Source Package")
+		public MXFSourcePackage(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Source Package")
 		{
 		}
 

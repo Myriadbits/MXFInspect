@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         public string CameraSettingFileURI { get; set; }
-        [Category(CATEGORYNAME)] 
+        [Category(CATEGORYNAME)]
         public string CameraAttributes { get; set; }
         [Category(CATEGORYNAME)]
         public MXFKey TransferCharacteristic { get; set; }
@@ -84,13 +84,12 @@ namespace Myriadbits.MXF
         public UInt16? CameraLuminanceDynamicRange { get; set; }
         [Category(CATEGORYNAME)]
         public byte? GammaForCDL { get; set; }
-        
 
 
-        public MXFCameraUnitAquisitionMetadata(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+
+        public MXFCameraUnitAquisitionMetadata(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "CameraUnitAquisitionMetadata")
         {
-            this.MetaDataName = "MetaDictionary";
         }
 
 
@@ -107,7 +106,7 @@ namespace Myriadbits.MXF
                 case 0x3210: this.TransferCharacteristic = reader.ReadULKey(); return true;
                 case 0x8106: this.CaptureFrameRate = reader.ReadRational(); return true;
                 case 0x8100: this.AutoExposureMode = reader.ReadULKey(); return true;
-                case 0x8101: this.AutoFocusSensingAreaSetting = (MXFAutoFocusSensingAreaSetting) reader.ReadByte(); return true;
+                case 0x8101: this.AutoFocusSensingAreaSetting = (MXFAutoFocusSensingAreaSetting)reader.ReadByte(); return true;
                 case 0x8102: this.ColorCorrectionFilterWheelSetting = (MXFColorCorrectionFilterWheelSetting)reader.ReadByte(); return true;
                 case 0x8103: this.NeutralDensityFilterWheelSetting = reader.ReadUInt16(); return true;
                 case 0x8104: this.ImageSensorDimensionEffectiveWidth = reader.ReadUInt16(); return true;
@@ -115,14 +114,14 @@ namespace Myriadbits.MXF
                 case 0x8107: this.ImageSensorReadoutMode = (MXFImageSensorReadoutMode)reader.ReadByte(); return true;
                 case 0x8108: this.ShutterSpeedAngle = reader.ReadUInt32(); return true;
                 case 0x8109: this.ShutterSpeedTime = reader.ReadRational(); return true;
-                case 0x810a: this.CameraMasterGainAdjustment = (short) reader.ReadUInt16(); return true;
+                case 0x810a: this.CameraMasterGainAdjustment = (short)reader.ReadUInt16(); return true;
                 case 0x810b: this.ISOSensitivity = reader.ReadUInt16(); return true;
                 case 0x810c: this.ElectricalExtenderMagnification = reader.ReadUInt16(); return true;
                 case 0x8115: this.ExposureIndexOfPhotoMeter = reader.ReadUInt16(); return true;
                 case 0x8118: this.ColorMatrix = reader.ReadArray(reader.ReadRational, localTag.Size); return true;
                 case 0x810d: this.AutoWhiteBalanceMode = (MXFAutoWhiteBalanceMode)reader.ReadByte(); return true;
                 case 0x810e: this.WhiteBalance = reader.ReadUInt16(); return true;
-                case 0x810f: this.CameraMasterBlackLevel = (short) reader.ReadUInt16(); return true;
+                case 0x810f: this.CameraMasterBlackLevel = (short)reader.ReadUInt16(); return true;
                 case 0x8110: this.CameraKneePoint = reader.ReadUInt16(); return true;
                 case 0x8111: this.CameraKneeSlope = reader.ReadUInt16(); return true;
                 case 0x8112: this.CameraLuminanceDynamicRange = reader.ReadUInt16(); return true;

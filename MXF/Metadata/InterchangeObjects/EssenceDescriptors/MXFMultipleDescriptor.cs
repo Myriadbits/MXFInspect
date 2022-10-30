@@ -29,9 +29,9 @@ namespace Myriadbits.MXF
 		/// Constructor when used as base class
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFMultipleDescriptor(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "Multiple Descriptor")
+		/// <param name="pack"></param>
+		public MXFMultipleDescriptor(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Multiple Descriptor")
 		{
 		}
 

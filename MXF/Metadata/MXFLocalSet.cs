@@ -31,12 +31,16 @@ namespace Myriadbits.MXF
     /// short local tag defined within the context of the local set. The local tag is typically only 1 
     /// or 2 bytes long and is used as an alias for the full 16-byte universal label value.
     /// </summary>
-    public class MXFLocalSet : MXFKLV
+    public class MXFLocalSet : MXFPack
     {
-        public MXFLocalSet(MXFReader reader, MXFKLV klv)
-            : base(reader, klv)
+        public MXFLocalSet(MXFReader reader, MXFPack pack)
+            : base(pack.Key, pack.Length, pack.Offset)
         {
-            this.Key.Name ??= "LocalSet";
+            if (Key.SMPTEInformation != null)
+            {
+                this.Key.Name ??= "LocalSet";
+            }
+
             ParseTags(reader);
         }
 
@@ -47,10 +51,10 @@ namespace Myriadbits.MXF
         private void ParseTags(MXFReader reader)
         {
             // Make sure we read at the data position
-            reader.Seek(this.DataOffset);
+            reader.Seek(this.ValueOffset);
 
             // Read all local tags
-            long klvEnd = this.DataOffset + this.Length;
+            long klvEnd = this.ValueOffset + this.Length.Value;
             while (reader.Position + 4 < klvEnd)
             {
                 MXFLocalTag tag = new MXFLocalTag(reader);
@@ -83,10 +87,10 @@ namespace Myriadbits.MXF
         {
             if (this.Partition?.PrimerKeys != null)
             {
-                if (this.Partition.PrimerKeys.ContainsKey(tag.Tag))
+                if (this.Partition.PrimerKeys.TryGetValue(tag.Tag, out MXFEntryPrimer primerEntry))
                 {
-                    MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
-                    tag.Key = entry.AliasUID.Key;
+                    //MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
+                    tag.Key = primerEntry.AliasUID.Key;
                 }
             }
         }

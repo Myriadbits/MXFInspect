@@ -49,8 +49,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public bool IsContiguous { get; set; }
 
-        public MXFTIFFDescriptor(MXFReader reader, MXFKLV headerKLV)
-            : base(reader, headerKLV, "TIFFDescriptor")
+        public MXFTIFFDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "TIFFDescriptor")
         {
         }
 

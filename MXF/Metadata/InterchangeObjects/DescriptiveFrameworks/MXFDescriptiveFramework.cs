@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
 	{
 		public readonly MXFKey linkedDMPluginID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x0c, 0x00, 0x00, 0x00);
 
-		public MXFDescriptiveFramework(MXFReader reader, MXFKLV headerKLV)
-			: base(reader, headerKLV, "DescriptiveFramework")
+		public MXFDescriptiveFramework(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "DescriptiveFramework")
 		{
 		}
 

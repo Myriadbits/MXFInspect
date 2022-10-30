@@ -82,7 +82,7 @@ namespace Myriadbits.MXF
 			UInt16 identifier = reader.ReadUInt16();
 			if (identifier == 0x9669)
 			{
-				this.Length = reader.ReadByte();
+				this.TotalLength = reader.ReadByte();
 				this.FrameRateE = (MXFCDFFrameRate) ((reader.ReadByte() & 0xF0) >> 4);
 
 				switch (this.FrameRateE)
@@ -108,7 +108,7 @@ namespace Myriadbits.MXF
 				this.SequenceCounter = reader.ReadUInt16();
 
 				byte count = 0;
-				long endPos = this.Offset + this.Length;
+				long endPos = this.Offset + this.TotalLength;
 				while (reader.Position < endPos)
 				{
 					identifier = reader.ReadByte();
