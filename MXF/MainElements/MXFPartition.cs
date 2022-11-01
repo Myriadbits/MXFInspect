@@ -44,6 +44,10 @@ namespace Myriadbits.MXF
         public PartitionType PartitionType { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.01020203.00000000")]
+        public MXFKey OP { get; set; }
+
+        [Category(CATEGORYNAME)]
         public bool Closed { get; set; }
 
         [Category(CATEGORYNAME)]
@@ -92,10 +96,6 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01030404.00000000")]
         public UInt32 BodySID { get; set; }
-
-        [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010105.01020203.00000000")]
-        public MXFKey OP { get; set; }
 
         [Browsable(false)]
         public MXFSystemItem FirstSystemItem { get; set; }
