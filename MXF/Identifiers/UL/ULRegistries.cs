@@ -63,7 +63,7 @@ namespace Myriadbits.MXF
         [Description("Local Set, Length: 1 bytes, Tag: 2 bytes")]
         LocalSet_1Byte_2Bytes = 0x23,
         [Description("Local Set, Length: 1 bytes, Tag: 4 bytes")]
-        LocalSet1_Byte_4Bytes = 0x3b,
+        LocalSet_1Byte_4Bytes = 0x3b,
         [Description("Local Set, Length: 2 bytes, Tag: 1 byte")]
         LocalSet_2Bytes_1Byte = 0x43,
         [Description("Local Set, Length: 2 bytes, Tag: OID BER")]

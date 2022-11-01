@@ -166,7 +166,7 @@ namespace Myriadbits.MXF
                                 RegistryDesignator = ULRegistries.LocalSet_1Byte_2Bytes;
                                 break;
                             case 0x3b:
-                                RegistryDesignator = ULRegistries.LocalSet1_Byte_4Bytes;
+                                RegistryDesignator = ULRegistries.LocalSet_1Byte_4Bytes;
                                 break;
                             case 0x43:
                                 RegistryDesignator = ULRegistries.LocalSet_2Bytes_1Byte;
