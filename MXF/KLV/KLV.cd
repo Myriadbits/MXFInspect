@@ -25,26 +25,21 @@
       <FileName>KLV\KLVKey.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.KLVLength">
-    <Position X="7.75" Y="7.25" Width="1.5" />
+  <Class Name="Myriadbits.MXF.KLVBERLength">
+    <Position X="6.5" Y="7.75" Width="2.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="Myriadbits.MXF.KLVLength.LengthEncodings">
+      <Enum Name="Myriadbits.MXF.KLVBERLength.BERForms">
         <TypeIdentifier>
-          <NewMemberFileName>KLV\KLVLength.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="Myriadbits.MXF.KLVLength.BERForms">
-        <TypeIdentifier>
-          <NewMemberFileName>KLV\KLVLength.cs</NewMemberFileName>
+          <NewMemberFileName>KLV\KLVBERLength.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAAAEAAAAAAAAAEAAAAAAAAIgAAAAAAA=</HashCode>
-      <FileName>KLV\KLVLength.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAEAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>KLV\KLVBERLength.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.KLVValue">
@@ -69,7 +64,7 @@
       <FileName>KLV\ByteArrayExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.KLVTriplet">
+  <Class Name="Myriadbits.MXF.KLVTriplet&lt;K, L&gt;">
     <Position X="12.75" Y="0.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAACAQAAgAAAABAAAAAAAAQCAAkAAAAgAA=</HashCode>
@@ -79,7 +74,7 @@
   <Class Name="Myriadbits.MXF.MXFPack">
     <Position X="13" Y="5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAQEAAAAAAAAAAAAQAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAACAQEAAAAAABAAAAAQAAACAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFPack.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -110,6 +105,23 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>KLVLengthBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.KLV.KLVLength">
+    <Position X="9.5" Y="7.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Myriadbits.MXF.KLV.KLVLength.LengthEncodings">
+        <TypeIdentifier>
+          <NewMemberFileName>KLV\KLVLength.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KLV\KLVLength.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFFile : MXFObject
     {
-        private MXFReader m_reader;
+        private MXFReader mxfReader;
         private List<MXFValidationResult> m_results;
 
         public string Filename { get; set; }
@@ -124,9 +124,9 @@ namespace Myriadbits.MXF
             int previousPercentage = 0;
             Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
             //int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
-            using (m_reader = new MXFReader(this.Filename))
+            using (mxfReader = new MXFReader(this.Filename))
             {
-                this.Filesize = m_reader.Size;
+                this.Filesize = mxfReader.Size;
                 MXFObject partitions = new MXFNamedObject("Partitions", 0);
                 this.AddChild(partitions);
 
@@ -186,17 +186,13 @@ namespace Myriadbits.MXF
         {
 
             Stopwatch sw = Stopwatch.StartNew();
-
-            //MXFPackFactory mxfPackFactory = new MXFPackFactory();
-
-            //MXFPartition currentPartition = null;
             int previousPercentage = 0;
             Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
 
             //PartialSeekMode seekMode = PartialSeekMode.Unknown;
-            using (m_reader = new MXFReader(this.Filename))
+            using (mxfReader = new MXFReader(this.Filename))
             {
-                this.Filesize = m_reader.Size;
+                this.Filesize = mxfReader.Size;
                 MXFObject root = new MXFNamedObject("Partitions", 0);
                 this.AddChild(root);
 
@@ -204,14 +200,47 @@ namespace Myriadbits.MXF
                 int partitionNumber = 0;
 
                 // Test with new implementation
-                KLVParser parser = new KLVParser(m_reader);
-                List<MXFPack> packList = new List<MXFPack>();
+                KLVParser parser = new KLVParser(mxfReader);
+                List<MXFObject> packList = new List<MXFObject>();
                 while (parser.HasNext())
                 {
-                    var pack = parser.GetNextMXFPack();
-                    Partition(pack, ref currentPartition);
-                    //packList.Add(pack);
+                    try
+                    {
+                        var pack = parser.GetNextMXFPack();
+                        packList.Add(pack);
+                        //Partition(pack, ref currentPartition, ref partitionNumber);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        // error in klv-stream
+                        long lastgoodPos = parser.CurrentPack.Offset + parser.CurrentPack.TotalLength;
+                        if (!parser.SeekForNextPotentialKey(out long newOffset))
+                        {
+                            //we have reached end of file, exceptional case so handle it
+                        }
+                        else
+                        {
+                            packList.Add(new MXFNamedObject("Non-KLV Data", lastgoodPos, newOffset - lastgoodPos));
+                        }
+
+                    }
                 }
+
+
+                // Now partition
+                PartitionPackList(packList);
+
+                Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
+
+                // Progress should now be 90%
+
+                DoPostWork(worker, sw, allPrimerKeys);
+
+                // And Execute FAST tests
+                this.ExecuteValidationTest(worker, false);
+
+                // Finished
+                worker.ReportProgress(100, "Finished");
 
                 // Partition the packs
                 // Partition(packList);
@@ -307,37 +336,22 @@ namespace Myriadbits.MXF
                 //    }
                 //}
             }
-
-            Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
-
-            // Progress should now be 90%
-
-            DoPostWork(worker, sw, allPrimerKeys);
-
-            // And Execute FAST tests
-            //this.ExecuteValidationTest(worker, false);
-
-            // Finished
-            worker.ReportProgress(100, "Finished");
         }
 
-        private void Partition(List<MXFPack> packList)
+        private void PartitionPackList(List<MXFObject> packList)
         {
-            MXFObject root = new MXFNamedObject("Partitions", 0);
-            this.AddChild(root);
-
             MXFPartition currentPartition = null;
             int partitionNumber = 0;
 
-            foreach (var pack in packList)
+            foreach (var obj in packList)
             {
-                switch (pack)
+                switch (obj)
                 {
                     case MXFPartition partition:
                         currentPartition = partition;
                         currentPartition.File = this;
-                        currentPartition.PartitionNumber = ++partitionNumber;
-                        root.AddChild(currentPartition);
+                        currentPartition.PartitionNumber = partitionNumber++;
+                        this.Children.First().AddChild(currentPartition);
                         this.Partitions.Add(currentPartition);
                         break;
 
@@ -350,7 +364,7 @@ namespace Myriadbits.MXF
                         this.LogicalBase = preface.CreateLogicalObject();
                         if (currentPartition != null)
                         {
-                            currentPartition.AddChild(pack);
+                            currentPartition.AddChild(obj);
                         }
                         break;
 
@@ -365,21 +379,24 @@ namespace Myriadbits.MXF
                         break;
 
                     default:
-                        currentPartition.AddChild(pack);
+                        currentPartition.AddChild(obj);
                         break;
-                };
+
+                }
             }
+
+
         }
 
-        private void Partition(MXFPack pack, ref MXFPartition currentPartition)
+        private void Partition(MXFPack pack, ref MXFPartition currentPartition, ref int partitionNumber)
         {
             switch (pack)
             {
                 case MXFPartition partition:
                     currentPartition = partition;
                     currentPartition.File = this;
-                    //currentPartition.PartitionNumber = ++partitionNumber;
-                    this.AddChild(currentPartition);
+                    currentPartition.PartitionNumber = partitionNumber++;
+                    this.Children.First().AddChild(currentPartition);
                     this.Partitions.Add(currentPartition);
                     break;
 
@@ -614,12 +631,12 @@ namespace Myriadbits.MXF
             if (this.RIP == null)
             {
                 // Read the last 4 bytes of the file
-                m_reader.Seek(this.Filesize - 4);
-                uint ripSize = m_reader.ReadUInt32();
+                mxfReader.Seek(this.Filesize - 4);
+                uint ripSize = mxfReader.ReadUInt32();
                 if (ripSize < this.Filesize && ripSize >= 4) // At least 4 bytes
                 {
-                    m_reader.Seek(this.Filesize - ripSize);
-                    MXFPack pack = mxfPackFactory.CreatePack(null, m_reader);
+                    mxfReader.Seek(this.Filesize - ripSize);
+                    MXFPack pack = mxfPackFactory.CreatePack(null, mxfReader);
                     if (pack is MXFRIP rip)
                     {
                         // Yes, RIP found

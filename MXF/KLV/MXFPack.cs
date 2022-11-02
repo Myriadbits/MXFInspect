@@ -23,6 +23,7 @@
 
 using Myriadbits.MXF.Utils;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace Myriadbits.MXF
 {
@@ -33,21 +34,34 @@ namespace Myriadbits.MXF
         private const int CATEGORYPOS = 1;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        public long Number { get; set; }
+
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public override UL Key { get; }
 
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public override KLVLength Length { get; }
+        public override KLVBERLength Length { get; }
 
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
 
-        public MXFPack(UL key, KLVLength length, long offset) : base(key, length, offset)
+        public MXFPack(UL key, KLVBERLength length, long offset) : base(key, length, offset)
         {
             // needed since it is overriden
             Key = key;
             Length = length;
+        }
+
+        // copy ctor
+        public MXFPack(MXFPack pack) : base(pack.Key, pack.Length, pack.Offset)
+        {
+            // needed since it is overriden
+            Key = pack.Key;
+            Length = pack.Length;
+            KLVSublist = pack.KLVSublist;
         }
 
         public override string ToString()

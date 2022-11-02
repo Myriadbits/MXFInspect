@@ -310,21 +310,18 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public MXFPack CreatePack(MXFPack pack, MXFReader reader)
         {
-            MXFPack subPack = new MXFPack(pack.Key, pack.Length, pack.Offset);
-
-            if (dict.TryGetValue(subPack.Key, out Type foundType))
+            if (dict.TryGetValue(pack.Key, out Type foundType))
             {
-                return (MXFPack)Activator.CreateInstance(foundType, reader, subPack);
+                return (MXFPack)Activator.CreateInstance(foundType, reader, pack);
             }
-            else if (subPack.Key.CategoryDesignator == ULCategories.Groups &&
-                subPack.Key.RegistryDesignator == ULRegistries.LocalSet_2Bytes_2Bytes)
+            else if (pack.Key.IdentifiesLocalSet_2BytesLength2BytesTag())
             {
                 // TODO we need something that make the object that is not found in dict distinctable 
                 // TODO this could be handled also with a partial UL, check if better approach
-                return new MXFLocalSet(reader, subPack);
+                return new MXFLocalSet(reader, pack);
             }
 
-            return subPack;
+            return pack;
         }
 
         // TODO should it be public or internal?

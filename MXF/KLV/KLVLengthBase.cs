@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Myriadbits.MXF
+namespace Myriadbits.MXF.KLV
 {
-    public class KLVLengthBase : ByteArray
+    public abstract class KLVLengthBase : ByteArray
     {
         public long Value { get; protected set; }
 

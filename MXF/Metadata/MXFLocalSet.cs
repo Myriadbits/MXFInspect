@@ -34,7 +34,7 @@ namespace Myriadbits.MXF
     public class MXFLocalSet : MXFPack
     {
         public MXFLocalSet(MXFReader reader, MXFPack pack)
-            : base(pack.Key, pack.Length, pack.Offset)
+            : base(pack)
         {
             if (Key.SMPTEInformation != null)
             {

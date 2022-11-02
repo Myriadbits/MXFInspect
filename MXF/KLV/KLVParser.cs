@@ -26,133 +26,83 @@ using Myriadbits.MXF.KLV;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using static Myriadbits.MXF.KLV.KLVLength;
 using static Myriadbits.MXF.KLVKey;
-using static Myriadbits.MXF.KLVLength;
 
 namespace Myriadbits.MXF
 {
     public class KLVParser
     {
-        private readonly MXFReader reader;
-        private long actualOffset = 0;
-        private MXFPartition currentPartition = null;
-        private MXFPackFactory factory = new MXFPackFactory();
+        private readonly MXFReader reader = null;
+        private readonly MXFPackFactory factory = new MXFPackFactory();
+        private long currentPackOffset = 0;
+        private long currentPackNumber = 0;
 
+        public MXFPack CurrentPack { get; private set; }
+       
         public KLVParser(MXFReader _reader)
         {
             reader = _reader;
         }
 
-        //private KLVTriplet GetNextKLV1()
-        //{
-        //    UL ul;
-
-        //    try
-        //    {
-        //        ul = ParseUL();
-        //    }
-        //    catch (System.Exception)
-        //    {
-        //        SeekForNextPotentialKey();
-        //        GetNextMXFPack();
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        var length = KLVLengthParser.ParseKLVLength(_reader, LengthEncodings.BER);
-        //        //return new KLV(ul, length, null);
-        //    }
-
-        //    return null;
-        //}
-
         public MXFPack GetNextMXFPack()
         {
-            var pack = ParseMXFPack(actualOffset);
-            pack.Partition = currentPartition;
 
-            // TODO really neccessary this type check?
-            //if (pack.Key.CategoryDesignator == ULCategories.Groups)
-            //{
-            //    switch (pack.Key.RegistryDesignator)
-            //    {
-            //        //case ULRegistries.MetadataDictionaries:
-            //        //    break;
-            //        //case ULRegistries.EssenceDictionaries:
-            //        //    break;
-            //        //case ULRegistries.ControlDictionaries:
-            //        //    break;
-            //        //case ULRegistries.TypesDictionaries:
-            //        //    break;
-            //        //case ULRegistries.GlobalSet_1Byte:
-            //        //    break;
-            //        //case ULRegistries.GlobalSet_2Bytes:
-            //        //    break;
-            //        //case ULRegistries.GlobalSet_4Bytes:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_BER_OIDBER:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_BER_2Bytes:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_BER_4Bytes:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_1Byte_1Byte:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_1Byte_OIDBER:
-            //        //    break;
-            //        //case ULRegistries.LocalSet1_Byte_4Bytes:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_2Bytes_1Byte:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_2Bytes_OIDBER:
-            //        //    break;
-            //        case ULRegistries.LocalSet_2Bytes_2Bytes:
-            //            pack.KLVSublist = GetSubKLV(pack, KeyLengths.TwoBytes, LengthEncodings.TwoBytes);
-            //            break;
-            //        case ULRegistries.LocalSet_2Bytes_4Bytes:
-            //            pack.KLVSublist = GetSubKLV(pack, KeyLengths.TwoBytes, LengthEncodings.FourBytes);
-            //            break;
-            //        case ULRegistries.LocalSet_4Bytes_1Byte:
-            //            break;
-            //        //case ULRegistries.LocalSet_4Bytes_OIDBER:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_4Bytes_2Bytes:
-            //        //    break;
-            //        //case ULRegistries.LocalSet_4Bytes_4Bytes:
-            //        //    break;
-            //        //case ULRegistries.VariableLengthPacks_1Byte:
-            //        //    break;
-            //        //case ULRegistries.VariableLengthPacks_2Bytes:
-            //        //    break;
-            //        //case ULRegistries.VariableLengthPacks_4Bytes:
-            //        //    break;
-            //        //case ULRegistries.DefinedLengthPacks:
-            //        //    break;
-            //        //case ULRegistries.Reserved:
-            //        //    break;
-            //        //case ULRegistries.SimpleWrappersAndContainers:
-            //        //    break;
-            //        //case ULRegistries.ComplexWrappersAndContainers:
-            //        //    break;
-            //        case null:
-            //            break;
-            //    }
-            //}
+            var pack = ParseMXFPack(currentPackOffset);
 
-            var subpack = factory.CreatePack(pack, reader);
+            var typedPack = factory.CreatePack(pack, reader);
+            typedPack.Number = currentPackNumber++;
+            PopulateKLVSubList(typedPack);
 
-            if (subpack is MXFPartition partition)
+            CurrentPack = typedPack;
+
+            // advance to next pack
+            Seek(currentPackOffset + pack.TotalLength);
+
+            return typedPack;
+        }
+
+        private void PopulateKLVSubList(MXFPack pack)
+        {
+            if (pack.Key.IdentifiesLocalSet())
             {
-                currentPartition = partition;
+                switch (pack.Key.RegistryDesignator)
+                {
+                    //case ULRegistries.LocalSet_BER_OIDBER:
+                    //    break;
+                    //case ULRegistries.LocalSet_BER_2Bytes:
+                    //    break;
+                    //case ULRegistries.LocalSet_BER_4Bytes:
+                    //    break;
+                    //case ULRegistries.LocalSet_1Byte_1Byte:
+                    //    break;
+                    //case ULRegistries.LocalSet_1Byte_OIDBER:
+                    //    break;
+                    //case ULRegistries.LocalSet1_Byte_4Bytes:
+                    //    break;
+                    //case ULRegistries.LocalSet_2Bytes_1Byte:
+                    //    break;
+                    //case ULRegistries.LocalSet_2Bytes_OIDBER:
+                    //    break;
+                    case ULRegistries.LocalSet_2Bytes_2Bytes:
+                        pack.KLVSublist = GetSubKLV(pack, KeyLengths.TwoBytes, LengthEncodings.TwoBytes);
+                        break;
+                    case ULRegistries.LocalSet_2Bytes_4Bytes:
+                        pack.KLVSublist = GetSubKLV(pack, KeyLengths.TwoBytes, LengthEncodings.FourBytes);
+                        break;
+                    case ULRegistries.LocalSet_4Bytes_1Byte:
+                        break;
+                    //case ULRegistries.LocalSet_4Bytes_OIDBER:
+                    //    break;
+                    //case ULRegistries.LocalSet_4Bytes_2Bytes:
+                    //    break;
+                    //case ULRegistries.LocalSet_4Bytes_4Bytes:
+                    //    break;
+                    case null:
+                        break;
+                }
             }
-
-            subpack.Partition = currentPartition;
-
-            // advance file position
-            actualOffset += pack.TotalLength;
-            reader.Seek(actualOffset);
-
-            return subpack;
         }
 
         public bool HasNext()
@@ -160,47 +110,49 @@ namespace Myriadbits.MXF
             return !reader.EOF;
         }
 
+        // TODO this should be private, but cannot due to usage in PackageMetadata
         public void Seek(long position)
         {
             reader.Seek(position);
-            actualOffset = position;
+            currentPackOffset = position;
         }
 
-        private void Partition(MXFPack pack)
-        {
-            switch (pack)
-            {
-                case MXFPartition partition:
-                    currentPartition = partition;
-                    break;
+        //private void Partition(MXFPack pack)
+        //{
+        //    switch (pack)
+        //    {
+        //        case MXFPartition partition:
+        //            currentPartition = partition;
+        //            break;
 
-                case MXFRIP rip:
-                    break;
+        //        case MXFRIP rip:
+        //            break;
 
-                case MXFPreface preface:
-                    //this.LogicalBase = preface.CreateLogicalObject();
-                    //if (currentPartition != null)
-                    //{
-                    //    currentPartition.AddChild(pack);
-                    //}
-                    break;
+        //        case MXFPreface preface:
+        //            //this.LogicalBase = preface.CreateLogicalObject();
+        //            //if (currentPartition != null)
+        //            //{
+        //            //    currentPartition.AddChild(pack);
+        //            //}
+        //            break;
 
-                case MXFPrimerPack primer:
-                    if (currentPartition != null)
-                    {
-                        // Let the partition know all primer keys
-                        //allPrimerKeys = primer.AllKeys;
-                        currentPartition.PrimerKeys = primer.AllKeys;
-                        currentPartition.AddChild(primer); // Add the primer 
-                    }
-                    break;
+        //        case MXFPrimerPack primer:
+        //            if (currentPartition != null)
+        //            {
+        //                // Let the partition know all primer keys
+        //                //allPrimerKeys = primer.AllKeys;
+        //                currentPartition.PrimerKeys = primer.AllKeys;
+        //                currentPartition.AddChild(primer); // Add the primer 
+        //            }
+        //            break;
 
-                default:
-                    currentPartition.AddChild(pack);
-                    break;
+        //        default:
+        //            currentPartition.AddChild(pack);
+        //            break;
 
-            }
-        }
+        //    }
+        //}
+
         private List<KLVTriplet> GetSubKLV(KLVTriplet klv, KeyLengths subKeyLength, LengthEncodings subLengthEncoding)
         {
             var subKLVList = new List<KLVTriplet>();
@@ -212,6 +164,7 @@ namespace Myriadbits.MXF
 
                 if (subKLV.Offset + subKLV.TotalLength > klv.Offset + klv.TotalLength)
                 {
+                    // TODO should be of type KLVParser exception
                     throw new System.Exception("SubKLV out range");
                 }
                 else
@@ -235,74 +188,13 @@ namespace Myriadbits.MXF
             return new KLVTriplet(key, length, offset, value);
         }
 
-        private MXFPack ParseMXFPack(long offset)
-        {
-            // move to file pos
-            reader.Seek(offset);
-
-            var ul = new UL(reader.ReadBytes(16));
-
-            var length = ParseKLVLength(LengthEncodings.BER);
-            return new MXFPack(ul, length, actualOffset);
-        }
-
-        private bool SeekForNextPotentialKey()
-        {
-            int foundBytes = 0;
-
-            // TODO implement Boyer-Moore algorithm
-            while (!reader.EOF)
-            {
-                if (reader.ReadByte() == UL.ValidULPrefix[foundBytes])
-                {
-                    foundBytes++;
-
-                    if (foundBytes == 4)
-                    {
-                        reader.Seek(reader.Position - 4);
-                        return true;
-                    }
-                }
-                else
-                {
-                    foundBytes = 0;
-                }
-            }
-            // TODO what does the caller have to do in this case?
-            return false;
-        }
-
-        private KLVKey ParseKLVKey(KeyLengths keyLength)
-        {
-            return new KLVKey(keyLength, reader.ReadBytes((int)keyLength));
-        }
-
         private KLVLength ParseKLVLength(LengthEncodings encoding)
         {
 
-            switch (encoding)
-            {
-                case LengthEncodings.OneByte:
-                case LengthEncodings.TwoBytes:
-                case LengthEncodings.FourBytes:
-                    return ParseNonBERKLVLength((int)encoding);
-
-                case LengthEncodings.BER:
-                    return ParseBERKLVLength();
-
-                default:
-                    return null;
-            }
+            return ParseBERKLVLength((int)encoding);
         }
 
-        private KLVLength ParseNonBERKLVLength(int numOfBytes)
-        {
-            byte[] bytes = reader.ReadBytes(numOfBytes);
-            long lengthValue = bytes.ToLong();
-            return new KLVLength((LengthEncodings)numOfBytes, lengthValue, bytes);
-        }
-
-        private KLVLength ParseBERKLVLength()
+        private KLVBERLength ParseBERKLVLength()
         {
             byte[] bytes = new byte[] { reader.ReadByte() };
 
@@ -310,7 +202,7 @@ namespace Myriadbits.MXF
             {
                 case <= 0x7F:
                     // short form, size = length
-                    return new KLVLength(LengthEncodings.BER, bytes[0], bytes);
+                    return new KLVBERLength(bytes[0], bytes);
 
                 case 0x80:
                     // Indefinite form
@@ -332,8 +224,59 @@ namespace Myriadbits.MXF
                     byte[] additionalOctets = reader.ReadBytes(additionalOctetsCount);
                     long lengthValue = additionalOctets.ToLong();
                     bytes = bytes.Concat(additionalOctets).ToArray();
-                    return new KLVLength(LengthEncodings.BER, lengthValue, bytes);
+                    return new KLVBERLength(lengthValue, bytes);
             }
+        }
+
+        private KLVKey ParseKLVKey(KeyLengths keyLength)
+        {
+            byte[] bytes = reader.ReadBytes((int)keyLength);
+            return new KLVKey(keyLength, bytes);
+        }
+
+        private KLVLength ParseBERKLVLength(int numOfBytes)
+        {
+            byte[] bytes = reader.ReadBytes(numOfBytes);
+            long lengthValue = bytes.ToLong();
+            return new KLVLength((LengthEncodings)numOfBytes, lengthValue, bytes);
+        }
+
+        private MXFPack ParseMXFPack(long offset)
+        {
+            // move to file pos
+            Seek(offset);
+
+            var ul = new UL(reader.ReadBytes(16));
+            var length = ParseBERKLVLength();
+            return new MXFPack(ul, length, currentPackOffset);
+        }
+
+        public bool SeekForNextPotentialKey(out long newOffset)
+        {
+            int foundBytes = 0;
+
+            // TODO implement Boyer-Moore algorithm
+            while (!reader.EOF)
+            {
+                if (reader.ReadByte() == UL.ValidULPrefix[foundBytes])
+                {
+                    foundBytes++;
+
+                    if (foundBytes == 4)
+                    {
+                        Seek(reader.Position - 4);
+                        newOffset = reader.Position;
+                        return true;
+                    }
+                }
+                else
+                {
+                    foundBytes = 0;
+                }
+            }
+            // TODO what does the caller have to do in this case?
+            newOffset = reader.Position;
+            return false;
         }
 
     }
