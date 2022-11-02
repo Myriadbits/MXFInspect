@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010103.01000000")]
-        public MXFUMID SourcePackageID { get; set; }
+        public UMID SourcePackageID { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010103.02000000")]

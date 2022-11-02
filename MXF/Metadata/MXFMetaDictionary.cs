@@ -33,7 +33,7 @@ namespace Myriadbits.MXF
 
         // TODO is not really part of MetaDictionary
         [Category(CATEGORYNAME)]
-        public MXFUUID InstanceId { get; set; }
+        public UUID InstanceId { get; set; }
 
         public MXFMetaDictionary(MXFReader reader, MXFPack pack)
             : base(reader, pack, "MetaDictionary")
@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x3c0a: this.InstanceId = reader.ReadUUIDKey(); return true;
+                case 0x3c0a: this.InstanceId = reader.ReadUUID(); return true;
                 case 0x0003:
                     this.AddChild(reader.ReadReferenceSet<MXFClassDefinition>("ClassDefinitions", "ClassDefinition")); return true;
                 case 0x0004:
@@ -54,7 +54,7 @@ namespace Myriadbits.MXF
             return base.ParseLocalTag(reader, localTag);
         }
 
-        public MXFUUID GetUUID()
+        public UUID GetUUID()
         {
             return this.InstanceId;
         }

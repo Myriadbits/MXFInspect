@@ -30,8 +30,8 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "GenericSoundEssenceDescriptor";
 
-        private readonly MXFKey refImageEditRate_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x06, 0x00, 0x00, 0x00);
-        private readonly MXFKey refAudioAlignmentLevel = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x07, 0x00, 0x00, 0x00);
+        private readonly UL refImageEditRate_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x06, 0x00, 0x00, 0x00);
+        private readonly UL refAudioAlignmentLevel = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x01, 0x01, 0x07, 0x00, 0x00, 0x00);
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020301.01010000")]
@@ -63,7 +63,7 @@ namespace Myriadbits.MXF
         
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04020402.00000000")]
-        public MXFKey SoundEssenceCoding { get; set; }
+        public UL SoundEssenceCoding { get; set; }
         
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04020101.06000000")]
@@ -108,7 +108,7 @@ namespace Myriadbits.MXF
                 case 0x3D07: this.ChannelCount = reader.ReadUInt32(); return true;
                 case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
                 case 0x3D0C: this.DialNorm = reader.ReadSignedByte(); return true;
-                case 0x3D06: this.SoundEssenceCoding = reader.ReadULKey(); return true;
+                case 0x3D06: this.SoundEssenceCoding = reader.ReadUL(); return true;
                 case var _ when localTag.Key == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
                 case var _ when localTag.Key == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
             }

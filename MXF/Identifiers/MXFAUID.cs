@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -32,27 +33,27 @@ namespace Myriadbits.MXF
 		private const string CATEGORYNAME = "AUID";
 
 		[Category(CATEGORYNAME)]
-		public MXFKey Key { get; set; }
+		public AUID Key { get; set; }
 
 		public MXFAUID(MXFReader reader, string name)
 			: base(reader.Position)
 		{
 			this.Name = name;
-			this.Key = reader.ReadULKey();
-			this.TotalLength = this.Key.Length;
+			this.Key = reader.ReadAUID();
+			this.TotalLength = (long)this.Key.KeyLength;
 		}
 
         /// <summary>
         /// Some output
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (string.IsNullOrEmpty(this.Name))
-                return this.Key.Name;
+   //     public override string ToString()
+   //     {
+   //         if (string.IsNullOrEmpty(this.Name))
+   //             return this.Key.Name;
 
-			string keyName = this.Key.Name ?? this.Key.ToString();
-            return string.Format("{0} [{1}]", this.Name, keyName);
-        }
+			//string keyName = this.Key.Name ?? this.Key.ToString();
+   //         return string.Format("{0} [{1}]", this.Name, keyName);
+   //     }
     }
 }

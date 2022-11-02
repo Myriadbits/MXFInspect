@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.01020203.00000000")]
-        public MXFKey OP { get; set; }
+        public UL OperationalPattern { get; set; }
 
         [Category(CATEGORYNAME)]
         public bool Closed { get; set; }
@@ -153,7 +153,7 @@ namespace Myriadbits.MXF
             this.BodyOffset = reader.ReadUInt64();
             this.BodySID = reader.ReadUInt32();
 
-            this.OP = reader.ReadULKey();
+            this.OperationalPattern = reader.ReadUL();
 
             MXFObject essenceContainers = reader.ReadAUIDSet("Essence Containers", "Essence Container");
             this.AddChild(essenceContainers);

@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -30,9 +31,9 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "DescriptiveMarker";
 
-        public readonly MXFKey metadataScheme_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x06, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00);
-        public readonly MXFKey metadataPlugInID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x0e, 0x00, 0x00, 0x00);
-        public readonly MXFKey metadataApplicationEnvironmentID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x10, 0x00, 0x00, 0x00);
+        public readonly UL metadataScheme_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x06, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00);
+        public readonly UL metadataPlugInID_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x0e, 0x00, 0x00, 0x00);
+        public readonly UL metadataApplicationEnvironmentID_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x05, 0x20, 0x07, 0x01, 0x10, 0x00, 0x00, 0x00);
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01070105.00000000")]
@@ -42,11 +43,11 @@ namespace Myriadbits.MXF
         // TODO should this be UUID or AUID or UL?
         [CategoryAttribute(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.04060804.00000000")]
-        public MXFKey DescriptiveMetadataScheme { get; set; }
+        public AUID DescriptiveMetadataScheme { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.05200701.0e000000")]
-        public MXFUUID DescriptiveMetadataPlugInID { get; set; }
+        public UUID DescriptiveMetadataPlugInID { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010c.05200701.10000000")]
@@ -71,9 +72,9 @@ namespace Myriadbits.MXF
                     return true;
                 case 0x6101: this.AddChild(reader.ReadReference<MXFDescriptiveFramework>("DescriptiveFrameworkObject")); return true;
                 case var _ when localTag.Key == metadataScheme_Key:
-                    this.DescriptiveMetadataScheme = reader.ReadULKey(); 
+                    this.DescriptiveMetadataScheme = reader.ReadAUID(); 
                     return true;
-                case var _ when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUIDKey(); return true;
+                case var _ when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUID(); return true;
                 case var _ when localTag.Key == metadataApplicationEnvironmentID_Key: 
                     this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Size); 
                     return true;

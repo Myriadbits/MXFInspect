@@ -87,13 +87,13 @@ namespace Myriadbits.MXF
                         byteArray = reader.ReadArray(reader.ReadByte, (int)Size);
                         if (Size == 64)
                         {
-                            var umid = new MXFExtendedUMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<MXFExtendedUMID>(umid, "ExtendedUMID", pos, Size));
+                            var umid = new ExtendedUMID(byteArray);
+                            this.AddChild(new MXFWrapperObject<ExtendedUMID>(umid, "ExtendedUMID", pos, Size));
                         }
                         else if (Size == 32)
                         {
-                            var umid = new MXFUMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<MXFUMID>(umid, "UMID", pos, Size));
+                            var umid = new UMID(byteArray);
+                            this.AddChild(new MXFWrapperObject<UMID>(umid, "UMID", pos, Size));
                         }
                         else
                         {

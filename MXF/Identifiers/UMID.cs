@@ -29,66 +29,43 @@ using System.Text;
 namespace Myriadbits.MXF
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class MXFExtendedUMID : MXFIdentifier
+    public class UMID : ByteArray
     {
         [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] UL { get; set; }
+        public byte[] UL { get; }
+
+        public byte UMIDLength { get; }
 
         [TypeConverter(typeof(ByteArrayConverter))]
-        public byte UMIDLength { get; set; }
+        public byte[] InstanceNumber { get; }
 
         [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] InstanceNumber { get; set; }
+        public byte[] MaterialNumber { get; }
 
-        [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] MaterialNumber { get; set; }
-        
-        [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] DateTime { get; set; }
-
-        [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] Spatial { get; set; }
-
-        [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] Country { get; set; }
-
-        [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] Organisation { get; set; }
-
-        [TypeConverter(typeof(ByteArrayConverter))]
-        public byte[] User { get; set; }
-
-
-        public MXFExtendedUMID(params byte[] list) : base(list)
+        public UMID(params byte[] list) : base(list)
         {
-            if (this.Length == 64)
+            if (this.ArrayLength == 32)
             {
                 UL = new ReadOnlySpan<byte>(list, 0, 12).ToArray();
                 UMIDLength = list[12];
                 InstanceNumber = new ReadOnlySpan<byte>(list, 13, 3).ToArray();
                 MaterialNumber = new ReadOnlySpan<byte>(list, 16, 16).ToArray();
-                DateTime = new ReadOnlySpan<byte>(list, 32, 8).ToArray();
-                Spatial = new ReadOnlySpan<byte>(list, 40, 12).ToArray();
-                Country = new ReadOnlySpan<byte>(list, 52, 4).ToArray();
-                Organisation = new ReadOnlySpan<byte>(list, 56, 4).ToArray();
-                User = new ReadOnlySpan<byte>(list, 60, 4).ToArray();
             }
-            else throw new ArgumentException("Number of bytes must be 64", "list");
+            else throw new ArgumentException("Number of bytes must be 32", "list");
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            var bytes = this.GetByteArray();
-            sb.Append("Extended UMID - { ");
-            for (int n = 0; n < this.Length; n++)
+            StringBuilder sb = new StringBuilder();;
+            sb.Append("UMID - { ");
+            for (int n = 0; n < this.ArrayLength; n++)
             {
                 if (n > 0)
                 {
                     sb.Append('.');
                 }
 
-                sb.Append(string.Format("{0:X2}", bytes[n]));
+                sb.Append(string.Format("{0:X2}", this[n]));
             }
             sb.Append(" }");
             return sb.ToString();

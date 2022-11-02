@@ -29,6 +29,10 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
+    /// <summary>
+    /// Helper class for comparing ULs not by all entire 16 bytes (as per definition)
+    /// but instead allow for wildcards. See <see cref="MXFPackFactory"/>.
+    /// </summary>
     public class PartialUL : ByteArray
     {
         public PartialUL(params byte[] bytes) : base(bytes)

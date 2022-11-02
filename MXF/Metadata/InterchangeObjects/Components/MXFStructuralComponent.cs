@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
@@ -36,7 +37,7 @@ namespace Myriadbits.MXF
 		// TODO this should be a UUID?
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
-		public MXFKey DataDefinition { get; set; }
+		public AUID DataDefinition { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
@@ -55,7 +56,7 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x0201: this.DataDefinition = reader.ReadULKey(); return true;
+				case 0x0201: this.DataDefinition = reader.ReadAUID(); return true;
 				case 0x0202: this.Duration = reader.ReadUInt64(); return true;
 				// TODO replace generic MXFObject with class KLVData once implemented
 				case 0x0203: this.AddChild(reader.ReadReferenceSet<MXFObject>("KLV Data", "KLV Data")); return true;

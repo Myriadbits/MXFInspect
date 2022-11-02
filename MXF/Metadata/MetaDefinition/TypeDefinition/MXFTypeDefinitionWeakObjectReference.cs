@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -33,7 +34,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.0a000000")]
-        public MXFKey WeakReferencedType { get; set; }
+        public AUID WeakReferencedType { get; set; }
 
         public MXFTypeDefinitionWeakObjectReference(MXFReader reader, MXFPack pack)
             : base(reader, pack)
@@ -47,7 +48,7 @@ namespace Myriadbits.MXF
             switch (localTag.Tag)
             {
                 case 0x0013: this.AddChild(reader.ReadAUIDSet("TargetSet", "Target")); return true;
-                case 0x0012: WeakReferencedType = reader.ReadULKey(); return true;
+                case 0x0012: WeakReferencedType = reader.ReadAUID(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.Identifiers.UL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,10 +30,10 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public class UL : KLVKey
+    public class UL : AUID
     {
         private const string CATEGORYNAME = "Key";
-        private static readonly Dictionary<ByteArray, KeyDescription> smpteDictionary = SMPTEUL_Dictionary.GetEntries();
+        private static readonly Dictionary<ByteArray, ULDescription> smpteDictionary = SMPTEULDictionary.GetEntries();
         public static readonly byte[] ValidULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
         #region properties
@@ -63,12 +64,12 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [Description("SMPTE Information")]
-        public KeyDescription SMPTEInformation { get; }
+        public ULDescription SMPTEInformation { get; }
 
         [Browsable(false)]
         public string Name { get; set; }
 
-        public UL(params byte[] bytes) : base(KeyLengths.SixteenBytes, bytes)
+        public UL(params byte[] bytes) : base(bytes)
         {
             ValidateByteArray(bytes);
 

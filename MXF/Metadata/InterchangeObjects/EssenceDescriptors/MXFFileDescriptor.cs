@@ -51,7 +51,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01020000")]
-        public MXFKey EssenceContainer { get; set; }
+        public UL EssenceContainer { get; set; }
 
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Myriadbits.MXF
                 case 0x3006: this.LinkedTrackId = reader.ReadUInt32(); return true;
                 case 0x3001: this.SampleRate = reader.ReadRational(); return true;
                 case 0x3002: this.ContainerDuration = reader.ReadUInt64(); return true;
-                case 0x3004: this.EssenceContainer = reader.ReadULKey(); return true;
+                case 0x3004: this.EssenceContainer = reader.ReadUL(); return true;
                 case 0x3005:
                     this.AddChild(reader.ReadReference<MXFCodecDefinition>("Codec"));
                     return true;

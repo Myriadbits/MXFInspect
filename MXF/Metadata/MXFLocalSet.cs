@@ -90,7 +90,7 @@ namespace Myriadbits.MXF
                 if (this.Partition.PrimerKeys.TryGetValue(tag.Tag, out MXFEntryPrimer primerEntry))
                 {
                     //MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
-                    tag.Key = primerEntry.AliasUID.Key;
+                    tag.Key = primerEntry.AliasUID;
                 }
             }
         }

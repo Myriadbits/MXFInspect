@@ -100,8 +100,8 @@ namespace Myriadbits.MXF
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(MXFIdentifier)) return false;
-            return Equals((MXFIdentifier)obj);
+            if (obj.GetType() != typeof(ByteArray)) return false;
+            return Equals((ByteArray)obj);
         }
 
         //see https://stackoverflow.com/a/468084 and https://stackoverflow.com/a/53316768

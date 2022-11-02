@@ -23,22 +23,22 @@
 
 using System.Collections.Generic;
 
-namespace Myriadbits.MXF.Identifiers
+namespace Myriadbits.MXF.Identifiers.UL
 {
-    public class SMPTEULDictionaryComparer : IEqualityComparer<MXFShortKey>
+    public class SMPTEUL_DictionaryComparer : IEqualityComparer<ByteArray>
     {
         // if the keys to compare are of the same category (meaning the same hash) compare
         // whether the byte sequence is equal
-        public bool Equals(MXFShortKey x, MXFShortKey y)
+        public bool Equals(ByteArray x, ByteArray y)
         {
-            for (int i = 0; i < x.array.Length; i++)
+            for (int i = 0; i < x.ArrayLength; i++)
             {
                 // bypass klv syntaxes (i.e. 0x7F == 0x06 or 0x53) which is the sixth byte of an UL
                 if (i == 5)
                 {
                     continue;
                 }
-                else if (x.array[i] != x.array[i])
+                else if (x[i] != x[i])
                 {
                     return false;
                 }
@@ -47,19 +47,19 @@ namespace Myriadbits.MXF.Identifiers
         }
 
 
-        public int GetHashCode(MXFShortKey obj)
+        public int GetHashCode(ByteArray theBytes)
         {
             unchecked
             {
                 const int p = 16777619;
                 int hash = (int)2166136261;
 
-                for (int i = 0; i < obj.array.Length; i++)
+                for (int i = 0; i < theBytes.ArrayLength; i++)
                 {
                     // bypass klv syntaxes (i.e. 0x7F == 0x06 or 0x53) which is the sixth byte of an UL
                     if (i != 5)
                     {
-                        hash = (hash ^ obj.array[i]) * p;
+                        hash = (hash ^ theBytes[i]) * p;
                     }
                 }
 

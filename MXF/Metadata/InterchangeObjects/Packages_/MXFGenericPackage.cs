@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
 		private const string CATEGORYNAME = "GenericPackage";
 
 		[Category(CATEGORYNAME)]
-		public MXFUMID PackageID { get; set; }
+		public UMID PackageID { get; set; }
 
 		[Category(CATEGORYNAME)]
 		public string PackageName { get; set; }

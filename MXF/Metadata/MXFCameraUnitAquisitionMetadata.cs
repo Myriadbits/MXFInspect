@@ -39,11 +39,11 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string CameraAttributes { get; set; }
         [Category(CATEGORYNAME)]
-        public MXFKey TransferCharacteristic { get; set; }
+        public UL TransferCharacteristic { get; set; }
         [Category(CATEGORYNAME)]
         public MXFRational CaptureFrameRate { get; set; }
         [Category(CATEGORYNAME)]
-        public MXFKey AutoExposureMode { get; set; }
+        public UL AutoExposureMode { get; set; }
         [Category(CATEGORYNAME)]
         public MXFAutoFocusSensingAreaSetting? AutoFocusSensingAreaSetting { get; set; }
         [Category(CATEGORYNAME)]
@@ -103,9 +103,9 @@ namespace Myriadbits.MXF
             {
                 case 0x8113: this.CameraSettingFileURI = reader.ReadUTF8String(localTag.Size); return true;
                 case 0x8114: this.CameraAttributes = reader.ReadUTF8String(localTag.Size); return true;
-                case 0x3210: this.TransferCharacteristic = reader.ReadULKey(); return true;
+                case 0x3210: this.TransferCharacteristic = reader.ReadUL(); return true;
                 case 0x8106: this.CaptureFrameRate = reader.ReadRational(); return true;
-                case 0x8100: this.AutoExposureMode = reader.ReadULKey(); return true;
+                case 0x8100: this.AutoExposureMode = reader.ReadUL(); return true;
                 case 0x8101: this.AutoFocusSensingAreaSetting = (MXFAutoFocusSensingAreaSetting)reader.ReadByte(); return true;
                 case 0x8102: this.ColorCorrectionFilterWheelSetting = (MXFColorCorrectionFilterWheelSetting)reader.ReadByte(); return true;
                 case 0x8103: this.NeutralDensityFilterWheelSetting = reader.ReadUInt16(); return true;

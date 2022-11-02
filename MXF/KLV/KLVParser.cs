@@ -26,7 +26,6 @@ using Myriadbits.MXF.KLV;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using static Myriadbits.MXF.KLV.KLVLength;
 using static Myriadbits.MXF.KLVKey;
 

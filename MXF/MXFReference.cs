@@ -35,13 +35,13 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public T Reference { get; set; }
         [Category(CATEGORYNAME)]
-        public MXFUUID Identifier { get; set; }
+        public UUID Identifier { get; set; }
 
         public MXFReference(MXFReader reader, string name) : base(reader.Position)
         {
             Name = name;
-            Identifier = reader.ReadUUIDKey();
-            TotalLength = Identifier.Length;
+            Identifier = reader.ReadUUID();
+            TotalLength = (long)Identifier.KeyLength;
         }
 
         public override string ToString()

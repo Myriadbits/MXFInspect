@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -33,7 +34,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.01011503.00000000")]
-        public MXFKey DefinitionObjectIdentification { get; set; }
+        public AUID DefinitionObjectIdentification { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.01070102.03010000")]
@@ -56,7 +57,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x1b01: DefinitionObjectIdentification = reader.ReadULKey(); return true;
+                case 0x1b01: DefinitionObjectIdentification = reader.ReadAUID(); return true;
                 case 0x1b02: DefinitionObjectName = reader.ReadUTF16String(localTag.Size); return true;
                 case 0x1b03: DefinitionObjectDescription = reader.ReadUTF16String(localTag.Size); return true;
             }

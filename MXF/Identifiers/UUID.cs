@@ -21,30 +21,54 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public class MXFUUID : MXFIdentifier
+    public class UUID : AUID
     {
-        public MXFUUID(params byte[] list) : base(list)
+        /// <summary>
+        /// Universally unique identifier according to ISO 11578.
+        /// </summary>
+        public enum UUIDVersionType
         {
-            //a UUID is 16 bytes long by definition
+            Version1 = 1,
+            Version2 = 2,
+            Version3 = 3,
+            Version4 = 4,
+            Version5 = 5,
+            VersionUnknown
+        }
+        public UUIDVersionType Version { get; private set; }
+
+        public UUID(params byte[] list) : base(list)
+        {
+            switch (this[12])
+            {
+                case >= 0x06:
+                case 0x00:
+                    Version = UUIDVersionType.VersionUnknown;
+                    break;
+
+                default:
+                    Version = (UUIDVersionType)(this[13]);
+                    break;
+            }
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            var bytes = this.GetByteArray();
             sb.Append("UUID - { ");
-            for (int n = 0; n < this.Length; n++)
+            for (int n = 0; n < this.ArrayLength; n++)
             {
                 if (n == 4 || n == 6 || n == 8 || n == 10)
                 {
                     sb.Append('-');
                 }
 
-                sb.Append(string.Format("{0:X2}", bytes[n]));
+                sb.Append(string.Format("{0:X2}", this[n]));
             }
             sb.Append(" }");
             return sb.ToString();

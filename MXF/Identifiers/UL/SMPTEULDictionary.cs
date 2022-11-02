@@ -25,16 +25,15 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
-using System.Text;
 using System.Diagnostics;
 
-namespace Myriadbits.MXF.Identifiers
+namespace Myriadbits.MXF.Identifiers.UL
 {
     public static class SMPTEULDictionary
     {
-        private static Dictionary<MXFShortKey, KeyDescription> Dictionary { get; set; }
+        private static Dictionary<ByteArray, ULDescription> Dictionary { get; set; }
 
-        public static Dictionary<MXFShortKey, KeyDescription> GetEntries()
+        public static Dictionary<ByteArray, ULDescription> GetEntries()
         {
             // if already initialized return it
             if (Dictionary != null)
@@ -43,26 +42,26 @@ namespace Myriadbits.MXF.Identifiers
             }
             else
             {
-                Dictionary = new Dictionary<MXFShortKey, KeyDescription>(new SMPTEULDictionaryComparer());
+                Dictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
 
                 //Parse SMPTE Labels register
 
                 XElement regEntries;
                 XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
 
-                regEntries = XElement.Parse(MXF.Properties.Resources.Labels);
+                regEntries = XElement.Parse(Properties.Resources.Labels);
                 AddEntries(Dictionary, regEntries, ns);
 
                 // Parse SMPTE Elements register
 
                 ns = "http://www.smpte-ra.org/schemas/335/2012";
-                regEntries = XElement.Parse(MXF.Properties.Resources.Elements);
+                regEntries = XElement.Parse(Properties.Resources.Elements);
                 AddEntries(Dictionary, regEntries, ns);
 
                 //Parse SMPTE Groups register
 
                 ns = "http://www.smpte-ra.org/ns/395/2016";
-                regEntries = XElement.Parse(MXF.Properties.Resources.Groups);
+                regEntries = XElement.Parse(Properties.Resources.Groups);
                 AddEntries(Dictionary, regEntries, ns);
 
                 var values = Dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
@@ -71,7 +70,7 @@ namespace Myriadbits.MXF.Identifiers
             }
         }
 
-        private static void AddEntries(IDictionary<MXFShortKey, KeyDescription> dict, XElement regEntries, XNamespace ns)
+        private static void AddEntries(IDictionary<ByteArray, ULDescription> dict, XElement regEntries, XNamespace ns)
         {
             foreach (var e in regEntries.Descendants(ns + "Entry"))
             {
@@ -89,61 +88,46 @@ namespace Myriadbits.MXF.Identifiers
             }
         }
 
-        private static KeyValuePair<MXFShortKey, KeyDescription>? ParseEntry(XNamespace ns, XElement e)
+        private static KeyValuePair<ByteArray, ULDescription>? ParseEntry(XNamespace ns, XElement e)
         {
             var UL_string = (string)e.Element(ns + "UL") ?? "";
             if (!string.IsNullOrEmpty(UL_string))
             {
-                MXFShortKey shortKey = GetShortKeyFromSMPTEULString(UL_string);
+                var byteArray = GetByteArrayFromSMPTEULString(UL_string);
 
-                var keyDescription = new KeyDescription
+                var keyDescription = new ULDescription
                 {
-                    Name = (string)e.Element(ns + "Name") ?? "",
-                    Definition = (string)e.Element(ns + "Definition") ?? "",
-                    DefiningDocument = (string)e.Element(ns + "DefiningDocument") ?? "",
-                    IsDeprecated = (string)e.Element(ns + "IsDeprecated") ?? "",
-                    Notes = (string)e.Element(ns + "Notes") ?? "",
+                    Name = e.Element(ns + "Name")?.Value ?? "",
+                    Definition = e.Element(ns + "Definition")?.Value ?? "",
+                    DefiningDocument = e.Element(ns + "DefiningDocument")?.Value ?? "",
+                    IsDeprecated = e.Element(ns + "IsDeprecated")?.Value ?? "",
+                    Notes = e.Element(ns + "Notes")?.Value ?? "",
+                    Kind = e.Element(ns + "Kind")?.Value ?? "",
+                    IsConcrete = e.Element(ns + "IsConcrete")?.Value ?? "",
+                    Applications = e.Element(ns + "IsConcrete")?.Value ?? "",
                 };
 
-                return new KeyValuePair<MXFShortKey, KeyDescription>(shortKey, keyDescription);
+                return new KeyValuePair<ByteArray, ULDescription>(byteArray, keyDescription);
             }
             return null;
         }
 
-        public static MXFShortKey GetShortKeyFromSMPTEULString(string smpteString)
+        public static ByteArray GetByteArrayFromSMPTEULString(string smpteString)
         {
-            var bytes = GetByteArrayFromSMPTEULString(smpteString);
-            return new MXFShortKey(bytes);
+            var bytes = GetBytesFromSMPTEULString(smpteString);
+            return new ByteArray(bytes);
         }
 
-        private static byte[] GetByteArrayFromSMPTEULString(string smpteString)
+        private static byte[] GetBytesFromSMPTEULString(string smpteString)
         {
-            const int hexBase = 16;
-            byte[] byteArray = new byte[16];
-            string byteString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
-            var singleBytes = SplitString(byteString, 2).ToList();
-            for (int i = 0; i < singleBytes.Count; i++)
+            int hexBase = 16;
+            var byteArray = new byte[hexBase];
+            string ulString = smpteString.Replace("urn:smpte:ul:", "").Replace(".", "");
+            for (int i = 0, j = 0; j < ulString.Length; i++, j += 2)
             {
-                byteArray[i] = Convert.ToByte(singleBytes[i], hexBase);
+                byteArray[i] = Convert.ToByte(ulString.Substring(j, 2), hexBase);
             }
             return byteArray;
-        }
-
-        private static IEnumerable<string> SplitString(string s, int count)
-        {
-            int index = 0;
-            while (index < s.Length)
-            {
-                if (s.Length - index >= count)
-                {
-                    yield return s.Substring(index, count);
-                }
-                else
-                {
-                    yield return s.Substring(index, s.Length - index);
-                }
-                index += count;
-            }
         }
     }
 }

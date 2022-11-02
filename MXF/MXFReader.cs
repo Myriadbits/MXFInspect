@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.IO;
 
@@ -291,31 +292,37 @@ namespace Myriadbits.MXF
 
         #region Identifiers
 
-        public MXFKey ReadULKey()
+        public AUID ReadAUID()
         {
-            // Always read 16 bytes for UL keys (is not completely according to spec, length is part of the key...)
-            byte[] byteArr = this.ReadArray(this.ReadByte, 16);
-            return new MXFKey(byteArr);
+            byte[] byteArray = this.ReadArray(this.ReadByte, (int) AUID.KeyLengths.SixteenBytes);
+            return new AUID(byteArray);
+        }
+
+
+        public UL ReadUL()
+        {
+            byte[] byteArray = this.ReadArray(this.ReadByte, (int)AUID.KeyLengths.SixteenBytes);
+            return new UL(byteArray);
         }
 
         /// <summary>
         /// Reads a UMID key
         /// </summary>
-        public MXFUMID ReadUMIDKey()
+        public UMID ReadUMIDKey()
         {
             // Always read 32 bytes for UMID's 
             byte[] byteArr = this.ReadArray(this.ReadByte, 32);
-            return new MXFUMID(byteArr);
+            return new UMID(byteArr);
         }
 
         /// <summary>
         /// Reads a UUID key
         /// </summary>
-        public MXFUUID ReadUUIDKey()
+        public UUID ReadUUID()
         {
             // Always read 16 bytes for UUIDs
             byte[] byteArr = this.ReadArray(this.ReadByte, 16);
-            return new MXFUUID(byteArr);
+            return new UUID(byteArr);
         }
 
         /// <summary>

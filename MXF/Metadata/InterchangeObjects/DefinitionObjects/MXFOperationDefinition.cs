@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -45,7 +46,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.0530050a.00000000")]
-        public MXFKey OperationCategory { get; set; }
+        public AUID OperationCategory { get; set; }
 
         public MXFOperationDefinition(MXFReader reader, MXFPack pack)
             : base(reader, pack)
@@ -67,7 +68,7 @@ namespace Myriadbits.MXF
                 case 0x1e01:
                     this.AddChild(reader.ReadReference<MXFDataDefinition>("OperationDataDefinition")); 
                     return true;
-                case 0x1e06: OperationCategory = reader.ReadULKey(); return true;
+                case 0x1e06: OperationCategory = reader.ReadAUID(); return true;
                 case 0x1e09:
                     this.AddChild(reader.ReadReferenceSet<MXFParameterDefinition>("OperationParametersDefined", "OperationParametersDefined"));
                     return true;

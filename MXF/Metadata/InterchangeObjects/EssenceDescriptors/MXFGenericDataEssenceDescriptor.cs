@@ -25,54 +25,54 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFGenericDataEssenceDescriptor : MXFFileDescriptor
-	{
-		private const string CATEGORYNAME = "GenericDataEssenceDescriptor";
+    public class MXFGenericDataEssenceDescriptor : MXFFileDescriptor
+    {
+        private const string CATEGORYNAME = "GenericDataEssenceDescriptor";
 
-		[Category(CATEGORYNAME)]
-		public MXFKey DataEssenceCoding { get; set; }
-		
-		
+        [Category(CATEGORYNAME)]
+        public UL DataEssenceCoding { get; set; }
 
-		
-		/// <summary>
-		/// Constructor, set the correct descriptor name
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="pack"></param>
-		public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFPack pack)
-			: base(reader, pack, "Generic Data Essence Descriptor")
-		{
-			// TODO remove code, once implemented the subclasses
-			if (pack.Key[14] == 0x5B)
-				this.Key.Name = "VBI Data Descriptor";
-			if (pack.Key[14] == 0x5C)
-				this.Key.Name = "ANC Data Descriptor";
-			this.MetaDataName = this.Key.Name;
-		}
 
-		/// <summary>
-		/// Constructor, set the correct descriptor name
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="pack"></param>
-		public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, metadataName)
-		{
-		}
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.Tag)
-			{
-				case 0x3E01: this.DataEssenceCoding = reader.ReadULKey();	return true;
-			}
-			return base.ParseLocalTag(reader, localTag);
-		}
 
-	}
+        /// <summary>
+        /// Constructor, set the correct descriptor name
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="pack"></param>
+        public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFPack pack)
+            : base(reader, pack, "Generic Data Essence Descriptor")
+        {
+            // TODO remove code, once implemented the subclasses
+            if (pack.Key[14] == 0x5B)
+                this.Key.Name = "VBI Data Descriptor";
+            if (pack.Key[14] == 0x5C)
+                this.Key.Name = "ANC Data Descriptor";
+            this.MetaDataName = this.Key.Name;
+        }
+
+        /// <summary>
+        /// Constructor, set the correct descriptor name
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="pack"></param>
+        public MXFGenericDataEssenceDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+            : base(reader, pack, metadataName)
+        {
+        }
+
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.Tag)
+            {
+                case 0x3E01: this.DataEssenceCoding = reader.ReadUL(); return true;
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
+
+    }
 }

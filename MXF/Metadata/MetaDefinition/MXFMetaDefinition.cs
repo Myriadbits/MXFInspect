@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace Myriadbits.MXF
 
         // TODO is not really part of MetaDefinition
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        public MXFUUID InstanceId { get; set; }
+        public UUID InstanceId { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.03020401.02010000")]
@@ -44,7 +45,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.13000000")]
-        public MXFKey MetaDefinitionIdentification { get; set; }
+        public AUID MetaDefinitionIdentification { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.14010000")]
@@ -59,15 +60,15 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x3c0a: InstanceId = reader.ReadUUIDKey(); return true;
+                case 0x3c0a: InstanceId = reader.ReadUUID(); return true;
                 case 0x0006: MetaDefinitionName = reader.ReadUTF16String(localTag.Size); return true;
-                case 0x0005: MetaDefinitionIdentification = reader.ReadULKey(); return true;
+                case 0x0005: MetaDefinitionIdentification = reader.ReadAUID(); return true;
                 case 0x0007: MetaDefinitionDescription = reader.ReadUTF16String(localTag.Size); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
 
-        public MXFUUID GetUUID()
+        public UUID GetUUID()
         {
             return this.InstanceId;
         }

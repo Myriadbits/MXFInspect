@@ -23,7 +23,7 @@
 
 namespace Myriadbits.MXF.Identifiers
 {
-    public class KeyDescription
+    public class ULDescription
     {
         public string Name { get; set; }
 

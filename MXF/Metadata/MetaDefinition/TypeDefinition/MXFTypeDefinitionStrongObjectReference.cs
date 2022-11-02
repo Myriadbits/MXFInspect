@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -33,7 +34,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.09000000")]
-        public MXFKey ReferencedType { get; set; }
+        public AUID ReferencedType { get; set; }
 
         public MXFTypeDefinitionStrongObjectReference(MXFReader reader, MXFPack pack)
             : base(reader, pack)
@@ -46,7 +47,7 @@ namespace Myriadbits.MXF
         {
             switch (localTag.Tag)
             {
-                case 0x0011: ReferencedType = reader.ReadULKey(); return true;
+                case 0x0011: ReferencedType = reader.ReadAUID(); return true;
                 // TODO maybe this is more appropriate?
                 //case 0x0011: this.AddChild(reader.ReadReference<MXFTypeDefinition>("ReferencedType")); return true;
             }

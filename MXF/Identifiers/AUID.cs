@@ -21,36 +21,18 @@
 //
 #endregion
 
-using System.ComponentModel;
-
-namespace Myriadbits.MXF
+namespace Myriadbits.MXF.Identifiers
 {
-    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013c00")]
-    public class MXFParameter : MXFInterchangeObject
+    public class AUID : KLVKey
     {
-        private const string CATEGORYNAME = "Parameter";
-
-        [Category(CATEGORYNAME)]
-        public UUID ParameterDefinitionReference { get; set; }
-
-
-        public MXFParameter(MXFReader reader, MXFPack pack)
-            : base(reader, pack, "Parameter")
-        {
-        }
-
         /// <summary>
-        /// Overridden method to process local tags
+        /// AAF uses a 16-byte unique identifier known as an Authoring Unique Identifier
+        /// (AUID) for this purpose. The value of an AUID is either an SMPTE 298M 
+        /// Universal Label(UL) or a UUID.5
         /// </summary>
-        /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        public AUID(byte[] bytes) : base(KeyLengths.SixteenBytes, bytes)
         {
-            switch (localTag.Tag)
-            {
-                case 0x4C01: this.ParameterDefinitionReference = reader.ReadUUID(); return true;
-            }
-            return base.ParseLocalTag(reader, localTag);
-        }
 
+        }
     }
 }

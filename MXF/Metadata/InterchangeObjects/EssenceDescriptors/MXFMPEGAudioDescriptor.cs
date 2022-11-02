@@ -31,8 +31,8 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "MPEG AudioDescriptor";
 
-        private readonly MXFKey audioBitRate_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x02, 0x04, 0x03, 0x01, 0x02, 0x00, 0x00);
-        private readonly MXFKey channelAssignment_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x04, 0x03, 0x01, 0x05, 0x00, 0x00);
+        private readonly UL audioBitRate_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0a, 0x04, 0x02, 0x04, 0x03, 0x01, 0x02, 0x00, 0x00);
+        private readonly UL channelAssignment_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x02, 0x04, 0x03, 0x01, 0x05, 0x00, 0x00);
 
 
         [Category(CATEGORYNAME)]
@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04020403.01050000")]
-        public MXFKey MPEGAudioChannelAssignment { get; set; }
+        public UL MPEGAudioChannelAssignment { get; set; }
 
         /// <summary>
         /// Constructor, set the correct descriptor name
@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
             switch (localTag.Tag)
             {
                 case var _ when localTag.Key == audioBitRate_Key: this.MPEGAudioBitRate = reader.ReadUInt32(); return true;
-                case var _ when localTag.Key == channelAssignment_Key: this.MPEGAudioChannelAssignment = reader.ReadULKey(); return true;
+                case var _ when localTag.Key == channelAssignment_Key: this.MPEGAudioChannelAssignment = reader.ReadUL(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

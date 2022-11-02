@@ -33,15 +33,15 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "GenericPictureEssenceDescriptor";
         private const int CATEGORYPOS = 4;
 
-        private readonly MXFKey altCenterCuts_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x03, 0x02, 0x0b, 0x00, 0x00, 0x00);
-        private readonly MXFKey activeHeight_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x13, 0x00, 0x00, 0x00);
-        private readonly MXFKey activeWidth_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x14, 0x00, 0x00, 0x00);
-        private readonly MXFKey activeXOffset_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x15, 0x00, 0x00, 0x00);
-        private readonly MXFKey activeYOffset_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x16, 0x00, 0x00, 0x00);
-        private readonly MXFKey displayPrimaries_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x01, 0x00, 0x00);
-        private readonly MXFKey displayWhitePointChromaticity_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x04, 0x20, 0x04, 0x01, 0x01, 0x02, 0x00, 0x00);
-        private readonly MXFKey displayMaxLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x03, 0x00, 0x00);
-        private readonly MXFKey displayMinLuminance_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x04, 0x00, 0x00);
+        private readonly UL altCenterCuts_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x03, 0x02, 0x0b, 0x00, 0x00, 0x00);
+        private readonly UL activeHeight_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x13, 0x00, 0x00, 0x00);
+        private readonly UL activeWidth_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x14, 0x00, 0x00, 0x00);
+        private readonly UL activeXOffset_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x15, 0x00, 0x00, 0x00);
+        private readonly UL activeYOffset_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x05, 0x01, 0x16, 0x00, 0x00, 0x00);
+        private readonly UL displayPrimaries_Key =  new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x01, 0x00, 0x00);
+        private readonly UL displayWhitePointChromaticity_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x02, 0x00, 0x00);
+        private readonly UL displayMaxLuminance_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x03, 0x00, 0x00);
+        private readonly UL displayMinLuminance_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x20, 0x04, 0x01, 0x01, 0x04, 0x00, 0x00);
 
         #region properties
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
@@ -119,7 +119,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010201.01010200")]
-        public MXFKey TransferCharacteristic { get; set; }
+        public UL TransferCharacteristic { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04180101.00000000")]
@@ -139,15 +139,15 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010601.00000000")]
-        public MXFKey PictureCompression { get; set; }
+        public UL PictureCompression { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010201.01030100")]
-        public MXFKey CodingEquations { get; set; }
+        public UL CodingEquations { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010109.04010201.01060100")]
-        public MXFKey ColorPrimaries { get; set; }
+        public UL ColorPrimaries { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04010501.13000000")]
@@ -231,14 +231,14 @@ namespace Myriadbits.MXF
                 case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
                 case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
                 case 0x320F: this.AlphaTransparency = (MXFAlphaTransparency)reader.ReadByte(); return true;
-                case 0x3210: this.TransferCharacteristic = reader.ReadULKey(); return true;
+                case 0x3210: this.TransferCharacteristic = reader.ReadUL(); return true;
                 case 0x3211: this.ImageAlignmentFactor = reader.ReadUInt32(); return true;
                 case 0x3213: this.ImageStartOffset = reader.ReadUInt32(); return true;
                 case 0x3214: this.ImageEndOffset = reader.ReadUInt32(); return true;
                 case 0x3212: this.FieldDominance = (MXFFieldNumber)reader.ReadByte(); return true;
-                case 0x3201: this.PictureCompression = reader.ReadULKey(); return true;
-                case 0x321A: this.CodingEquations = reader.ReadULKey(); return true;
-                case 0x3219: this.ColorPrimaries = reader.ReadULKey(); return true;
+                case 0x3201: this.PictureCompression = reader.ReadUL(); return true;
+                case 0x321A: this.CodingEquations = reader.ReadUL(); return true;
+                case 0x3219: this.ColorPrimaries = reader.ReadUL(); return true;
                 case var _ when localTag.Key == altCenterCuts_Key: this.AddChild(reader.ReadAUIDSet("AlternativeCenterCuts", "AlternativeCenterCut")); return true;
                 case var _ when localTag.Key == activeHeight_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
                 case var _ when localTag.Key == activeWidth_Key: this.ActiveHeight = reader.ReadUInt32(); return true;

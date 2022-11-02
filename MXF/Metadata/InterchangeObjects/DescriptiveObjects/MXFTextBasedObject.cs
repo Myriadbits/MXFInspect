@@ -31,10 +31,10 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "TextBasedObject";
 
-        public readonly MXFKey rfc5646TextLanguageCode_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x03, 0x01, 0x01, 0x02, 0x02, 0x14, 0x00, 0x00);
-        public readonly MXFKey textDataDescription_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x03, 0x02, 0x01, 0x06, 0x03, 0x02, 0x00, 0x00);
-        public readonly MXFKey textBasedMetadataPayloadSchemeID_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x04, 0x06, 0x08, 0x06, 0x00, 0x00, 0x00, 0x00);
-        public readonly MXFKey textMIMEMediaType_Key = new MXFKey(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x04, 0x09, 0x02, 0x02, 0x00, 0x00, 0x00, 0x00);
+        public readonly UL rfc5646TextLanguageCode_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x03, 0x01, 0x01, 0x02, 0x02, 0x14, 0x00, 0x00);
+        public readonly UL textDataDescription_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x03, 0x02, 0x01, 0x06, 0x03, 0x02, 0x00, 0x00);
+        public readonly UL textBasedMetadataPayloadSchemeID_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x04, 0x06, 0x08, 0x06, 0x00, 0x00, 0x00, 0x00);
+        public readonly UL textMIMEMediaType_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x04, 0x09, 0x02, 0x02, 0x00, 0x00, 0x00, 0x00);
 
         [Category(CATEGORYNAME)]
         public string RFC5646TextLanguageCode { get; set; }
@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
 
         // TODO this should be a AUID?
         [Category(CATEGORYNAME)]
-        public MXFUUID TextBasedMetadataPayloadSchemeID { get; set; }
+        public UUID TextBasedMetadataPayloadSchemeID { get; set; }
 
         [Category(CATEGORYNAME)]
         public string TextMIMEMediaType { get; set; }
@@ -69,7 +69,7 @@ namespace Myriadbits.MXF
                 {
                     case var _ when localTag.Key == rfc5646TextLanguageCode_Key: this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Size); return true;
                     case var _ when localTag.Key == textDataDescription_Key: this.TextDataDescription = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadUUIDKey(); return true;
+                    case var _ when localTag.Key == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadUUID(); return true;
                     case var _ when localTag.Key == textMIMEMediaType_Key: this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Size); return true;
                 }
             }

@@ -22,6 +22,7 @@
 #endregion
 
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -97,7 +98,7 @@ namespace Myriadbits.MXF
 		public UInt16 ContinuityCount { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public MXFKey SMPTE { get; set; }
+		public AUID SMPTE { get; set; }
 
 		[Category(CATEGORYNAME)]
 		public string CreationDate { get; set; }
@@ -158,7 +159,7 @@ namespace Myriadbits.MXF
 			this.ChannelHandle = reader.ReadUInt16();
 			this.ContinuityCount = reader.ReadUInt16();
 
-			this.SMPTE = reader.ReadULKey(); // Always read even if zero
+			this.SMPTE = reader.ReadAUID(); // Always read even if zero
 
 			MXFTimeStamp creationTimeStamp = reader.ReadBCDTimeCode(this.PackageRate);
 			this.CreationDate = creationTimeStamp.ToString();

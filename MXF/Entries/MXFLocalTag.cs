@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 using System.Text;
@@ -41,7 +42,7 @@ namespace Myriadbits.MXF
         public UInt16 Size { get; set; }
 
         [Category(CATEGORYNAME)]
-        public MXFKey Key { get; set; }
+        public AUID Key { get; set; }
 
         [Category(CATEGORYNAME)]
         public object Value { get; set; }
@@ -79,7 +80,7 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"LocalTag 0x{this.Tag:X4} -> {this.Key?.Name ?? "<Unknown tag>"} [len {this.Size}]");
+            //sb.Append($"LocalTag 0x{this.Tag:X4} -> {this.Key?.Name ?? "<Unknown tag>"} [len {this.Size}]");
             return sb.ToString();
         }
 

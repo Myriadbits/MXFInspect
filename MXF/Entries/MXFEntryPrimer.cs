@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -35,14 +36,14 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		// TODO smpte specs request an AUID, but 
 		// probably a MXFKey = UL would make more sense here, so can we change this safely?
-		public MXFAUID AliasUID { get; set; }
+		public AUID AliasUID { get; set; }
 
 		public MXFEntryPrimer(MXFReader reader)
 			: base(reader)
 		{
 			this.Offset = reader.Position;
 			this.LocalTag = reader.ReadUInt16();
-			this.AliasUID = new MXFAUID(reader, "AliasUID");
+			this.AliasUID = reader.ReadAUID();
 			this.TotalLength = 20; // Fixed length (16 bytes key + 4 bytes local tag)
 		}
 

@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.ComponentModel;
 
@@ -43,7 +44,7 @@ namespace Myriadbits.MXF
 		public string ProductVersionString { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public MXFKey ProductUID { get; set; }
+		public AUID ProductUID { get; set; }
 
 		[Category(CATEGORYNAME)]
 		public DateTime? ModificationDate { get; set; }
@@ -55,7 +56,7 @@ namespace Myriadbits.MXF
 		public string Platform { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public MXFKey ThisGenerationUID { get; set; }
+		public AUID ThisGenerationUID { get; set; }
 
 		public MXFIdentification(MXFReader reader, MXFPack pack)
 			: base(reader, pack, "Identification")
@@ -70,12 +71,12 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3C09: this.ThisGenerationUID = reader.ReadULKey(); return true;
+				case 0x3C09: this.ThisGenerationUID = reader.ReadUUID(); return true;
 				case 0x3C01: this.CompanyName = reader.ReadUTF16String(localTag.Size); return true;
 				case 0x3C02: this.ProductName = reader.ReadUTF16String(localTag.Size); return true;
 				case 0x3C03: this.ProductVersion = reader.ReadProductVersion(); return true;
 				case 0x3C04: this.ProductVersionString = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x3C05: this.ProductUID = reader.ReadULKey(); return true;
+				case 0x3C05: this.ProductUID = reader.ReadAUID(); return true;
 				case 0x3C06: this.ModificationDate = reader.ReadTimestamp(); return true;
 				case 0x3C07: this.ToolkitVersion = reader.ReadProductVersion(); return true;
 				case 0x3C08: this.Platform = reader.ReadUTF16String(localTag.Size); return true;

@@ -25,6 +25,6 @@ namespace Myriadbits.MXF
 {
     public interface IUUIDIdentifiable
     {
-        MXFUUID GetUUID();
+        UUID GetUUID();
     }
 }
