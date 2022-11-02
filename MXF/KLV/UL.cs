@@ -94,6 +94,37 @@ namespace Myriadbits.MXF
             return bytes.Length >= 4 && bytes.Take(4).SequenceEqual(ValidULPrefix);
         }
 
+        public bool IdentifiesLocalSet()
+        {
+            return CategoryDesignator == ULCategories.Groups &&
+                    (RegistryDesignator == ULRegistries.LocalSet_1Byte_1Byte ||
+                    RegistryDesignator == ULRegistries.LocalSet_1Byte_2Bytes ||
+                    RegistryDesignator == ULRegistries.LocalSet_1Byte_4Bytes ||
+                    RegistryDesignator == ULRegistries.LocalSet_1Byte_OIDBER ||
+
+                    RegistryDesignator == ULRegistries.LocalSet_2Bytes_1Byte ||
+                    RegistryDesignator == ULRegistries.LocalSet_2Bytes_2Bytes ||
+                    RegistryDesignator == ULRegistries.LocalSet_2Bytes_4Bytes ||
+                    RegistryDesignator == ULRegistries.LocalSet_2Bytes_OIDBER ||
+
+                    RegistryDesignator == ULRegistries.LocalSet_4Bytes_1Byte ||
+                    RegistryDesignator == ULRegistries.LocalSet_4Bytes_2Bytes ||
+                    RegistryDesignator == ULRegistries.LocalSet_4Bytes_1Byte ||
+                    RegistryDesignator == ULRegistries.LocalSet_4Bytes_OIDBER ||
+
+                    RegistryDesignator == ULRegistries.LocalSet_BER_1Byte ||
+                    RegistryDesignator == ULRegistries.LocalSet_BER_2Bytes ||
+                    RegistryDesignator == ULRegistries.LocalSet_BER_4Bytes ||
+                    RegistryDesignator == ULRegistries.LocalSet_BER_OIDBER);
+        }
+
+
+        public bool IdentifiesLocalSet_2BytesLength2BytesTag()
+        {
+            return CategoryDesignator == ULCategories.Groups &&
+                RegistryDesignator == ULRegistries.LocalSet_2Bytes_2Bytes;
+        }
+
         public override string ToString()
         {
             if (SMPTEInformation?.Name != null)
@@ -110,7 +141,7 @@ namespace Myriadbits.MXF
             {
                 throw new ArgumentException("Wrong number of bytes. A SMPTE Universal Label must consist of exactly 16 bytes");
             }
-            else if (!UL.HasValidULPrefix(bytes))
+            else if (!HasValidULPrefix(bytes))
             {
                 throw new ArgumentException("Wrong byte value. A SMPTE Universal Label must start with the following byte sequence: 0x06, 0x0e, 0x2b, 0x34");
             }
@@ -191,7 +222,7 @@ namespace Myriadbits.MXF
                             RegistryDesignator = ULRegistries.LocalSet_1Byte_2Bytes;
                             break;
                         case 0x3b:
-                            RegistryDesignator = ULRegistries.LocalSet1_Byte_4Bytes;
+                            RegistryDesignator = ULRegistries.LocalSet_1Byte_4Bytes;
                             break;
                         case 0x43:
                             RegistryDesignator = ULRegistries.LocalSet_2Bytes_1Byte;
