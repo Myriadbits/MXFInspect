@@ -26,55 +26,50 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	/// <summary>
-	/// Named object type (collectionname)
-	/// </summary>
-	public class MXFNamedObject : MXFObject
-	{
-		[Browsable(false)]
-		public string Name { get; set; }
+    /// <summary>
+    /// Named object type (collectionname)
+    /// </summary>
+    public class MXFNamedObject : MXFObject
+    {
+        [Browsable(false)]
+        public string Name { get; set; }
 
 
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(long offset)
-			: base(offset)
-		{
-		}
+        /// <summary>
+        /// MXF Object constructor
+        /// </summary>
+        /// <param name="reader"></param>
+        public MXFNamedObject(long offset)
+            : base(offset)
+        {
+        }
 
-		
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string name, long offset)
-			: base(offset)
-		{
-			this.Name = name;
-		}
 
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string name, long offset, long length)
-			: base(offset)
-		{
-			this.Name = name;
-			this.TotalLength = length;
-		}
+        /// <summary>
+        /// MXF Object constructor
+        /// </summary>
+        /// <param name="reader"></param>
+        public MXFNamedObject(string name, long offset) : this(offset)
+        {
+            Name = name;
+        }
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (!this.Children.Any())
-				return this.Name;
-			return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
-		}
-	}
+        /// <summary>
+        /// MXF Object constructor
+        /// </summary>
+        public MXFNamedObject(string name, long offset, long length) : this(name, offset)
+        {
+            TotalLength = length;
+        }
+
+        /// <summary>
+        /// Some output
+        /// </summary>
+        public override string ToString()
+        {
+            if (!this.Children.Any())
+                return this.Name;
+            return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
+        }
+    }
 }
