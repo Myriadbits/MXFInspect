@@ -112,26 +112,8 @@ namespace Myriadbits.MXFInspect
             foreach (var item in propList)
             {
                 Debug.WriteLine(item.Name);
-                list.AddRange(ReadOnlyPropertyGridHelpers.GetAllChilds1(item, list));
+                list.AddRange(ReadOnlyPropertyGridHelpers.GetAllChildsProperties(item, list));
             }
-
-            //propList =  ReadOnlyPropertyGridHelpers.ConcatWithChildPropDescriptors(propList);
-
-            //propList = propList.Concat(GetChilds(propList)).Distinct();
-
-            //propList = propList.Concat(GetChilds(propList)).Distinct();
-
-            //propList = propList.Concat(GetChilds(propList)).Distinct();
-
-            //propList = propList.Concat(GetChilds(propList)).Distinct();
-
-            //propList = propList.Concat(GetChilds(propList)).Distinct();
-
-            //propList = propList.Concat(GetChilds(propList)).Distinct();
-
-            //propList = propList.Concat(GetChilds(propList)).Distinct();
-
-            //propList = propList.Concat(GetChilds(propList));
 
             return list;
             //propList = propList.Concat(propList.SelectMany(o => o.GetChildProperties().Cast<PropertyDescriptor>())
