@@ -222,6 +222,14 @@ namespace Myriadbits.MXF
                         }
 
                     }
+
+                    // Only report progress when the percentage has changed
+                    int currentPercentage = Convert.ToInt32(parser.CurrentPack.Offset * 90 / Filesize);
+                    if (currentPercentage != previousPercentage)
+                    {
+                        worker.ReportProgress(currentPercentage, "Partial Parsing MXF file");
+                        previousPercentage = currentPercentage;
+                    }
                 }
 
 
@@ -233,13 +241,25 @@ namespace Myriadbits.MXF
 
                 // Progress should now be 90%
 
+                // Resolve the references
+                sw.Restart();
+                worker.ReportProgress(93, "Resolving flatlist");
+                int numOfResolved = ResolveReferences();
+                Debug.WriteLine("{0} references resolved in {1} ms", numOfResolved, sw.ElapsedMilliseconds);
+
+
+                // Create the logical tree
+                worker.ReportProgress(94, "Creating Logical tree");
+                sw.Restart();
+                CreateLogicalTree();
+                Debug.WriteLine("Logical tree created in {0} ms", sw.ElapsedMilliseconds);
                 DoPostWork(worker, sw, allPrimerKeys);
 
                 // And Execute FAST tests
-                //this.ExecuteValidationTest(worker, false);
+                this.ExecuteValidationTest(worker, false);
 
                 // Finished
-                //worker.ReportProgress(100, "Finished");
+                worker.ReportProgress(100, "Finished");
 
                 #region old
                 // Partition the packs
@@ -409,7 +429,7 @@ namespace Myriadbits.MXF
                             {
                                 currentPartition.FirstPictureEssenceElement = el;
                             }
-                                
+
                             currentPartition.AddChild(el);
                         }
                         else
@@ -591,9 +611,9 @@ namespace Myriadbits.MXF
                 {
                     StringBuilder sb = new StringBuilder();
                     MXFSequence seq = genericTrack.GetFirstMXFSequence();
-                    if (seq != null && seq.DataDefinition != null)
+                    if (seq != null && seq.DataDefinition != null && seq.DataDefinition is UL ul)
                     {
-                        //sb.Append(string.Format("{0}", seq.DataDefinition.Name));
+                        sb.Append(seq.DataDefinition.ToString());
                     }
 
                     if (genericTrack is MXFTimelineTrack timeLineTrack)

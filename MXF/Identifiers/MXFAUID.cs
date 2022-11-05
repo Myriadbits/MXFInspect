@@ -27,6 +27,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	// TODO rethink this class
 	[TypeConverter(typeof(ExpandableObjectConverter))]
 	public class MXFAUID : MXFNamedObject 
 	{
@@ -43,17 +44,21 @@ namespace Myriadbits.MXF
 			this.TotalLength = (long)this.Key.KeyLength;
 		}
 
-        /// <summary>
-        /// Some output
-        /// </summary>
-        /// <returns></returns>
-   //     public override string ToString()
-   //     {
-   //         if (string.IsNullOrEmpty(this.Name))
-   //             return this.Key.Name;
+		public MXFAUID(string name, long offset, AUID auid) : base(name, offset)
+		{
+			Key = auid;
+		}
 
-			//string keyName = this.Key.Name ?? this.Key.ToString();
-   //         return string.Format("{0} [{1}]", this.Name, keyName);
-   //     }
-    }
+        public override string ToString()
+		{
+			if (string.IsNullOrEmpty(Name))
+			{
+				return Key.ToString();
+			}
+			else
+			{
+                return string.Format("{0} [{1}]", Name, Key.ToString());
+            }	
+		}
+	}
 }

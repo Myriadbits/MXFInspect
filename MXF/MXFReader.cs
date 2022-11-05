@@ -294,8 +294,12 @@ namespace Myriadbits.MXF
 
         public AUID ReadAUID()
         {
-            byte[] byteArray = this.ReadArray(this.ReadByte, (int) AUID.KeyLengths.SixteenBytes);
-            return new AUID(byteArray);
+            byte[] bytes = this.ReadArray(this.ReadByte, (int)AUID.KeyLengths.SixteenBytes);
+            if (UL.HasValidULPrefix(bytes))
+            {
+                return new UL(bytes);
+            }
+            return new AUID(bytes);
         }
 
 
@@ -305,9 +309,6 @@ namespace Myriadbits.MXF
             return new UL(byteArray);
         }
 
-        /// <summary>
-        /// Reads a UMID key
-        /// </summary>
         public UMID ReadUMIDKey()
         {
             // Always read 32 bytes for UMID's 
@@ -315,9 +316,6 @@ namespace Myriadbits.MXF
             return new UMID(byteArr);
         }
 
-        /// <summary>
-        /// Reads a UUID key
-        /// </summary>
         public UUID ReadUUID()
         {
             // Always read 16 bytes for UUIDs
@@ -340,8 +338,9 @@ namespace Myriadbits.MXF
             {
                 for (int n = 0; n < nofItems; n++)
                 {
-                    MXFAUID auid = new MXFAUID(this, singleItem);
-                    auidGroup.AddChild(auid);
+                    AUID auid = ReadAUID();
+                    MXFAUID mxfAUID = new MXFAUID(singleItem, this.Position, auid);
+                    auidGroup.AddChild(mxfAUID);
                 }
             }
             return auidGroup;
@@ -438,9 +437,14 @@ namespace Myriadbits.MXF
         /// </summary>
         public MXFColorPrimary ReadColorPrimary()
         {
-            MXFColorPrimary colorPrimary = new MXFColorPrimary();
-            colorPrimary.XColorCoordinate = this.ReadUInt16();
-            colorPrimary.YColorCoordinate = this.ReadUInt16();
+            var xcolor = this.ReadUInt16();
+            var ycolor = this.ReadUInt16();
+
+            MXFColorPrimary colorPrimary = new MXFColorPrimary()
+            {
+                XColorCoordinate = xcolor,
+                YColorCoordinate = ycolor
+            };
             return colorPrimary;
         }
 

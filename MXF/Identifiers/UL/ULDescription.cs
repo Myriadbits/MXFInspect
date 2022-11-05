@@ -21,8 +21,12 @@
 //
 #endregion
 
+using System.ComponentModel;
+
 namespace Myriadbits.MXF.Identifiers
 {
+
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public class ULDescription
     {
         public string Name { get; set; }

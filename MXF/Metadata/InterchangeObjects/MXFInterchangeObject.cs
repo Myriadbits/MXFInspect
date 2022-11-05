@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.08000000")]
-        public AUID LinkedGenerationID { get; set; }
+        public UUID LinkedGenerationID { get; set; }
 
         public MXFInterchangeObject(MXFReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
             switch (localTag.Tag)
             {
                 case 0x3C0A: this.InstanceID = reader.ReadUUID(); return true;
-                case 0x0102: this.LinkedGenerationID = reader.ReadAUID(); return true;
+                case 0x0102: this.LinkedGenerationID = reader.ReadUUID(); return true;
                 case 0x0101: this.ObjectClass = reader.ReadAUID(); return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
                 case var _ when localTag.Key == appPluginObjects_Key: 
