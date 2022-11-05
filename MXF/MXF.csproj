@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Company>Myriadbits</Company>
-    <Description>MXF .NET 5 Library</Description>
+    <Description>MXF .NET 6 Parsing Library</Description>
     <Copyright>Copyright © 2015 by Myriadbits.com</Copyright>
     <PackageProjectUrl>https://github.com/rayden84/MXFInspect</PackageProjectUrl>
     <RepositoryUrl>https://github.com/rayden84/MXFInspect</RepositoryUrl>
