@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public bool? IsRIPPresent { get; set; }
 
-
+        // TODO ByteOrder missing, localtag 0x3B01
 
         public MXFPreface(MXFReader reader, MXFPack pack)
             : base(reader, pack, "Preface")
@@ -65,7 +65,7 @@ namespace Myriadbits.MXF
             {
                 case 0x3B02: this.LastModificationDate = reader.ReadTimestamp(); return true;
                 case 0x3B05: this.Version = reader.ReadVersion(); return true;
-                case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
+                //case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
                 case 0x3B03: this.AddChild(reader.ReadReference<MXFContentStorage>("ContentStorage")); return true;
                 case 0x3B08: this.AddChild(reader.ReadReference<MXFGenericPackage>("PrimaryPackage")); return true;
                 case 0x3B09: this.OperationalPattern = reader.ReadUL(); return true;
