@@ -96,118 +96,51 @@ namespace Myriadbits.MXFInspect
         /// <returns></returns>
         private static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(object selectedObject)
         {
-            //return TypeDescriptor.GetProperties(selectedObject)
-            //                        .Cast<PropertyDescriptor>()
-            //                        .Where(propInfo => propInfo.IsBrowsable)
-            //                        .GetChildPropertyDescriptors();
-
-
             var propList = TypeDescriptor.GetProperties(selectedObject)
                                     .Cast<PropertyDescriptor>()
                                     .Where(prop => prop.IsBrowsable);
 
             List<PropertyDescriptor> list = new List<PropertyDescriptor>();
             list.AddRange(propList);
-            
+
             foreach (var item in propList)
             {
                 Debug.WriteLine(item.Name);
-                list.AddRange(ReadOnlyPropertyGridHelpers.GetAllChildsProperties(item, list));
+                list.AddRange(GetAllChildsProperties(item, list));
             }
 
             return list;
-            //propList = propList.Concat(propList.SelectMany(o => o.GetChildProperties().Cast<PropertyDescriptor>())
-            //                        .Where(prop => prop.IsBrowsable));
-
-            //var childchildpropList = childpropList.SelectMany(o => o.GetChildProperties().Cast<PropertyDescriptor>())
-            //            .Where(prop => prop.IsBrowsable);
-
-            //var childchildpropList = childpropList.SelectMany(o => o.GetChildProperties().Cast<PropertyDescriptor>())
-            //            .Where(prop => prop.IsBrowsable);
-
-            //var entireList = propList.Concat(childchildpropList).Distinct();
-            //return entireList;
-            //List<Type> visitedTypes = new List<Type>();
-            //var list = TypeDescriptor.GetProperties(selectedObject)
-            //                        .Cast<PropertyDescriptor>()
-            //                        .Where(propInfo => propInfo.IsBrowsable)
-            //                        .GetChildPropertyDescriptors(visitedTypes);
-
-
-            ////PrintAllTypes(selectedObject.GetType(), "", visitedTypes);
-            //var s = new List<PropertyDescriptor>();
-            ////var l = GetAllProperties(selectedObject.GetType(), "", visitedTypes, s);
-            //return TypeDescriptor.GetProperties(selectedObject)
-            //                        .Cast<PropertyDescriptor>()
-            //                        //.Where(propInfo => propInfo.IsBrowsable)
-            //                        .GetChildPropertyDescriptors(visitedTypes);
-
         }
 
+        private static IEnumerable<PropertyDescriptor> GetAllChildsProperties(PropertyDescriptor pDescriptor, List<PropertyDescriptor> alreadyVisited)
+        {
 
+            var children = pDescriptor.GetChildProperties()
+                .Cast<PropertyDescriptor>()
+                .Where(prop => prop.IsBrowsable)
+                .Except(alreadyVisited);
 
-        ////private List<Type> alreadyVisitedTypes = new List<Type>(); // to avoid infinite recursion
-        //public static void PrintAllTypes(Type currentType, string prefix, List<Type> alreadyVisitedTypes)
-        //{
-        //    if (alreadyVisitedTypes.Contains(currentType)) return;
-        //    alreadyVisitedTypes.Add(currentType);
-        //    foreach (PropertyInfo pi in currentType.GetProperties())
-        //    {
-        //        Debug.WriteLine($"{prefix} {pi.PropertyType.Name} {pi.Name}");
-        //        if (!pi.PropertyType.IsPrimitive) PrintAllTypes(pi.PropertyType, prefix + "  ", alreadyVisitedTypes);
-        //    }
-        //}
+            if (children.Any())
+            {
+                var childStack = new Stack<PropertyDescriptor>(children);
+                while (childStack.Any())
+                {
+                    PropertyDescriptor pi = childStack.Pop();
+                    yield return pi;
 
-        //public static IEnumerable<PropertyInfo> GetAll(Type currentType, string prefix, List<Type> alreadyVisitedTypes)
-        //{
-        //    if (alreadyVisitedTypes.Contains(currentType)) return;
-        //    alreadyVisitedTypes.Add(currentType);
-        //    foreach (PropertyInfo pi in currentType.GetProperties())
-        //    {
-        //        Debug.WriteLine($"{prefix} {pi.PropertyType.Name} {pi.Name}");
-        //        if (!pi.PropertyType.IsPrimitive) yield return (pi.PropertyType, prefix + "  ", alreadyVisitedTypes);
-        //    }
-        //}
-
-        //public static IEnumerable<PropertyDescriptor> GetAllProperties(Type currentType, string prefix, List<Type> alreadyVisitedTypes, List<PropertyDescriptor> list)
-        //{
-        //    if (alreadyVisitedTypes.Contains(currentType)) return list;
-        //    alreadyVisitedTypes.Add(currentType);
-
-        //    foreach (var pi in currentType.GetProperties())
-        //    {
-        //        list.Concat(GetPropertyDescriptors(pi));
-        //    }
-        //        return list.Concat(GetAllProperties(pi.GetType(), "", alreadyVisitedTypes, list));
-        //        //Debug.WriteLine($"{prefix} {pi.PropertyType.Name} {pi.Name}");
-        //        //if (!pi.PropertyType.IsPrimitive)
-        //        //return GetAllProperties(pi.PropertyType, prefix + "  ", alreadyVisitedTypes, list);
-        //    //}
-        //    //return list;
-        //}
-
-        //public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(PropertyInfo PropertyInfo)
-        //{
-        //    return TypeDescriptor.GetProperties(PropertyInfo.DeclaringType).Cast<PropertyDescriptor>();
-        //}
+                    var subChildren = GetAllChildsProperties(pi, alreadyVisited);
+                    if (subChildren.Any())
+                    {
+                        foreach (var subChild in subChildren)
+                        {
+                            if (!alreadyVisited.Contains(subChild))
+                            { childStack.Push(subChild); }
+                        }
+                        alreadyVisited.AddRange(children);
+                    }
+                }
+            }
+            else yield break;
+        }
     }
-
-    //internal static class ReadOnlyPropertyGridHelpers
-    //{
-    //    public static IEnumerable<PropertyDescriptor> GetChildPropertyDescriptors(this IEnumerable<PropertyDescriptor> l, IEnumerable<Type> alreadyVisitedTypes)
-    //    {
-    //        alreadyVisitedTypes = alreadyVisitedTypes.Concat(l.Select(s => s.GetType())).Distinct();
-
-    //        if (l.Any())
-    //        {
-    //            return l.Distinct().Concat(l.SelectMany(pi => pi.GetChildProperties()
-    //                                        .Cast<PropertyDescriptor>()
-    //                                        .Where(propInfo => propInfo.IsBrowsable && !alreadyVisitedTypes.Contains(pi.GetType()))
-    //                                ).GetChildPropertyDescriptors(alreadyVisitedTypes)
-    //                                .Distinct());
-    //        }
-    //        else return l;
-
-    //    }
-    //}
 }
