@@ -18,15 +18,8 @@
   <Class Name="Myriadbits.MXF.MXFObject">
     <Position X="11.25" Y="6.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IgAAAAAAAAAAGAAEAAIAAABAIAgIABAAiQAAAAABgAQ=</HashCode>
+      <HashCode>IgAAAAAAAAAAGAAEAgIAAAAAIAgIABAAiAAAAAAAgAQ=</HashCode>
       <FileName>MXFObject.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Myriadbits.MXF.MXFKLV">
-    <Position X="8.25" Y="12.25" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAIAEAACACBQEAAAAAAACAAAAQAAACAAAAAAAAAA=</HashCode>
-      <FileName>MXFKLV.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFWrapperObject&lt;T&gt;">
@@ -57,18 +50,18 @@
       <FileName>Metadata\MXFMetadataBaseclass.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.MXFExtendedUMID">
+  <Class Name="Myriadbits.MXF.ExtendedUMID">
     <Position X="19.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAgAAAAAAAAEAAAABAAAAIIAAAQAAAAAGAAIAAA=</HashCode>
-      <FileName>Identifiers\MXFExtendedUMID.cs</FileName>
+      <FileName>Identifiers\ExtendedUMID.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.MXFUMID">
+  <Class Name="Myriadbits.MXF.UMID">
     <Position X="19.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAAAEAAAAAAAAAIAAAAAAAAAACAAIAAA=</HashCode>
-      <FileName>Identifiers\MXFUMID.cs</FileName>
+      <FileName>Identifiers\UMID.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Myriadbits.MXF.INode&lt;T&gt;">
