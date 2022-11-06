@@ -96,9 +96,8 @@
             this.lblOverallDesc.Location = new System.Drawing.Point(14, 59);
             this.lblOverallDesc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblOverallDesc.Name = "lblOverallDesc";
-            this.lblOverallDesc.Size = new System.Drawing.Size(107, 15);
+            this.lblOverallDesc.Size = new System.Drawing.Size(0, 15);
             this.lblOverallDesc.TabIndex = 8;
-            this.lblOverallDesc.Text = "Overall Description";
             // 
             // lblSingleDesc
             // 
@@ -107,9 +106,8 @@
             this.lblSingleDesc.Location = new System.Drawing.Point(14, 119);
             this.lblSingleDesc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSingleDesc.Name = "lblSingleDesc";
-            this.lblSingleDesc.Size = new System.Drawing.Size(99, 15);
+            this.lblSingleDesc.Size = new System.Drawing.Size(0, 15);
             this.lblSingleDesc.TabIndex = 9;
-            this.lblSingleDesc.Text = "SingleDescription";
             // 
             // lblTime
             // 

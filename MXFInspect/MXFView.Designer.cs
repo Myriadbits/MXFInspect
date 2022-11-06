@@ -257,13 +257,6 @@
             this.prbProcessing.Size = new System.Drawing.Size(1105, 18);
             this.prbProcessing.TabIndex = 16;
             // 
-            // bgwProcess
-            // 
-            this.bgwProcess.WorkerReportsProgress = true;
-            this.bgwProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwProcess_DoWork);
-            this.bgwProcess.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwProcess_ProgressChanged);
-            this.bgwProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwProcess_RunWorkerCompleted);
-            // 
             // MXFView
             // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;

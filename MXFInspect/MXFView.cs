@@ -27,8 +27,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -105,7 +105,7 @@ namespace Myriadbits.MXFInspect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MXFView_Load(object sender, EventArgs e)
+        private async void MXFView_Load(object sender, EventArgs e)
         {
             this.ParentMainForm = this.MdiParent as FormMain;
 
@@ -116,7 +116,6 @@ namespace Myriadbits.MXFInspect
             this.MaximizeBox = false;
 
             this.splitMain.Visible = false;
-            this.prbProcessing.Visible = true;
 
             // bug that means you have to set the desired icon again otherwise it reverts to default when child form is maximised
             this.Icon = Myriadbits.MXFInspect.Properties.Resources.ChildIcon;
@@ -125,11 +124,42 @@ namespace Myriadbits.MXFInspect
             this.tlvPhysical.SelectionChanged += PhysicalTree_SelectionChanged;
             this.tlvLogical.SelectionChanged += LogicalTree_SelectionChanged;
 
-            this.bgwProcess.RunWorkerAsync(this);
-
+            ParentMainForm.EnableUI(false);
             this.ApplyUserSettings();
 
-            ParentMainForm.EnableUI(false);
+            var cts = new CancellationTokenSource();
+            var prgForm = new FormProgress("Opening file...", cts);
+            var overallProgressHandler = new Progress<TaskReport>(prgForm.ReportOverallProgress);
+            var singleProgressHandler = new Progress<TaskReport>(prgForm.ReportSingleProgress);
+            var progressFormTask = prgForm.ShowDialogAsync();
+
+            // Open the selected file to read.
+            try
+            {
+                this.File = await MXFFile.CreateAsync(this.Filename, overallProgressHandler, singleProgressHandler, cts.Token);
+
+                FillTrees();
+                this.splitMain.Visible = true;
+                this.tabMain.SelectedIndex = 0;
+
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.WriteLine("Operation aborted by user {0}", ex);
+                this.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error while opening the file");
+            }
+            finally
+            {
+                // TODO: really needed?
+                prgForm.Close();
+                await progressFormTask;
+                ParentMainForm.EnableUI(true);
+            }
         }
 
 
@@ -302,80 +332,5 @@ namespace Myriadbits.MXFInspect
             this.tlvPhysical.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
             this.rtfHexViewer.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
         }
-
-        #region backgroundworker
-
-        /// <summary>
-        /// Worker thread!
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void bgwProcess_DoWork(object sender, DoWorkEventArgs e)
-        {
-            // Open the selected file to read.
-            try
-            {
-                BackgroundWorker worker = sender as BackgroundWorker;
-                // Process the file
-                this.File = new MXFFile(this.Filename, worker, this.FileParseMode);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error while opening the file");
-            }
-
-        }
-
-        /// <summary>
-        /// The progress has changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void bgwProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            if (e.ProgressPercentage > 0)
-            {
-                if (!sw.IsRunning)
-                {
-                    sw.Start();
-                    m_lastPercentage = e.ProgressPercentage;
-                }
-                else
-                {
-                    string currentTask = e.UserState as string;
-                    if (currentTask == null) currentTask = "";
-                    if (e.ProgressPercentage - m_lastPercentage > 0)
-                    {
-                        int estimate = 100 - e.ProgressPercentage;
-                        int msecPerPercentage = (int)(sw.ElapsedMilliseconds / (e.ProgressPercentage - m_lastPercentage));
-                        txtOverall.Text = string.Format("{0} - Estimated time: {1} s", currentTask, (estimate * msecPerPercentage) / 1000);
-                    }
-                    m_lastPercentage = e.ProgressPercentage;
-                }
-            }
-            this.prbProcessing.Value = e.ProgressPercentage;
-        }
-
-        /// <summary>
-        /// Finished processing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void bgwProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            ParentMainForm.EnableUI(true);
-            this.prbProcessing.Visible = false;
-            this.splitMain.Visible = true;
-
-            txtOverall.Text = string.Format("Finished parsing file '{0}' in {1:N0} ms", this.Filename, sw.ElapsedMilliseconds);
-            FillTrees();
-
-            this.tabMain.SelectedIndex = 0;
-
-            FormReport fr = new FormReport(this.File);
-            fr.ShowDialog(ParentMainForm);
-        }
-
-        #endregion
     }
 }
