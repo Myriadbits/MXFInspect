@@ -105,14 +105,13 @@ namespace Myriadbits.MXFInspect
 
             foreach (var item in propList)
             {
-                Debug.WriteLine(item.Name);
-                list.AddRange(GetAllChildsProperties(item, list));
+                list.AddRange(GetAllChildsProperties(item, list).Distinct());
             }
 
             return list;
         }
 
-        private static IEnumerable<PropertyDescriptor> GetAllChildsProperties(PropertyDescriptor pDescriptor, List<PropertyDescriptor> alreadyVisited)
+        private static IEnumerable<PropertyDescriptor> GetAllChildsProperties(PropertyDescriptor pDescriptor, IEnumerable<PropertyDescriptor> alreadyVisited)
         {
 
             var children = pDescriptor.GetChildProperties()
@@ -136,7 +135,7 @@ namespace Myriadbits.MXFInspect
                             if (!alreadyVisited.Contains(subChild))
                             { childStack.Push(subChild); }
                         }
-                        alreadyVisited.AddRange(children);
+                        alreadyVisited = alreadyVisited.Concat(children).Distinct();
                     }
                 }
             }
