@@ -55,7 +55,7 @@ namespace Myriadbits.MXFInspect
             this.ColumnMXFObject.AspectName = "ToString";
             this.ColumnMXFObject.FillsFreeSpace = true;
             this.ColumnMXFObject.Hyperlink = true;
-            this.ColumnMXFObject.Text = "Name";
+            this.ColumnMXFObject.Text = "Object";
             this.ColumnMXFObject.Width = 276;
             this.ColumnMXFObject.Renderer = TreeColumnRenderer;
 

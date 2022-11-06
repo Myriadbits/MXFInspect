@@ -177,7 +177,7 @@ namespace Myriadbits.MXFInspect
                 var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
                 this.tlvLogical.FillTree(logicalList);
 
-                //this.txtOverall.Text = string.Format("Total objects: {0}", this.File.Descendants().Count());
+                this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count()} items]";
             }
             catch (Exception ex)
             {
