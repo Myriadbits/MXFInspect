@@ -34,7 +34,7 @@ namespace Myriadbits.MXF
     /// components to read-only, as the default value is NOT. 
     /// </summary>
     /// <see cref="https://stackoverflow.com/questions/36466732/how-to-make-a-readonly-expandable-properties-in-the-winforms-propertygrid"/>
-    public abstract class CustomArrayConverter : ArrayConverter
+    public abstract class CustomArrayConverter<T> : ArrayConverter
     { 
         // set the array properties to readonly by attaching a readonly attribute to the property descriptor
         public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
             return props;
         }
 
-        protected string ArrayToString<T>(T[] array, string separator, Func<object, string> formatFunction)
+        protected string ArrayToString(T[] array, string separator, Func<T, string> formatFunction)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{ ");

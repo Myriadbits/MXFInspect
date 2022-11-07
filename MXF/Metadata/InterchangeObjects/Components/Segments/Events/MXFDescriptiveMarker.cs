@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01070105.00000000")]
-        [TypeConverter(typeof(IntegerArrayConverter))]
+        [TypeConverter(typeof(UInt32ArrayConverter))]
         public UInt32[] DescribedTrackIDs { get; set; }
 
         // TODO should this be UUID or AUID or UL?

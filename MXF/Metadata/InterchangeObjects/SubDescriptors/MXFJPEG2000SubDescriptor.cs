@@ -89,6 +89,7 @@ namespace Myriadbits.MXF
         public byte[] QuantizationDefault { get; set; }
 
         [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(EnumArrayConverter<MXFRGBAComponent>))]
         public MXFRGBAComponent[] J2CLayout { get; set; }
 
 

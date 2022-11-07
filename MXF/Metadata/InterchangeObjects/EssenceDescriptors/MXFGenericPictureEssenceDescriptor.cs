@@ -110,7 +110,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010302.05000000")]
-        [TypeConverter(typeof(IntegerArrayConverter))]
+        [TypeConverter(typeof(Int32ArrayConverter))]
         public Int32[] VideoLineMap { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
@@ -167,6 +167,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200401.01010000")]
+        [TypeConverter(typeof(EnumArrayConverter<MXFColorPrimary>))]
         public MXFColorPrimary[] MasteringDisplayPrimaries { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]

@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
 
 		[Category(CATEGORYNAME)]
 		[ULElement("urn:smpte:ul:060e2b34.01010105.01070106.00000000")]
-		[TypeConverter(typeof(IntegerArrayConverter))]
+		[TypeConverter(typeof(UInt32ArrayConverter))]
 		public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
         
         public MXFDescriptiveClip(MXFReader reader, MXFPack pack)

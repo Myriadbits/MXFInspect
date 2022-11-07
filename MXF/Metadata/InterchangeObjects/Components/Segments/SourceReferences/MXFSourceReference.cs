@@ -41,12 +41,12 @@ namespace Myriadbits.MXF
         
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010107.06010103.07000000")]
-        [TypeConverter(typeof(IntegerArrayConverter))]
+        [TypeConverter(typeof(UInt32ArrayConverter))]
         public UInt32[] ChannelIDs { get; set; }
         
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010108.06010103.08000000")]
-        [TypeConverter(typeof(IntegerArrayConverter))]
+        [TypeConverter(typeof(UInt32ArrayConverter))]
         public UInt32[] MonoSourceTrackIDs { get; set; }
 
         public MXFSourceReference(MXFReader reader, MXFPack pack)

@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -29,31 +30,25 @@ using System.Text;
 namespace Myriadbits.MXF
 {
     /// <summary>
-    /// Provides a type converter based on the array converter, that shows a int array
-    /// as hex string (e.g. { 312, 21, 0, 7, ...} )
+    /// Provides a type converter based on the array converter, that shows an enum array
     /// </summary>
-    public class IntegerArrayConverter : CustomArrayConverter
+    public class EnumArrayConverter<T> : CustomArrayConverter<T>
     {
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
-        {
-            if (destinationType == typeof(string) && value != null)
+        { 
+            if (destinationType == typeof(string) && value != null && (value is T[] enumArray))
             {
-                if (value is UInt32[] uint_array)
-                {
-                    return ArrayToString(uint_array, ", ", FormatInteger);
-                }
-                else if (value is Int32[] int_array)
-                {
-                    return ArrayToString(int_array, ", ", FormatInteger);
-                }
-
+                return ArrayToString(enumArray, ".", FormatByte);
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
-        private string FormatInteger(object value)
+
+        private string FormatByte(T value)
         {
-            return string.Format("{0:00}", value);
+            return value.ToString();
         }
+        
+
     }
 }

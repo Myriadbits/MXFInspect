@@ -36,6 +36,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010109.06010103.0a000000")]
+        [TypeConverter(typeof(UInt32ArrayConverter))]
         public UInt32[] DynamicSourceTrackIDs { get; set; }
 
         //TODO this is of type "indirect"

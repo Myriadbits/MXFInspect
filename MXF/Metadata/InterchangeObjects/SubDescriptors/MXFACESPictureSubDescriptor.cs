@@ -40,6 +40,7 @@ namespace Myriadbits.MXF
         public string ACESAuthoringInformation { get; set; }
 
         [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(EnumArrayConverter<MXFColorPrimary>))]
         public MXFColorPrimary[] ACESMasteringDisplayPrimaries { get; set; }
 
         [Category(CATEGORYNAME)]

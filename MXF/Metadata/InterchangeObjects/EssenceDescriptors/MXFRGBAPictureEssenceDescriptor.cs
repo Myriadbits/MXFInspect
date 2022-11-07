@@ -48,14 +48,16 @@ namespace Myriadbits.MXF
 		public MXFScanningDirection? ScanningDirection { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public MXFRGBAComponent[] PixelLayout { get; set; }
+		[TypeConverter(typeof(EnumArrayConverter<MXFRGBAComponent>))]
+	    public MXFRGBAComponent[] PixelLayout { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		[TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Palette { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public MXFRGBAComponent[] PaletteLayout { get; set; }
+        [TypeConverter(typeof(EnumArrayConverter<MXFRGBAComponent>))]
+        public MXFRGBAComponent[] PaletteLayout { get; set; }
 
 		/// <summary>
 		/// Constructor, set the correct descriptor name

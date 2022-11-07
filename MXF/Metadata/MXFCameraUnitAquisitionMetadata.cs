@@ -69,6 +69,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UInt16? ExposureIndexOfPhotoMeter { get; set; }
         [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(EnumArrayConverter<MXFRational>))]
         public MXFRational[] ColorMatrix { get; set; }
         [Category(CATEGORYNAME)]
         public MXFAutoWhiteBalanceMode? AutoWhiteBalanceMode { get; set; }

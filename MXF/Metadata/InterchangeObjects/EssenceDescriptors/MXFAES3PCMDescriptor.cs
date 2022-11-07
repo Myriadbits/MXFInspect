@@ -40,14 +40,16 @@ namespace Myriadbits.MXF
 		public MXFAuxBitsMode? AuxiliaryBitsMode { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
-		public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
+        [TypeConverter(typeof(EnumArrayConverter<MXFChannelStatusMode>))]
+        public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
-		public byte[] FixedChannelStatusData { get; set; }
+        public byte[] FixedChannelStatusData { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
-		public MXFUserDataMode[] UserDataMode { get; set; }
+        [TypeConverter(typeof(EnumArrayConverter<MXFUserDataMode>))]
+        public MXFUserDataMode[] UserDataMode { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME), Description("3D13")]
         [TypeConverter(typeof(ByteArrayConverter))]
