@@ -294,7 +294,7 @@ namespace Myriadbits.MXF
 
         public AUID ReadAUID()
         {
-            byte[] bytes = this.ReadArray(this.ReadByte, (int)AUID.KeyLengths.SixteenBytes);
+            byte[] bytes = this.ReadBytes((int)KLVKey.KeyLengths.SixteenBytes);
             if (UL.HasValidULPrefix(bytes))
             {
                 return new UL(bytes);
@@ -305,14 +305,14 @@ namespace Myriadbits.MXF
 
         public UL ReadUL()
         {
-            byte[] byteArray = this.ReadArray(this.ReadByte, (int)AUID.KeyLengths.SixteenBytes);
+            byte[] byteArray = this.ReadBytes((int)KLVKey.KeyLengths.SixteenBytes);
             return new UL(byteArray);
         }
 
         public UMID ReadUMIDKey()
         {
             // Always read 32 bytes for UMID's 
-            byte[] byteArr = this.ReadArray(this.ReadByte, 32);
+            byte[] byteArr = this.ReadBytes(32);
             return new UMID(byteArr);
         }
 
@@ -395,6 +395,7 @@ namespace Myriadbits.MXF
             }
             catch (Exception)
             {
+                // TODO do not "eat" exception
                 return new DateTime();
             }
         }
