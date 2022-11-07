@@ -88,7 +88,7 @@ namespace Myriadbits.MXF
         }
 
 
-        public MXFFile(string fileName)
+        private MXFFile(string fileName)
         {
             this.Filename = fileName;
             this.Partitions = new List<MXFPartition>();
@@ -99,25 +99,20 @@ namespace Myriadbits.MXF
         /// Create/open an MXF file
         /// </summary>
         /// <param name="fileName"></param>
-        public MXFFile(string fileName, BackgroundWorker worker, FileParseMode options = FileParseMode.Full)
-        {
-            this.Filename = fileName;
-            this.Partitions = new List<MXFPartition>();
-            this.m_results = new List<MXFValidationResult>();
+        //public MXFFile(string fileName, BackgroundWorker worker, FileParseMode options = FileParseMode.Full) : this(fileName)
+        //{
+        //    switch (options)
+        //    {
+        //        case FileParseMode.Full:
+        //            ParseFull(worker);
+        //            break;
 
+        //        case FileParseMode.Partial:
+        //            //ParsePartial(worker);
+        //            break;
+        //    }
 
-            switch (options)
-            {
-                case FileParseMode.Full:
-                    ParseFull(worker);
-                    break;
-
-                case FileParseMode.Partial:
-                    //ParsePartial(worker);
-                    break;
-            }
-
-        }
+        //}
 
         public static Task<MXFFile> CreateAsync(string fileName, IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
         {
@@ -433,7 +428,7 @@ namespace Myriadbits.MXF
                             if (currentPercentage <= 100)
                             {
                                 int overallPercentage = 12 + currentPercentage * (65 - 12) / 100;
-                                overallProgress?.Report(new TaskReport(overallPercentage, "Reading file"));
+                                overallProgress?.Report(new TaskReport(overallPercentage, "Reading KLV stream"));
                                 singleProgress?.Report(new TaskReport(currentPercentage, "Parsing packs..."));
                                 previousPercentage = currentPercentage;
                             }
@@ -474,7 +469,6 @@ namespace Myriadbits.MXF
 
             return result;
         }
-
 
         private void ProcessPacks(List<MXFObject> packList)
         {

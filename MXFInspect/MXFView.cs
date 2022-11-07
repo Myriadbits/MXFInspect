@@ -132,6 +132,7 @@ namespace Myriadbits.MXFInspect
             var overallProgressHandler = new Progress<TaskReport>(prgForm.ReportOverallProgress);
             var singleProgressHandler = new Progress<TaskReport>(prgForm.ReportSingleProgress);
             var progressFormTask = prgForm.ShowDialogAsync();
+            sw.Start();
 
             // Open the selected file to read.
             try
@@ -141,17 +142,19 @@ namespace Myriadbits.MXFInspect
                 FillTrees();
                 this.splitMain.Visible = true;
                 this.tabMain.SelectedIndex = 0;
-
+                this.ParentMainForm.SetActivityText(string.Format("Finished reading file '{0}' in {1:N0} ms", this.Filename, sw.ElapsedMilliseconds));
             }
             catch (OperationCanceledException ex)
             {
                 Debug.WriteLine("Operation aborted by user {0}", ex);
+                this.ParentMainForm.SetActivityText(string.Format("Operation aborted by user"));
                 this.Close();
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error while opening the file");
+                this.ParentMainForm.SetActivityText(string.Format($"Error while opening the file {this.Filename}"));
             }
             finally
             {
@@ -177,7 +180,7 @@ namespace Myriadbits.MXFInspect
                 var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
                 this.tlvLogical.FillTree(logicalList);
 
-                this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count()} items]";
+                this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count():N0} items]";
             }
             catch (Exception ex)
             {

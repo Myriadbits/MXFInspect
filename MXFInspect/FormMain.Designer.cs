@@ -31,11 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tslActivity = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tslSpacer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslOffsetStyle = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslPartialLoading = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslVersion = new System.Windows.Forms.ToolStripStatusLabel();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,7 +81,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tslActivity,
-            this.tslSpacer,
+            this.toolStripStatusLabel1,
             this.tslOffsetStyle,
             this.tslPartialLoading,
             this.tslVersion});
@@ -97,23 +96,21 @@
             this.tslActivity.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslActivity.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
             this.tslActivity.Name = "tslActivity";
-            this.tslActivity.Size = new System.Drawing.Size(319, 19);
-            this.tslActivity.Spring = true;
+            this.tslActivity.Size = new System.Drawing.Size(4, 19);
             this.tslActivity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tslSpacer
+            // toolStripStatusLabel1
             // 
-            this.tslSpacer.Name = "tslSpacer";
-            this.tslSpacer.Size = new System.Drawing.Size(319, 19);
-            this.tslSpacer.Spring = true;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1113, 19);
+            this.toolStripStatusLabel1.Spring = true;
             // 
             // tslOffsetStyle
             // 
             this.tslOffsetStyle.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslOffsetStyle.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
             this.tslOffsetStyle.Name = "tslOffsetStyle";
-            this.tslOffsetStyle.Size = new System.Drawing.Size(319, 19);
-            this.tslOffsetStyle.Spring = true;
+            this.tslOffsetStyle.Size = new System.Drawing.Size(73, 19);
             this.tslOffsetStyle.Text = "Offset style:";
             this.tslOffsetStyle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -122,8 +119,7 @@
             this.tslPartialLoading.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslPartialLoading.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
             this.tslPartialLoading.Name = "tslPartialLoading";
-            this.tslPartialLoading.Size = new System.Drawing.Size(319, 19);
-            this.tslPartialLoading.Spring = true;
+            this.tslPartialLoading.Size = new System.Drawing.Size(87, 19);
             this.tslPartialLoading.Text = "PartialLoading";
             this.tslPartialLoading.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -168,7 +164,7 @@
             this.tsmiOpenFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiOpenFile.Image")));
             this.tsmiOpenFile.Name = "tsmiOpenFile";
             this.tsmiOpenFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmiOpenFile.Size = new System.Drawing.Size(157, 22);
+            this.tsmiOpenFile.Size = new System.Drawing.Size(155, 22);
             this.tsmiOpenFile.Text = "&Open...";
             this.tsmiOpenFile.Click += new System.EventHandler(this.tsmiOpenFile_Click);
             // 
@@ -176,20 +172,20 @@
             // 
             this.tsmiClose.Name = "tsmiClose";
             this.tsmiClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.tsmiClose.Size = new System.Drawing.Size(157, 22);
+            this.tsmiClose.Size = new System.Drawing.Size(155, 22);
             this.tsmiClose.Text = "&Close";
             this.tsmiClose.Click += new System.EventHandler(this.tsmiClose_Click);
             // 
             // tsSeparator1
             // 
             this.tsSeparator1.Name = "tsSeparator1";
-            this.tsSeparator1.Size = new System.Drawing.Size(154, 6);
+            this.tsSeparator1.Size = new System.Drawing.Size(152, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
             this.tsmiExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.tsmiExit.Size = new System.Drawing.Size(157, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(155, 22);
             this.tsmiExit.Text = "E&xit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -211,21 +207,21 @@
             // 
             this.tsmiValidationReport.Image = ((System.Drawing.Image)(resources.GetObject("tsmiValidationReport.Image")));
             this.tsmiValidationReport.Name = "tsmiValidationReport";
-            this.tsmiValidationReport.Size = new System.Drawing.Size(248, 22);
+            this.tsmiValidationReport.Size = new System.Drawing.Size(197, 22);
             this.tsmiValidationReport.Text = "&Validation report...";
             this.tsmiValidationReport.Click += new System.EventHandler(this.tsmiValidationReport_Click);
             // 
             // tsSeparator4
             // 
             this.tsSeparator4.Name = "tsSeparator4";
-            this.tsSeparator4.Size = new System.Drawing.Size(245, 6);
+            this.tsSeparator4.Size = new System.Drawing.Size(194, 6);
             // 
             // tsmiFindNextItem
             // 
             this.tsmiFindNextItem.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFindNextItem.Image")));
             this.tsmiFindNextItem.Name = "tsmiFindNextItem";
             this.tsmiFindNextItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.tsmiFindNextItem.Size = new System.Drawing.Size(248, 22);
+            this.tsmiFindNextItem.Size = new System.Drawing.Size(197, 22);
             this.tsmiFindNextItem.Text = "&Next item";
             this.tsmiFindNextItem.ToolTipText = "Select the next object in the MXF file";
             this.tsmiFindNextItem.Click += new System.EventHandler(this.tsmiFindNextItem_Click);
@@ -235,7 +231,7 @@
             this.tsmiFindPreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFindPreviousItem.Image")));
             this.tsmiFindPreviousItem.Name = "tsmiFindPreviousItem";
             this.tsmiFindPreviousItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F3)));
-            this.tsmiFindPreviousItem.Size = new System.Drawing.Size(248, 22);
+            this.tsmiFindPreviousItem.Size = new System.Drawing.Size(197, 22);
             this.tsmiFindPreviousItem.Text = "&Previous item";
             this.tsmiFindPreviousItem.ToolTipText = "Select the previous object in the MXF file";
             this.tsmiFindPreviousItem.Click += new System.EventHandler(this.tsmiFindPreviousItem_Click);
@@ -245,21 +241,21 @@
             this.tsmiFilterCurrentType.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFilterCurrentType.Image")));
             this.tsmiFilterCurrentType.Name = "tsmiFilterCurrentType";
             this.tsmiFilterCurrentType.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.tsmiFilterCurrentType.Size = new System.Drawing.Size(248, 22);
+            this.tsmiFilterCurrentType.Size = new System.Drawing.Size(197, 22);
             this.tsmiFilterCurrentType.Text = "&Filter current type";
             this.tsmiFilterCurrentType.Click += new System.EventHandler(this.tsmiFilterCurrentType_Click);
             // 
             // tsSeparator5
             // 
             this.tsSeparator5.Name = "tsSeparator5";
-            this.tsSeparator5.Size = new System.Drawing.Size(245, 6);
+            this.tsSeparator5.Size = new System.Drawing.Size(194, 6);
             // 
             // tsmiShowFillers
             // 
             this.tsmiShowFillers.Image = ((System.Drawing.Image)(resources.GetObject("tsmiShowFillers.Image")));
             this.tsmiShowFillers.Name = "tsmiShowFillers";
             this.tsmiShowFillers.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.tsmiShowFillers.Size = new System.Drawing.Size(248, 22);
+            this.tsmiShowFillers.Size = new System.Drawing.Size(197, 22);
             this.tsmiShowFillers.Text = "&Show fillers";
             this.tsmiShowFillers.Click += new System.EventHandler(this.showFillersToolStripMenuItem_Click);
             // 
@@ -279,26 +275,26 @@
             this.tsmiCollapseAll.Image = ((System.Drawing.Image)(resources.GetObject("tsmiCollapseAll.Image")));
             this.tsmiCollapseAll.Name = "tsmiCollapseAll";
             this.tsmiCollapseAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.tsmiCollapseAll.Size = new System.Drawing.Size(178, 22);
+            this.tsmiCollapseAll.Size = new System.Drawing.Size(176, 22);
             this.tsmiCollapseAll.Text = "Collapse all";
             this.tsmiCollapseAll.Click += new System.EventHandler(this.tsmiCollapseAll_Click);
             // 
             // tsmiShowPropInfo
             // 
             this.tsmiShowPropInfo.Name = "tsmiShowPropInfo";
-            this.tsmiShowPropInfo.Size = new System.Drawing.Size(178, 22);
+            this.tsmiShowPropInfo.Size = new System.Drawing.Size(176, 22);
             this.tsmiShowPropInfo.Text = "Show property info";
             this.tsmiShowPropInfo.Click += new System.EventHandler(this.tsmiShowPropInfo_Click);
             // 
             // tsSeparator8
             // 
             this.tsSeparator8.Name = "tsSeparator8";
-            this.tsSeparator8.Size = new System.Drawing.Size(175, 6);
+            this.tsSeparator8.Size = new System.Drawing.Size(173, 6);
             // 
             // tsmiSettings
             // 
             this.tsmiSettings.Name = "tsmiSettings";
-            this.tsmiSettings.Size = new System.Drawing.Size(178, 22);
+            this.tsmiSettings.Size = new System.Drawing.Size(176, 22);
             this.tsmiSettings.Text = "Settings...";
             this.tsmiSettings.Click += new System.EventHandler(this.tsmiSettings_Click);
             // 
@@ -504,7 +500,6 @@
 		#endregion
 
 		private System.Windows.Forms.StatusStrip statusStrip;
-		private System.ComponentModel.BackgroundWorker backgroundWorker;
 		private System.Windows.Forms.MenuStrip menuMain;
 		private System.Windows.Forms.ToolStripMenuItem tsmiFile;
 		private System.Windows.Forms.ToolStripMenuItem tsmiOpenFile;
@@ -546,7 +541,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tslActivity;
         private System.Windows.Forms.ToolStripStatusLabel tslOffsetStyle;
         private System.Windows.Forms.ToolStripStatusLabel tslPartialLoading;
-        private System.Windows.Forms.ToolStripStatusLabel tslSpacer;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

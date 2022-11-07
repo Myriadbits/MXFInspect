@@ -44,5 +44,11 @@ namespace Myriadbits.MXF.Identifiers
         public string Kind { get; set; }
 
         public string Applications { get; set; }
+
+
+        public override string ToString()
+        {
+            return Definition;
+        }
     }
 }

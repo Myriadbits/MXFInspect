@@ -66,6 +66,11 @@ namespace Myriadbits.MXFInspect
             this.toolStrip.Enabled = enable;
         }
 
+        public void SetActivityText(string text)
+        {
+            this.tslActivity.Text = text;
+        }
+
         /// <summary>
         /// Initialize/fill the MRU
         /// </summary>
