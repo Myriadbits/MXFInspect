@@ -54,7 +54,7 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("{ ");
+            sb.Append("[ ");
             int separatorDistance = KeyLength == KeyLengths.SixteenBytes ? 4 : 2;
             for (int n = 0; n < this.ArrayLength; n++)
             {
@@ -65,7 +65,7 @@ namespace Myriadbits.MXF
 
                 sb.Append(string.Format("{0:x2}", this[n]));
             }
-            sb.Append(" }");
+            sb.Append(" ]");
             return sb.ToString();
         }
     }
