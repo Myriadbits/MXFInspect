@@ -82,6 +82,7 @@ namespace Myriadbits.MXF
             Value = value;
         }
 
+        // TODO this should not be the responsibility of the class to read its content
         public KLVValue GetValue(MXFReader reader)
         {
             reader.Seek(ValueOffset);
