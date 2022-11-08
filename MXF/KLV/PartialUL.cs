@@ -21,11 +21,7 @@
 //
 #endregion
 
-using Myriadbits.MXF.Identifiers;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Myriadbits.MXF
 {
