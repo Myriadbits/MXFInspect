@@ -51,7 +51,6 @@ namespace Myriadbits.MXF
         public virtual long Offset { get; protected set; } = long.MaxValue;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        [Description("Length of KLV in bytes")]
         //TODO this is not the length of KLV but the length of the object!!!
         public virtual long TotalLength
         {

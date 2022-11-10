@@ -34,14 +34,17 @@ namespace Myriadbits.MXF
         private const int CATEGORYPOS = 1;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [Description("Consecutive pack number")]
         public long Number { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Description("Key part of KLV triplet")]
         public override UL Key { get; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Description("Length part of KLV triplet")]
         public override KLVBERLength Length { get; }
 
         [Browsable(false)]

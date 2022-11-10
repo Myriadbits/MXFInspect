@@ -35,12 +35,15 @@ namespace Myriadbits.MXF
         private const int CATEGORYPOS = 1;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [Description("Key part of KLV triplet")]
         public virtual KLVKey Key { get; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [Description("Length part of KLV triplet")]
         public virtual KLVLengthBase Length { get; }
 
         [Browsable(false)]
+        [Description("Value part of KLV triplet")]
         public byte[] Value { get; }
 
         [Browsable(false)]
@@ -54,12 +57,14 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Total length of KLV (= sum of lengths of key, KLV-length and value)
         /// </summary>
+        [Description("Total length of KLV in bytes (Key length + Length length + Value length)")]
         public override long TotalLength { get; set; }
 
         /// <summary>
         /// Offset of the value (=data), i.e. where the payload begins.
         /// </summary>
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [Description("Offset of the value part of the KLV in term of bytes from beginning of the file")]
         public long ValueOffset { get; }
 
 

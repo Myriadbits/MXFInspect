@@ -67,6 +67,7 @@ namespace Myriadbits.MXF
         public ULDescription SMPTEInformation { get; }
 
         [Browsable(false)]
+        [Description("Universal Label Name")]
         public string Name { get; set; }
 
         public UL(params byte[] bytes) : base(bytes)
