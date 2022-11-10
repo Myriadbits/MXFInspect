@@ -111,6 +111,7 @@ namespace Myriadbits.MXF
         public override void AddChild(MXFObject child)
         {
             base.AddChild(child);
+            // TODO not really clean?!
             if (child.Offset < this.Offset)
                 this.Offset = child.Offset;
         }
