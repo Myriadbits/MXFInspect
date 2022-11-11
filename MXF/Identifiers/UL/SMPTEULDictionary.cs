@@ -31,18 +31,18 @@ namespace Myriadbits.MXF.Identifiers.UL
 {
     public static class SMPTEULDictionary
     {
-        private static Dictionary<ByteArray, ULDescription> Dictionary { get; set; }
+        private static Dictionary<ByteArray, ULDescription> dictionary { get; set; }
 
         public static Dictionary<ByteArray, ULDescription> GetEntries()
         {
             // if already initialized return it
-            if (Dictionary != null)
+            if (dictionary != null)
             {
-                return Dictionary;
+                return dictionary;
             }
             else
             {
-                Dictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
+                dictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
 
                 //Parse SMPTE Labels register
 
@@ -50,23 +50,23 @@ namespace Myriadbits.MXF.Identifiers.UL
                 XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
 
                 regEntries = XElement.Parse(Properties.Resources.Labels);
-                AddEntries(Dictionary, regEntries, ns);
+                AddEntries(dictionary, regEntries, ns);
 
                 // Parse SMPTE Elements register
 
                 ns = "http://www.smpte-ra.org/schemas/335/2012";
                 regEntries = XElement.Parse(Properties.Resources.Elements);
-                AddEntries(Dictionary, regEntries, ns);
+                AddEntries(dictionary, regEntries, ns);
 
                 //Parse SMPTE Groups register
 
                 ns = "http://www.smpte-ra.org/ns/395/2016";
                 regEntries = XElement.Parse(Properties.Resources.Groups);
-                AddEntries(Dictionary, regEntries, ns);
+                AddEntries(dictionary, regEntries, ns);
 
-                var values = Dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
+                var values = dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
 
-                return Dictionary;
+                return dictionary;
             }
         }
 
