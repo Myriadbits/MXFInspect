@@ -80,7 +80,14 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            //sb.Append($"LocalTag 0x{this.Tag:X4} -> {this.Key?.Name ?? "<Unknown tag>"} [len {this.Size}]");
+            if (Key is UL ul)
+            {
+                sb.Append($"LocalTag 0x{this.Tag:X4} -> {ul.Name} [len {this.Size}]");
+            }
+            else
+            {
+                sb.Append($"LocalTag 0x{this.Tag:X4} -> <Unknown tag> [len {this.Size}]");
+            }
             return sb.ToString();
         }
 
