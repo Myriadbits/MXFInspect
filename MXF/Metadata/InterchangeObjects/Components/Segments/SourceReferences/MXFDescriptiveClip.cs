@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014500")]
 	public class MXFDescriptiveClip : MXFSourceClip
 	{
 		private const string CATEGORYNAME = "SourceClip";

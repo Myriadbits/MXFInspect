@@ -25,6 +25,7 @@ namespace Myriadbits.MXF
 {
     public class MXFSelector : MXFSegment
     {
+        [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010e00")]
         public MXFSelector(MXFReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, "Selector")
         {

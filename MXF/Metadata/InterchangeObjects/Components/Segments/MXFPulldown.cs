@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010c00")]
     public class MXFPulldown : MXFSegment
     {
         private const string CATEGORYNAME = "Pulldown";

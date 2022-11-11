@@ -23,6 +23,7 @@
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.01010102.03010210.01000000")]
 	public class MXFFiller : MXFSegment
 	{
 		public MXFFiller(MXFReader reader, MXFPack pack)
