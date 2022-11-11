@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
@@ -67,9 +68,10 @@ namespace Myriadbits.MXF
                     // Not processed, use default
                     tag.Parse(reader);
 
-                    // Add to the collection
-                    AddChild(tag);
                 }
+
+                // Add to the collection
+                AddChild(tag);
 
                 reader.Seek(next);
             }
@@ -78,6 +80,19 @@ namespace Myriadbits.MXF
             PostInitialize();
         }
 
+
+        public void ParseTagsAgain(MXFReader reader)
+        {
+            var tags = this.Children.OfType<MXFLocalTag>();
+            foreach (var tag in tags)
+            {
+                AddRefKeyFromPrimerPack(tag);
+                tag.Parse(reader);
+            }
+
+            // Allow derived classes to do some final work
+            PostInitialize();
+        }
         /// <summary>
         ///	Tries to find the local tag in the primer pack and if so,
         ///	adds the referring key to the tag.
@@ -85,14 +100,24 @@ namespace Myriadbits.MXF
         /// <param name="tag"></param>
         private void AddRefKeyFromPrimerPack(MXFLocalTag tag)
         {
-            if (this.Partition?.PrimerKeys != null)
+            var parentPartition = this.Ancestors().OfType<MXFPartition>().FirstOrDefault();
+
+            if (parentPartition != null && parentPartition.PrimerKeys != null)
             {
-                if (this.Partition.PrimerKeys.TryGetValue(tag.Tag, out MXFEntryPrimer primerEntry))
+                if (parentPartition.PrimerKeys.TryGetValue(tag.Tag, out MXFEntryPrimer primerEntry))
                 {
                     //MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
                     tag.Key = primerEntry.AliasUID;
                 }
             }
+            //if (this.Partition?.PrimerKeys != null)
+            //{
+            //    if (this.Partition.PrimerKeys.TryGetValue(tag.Tag, out MXFEntryPrimer primerEntry))
+            //    {
+            //        MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
+            //        tag.Key = primerEntry.AliasUID;
+            //    }
+            //}
         }
 
         /// <summary>

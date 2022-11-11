@@ -23,6 +23,7 @@
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011800")]
 	public class MXFContentStorage : MXFInterchangeObject
 	{
 		public MXFContentStorage(MXFReader reader, MXFPack pack)

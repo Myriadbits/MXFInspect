@@ -26,64 +26,112 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    // CameraUnitAcquisitionMetadata 
-    // urn:smpte:ul:060e2b34.027f0101.0c020101.02010000
-
     // TODO add InstanceID property and check the inheritance tree, does it really derive from metadatabase class?
+
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0c020101.02010000")]
     public class MXFCameraUnitAquisitionMetadata : MXFMetadataBaseclass
     {
         private const string CATEGORYNAME = "CameraUnitAquisitionMetadata";
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.01020108.02000000")]
         public string CameraSettingFileURI { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.03020302.02100200")]
         public string CameraAttributes { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010201.01010200")]
         public UL TransferCharacteristic { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04010301.03010000")]
         public MXFRational CaptureFrameRate { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01010000")]
         public UL AutoExposureMode { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01020000")]
         public MXFAutoFocusSensingAreaSetting? AutoFocusSensingAreaSetting { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01030000")]
         public MXFColorCorrectionFilterWheelSetting? ColorCorrectionFilterWheelSetting { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01040000")]
         public UInt16? NeutralDensityFilterWheelSetting { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01050000")]
         public UInt16? ImageSensorDimensionEffectiveWidth { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01060000")]
         public UInt16? ImageSensorDimensionEffectiveHeight { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01070000")]
         public MXFImageSensorReadoutMode? ImageSensorReadoutMode { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01080000")]
         public UInt32? ShutterSpeedAngle { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01080100")]
         public MXFRational ShutterSpeedTime { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.01090000")]
         public Int16? CameraMasterGainAdjustment { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.010a0000")]
         public UInt16? ISOSensitivity { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.010b0000")]
         public UInt16? ElectricalExtenderMagnification { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04200103.010c0000")]
         public UInt16? ExposureIndexOfPhotoMeter { get; set; }
+        
         [Category(CATEGORYNAME)]
         [TypeConverter(typeof(EnumArrayConverter<MXFRational>))]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04200103.010d0000")]
         public MXFRational[] ColorMatrix { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.02010000")]
         public MXFAutoWhiteBalanceMode? AutoWhiteBalanceMode { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.02020000")]
         public UInt16? WhiteBalance { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.02030000")]
         public Int16? CameraMasterBlackLevel { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.02040000")]
         public UInt16? CameraKneePoint { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.02050000")]
         public UInt16? CameraKneeSlope { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200103.02060000")]
         public UInt16? CameraLuminanceDynamicRange { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04200103.02070000")]
         public byte? GammaForCDL { get; set; }
 
 

@@ -33,7 +33,6 @@ namespace Myriadbits.MXF
     public class KLVParser
     {
         private readonly MXFReader reader = null;
-        private readonly MXFPackFactory factory = new MXFPackFactory();
         private long currentPackOffset = 0;
         private long currentPackNumber = 0;
 
@@ -49,7 +48,7 @@ namespace Myriadbits.MXF
 
             var pack = ParseMXFPack(currentPackOffset);
 
-            var typedPack = factory.CreatePack(pack, reader);
+            var typedPack = MXFPackFactory.CreatePack(pack, reader);
             typedPack.Number = currentPackNumber++;
             PopulateKLVSubList(typedPack);
 

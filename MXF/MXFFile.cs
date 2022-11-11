@@ -117,7 +117,7 @@ namespace Myriadbits.MXF
         public static Task<MXFFile> CreateAsync(string fileName, IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
         {
             var ret = new MXFFile(fileName);
-            return ret.ParsePartialAsync(overallProgress, singleProgress, ct);
+            return ret.ParseAsync(overallProgress, singleProgress, ct);
         }
 
 
@@ -372,7 +372,7 @@ namespace Myriadbits.MXF
         //}
 
 
-        protected async Task<MXFFile> ParsePartialAsync(IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
+        protected async Task<MXFFile> ParseAsync(IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
         {
             var result = await Task.Run(() =>
             {
@@ -381,7 +381,6 @@ namespace Myriadbits.MXF
                 int previousPercentage = 0;
                 Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
 
-                //PartialSeekMode seekMode = PartialSeekMode.Unknown;
                 using (mxfReader = new MXFReader(this.Filename))
                 {
                     // Prepare
@@ -441,6 +440,10 @@ namespace Myriadbits.MXF
                     overallProgress?.Report(new TaskReport(65, "Process packs"));
                     ProcessPacks(packList);
 
+                    MXFPackFactory.SetDescriptionAttributesForAllTypes();
+                    
+                    ReparseLocalTags(packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any()));
+
                     // Progress should now be 80%
                     overallProgress?.Report(new TaskReport(73, "Update tree"));
 
@@ -470,7 +473,7 @@ namespace Myriadbits.MXF
             return result;
         }
 
-        private void ProcessPacks(List<MXFObject> packList)
+        private void ProcessPacks(IEnumerable<MXFObject> packList)
         {
             MXFPartition currentPartition = null;
             int partitionNumber = 0;
@@ -560,6 +563,23 @@ namespace Myriadbits.MXF
             }
         }
 
+        private void ReparseLocalTags(IEnumerable<MXFLocalSet> localSetList)
+        {
+            var reader = new MXFReader(this.Filename);
+
+            foreach (var ls in localSetList)
+            {
+                var tags = ls.Children.OfType<MXFLocalTag>();
+
+                ls.ParseTagsAgain(reader);
+                //foreach (var tag in tags)
+                //{
+                //    //ls.AddRefKeyFromPrimerPack(tag);
+                //    //ls.ParseLocalTag(reader, tag);
+                //} 
+            }
+        }
+
         private void DoPostWork(BackgroundWorker worker, Stopwatch sw, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
         {
             // Update all type descriptions
@@ -592,7 +612,7 @@ namespace Myriadbits.MXF
                 if (ripSize < this.Filesize && ripSize >= 4) // At least 4 bytes
                 {
                     mxfReader.Seek(this.Filesize - ripSize);
-                    MXFPack pack = mxfPackFactory.CreatePack(null, mxfReader);
+                    MXFPack pack = MXFPackFactory.CreatePack(null, mxfReader);
                     if (pack is MXFRIP rip)
                     {
                         // Yes, RIP found

@@ -1,5 +1,4 @@
-﻿using Myriadbits.MXF.Identifiers.UL;
-#region license
+﻿#region license
 //
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
@@ -22,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers.UL;
 using System;
 
 namespace Myriadbits.MXF
@@ -30,13 +30,13 @@ namespace Myriadbits.MXF
     public abstract class ULBaseAttribute : Attribute
     {
         public string SMPTEULString { get; set; }
-        public ByteArray UniversalLabel { get; protected set; }
+        public ByteArray UL { get; protected set; }
 
 
         public ULBaseAttribute(string smpteULString)
         {
             SMPTEULString = smpteULString;
-            UniversalLabel = SMPTEULDictionary.GetByteArrayFromSMPTEULString(smpteULString);
+            UL = SMPTEULDictionary.GetByteArrayFromSMPTEULString(smpteULString);
         }
     }
 }

@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.Identifiers.UL;
 using Myriadbits.MXF.Metadata;
 using Myriadbits.MXF.Utils;
 using System;
@@ -38,7 +39,7 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFPackFactory
     {
-        static readonly Dictionary<ByteArray, Type> dict = new Dictionary<ByteArray, Type>(new KeyPartialMatchComparer())
+        private static readonly IReadOnlyDictionary<ByteArray, Type> dict = new Dictionary<ByteArray, Type>(new KeyPartialMatchComparer())
         {
             #region Main Elements
             {new PartialUL(0x06, 0x0e, 0x2b, 0x34, 0x02, 0x05, 0x01, 0x01, 0x0d, 0x01, 0x02, 0x01, 0x01, 0x02), typeof(MXFPartition)} ,               // Header partition
@@ -308,8 +309,9 @@ namespace Myriadbits.MXF
         /// <param name="reader"></param>
         /// <param name="currentPartition"></param>
         /// <returns></returns>
-        public MXFPack CreatePack(MXFPack pack, MXFReader reader)
+        public static MXFPack CreatePack(MXFPack pack, MXFReader reader)
         {
+
             if (dict.TryGetValue(pack.Key, out Type foundType))
             {
                 return (MXFPack)Activator.CreateInstance(foundType, reader, pack);
@@ -322,6 +324,43 @@ namespace Myriadbits.MXF
             }
 
             return pack;
+        }
+
+        public static void SetDescriptionAttributesForAllTypes()
+        {
+            foreach(Type t in dict.Values)
+            {
+                SetDescriptionAttribute(t);
+            }
+        }
+
+        private static void SetDescriptionAttribute(Type type)
+        {
+            // recursive calls up to the inheritance chain
+
+            if (type.BaseType != null)
+            {
+                SetDescriptionAttribute(type.BaseType);
+            }
+
+            // iterate through all properties
+
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(type))
+            {
+                // get the short key of the property, marked via the ULAttribute 
+
+                var ul = prop.Attributes.OfType<ULElementAttribute>().FirstOrDefault()?.UL;
+                var knownKeys = SMPTEULDictionary.GetEntries();
+
+                if (ul != null)
+                {
+                    if (knownKeys.TryGetValue(ul, out var keyDescription))
+                    {
+                        prop.AddAttribute(new DescriptionAttribute(keyDescription.Definition));
+                    }
+
+                }
+            }
         }
 
         // TODO should it be public or internal?

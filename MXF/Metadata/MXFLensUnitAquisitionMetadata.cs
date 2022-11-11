@@ -26,7 +26,6 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    // LensUnitAcquisitionMetadata 
     // urn:smpte:ul:060e2b34.027f0101.0c020101.01010000
     // TODO add ULGroup attribute
     // TODO add InstanceID property and check the inheritance tree, does it really derive from metadatabase class?
@@ -35,28 +34,51 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "LensUnitAquisitionMetadata";
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.03020302.02100100")]
         public string LensAttributes { get; set; }
-        [Category(CATEGORYNAME)] 
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.01000000")]
         public UInt16? IrisFNumber { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.02000000")]
         public UInt16? FocusPositionFromImagePlane { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.03000000")]
         public UInt16? FocusPositionFromFrontLensVertex { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.04000000")]
         public bool? MacroSetting { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.05000000")]
         public UInt16? LensZoom35mmStillCameraEquivalent { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.06000000")]
         public UInt16? LensZoomActualFocalLength { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.07000000")]
         public UInt16? OpticalExtenderMagnification { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.08000000")]
         public UInt16? IrisTNumber { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.09000000")]
         public UInt16? IrisRingPosition { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.0a000000")]
         public UInt16? FocusRingPosition { get; set; }
+        
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.0b000000")]
         public UInt16? ZoomRingPosition { get; set; }
 
 

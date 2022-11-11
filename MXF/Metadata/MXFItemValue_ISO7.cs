@@ -32,7 +32,8 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "Item Value ISO7";
 
         [Category(CATEGORYNAME)]
-		public string ItemValue_ISO7 { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.0301020a.02000000")]
+        public string ItemValue_ISO7 { get; set; }
 
         public MXFItemValue_ISO7(MXFReader reader, MXFPack pack)
             : base(pack.Key, pack.Length, pack.Offset)

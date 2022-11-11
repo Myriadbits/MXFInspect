@@ -31,6 +31,7 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "Parameter";
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01040000")]
         public UUID ParameterDefinitionReference { get; set; }
 
 

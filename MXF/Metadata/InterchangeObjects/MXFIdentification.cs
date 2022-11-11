@@ -32,31 +32,40 @@ namespace Myriadbits.MXF
 		private const string CATEGORYNAME = "Identification";
 
 		[Category(CATEGORYNAME)]
-		public string CompanyName { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.02010000")]
+        public string ApplicationSupplierName { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public string ProductName { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.03010000")]
+        public string ApplicationName { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public MXFProductVersion ProductVersion { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.04000000")]
+        public MXFProductVersion ApplicationVersion { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public string ProductVersionString { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.05010000")]
+        public string ApplicationVersionString { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public AUID ProductUID { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.07000000")]
+        public AUID ApplicationProductId { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public DateTime? ModificationDate { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020110.02030000")]
+        public DateTime? FileModificationDate { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public MXFProductVersion ToolkitVersion { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.0a000000")]
+        public MXFProductVersion ToolkitVersion { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public string Platform { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.06010000")]
+        public string ApplicationPlatform { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public AUID ThisGenerationUID { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.01000000")]
+        public AUID GenerationID { get; set; }
 
 		public MXFIdentification(MXFReader reader, MXFPack pack)
 			: base(reader, pack, "Identification")
@@ -71,15 +80,15 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3C09: this.ThisGenerationUID = reader.ReadUUID(); return true;
-				case 0x3C01: this.CompanyName = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x3C02: this.ProductName = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x3C03: this.ProductVersion = reader.ReadProductVersion(); return true;
-				case 0x3C04: this.ProductVersionString = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x3C05: this.ProductUID = reader.ReadAUID(); return true;
-				case 0x3C06: this.ModificationDate = reader.ReadTimestamp(); return true;
+				case 0x3C09: this.GenerationID = reader.ReadUUID(); return true;
+				case 0x3C01: this.ApplicationSupplierName = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x3C02: this.ApplicationName = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x3C03: this.ApplicationVersion = reader.ReadProductVersion(); return true;
+				case 0x3C04: this.ApplicationVersionString = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x3C05: this.ApplicationProductId = reader.ReadAUID(); return true;
+				case 0x3C06: this.FileModificationDate = reader.ReadTimestamp(); return true;
 				case 0x3C07: this.ToolkitVersion = reader.ReadProductVersion(); return true;
-				case 0x3C08: this.Platform = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x3C08: this.ApplicationPlatform = reader.ReadUTF16String(localTag.Size); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

@@ -30,14 +30,16 @@ namespace Myriadbits.MXF
 	{
 		private const string CATEGORYNAME = "ControlPoint";
 
-		[ULElement("urn:smpte:ul:060e2b34.01010102.05300508.00000000")]
-		[Category(CATEGORYNAME)]
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05300508.00000000")]
 		public MXFEditHint EditHint { get; set; }
 
-		[ULElement("urn:smpte:ul:060e2b34.01010102.0530050d.00000000")]
-		public object ControlPointValue { get; set; } 	
-		
-	    [ULElement("urn:smpte:ul:060e2b34.01010102.07020103.10020100")]
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.0530050d.00000000")]
+		public object ControlPointValue { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020103.10020100")]
 		public MXFRational ControlPointTime { get; set; }
 
 

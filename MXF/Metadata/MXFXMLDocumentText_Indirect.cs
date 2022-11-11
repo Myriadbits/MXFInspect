@@ -31,6 +31,7 @@ namespace Myriadbits.MXF.Metadata
 
         [Category(CATEGORYNAME)]
         [MultiLine]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.03010220.01000000")]
         public string Text { get; set; }
 
         public MXFXMLDocumentText_Indirect(MXFReader reader, MXFPack pack)
