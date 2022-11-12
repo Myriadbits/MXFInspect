@@ -139,15 +139,15 @@ namespace Myriadbits.MXF
                         .UnWrapAs<MXFMaterialPackage>();
         }
 
-        public static IEnumerable<MXFGenericTrack> GetGenericTracks(this MXFGenericPackage package)
+        public static IEnumerable<MXFTrack> GetGenericTracks(this MXFPackage package)
         {
             return package.LogicalWrapper
                         .Children
-                        .OfWrappedType<MXFGenericTrack>()
-                        .UnWrapAs<MXFGenericTrack>();
+                        .OfWrappedType<MXFTrack>()
+                        .UnWrapAs<MXFTrack>();
         }
 
-        public static MXFSequence GetFirstMXFSequence(this MXFGenericTrack track)
+        public static MXFSequence GetFirstMXFSequence(this MXFTrack track)
         {
             return track.LogicalWrapper
                     .Children.OfWrappedType<MXFSequence>()

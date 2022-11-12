@@ -25,12 +25,14 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012c00")]
     public class MXFWAVEDescriptor : MXFFileDescriptor
     {
         private const string CATEGORYNAME = "WAVEDescriptor";
 
         [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.03030302.01000000")]
         public byte[] WaveSummary { get; set; }
         
         public MXFWAVEDescriptor(MXFReader reader, MXFPack pack)

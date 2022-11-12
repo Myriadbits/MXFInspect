@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01017900")]
     public class MXFACESPictureSubDescriptor : MXFSubDescriptor
     {
         private const string CATEGORYNAME = "ACESPictureSubDescriptor";
@@ -37,19 +38,24 @@ namespace Myriadbits.MXF
         private readonly UL aCESMasteringDisplayMinimumLuminance_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x06, 0x0a, 0x05, 0x00, 0x00, 0x00);
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.01000000")]
         public string ACESAuthoringInformation { get; set; }
 
         [Category(CATEGORYNAME)]
         [TypeConverter(typeof(EnumArrayConverter<MXFColorPrimary>))]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.02000000")]
         public MXFColorPrimary[] ACESMasteringDisplayPrimaries { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.03000000")]
         public MXFColorPrimary ACESMasteringDisplayWhitePointChromaticity { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.04000000")]
         public UInt32? ACESMasteringDisplayMaximumLuminance { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.05000000")]
         public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
         public MXFACESPictureSubDescriptor(MXFReader reader, MXFPack pack)

@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01015f00")]
     public class MXFVC1VideoDescriptor : MXFCDCIPictureEssenceDescriptor
     {
         private const string CATEGORYNAME = "VC1 Video Descriptor";

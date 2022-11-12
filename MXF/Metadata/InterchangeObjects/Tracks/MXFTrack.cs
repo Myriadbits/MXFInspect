@@ -26,28 +26,31 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFGenericPackage : MXFInterchangeObject
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013800")]
+	public class MXFTrack : MXFInterchangeObject
 	{
-		private const string CATEGORYNAME = "GenericPackage";
+		private const string CATEGORYNAME = "GenericTrack";
 
 		[Category(CATEGORYNAME)]
-		public UMID PackageID { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.01070101.00000000")]
+        public UInt32? TrackID { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public string PackageName { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.01040103.00000000")]
+        public UInt32? EssenceTrackNumber { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public DateTime? ModifiedDate { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.01070102.01000000")]
+        public string TrackName { get; set; }
 
-		[Category(CATEGORYNAME)]
-		public DateTime? CreationDate { get; set; }
 
-		public MXFGenericPackage(MXFReader reader, MXFPack pack)
-			: base(reader, pack, "Generic Package")
+		public MXFTrack(MXFReader reader, MXFPack pack)
+			: base(reader, pack, "Generic Track")
 		{
 		}
 
-		public MXFGenericPackage(MXFReader reader, MXFPack pack, string metadataName)
+
+		public MXFTrack(MXFReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, metadataName)
 		{
 		}
@@ -60,12 +63,10 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.Tag)
 			{
-				case 0x4401: this.PackageID = reader.ReadUMIDKey(); return true;
-				case 0x4402: this.PackageName = reader.ReadUTF16String(localTag.Size); return true;
-				//case 0x4403: ReadReferenceSet<MXFGenericTrack>(reader, "Tracks", "Track"); return true;
-				case 0x4403: this.AddChild(reader.ReadReferenceSet<MXFGenericTrack>("Tracks", "Track")); return true;
-				case 0x4404: this.ModifiedDate = reader.ReadTimestamp(); return true;
-				case 0x4405: this.CreationDate = reader.ReadTimestamp(); return true;
+				case 0x4801: this.TrackID = reader.ReadUInt32(); return true;
+				case 0x4802: this.TrackName = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x4803: this.AddChild(reader.ReadReference<MXFSegment>("TrackSegment")); return true;
+				case 0x4804: this.EssenceTrackNumber = reader.ReadUInt32(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

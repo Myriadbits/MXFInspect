@@ -23,6 +23,7 @@
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016a00")]
 	public class MXFMCALabelSubDescriptor : MXFSubDescriptor
     {
 		public MXFMCALabelSubDescriptor(MXFReader reader, MXFPack pack)

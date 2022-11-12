@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
         {
             this.Task = "Track Info";
             MXFMaterialPackage mp = this.File.GetContentStorage()?.GetFirstMaterialPackage();
-            List<MXFGenericTrack> tracks = mp.GetGenericTracks().ToList();
+            List<MXFTrack> tracks = mp.GetGenericTracks().ToList();
 
             foreach (var t in tracks)
             {

@@ -26,7 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFTimelineTrack : MXFGenericTrack
+	public class MXFTimelineTrack : MXFTrack
 	{
 		private const string CATEGORYNAME = "TimeLineTrack";
 

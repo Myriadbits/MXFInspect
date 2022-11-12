@@ -25,11 +25,13 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013300")]
 	public class MXFTextLocator : MXFLocator
 	{
 		private const string CATEGORYNAME = "TextLocator";
 
 		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.01040102.01000000")]
 		public string LocationName { get; set; }
 
 		public MXFTextLocator(MXFReader reader, MXFPack pack)

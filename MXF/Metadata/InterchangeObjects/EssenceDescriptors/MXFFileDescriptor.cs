@@ -62,17 +62,7 @@ namespace Myriadbits.MXF
             // Add all meta data 
             m_metaTypes.Add(0x14, "Descriptor: Timecode");
             m_metaTypes.Add(0x23, "Descriptor: Data container");
-            m_metaTypes.Add(0x27, "Generic Picture Essence Descriptor");
-            m_metaTypes.Add(0x28, "CDCI Essence Descriptor");
-            m_metaTypes.Add(0x29, "RGBA Essence Descriptor");
-            m_metaTypes.Add(0x42, "Generic Sound Essence Descriptor");
-            m_metaTypes.Add(0x43, "Generic Data Essence Descriptor");
-            m_metaTypes.Add(0x44, "MultipleDescriptor");
-            m_metaTypes.Add(0x47, "Descriptor: AES3");
-            m_metaTypes.Add(0x48, "Descriptor: Wave");
-            m_metaTypes.Add(0x51, "Descriptor: MPEG 2 Video");
             m_metaTypes.Add(0x5C, "Descriptor: ANC Data Descriptor, SMPTE 436 - 7.3");
-            m_metaTypes.Add(0x25, "File Descriptor");
         }
 
         /// <summary>

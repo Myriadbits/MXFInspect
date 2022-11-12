@@ -27,9 +27,6 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    /// <summary>
-    /// See SMPTE 377-1-2009
-    /// </summary>
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010201.01100100")]
     public class MXFIndexTableSegment : MXFInterchangeObject
 	{

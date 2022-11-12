@@ -21,14 +21,36 @@
 //
 #endregion
 
+using System.ComponentModel;
+
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016b00")]
 	public class MXFAudioChannelLabelSubDescriptor : MXFMCALabelSubDescriptor
     {
+        private const string CATEGORYNAME = "AudioChannelLabelSubDescriptor";
+        private readonly UL SoundfieldGroupLinkId_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x01, 0x03, 0x07, 0x01, 0x06, 0x00, 0x00, 0x00);
+
+        [Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.0101010e.01030701.06000000")]
+		public UUID SoundfieldGroupLinkID { get; set; }
+		
 		public MXFAudioChannelLabelSubDescriptor(MXFReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "AudioChannelLabelSubDescriptor";
 		}
-	}
+
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            if (localTag.Key != null)
+            {
+                switch (localTag.Key)
+                {
+                    case var _ when localTag.Key == SoundfieldGroupLinkId_Key: this.SoundfieldGroupLinkID = reader.ReadUUID(); return true;
+                }
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
+    }
 }

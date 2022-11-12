@@ -25,6 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    // TODO complete this class
     public class MXFDMS1Framework : MXFDescriptiveFramework
     {
         private const string CATEGORYNAME = "DMS1Framework";

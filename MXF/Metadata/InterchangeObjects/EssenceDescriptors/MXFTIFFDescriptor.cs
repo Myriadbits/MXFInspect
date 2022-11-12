@@ -26,27 +26,34 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012b00")]
     public class MXFTIFFDescriptor : MXFFileDescriptor
     {
         private const string CATEGORYNAME = "TIFFDescriptor";
 
         [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.03030302.03000000")]
         public byte[] TIFFSummary { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04010302.03000000")]
         public Int32? LeadingLines { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04010302.04000000")]
         public Int32? TrailingLines { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05020103.01010000")]
         public bool IsUniform { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.05020103.01020000")]
         public Int32? JPEGTableID { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.06080201.00000000")]
         public bool IsContiguous { get; set; }
 
         public MXFTIFFDescriptor(MXFReader reader, MXFPack pack)

@@ -83,7 +83,7 @@ namespace Myriadbits.MXF
                 case 0x3B05: this.FormatVersion = reader.ReadVersion(); return true;
                 case 0x3B06: this.AddChild(reader.ReadReferenceSet<MXFIdentification>("Identifications", "Identification")); return true;
                 case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
-                case 0x3B08: this.AddChild(reader.ReadReference<MXFGenericPackage>("PrimaryPackage")); return true;
+                case 0x3B08: this.AddChild(reader.ReadReference<MXFPackage>("PrimaryPackage")); return true;
                 case 0x3B09: this.OperationalPattern = reader.ReadUL(); return true;
                 case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
                     // TODO review how the metadataschemes are read (especially if there are no schemes present)

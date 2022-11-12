@@ -23,7 +23,7 @@
 
 namespace Myriadbits.MXF
 {
-	public class MXFStaticTrack : MXFGenericTrack
+	public class MXFStaticTrack : MXFTrack
 	{
 		public MXFStaticTrack(MXFReader reader, MXFPack pack)
 			: base(reader, pack)

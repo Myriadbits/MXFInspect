@@ -25,15 +25,14 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014300")]
     public class MXFGenericDataEssenceDescriptor : MXFFileDescriptor
     {
         private const string CATEGORYNAME = "GenericDataEssenceDescriptor";
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010103.04030302.00000000")]
         public UL DataEssenceCoding { get; set; }
-
-
-
 
         /// <summary>
         /// Constructor, set the correct descriptor name

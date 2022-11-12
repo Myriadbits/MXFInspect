@@ -25,6 +25,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.04010100")]
 	public class MXFTextBasedFramework : MXFDescriptiveFramework
 	{
 		public readonly UL textBasedObject_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x06, 0x01, 0x01, 0x04, 0x05, 0x41, 0x01, 0x00);

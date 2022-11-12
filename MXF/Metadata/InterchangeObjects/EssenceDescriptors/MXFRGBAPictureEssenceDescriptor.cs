@@ -27,36 +27,45 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012900")]
 	public class MXFRGBAPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
 	{
 		private const string CATEGORYNAME = "RGBAPictureEssenceDescriptor";
 		private const int CATEGORYPOS = 3;
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public UInt32? ComponentMaxRef { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010503.0b000000")]
+        public UInt32? ComponentMaxRef { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public UInt32? ComponentMinRef { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010503.0c000000")]
+        public UInt32? ComponentMinRef { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public UInt32? AlphaMaxRef { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010503.0d000000")]
+        public UInt32? AlphaMaxRef { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public UInt32? AlphaMinRef { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010503.0e000000")]
+        public UInt32? AlphaMinRef { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		public MXFScanningDirection? ScanningDirection { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010404.01000000")]
+        public MXFScanningDirection? ScanningDirection { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		[TypeConverter(typeof(EnumArrayConverter<MXFRGBAComponent>))]
-	    public MXFRGBAComponent[] PixelLayout { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.06000000")]
+        public MXFRGBAComponent[] PixelLayout { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
 		[TypeConverter(typeof(ByteArrayConverter))]
-		public byte[] Palette { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.08000000")]
+        public byte[] Palette { get; set; }
 
 		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [TypeConverter(typeof(EnumArrayConverter<MXFRGBAComponent>))]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.09000000")]
         public MXFRGBAComponent[] PaletteLayout { get; set; }
 
 		/// <summary>

@@ -26,48 +26,62 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014800")]
     public class MXFWAVEPCMDescriptor : MXFGenericSoundEssenceDescriptor
     {
         private const string CATEGORYNAME = "WAVE PCM Descriptor";
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020302.01000000")]
         public UInt16? BlockAlign { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020302.02000000")]
         public byte? SequenceOffset { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020303.05000000")]
         public UInt32? AverageBytesPerSecond { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010107.04020101.05000000")]
         public UL ChannelAssignment { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.06000000")]
         public UInt32? PeakEnvelopeVersion { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.07000000")]
         public UInt32? PeakEnvelopeFormat { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.08000000")]
         public UInt32? PointsPerPeakValue { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.09000000")]
         public UInt32? PeakEnvelopeBlockSize { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.0a000000")]
         public UInt32? PeakChannels { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.0b000000")]
         public UInt32? PeakFrames { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.0c000000")]
         public MXFPosition? PeakOfPeaksPosition { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.0d000000")]
         public DateTime? PeakEnvelopeTimestamp { get; set; }
 
         [Category(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.0e000000")]
         public byte[] PeakEnvelopeData { get; set; }
 
 

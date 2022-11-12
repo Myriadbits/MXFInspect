@@ -733,7 +733,7 @@ namespace Myriadbits.MXF
         /// Return info for a generic track packet
         /// </summary>
         /// <returns>A string representing information about a generic track</returns>
-        public string GetTrackInfo(MXFGenericTrack genericTrack)
+        public string GetTrackInfo(MXFTrack genericTrack)
         {
             try
             {

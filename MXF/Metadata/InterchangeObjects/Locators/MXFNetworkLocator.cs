@@ -25,11 +25,13 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013200")]
 	public class MXFNetworkLocator : MXFLocator
 	{
 		private const string CATEGORYNAME = "NetworkLocator";
 
 		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010101.01020101.01000000")]
 		public string URLString { get; set; }
 
 		public MXFNetworkLocator(MXFReader reader, MXFPack pack)

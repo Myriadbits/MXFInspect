@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01015100")]
     public class MXFMPEGPictureEssenceDescriptor : MXFCDCIPictureEssenceDescriptor
     {
         private const string CATEGORYNAME = "MPEGPictureEssenceDescriptor";
@@ -42,33 +43,43 @@ namespace Myriadbits.MXF
         private readonly UL lowDelay_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x04, 0x01, 0x06, 0x02, 0x01, 0x05, 0x00, 0x00);
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01020000")]
         public bool? SingleSequenceFlag { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01050000")]
         public bool? LowDelayIndicator { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.010b0000")]
         public UInt32? BitRate { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01070000")]
         public bool? IdenticalGOPIndicator { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01030000")]
         public bool? ConstantBPictureFlag { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01060000")]
         public bool? ClosedGOPIndicator { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01080000")]
         public UInt16? MaximumGOPSize { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01090000")]
         public UInt16? MaximumBPictureCount { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.010a0000")]
         public byte? ProfileAndLevel { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04010602.01040000")]
         public MXFCodedContentScanning? CodedContentScanningKind { get; set; }
 
 

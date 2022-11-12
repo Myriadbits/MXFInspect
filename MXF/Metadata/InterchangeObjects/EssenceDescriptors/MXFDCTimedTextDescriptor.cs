@@ -21,19 +21,61 @@
 //
 #endregion
 
+using Myriadbits.MXF.Properties;
+using System.ComponentModel;
+
 namespace Myriadbits.MXF
 {
-	public class MXFDCTimedTextDescriptor : MXFGenericDataEssenceDescriptor
-	{
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016400")]
+    public class MXFDCTimedTextDescriptor : MXFGenericDataEssenceDescriptor
+    {
+        private const string CATEGORYNAME = "DC Timed Text Descriptor";
+
+        private UL resourceID_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x01, 0x01, 0x15, 0x12, 0x00, 0x00, 0x00, 0x00);
+        private UL namespaceURI_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x08, 0x01, 0x02, 0x01, 0x05, 0x01, 0x00, 0x00, 0x00);
+        private UL rFC5646LanguageTagList_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x03, 0x01, 0x01, 0x02, 0x02, 0x16, 0x00, 0x00);
+        private UL uCSEncoding_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0c, 0x04, 0x09, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00);
+        private UL displayType_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x06, 0x01, 0x01, 0x02, 0x04, 0x00, 0x00, 0x00);
+        private UL intrinsicPictureResolution_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x06, 0x01, 0x01, 0x02, 0x05, 0x00, 0x00, 0x00);
+        private UL zpositionInUse_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x06, 0x01, 0x01, 0x02, 0x06, 0x00, 0x00, 0x00);
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010c.01011512.00000000")]
+        public UUID ResourceID { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.01020105.01000000")]
+        public string NamespaceURI { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.03010102.02160000")]
+        public string RFC5646LanguageTagList { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010c.04090500.00000000")]
+        public string UCSEncoding { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.06010102.04000000")]
+        public string DisplayType { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.06010102.05000000")]
+        public string IntrinsicPictureResolution { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.06010102.06000000")]
+        public byte? ZpositionInUse { get; set; }
+
         /// <summary>
         /// Constructor, set the correct descriptor name
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
         public MXFDCTimedTextDescriptor(MXFReader reader, MXFPack pack)
-			: base(reader, pack, "DC Timed Text Descriptor")
-		{
-			this.MetaDataName = this.Key.Name;
+            : base(reader, pack, "DC Timed Text Descriptor")
+        {
+            this.MetaDataName = this.Key.Name;
         }
 
         /// <summary>
@@ -42,8 +84,30 @@ namespace Myriadbits.MXF
         /// <param name="reader"></param>
         /// <param name="pack"></param>
         public MXFDCTimedTextDescriptor(MXFReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, metadataName)
-		{
+            : base(reader, pack, metadataName)
+        {
+
+
+
+
         }
-	}
+
+        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        {
+            if (localTag.Key != null)
+            {
+                switch (localTag.Key)
+                {
+                    case var _ when localTag.Key == resourceID_Key: this.ResourceID = reader.ReadUUID(); return true;
+                    case var _ when localTag.Key == namespaceURI_Key: this.NamespaceURI = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == rFC5646LanguageTagList_Key: this.RFC5646LanguageTagList = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == uCSEncoding_Key: this.UCSEncoding = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == displayType_Key: this.DisplayType = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == intrinsicPictureResolution_Key: this.IntrinsicPictureResolution = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.Key == zpositionInUse_Key: this.ZpositionInUse = reader.ReadByte(); return true;
+                }
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
+    }
 }

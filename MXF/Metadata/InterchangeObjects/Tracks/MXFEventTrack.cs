@@ -25,13 +25,17 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEventTrack : MXFGenericTrack
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013900")]
+	public class MXFEventTrack : MXFTrack
 	{
 		private const string CATEGORYNAME = "EventTrack";
 
 		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.05300402.00000000")]
 		public MXFRational EventTrackEditRate { get; set; }
+		
 		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010105.07020103.010b0000")]
 		public MXFPosition? EventTrackOrigin { get; set; }
 
 		public MXFEventTrack(MXFReader reader, MXFPack pack)

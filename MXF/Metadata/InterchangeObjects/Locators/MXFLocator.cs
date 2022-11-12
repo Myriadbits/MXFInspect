@@ -23,8 +23,7 @@
 
 namespace Myriadbits.MXF
 {
-	// Locator http://www.smpte-ra.org/reg/395/2014/13/1/aaf 	
-	// urn:smpte:ul:060e2b34.027f0101.0d010101.01013100
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013100")]
 	public class MXFLocator : MXFInterchangeObject
 	{
 		public MXFLocator(MXFReader reader, MXFPack pack, string metadataName)

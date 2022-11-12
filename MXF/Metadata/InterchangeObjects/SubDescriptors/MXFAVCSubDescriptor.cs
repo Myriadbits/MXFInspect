@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016e00")]
     public class MXFAVCSubDescriptor : MXFSubDescriptor
     {
         private const string CATEGORYNAME = "AVCSubDescriptor";
@@ -48,48 +49,63 @@ namespace Myriadbits.MXF
 
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01030000")]
         public bool? AVCConstantBPictureFlag { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01040000")]
         public MXFAVCContentScanning? AVCCodedContentKind { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01060000")]
         public bool? AVCClosedGOPIndicator { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01070000")]
         public bool? AVCIdenticalGOPIndicator { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01080000")]
         public UInt16? AVCMaximumGOPSize { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01090000")]
         public UInt16? AVCMaximumBPictureCount { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.010a0000")]
         public byte? AVCProfile { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.010b0000")]
         public UInt32? AVCMaximumBitRate { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.010c0000")]
         public byte? AVCProfileConstraint { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.010d0000")]
         public byte? AVCLevel { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.010e0000")]
         public byte? AVCDecodingDelay { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.010f0000")]
         public byte? AVCMaximumRefFrames { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01100000")]
         public byte? AVCSequenceParameterSetFlag { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01110000")]
         public byte? AVCPictureParameterSetFlag { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.0101010e.04010606.01140000")]
         public UInt32? AVCAverageBitRate { get; set; }
 
 

@@ -26,34 +26,42 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014700")]
 	public class MXFAES3PCMDescriptor : MXFWAVEPCMDescriptor
 	{
 		private const string CATEGORYNAME = "AES3 PCM Descriptor";
 
 		[CategoryAttribute(CATEGORYNAME)]
-		public MXFEmphasis? Emphasis { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.06000000")]
+        public MXFEmphasis? Emphasis { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
-		public UInt16? BlockStartOffset { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020302.03000000")]
+        public UInt16? BlockStartOffset { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
-		public MXFAuxBitsMode? AuxiliaryBitsMode { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.01000000")]
+        public MXFAuxBitsMode? AuxiliaryBitsMode { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(EnumArrayConverter<MXFChannelStatusMode>))]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.02000000")]
         public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.03000000")]
         public byte[] FixedChannelStatusData { get; set; }
 
 		[CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(EnumArrayConverter<MXFUserDataMode>))]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.04000000")]
         public MXFUserDataMode[] UserDataMode { get; set; }
 
-		[CategoryAttribute(CATEGORYNAME), Description("3D13")]
+		[CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
-		public byte[] FixedUserData { get; set; }		
+        [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.05000000")]
+        public byte[] FixedUserData { get; set; }		
 		
 		/// <summary>
 		/// Constructor, set the correct descriptor name

@@ -25,7 +25,8 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFSourcePackage : MXFGenericPackage
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013700")]
+	public class MXFSourcePackage : MXFPackage
 	{
 		public MXFSourcePackage(MXFReader reader, MXFPack pack)
 			: base(reader, pack, "Source Package")
