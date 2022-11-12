@@ -26,7 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("Timecode – urn:smpte:ul:060e2b34.027f0101.0d010101.01011400")]
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011400")]
 	public class MXFTimecodeComponent : MXFSegment
 	{
 		private const string CATEGORYNAME = "TimecodeComponent";

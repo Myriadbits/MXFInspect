@@ -35,6 +35,7 @@ namespace Myriadbits.MXF
 
         public ULBaseAttribute(string smpteULString)
         {
+            // TODO instead of throwing if the string is not a smpteUL just log 
             SMPTEULString = smpteULString;
             UL = SMPTEULDictionary.GetByteArrayFromSMPTEULString(smpteULString);
         }
