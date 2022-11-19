@@ -26,28 +26,30 @@ using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public class KLVTriplet : MXFObject 
+    public class KLVTriplet<K,L,V> : MXFObject, IKLVTriplet<K, L, V>
+        where K : KLVKey
+        where L : KLVLengthBase
+        where V : ByteArray
+
     {
         private const string CATEGORYNAME = "MXFPack";
         private const int CATEGORYPOS = 1;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Key part of KLV triplet")]
-        public virtual KLVKey Key { get; }
+        public virtual K Key { get; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length part of KLV triplet")]
-        public virtual KLVLengthBase Length { get; }
+        public virtual L Length { get; }
 
         [Browsable(false)]
         [Description("Value part of KLV triplet")]
-        public byte[] Value { get; }
-
-        [Browsable(false)]
-        public List<KLVTriplet> KLVSublist { get; set; }
+        public virtual V Value { get; }
 
         /// <summary>
         /// Offset from beginning of the file (i.e. position of start of key within file)
@@ -68,7 +70,7 @@ namespace Myriadbits.MXF
         public long ValueOffset { get; }
 
 
-        public KLVTriplet(KLVKey key, KLVLengthBase length, long offset)
+        public KLVTriplet(K key, L length, long offset)
         {
             Key = key;
             Length = length;
@@ -77,22 +79,15 @@ namespace Myriadbits.MXF
             TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
         }
 
-        public KLVTriplet(KLVKey key, KLVLengthBase length, long offset, byte[] value) : this(key, length, offset)
-        {
-            // if passed value differs in length w.r.t to the declared length throw
-            if (value.LongLength != length.Value)
-            {
-                throw new ArgumentException($"Size of value ({value.LongLength}) does not match with declared length of KLV ({length.Value})");
-            }
-            Value = value;
-        }
-
-        // TODO this should not be the responsibility of the class to read its content
-        public KLVValue GetValue(MXFReader reader)
-        {
-            reader.Seek(ValueOffset);
-            return new KLVValue(reader.ReadArray(reader.ReadByte, Length.Value));
-        }
+        //// TODO this should not be the responsibility of the class to read its content
+        //public V GetValue(SubStream ss)
+        //{
+        //    byte[] buffer = new byte[byte]
+        //    ss.Seek(Offset, SeekOrigin.Begin);
+        //    ss.Read()
+            
+        //        //return new KLVValue(reader.ReadArray(reader.ReadByte, Length.Value));
+        //}
     }
 
 }

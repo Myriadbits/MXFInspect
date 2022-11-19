@@ -28,7 +28,7 @@ using System.Reflection;
 namespace Myriadbits.MXF
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class MXFPack : KLVTriplet
+    public class MXFPack : KLVTriplet<UL, KLVBERLength, ByteArray>
     {
         private const string CATEGORYNAME = "MXFPack";
         private const int CATEGORYPOS = 1;
@@ -37,34 +37,17 @@ namespace Myriadbits.MXF
         [Description("Consecutive pack number")]
         public long Number { get; set; }
 
-        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        [TypeConverter(typeof(ExpandableObjectConverter))]
-        [Description("Key part of KLV triplet")]
-        public override UL Key { get; }
-
-        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        [TypeConverter(typeof(ExpandableObjectConverter))]
-        [Description("Length part of KLV triplet")]
-        public override KLVBERLength Length { get; }
-
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
 
         public MXFPack(UL key, KLVBERLength length, long offset) : base(key, length, offset)
         {
-            // needed since it is overriden
-            Key = key;
-            Length = length;
         }
 
         // copy ctor
         public MXFPack(MXFPack pack) : base(pack.Key, pack.Length, pack.Offset)
         {
-            // needed since it is overriden
-            Key = pack.Key;
-            Length = pack.Length;
-            KLVSublist = pack.KLVSublist;
         }
 
         public override string ToString()

@@ -3,7 +3,7 @@
   <Class Name="Myriadbits.MXF.ByteArray">
     <Position X="10.25" Y="0.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAABiQAAAAAAAAIQAKIEAAAAAAAAAiA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAABiQAAAAAAAAIQAKIEAAAAAAAABiA=</HashCode>
       <FileName>KLV\ByteArray.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -64,31 +64,33 @@
       <FileName>KLV\ByteArrayExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.KLVTriplet">
+  <Class Name="Myriadbits.MXF.KLVTriplet&lt;K, L, V&gt;">
     <Position X="18" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAACAQAAgAAAABAAAAAAAAQCAAkAAAAgAA=</HashCode>
+      <HashCode>AAAAAAAAAAAACAQAAgAAAABAAAAAAAAQCAAgAAAAgAA=</HashCode>
       <FileName>KLV\KLVTriplet.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.MXFPack">
-    <Position X="18.25" Y="5" Width="1.75" />
+    <Position X="18" Y="5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAQEAEAAAABAAAAAQAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAACAAEAEAAAAAAAAAAQAAACAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFPack.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFPackFactory">
-    <Position X="21.5" Y="4.5" Width="2.75" />
+    <Position X="23.25" Y="3.75" Width="2.75" />
     <NestedTypes>
       <Class Name="Myriadbits.MXF.MXFPackFactory.KeyPartialMatchComparer" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>KLV\MXFPackFactory.cs</NewMemberFileName>
         </TypeIdentifier>
+        <Lollipop Position="0.2" />
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAQAAAAQAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFPackFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -161,5 +163,19 @@
       <FileName>Identifiers\UMID.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Myriadbits.MXF.MXFPackParser">
+    <Position X="26" Y="7.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAACQAAABAACACAAAAAAAEQCICAAAAAABAQCAA=</HashCode>
+      <FileName>KLV\MXFPackParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Myriadbits.MXF.KLV.IKLVTriplet&lt;K, L, V&gt;">
+    <Position X="20.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>KLV\IKLVTriplet.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
