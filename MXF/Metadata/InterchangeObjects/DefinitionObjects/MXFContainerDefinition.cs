@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.03010201.03000000")]
         public bool EssenceIsIdentified { get; set; }
 
-        public MXFContainerDefinition(MXFReader reader, MXFPack pack)
+        public MXFContainerDefinition(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "ContainerDefinition";
@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

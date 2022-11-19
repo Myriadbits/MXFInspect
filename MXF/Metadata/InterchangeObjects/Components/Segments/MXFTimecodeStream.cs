@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] TimecodeStreamData { get; private set; }
 
-        public MXFTimecodeStream(MXFReader reader, MXFPack pack, string metadataName)
+        public MXFTimecodeStream(IMXFReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, "TimecodeStream")
         {
         }
@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

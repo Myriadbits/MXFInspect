@@ -21,9 +21,14 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection.PortableExecutable;
+using static Myriadbits.MXF.KLV.KLVLength;
+using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
@@ -34,7 +39,9 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFLocalSet : MXFPack
     {
-        public MXFLocalSet(MXFReader reader, MXFPack pack)
+        //public override List<MXFLokalTag> Value { get;  }
+
+        public MXFLocalSet(IMXFReader reader, MXFPack pack)
             : base(pack)
         {
             if (Key.SMPTEInformation != null)
@@ -45,11 +52,46 @@ namespace Myriadbits.MXF
             ParseTags(reader);
         }
 
+        //public List<MXFLokalTag> GetSubKLV()
+        //{
+        //    var subKLVList = new List<MXFLokalTag>();
+        //    var offset = this.ValueOffset;
+        //    long summedLength = 0;
+        //    while (summedLength < this.Length.Value)
+        //    {
+        //        var subKLV = ParseKLV(subKeyLength, subLengthEncoding, offset);
+
+        //        if (subKLV.Offset + subKLV.TotalLength > this.Offset + this.TotalLength)
+        //        {
+        //            // TODO should be of type KLVParser exception
+        //            throw new System.Exception("SubKLV out range");
+        //        }
+        //        else
+        //        {
+        //            subKLVList.Add(subKLV);
+        //            offset += subKLV.TotalLength;
+        //            summedLength += subKLV.TotalLength;
+        //        }
+        //    }
+        //    return subKLVList;
+        //}
+
+        //private KLVTriplet ParseKLV(KeyLengths keyLength, LengthEncodings encoding, long offset)
+        //{
+        //    // move to file pos
+        //    reader.Seek(offset);
+
+        //    var key = ParseKLVKey(keyLength);
+        //    var length = ParseKLVLength(encoding);
+        //    var value = reader.ReadArray(reader.ReadByte, length.Value);
+        //    return new KLVTriplet(key, length, offset, value);
+        //}
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="reader"></param>
-        private void ParseTags(MXFReader reader)
+        private void ParseTags(IMXFReader reader)
         {
             // Make sure we read at the data position
             reader.Seek(this.ValueOffset);
@@ -81,7 +123,7 @@ namespace Myriadbits.MXF
         }
 
 
-        public void ParseTagsAgain(MXFReader reader)
+        public void ParseTagsAgain(IMXFReader reader)
         {
             var tags = this.Children.OfType<MXFLocalTag>();
             foreach (var tag in tags)
@@ -124,7 +166,7 @@ namespace Myriadbits.MXF
         /// Allow derived classes to process the local tag
         /// </summary>
         /// <param name="localTag"></param>
-        protected virtual bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected virtual bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             return false;
         }

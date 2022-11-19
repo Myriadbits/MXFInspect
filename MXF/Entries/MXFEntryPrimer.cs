@@ -38,7 +38,7 @@ namespace Myriadbits.MXF
 		// probably a MXFKey = UL would make more sense here, so can we change this safely?
 		public AUID AliasUID { get; set; }
 
-		public MXFEntryPrimer(MXFReader reader)
+		public MXFEntryPrimer(IMXFReader reader)
 			: base(reader)
 		{
 			this.Offset = reader.Position;

@@ -35,12 +35,12 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03030302.01000000")]
         public byte[] WaveSummary { get; set; }
         
-        public MXFWAVEDescriptor(MXFReader reader, MXFPack pack)
+        public MXFWAVEDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "WAVEDescriptor")
         {
         }
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

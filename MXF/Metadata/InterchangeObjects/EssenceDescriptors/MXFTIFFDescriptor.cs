@@ -56,12 +56,12 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.06080201.00000000")]
         public bool IsContiguous { get; set; }
 
-        public MXFTIFFDescriptor(MXFReader reader, MXFPack pack)
+        public MXFTIFFDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "TIFFDescriptor")
         {
         }
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

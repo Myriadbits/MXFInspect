@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public string DataString { get; set; }
 
-		public MXFEntrySVCInfo(MXFReader reader)
+		public MXFEntrySVCInfo(IMXFReader reader)
 			: base(reader)
 		{
 			this.TotalLength = 7; // Fixed

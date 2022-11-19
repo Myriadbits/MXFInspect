@@ -90,7 +90,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFWAVEPCMDescriptor(MXFReader reader, MXFPack pack)
+        public MXFWAVEPCMDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "WAVE PCM Descriptor")
         {
         }
@@ -100,7 +100,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFWAVEPCMDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+        public MXFWAVEPCMDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
         {
         }
@@ -109,7 +109,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

@@ -31,14 +31,14 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "TypeDefinitionSet";
 
-        public MXFTypeDefinitionSet(MXFReader reader, MXFPack pack)
+        public MXFTypeDefinitionSet(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionSet";
         }
 
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public UInt64 PartitionOffset { get; set; }
 
-		public MXFEntryRIP(MXFReader reader)
+		public MXFEntryRIP(IMXFReader reader)
 			: base(reader)
 		{
 			this.BodySID = reader.ReadUInt32();

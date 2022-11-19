@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }		
 
-		public MXFEntryCCData(MXFReader reader)
+		public MXFEntryCCData(IMXFReader reader)
 			: base(reader)
 		{
 			this.TotalLength = 3; // Fixed

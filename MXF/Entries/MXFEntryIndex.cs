@@ -87,7 +87,7 @@ namespace Myriadbits.MXF
 
         public MXFRational[] PosTable { get; set; }
 
-        public MXFEntryIndex(UInt64 index, MXFReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)
+        public MXFEntryIndex(UInt64 index, IMXFReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)
             : base(reader)
         {
             this.TotalLength = length;

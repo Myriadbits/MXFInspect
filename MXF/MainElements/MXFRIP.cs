@@ -28,13 +28,13 @@ namespace Myriadbits.MXF
 {	
 	public class MXFRIP : MXFPack
 	{
-		public MXFRIP(MXFReader reader, MXFPack pack)
+		public MXFRIP(IMXFReader reader, MXFPack pack)
 			: base(pack.Key, pack.Length, pack.Offset)
         {
 			Initialize(reader);
 		}
 
-		private void Initialize(MXFReader reader)
+		private void Initialize(IMXFReader reader)
 		{
 			// Make sure we read at the data position
 			reader.Seek(this.ValueOffset);

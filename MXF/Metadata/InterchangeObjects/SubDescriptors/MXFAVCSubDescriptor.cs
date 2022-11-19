@@ -109,7 +109,7 @@ namespace Myriadbits.MXF
         public UInt32? AVCAverageBitRate { get; set; }
 
 
-        public MXFAVCSubDescriptor(MXFReader reader, MXFPack pack)
+        public MXFAVCSubDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "AVCSubDescriptor")
         {
         }
@@ -118,7 +118,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

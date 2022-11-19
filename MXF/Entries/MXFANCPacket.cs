@@ -118,7 +118,7 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		public MXFANCPacket(MXFReader reader)
+		public MXFANCPacket(IMXFReader reader)
 			: base(reader)
 		{
 			this.LineNumber = reader.ReadUInt16();

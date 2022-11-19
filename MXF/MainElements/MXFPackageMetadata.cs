@@ -30,7 +30,7 @@ namespace Myriadbits.MXF
     {
         private int nofSizeSize = 2;
 
-        public MXFPackageMetaData(MXFReader reader, MXFPack pack)
+        public MXFPackageMetaData(IMXFReader reader, MXFPack pack)
             : base(pack.Key, pack.Length, pack.Offset)
         {
             if (this.Key[5] == 0x63)
@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 
 
         // Add all meta data see spec: SMPTE ST 331:2011
-        private void ParseElements(MXFReader reader)
+        private void ParseElements(IMXFReader reader)
         {
             reader.Seek(this.ValueOffset); // Seek to the start of the data
 
@@ -148,7 +148,7 @@ namespace Myriadbits.MXF
             }
         }
 
-        private (byte Tag, UInt32 Size) GetTag(MXFReader reader)
+        private (byte Tag, UInt32 Size) GetTag(IMXFReader reader)
         {
             byte tag = reader.ReadByte();
             UInt32 size = 0;

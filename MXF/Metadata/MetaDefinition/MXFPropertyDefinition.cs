@@ -48,14 +48,14 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010d.06010107.20000000")]
         public bool IsUniqueIdentifier { get; set; }
 
-        public MXFPropertyDefinition(MXFReader reader, MXFPack pack)
+        public MXFPropertyDefinition(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "PropertyDefinition")
         {
             this.MetaDataName = "PropertyDefinition";
         }
 
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

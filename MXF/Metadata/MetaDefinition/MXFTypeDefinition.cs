@@ -27,7 +27,7 @@ namespace Myriadbits.MXF
     public class MXFTypeDefinition : MXFMetaDefinition
     {
 
-        public MXFTypeDefinition(MXFReader reader, MXFPack pack)
+        public MXFTypeDefinition(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "TypeDefinition")
         {
             this.MetaDataName = "TypeDefinition";

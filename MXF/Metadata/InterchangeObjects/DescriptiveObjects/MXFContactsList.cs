@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
         public readonly UL organizationObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x15, 0x00);
         public readonly UL locationObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x16, 0x00);
 
-        public MXFContactsList(MXFReader reader, MXFPack pack)
+        public MXFContactsList(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "Contacts List";
@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011f00")]
     public class MXFCodecDefinition : MXFDefinitionObject
     {
-        public MXFCodecDefinition(MXFReader reader, MXFPack pack)
+        public MXFCodecDefinition(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "CodecDefinition";
@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

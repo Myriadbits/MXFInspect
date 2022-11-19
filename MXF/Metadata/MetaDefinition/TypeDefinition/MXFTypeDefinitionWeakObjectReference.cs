@@ -36,14 +36,14 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.0a000000")]
         public AUID WeakReferencedType { get; set; }
 
-        public MXFTypeDefinitionWeakObjectReference(MXFReader reader, MXFPack pack)
+        public MXFTypeDefinitionWeakObjectReference(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionWeakObjectReference ";
         }
 
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

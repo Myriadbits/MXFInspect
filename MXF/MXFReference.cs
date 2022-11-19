@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UUID Identifier { get; set; }
 
-        public MXFReference(MXFReader reader, string name) : base(reader.Position)
+        public MXFReference(IMXFReader reader, string name) : base(reader.Position)
         {
             Name = name;
             Identifier = reader.ReadUUID();

@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010109.07020502.00000000")]
         public object ToleranceWindow { get; set; }
 
-        public MXFDynamicMarker(MXFReader reader, MXFPack pack)
+        public MXFDynamicMarker(IMXFReader reader, MXFPack pack)
         : base(reader, pack)
         {
             this.MetaDataName = "DynamicMarker";
@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

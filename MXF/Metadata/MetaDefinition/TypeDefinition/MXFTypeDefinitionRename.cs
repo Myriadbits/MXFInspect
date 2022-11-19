@@ -30,14 +30,14 @@ namespace Myriadbits.MXF
     public class MXFTypeDefinitionRename : MXFTypeDefinition
     {
 
-        public MXFTypeDefinitionRename(MXFReader reader, MXFPack pack)
+        public MXFTypeDefinitionRename(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionRename";
         }
 
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

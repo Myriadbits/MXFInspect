@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
 		public byte[] Data { get; set; }
 
 
-		public MXFCDPFuture(MXFReader reader, byte sectionID)
+		public MXFCDPFuture(IMXFReader reader, byte sectionID)
 			: base(reader)
 		{
 			this.SectionID = sectionID;

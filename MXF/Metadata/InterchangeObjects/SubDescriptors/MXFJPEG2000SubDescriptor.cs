@@ -127,7 +127,7 @@ namespace Myriadbits.MXF
         public UInt16[] J2KCorrespondingProfile { get; set; }
 
 
-        public MXFJPEG2000SubDescriptor(MXFReader reader, MXFPack pack)
+        public MXFJPEG2000SubDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "JPEG2000SubDescriptor")
         {
         }
@@ -136,7 +136,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFMultipleDescriptor(MXFReader reader, MXFPack pack)
+		public MXFMultipleDescriptor(IMXFReader reader, MXFPack pack)
 			: base(reader, pack, "Multiple Descriptor")
 		{
 		}
@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

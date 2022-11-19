@@ -172,7 +172,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="frameRateNonDrop"></param>
-		public void ParseBCDTimeCode(MXFReader reader, double frameRate)
+		public void ParseBCDTimeCode(IMXFReader reader, double frameRate)
 		{
 			byte frameb = reader.ReadByte();
 			byte secondb = reader.ReadByte();
@@ -221,7 +221,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="frameRate"></param>
-		public void ParseSMPTE12M(MXFReader reader, double frameRate)
+		public void ParseSMPTE12M(IMXFReader reader, double frameRate)
 		{
 			byte hoursb = reader.ReadByte();
 			byte minutesb = reader.ReadByte();

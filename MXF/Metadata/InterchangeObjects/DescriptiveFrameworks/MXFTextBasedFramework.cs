@@ -30,7 +30,7 @@ namespace Myriadbits.MXF
 	{
 		public readonly UL textBasedObject_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x06, 0x01, 0x01, 0x04, 0x05, 0x41, 0x01, 0x00);
 
-		public MXFTextBasedFramework(MXFReader reader, MXFPack pack)
+		public MXFTextBasedFramework(IMXFReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "TextBasedFramework";
@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			if (localTag.Key != null)
 			{

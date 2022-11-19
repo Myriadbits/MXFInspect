@@ -34,7 +34,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.04040101.04000000")]
         public bool? IncludeSync { get; set; }
 
-        public MXFTimecodeStream12M(MXFReader reader, MXFPack pack, string metadataName)
+        public MXFTimecodeStream12M(IMXFReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, "TimecodeStream12M")
         {
         }
@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

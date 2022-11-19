@@ -76,7 +76,7 @@ namespace Myriadbits.MXF
 		public MXFTimeStamp TimeCode { get; set; }
 		
 
-		public MXFCDPPacket(MXFReader reader)
+		public MXFCDPPacket(IMXFReader reader)
 			: base(reader)
 		{
 			UInt16 identifier = reader.ReadUInt16();

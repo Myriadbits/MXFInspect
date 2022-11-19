@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public AUID Key { get; set; }
 
-		public MXFAUID(MXFReader reader, string name)
+		public MXFAUID(IMXFReader reader, string name)
 			: base(reader.Position)
 		{
 			this.Name = name;

@@ -48,12 +48,12 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFMPEGAudioDescriptor(MXFReader reader, MXFPack pack)
+        public MXFMPEGAudioDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "MPEG AudioDescriptor")
         {
         }
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

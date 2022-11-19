@@ -6,7 +6,9 @@ namespace Myriadbits.MXF.KLV
 {
     public class BReader : BinaryReader, IMXFReader
     {
-        public FileStream m_FileStream = null;
+        public Stream _stream = null;
+
+        public Stream Stream { get => _stream; }
 
         #region Properties
 
@@ -23,7 +25,7 @@ namespace Myriadbits.MXF.KLV
         {
             get
             {
-                return this.m_FileStream.Position;
+                return this._stream.Position;
             }
         }
 
@@ -35,9 +37,9 @@ namespace Myriadbits.MXF.KLV
         {
             get
             {
-                if (this.m_FileStream == null)
+                if (this._stream == null)
                     return true;
-                return this.m_FileStream.Position >= this.m_FileStream.Length;
+                return this._stream.Position >= this._stream.Length;
             }
         }
 
@@ -49,9 +51,9 @@ namespace Myriadbits.MXF.KLV
         {
             get
             {
-                if (this.m_FileStream == null)
+                if (this._stream == null)
                     return 0;
-                return this.m_FileStream.Length;
+                return this._stream.Length;
             }
         }
 
@@ -63,7 +65,7 @@ namespace Myriadbits.MXF.KLV
         /// <param name="reader"></param>
         public BReader(Stream stream) : base(stream)
         {
-            //Open(fileName);
+            _stream = stream;
         }
 
         /// <summary>
@@ -73,8 +75,8 @@ namespace Myriadbits.MXF.KLV
         public void Open(string fileName)
         {
             this.FileName = fileName;
-            this.m_FileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 65536);
-            this.m_FileStream.Seek(0, SeekOrigin.Begin);
+            this._stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 65536);
+            this._stream.Seek(0, SeekOrigin.Begin);
         }
 
 
@@ -96,7 +98,7 @@ namespace Myriadbits.MXF.KLV
         /// <param name="newPosition">The position to head for</param>
         public void Seek(long newPosition)
         {
-            this.m_FileStream.Seek(newPosition, SeekOrigin.Begin);
+            this._stream.Seek(newPosition, SeekOrigin.Begin);
         }
 
         /// <summary>
@@ -135,33 +137,15 @@ namespace Myriadbits.MXF.KLV
             return false;
         }
 
-        ///// <summary>
-        ///// Clean-up
-        ///// </summary>
-        //void IDisposable.Dispose()
-        //{
-        //    Close();
-        //}
-
         #region Basic types
-
-        ///// <summary>
-        ///// Reads a single byte
-        ///// </summary>
-        //public byte ReadByte()
-        //{
-        //    if (this.m_FileStream != null)
-        //        return (byte)this.m_FileStream.ReadByte();
-        //    return 0;
-        //}
 
         /// <summary>
         /// Reads a signed byte
         /// </summary>
         public sbyte ReadSignedByte()
         {
-            if (this.m_FileStream != null)
-                return (sbyte)this.m_FileStream.ReadByte();
+            if (this._stream != null)
+                return (sbyte)this._stream.ReadByte();
             return 0;
         }
 
@@ -173,60 +157,58 @@ namespace Myriadbits.MXF.KLV
             return (this.ReadByte() != 0);
         }
 
-        ///// <summary>
-        ///// Reads a single word
-        ///// </summary>
-        //public UInt16 ReadUInt16()
-        //{
-        //    if (this.m_FileStream != null)
-        //        return (UInt16)((this.m_FileStream.ReadByte() << 8) + this.m_FileStream.ReadByte());
-        //    return 0;
-        //}
+        /// <summary>
+        /// Reads a single word
+        /// </summary>
+        public override UInt16 ReadUInt16()
+        {
+            return (UInt16)((_stream.ReadByte() << 8) + _stream.ReadByte());
+        }
 
-        ///// <summary>
-        ///// Reads a dword
-        ///// </summary>
-        //public UInt32 ReadUInt32()
-        //{
-        //    if (this.m_FileStream != null)
-        //        return (UInt32)(
-        //                ((UInt32)this.m_FileStream.ReadByte() << 24) +
-        //                ((UInt32)this.m_FileStream.ReadByte() << 16) +
-        //                ((UInt32)this.m_FileStream.ReadByte() << 8) +
-        //                ((UInt32)this.m_FileStream.ReadByte())
-        //                );
-        //    return 0;
-        //}
+        /// <summary>
+        /// Reads a dword
+        /// </summary>
+        public override UInt32 ReadUInt32()
+        {
+            if (this._stream != null)
+                return
+                        ((UInt32)this._stream.ReadByte() << 24) +
+                        ((UInt32)this._stream.ReadByte() << 16) +
+                        ((UInt32)this._stream.ReadByte() << 8) +
+                        ((UInt32)this._stream.ReadByte())
+                        ;
+            return 0;
+        }
 
 
-        ///// <summary>
-        ///// Reads a signed dword
-        ///// </summary>
-        //public Int32 ReadInt32()
-        //{
-        //    // TODO pay attention, this method works only for positive numbers!!!
-        //    return (Int32)this.ReadUInt32();
-        //}
+        /// <summary>
+        /// Reads a signed dword
+        /// </summary>
+        public override Int32 ReadInt32()
+        {
+            // TODO pay attention, this method works only for positive numbers!!!
+            return (Int32)this.ReadUInt32();
+        }
 
 
         /// <summary>
         /// Reads a long
         /// </summary>
-        //public UInt64 ReadUInt64()
-        //{
-        //    if (this.m_FileStream != null)
-        //        return (UInt64)(
-        //                ((UInt64)this.m_FileStream.ReadByte() << 56) +
-        //                ((UInt64)this.m_FileStream.ReadByte() << 48) +
-        //                ((UInt64)this.m_FileStream.ReadByte() << 40) +
-        //                ((UInt64)this.m_FileStream.ReadByte() << 32) +
-        //                ((UInt64)this.m_FileStream.ReadByte() << 24) +
-        //                ((UInt64)this.m_FileStream.ReadByte() << 16) +
-        //                ((UInt64)this.m_FileStream.ReadByte() << 8) +
-        //                ((UInt64)this.m_FileStream.ReadByte())
-        //                );
-        //    return 0;
-        //}
+        public override UInt64 ReadUInt64()
+        {
+            if (_stream != null)
+                return
+                        ((UInt64)_stream.ReadByte() << 56) +
+                        ((UInt64)_stream.ReadByte() << 48) +
+                        ((UInt64)_stream.ReadByte() << 40) +
+                        ((UInt64)_stream.ReadByte() << 32) +
+                        ((UInt64)_stream.ReadByte() << 24) +
+                        ((UInt64)_stream.ReadByte() << 16) +
+                        ((UInt64)_stream.ReadByte() << 8) +
+                        ((UInt64)_stream.ReadByte())
+                        ;
+            return 0;
+        }
 
         /// <summary>
         /// Reads a string in UTF8 coding
@@ -251,15 +233,6 @@ namespace Myriadbits.MXF.KLV
                 data[n] = this.ReadByte();
             return System.Text.Encoding.BigEndianUnicode.GetString(data);
         }
-
-
-        //public byte[] ReadBytes(int length)
-        //{
-        //    var b = new byte[length];
-        //    m_FileStream.Read(b, 0, length);
-        //    return b;
-        //}
-
 
         #endregion
 

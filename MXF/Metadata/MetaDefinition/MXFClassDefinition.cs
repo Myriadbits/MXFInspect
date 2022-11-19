@@ -35,14 +35,14 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.03000000")]
         public bool IsConcrete { get; set; }
 
-        public MXFClassDefinition(MXFReader reader, MXFPack pack)
+        public MXFClassDefinition(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "ClassDefinition")
         {
             this.MetaDataName = "ClassDefinition";
         }
 
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

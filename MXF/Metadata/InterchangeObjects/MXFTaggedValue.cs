@@ -38,12 +38,12 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03020102.09010000")]
         public object IndirectValue { get; set; }
 
-        public MXFTaggedValue(MXFReader reader, MXFPack pack)
+        public MXFTaggedValue(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "TaggedValue")
         {
         }
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

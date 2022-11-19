@@ -25,7 +25,7 @@ namespace Myriadbits.MXF
 {
 	public class MXFStaticTrack : MXFTrack
 	{
-		public MXFStaticTrack(MXFReader reader, MXFPack pack)
+		public MXFStaticTrack(IMXFReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "Static Track";
@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			return base.ParseLocalTag(reader, localTag); 
 		}

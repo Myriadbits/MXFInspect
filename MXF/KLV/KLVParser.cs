@@ -33,13 +33,13 @@ namespace Myriadbits.MXF
 {
     public class KLVParser
     {
-        private readonly MXFReader reader = null;
+        private readonly IMXFReader reader = null;
         private long currentPackOffset = 0;
         private long currentPackNumber = 0;
 
         public MXFPack CurrentPack { get; private set; }
 
-        public KLVParser(MXFReader _reader)
+        public KLVParser(IMXFReader _reader)
         {
             reader = _reader;
         }
@@ -48,12 +48,14 @@ namespace Myriadbits.MXF
         {
 
             var pack = ParseMXFPack(currentPackOffset);
-            var ss = new SubStream(reader.m_FileStream, pack.Offset, pack.TotalLength);
+            var ss = new SubStream(reader.Stream, pack.Offset, pack.TotalLength);
+            
+            // TODO wrap into using/ try...catch
             var bReader = new BReader(ss);
             var typedPack = MXFPackFactory.CreatePack(pack, bReader);
-            typedPack.Number = currentPackNumber++;
-            //PopulateKLVSubList(typedPack);
+            //bReader.Close();
 
+            typedPack.Number = currentPackNumber++;
             CurrentPack = typedPack;
 
             // advance to next pack

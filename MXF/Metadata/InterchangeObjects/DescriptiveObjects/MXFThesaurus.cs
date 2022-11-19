@@ -34,7 +34,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string ThesaurusName { get; set; }
 
-        public MXFThesaurus(MXFReader reader, MXFPack pack)
+        public MXFThesaurus(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "Thesaurus";
@@ -44,7 +44,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

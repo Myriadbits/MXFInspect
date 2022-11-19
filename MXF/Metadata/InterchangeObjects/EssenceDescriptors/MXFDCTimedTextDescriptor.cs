@@ -72,7 +72,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFDCTimedTextDescriptor(MXFReader reader, MXFPack pack)
+        public MXFDCTimedTextDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "DC Timed Text Descriptor")
         {
             this.MetaDataName = this.Key.Name;
@@ -83,7 +83,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFDCTimedTextDescriptor(MXFReader reader, MXFPack pack, string metadataName)
+        public MXFDCTimedTextDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
         {
 
@@ -92,7 +92,7 @@ namespace Myriadbits.MXF
 
         }
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

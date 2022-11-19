@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01017d00")]
     public class MXFOpDefinition : MXFDefinitionObject
     {
-        public MXFOpDefinition(MXFReader reader, MXFPack pack)
+        public MXFOpDefinition(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "OPDefinition";

@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.05000000")]
         public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
-        public MXFACESPictureSubDescriptor(MXFReader reader, MXFPack pack)
+        public MXFACESPictureSubDescriptor(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "ACESPictureSubDescriptor")
         {
         }
@@ -67,7 +67,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

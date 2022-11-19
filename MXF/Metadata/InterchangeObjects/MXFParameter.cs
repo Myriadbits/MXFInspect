@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
         public UUID ParameterDefinitionReference { get; set; }
 
 
-        public MXFParameter(MXFReader reader, MXFPack pack)
+        public MXFParameter(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "Parameter")
         {
         }
@@ -44,7 +44,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

@@ -27,7 +27,7 @@ namespace Myriadbits.MXF
     public class MXFCommentMarker : MXFEvent
     {
 
-        public MXFCommentMarker(MXFReader reader, MXFPack pack)
+        public MXFCommentMarker(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "Comment Marker")
         {
         }
@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

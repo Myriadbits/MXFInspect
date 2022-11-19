@@ -43,14 +43,14 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.0b000000")]
         public object ElementType { get; set; }
 
-        public MXFTypeDefinitionEnumeration(MXFReader reader, MXFPack pack)
+        public MXFTypeDefinitionEnumeration(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionEnumeration";
         }
 
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

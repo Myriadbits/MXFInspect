@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
         public object Value { get; set; }
 
 
-        public MXFLocalTag(MXFReader reader)
+        public MXFLocalTag(IMXFReader reader)
             : base(reader)
         {
             this.Tag = reader.ReadUInt16();
@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
         /// Parse this tag
         /// </summary>
         /// <param name="reader"></param>
-        public void Parse(MXFReader reader)
+        public void Parse(IMXFReader reader)
         {
             if (this.Size == 1)
                 this.Value = reader.ReadByte();

@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFPrimerPack(MXFReader reader, MXFPack pack)
+		public MXFPrimerPack(IMXFReader reader, MXFPack pack)
 			: base(pack.Key, pack.Length, pack.Offset)
         {
 			this.LocalTagCount = ReadTagList(reader, "LocalTags");
@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		/// <param name="categoryName"></param>
 		/// <returns></returns>
-		protected UInt32 ReadTagList(MXFReader reader, string categoryName)
+		protected UInt32 ReadTagList(IMXFReader reader, string categoryName)
 		{
 			UInt32 nofItems = reader.ReadUInt32();
 			UInt32 objectSize = reader.ReadUInt32(); // useless size of objects, always 16 according to specs

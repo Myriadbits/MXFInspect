@@ -44,13 +44,13 @@ namespace Myriadbits.MXF
         public string TrackName { get; set; }
 
 
-		public MXFTrack(MXFReader reader, MXFPack pack)
+		public MXFTrack(IMXFReader reader, MXFPack pack)
 			: base(reader, pack, "Generic Track")
 		{
 		}
 
 
-		public MXFTrack(MXFReader reader, MXFPack pack, string metadataName)
+		public MXFTrack(IMXFReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, metadataName)
 		{
 		}
@@ -59,7 +59,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

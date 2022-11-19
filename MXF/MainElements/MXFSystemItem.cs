@@ -125,7 +125,7 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		public MXFSystemItem(MXFReader reader, MXFPack pack)
+		public MXFSystemItem(IMXFReader reader, MXFPack pack)
 			: base(pack.Key, pack.Length, pack.Offset)
         {
 			this.Key.Name ??= "SystemItem (CP)";

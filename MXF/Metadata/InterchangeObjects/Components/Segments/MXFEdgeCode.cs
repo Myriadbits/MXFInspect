@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.04100103.01090000")]
         public MXFFilm? EdgeCodeFilmFormat { get; set; }
 
-        public MXFEdgeCode(MXFReader reader, MXFPack pack)
+        public MXFEdgeCode(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "EdgeCode")
         {
         }
@@ -56,7 +56,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

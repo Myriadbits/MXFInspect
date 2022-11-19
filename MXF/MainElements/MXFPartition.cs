@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Myriadbits.MXF
 {
@@ -116,7 +117,7 @@ namespace Myriadbits.MXF
         public bool IsLoaded { get; set; }
 
 
-        public MXFPartition(MXFReader reader, MXFPack pack)
+        public MXFPartition(IMXFReader reader, MXFPack pack)
             : base(pack.Key, pack.Length, pack.Offset)
         {
             this.IsLoaded = false;
@@ -181,7 +182,7 @@ namespace Myriadbits.MXF
             //if (!this.IsLoaded)
             //{
             //    MXFPackFactory klvFactory = new MXFPackFactory();
-            //    using (MXFReader reader = new MXFReader(this.File.Filename))
+            //    using (IMXFReader reader = new MXFReader(this.File.Filename))
             //    {
             //        // Seek just after this partition
             //        reader.Seek(this.ValueOffset + this.Length.Value);

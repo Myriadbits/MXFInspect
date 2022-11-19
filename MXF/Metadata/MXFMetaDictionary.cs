@@ -35,13 +35,13 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UUID InstanceId { get; set; }
 
-        public MXFMetaDictionary(MXFReader reader, MXFPack pack)
+        public MXFMetaDictionary(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "MetaDictionary")
         {
         }
 
 
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public UInt32 ElementDelta { get; set; }
 
-		public MXFEntryDelta(MXFReader reader, UInt32 length)
+		public MXFEntryDelta(IMXFReader reader, UInt32 length)
 			: base(reader)
 		{
 			this.TotalLength = length;

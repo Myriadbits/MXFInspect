@@ -38,7 +38,7 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010105.07020103.010b0000")]
 		public MXFPosition? EventTrackOrigin { get; set; }
 
-		public MXFEventTrack(MXFReader reader, MXFPack pack)
+		public MXFEventTrack(IMXFReader reader, MXFPack pack)
 			: base(reader, pack, "Event Track")
 		{
 		}
@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

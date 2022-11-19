@@ -45,12 +45,12 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public MXFPosition? PackageMarkOutPosition { get; set; }
 
-		public MXFTimelineTrack(MXFReader reader, MXFPack pack)
+		public MXFTimelineTrack(IMXFReader reader, MXFPack pack)
 			: base(reader, pack, "Timeline Track")
 		{
 		}
 
-		public MXFTimelineTrack(MXFReader reader, MXFPack pack, string metadataName)
+		public MXFTimelineTrack(IMXFReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, metadataName)
 		{
 		}
@@ -59,7 +59,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

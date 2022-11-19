@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
 		[TypeConverter(typeof(UInt32ArrayConverter))]
 		public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
         
-        public MXFDescriptiveClip(MXFReader reader, MXFPack pack)
+        public MXFDescriptiveClip(IMXFReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "DescriptiveClip";
@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

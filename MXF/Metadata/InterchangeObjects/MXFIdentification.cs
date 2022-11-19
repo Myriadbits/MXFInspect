@@ -68,7 +68,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.01000000")]
         public AUID GenerationID { get; set; }
 
-		public MXFIdentification(MXFReader reader, MXFPack pack)
+		public MXFIdentification(IMXFReader reader, MXFPack pack)
 			: base(reader, pack, "Identification")
 		{
 		}
@@ -77,7 +77,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

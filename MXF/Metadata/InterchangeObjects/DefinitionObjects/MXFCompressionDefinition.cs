@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01017e00")]
     public class MXFCompressionDefinition : MXFDefinitionObject
     {
-        public MXFCompressionDefinition(MXFReader reader, MXFPack pack)
+        public MXFCompressionDefinition(IMXFReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "CompressionDefinition";

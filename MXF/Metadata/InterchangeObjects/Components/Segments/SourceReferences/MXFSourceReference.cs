@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(UInt32ArrayConverter))]
         public UInt32[] MonoSourceTrackIDs { get; set; }
 
-        public MXFSourceReference(MXFReader reader, MXFPack pack)
+        public MXFSourceReference(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "SourceReference")
         {
         }
@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

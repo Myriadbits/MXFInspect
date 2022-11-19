@@ -26,7 +26,7 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010500")]
     public class MXFEssenceGroup : MXFSegment
     {
-        public MXFEssenceGroup(MXFReader reader, MXFPack pack)
+        public MXFEssenceGroup(IMXFReader reader, MXFPack pack)
             : base(reader, pack, "EssenceGroup")
         {
         }
@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

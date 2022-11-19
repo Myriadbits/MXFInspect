@@ -87,7 +87,7 @@ namespace Myriadbits.MXF
         /// Constructor
         /// </summary>
         /// <param name="reader"></param>
-        protected MXFObject(MXFReader reader)
+        protected MXFObject(IMXFReader reader)
         {
             this.Offset = reader.Position;
         }

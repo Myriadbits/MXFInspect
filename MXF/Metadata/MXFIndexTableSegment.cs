@@ -88,7 +88,7 @@ namespace Myriadbits.MXF
 		public List<MXFEntryIndex> IndexEntries { get; set; }
 
 
-		public MXFIndexTableSegment(MXFReader reader, MXFPack pack)
+		public MXFIndexTableSegment(IMXFReader reader, MXFPack pack)
 			: base(reader, pack, "IndexTableSegment") //base(pack, "IndexTableSegment", KeyType.IndexSegment)
 		{
 		}
@@ -98,7 +98,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(MXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{
