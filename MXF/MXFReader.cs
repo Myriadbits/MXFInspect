@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 {
     /// <summary>
     /// Read data from the MXF file, low-level read class 
-    /// (Candidate for performance increase)
+    /// TODO (Candidate for performance increase)
     /// </summary>
     public class MXFReader : IDisposable, IMXFReader
     {

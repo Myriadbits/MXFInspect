@@ -85,7 +85,6 @@ namespace Myriadbits.MXF
             ValueOffset = offset + (int)key.KeyLength + length.ArrayLength;
             RelativeValueOffset = key.ArrayLength + length.ArrayLength; 
             TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
-
         }
 
         //// TODO this should not be the responsibility of the class to read its content

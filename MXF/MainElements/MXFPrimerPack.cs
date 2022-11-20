@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 		public MXFPrimerPack(IMXFReader reader, MXFPack pack)
 			: base(pack.Key, pack.Length, pack.Offset)
         {
-            this.LocalTagCount = ReadTagList(reader, "LocalTags");
+            this.LocalTagCount = ReadPrimerEntries(reader, "Primer Entries");
 		}
 
 		/// <summary>
@@ -58,25 +58,28 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		/// <param name="categoryName"></param>
 		/// <returns></returns>
-		protected UInt32 ReadTagList(IMXFReader reader, string categoryName)
+		protected UInt32 ReadPrimerEntries(IMXFReader reader, string categoryName)
 		{
 			reader.Seek(this.RelativeValueOffset);
-			UInt32 nofItems = reader.ReadUInt32();
-			UInt32 objectSize = reader.ReadUInt32(); // useless size of objects, always 16 according to specs
+			UInt32 numOfPrimerEntries = reader.ReadUInt32();
 
-			MXFObject keylist = new MXFNamedObject(categoryName, reader.Position);
-			if (nofItems > 0 && nofItems < UInt32.MaxValue)
+            // TODO useless size of objects, always 2(=tag) + 16(=UL) -> 18 according to specs
+            UInt32 primerEntrySize = reader.ReadUInt32(); 
+
+
+			// TODO do a minimum of checks here
+
+			if (numOfPrimerEntries > 0 && numOfPrimerEntries < UInt32.MaxValue)
 			{
 				m_PrimerKeys = new Dictionary<UInt16, MXFEntryPrimer>();
-				for (int n = 0; n < nofItems; n++)
+				for (int n = 0; n < numOfPrimerEntries; n++)
 				{
-					MXFEntryPrimer entry = new MXFEntryPrimer(reader);
-					m_PrimerKeys.Add(entry.LocalTag, entry); // Add to our own internal list
-					keylist.AddChild(entry); // And add the entry as one of our children
+					MXFEntryPrimer entry = new MXFEntryPrimer(reader, this.Offset + reader.Position);
+					m_PrimerKeys.Add(entry.Tag, entry); // Add to our own internal list
+					this.AddChild(entry); // And add the entry as one of our children
 				}
 			}
-			this.AddChild(keylist);
-			return nofItems;
+			return numOfPrimerEntries;
 		}
 
 
