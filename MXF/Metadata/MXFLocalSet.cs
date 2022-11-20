@@ -94,13 +94,18 @@ namespace Myriadbits.MXF
         private void ParseTags(IMXFReader reader)
         {
             // Make sure we read at the data position
-            reader.Seek(this.ValueOffset);
+            reader.Seek(this.RelativeValueOffset);
 
             // Read all local tags
-            long klvEnd = this.ValueOffset + this.Length.Value;
+            long klvEnd = this.RelativeValueOffset + this.Length.Value;
+            // while(reader.EOF)
             while (reader.Position + 4 < klvEnd)
             {
                 MXFLocalTag tag = new MXFLocalTag(reader);
+
+                if (tag.Size == 0)
+                    break;
+                
                 long next = tag.DataOffset + tag.Size;
                 AddRefKeyFromPrimerPack(tag);
 

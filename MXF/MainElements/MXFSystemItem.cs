@@ -132,7 +132,7 @@ namespace Myriadbits.MXF
 			if (this.Key[12] == 0x14)
 				this.Key.Name = "SystemItem (GC)";
 
-			reader.Seek(this.ValueOffset); // Seek to the start of the data
+			reader.Seek(this.RelativeValueOffset); // Seek to the start of the data
 
 			// Parse system bitmap
 			this.SystemBitmap = (SystemBitmap)reader.ReadByte();

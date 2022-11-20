@@ -28,9 +28,9 @@ namespace Myriadbits.MXF.KLV
 {
     public class SubStream : Stream
     {
-        readonly Stream Vector;
+        private readonly Stream Vector;
         private readonly long Offset;
-        private long _Length;
+        private readonly long _Length;
         private long _Position = 0;
 
         public SubStream(Stream vector, long offset, long length)
@@ -71,8 +71,10 @@ namespace Myriadbits.MXF.KLV
             else if (origin == SeekOrigin.Current)
                 pos += offset;
 
-            if (pos < 0) pos = 0;
-            else if (pos >= _Length) pos = _Length - 1;
+
+            //TODO remove Guard clauses
+            //if (pos < 0) pos = 0;
+            //else if (pos >= _Length) pos = _Length - 1;
 
             _Position = Vector.Seek(this.Offset + pos, SeekOrigin.Begin) - this.Offset;
 

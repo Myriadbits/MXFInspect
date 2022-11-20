@@ -418,6 +418,21 @@ namespace Myriadbits.MXF
                             }
 
                         }
+                        catch (Exception e)
+                        {
+                            // error in klv-stream
+
+                            long lastgoodPos = parser.CurrentPack.Offset + parser.CurrentPack.TotalLength;
+                            if (!parser.SeekForNextPotentialKey(out long newOffset))
+                            {
+                                // we have reached end of file, exceptional case so handle it
+                            }
+                            else
+                            {
+                                packList.Add(new MXFNamedObject("Non-Parseable Data", lastgoodPos, newOffset - lastgoodPos));
+                            }
+
+                        }
 
                         // Only report progress when the percentage has changed
                         currentPercentage = (int)((parser.CurrentPack.Offset + parser.CurrentPack.TotalLength) * 100 / this.Filesize);

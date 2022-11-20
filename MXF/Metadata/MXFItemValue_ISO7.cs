@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
         private void Initialize(IMXFReader reader)
         {
             // Make sure we read at the data position
-            reader.Seek(this.ValueOffset);
+            reader.Seek(this.RelativeValueOffset);
             ItemValue_ISO7 = reader.ReadUTF8String((int)this.Length.Value);
         }
     }

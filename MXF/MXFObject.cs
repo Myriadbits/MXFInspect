@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Offset from the beginning of file in terms of bytes")]
-        public virtual long Offset { get; protected set; } = long.MaxValue;
+        public virtual long Offset { get; protected set; } = 0;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         //TODO this is not the length of KLV but the length of the object!!!
@@ -112,7 +112,9 @@ namespace Myriadbits.MXF
             base.AddChild(child);
             // TODO not really clean?!
             if (child.Offset < this.Offset)
-                this.Offset = child.Offset;
+            {
+                child.Offset = this.Offset + child.Offset;
+            }
         }
 
         public MXFObject FindNextObjectOfType(Type typeToFind)

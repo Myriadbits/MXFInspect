@@ -171,7 +171,7 @@ namespace Myriadbits.MXF.KLV
         public override UInt32 ReadUInt32()
         {
             if (this._stream != null)
-                return
+                return(UInt32)
                         ((UInt32)this._stream.ReadByte() << 24) +
                         ((UInt32)this._stream.ReadByte() << 16) +
                         ((UInt32)this._stream.ReadByte() << 8) +

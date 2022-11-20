@@ -139,7 +139,7 @@ namespace Myriadbits.MXF
             this.Complete = (this.Key[14] > 2);
 
             // Make sure we read at the data position
-            reader.Seek(this.ValueOffset);
+            reader.Seek(this.RelativeValueOffset);
 
             this.MajorVersion = reader.ReadUInt16();
             this.MinorVersion = reader.ReadUInt16();

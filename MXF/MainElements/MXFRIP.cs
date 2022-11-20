@@ -37,10 +37,10 @@ namespace Myriadbits.MXF
 		private void Initialize(IMXFReader reader)
 		{
 			// Make sure we read at the data position
-			reader.Seek(this.ValueOffset);
+			reader.Seek(this.RelativeValueOffset);
 
 			// Read all local tags
-			long klvEnd = this.ValueOffset + this.Length.Value;
+			long klvEnd = this.RelativeValueOffset + this.Length.Value;
 			while (reader.Position + 12 < klvEnd)
 			{
 				// Add to the collection

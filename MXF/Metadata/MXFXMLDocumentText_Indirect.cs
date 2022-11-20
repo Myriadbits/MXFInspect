@@ -43,7 +43,7 @@ namespace Myriadbits.MXF.Metadata
         private void Initialize(IMXFReader reader)
         {
             // Make sure we read at the data position
-            reader.Seek(this.ValueOffset);
+            reader.Seek(this.RelativeValueOffset);
             Text = reader.ReadUTF8String((int)this.Length.Value);
         }
     }

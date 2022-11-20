@@ -69,6 +69,13 @@ namespace Myriadbits.MXF
         [Description("Offset of the value part of the KLV in term of bytes from beginning of the file")]
         public long ValueOffset { get; }
 
+        /// <summary>
+        /// Offset of the value (=data), i.e. where the payload beginsfrom the beginning of the triplet,
+        /// i. e. length of the key +  length of lengthencoding 
+        /// </summary>
+        [Browsable(false)]
+        public long RelativeValueOffset { get; }
+
 
         public KLVTriplet(K key, L length, long offset)
         {
@@ -76,7 +83,9 @@ namespace Myriadbits.MXF
             Length = length;
             Offset = offset;
             ValueOffset = offset + (int)key.KeyLength + length.ArrayLength;
+            RelativeValueOffset = key.ArrayLength + length.ArrayLength; 
             TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
+
         }
 
         //// TODO this should not be the responsibility of the class to read its content

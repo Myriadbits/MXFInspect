@@ -23,8 +23,6 @@
 
 using Myriadbits.MXF.KLV;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using static Myriadbits.MXF.KLV.KLVLength;
 using static Myriadbits.MXF.KLVKey;

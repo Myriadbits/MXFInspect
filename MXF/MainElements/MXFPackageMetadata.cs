@@ -51,12 +51,12 @@ namespace Myriadbits.MXF
         // Add all meta data see spec: SMPTE ST 331:2011
         private void ParseElements(IMXFReader reader)
         {
-            reader.Seek(this.ValueOffset); // Seek to the start of the data
+            reader.Seek(this.RelativeValueOffset); // Seek to the start of the data
 
-            long end = this.ValueOffset + this.Length.Value;
+            long end = this.RelativeValueOffset + this.Length.Value;
             byte[] byteArray;
 
-            while (reader.Position < end)
+            while (!reader.EOF)
             {
                 var (Tag, Size) = GetTag(reader);
                 var pos = reader.Position;
