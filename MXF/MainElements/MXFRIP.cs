@@ -29,7 +29,7 @@ namespace Myriadbits.MXF
 	public class MXFRIP : MXFPack
 	{
 		public MXFRIP(IMXFReader reader, MXFPack pack)
-			: base(pack.Key, pack.Length, pack.Offset)
+			: base(pack)
         {
 			Initialize(reader);
 		}

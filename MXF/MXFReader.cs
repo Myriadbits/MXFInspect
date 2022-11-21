@@ -102,7 +102,7 @@ namespace Myriadbits.MXF
     public void Open(string fileName)
     {
         this.FileName = fileName;
-        this.m_FileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 65536);
+        this.m_FileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240);
         this.m_FileStream.Seek(0, SeekOrigin.Begin);
     }
 

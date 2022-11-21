@@ -126,7 +126,7 @@ namespace Myriadbits.MXF
 		}
 
 		public MXFSystemItem(IMXFReader reader, MXFPack pack)
-			: base(pack.Key, pack.Length, pack.Offset)
+			: base(pack)
         {
 			this.Key.Name ??= "SystemItem (CP)";
 			if (this.Key[12] == 0x14)

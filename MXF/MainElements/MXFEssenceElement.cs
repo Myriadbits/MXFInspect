@@ -69,7 +69,7 @@ namespace Myriadbits.MXF
         public bool Indexed { get; set; }
 
         public MXFEssenceElement(IMXFReader reader, MXFPack pack)
-            : base(pack.Key,pack.Length,pack.Offset)
+            : base(pack)
         {
             this.Key.Name ??= "EssenceElement";
             if (m_itemTypes.ContainsKey(this.Key[12]))

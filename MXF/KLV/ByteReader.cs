@@ -4,9 +4,9 @@ using System.IO;
 
 namespace Myriadbits.MXF.KLV
 {
-    public class BReader : BinaryReader, IMXFReader
+    public class ByteReader : BinaryReader, IMXFReader
     {
-        public Stream _stream = null;
+        private Stream _stream = null;
 
         public Stream Stream { get => _stream; }
 
@@ -63,7 +63,7 @@ namespace Myriadbits.MXF.KLV
         /// Constructor, creates the file reader
         /// </summary>
         /// <param name="reader"></param>
-        public BReader(Stream stream) : base(stream)
+        public ByteReader(Stream stream) : base(stream)
         {
             _stream = stream;
         }

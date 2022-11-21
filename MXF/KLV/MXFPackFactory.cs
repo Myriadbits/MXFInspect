@@ -299,7 +299,7 @@ namespace Myriadbits.MXF
             return pack;
         }
 
-        public static void SetDescriptionAttributesForAllTypes()
+        public static void SetDescriptionFromAttributeForAllTypes()
         {
             foreach (Type t in dict.Values)
             {

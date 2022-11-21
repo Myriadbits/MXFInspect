@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
         private int nofSizeSize = 2;
 
         public MXFPackageMetaData(IMXFReader reader, MXFPack pack)
-            : base(pack.Key, pack.Length, pack.Offset)
+            : base(pack)
         {
             if (this.Key[5] == 0x63)
                 nofSizeSize = 4;

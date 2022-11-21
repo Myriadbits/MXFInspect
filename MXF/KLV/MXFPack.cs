@@ -37,6 +37,7 @@ namespace Myriadbits.MXF
         [Description("Consecutive pack number")]
         public long Number { get; set; }
 
+        // TODO remove this dependency
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 

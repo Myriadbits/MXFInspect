@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
         public string ItemValue_ISO7 { get; set; }
 
         public MXFItemValue_ISO7(IMXFReader reader, MXFPack pack)
-            : base(pack.Key, pack.Length, pack.Offset)
+            : base(pack)
         {
             this.Key.Name ??= "Item Value ISO7";
             Initialize(reader);

@@ -35,7 +35,7 @@ namespace Myriadbits.MXF.Metadata
         public string Text { get; set; }
 
         public MXFXMLDocumentText_Indirect(IMXFReader reader, MXFPack pack)
-            : base(pack.Key, pack.Length, pack.Offset)
+            : base(pack)
         {
             Initialize(reader);
         }

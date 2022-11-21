@@ -455,22 +455,19 @@ namespace Myriadbits.MXF
                     overallProgress?.Report(new TaskReport(65, "Process packs"));
                     ProcessPacks(packList);
 
-                    MXFPackFactory.SetDescriptionAttributesForAllTypes();
+                    // Set property description by reading the description attribute (for all types)
+                    MXFPackFactory.SetDescriptionFromAttributeForAllTypes();
                     
                     ReparseLocalTags(packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any()));
 
                     // Progress should now be 80%
                     overallProgress?.Report(new TaskReport(73, "Update tree"));
 
-                    // TODO Update all type descriptions
-                    // MXFKLVFactory.UpdateAllTypeDescriptions(allPrimerKeys);
-
                     // Resolve the references
                     sw.Restart();
                     overallProgress?.Report(new TaskReport(81, "Resolving references"));
                     int numOfResolved = ResolveReferences();
                     Debug.WriteLine("{0} references resolved in {1} ms", numOfResolved, sw.ElapsedMilliseconds);
-
 
                     // Create the logical tree
                     overallProgress?.Report(new TaskReport(95, "Creating Logical tree"));

@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
 		public MXFPrimerPack(IMXFReader reader, MXFPack pack)
-			: base(pack.Key, pack.Length, pack.Offset)
+			: base(pack)
         {
             this.LocalTagCount = ReadPrimerEntries(reader, "Primer Entries");
 		}

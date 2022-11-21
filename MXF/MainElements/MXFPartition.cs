@@ -118,7 +118,7 @@ namespace Myriadbits.MXF
 
 
         public MXFPartition(IMXFReader reader, MXFPack pack)
-            : base(pack.Key, pack.Length, pack.Offset)
+            : base(pack)
         {
             this.IsLoaded = false;
 

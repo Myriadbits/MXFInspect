@@ -49,9 +49,8 @@ namespace Myriadbits.MXF
             var ss = new SubStream(reader.Stream, pack.Offset, pack.TotalLength);
             
             // TODO wrap into using/ try...catch
-            var bReader = new BReader(ss);
-            var typedPack = MXFPackFactory.CreatePack(pack, bReader);
-            //bReader.Close();
+            var byteReader = new ByteReader(ss);
+            var typedPack = MXFPackFactory.CreatePack(pack, byteReader);
 
             typedPack.Number = currentPackNumber++;
             CurrentPack = typedPack;
@@ -61,48 +60,6 @@ namespace Myriadbits.MXF
 
             return typedPack;
         }
-
-        //private void PopulateKLVSubList(MXFPack pack)
-        //{
-        //    if (pack.Key.IdentifiesLocalSet())
-        //    {
-        //        switch (pack.Key.RegistryDesignator)
-        //        {
-        //            //case ULRegistries.LocalSet_BER_OIDBER:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_BER_2Bytes:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_BER_4Bytes:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_1Byte_1Byte:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_1Byte_OIDBER:
-        //            //    break;
-        //            //case ULRegistries.LocalSet1_Byte_4Bytes:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_2Bytes_1Byte:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_2Bytes_OIDBER:
-        //            //    break;
-        //            case ULRegistries.LocalSet_2Bytes_2Bytes:
-        //                pack.KLVSublist = GetSubKLV(pack, KeyLengths.TwoBytes, LengthEncodings.TwoBytes);
-        //                break;
-        //            case ULRegistries.LocalSet_2Bytes_4Bytes:
-        //                pack.KLVSublist = GetSubKLV(pack, KeyLengths.TwoBytes, LengthEncodings.FourBytes);
-        //                break;
-        //            case ULRegistries.LocalSet_4Bytes_1Byte:
-        //                break;
-        //            //case ULRegistries.LocalSet_4Bytes_OIDBER:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_4Bytes_2Bytes:
-        //            //    break;
-        //            //case ULRegistries.LocalSet_4Bytes_4Bytes:
-        //            //    break;
-        //            case null:
-        //                break;
-        //        }
-        //    }
-        //}
 
         public bool HasNext()
         {
@@ -174,7 +131,7 @@ namespace Myriadbits.MXF
             // move to file pos
             Seek(offset);
 
-            var ul = new UL(reader.ReadBytes(16));
+            var ul = new UL(reader.ReadBytes((int)KeyLengths.SixteenBytes));
             var length = ParseBERKLVLength();
             return new MXFPack(ul, length, currentPackOffset);
         }

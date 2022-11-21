@@ -23,14 +23,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFWrapperObject&lt;T&gt;">
-    <Position X="13.25" Y="15" Width="2.25" />
+    <Position X="11.25" Y="15" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>MXFWrapperObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFNamedObject">
-    <Position X="13.25" Y="12.25" Width="2.25" />
+    <Position X="11.25" Y="12.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MXFNamedObject.cs</FileName>
@@ -39,7 +39,7 @@
   <Class Name="Myriadbits.MXF.MXFLocalSet">
     <Position X="6.5" Y="17.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAEAAABAAAAgAAAAAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAACAAAAAAAEAAABAEAAgAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Metadata\MXFLocalSet.cs</FileName>
     </TypeIdentifier>
   </Class>
