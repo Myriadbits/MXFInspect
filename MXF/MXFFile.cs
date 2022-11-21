@@ -418,7 +418,7 @@ namespace Myriadbits.MXF
                             }
 
                         }
-                        catch (Exception e)
+                        catch (Exception e) when (e is not OperationCanceledException)
                         {
                             // error in klv-stream
 
@@ -458,6 +458,7 @@ namespace Myriadbits.MXF
                     // Set property description by reading the description attribute (for all types)
                     MXFPackFactory.SetDescriptionFromAttributeForAllTypes();
                     
+                    // parse all local tags, as now we know the primerpackage aliases
                     ReparseLocalTags(packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any()));
 
                     // Progress should now be 80%
