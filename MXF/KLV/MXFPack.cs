@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-
+        // TODO transform it to pass a KLV
         public MXFPack(UL key, KLVBERLength length, long offset) : base(key, length, offset)
         {
         }

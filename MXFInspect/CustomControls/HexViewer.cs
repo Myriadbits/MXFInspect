@@ -22,7 +22,9 @@
 #endregion
 
 using Myriadbits.MXF;
+using Myriadbits.MXF.KLV;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -63,20 +65,27 @@ namespace Myriadbits.MXFInspect
             }
             else if (len > 0)
             {
-                byte[] data = new byte[len];
-                using (MXFReader reader = new MXFReader((obj.Root() as MXFFile).Filename))
-                {
-                    reader.Seek(obj.Offset);
-                    data = reader.ReadArray(reader.ReadByte, data.Length);
-                }
+                byte[] data = GetObjectDataValue(obj);
                 int maxNumOfDigits = GetDigitCountOfLastKLV(obj);
-
                 this.Text = GetHexDump(obj.Offset, len, maxNumOfDigits, BytesPerLine, data);
             }
         }
 
 
-        // TODO: better move to file of the only caller 
+        private byte[] GetObjectDataValue(MXFObject obj)
+        {
+            long len = GetObjectLength(obj);
+
+            byte[] data = new byte[len];
+
+            string fileName = (obj.Root() as MXFFile).Filename;
+            using (var byteReader = new ByteReader(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
+            {
+                byteReader.Seek(obj.Offset);
+                return byteReader.ReadBytes(data.Length);
+            }
+        }
+
         private int GetDigitCountOfLastKLV(MXFObject obj)
         {
             // get the object with the greatest offset value
@@ -107,9 +116,6 @@ namespace Myriadbits.MXFInspect
         {
             switch (obj)
             {
-                case MXFPack pack:
-                    return pack.TotalLength;
-
                 case MXFLocalTag tag:
                     return tag.DataOffset - tag.Offset + tag.Size;
 

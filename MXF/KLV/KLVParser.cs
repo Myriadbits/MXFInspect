@@ -23,6 +23,7 @@
 
 using Myriadbits.MXF.KLV;
 using System;
+using System.IO;
 using System.Linq;
 using static Myriadbits.MXF.KLV.KLVLength;
 using static Myriadbits.MXF.KLVKey;
@@ -40,6 +41,12 @@ namespace Myriadbits.MXF
         public KLVParser(IMXFReader _reader)
         {
             reader = _reader;
+        }
+
+
+        public KLVParser(Stream dataStream)
+        {
+            reader = new ByteReader(dataStream);
         }
 
         public MXFPack GetNextMXFPack()

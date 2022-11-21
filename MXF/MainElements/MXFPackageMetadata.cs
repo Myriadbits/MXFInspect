@@ -97,6 +97,7 @@ namespace Myriadbits.MXF
                         }
                         else
                         {
+                            // TODO raise an exception
                             Debug.WriteLine("Invalid tag size for UMID. Must be 32 bytes or 64 for extended UMID");
                         }
                         break;

@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
 		private const string CATEGORYNAME = "PrimerPack";
 
 		[Category(CATEGORYNAME)] 
-		public UInt32 LocalTagCount { get; set; }
+		public UInt32 PrimerEntriesCount { get; set; }
 
 		[Browsable(false)]
 		private Dictionary<UInt16, MXFEntryPrimer> m_PrimerKeys = null;
@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 		public MXFPrimerPack(IMXFReader reader, MXFPack pack)
 			: base(pack)
         {
-            this.LocalTagCount = ReadPrimerEntries(reader, "Primer Entries");
+            this.PrimerEntriesCount = ReadPrimerEntries(reader, "Primer Entries");
 		}
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace Myriadbits.MXF
 
 		public override string ToString()
 		{
-			return (this.LocalTagCount == 0) ? "PrimerPack" : $"PrimerPack [{this.LocalTagCount} items]";
+			return (this.PrimerEntriesCount == 0) ? "PrimerPack" : $"PrimerPack [{this.PrimerEntriesCount} items]";
 		}
 	}
 }

@@ -52,41 +52,6 @@ namespace Myriadbits.MXF
             ParseTags(reader);
         }
 
-        //public List<MXFLokalTag> GetSubKLV()
-        //{
-        //    var subKLVList = new List<MXFLokalTag>();
-        //    var offset = this.ValueOffset;
-        //    long summedLength = 0;
-        //    while (summedLength < this.Length.Value)
-        //    {
-        //        var subKLV = ParseKLV(subKeyLength, subLengthEncoding, offset);
-
-        //        if (subKLV.Offset + subKLV.TotalLength > this.Offset + this.TotalLength)
-        //        {
-        //            // TODO should be of type KLVParser exception
-        //            throw new System.Exception("SubKLV out range");
-        //        }
-        //        else
-        //        {
-        //            subKLVList.Add(subKLV);
-        //            offset += subKLV.TotalLength;
-        //            summedLength += subKLV.TotalLength;
-        //        }
-        //    }
-        //    return subKLVList;
-        //}
-
-        //private KLVTriplet ParseKLV(KeyLengths keyLength, LengthEncodings encoding, long offset)
-        //{
-        //    // move to file pos
-        //    reader.Seek(offset);
-
-        //    var key = ParseKLVKey(keyLength);
-        //    var length = ParseKLVLength(encoding);
-        //    var value = reader.ReadArray(reader.ReadByte, length.Value);
-        //    return new KLVTriplet(key, length, offset, value);
-        //}
-
         /// <summary>
         /// 
         /// </summary>
@@ -98,11 +63,12 @@ namespace Myriadbits.MXF
 
             // Read all local tags
             long klvEnd = this.RelativeValueOffset + this.Length.Value;
-            // while(reader.EOF)
-            while (reader.Position + 4 < klvEnd)
+            while(!reader.EOF)
+            //while (reader.Position + 4 < klvEnd)
             {
                 MXFLocalTag tag = new MXFLocalTag(reader);
 
+                // TODO hm???
                 if (tag.Size == 0)
                     break;
                 

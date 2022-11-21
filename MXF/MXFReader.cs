@@ -87,27 +87,6 @@ namespace Myriadbits.MXF
     #endregion
 
     /// <summary>
-    /// Constructor, creates the file reader
-    /// </summary>
-    /// <param name="reader"></param>
-    public MXFReader(string fileName)
-    {
-        Open(fileName);
-    }
-
-    /// <summary>
-    /// Initializes, creates the file reader
-    /// </summary>
-    /// <param name="reader"></param>
-    public void Open(string fileName)
-    {
-        this.FileName = fileName;
-        this.m_FileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240);
-        this.m_FileStream.Seek(0, SeekOrigin.Begin);
-    }
-
-
-    /// <summary>
     /// Closes the file reader
     /// </summary>
     /// <param name="reader"></param>

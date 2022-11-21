@@ -13,7 +13,6 @@ namespace Myriadbits.MXF
         long Position { get; }
         long Size { get; } 
         void Close();
-        void Open(string fileName);
         T[] ReadArray<T>(Func<T> readFunction, long count);
         AUID ReadAUID();
         MXFObject ReadAUIDSet(string groupName, string singleItem);

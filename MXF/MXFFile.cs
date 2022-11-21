@@ -30,6 +30,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
+using System.Reflection.PortableExecutable;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -54,7 +57,7 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFFile : MXFObject
     {
-        private MXFReader mxfReader;
+        private IMXFReader mxfReader;
         private List<MXFValidationResult> m_results;
 
         public string Filename { get; set; }
@@ -124,70 +127,70 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Fully Parse an MXF file 
         /// </summary>
-        protected void ParseFull(BackgroundWorker worker)
-        {
-            Stopwatch sw = Stopwatch.StartNew();
+        //protected void ParseFull(BackgroundWorker worker)
+        //{
+        //    Stopwatch sw = Stopwatch.StartNew();
 
-            MXFPackFactory mxfPackFactory = new MXFPackFactory();
+        //    MXFPackFactory mxfPackFactory = new MXFPackFactory();
 
-            MXFPartition currentPartition = null;
-            int previousPercentage = 0;
-            Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
-            //int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
-            using (mxfReader = new MXFReader(this.Filename))
-            {
-                this.Filesize = mxfReader.Size;
-                MXFObject partitions = new MXFNamedObject("Partitions", 0);
-                this.AddChild(partitions);
+        //    MXFPartition currentPartition = null;
+        //    int previousPercentage = 0;
+        //    Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
+        //    int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
+        //    using (mxfReader = new MXFReader(this.Filename))
+        //    {
+        //        this.Filesize = mxfReader.Size;
+        //        MXFObject partitions = new MXFNamedObject("Partitions", 0);
+        //        this.AddChild(partitions);
 
-                int partitionNumber = 0; // For easy partition identification
-                //while (!m_reader.EOF)
-                //{
-                //    try
-                //    {
-                //        MXFPack pack = mxfPackFactory.CreatePack();
+        //        int partitionNumber = 0; // For easy partition identification
+        //        while (!m_reader.EOF)
+        //        {
+        //            try
+        //            {
+        //                MXFPack pack = mxfPackFactory.CreatePack();
 
-                //        //// Update overall counters
-                //        //if (klv.Key.Type == KeyType.None)
-                //        //    counters[(int)klv.Key.Type]++;
+        //                //// Update overall counters
+        //                //if (klv.Key.Type == KeyType.None)
+        //                //    counters[(int)klv.Key.Type]++;
 
-                //        // Process the new KLV
-                //        ProcessKLVObject(pack, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
+        //                // Process the new KLV
+        //                ProcessKLVObject(pack, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
 
-                //        // Next KLV please
-                //        m_reader.Seek(pack.ValueOffset + pack.Length.Value);
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        m_reader.SeekForNextPotentialKey();
-                //    }
+        //                // Next KLV please
+        //                m_reader.Seek(pack.ValueOffset + pack.Length.Value);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                m_reader.SeekForNextPotentialKey();
+        //            }
 
 
 
-                //    // Only report progress when the percentage has changed
-                //    int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
-                //    if (currentPercentage != previousPercentage)
-                //    {
-                //        worker.ReportProgress(currentPercentage, "Parsing MXF file");
-                //        previousPercentage = currentPercentage;
-                //    }
-                //}
-            }
+        //            // Only report progress when the percentage has changed
+        //            int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
+        //            if (currentPercentage != previousPercentage)
+        //            {
+        //                worker.ReportProgress(currentPercentage, "Parsing MXF file");
+        //                previousPercentage = currentPercentage;
+        //            }
+        //        }
+        //    }
 
-            Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
+        //    Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
 
-            // Progress should now be 90%
+        //    Progress should now be 90 %
 
-            DoPostWork(worker, sw, allPrimerKeys);
+        //   DoPostWork(worker, sw, allPrimerKeys);
 
-            // And Execute ALL test
-            sw.Restart();
-            this.ExecuteValidationTest(worker, true);
-            Debug.WriteLine("Tests executed in {0} ms", sw.ElapsedMilliseconds);
+        //    And Execute ALL test
+        //    sw.Restart();
+        //    this.ExecuteValidationTest(worker, true);
+        //    Debug.WriteLine("Tests executed in {0} ms", sw.ElapsedMilliseconds);
 
-            // Finished
-            worker.ReportProgress(100, "Finished");
-        }
+        //    Finished
+        //    worker.ReportProgress(100, "Finished");
+        //}
 
         /// <summary>
         /// Partially Parse an MXF file, skip all data
@@ -379,19 +382,18 @@ namespace Myriadbits.MXF
                 Stopwatch sw = Stopwatch.StartNew();
                 int currentPercentage = 0;
                 int previousPercentage = 0;
-                Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
 
-                using (mxfReader = new MXFReader(this.Filename))
+                using (var fileStream = new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
                 {
                     // Prepare
-                    this.Filesize = mxfReader.Size;
+                    this.Filesize = fileStream.Length;
 
                     // Create root node
                     MXFObject root = new MXFNamedObject("Partitions", 0);
                     this.AddChild(root);
 
                     // Parse Packs 
-                    KLVParser parser = new KLVParser(mxfReader);
+                    KLVParser parser = new KLVParser(fileStream);
                     List<MXFObject> packList = new List<MXFObject>();
                     overallProgress?.Report(new TaskReport(0, "Reading KLV stream"));
                     while (parser.HasNext())
@@ -457,7 +459,7 @@ namespace Myriadbits.MXF
 
                     // Set property description by reading the description attribute (for all types)
                     MXFPackFactory.SetDescriptionFromAttributeForAllTypes();
-                    
+
                     // parse all local tags, as now we know the primerpackage aliases
                     ReparseLocalTags(packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any()));
 
@@ -578,18 +580,12 @@ namespace Myriadbits.MXF
 
         private void ReparseLocalTags(IEnumerable<MXFLocalSet> localSetList)
         {
-            var reader = new MXFReader(this.Filename);
-
-            foreach (var ls in localSetList)
+            using (var byteReader = new ByteReader(new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
             {
-                var tags = ls.Children.OfType<MXFLocalTag>();
-
-                ls.ParseTagsAgain(reader);
-                //foreach (var tag in tags)
-                //{
-                //    //ls.AddRefKeyFromPrimerPack(tag);
-                //    //ls.ParseLocalTag(reader, tag);
-                //} 
+                foreach (var ls in localSetList)
+                {
+                    ls.ParseTagsAgain(byteReader);
+                }
             }
         }
 
