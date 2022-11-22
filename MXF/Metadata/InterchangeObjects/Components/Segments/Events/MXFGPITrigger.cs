@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010700")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010700")]
 	public class MXFGPITrigger : MXFEvent
 	{
 		private const string CATEGORYNAME = "GPITrigger";
@@ -34,7 +35,7 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010101.05300401.00000000")]
 		public bool? ActiveState { get; set; }
 
-		public MXFGPITrigger(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFGPITrigger(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, "GPITrigger")
 		{
 		}
@@ -43,11 +44,11 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{
-				case 0x0801: this.ActiveState = reader.ReadBool(); return true;
+				case 0x0801: this.ActiveState = reader.ReadBoolean(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 
 		}

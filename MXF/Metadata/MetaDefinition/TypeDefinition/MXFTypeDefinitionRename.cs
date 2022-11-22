@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -30,14 +31,14 @@ namespace Myriadbits.MXF
     public class MXFTypeDefinitionRename : MXFTypeDefinition
     {
 
-        public MXFTypeDefinitionRename(IMXFReader reader, MXFPack pack)
+        public MXFTypeDefinitionRename(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionRename";
         }
 
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

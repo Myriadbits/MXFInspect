@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013300")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013300")]
 	public class MXFTextLocator : MXFLocator
 	{
 		private const string CATEGORYNAME = "TextLocator";
@@ -34,7 +35,7 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.01040102.01000000")]
 		public string LocationName { get; set; }
 
-		public MXFTextLocator(IMXFReader reader, MXFPack pack)
+		public MXFTextLocator(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "Text Locator")
 		{
 		}
@@ -43,7 +44,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

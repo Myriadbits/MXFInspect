@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFTimelineTrack : MXFTrack
+    public class MXFTimelineTrack : MXFTrack
 	{
 		private const string CATEGORYNAME = "TimeLineTrack";
 
@@ -45,12 +46,12 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public MXFPosition? PackageMarkOutPosition { get; set; }
 
-		public MXFTimelineTrack(IMXFReader reader, MXFPack pack)
+		public MXFTimelineTrack(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "Timeline Track")
 		{
 		}
 
-		public MXFTimelineTrack(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFTimelineTrack(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, metadataName)
 		{
 		}
@@ -59,7 +60,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

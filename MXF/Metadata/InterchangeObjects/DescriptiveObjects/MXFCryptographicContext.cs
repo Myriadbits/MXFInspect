@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
@@ -57,7 +58,7 @@ namespace Myriadbits.MXF
 
 
 
-        public MXFCryptographicContext(IMXFReader reader, MXFPack pack)
+        public MXFCryptographicContext(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "CryptographicContext";
@@ -67,7 +68,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

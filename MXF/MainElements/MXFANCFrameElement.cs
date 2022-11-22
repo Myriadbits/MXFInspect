@@ -23,14 +23,15 @@
 
 using System;
 using System.Collections.Generic;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
-{	
-	public class MXFANCFrameElement : MXFEssenceElement
+{
+    public class MXFANCFrameElement : MXFEssenceElement
 	{
 		private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>();
 
-		public MXFANCFrameElement(IMXFReader reader, MXFPack pack)
+		public MXFANCFrameElement(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack)
         {
 			UInt16 nofPackets = reader.ReadUInt16();

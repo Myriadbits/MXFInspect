@@ -24,10 +24,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFItemValue_ISO7 : MXFPack
+    public class MXFItemValue_ISO7 : MXFPack
 	{
         private const string CATEGORYNAME = "Item Value ISO7";
 
@@ -35,14 +36,14 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010105.0301020a.02000000")]
         public string ItemValue_ISO7 { get; set; }
 
-        public MXFItemValue_ISO7(IMXFReader reader, MXFPack pack)
+        public MXFItemValue_ISO7(IKLVStreamReader reader, MXFPack pack)
             : base(pack)
         {
             this.Key.Name ??= "Item Value ISO7";
             Initialize(reader);
         }
 
-        private void Initialize(IMXFReader reader)
+        private void Initialize(IKLVStreamReader reader)
         {
             // Make sure we read at the data position
             reader.Seek(this.RelativeValueOffset);

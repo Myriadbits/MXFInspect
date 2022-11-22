@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -127,7 +128,7 @@ namespace Myriadbits.MXF
         public UInt16[] J2KCorrespondingProfile { get; set; }
 
 
-        public MXFJPEG2000SubDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFJPEG2000SubDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "JPEG2000SubDescriptor")
         {
         }
@@ -136,7 +137,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {
@@ -153,19 +154,19 @@ namespace Myriadbits.MXF
                     case var _ when localTag.Key == yTOsiz: this.YTOsiz = reader.ReadUInt32(); return true;
                     case var _ when localTag.Key == csiz: this.Csiz = reader.ReadUInt16(); return true;
                     case var _ when localTag.Key == pictureComponentSizing:
-                        this.PictureComponentSizing = reader.ReadArray(reader.ReadByte, localTag.Size);
+                        this.PictureComponentSizing = reader.ReadBytes(localTag.Size);
                         return true;
                     case var _ when localTag.Key == codingStyleDefault:
-                        this.CodingStyleDefault = reader.ReadArray(reader.ReadByte, localTag.Size);
+                        this.CodingStyleDefault = reader.ReadBytes(localTag.Size);
                         return true;
                     case var _ when localTag.Key == quantizationDefault:
-                        this.QuantizationDefault = reader.ReadArray(reader.ReadByte, localTag.Size);
+                        this.QuantizationDefault = reader.ReadBytes(localTag.Size);
                         return true;
                     case var _ when localTag.Key == j2CLayout:
                         this.J2CLayout = reader.ReadRGBALayout();
                         return true;
                     case var _ when localTag.Key == j2KExtendedCapabilities:
-                        this.J2KExtendedCapabilities = reader.ReadArray(reader.ReadByte, localTag.Size);
+                        this.J2KExtendedCapabilities = reader.ReadBytes(localTag.Size);
                         return true;
                     case var _ when localTag.Key == j2KProfile:
                         this.J2KProfile = reader.ReadArray(reader.ReadUInt16, localTag.Size);

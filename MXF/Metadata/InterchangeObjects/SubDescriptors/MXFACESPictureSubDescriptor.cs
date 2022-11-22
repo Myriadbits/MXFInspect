@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -58,7 +59,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.05000000")]
         public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
-        public MXFACESPictureSubDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFACESPictureSubDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "ACESPictureSubDescriptor")
         {
         }
@@ -67,7 +68,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

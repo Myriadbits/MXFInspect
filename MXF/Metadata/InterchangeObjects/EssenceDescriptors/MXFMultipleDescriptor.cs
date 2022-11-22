@@ -21,9 +21,11 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014400")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014400")]
 	public class MXFMultipleDescriptor : MXFFileDescriptor
 	{
 		/// <summary>
@@ -31,7 +33,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFMultipleDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFMultipleDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "Multiple Descriptor")
 		{
 		}
@@ -40,7 +42,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

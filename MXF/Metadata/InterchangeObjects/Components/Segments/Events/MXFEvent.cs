@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010600")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010600")]
 	public class MXFEvent : MXFSegment
 	{
 		private const string CATEGORYNAME = "Event";
@@ -38,7 +39,7 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.05300404.01000000")]
 		public string EventComment { get; set; }
 
-		public MXFEvent(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFEvent(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, "Event")
 		{
 		}
@@ -47,7 +48,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

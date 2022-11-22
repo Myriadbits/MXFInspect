@@ -25,10 +25,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public enum MXFANCWrappingType
+    public enum MXFANCWrappingType
 	{
 		Unknown = 0x00,
 		VANC = 0x01,
@@ -118,7 +119,7 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		public MXFANCPacket(IMXFReader reader)
+		public MXFANCPacket(IKLVStreamReader reader)
 			: base(reader)
 		{
 			this.LineNumber = reader.ReadUInt16();
@@ -165,7 +166,7 @@ namespace Myriadbits.MXF
 						break;
 					default:
 						// Read the real payload without the did/sdid/size
-						this.Payload = reader.ReadArray(reader.ReadByte, (int)(this.TotalLength - 3));
+						this.Payload = reader.ReadBytes((int)(this.TotalLength - 3));
 						break;
 				}
 			}

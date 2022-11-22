@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -39,7 +40,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string LocationKind { get; set; }
 
-        public MXFLocation(IMXFReader reader, MXFPack pack)
+        public MXFLocation(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "Location";
@@ -49,7 +50,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

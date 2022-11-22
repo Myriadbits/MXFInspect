@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -136,7 +137,7 @@ namespace Myriadbits.MXF
 
 
 
-        public MXFCameraUnitAquisitionMetadata(IMXFReader reader, MXFPack pack)
+        public MXFCameraUnitAquisitionMetadata(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "CameraUnitAquisitionMetadata")
         {
         }
@@ -146,7 +147,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

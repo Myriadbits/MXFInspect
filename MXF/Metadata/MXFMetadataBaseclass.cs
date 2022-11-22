@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -38,7 +39,7 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public string MetaDataName { get; protected set; }
 
-        public MXFMetadataBaseclass(IMXFReader reader, MXFPack pack, string metaDataName)
+        public MXFMetadataBaseclass(IKLVStreamReader reader, MXFPack pack, string metaDataName)
             : base(reader, pack)
         {
             MetaDataName = metaDataName;

@@ -57,7 +57,7 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFFile : MXFObject
     {
-        private IMXFReader mxfReader;
+        private IKLVStreamReader mxfReader;
         private List<MXFValidationResult> m_results;
 
         public string Filename { get; set; }
@@ -580,7 +580,7 @@ namespace Myriadbits.MXF
 
         private void ReparseLocalTags(IEnumerable<MXFLocalSet> localSetList)
         {
-            using (var byteReader = new ByteReader(new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
+            using (var byteReader = new KLVStreamReader(new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
             {
                 foreach (var ls in localSetList)
                 {

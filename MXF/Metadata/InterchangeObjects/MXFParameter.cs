@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -35,7 +36,7 @@ namespace Myriadbits.MXF
         public UUID ParameterDefinitionReference { get; set; }
 
 
-        public MXFParameter(IMXFReader reader, MXFPack pack)
+        public MXFParameter(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "Parameter")
         {
         }
@@ -44,7 +45,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

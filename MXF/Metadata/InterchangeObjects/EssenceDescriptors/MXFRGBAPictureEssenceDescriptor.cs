@@ -21,13 +21,14 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012900")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012900")]
 	public class MXFRGBAPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
 	{
 		private const string CATEGORYNAME = "RGBAPictureEssenceDescriptor";
@@ -73,7 +74,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFRGBAPictureEssenceDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFRGBAPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "RGBA Picture Essence Descriptor")
 		{
 		}
@@ -82,7 +83,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{
@@ -92,7 +93,7 @@ namespace Myriadbits.MXF
 				case 0x3409: this.AlphaMinRef = reader.ReadUInt32(); return true;
 				case 0x3405: this.ScanningDirection = (MXFScanningDirection) reader.ReadByte(); return true;
 				case 0x3401: this.PixelLayout = reader.ReadRGBALayout(); return true;
-				case 0x3403: this.Palette = reader.ReadArray(reader.ReadByte, localTag.Size); return true; 
+				case 0x3403: this.Palette = reader.ReadBytes(localTag.Size); return true; 
 				case 0x3404: this.PaletteLayout = reader.ReadRGBALayout(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

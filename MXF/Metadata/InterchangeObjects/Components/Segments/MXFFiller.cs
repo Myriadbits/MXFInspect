@@ -21,12 +21,14 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.01010102.03010210.01000000")]
+    [ULGroup("urn:smpte:ul:060e2b34.01010102.03010210.01000000")]
 	public class MXFFiller : MXFSegment
 	{
-		public MXFFiller(IMXFReader reader, MXFPack pack)
+		public MXFFiller(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "Filler")
 		{
 		}
@@ -35,7 +37,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			// Filler does not have local tags
 			return true; 

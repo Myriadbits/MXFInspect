@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011700")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011700")]
 	public class MXFTransition : MXFSegment
 	{
 		private const string CATEGORYNAME = "Transition";
@@ -35,7 +36,7 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01060000")]
 		public MXFPosition? CutPoint { get; set; }
 		
-		public MXFTransition(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFTransition(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, "Transition")
 		{
 		}
@@ -44,7 +45,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
             switch (localTag.Tag)
             {

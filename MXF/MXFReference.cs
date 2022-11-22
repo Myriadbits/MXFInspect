@@ -23,6 +23,7 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -37,7 +38,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UUID Identifier { get; set; }
 
-        public MXFReference(IMXFReader reader, string name) : base(reader.Position)
+        public MXFReference(IKLVStreamReader reader, string name) : base(reader.Position)
         {
             Name = name;
             Identifier = reader.ReadUUID();

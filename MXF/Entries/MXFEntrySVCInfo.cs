@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEntrySVCInfo : MXFObject
+    public class MXFEntrySVCInfo : MXFObject
 	{
 		private const string CATEGORYNAME = "SVC Info";
 
@@ -37,7 +38,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public string DataString { get; set; }
 
-		public MXFEntrySVCInfo(IMXFReader reader)
+		public MXFEntrySVCInfo(IKLVStreamReader reader)
 			: base(reader)
 		{
 			this.TotalLength = 7; // Fixed
@@ -48,7 +49,7 @@ namespace Myriadbits.MXF
 			else
 				this.CaptionServiceNumber = (byte)(b0 & 0x3F);
 
-			this.Data = reader.ReadArray(reader.ReadByte, 6);
+			this.Data = reader.ReadBytes(6);
 
 			this.DataString = System.Text.Encoding.ASCII.GetString(this.Data);
 		}

@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 using System.Text;
@@ -48,7 +49,7 @@ namespace Myriadbits.MXF
         public object Value { get; set; }
 
 
-        public MXFLocalTag(IMXFReader reader)
+        public MXFLocalTag(IKLVStreamReader reader)
             : base(reader)
         {
             this.Tag = reader.ReadUInt16();
@@ -61,7 +62,7 @@ namespace Myriadbits.MXF
         /// Parse this tag
         /// </summary>
         /// <param name="reader"></param>
-        public void Parse(IMXFReader reader)
+        public void Parse(IKLVStreamReader reader)
         {
             if (this.Size == 1)
                 this.Value = reader.ReadByte();
@@ -73,7 +74,7 @@ namespace Myriadbits.MXF
                 this.Value = reader.ReadUInt64();
             else
             {
-                this.Value = reader.ReadArray(reader.ReadByte, this.Size);
+                this.Value = reader.ReadBytes(this.Size);
             }
         }
 

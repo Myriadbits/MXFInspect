@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEntryDelta : MXFObject
+    public class MXFEntryDelta : MXFObject
 	{
 		private const string CATEGORYNAME = "DeltaEntry";
 
@@ -37,11 +38,11 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public UInt32 ElementDelta { get; set; }
 
-		public MXFEntryDelta(IMXFReader reader, UInt32 length)
+		public MXFEntryDelta(IKLVStreamReader reader, UInt32 length)
 			: base(reader)
 		{
 			this.TotalLength = length;
-			this.PosTableIndex = reader.ReadSignedByte();
+			this.PosTableIndex = reader.ReadSByte();
 			this.Slice = reader.ReadByte();
 			this.ElementDelta = reader.ReadUInt32();
 		}

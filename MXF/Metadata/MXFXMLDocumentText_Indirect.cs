@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF.Metadata
 {
@@ -34,13 +35,13 @@ namespace Myriadbits.MXF.Metadata
         [ULElement("urn:smpte:ul:060e2b34.01010105.03010220.01000000")]
         public string Text { get; set; }
 
-        public MXFXMLDocumentText_Indirect(IMXFReader reader, MXFPack pack)
+        public MXFXMLDocumentText_Indirect(IKLVStreamReader reader, MXFPack pack)
             : base(pack)
         {
             Initialize(reader);
         }
 
-        private void Initialize(IMXFReader reader)
+        private void Initialize(IKLVStreamReader reader)
         {
             // Make sure we read at the data position
             reader.Seek(this.RelativeValueOffset);

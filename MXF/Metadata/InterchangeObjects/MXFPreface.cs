@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -62,7 +63,7 @@ namespace Myriadbits.MXF
         public DateTime? FileLastModified { get; set; }
 
 
-        public MXFPreface(IMXFReader reader, MXFPack pack)
+        public MXFPreface(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "Preface")
         {
             //this.Key.Type = KeyType.Preface;
@@ -72,7 +73,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
@@ -88,7 +89,7 @@ namespace Myriadbits.MXF
                 case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
                     // TODO review how the metadataschemes are read (especially if there are no schemes present)
                 case 0x3B0B: this.AddChild(reader.ReadAUIDSet("Descriptive Metadata Schemes", "DM scheme")); return true;
-                case var _ when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBool(); return true;
+                case var _ when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBoolean(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

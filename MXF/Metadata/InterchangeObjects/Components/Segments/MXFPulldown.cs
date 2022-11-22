@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -43,7 +44,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.05401001.03000000")]
         public UInt32? PhaseFrame { get; set; }
 
-        public MXFPulldown(IMXFReader reader, MXFPack pack, string metadataName)
+        public MXFPulldown(IKLVStreamReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, "Pulldown")
         {
         }
@@ -52,7 +53,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

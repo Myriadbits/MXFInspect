@@ -24,10 +24,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFPrimerPack : MXFPack
+    public class MXFPrimerPack : MXFPack
 	{
 		private const string CATEGORYNAME = "PrimerPack";
 
@@ -46,7 +47,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFPrimerPack(IMXFReader reader, MXFPack pack)
+		public MXFPrimerPack(IKLVStreamReader reader, MXFPack pack)
 			: base(pack)
         {
             this.PrimerEntriesCount = ReadPrimerEntries(reader, "Primer Entries");
@@ -58,7 +59,7 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		/// <param name="categoryName"></param>
 		/// <returns></returns>
-		protected UInt32 ReadPrimerEntries(IMXFReader reader, string categoryName)
+		protected UInt32 ReadPrimerEntries(IKLVStreamReader reader, string categoryName)
 		{
 			reader.Seek(this.RelativeValueOffset);
 			UInt32 numOfPrimerEntries = reader.ReadUInt32();

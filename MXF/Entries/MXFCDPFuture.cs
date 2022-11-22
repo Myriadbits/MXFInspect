@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFCDPFuture : MXFObject
+    public class MXFCDPFuture : MXFObject
 	{
 		private const string CATEGORYNAME = "CDPFuture";
 
@@ -36,12 +37,12 @@ namespace Myriadbits.MXF
 		public byte[] Data { get; set; }
 
 
-		public MXFCDPFuture(IMXFReader reader, byte sectionID)
+		public MXFCDPFuture(IKLVStreamReader reader, byte sectionID)
 			: base(reader)
 		{
 			this.SectionID = sectionID;
 			this.TotalLength = reader.ReadByte();
-			this.Data = reader.ReadArray(reader.ReadByte, (int)this.TotalLength);
+			this.Data = reader.ReadBytes((int)this.TotalLength);
 		}
 
 		/// <summary>

@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -47,7 +48,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.04100103.01090000")]
         public MXFFilm? EdgeCodeFilmFormat { get; set; }
 
-        public MXFEdgeCode(IMXFReader reader, MXFPack pack)
+        public MXFEdgeCode(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "EdgeCode")
         {
         }
@@ -56,11 +57,11 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
-                case 0x0404: this.EdgeCodeHeader = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+                case 0x0404: this.EdgeCodeHeader = reader.ReadBytes(localTag.Size); return true;
                 case 0x0401: this.EdgeCodeStart = reader.ReadUInt64(); return true;
                 case 0x0403: this.EdgeCodeFormat = (MXFEdge)reader.ReadUInt16(); return true;
                 case 0x0402: this.EdgeCodeFilmFormat = (MXFFilm)reader.ReadUInt16(); return true;

@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -35,18 +36,18 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03030302.01000000")]
         public byte[] WaveSummary { get; set; }
         
-        public MXFWAVEDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFWAVEDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "WAVEDescriptor")
         {
         }
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {
                 switch (localTag.Tag)
                 {
-                    case 0x3801: this.WaveSummary = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+                    case 0x3801: this.WaveSummary = reader.ReadBytes(localTag.Size); return true;
                 }
             }
             return base.ParseLocalTag(reader, localTag);

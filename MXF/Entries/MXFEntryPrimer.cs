@@ -22,12 +22,13 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEntryPrimer : MXFObject
+    public class MXFEntryPrimer : MXFObject
 	{
 		private const string CATEGORYNAME = "PrimerEntry";
 
@@ -37,7 +38,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public AUID AliasUID { get; set; }
 
-		public MXFEntryPrimer(IMXFReader reader, long offset)
+		public MXFEntryPrimer(IKLVStreamReader reader, long offset)
 			: base(reader)
 		{
 			this.Offset = offset;

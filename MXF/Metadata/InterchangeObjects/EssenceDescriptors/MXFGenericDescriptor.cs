@@ -21,13 +21,15 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012400")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012400")]
 	public class MXFGenericDescriptor : MXFInterchangeObject
 	{
 		private readonly UL subDescriptorKey = new UL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x09,0x06,0x01,0x01,0x04,0x06,0x10,0x00,0x00);
-		public MXFGenericDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFGenericDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, metadataName)
 		{
 		}
@@ -36,7 +38,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

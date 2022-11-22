@@ -21,10 +21,12 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
 
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016900")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016900")]
 	public class MXFTIFFPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
 	{
 
@@ -33,7 +35,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFTIFFPictureEssenceDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFTIFFPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "TIFFEssenceDescriptor")
 		{
 		}

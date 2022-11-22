@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014700")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014700")]
 	public class MXFAES3PCMDescriptor : MXFWAVEPCMDescriptor
 	{
 		private const string CATEGORYNAME = "AES3 PCM Descriptor";
@@ -68,7 +69,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFAES3PCMDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFAES3PCMDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "AES3 PCM Descriptor")
 		{
 		}
@@ -78,7 +79,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{
@@ -87,12 +88,12 @@ namespace Myriadbits.MXF
 				case 0x3D08: this.AuxiliaryBitsMode = (MXFAuxBitsMode)reader.ReadByte(); return true;
                 case 0x3D10: this.ChannelStatusMode = reader.ReadArray(reader.ReadChannelstatusMode, 8); return true;
                 case 0x3D11:
-						this.FixedChannelStatusData = reader.ReadArray(reader.ReadByte, localTag.Size);
+						this.FixedChannelStatusData = reader.ReadBytes(localTag.Size);
 						return true;
 				case 0x3D12:
 					this.UserDataMode = reader.ReadArray(reader.ReadUserDataMode, 2); return true;
 				case 0x3D13:
-						this.FixedUserData = reader.ReadArray(reader.ReadByte, localTag.Size);
+						this.FixedUserData = reader.ReadBytes(localTag.Size);
 						return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

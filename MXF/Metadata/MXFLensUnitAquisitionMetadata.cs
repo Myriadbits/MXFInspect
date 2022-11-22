@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -83,7 +84,7 @@ namespace Myriadbits.MXF
 
 
 
-        public MXFLensUnitAquisitionMetadata(IMXFReader reader, MXFPack pack)
+        public MXFLensUnitAquisitionMetadata(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "LensUnitAquisitionMetadata")
         {
         }
@@ -93,7 +94,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
@@ -101,7 +102,7 @@ namespace Myriadbits.MXF
                 case 0x8000: this.IrisFNumber = reader.ReadUInt16(); return true;
                 case 0x8001: this.FocusPositionFromImagePlane = reader.ReadUInt16();  return true;
                 case 0x8002: this.FocusPositionFromFrontLensVertex = reader.ReadUInt16(); return true;
-                case 0x8003: this.MacroSetting = reader.ReadBool(); return true;
+                case 0x8003: this.MacroSetting = reader.ReadBoolean(); return true;
                 case 0x8004: this.LensZoom35mmStillCameraEquivalent = reader.ReadUInt16(); return true;
                 case 0x8005: this.LensZoomActualFocalLength= reader.ReadUInt16(); return true;
                 case 0x8006: this.OpticalExtenderMagnification = reader.ReadUInt16(); return true;

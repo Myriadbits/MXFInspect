@@ -23,18 +23,19 @@
 
 
 using System.Linq;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
-{	
-	public class MXFRIP : MXFPack
+{
+    public class MXFRIP : MXFPack
 	{
-		public MXFRIP(IMXFReader reader, MXFPack pack)
+		public MXFRIP(IKLVStreamReader reader, MXFPack pack)
 			: base(pack)
         {
 			Initialize(reader);
 		}
 
-		private void Initialize(IMXFReader reader)
+		private void Initialize(IKLVStreamReader reader)
 		{
 			// Make sure we read at the data position
 			reader.Seek(this.RelativeValueOffset);

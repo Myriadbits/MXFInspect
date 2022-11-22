@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
@@ -73,12 +74,12 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.05000000")]
         public UInt32? ColorRange { get; set; }
 
-        public MXFCDCIPictureEssenceDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFCDCIPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "CDCI Picture Essence Descriptor")
         {
         }
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
@@ -86,7 +87,7 @@ namespace Myriadbits.MXF
                 case 0x3302: this.HorizontalSubsampling = reader.ReadUInt32(); return true;
                 case 0x3308: this.VerticalSubsampling = reader.ReadUInt32(); return true;
                 case 0x3303: this.ColorSiting = (MXFColorSiting)reader.ReadByte(); return true;
-                case 0x330B: this.ReversedByteOrder = reader.ReadBool(); return true;
+                case 0x330B: this.ReversedByteOrder = reader.ReadBoolean(); return true;
                 case 0x3307: this.PaddingBits = (Int16)reader.ReadUInt16(); return true;
                 case 0x3309: this.AlphaSampleDepth = reader.ReadUInt32(); return true;
                 case 0x3304: this.BlackRefLevel = reader.ReadUInt32(); return true;

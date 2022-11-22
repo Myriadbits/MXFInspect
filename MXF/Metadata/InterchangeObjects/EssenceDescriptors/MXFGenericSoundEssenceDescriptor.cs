@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -79,7 +80,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericSoundEssenceDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFGenericSoundEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "Generic Sound Essence Descriptor")
         {
         }
@@ -89,7 +90,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericSoundEssenceDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
+        public MXFGenericSoundEssenceDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
         {
         }
@@ -98,17 +99,17 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
                 case 0x3D03: this.AudioSamplingRate = reader.ReadRational(); return true;
-                case 0x3D02: this.Locked = reader.ReadBool(); return true;
-                case 0x3D04: this.AudioRefLevel = reader.ReadSignedByte(); return true;
+                case 0x3D02: this.Locked = reader.ReadBoolean(); return true;
+                case 0x3D04: this.AudioRefLevel = reader.ReadSByte(); return true;
                 case 0x3D05: this.ElectroSpatialFormulation = (MXFElectroSpatialFormulation)reader.ReadByte(); return true;
                 case 0x3D07: this.ChannelCount = reader.ReadUInt32(); return true;
                 case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
-                case 0x3D0C: this.DialNorm = reader.ReadSignedByte(); return true;
+                case 0x3D0C: this.DialNorm = reader.ReadSByte(); return true;
                 case 0x3D06: this.SoundEssenceCoding = reader.ReadUL(); return true;
                 case var _ when localTag.Key == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
                 case var _ when localTag.Key == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;

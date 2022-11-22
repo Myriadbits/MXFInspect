@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -88,7 +89,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFMPEGPictureEssenceDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFMPEGPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "MPEG Picture Essence Descriptor";
@@ -98,22 +99,22 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {
                 switch (localTag.Key)
                 {
                     case var _ when localTag.Key == bitRate_Key: this.BitRate = reader.ReadUInt32(); return true;
-                    case var _ when localTag.Key == identicalGOPIndicator_Key: this.IdenticalGOPIndicator = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == identicalGOPIndicator_Key: this.IdenticalGOPIndicator = reader.ReadBoolean(); return true;
                     case var _ when localTag.Key == maxGOPSize_Key: this.MaximumGOPSize = reader.ReadUInt16(); return true;
                     case var _ when localTag.Key == maxBPictureCount_Key: this.MaximumBPictureCount = reader.ReadUInt16(); return true;
-                    case var _ when localTag.Key == constantBPictureFlag_Key: this.ConstantBPictureFlag = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == constantBPictureFlag_Key: this.ConstantBPictureFlag = reader.ReadBoolean(); return true;
                     case var _ when localTag.Key == codedContentScanningKind_Key: this.CodedContentScanningKind = (MXFCodedContentScanning)reader.ReadByte(); return true;
                     case var _ when localTag.Key == profileAndLevel_Key: this.ProfileAndLevel = reader.ReadByte(); return true;
-                    case var _ when localTag.Key == singleSequenceFlag_Key: this.SingleSequenceFlag = reader.ReadBool(); return true;
-                    case var _ when localTag.Key == closedGOP_Key: this.ClosedGOPIndicator = reader.ReadBool(); return true;
-                    case var _ when localTag.Key == lowDelay_Key: this.LowDelayIndicator = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == singleSequenceFlag_Key: this.SingleSequenceFlag = reader.ReadBoolean(); return true;
+                    case var _ when localTag.Key == closedGOP_Key: this.ClosedGOPIndicator = reader.ReadBoolean(); return true;
+                    case var _ when localTag.Key == lowDelay_Key: this.LowDelayIndicator = reader.ReadBoolean(); return true;
                 }
             }
 

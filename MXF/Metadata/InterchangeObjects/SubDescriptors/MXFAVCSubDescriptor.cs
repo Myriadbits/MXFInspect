@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -109,7 +110,7 @@ namespace Myriadbits.MXF
         public UInt32? AVCAverageBitRate { get; set; }
 
 
-        public MXFAVCSubDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFAVCSubDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "AVCSubDescriptor")
         {
         }
@@ -118,16 +119,16 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {
                 switch (localTag.Key)
                 {
-                    case var _ when localTag.Key == constantBPictureFlag_Key: this.AVCConstantBPictureFlag = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == constantBPictureFlag_Key: this.AVCConstantBPictureFlag = reader.ReadBoolean(); return true;
                     case var _ when localTag.Key == codedContentKind_Key: this.AVCCodedContentKind = (MXFAVCContentScanning)reader.ReadByte(); return true;
-                    case var _ when localTag.Key == closedGOPIndicator_Key: this.AVCClosedGOPIndicator = reader.ReadBool(); return true;
-                    case var _ when localTag.Key == identicalGOPIndicator_Key: this.AVCIdenticalGOPIndicator = reader.ReadBool(); return true;
+                    case var _ when localTag.Key == closedGOPIndicator_Key: this.AVCClosedGOPIndicator = reader.ReadBoolean(); return true;
+                    case var _ when localTag.Key == identicalGOPIndicator_Key: this.AVCIdenticalGOPIndicator = reader.ReadBoolean(); return true;
                     case var _ when localTag.Key == maximumGOPSize_Key: this.AVCMaximumGOPSize = reader.ReadUInt16(); return true;
                     case var _ when localTag.Key == maximumBPictureCount_Key: this.AVCMaximumBPictureCount = reader.ReadUInt16(); return true;
                     case var _ when localTag.Key == profile_Key: this.AVCProfile = reader.ReadByte(); return true;

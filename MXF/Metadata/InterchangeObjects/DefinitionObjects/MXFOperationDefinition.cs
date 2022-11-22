@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
@@ -48,7 +49,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.0530050a.00000000")]
         public AUID OperationCategory { get; set; }
 
-        public MXFOperationDefinition(IMXFReader reader, MXFPack pack)
+        public MXFOperationDefinition(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "OperationDefinition";
@@ -58,11 +59,11 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
-                case 0x1e02: IsTimeWarp = reader.ReadBool(); return true;
+                case 0x1e02: IsTimeWarp = reader.ReadBoolean(); return true;
                 case 0x1e07: OperationInputCount = reader.ReadInt32(); return true;
                 case 0x1e08: Bypass = reader.ReadUInt32(); return true;
                 case 0x1e01:

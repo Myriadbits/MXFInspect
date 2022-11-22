@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016b00")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016b00")]
 	public class MXFAudioChannelLabelSubDescriptor : MXFMCALabelSubDescriptor
     {
         private const string CATEGORYNAME = "AudioChannelLabelSubDescriptor";
@@ -35,13 +36,13 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.0101010e.01030701.06000000")]
 		public UUID SoundfieldGroupLinkID { get; set; }
 		
-		public MXFAudioChannelLabelSubDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFAudioChannelLabelSubDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "AudioChannelLabelSubDescriptor";
 		}
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

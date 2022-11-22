@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Properties;
 using System.ComponentModel;
 
@@ -72,7 +73,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFDCTimedTextDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFDCTimedTextDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "DC Timed Text Descriptor")
         {
             this.MetaDataName = this.Key.Name;
@@ -83,7 +84,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFDCTimedTextDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
+        public MXFDCTimedTextDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
         {
 
@@ -92,7 +93,7 @@ namespace Myriadbits.MXF
 
         }
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

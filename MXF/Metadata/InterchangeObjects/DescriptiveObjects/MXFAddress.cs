@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFAddress : MXFDescriptiveObject
+    public class MXFAddress : MXFDescriptiveObject
 	{
 		private const string CATEGORYNAME = "Address";
 
@@ -73,7 +74,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public string AstronomicalBodyName { get; set; }
 
-		public MXFAddress(IMXFReader reader, MXFPack pack)
+		public MXFAddress(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "Address";
@@ -83,7 +84,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			if (localTag.Key != null)
 			{
@@ -130,7 +131,7 @@ namespace Myriadbits.MXF
 						this.PlaceName = reader.ReadUTF16String(localTag.Size); 
 						return true;
 					case var _ when localTag.Key == geoCoordinates_Key: 
-						this.GeographicalCoordinates = reader.ReadArray(reader.ReadByte, 12); 
+						this.GeographicalCoordinates = reader.ReadBytes(12); 
 						return true;
 					case var _ when localTag.Key == astroBodyName_Key: 
 						this.AstronomicalBodyName = reader.ReadUTF16String(localTag.Size); 

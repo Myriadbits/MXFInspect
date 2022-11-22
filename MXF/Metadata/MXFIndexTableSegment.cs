@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -88,7 +89,7 @@ namespace Myriadbits.MXF
 		public List<MXFEntryIndex> IndexEntries { get; set; }
 
 
-		public MXFIndexTableSegment(IMXFReader reader, MXFPack pack)
+		public MXFIndexTableSegment(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "IndexTableSegment") //base(pack, "IndexTableSegment", KeyType.IndexSegment)
 		{
 		}
@@ -98,7 +99,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{
@@ -111,9 +112,9 @@ namespace Myriadbits.MXF
 				case 0x3F0E: this.PositionTableCount = reader.ReadByte(); return true;
 				case 0x3F0F: this.ExtStartOffset = reader.ReadUInt64(); return true;
 				case 0x3F10: this.VBEByteCount = reader.ReadUInt64(); return true;
-				case 0x3F11: this.SingleIndexLocation = reader.ReadBool(); return true;
-				case 0x3F12: this.SingleEssenceLocation = reader.ReadBool(); return true;
-				case 0x3F13: this.ForwardIndexDirection = reader.ReadBool(); return true;
+				case 0x3F11: this.SingleIndexLocation = reader.ReadBoolean(); return true;
+				case 0x3F12: this.SingleEssenceLocation = reader.ReadBoolean(); return true;
+				case 0x3F13: this.ForwardIndexDirection = reader.ReadBoolean(); return true;
 				case 0x3F0B: this.IndexEditRate = reader.ReadRational(); return true;
 				case 0x3F0A:  // Index entry array
 					{

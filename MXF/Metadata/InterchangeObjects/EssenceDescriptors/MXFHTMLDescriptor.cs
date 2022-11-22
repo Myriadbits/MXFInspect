@@ -21,13 +21,15 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012a00")]
     public class MXFHTMLDescriptor : MXFFileDescriptor
     {
         
-        public MXFHTMLDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFHTMLDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "HTMLDescriptor")
         {
         }

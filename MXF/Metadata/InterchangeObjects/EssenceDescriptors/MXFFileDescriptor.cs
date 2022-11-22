@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFFileDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFFileDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "Descriptor")
         {
             if (m_metaTypes.ContainsKey(this.Key[14]))
@@ -82,7 +83,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFFileDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
+        public MXFFileDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
         {
         }
@@ -91,7 +92,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

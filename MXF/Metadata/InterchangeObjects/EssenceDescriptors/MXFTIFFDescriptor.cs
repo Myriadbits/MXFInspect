@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -56,23 +57,23 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.06080201.00000000")]
         public bool IsContiguous { get; set; }
 
-        public MXFTIFFDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFTIFFDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "TIFFDescriptor")
         {
         }
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {
                 switch (localTag.Tag)
                 {
-                    case 0x3706: this.TIFFSummary = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+                    case 0x3706: this.TIFFSummary = reader.ReadBytes(localTag.Size); return true;
                     case 0x3703: this.LeadingLines = reader.ReadInt32(); return true;
                     case 0x3704: this.TrailingLines = reader.ReadInt32(); return true;
-                    case 0x3701: this.IsUniform = reader.ReadBool(); return true;
+                    case 0x3701: this.IsUniform = reader.ReadBoolean(); return true;
                     case 0x3705: this.JPEGTableID = reader.ReadInt32(); return true;
-                    case 0x3702: this.IsContiguous = reader.ReadBool(); return true;
+                    case 0x3702: this.IsContiguous = reader.ReadBoolean(); return true;
                 }
             }
             return base.ParseLocalTag(reader, localTag);

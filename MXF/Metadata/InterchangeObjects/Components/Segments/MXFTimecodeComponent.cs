@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011400")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011400")]
 	public class MXFTimecodeComponent : MXFSegment
 	{
 		private const string CATEGORYNAME = "TimecodeComponent";
@@ -43,12 +44,12 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010101.04040101.05000000")]
 		public bool? DropFrame { get; set; }
 
-		public MXFTimecodeComponent(IMXFReader reader, MXFPack pack)
+		public MXFTimecodeComponent(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "TimeCodeComponent")
 		{
 		}
 
-		public MXFTimecodeComponent(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFTimecodeComponent(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, metadataName)
 		{
 		}
@@ -57,7 +58,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

@@ -41,7 +41,7 @@ namespace Myriadbits.MXF
     {
         //public override List<MXFLokalTag> Value { get;  }
 
-        public MXFLocalSet(IMXFReader reader, MXFPack pack)
+        public MXFLocalSet(IKLVStreamReader reader, MXFPack pack)
             : base(pack)
         {
             if (Key.SMPTEInformation != null)
@@ -56,7 +56,7 @@ namespace Myriadbits.MXF
         /// 
         /// </summary>
         /// <param name="reader"></param>
-        private void ParseTags(IMXFReader reader)
+        private void ParseTags(IKLVStreamReader reader)
         {
             // Make sure we read at the data position
             reader.Seek(this.RelativeValueOffset);
@@ -94,7 +94,7 @@ namespace Myriadbits.MXF
         }
 
 
-        public void ParseTagsAgain(IMXFReader reader)
+        public void ParseTagsAgain(IKLVStreamReader reader)
         {
             var tags = this.Children.OfType<MXFLocalTag>();
             foreach (var tag in tags)
@@ -137,7 +137,7 @@ namespace Myriadbits.MXF
         /// Allow derived classes to process the local tag
         /// </summary>
         /// <param name="localTag"></param>
-        protected virtual bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected virtual bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             return false;
         }

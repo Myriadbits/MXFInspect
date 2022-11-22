@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
@@ -36,14 +37,14 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.09000000")]
         public AUID ReferencedType { get; set; }
 
-        public MXFTypeDefinitionStrongObjectReference(IMXFReader reader, MXFPack pack)
+        public MXFTypeDefinitionStrongObjectReference(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionStrongObjectReference ";
         }
 
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

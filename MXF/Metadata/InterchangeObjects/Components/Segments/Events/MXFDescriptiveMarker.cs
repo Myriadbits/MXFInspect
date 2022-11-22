@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
@@ -54,7 +55,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010c.05200701.10000000")]
         public string DescriptiveMetadataApplicationEnvironmentID { get; set; }
 
-        public MXFDescriptiveMarker(IMXFReader reader, MXFPack pack)
+        public MXFDescriptiveMarker(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "Descriptive Marker";
@@ -64,7 +65,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

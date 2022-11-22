@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -34,7 +35,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.04040101.04000000")]
         public bool? IncludeSync { get; set; }
 
-        public MXFTimecodeStream12M(IMXFReader reader, MXFPack pack, string metadataName)
+        public MXFTimecodeStream12M(IKLVStreamReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, "TimecodeStream12M")
         {
         }
@@ -43,11 +44,11 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
-                case 0x1701: this.IncludeSync = reader.ReadBool(); return true;
+                case 0x1701: this.IncludeSync = reader.ReadBoolean(); return true;
             }
 
             return base.ParseLocalTag(reader, localTag);

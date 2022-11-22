@@ -22,12 +22,13 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013000")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013000")]
 	public class MXFIdentification : MXFInterchangeObject
 	{
 		private const string CATEGORYNAME = "Identification";
@@ -68,7 +69,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.01000000")]
         public AUID GenerationID { get; set; }
 
-		public MXFIdentification(IMXFReader reader, MXFPack pack)
+		public MXFIdentification(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "Identification")
 		{
 		}
@@ -77,7 +78,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

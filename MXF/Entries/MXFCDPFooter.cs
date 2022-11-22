@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFCDPFooter : MXFObject
+    public class MXFCDPFooter : MXFObject
 	{
 		private const string CATEGORYNAME = "CDPFooter";
 
@@ -36,7 +37,7 @@ namespace Myriadbits.MXF
 		public byte? PacketChecksum { get; set; }
 
 
-		public MXFCDPFooter(IMXFReader reader)
+		public MXFCDPFooter(IKLVStreamReader reader)
 			: base(reader)
 		{
 			this.SequenceCounter = reader.ReadUInt16();

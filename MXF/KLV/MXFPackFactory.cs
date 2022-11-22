@@ -23,6 +23,7 @@
 
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.Identifiers.UL;
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Metadata;
 using Myriadbits.MXF.Utils;
 using System;
@@ -282,7 +283,7 @@ namespace Myriadbits.MXF
         /// <param name="reader"></param>
         /// <param name="currentPartition"></param>
         /// <returns></returns>
-        public static MXFPack CreatePack(MXFPack pack, IMXFReader reader)
+        public static MXFPack CreatePack(MXFPack pack, IKLVStreamReader reader)
         {
 
             if (dict.TryGetValue(pack.Key, out Type foundType))

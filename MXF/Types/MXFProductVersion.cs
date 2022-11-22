@@ -26,9 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	//namespace: http://www.smpte-ra.org/reg/2003/2012 	
 	[ULType("urn:smpte:ul:060e2b34.01040101.02010101.00000000")]
-
 	public enum MXFProductReleaseType
 	{
 		VersionUnknown = 0x00,
@@ -39,7 +37,6 @@ namespace Myriadbits.MXF
 		VersionPrivateBuild = 0x05,
 	}
 
-	//namespace: http://www.smpte-ra.org/reg/2003/2012 	
 	[TypeConverter(typeof(ExpandableObjectConverter))]
 	[ULType("urn:smpte:ul:060e2b34.01040101.03010200.00000000")]
 	public class MXFProductVersion 

@@ -23,6 +23,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -68,7 +69,7 @@ namespace Myriadbits.MXF
         // TODO helper property for indexvalidator that should be avoided
         public bool Indexed { get; set; }
 
-        public MXFEssenceElement(IMXFReader reader, MXFPack pack)
+        public MXFEssenceElement(IKLVStreamReader reader, MXFPack pack)
             : base(pack)
         {
             this.Key.Name ??= "EssenceElement";

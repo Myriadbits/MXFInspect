@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
@@ -87,7 +88,7 @@ namespace Myriadbits.MXF
         /// Constructor
         /// </summary>
         /// <param name="reader"></param>
-        protected MXFObject(IMXFReader reader)
+        protected MXFObject(IKLVStreamReader reader)
         {
             this.Offset = reader.Position;
         }

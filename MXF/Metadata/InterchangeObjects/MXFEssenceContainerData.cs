@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -75,7 +76,7 @@ namespace Myriadbits.MXF
         public byte[] SampleIndex { get; set; }
 
 
-        public MXFEssenceContainerData(IMXFReader reader, MXFPack pack)
+        public MXFEssenceContainerData(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "EssenceContainerData")
         {
         }
@@ -84,19 +85,19 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
                 case 0x2701: this.LinkedPackageID = reader.ReadUMIDKey(); return true;
                 case 0x3F06: this.IndexSID = reader.ReadUInt32(); return true;
                 case 0x3F07: this.EssenceSID = reader.ReadUInt32(); return true;
-                case 0x2702: this.EssenceStream = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
-                case 0x2B01: this.SampleIndex = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
-                case var _ when localTag.Key == precedingIndexTable_Key: this.PrecedingIndexTable = reader.ReadBool(); return true;
-                case var _ when localTag.Key == followingIndexTable_Key: this.FollowingIndexTable = reader.ReadBool(); return true;
-                case var _ when localTag.Key == isSparse_Key: this.IsSparse = reader.ReadBool(); return true;
-                case var _ when localTag.Key == singularPartitionUsage_Key: this.SingularPartitionUsage = reader.ReadBool(); return true;
+                case 0x2702: this.EssenceStream = reader.ReadBytes(localTag.Size); return true;
+                case 0x2B01: this.SampleIndex = reader.ReadBytes(localTag.Size); return true;
+                case var _ when localTag.Key == precedingIndexTable_Key: this.PrecedingIndexTable = reader.ReadBoolean(); return true;
+                case var _ when localTag.Key == followingIndexTable_Key: this.FollowingIndexTable = reader.ReadBoolean(); return true;
+                case var _ when localTag.Key == isSparse_Key: this.IsSparse = reader.ReadBoolean(); return true;
+                case var _ when localTag.Key == singularPartitionUsage_Key: this.SingularPartitionUsage = reader.ReadBoolean(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

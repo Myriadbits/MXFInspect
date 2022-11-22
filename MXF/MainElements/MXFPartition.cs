@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -117,7 +118,7 @@ namespace Myriadbits.MXF
         public bool IsLoaded { get; set; }
 
 
-        public MXFPartition(IMXFReader reader, MXFPack pack)
+        public MXFPartition(IKLVStreamReader reader, MXFPack pack)
             : base(pack)
         {
             this.IsLoaded = false;

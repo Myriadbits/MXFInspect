@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014500")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014500")]
 	public class MXFDescriptiveClip : MXFSourceClip
 	{
 		private const string CATEGORYNAME = "SourceClip";
@@ -36,7 +37,7 @@ namespace Myriadbits.MXF
 		[TypeConverter(typeof(UInt32ArrayConverter))]
 		public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
         
-        public MXFDescriptiveClip(IMXFReader reader, MXFPack pack)
+        public MXFDescriptiveClip(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "DescriptiveClip";
@@ -46,7 +47,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

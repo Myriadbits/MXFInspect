@@ -22,13 +22,14 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	// TODO rethink this class
-	[TypeConverter(typeof(ExpandableObjectConverter))]
+    // TODO rethink this class
+    [TypeConverter(typeof(ExpandableObjectConverter))]
 	public class MXFAUID : MXFNamedObject 
 	{
 		private const string CATEGORYNAME = "AUID";
@@ -36,7 +37,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public AUID Key { get; set; }
 
-		public MXFAUID(IMXFReader reader, string name)
+		public MXFAUID(IKLVStreamReader reader, string name)
 			: base(reader.Position)
 		{
 			this.Name = name;

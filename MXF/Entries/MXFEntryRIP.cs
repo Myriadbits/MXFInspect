@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEntryRIP : MXFObject
+    public class MXFEntryRIP : MXFObject
 	{
 		private const string CATEGORYNAME = "RIPEntry";
 
@@ -35,7 +36,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public UInt64 PartitionOffset { get; set; }
 
-		public MXFEntryRIP(IMXFReader reader)
+		public MXFEntryRIP(IKLVStreamReader reader)
 			: base(reader)
 		{
 			this.BodySID = reader.ReadUInt32();

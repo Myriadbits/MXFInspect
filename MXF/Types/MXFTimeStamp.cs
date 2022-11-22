@@ -22,10 +22,11 @@
 #endregion
 
 using System;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFTimeStamp
+    public class MXFTimeStamp
 	{
 		public MXFTimeStamp()
 		{
@@ -172,7 +173,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="frameRateNonDrop"></param>
-		public void ParseBCDTimeCode(IMXFReader reader, double frameRate)
+		public void ParseBCDTimeCode(IKLVStreamReader reader, double frameRate)
 		{
 			byte frameb = reader.ReadByte();
 			byte secondb = reader.ReadByte();
@@ -221,7 +222,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="frameRate"></param>
-		public void ParseSMPTE12M(IMXFReader reader, double frameRate)
+		public void ParseSMPTE12M(IKLVStreamReader reader, double frameRate)
 		{
 			byte hoursb = reader.ReadByte();
 			byte minutesb = reader.ReadByte();

@@ -23,13 +23,14 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011b00")]
     public class MXFDataDefinition : MXFDefinitionObject
     {
-        public MXFDataDefinition(IMXFReader reader, MXFPack pack)
+        public MXFDataDefinition(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "DataDefinition";

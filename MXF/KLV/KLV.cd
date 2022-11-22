@@ -177,11 +177,26 @@
       <FileName>KLV\MXFLokalTag.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Myriadbits.MXF.KLV.KLVStreamReader">
+    <Position X="31.5" Y="0.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAQCBAAACHAoKCEAEIAAABAIQAiAAEQRgACACBA=</HashCode>
+      <FileName>KLV\KLVStreamReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="Myriadbits.MXF.KLV.IKLVTriplet&lt;K, L, V&gt;">
     <Position X="20.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>KLV\IKLVTriplet.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Myriadbits.MXF.KLV.IKLVStreamReader">
+    <Position X="29" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAACBAAACHgoKCEAEIAAADAIQEgAAEQRgACACAA=</HashCode>
+      <FileName>KLV\IKLVStreamReader.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -35,13 +36,13 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UUID InstanceId { get; set; }
 
-        public MXFMetaDictionary(IMXFReader reader, MXFPack pack)
+        public MXFMetaDictionary(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "MetaDictionary")
         {
         }
 
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

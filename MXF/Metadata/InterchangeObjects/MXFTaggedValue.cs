@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -38,12 +39,12 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03020102.09010000")]
         public object IndirectValue { get; set; }
 
-        public MXFTaggedValue(IMXFReader reader, MXFPack pack)
+        public MXFTaggedValue(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "TaggedValue")
         {
         }
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

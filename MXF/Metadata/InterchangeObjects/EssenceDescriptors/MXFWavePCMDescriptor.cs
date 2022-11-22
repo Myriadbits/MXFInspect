@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -90,7 +91,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFWAVEPCMDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFWAVEPCMDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "WAVE PCM Descriptor")
         {
         }
@@ -100,7 +101,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFWAVEPCMDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
+        public MXFWAVEPCMDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
         {
         }
@@ -109,7 +110,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
@@ -125,7 +126,7 @@ namespace Myriadbits.MXF
                 case 0x3D2E: this.PeakFrames = reader.ReadUInt32(); return true;
                 case 0x3D2F: this.PeakOfPeaksPosition = reader.ReadUInt64(); return true;
                 case 0x3D30: this.PeakEnvelopeTimestamp = reader.ReadTimestamp(); return true;
-                case 0x3D31: this.PeakEnvelopeData = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+                case 0x3D31: this.PeakEnvelopeData = reader.ReadBytes(localTag.Size); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

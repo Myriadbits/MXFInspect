@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public enum CCDataType
+    public enum CCDataType
 	{
 		NTSC_CC_FIELD_1 = 0, 
 		NTSC_CC_FIELD_2 = 1, 
@@ -45,7 +46,7 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }		
 
-		public MXFEntryCCData(IMXFReader reader)
+		public MXFEntryCCData(IKLVStreamReader reader)
 			: base(reader)
 		{
 			this.TotalLength = 3; // Fixed

@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -49,7 +50,7 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(UInt32ArrayConverter))]
         public UInt32[] MonoSourceTrackIDs { get; set; }
 
-        public MXFSourceReference(IMXFReader reader, MXFPack pack)
+        public MXFSourceReference(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "SourceReference")
         {
         }
@@ -58,7 +59,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

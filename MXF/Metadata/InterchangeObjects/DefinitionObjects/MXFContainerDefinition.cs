@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -35,7 +36,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.03010201.03000000")]
         public bool EssenceIsIdentified { get; set; }
 
-        public MXFContainerDefinition(IMXFReader reader, MXFPack pack)
+        public MXFContainerDefinition(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "ContainerDefinition";
@@ -45,11 +46,11 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
-                case 0x2401: EssenceIsIdentified = reader.ReadBool(); return true;
+                case 0x2401: EssenceIsIdentified = reader.ReadBoolean(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

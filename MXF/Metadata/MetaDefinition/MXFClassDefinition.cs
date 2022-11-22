@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -35,14 +36,14 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.03000000")]
         public bool IsConcrete { get; set; }
 
-        public MXFClassDefinition(IMXFReader reader, MXFPack pack)
+        public MXFClassDefinition(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "ClassDefinition")
         {
             this.MetaDataName = "ClassDefinition";
         }
 
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
@@ -50,7 +51,7 @@ namespace Myriadbits.MXF
                     this.AddChild(reader.ReadReference<MXFClassDefinition>("ParentClass")); return true;
                 case 0x0009:
                     this.AddChild(reader.ReadReferenceSet<MXFPropertyDefinition>("Properties", "Property")); return true;
-                case 0x000a: IsConcrete = reader.ReadBool(); return true;
+                case 0x000a: IsConcrete = reader.ReadBoolean(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

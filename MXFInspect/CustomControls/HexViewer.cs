@@ -79,7 +79,7 @@ namespace Myriadbits.MXFInspect
             byte[] data = new byte[len];
 
             string fileName = (obj.Root() as MXFFile).Filename;
-            using (var byteReader = new ByteReader(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
+            using (var byteReader = new KLVStreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
             {
                 byteReader.Seek(obj.Offset);
                 return byteReader.ReadBytes(data.Length);

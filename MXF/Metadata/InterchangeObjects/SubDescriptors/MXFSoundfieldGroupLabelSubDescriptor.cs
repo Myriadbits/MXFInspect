@@ -21,12 +21,14 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016c00")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016c00")]
 	public class MXFSoundfieldGroupLabelSubDescriptor : MXFMCALabelSubDescriptor
     {
-		public MXFSoundfieldGroupLabelSubDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFSoundfieldGroupLabelSubDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack)
 		{
 			this.MetaDataName = "SoundfieldGroupLabelSubDescriptor";

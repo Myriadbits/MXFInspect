@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -37,7 +38,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UInt32 GenericStreamID { get; set; }
 
-        public MXFGenericStreamTextBasedSet(IMXFReader reader, MXFPack pack)
+        public MXFGenericStreamTextBasedSet(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "Generic Stream Text Based Object";
@@ -47,7 +48,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

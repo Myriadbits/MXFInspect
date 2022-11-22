@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01015d00")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01015d00")]
 	public class MXFDCPCMSoundDescriptor : MXFGenericSoundEssenceDescriptor
 	{
 
@@ -35,7 +36,7 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFDCPCMSoundDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFDCPCMSoundDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "DC PCM Descriptor")
 		{
 		}

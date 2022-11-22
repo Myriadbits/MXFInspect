@@ -21,13 +21,15 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.02030000")]
     public class MXFTypeDefinition : MXFMetaDefinition
     {
 
-        public MXFTypeDefinition(IMXFReader reader, MXFPack pack)
+        public MXFTypeDefinition(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "TypeDefinition")
         {
             this.MetaDataName = "TypeDefinition";

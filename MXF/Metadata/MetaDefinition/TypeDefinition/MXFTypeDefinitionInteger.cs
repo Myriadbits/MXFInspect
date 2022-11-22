@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -39,19 +40,19 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03010203.02000000")]
         public bool IsSigned { get; set; }
 
-        public MXFTypeDefinitionInteger(IMXFReader reader, MXFPack pack)
+        public MXFTypeDefinitionInteger(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "TypeDefinitionInteger";
         }
 
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
                 case 0x000F: Size = reader.ReadByte(); return true;
-                case 0x0010: IsSigned = reader.ReadBool(); return true;
+                case 0x0010: IsSigned = reader.ReadBoolean(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

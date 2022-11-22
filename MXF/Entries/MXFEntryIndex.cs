@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -87,13 +88,13 @@ namespace Myriadbits.MXF
 
         public MXFRational[] PosTable { get; set; }
 
-        public MXFEntryIndex(UInt64 index, IMXFReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)
+        public MXFEntryIndex(UInt64 index, IKLVStreamReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)
             : base(reader)
         {
             this.TotalLength = length;
             this.Index = index;
-            this.TemporalOffset = reader.ReadSignedByte();
-            this.KeyFrameOffset = reader.ReadSignedByte();
+            this.TemporalOffset = reader.ReadSByte();
+            this.KeyFrameOffset = reader.ReadSByte();
             this.Flags = new IndexEntryFlags(reader.ReadByte());
             this.StreamOffset = reader.ReadUInt64();
 

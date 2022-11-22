@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -61,7 +62,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string FrameworkThesaurusName { get; set; }
 
-        public MXFDMS1Framework(IMXFReader reader, MXFPack pack)
+        public MXFDMS1Framework(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack)
         {
             this.MetaDataName = "DMS1Framework";
@@ -71,7 +72,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.Key != null)
             {

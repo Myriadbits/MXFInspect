@@ -21,12 +21,14 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
+
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01017a00")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01017a00")]
 	public class MXFTargetFrameSubDescriptor : MXFSubDescriptor
 	{
-		public MXFTargetFrameSubDescriptor(IMXFReader reader, MXFPack pack)
+		public MXFTargetFrameSubDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "TargetFrameSubDescriptor")
 		{
 		}

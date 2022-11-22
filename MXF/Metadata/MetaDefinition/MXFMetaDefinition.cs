@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
 using System.Collections.Generic;
@@ -51,12 +52,12 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.14010000")]
         public string MetaDefinitionDescription { get; set; }
 
-        public MXFMetaDefinition(IMXFReader reader, MXFPack pack, string metaDataName)
+        public MXFMetaDefinition(IKLVStreamReader reader, MXFPack pack, string metaDataName)
             : base(reader, pack, metaDataName)
         {
         }
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

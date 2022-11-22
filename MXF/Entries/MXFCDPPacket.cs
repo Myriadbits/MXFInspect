@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public enum MXFCDFFrameRate
+    public enum MXFCDFFrameRate
 	{
 		Forbidden = 0,
 		Rate_24000_1001 = 1,
@@ -76,7 +77,7 @@ namespace Myriadbits.MXF
 		public MXFTimeStamp TimeCode { get; set; }
 		
 
-		public MXFCDPPacket(IMXFReader reader)
+		public MXFCDPPacket(IKLVStreamReader reader)
 			: base(reader)
 		{
 			UInt16 identifier = reader.ReadUInt16();

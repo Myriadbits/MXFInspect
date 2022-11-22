@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
@@ -48,21 +49,21 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010d.06010107.20000000")]
         public bool IsUniqueIdentifier { get; set; }
 
-        public MXFPropertyDefinition(IMXFReader reader, MXFPack pack)
+        public MXFPropertyDefinition(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "PropertyDefinition")
         {
             this.MetaDataName = "PropertyDefinition";
         }
 
 
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
-                case 0x000c: IsOptional = reader.ReadBool(); return true;
+                case 0x000c: IsOptional = reader.ReadBoolean(); return true;
                 case 0x000b: PropertyType = reader.ReadAUID(); return true;
                 case 0x000d: LocalIdentification = reader.ReadUInt16(); return true;
-                case 0x000e: IsUniqueIdentifier = reader.ReadBool(); return true;
+                case 0x000e: IsUniqueIdentifier = reader.ReadBoolean(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

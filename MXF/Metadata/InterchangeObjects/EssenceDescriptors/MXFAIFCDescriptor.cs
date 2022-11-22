@@ -22,10 +22,11 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012600")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012600")]
 	public class MXFAIFCDescriptor : MXFFileDescriptor
 	{
 		private const string CATEGORYNAME = "AIFCDescriptor";
@@ -41,7 +42,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFAIFCDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFAIFCDescriptor(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "AIFCDescriptor")
 		{
 		}
@@ -50,11 +51,11 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{
-				case 0x3101: this.AIFCSummary = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+				case 0x3101: this.AIFCSummary = reader.ReadBytes(localTag.Size); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

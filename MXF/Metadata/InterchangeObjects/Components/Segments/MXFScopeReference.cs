@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010d00")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010d00")]
 	public class MXFScopeReference : MXFSegment
 	{
 		private const string CATEGORYNAME = "ScopeReference";
@@ -39,7 +40,7 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.06010103.04000000")]
 		public UInt32? RelativeTrack { get; set; }
 		
-		public MXFScopeReference(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFScopeReference(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, "ScopeReference")
 		{
 		}
@@ -48,7 +49,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
             switch (localTag.Tag)
             {

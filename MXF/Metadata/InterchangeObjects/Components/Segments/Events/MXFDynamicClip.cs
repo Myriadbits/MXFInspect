@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -50,7 +51,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010109.06010103.0c000000")]
         public object SourceSpecies { get; set; }
 
-        public MXFDynamicClip(IMXFReader reader, MXFPack pack)
+        public MXFDynamicClip(IKLVStreamReader reader, MXFPack pack)
         : base(reader, pack)
         {
             this.MetaDataName = "DynamicClip";
@@ -60,14 +61,14 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {
                 case 0x5801: this.DynamicSourcePackageID = reader.ReadUMIDKey(); return true;
                 case 0x5802: reader.ReadArray(reader.ReadUInt32, localTag.Size); return true;
-                case 0x5803: this.SourceIndex = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
-                case 0x5804: this.SourceSpecies = reader.ReadArray(reader.ReadByte, localTag.Size); return true;
+                case 0x5803: this.SourceIndex = reader.ReadBytes(localTag.Size); return true;
+                case 0x5804: this.SourceSpecies = reader.ReadBytes(localTag.Size); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

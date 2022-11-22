@@ -23,10 +23,11 @@
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013800")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013800")]
 	public class MXFTrack : MXFInterchangeObject
 	{
 		private const string CATEGORYNAME = "GenericTrack";
@@ -44,13 +45,13 @@ namespace Myriadbits.MXF
         public string TrackName { get; set; }
 
 
-		public MXFTrack(IMXFReader reader, MXFPack pack)
+		public MXFTrack(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack, "Generic Track")
 		{
 		}
 
 
-		public MXFTrack(IMXFReader reader, MXFPack pack, string metadataName)
+		public MXFTrack(IKLVStreamReader reader, MXFPack pack, string metadataName)
 			: base(reader, pack, metadataName)
 		{
 		}
@@ -59,7 +60,7 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.Tag)
 			{

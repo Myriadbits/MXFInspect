@@ -22,6 +22,7 @@
 #endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -39,7 +40,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericDataEssenceDescriptor(IMXFReader reader, MXFPack pack)
+        public MXFGenericDataEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "Generic Data Essence Descriptor")
         {
             // TODO remove code, once implemented the subclasses
@@ -55,7 +56,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericDataEssenceDescriptor(IMXFReader reader, MXFPack pack, string metadataName)
+        public MXFGenericDataEssenceDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
             : base(reader, pack, metadataName)
         {
         }
@@ -64,7 +65,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IMXFReader reader, MXFLocalTag localTag)
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.Tag)
             {

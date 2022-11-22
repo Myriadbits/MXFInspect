@@ -23,12 +23,13 @@
 
 
 using Myriadbits.MXF.Identifiers;
+using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-	[Flags]
+    [Flags]
 	public enum SystemBitmap
 	{
 		Control = 0x01,
@@ -125,7 +126,7 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		public MXFSystemItem(IMXFReader reader, MXFPack pack)
+		public MXFSystemItem(IKLVStreamReader reader, MXFPack pack)
 			: base(pack)
         {
 			this.Key.Name ??= "SystemItem (CP)";
