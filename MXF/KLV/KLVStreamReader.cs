@@ -7,9 +7,7 @@ namespace Myriadbits.MXF.KLV
 {
     public class KLVStreamReader : BinaryReader, IKLVStreamReader
     {
-        private readonly Stream _stream;
-
-        public Stream Stream { get => _stream; }
+        private readonly Stream klvStream;
 
         #region Properties
 
@@ -20,7 +18,7 @@ namespace Myriadbits.MXF.KLV
         {
             get
             {
-                return this._stream.Position;
+                return this.klvStream.Position;
             }
         }
 
@@ -32,21 +30,9 @@ namespace Myriadbits.MXF.KLV
         {
             get
             {
-                return this._stream.Position >= this._stream.Length;
+                return this.klvStream.Position >= this.klvStream.Length;
             }
         }
-
-
-        ///// <summary>
-        ///// Gets the size of the file
-        ///// </summary>
-        //public long Size
-        //{
-        //    get
-        //    {
-        //        return this._stream.Length;
-        //    }
-        //}
 
         #endregion
 
@@ -56,7 +42,7 @@ namespace Myriadbits.MXF.KLV
         /// <param name="reader"></param>
         public KLVStreamReader(Stream stream) : base(stream)
         {
-            _stream = stream ?? throw new ArgumentException("Stream cannot be null", nameof(stream));
+            klvStream = stream ?? throw new ArgumentException("Stream cannot be null", nameof(stream));
         }
 
         /// <summary>
@@ -65,7 +51,7 @@ namespace Myriadbits.MXF.KLV
         /// <param name="newPosition">The position to head for</param>
         public void Seek(long newPosition)
         {
-            this._stream.Seek(newPosition, SeekOrigin.Begin);
+            this.klvStream.Seek(newPosition, SeekOrigin.Begin);
         }
 
         // TODO check which classes responsibility 

@@ -8,7 +8,6 @@ namespace Myriadbits.MXF.KLV
     {
         #region properties
 
-        Stream Stream { get; }
         bool EOF { get; }
         long Position { get; }
 

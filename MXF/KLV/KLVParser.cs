@@ -32,22 +32,24 @@ namespace Myriadbits.MXF
 {
     public class KLVParser
     {
-        private readonly IKLVStreamReader reader = null;
+        private readonly IKLVStreamReader reader;
+        private readonly Stream klvStream;
         private long currentPackOffset = 0;
         private long currentPackNumber = 0;
 
         public MXFPack CurrentPack { get; private set; }
 
-        public KLVParser(Stream dataStream)
+        public KLVParser(Stream stream)
         {
-            reader = new KLVStreamReader(dataStream);
+            klvStream = stream;
+            reader = new KLVStreamReader(stream);
         }
 
         public MXFPack GetNextMXFPack()
         {
 
             var pack = ParseMXFPack(currentPackOffset);
-            var ss = new SubStream(reader.Stream, pack.Offset, pack.TotalLength);
+            var ss = new SubStream(klvStream, pack.Offset, pack.TotalLength);
             
             // TODO wrap into using/ try...catch
             var byteReader = new KLVStreamReader(ss);

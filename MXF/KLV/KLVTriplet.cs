@@ -70,7 +70,7 @@ namespace Myriadbits.MXF
         public long ValueOffset { get; }
 
         /// <summary>
-        /// Offset of the value (=data), i.e. where the payload beginsfrom the beginning of the triplet,
+        /// Offset of the value (=data), i.e. where the payload begins from the beginning of the triplet,
         /// i. e. length of the key +  length of lengthencoding 
         /// </summary>
         [Browsable(false)]
