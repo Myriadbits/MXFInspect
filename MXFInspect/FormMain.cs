@@ -186,8 +186,10 @@ namespace Myriadbits.MXFInspect
         {
             // Update the MRU
             AddFileToMRU(fileName);
+            
+            FileInfo fi = new FileInfo(fileName);  
 
-            var fileParseMode = DetermineFileParseMode(fileName);
+            var fileParseMode = DetermineFileParseMode(fi);
 
             if (fileParseMode == FileParseMode.Partial && MXFInspect.Properties.Settings.Default.PartialLoadWarning)
             {
@@ -198,19 +200,18 @@ namespace Myriadbits.MXFInspect
                     MessageBoxIcon.Information);
             }
 
-            MXFView newView = new MXFView(fileName, fileParseMode);
+            MXFView newView = new MXFView(fi, fileParseMode);
             newView.MdiParent = this;
             newView.Show();
         }
 
-        private FileParseMode DetermineFileParseMode(string fileName)
+        private FileParseMode DetermineFileParseMode(FileInfo fi)
         {
             // Determine the filesize
             long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
-            FileInfo f = new FileInfo(fileName);
 
             // if setting is no partial load at all then threshold is negative
-            if (f.Length > fileThreshold && fileThreshold >= 0)
+            if (fi.Length > fileThreshold && fileThreshold >= 0)
             {
                 return FileParseMode.Partial;
             }

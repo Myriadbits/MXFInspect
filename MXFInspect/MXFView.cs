@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -42,7 +43,7 @@ namespace Myriadbits.MXFInspect
         public MXFObject PhysicalTreeSelectedObject { get; private set; }
         public MXFLogicalObject LogicalTreeSelectedObject { get; private set; }
         public bool PhysicalViewShown { get; set; } = true;
-        public string Filename { get; set; }
+        public FileInfo FileInfo { get; private set; }
 
         private bool _currentTypeFiltered = false;
         public bool FilterCurrentType
@@ -89,12 +90,11 @@ namespace Myriadbits.MXFInspect
 
 
 
-        public MXFView(string fileName, FileParseMode fileParseMode)
+        public MXFView(FileInfo fi, FileParseMode fileParseMode)
         {
             InitializeComponent();
-            this.Filename = fileName;
+            this.FileInfo = fi;
             this.FileParseMode = fileParseMode;
-            this.Text = fileName;
             this.FillerHidden = true;
             this.MainPanel = this.mainPanel; // Do this AFTER the InitializeComponent call!!!
 
@@ -110,7 +110,7 @@ namespace Myriadbits.MXFInspect
             this.ParentMainForm = this.MdiParent as FormMain;
 
             ObjectListView.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-            this.Text = this.Filename;
+            this.Text = this.FileInfo.FullName;
 
             this.MinimizeBox = false;
             this.MaximizeBox = false;
@@ -137,12 +137,12 @@ namespace Myriadbits.MXFInspect
             // Open the selected file to read.
             try
             {
-                this.File = await MXFFile.CreateAsync(this.Filename, overallProgressHandler, singleProgressHandler, cts.Token);
+                this.File = await MXFFile.CreateAsync(this.FileInfo, overallProgressHandler, singleProgressHandler, cts.Token);
 
                 FillTrees();
                 this.splitMain.Visible = true;
                 this.tabMain.SelectedIndex = 0;
-                this.ParentMainForm.SetActivityText(string.Format("Finished reading file '{0}' in {1:N0} ms", this.Filename, sw.ElapsedMilliseconds));
+                this.ParentMainForm.SetActivityText(string.Format("Finished reading file '{0}' in {1:N0} ms", this.FileInfo.FullName, sw.ElapsedMilliseconds));
             }
             catch (OperationCanceledException ex)
             {
@@ -154,7 +154,7 @@ namespace Myriadbits.MXFInspect
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error while opening the file");
-                this.ParentMainForm.SetActivityText(string.Format($"Error while opening the file {this.Filename}"));
+                this.ParentMainForm.SetActivityText(string.Format($"Error while opening the file {this.FileInfo.FullName}"));
             }
             finally
             {
@@ -177,7 +177,7 @@ namespace Myriadbits.MXFInspect
                 this.tlvPhysical.RevealAndSelectObject(this.tlvPhysical.GetFirstPartition());
                 this.tlvPhysical.HideFillers(this.FillerHidden);
 
-                var logicalList = new List<MXFLogicalObject>() { this.File.LogicalBase };
+                var logicalList = new List<MXFLogicalObject>() { this.File.LogicalTreeRoot };
                 this.tlvLogical.FillTree(logicalList);
 
                 this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count():N0} items]";

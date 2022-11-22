@@ -122,7 +122,7 @@ namespace Myriadbits.MXF
         public static MXFContentStorage GetContentStorage(this MXFFile file)
         {
             // TODO assuming there is only one content storage
-            return file.LogicalBase
+            return file.LogicalTreeRoot
                         .Children
                         .OfWrappedType<MXFContentStorage>()
                         .FirstOrDefault()

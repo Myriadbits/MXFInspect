@@ -22,7 +22,6 @@
 #endregion
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -31,7 +30,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
-using System.Reflection.PortableExecutable;
 using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
@@ -57,12 +55,10 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFFile : MXFObject
     {
-        private IKLVStreamReader mxfReader;
         private List<MXFValidationResult> m_results;
 
-        public string Filename { get; set; }
-        public long Filesize { get; set; }
-
+        public FileInfo File { get; }
+        
         public List<MXFPartition> Partitions { get; set; }
         public MXFRIP RIP { get; set; }
 
@@ -70,7 +66,7 @@ namespace Myriadbits.MXF
         public MXFSystemItem FirstSystemItem { get; set; }
         public MXFSystemItem LastSystemItem { get; set; }
 
-        public MXFLogicalObject LogicalBase { get; set; }
+        public MXFLogicalObject LogicalTreeRoot { get; set; }
 
         public int PartitionCount
         {
@@ -91,35 +87,16 @@ namespace Myriadbits.MXF
         }
 
 
-        private MXFFile(string fileName)
+        private MXFFile(FileInfo fi)
         {
-            this.Filename = fileName;
+            this.File = fi;
             this.Partitions = new List<MXFPartition>();
             this.m_results = new List<MXFValidationResult>();
         }
 
-        /// <summary>
-        /// Create/open an MXF file
-        /// </summary>
-        /// <param name="fileName"></param>
-        //public MXFFile(string fileName, BackgroundWorker worker, FileParseMode options = FileParseMode.Full) : this(fileName)
-        //{
-        //    switch (options)
-        //    {
-        //        case FileParseMode.Full:
-        //            ParseFull(worker);
-        //            break;
-
-        //        case FileParseMode.Partial:
-        //            //ParsePartial(worker);
-        //            break;
-        //    }
-
-        //}
-
-        public static Task<MXFFile> CreateAsync(string fileName, IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
+        public static Task<MXFFile> CreateAsync(FileInfo fi, IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
         {
-            var ret = new MXFFile(fileName);
+            var ret = new MXFFile(fi);
             return ret.ParseAsync(overallProgress, singleProgress, ct);
         }
 
@@ -383,10 +360,10 @@ namespace Myriadbits.MXF
                 int currentPercentage = 0;
                 int previousPercentage = 0;
 
-                using (var fileStream = new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
+                using (var fileStream = new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
                 {
                     // Prepare
-                    this.Filesize = fileStream.Length;
+                    //this.Filesize = fileStream.Length;
 
                     // Create root node
                     MXFObject root = new MXFNamedObject("Partitions", 0);
@@ -437,7 +414,7 @@ namespace Myriadbits.MXF
                         }
 
                         // Only report progress when the percentage has changed
-                        currentPercentage = (int)((parser.CurrentPack.Offset + parser.CurrentPack.TotalLength) * 100 / this.Filesize);
+                        currentPercentage = (int)((parser.CurrentPack.Offset + parser.CurrentPack.TotalLength) * 100 / this.File.Length);
                         if (currentPercentage != previousPercentage)
                         {
                             // TODO really need to check this?
@@ -451,7 +428,7 @@ namespace Myriadbits.MXF
                         }
                     }
 
-                    Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
+                    Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.File.FullName, sw.ElapsedMilliseconds);
 
                     // Now process the pack list (partition packs, treat special cases)
                     overallProgress?.Report(new TaskReport(65, "Process packs"));
@@ -511,7 +488,7 @@ namespace Myriadbits.MXF
                         break;
 
                     case MXFPreface preface:
-                        this.LogicalBase = preface.CreateLogicalObject();
+                        this.LogicalTreeRoot = preface.CreateLogicalObject();
                         if (currentPartition != null)
                         {
                             currentPartition.AddChild(obj);
@@ -580,7 +557,7 @@ namespace Myriadbits.MXF
 
         private void ReparseLocalTags(IEnumerable<MXFLocalSet> localSetList)
         {
-            using (var byteReader = new KLVStreamReader(new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
+            using (var byteReader = new KLVStreamReader(new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
             {
                 foreach (var ls in localSetList)
                 {
@@ -589,50 +566,31 @@ namespace Myriadbits.MXF
             }
         }
 
-        private void DoPostWork(BackgroundWorker worker, Stopwatch sw, Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys)
-        {
-            // Update all type descriptions
-            //MXFPackFactory.UpdateAllTypeDescriptions(allPrimerKeys);
-
-            // Resolve the references
-            sw.Restart();
-            worker.ReportProgress(93, "Resolving flatlist");
-            int numOfResolved = ResolveReferences();
-            Debug.WriteLine("{0} references resolved in {1} ms", numOfResolved, sw.ElapsedMilliseconds);
-
-
-            // Create the logical tree
-            worker.ReportProgress(94, "Creating Logical tree");
-            sw.Restart();
-            CreateLogicalTree();
-            Debug.WriteLine("Logical tree created in {0} ms", sw.ElapsedMilliseconds);
-        }
-
         /// <summary>
         /// Try to locate the RIP
         /// </summary>
-        private bool ReadRIP(MXFPackFactory mxfPackFactory)
-        {
-            if (this.RIP == null)
-            {
-                // Read the last 4 bytes of the file
-                mxfReader.Seek(this.Filesize - 4);
-                uint ripSize = mxfReader.ReadUInt32();
-                if (ripSize < this.Filesize && ripSize >= 4) // At least 4 bytes
-                {
-                    mxfReader.Seek(this.Filesize - ripSize);
-                    MXFPack pack = MXFPackFactory.CreatePack(null, mxfReader);
-                    if (pack is MXFRIP rip)
-                    {
-                        // Yes, RIP found
-                        this.AddChild(rip);
-                        this.RIP = rip;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+        //private bool ReadRIP(MXFPackFactory mxfPackFactory)
+        //{
+        //    if (this.RIP == null)
+        //    {
+        //        // Read the last 4 bytes of the file
+        //        mxfReader.Seek(this.Filesize - 4);
+        //        uint ripSize = mxfReader.ReadUInt32();
+        //        if (ripSize < this.Filesize && ripSize >= 4) // At least 4 bytes
+        //        {
+        //            mxfReader.Seek(this.Filesize - ripSize);
+        //            MXFPack pack = MXFPackFactory.CreatePack(null, mxfReader);
+        //            if (pack is MXFRIP rip)
+        //            {
+        //                // Yes, RIP found
+        //                this.AddChild(rip);
+        //                this.RIP = rip;
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
 
         public void ExecuteValidationTest(BackgroundWorker worker, bool extendedTest)
         {
@@ -671,12 +629,12 @@ namespace Myriadbits.MXF
         /// </summary>
         protected void CreateLogicalTree()
         {
-            if (this.LogicalBase == null)
+            if (this.LogicalTreeRoot == null)
                 return;
 
-            LogicalAddChilds(this.LogicalBase);
+            LogicalAddChilds(this.LogicalTreeRoot);
 
-            this.LogicalBase.Children = this.LogicalBase.Children.OrderBy(c => c.Object.Offset).ToList();
+            this.LogicalTreeRoot.Children = this.LogicalTreeRoot.Children.OrderBy(c => c.Object.Offset).ToList();
         }
 
         /// <summary>
