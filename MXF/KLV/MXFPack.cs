@@ -46,11 +46,6 @@ namespace Myriadbits.MXF
         {
         }
 
-        // copy ctor
-        public MXFPack(MXFPack pack) : base(pack.Key, pack.Length, pack.Offset)
-        {
-        }
-
         public MXFPack(KLVTriplet<UL,KLVBERLength,ByteArray> klv) : base(klv.Key, klv.Length, klv.Offset)
         {
         }
