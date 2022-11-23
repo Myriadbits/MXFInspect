@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
         private List<MXFValidationResult> m_results;
 
         public FileInfo File { get; }
-        
+
         public List<MXFPartition> Partitions { get; set; }
         public MXFRIP RIP { get; set; }
 
@@ -358,7 +358,7 @@ namespace Myriadbits.MXF
             {
                 Stopwatch sw = Stopwatch.StartNew();
                 int currentPercentage = 0;
-                int previousPercentage = 0;
+                int previousPercentage = 0;             
 
                 using (var fileStream = new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
                 {
@@ -370,14 +370,16 @@ namespace Myriadbits.MXF
                     this.AddChild(root);
 
                     // Parse Packs 
-                    KLVParser parser = new KLVParser(fileStream);
+                    //var klvParser = new KLVTripletParser<UL, KLVBERLength, ByteArray>(fileStream,);
+
+                    MXFPackParser parser = new MXFPackParser(fileStream);
                     List<MXFObject> packList = new List<MXFObject>();
                     overallProgress?.Report(new TaskReport(0, "Reading KLV stream"));
                     while (parser.HasNext())
                     {
                         try
                         {
-                            var pack = parser.GetNextMXFPack();
+                            var pack = parser.GetNext();
                             packList.Add(pack);
                             ct.ThrowIfCancellationRequested();
                         }
@@ -386,7 +388,7 @@ namespace Myriadbits.MXF
                         {
                             // error in klv-stream
 
-                            long lastgoodPos = parser.CurrentPack.Offset + parser.CurrentPack.TotalLength;
+                            long lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
                             if (!parser.SeekForNextPotentialKey(out long newOffset))
                             {
                                 // we have reached end of file, exceptional case so handle it
@@ -401,7 +403,7 @@ namespace Myriadbits.MXF
                         {
                             // error in klv-stream
 
-                            long lastgoodPos = parser.CurrentPack.Offset + parser.CurrentPack.TotalLength;
+                            long lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
                             if (!parser.SeekForNextPotentialKey(out long newOffset))
                             {
                                 // we have reached end of file, exceptional case so handle it
@@ -414,7 +416,7 @@ namespace Myriadbits.MXF
                         }
 
                         // Only report progress when the percentage has changed
-                        currentPercentage = (int)((parser.CurrentPack.Offset + parser.CurrentPack.TotalLength) * 100 / this.File.Length);
+                        currentPercentage = (int)((parser.Current.Offset + parser.Current.TotalLength) * 100 / this.File.Length);
                         if (currentPercentage != previousPercentage)
                         {
                             // TODO really need to check this?

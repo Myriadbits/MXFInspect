@@ -51,6 +51,10 @@ namespace Myriadbits.MXF
         {
         }
 
+        public MXFPack(KLVTriplet<UL,KLVBERLength,ByteArray> klv) : base(klv.Key, klv.Length, klv.Offset)
+        {
+        }
+
         public override string ToString()
         {
             return $"{Key.SMPTEInformation?.Name ?? Key.Name} [len {this.TotalLength}]";

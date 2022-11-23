@@ -69,5 +69,10 @@ namespace Myriadbits.MXF
             sb.Append(" ]");
             return sb.ToString();
         }
+
+        public static KLVKey GetKey(byte[] bytes)
+        {
+            return new KLVKey((KeyLengths)bytes.Length, bytes);
+        }
     }
 }

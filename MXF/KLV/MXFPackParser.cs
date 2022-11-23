@@ -25,60 +25,35 @@ using Myriadbits.MXF.KLV;
 using System;
 using System.IO;
 using System.Linq;
-using static Myriadbits.MXF.KLV.KLVLength;
 using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class KLVParser
+    public class MXFPackParser : KLVTripletParser<UL, KLVBERLength, ByteArray>
     {
-        private readonly IKLVStreamReader reader;
-        private readonly Stream klvStream;
-        private long currentPackOffset = 0;
         private long currentPackNumber = 0;
 
-        public MXFPack CurrentPack { get; private set; }
-
-        public KLVParser(Stream stream)
+        public MXFPackParser(Stream stream) : base(stream)
         {
-            klvStream = stream;
-            reader = new KLVStreamReader(stream);
         }
 
-        public MXFPack GetNextMXFPack()
+        public override MXFPack GetNext()
         {
 
-            var pack = ParseMXFPack(currentPackOffset);
-            var ss = new SubStream(klvStream, pack.Offset, pack.TotalLength);
-            
+            var klv = CreateKLV(currentKLVOffset, ParseUL, ParseBERKLVLength);
+            var ss = new SubStream(klvStream, klv.Offset, klv.TotalLength);
+
             // TODO wrap into using/ try...catch
             var byteReader = new KLVStreamReader(ss);
-            var typedPack = MXFPackFactory.CreatePack(pack, byteReader);
+            var typedPack = MXFPackFactory.CreatePack(new MXFPack(klv), byteReader);
 
             typedPack.Number = currentPackNumber++;
-            CurrentPack = typedPack;
+            Current = typedPack;
 
             // advance to next pack
-            Seek(currentPackOffset + pack.TotalLength);
+            Seek(currentKLVOffset + klv.TotalLength);
 
             return typedPack;
-        }
-
-        public bool HasNext()
-        {
-            return !reader.EOF;
-        }
-
-        private void Seek(long position)
-        {
-            reader.Seek(position);
-            currentPackOffset = position;
-        }
-
-        private KLVLength ParseKLVLength(LengthEncodings encoding)
-        {
-
-            return ParseBERKLVLength((int)encoding);
         }
 
         private KLVBERLength ParseBERKLVLength()
@@ -115,27 +90,9 @@ namespace Myriadbits.MXF
             }
         }
 
-        private KLVKey ParseKLVKey(KeyLengths keyLength)
+        private UL ParseUL()
         {
-            byte[] bytes = reader.ReadBytes((int)keyLength);
-            return new KLVKey(keyLength, bytes);
-        }
-
-        private KLVLength ParseBERKLVLength(int numOfBytes)
-        {
-            byte[] bytes = reader.ReadBytes(numOfBytes);
-            long lengthValue = bytes.ToLong();
-            return new KLVLength((LengthEncodings)numOfBytes, lengthValue, bytes);
-        }
-
-        private MXFPack ParseMXFPack(long offset)
-        {
-            // move to file pos
-            Seek(offset);
-
-            var ul = new UL(reader.ReadBytes((int)KeyLengths.SixteenBytes));
-            var length = ParseBERKLVLength();
-            return new MXFPack(ul, length, currentPackOffset);
+            return new UL(reader.ReadBytes((int)KeyLengths.SixteenBytes));
         }
 
         public bool SeekForNextPotentialKey(out long newOffset)
