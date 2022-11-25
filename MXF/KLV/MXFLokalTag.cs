@@ -1,6 +1,7 @@
 ﻿using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Myriadbits.MXF.KLV
         // TODO add Alias Universal Label?
         //public AUID AliasUID { get; private set; }
         
-        public MXFLokalTag(KLVKey key, KLVLength length, long offset) : base(key, length, offset)
+        public MXFLokalTag(KLVKey key, KLVLength length, long offset, Stream stream) : base(key, length, offset, stream)
         {
             // check passed parameters 
             if (Key.KeyLength != KeyLengths.TwoBytes)

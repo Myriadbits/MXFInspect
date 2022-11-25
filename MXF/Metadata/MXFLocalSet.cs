@@ -22,13 +22,8 @@
 #endregion
 
 using Myriadbits.MXF.KLV;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Reflection.PortableExecutable;
-using static Myriadbits.MXF.KLV.KLVLength;
-using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
@@ -93,6 +88,16 @@ namespace Myriadbits.MXF
             PostInitialize();
         }
 
+
+        private void AddLocalTags(IKLVStreamReader reader)
+        {
+            var ms = new MemoryStream(reader.ReadBytes((int)this.TotalLength));
+
+            //var localTagParser = new KLVTripletParser<KLVKey, KLVLength, ByteArray>(ms)
+            //{
+
+            //}
+        }
 
         public void ParseTagsAgain(IKLVStreamReader reader)
         {

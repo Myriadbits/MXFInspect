@@ -39,6 +39,8 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "MXFPack";
         private const int CATEGORYPOS = 1;
 
+        protected Stream Stream { get; }
+
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Key part of KLV triplet")]
         public virtual K Key { get; }
@@ -77,14 +79,15 @@ namespace Myriadbits.MXF
         public long RelativeValueOffset { get; }
 
 
-        public KLVTriplet(K key, L length, long offset)
+        public KLVTriplet(K key, L length, long offset, Stream stream)
         {
             Key = key;
             Length = length;
             Offset = offset;
             ValueOffset = offset + (int)key.KeyLength + length.ArrayLength;
-            RelativeValueOffset = key.ArrayLength + length.ArrayLength; 
+            RelativeValueOffset = key.ArrayLength + length.ArrayLength;
             TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
+            Stream = stream;
         }
 
         //// TODO this should not be the responsibility of the class to read its content
@@ -93,7 +96,7 @@ namespace Myriadbits.MXF
         //    byte[] buffer = new byte[byte]
         //    ss.Seek(Offset, SeekOrigin.Begin);
         //    ss.Read()
-            
+
         //        //return new KLVValue(reader.ReadArray(reader.ReadByte, Length.Value));
         //}
     }

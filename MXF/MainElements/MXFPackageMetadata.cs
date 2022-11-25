@@ -124,8 +124,8 @@ namespace Myriadbits.MXF
                     // KLV metadata
                     case 0x88:
                         var ms = new MemoryStream(byteArray);
-                        var klvParser = new KLVParser(ms);
-                        var pack = klvParser.GetNextMXFPack();
+                        var klvParser = new MXFPackParser(ms);
+                        var pack = klvParser.GetNext();
                         this.AddChild(pack);
                         break;
 

@@ -40,16 +40,6 @@ namespace Myriadbits.MXF
         Partial,
     }
 
-
-    //public enum PartialSeekMode
-    //{
-    //    Unknown,
-    //    UsingRIP,
-    //    Backwards,
-    //    //Full,
-    //}
-
-
     /// <summary>
     /// Name object, represents a complete MXF file
     /// </summary>
@@ -100,258 +90,6 @@ namespace Myriadbits.MXF
             return ret.ParseAsync(overallProgress, singleProgress, ct);
         }
 
-
-        /// <summary>
-        /// Fully Parse an MXF file 
-        /// </summary>
-        //protected void ParseFull(BackgroundWorker worker)
-        //{
-        //    Stopwatch sw = Stopwatch.StartNew();
-
-        //    MXFPackFactory mxfPackFactory = new MXFPackFactory();
-
-        //    MXFPartition currentPartition = null;
-        //    int previousPercentage = 0;
-        //    Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
-        //    int[] counters = new int[Enum.GetNames(typeof(KeyType)).Length];
-        //    using (mxfReader = new MXFReader(this.Filename))
-        //    {
-        //        this.Filesize = mxfReader.Size;
-        //        MXFObject partitions = new MXFNamedObject("Partitions", 0);
-        //        this.AddChild(partitions);
-
-        //        int partitionNumber = 0; // For easy partition identification
-        //        while (!m_reader.EOF)
-        //        {
-        //            try
-        //            {
-        //                MXFPack pack = mxfPackFactory.CreatePack();
-
-        //                //// Update overall counters
-        //                //if (klv.Key.Type == KeyType.None)
-        //                //    counters[(int)klv.Key.Type]++;
-
-        //                // Process the new KLV
-        //                ProcessKLVObject(pack, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
-
-        //                // Next KLV please
-        //                m_reader.Seek(pack.ValueOffset + pack.Length.Value);
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                m_reader.SeekForNextPotentialKey();
-        //            }
-
-
-
-        //            // Only report progress when the percentage has changed
-        //            int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
-        //            if (currentPercentage != previousPercentage)
-        //            {
-        //                worker.ReportProgress(currentPercentage, "Parsing MXF file");
-        //                previousPercentage = currentPercentage;
-        //            }
-        //        }
-        //    }
-
-        //    Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
-
-        //    Progress should now be 90 %
-
-        //   DoPostWork(worker, sw, allPrimerKeys);
-
-        //    And Execute ALL test
-        //    sw.Restart();
-        //    this.ExecuteValidationTest(worker, true);
-        //    Debug.WriteLine("Tests executed in {0} ms", sw.ElapsedMilliseconds);
-
-        //    Finished
-        //    worker.ReportProgress(100, "Finished");
-        //}
-
-        /// <summary>
-        /// Partially Parse an MXF file, skip all data
-        /// </summary>
-        //protected void ParsePartial(BackgroundWorker worker)
-        //{
-
-        //    Stopwatch sw = Stopwatch.StartNew();
-        //    int previousPercentage = 0;
-        //    Dictionary<UInt16, MXFEntryPrimer> allPrimerKeys = null;
-
-        //    //PartialSeekMode seekMode = PartialSeekMode.Unknown;
-        //    using (mxfReader = new MXFReader(this.Filename))
-        //    {
-        //        this.Filesize = mxfReader.Size;
-        //        MXFObject root = new MXFNamedObject("Partitions", 0);
-        //        this.AddChild(root);
-
-        //        // Parse Packs 
-        //        KLVParser parser = new KLVParser(mxfReader);
-        //        List<MXFObject> packList = new List<MXFObject>();
-        //        while (parser.HasNext())
-        //        {
-        //            try
-        //            {
-        //                var pack = parser.GetNextMXFPack();
-        //                packList.Add(pack);
-        //            }
-        //            // TODO be more selective with the exception
-        //            catch (ArgumentException e)
-        //            {
-        //                // error in klv-stream
-
-        //                long lastgoodPos = parser.CurrentPack.Offset + parser.CurrentPack.TotalLength;
-        //                if (!parser.SeekForNextPotentialKey(out long newOffset))
-        //                {
-        //                    // we have reached end of file, exceptional case so handle it
-        //                }
-        //                else
-        //                {
-        //                    packList.Add(new MXFNamedObject("Non-KLV Data", lastgoodPos, newOffset - lastgoodPos));
-        //                }
-
-        //            }
-
-        //            if (currentPercentage != previousPercentage)
-        //            {
-        //                // TODO really need to check this?
-        //                if (currentPercentage <= 100)
-        //                {
-        //                    overallProgress?.Report(new TaskReport(7 + (int)(currentPercentage * 0.73), "Partial Parsing..."));
-        //                    //previousPercentage = currentPercentage;
-        //                }
-        //            }
-        //        }
-
-
-        //        // Now process the pack list (partition, treat special cases)
-        //        ProcessPacks(packList);
-
-
-        //        Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.Filename, sw.ElapsedMilliseconds);
-
-        //        // Progress should now be 90%
-
-        //        // Resolve the references
-        //        sw.Restart();
-        //        worker.ReportProgress(93, "Resolving flatlist");
-        //        int numOfResolved = ResolveReferences();
-        //        Debug.WriteLine("{0} references resolved in {1} ms", numOfResolved, sw.ElapsedMilliseconds);
-
-
-        //        // Create the logical tree
-        //        worker.ReportProgress(94, "Creating Logical tree");
-        //        sw.Restart();
-        //        CreateLogicalTree();
-        //        Debug.WriteLine("Logical tree created in {0} ms", sw.ElapsedMilliseconds);
-        //        DoPostWork(worker, sw, allPrimerKeys);
-
-        //        // And Execute FAST tests
-        //        this.ExecuteValidationTest(worker, false);
-
-        //        // Finished
-        //        worker.ReportProgress(100, "Finished");
-
-        //        #region old
-        //        // Partition the packs
-        //        // Partition(packList);
-
-        //        //// Start with trying to find the RIP
-        //        //bool ripFound = ReadRIP(mxfPackFactory);
-        //        //if (ripFound)
-        //        //    seekMode = PartialSeekMode.UsingRIP;
-        //        //m_reader.Seek(0); // Start at the beginning
-
-        //        //// Start by reading the first partition
-        //        //int partitionNumber = 0; // For easy partition identification
-        //        //while (!m_reader.EOF && seekMode != PartialSeekMode.Backwards) // Eof and NOT searching backwards
-        //        //{
-        //        //    MXFPack pack = mxfPackFactory.CreatePack(m_reader, currentPartition);
-
-        //        //    pack.Pack = list.Single(p => p.Offset == pack.Offset);
-
-        //        //    if (pack is MXFPartition && seekMode == PartialSeekMode.Backwards)
-        //        //    {
-        //        //        if (this.Partitions.Exists(a => a.Offset == pack.Offset))
-        //        //        {
-        //        //            // A new partition has been found that we already found, quit the main loop
-        //        //            break;
-        //        //        }
-        //        //    }
-
-
-        //        //    // Process the new KLV
-        //        //    ProcessKLVObject(pack, partitions, ref currentPartition, ref partitionNumber, ref allPrimerKeys);
-
-
-        //        //    // If we found the second partition 
-        //        //    long nextSeekPosition = pack.ValueOffset + pack.Length.Value;
-        //        //    if (partitionNumber >= 2) // Header fully read, now busy with the second partition
-        //        //    {
-        //        //        switch (seekMode)
-        //        //        {
-        //        //            case PartialSeekMode.UsingRIP: // And we already found the RIP
-        //        //                if (currentPartition.FirstSystemItem != null) // And we found the first system item
-        //        //                {
-        //        //                    MXFEntryRIP ripEntry = this.RIP.GetPartition(partitionNumber);
-        //        //                    if (ripEntry != null)
-        //        //                    {
-        //        //                        // Mark the current partition as not-completely read
-        //        //                        currentPartition.IsLoaded = false;
-
-        //        //                        // Start at the next partition
-        //        //                        nextSeekPosition = (long)ripEntry.PartitionOffset;
-        //        //                    }
-        //        //                }
-        //        //                break;
-
-        //        //            case PartialSeekMode.Backwards: // NO RIP, searching backwards
-        //        //                                            // Backwards, jump to the PREVIOUS partition
-        //        //                if (currentPartition.FirstSystemItem != null) // And we found the first system item
-        //        //                {
-        //        //                    // Jump to the previous partition
-        //        //                    if (currentPartition.PreviousPartition != 0)
-        //        //                    {
-        //        //                        // And we haven't found this partition yet
-        //        //                        if (!this.Partitions.Exists(a => a.ThisPartition == currentPartition.PreviousPartition))
-        //        //                            nextSeekPosition = (long)currentPartition.PreviousPartition; // Jump to previous
-        //        //                    }
-        //        //                }
-        //        //                break;
-
-        //        //            case PartialSeekMode.Unknown: // No RIP....
-        //        //                                          // Hmmm, RIP is not found, check if we have a footer partition somewhere
-        //        //                MXFPartition part = this.Partitions.Where(a => a.FooterPartition != 0).FirstOrDefault();
-        //        //                if (part != null)
-        //        //                {
-        //        //                    // If we are already at the footer, don't bother to seek
-        //        //                    if (currentPartition.Offset != (long)part.FooterPartition)
-        //        //                    {
-        //        //                        nextSeekPosition = (long)part.FooterPartition; // Start at the footer
-        //        //                        seekMode = PartialSeekMode.Backwards;
-        //        //                    }
-        //        //                }
-        //        //                break;
-        //        //        }
-        //        //    }
-
-        //        //    // Next KLV please
-        //        //    m_reader.Seek(nextSeekPosition);
-
-        //        //    // Only report progress when the percentage has changed
-        //        //    int currentPercentage = (int)((m_reader.Position * 90) / m_reader.Size);
-        //        //    if (currentPercentage != previousPercentage)
-        //        //    {
-        //        //        worker.ReportProgress(currentPercentage, "Partial Parsing MXF file");
-        //        //        previousPercentage = currentPercentage;
-        //        //    }
-        //        //}
-        //        #endregion
-        //    }
-        //}
-
-
         protected async Task<MXFFile> ParseAsync(IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
         {
             var result = await Task.Run(() =>
@@ -370,8 +108,6 @@ namespace Myriadbits.MXF
                     this.AddChild(root);
 
                     // Parse Packs 
-                    //var klvParser = new KLVTripletParser<UL, KLVBERLength, ByteArray>(fileStream,);
-
                     MXFPackParser parser = new MXFPackParser(fileStream);
                     List<MXFObject> packList = new List<MXFObject>();
                     overallProgress?.Report(new TaskReport(0, "Reading KLV stream"));
@@ -465,6 +201,72 @@ namespace Myriadbits.MXF
             }, ct);
 
             return result;
+        }
+
+        /// <summary>
+        /// Return info for a generic track packet
+        /// </summary>
+        /// <returns>A string representing information about a generic track</returns>
+        public string GetTrackInfo(MXFTrack genericTrack)
+        {
+            try
+            {
+                if (genericTrack != null)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    MXFSequence seq = genericTrack.GetFirstMXFSequence();
+                    if (seq != null && seq.DataDefinition != null && seq.DataDefinition is UL ul)
+                    {
+                        sb.Append(seq.DataDefinition.ToString());
+                    }
+
+                    if (genericTrack is MXFTimelineTrack timeLineTrack)
+                    {
+                        sb.Append(string.Format(" @ {0}, ", timeLineTrack.EditRate));
+                    }
+                    sb.Append(string.Format(@"""{0}"", ", genericTrack.TrackName));
+
+                    return sb.ToString();
+
+                }
+                return "";
+            }
+            catch (Exception)
+            {
+                return "Unable to retrieve track info. See error log for more details";
+            }
+        }
+
+        public void ExecuteValidationTest(BackgroundWorker worker, bool extendedTest)
+        {
+            // Reset results
+            this.m_results.Clear();
+
+            // Execute validation tests
+            List<MXFValidator> allTests = new List<MXFValidator>
+            {
+                new MXFValidatorInfo(),
+                new MXFValidatorPartitions(),
+                new MXFValidatorRIP(),
+                new MXFValidatorKeys()
+            };
+
+            if (extendedTest)
+            {
+                allTests.Add(new MXFValidatorIndex());
+            }
+            foreach (MXFValidator mxfTest in allTests)
+            {
+                mxfTest.Initialize(this, worker);
+                mxfTest.ExecuteTest(ref m_results);
+            }
+
+            if (!extendedTest)
+            {
+                MXFValidationResult valResult = new MXFValidationResult("Index Table");
+                this.m_results.Add(valResult);
+                valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
+            }
         }
 
         private void ProcessPacks(IEnumerable<MXFObject> packList)
@@ -569,67 +371,9 @@ namespace Myriadbits.MXF
         }
 
         /// <summary>
-        /// Try to locate the RIP
-        /// </summary>
-        //private bool ReadRIP(MXFPackFactory mxfPackFactory)
-        //{
-        //    if (this.RIP == null)
-        //    {
-        //        // Read the last 4 bytes of the file
-        //        mxfReader.Seek(this.Filesize - 4);
-        //        uint ripSize = mxfReader.ReadUInt32();
-        //        if (ripSize < this.Filesize && ripSize >= 4) // At least 4 bytes
-        //        {
-        //            mxfReader.Seek(this.Filesize - ripSize);
-        //            MXFPack pack = MXFPackFactory.CreatePack(null, mxfReader);
-        //            if (pack is MXFRIP rip)
-        //            {
-        //                // Yes, RIP found
-        //                this.AddChild(rip);
-        //                this.RIP = rip;
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    return false;
-        //}
-
-        public void ExecuteValidationTest(BackgroundWorker worker, bool extendedTest)
-        {
-            // Reset results
-            this.m_results.Clear();
-
-            // Execute validation tests
-            List<MXFValidator> allTests = new List<MXFValidator>
-            {
-                new MXFValidatorInfo(),
-                new MXFValidatorPartitions(),
-                new MXFValidatorRIP(),
-                new MXFValidatorKeys()
-            };
-
-            if (extendedTest)
-            {
-                allTests.Add(new MXFValidatorIndex());
-            }
-            foreach (MXFValidator mxfTest in allTests)
-            {
-                mxfTest.Initialize(this, worker);
-                mxfTest.ExecuteTest(ref m_results);
-            }
-
-            if (!extendedTest)
-            {
-                MXFValidationResult valResult = new MXFValidationResult("Index Table");
-                this.m_results.Add(valResult);
-                valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
-            }
-        }
-
-        /// <summary>
         /// Create the logical view (starting with the preface)
         /// </summary>
-        protected void CreateLogicalTree()
+        private void CreateLogicalTree()
         {
             if (this.LogicalTreeRoot == null)
                 return;
@@ -643,7 +387,7 @@ namespace Myriadbits.MXF
         /// Add all children (recursively)
         /// </summary>
         /// <param name="lObj"></param>
-        protected MXFLogicalObject LogicalAddChilds(MXFLogicalObject lObj)
+        private MXFLogicalObject LogicalAddChilds(MXFLogicalObject lObj)
         {
             // Check properties for reference
             MXFObject obj = lObj.Object;
@@ -696,40 +440,6 @@ namespace Myriadbits.MXF
                 }
             }
             return numOfResolved;
-        }
-
-        /// <summary>
-        /// Return info for a generic track packet
-        /// </summary>
-        /// <returns>A string representing information about a generic track</returns>
-        public string GetTrackInfo(MXFTrack genericTrack)
-        {
-            try
-            {
-                if (genericTrack != null)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    MXFSequence seq = genericTrack.GetFirstMXFSequence();
-                    if (seq != null && seq.DataDefinition != null && seq.DataDefinition is UL ul)
-                    {
-                        sb.Append(seq.DataDefinition.ToString());
-                    }
-
-                    if (genericTrack is MXFTimelineTrack timeLineTrack)
-                    {
-                        sb.Append(string.Format(" @ {0}, ", timeLineTrack.EditRate));
-                    }
-                    sb.Append(string.Format(@"""{0}"", ", genericTrack.TrackName));
-
-                    return sb.ToString();
-
-                }
-                return "";
-            }
-            catch (Exception)
-            {
-                return "Unable to retrieve track info. See error log for more details";
-            }
         }
     }
 }

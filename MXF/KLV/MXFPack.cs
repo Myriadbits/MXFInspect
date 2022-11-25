@@ -21,8 +21,10 @@
 //
 #endregion
 
+using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 
 namespace Myriadbits.MXF
@@ -41,12 +43,11 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-        // TODO transform it to pass a KLV
-        public MXFPack(UL key, KLVBERLength length, long offset) : base(key, length, offset)
+        public MXFPack(UL key, KLVBERLength length, long offset, Stream stream) : base(key, length, offset, stream)
         {
         }
 
-        public MXFPack(KLVTriplet<UL,KLVBERLength,ByteArray> klv) : base(klv.Key, klv.Length, klv.Offset)
+        public MXFPack(MXFPack pack) : base(pack.Key, pack.Length, pack.Offset, pack.Stream)
         {
         }
 
