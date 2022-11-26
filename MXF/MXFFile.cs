@@ -176,8 +176,19 @@ namespace Myriadbits.MXF
                     // Set property description by reading the description attribute (for all types)
                     MXFPackFactory.SetDescriptionFromAttributeForAllTypes();
 
+                    // link local tag keys to primer entry keys
+                    var localSets = packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLokalTag>().Any());
+
+                    foreach (var ls in localSets)
+                    {
+                        ls.LookUpLocalTagKeys();
+                    }
+
                     // parse all local tags, as now we know the primerpackage aliases
                     ReparseLocalTags(packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any()));
+
+
+
 
                     // Progress should now be 80%
                     overallProgress?.Report(new TaskReport(73, "Update tree"));
@@ -193,21 +204,6 @@ namespace Myriadbits.MXF
                     sw.Restart();
                     CreateLogicalTree();
                     Debug.WriteLine("Logical tree created in {0} ms", sw.ElapsedMilliseconds);
-
-
-                    // TEST
-                    var filler = packList.OfType<MXFPack>().Where(p => p.Number == 81).SingleOrDefault();
-                    var hash = filler.Key.GetHashCode();
-
-                    var partialUL = SMPTEULDictionary.GetByteArrayFromSMPTEULString("urn:smpte:ul:060e2b34.01010102.03010210.01000000");
-                    if (partialUL is PartialUL p)
-                    {
-                        var h = p.GetHashCode();
-                        var e = (hash == h);
-                    }
-                    var hash1 = partialUL.GetHashCode();
-
-                    var b = (hash == hash1);
 
                     // Finished, return this (MXFFile)
                     overallProgress?.Report(new TaskReport(100, "Done"));
@@ -319,8 +315,7 @@ namespace Myriadbits.MXF
                         if (currentPartition != null)
                         {
                             // Let the partition know all primer keys
-                            //allPrimerKeys = primer.AllKeys;
-                            currentPartition.PrimerKeys = primer.AllKeys;
+                            currentPartition.PrimerKeys = primer.PrimerEntries;
                             currentPartition.AddChild(primer); // Add the primer 
                         }
                         break;

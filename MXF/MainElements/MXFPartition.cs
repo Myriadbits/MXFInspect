@@ -24,8 +24,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 
@@ -107,7 +105,7 @@ namespace Myriadbits.MXF
         public MXFEssenceElement FirstPictureEssenceElement { get; set; }
 
         [Browsable(false)]
-        public Dictionary<UInt16, MXFEntryPrimer> PrimerKeys { get; set; }
+        public IReadOnlyDictionary<UInt16, MXFEntryPrimer> PrimerKeys { get; set; }
 
         [Browsable(false)]
         public MXFFile File { get; set; }

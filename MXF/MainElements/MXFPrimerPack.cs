@@ -36,10 +36,10 @@ namespace Myriadbits.MXF
 		public UInt32 PrimerEntriesCount { get; set; }
 
 		[Browsable(false)]
-		private Dictionary<UInt16, MXFEntryPrimer> m_PrimerKeys = null;
+		private readonly Dictionary<UInt16, MXFEntryPrimer> primerEntries = new Dictionary<UInt16, MXFEntryPrimer>();
 		
 		[Browsable(false)]
-		public Dictionary<UInt16, MXFEntryPrimer> AllKeys { get { return m_PrimerKeys; } }
+		public IReadOnlyDictionary<UInt16, MXFEntryPrimer> PrimerEntries { get { return primerEntries; } }
 
 		/// <summary>
 		/// Primerpack constructor 
@@ -67,16 +67,14 @@ namespace Myriadbits.MXF
             // TODO useless size of objects, always 2(=tag) + 16(=UL) -> 18 according to specs
             UInt32 primerEntrySize = reader.ReadUInt32(); 
 
-
 			// TODO do a minimum of checks here
-
+			// TODO allow duplicate entries and complain afterwards when validating
 			if (numOfPrimerEntries > 0 && numOfPrimerEntries < UInt32.MaxValue)
 			{
-				m_PrimerKeys = new Dictionary<UInt16, MXFEntryPrimer>();
 				for (int n = 0; n < numOfPrimerEntries; n++)
 				{
 					MXFEntryPrimer entry = new MXFEntryPrimer(reader, this.Offset + reader.Position);
-					m_PrimerKeys.Add(entry.Tag, entry); // Add to our own internal list
+					primerEntries.Add(entry.Tag, entry); // Add to our own internal list
 					this.AddChild(entry); // And add the entry as one of our children
 				}
 			}

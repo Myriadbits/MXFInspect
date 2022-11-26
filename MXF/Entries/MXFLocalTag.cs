@@ -83,11 +83,11 @@ namespace Myriadbits.MXF
             StringBuilder sb = new StringBuilder();
             if (Key is UL ul)
             {
-                sb.Append($"LocalTag 0x{this.Tag:X4} -> {ul.Name} [len {this.Size}]");
+                sb.Append($"LocalTag 0x{this.Tag:X4} [len {this.Size}] -> {ul.Name} ");
             }
             else
             {
-                sb.Append($"LocalTag 0x{this.Tag:X4} -> <Unknown tag> [len {this.Size}]");
+                sb.Append($"LocalTag 0x{this.Tag:X4} [len {this.Size}] -> <Unknown tag> ");
             }
             return sb.ToString();
         }

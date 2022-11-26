@@ -54,25 +54,28 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("[ ");
-            int separatorDistance = KeyLength == KeyLengths.SixteenBytes ? 4 : 2;
-            for (int n = 0; n < this.ArrayLength; n++)
+            if (KeyLength == KeyLengths.TwoBytes)
             {
-                if (n % separatorDistance == 0 && n > 0)
-                {
-                    sb.Append('.');
-                }
-
-                sb.Append(string.Format("{0:x2}", this[n]));
+                return $"<{this[0]:x2}.{this[1]:x2}>";
             }
-            sb.Append(" ]");
-            return sb.ToString();
-        }
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("[ ");
+                int separatorDistance = KeyLength == KeyLengths.SixteenBytes ? 4 : 2;
+                for (int n = 0; n < this.ArrayLength; n++)
+                {
+                    if (n % separatorDistance == 0 && n > 0)
+                    {
+                        sb.Append('.');
+                    }
 
-        public static KLVKey GetKey(byte[] bytes)
-        {
-            return new KLVKey((KeyLengths)bytes.Length, bytes);
+                    sb.Append(string.Format("{0:x2}", this[n]));
+                }
+                sb.Append(" ]");
+                return sb.ToString();
+            }
+
+            }
         }
     }
-}
