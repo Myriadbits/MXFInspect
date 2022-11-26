@@ -396,7 +396,10 @@ namespace Myriadbits.MXF
 
             LogicalAddChilds(this.LogicalTreeRoot);
 
-            this.LogicalTreeRoot.Children = this.LogicalTreeRoot.Children.OrderBy(c => c.Object.Offset).ToList();
+            // order children by offset
+            var orderedChildren = this.LogicalTreeRoot.Children.OrderBy(c => c.Object.Offset).ToList();
+            this.LogicalTreeRoot.ClearChildren();
+            this.LogicalTreeRoot.AddChildren(orderedChildren);
         }
 
         /// <summary>

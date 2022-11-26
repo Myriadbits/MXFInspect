@@ -30,11 +30,16 @@ namespace Myriadbits.MXF
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public abstract class Node<T> : INode<T> where T : Node<T>
     {
-        [Browsable(false)]
-        public List<T> Children { get; set; } = new List<T>();
+        private readonly List<T> childrenList = new List<T>(); 
 
         [Browsable(false)]
-        public T Parent { get; set; }
+        public IReadOnlyList<T> Children
+        {
+            get => childrenList;
+        }
+
+        [Browsable(false)]
+        public T Parent { get; private set; }
 
         [Browsable(false)]
         public INode<T> Root()
@@ -57,16 +62,16 @@ namespace Myriadbits.MXF
 
         public IEnumerable<T> Descendants()
         {
-            if (this.Children.Any())
+            if (this.childrenList.Any())
             {
-                var nodes = new Stack<T>(this.Children);
+                var nodes = new Stack<T>(this.childrenList);
                 while (nodes.Any())
                 {
                     T node = nodes.Pop();
                     yield return node;
-                    if (node.Children.Any())
+                    if (node.childrenList.Any())
                     {
-                        foreach (var n in node.Children)
+                        foreach (var n in node.childrenList)
                         {
                             nodes.Push(n);
                         }
@@ -80,7 +85,20 @@ namespace Myriadbits.MXF
         public virtual void AddChild(T child)
         {
             child.Parent = (T)this;
-            this.Children.Add(child);
+            this.childrenList.Add(child);
+        }
+
+        public void AddChildren(IEnumerable<T> children)
+        {
+            foreach (var child in children)
+            {
+                AddChild(child);
+            }
+        }
+
+        public void ClearChildren()
+        {
+            childrenList.Clear();
         }
     }
 }

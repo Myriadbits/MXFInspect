@@ -27,9 +27,9 @@ namespace Myriadbits.MXF
 {
     public interface INode<T>
     {
-        List<T> Children { get; set; }
+        IReadOnlyList<T> Children { get; }
         
-        T Parent { get; set; }
+        T Parent { get; }
 
         INode<T> Root();
 
@@ -38,6 +38,10 @@ namespace Myriadbits.MXF
         IEnumerable<T> Ancestors();
 
         void AddChild(T child);
+        
+        void AddChildren(IEnumerable<T> children);
+        
+        void ClearChildren();
 
     }
 }
