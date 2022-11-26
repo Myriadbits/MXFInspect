@@ -67,7 +67,7 @@
   <Class Name="Myriadbits.MXF.KLVTriplet&lt;K, L, V&gt;">
     <Position X="18" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAACAQAAgAAAABAAAAAAAAQCAAgAAAAgAA=</HashCode>
+      <HashCode>AAAAACAAAAAACAQAAgAAAABAAAAIAAAQCAAgAAAAgAA=</HashCode>
       <FileName>KLV\KLVTriplet.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -186,7 +186,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.MXFPackParser">
-    <Position X="24.5" Y="8.25" Width="2.25" />
+    <Position X="24.25" Y="8.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAACAAAAAAAAAAAAAAAAAEAAAKAAAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFPackParser.cs</FileName>

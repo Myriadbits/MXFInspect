@@ -25,7 +25,7 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup("urn:smpte:ul:060e2b34.01010102.03010210.01000000")]
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010900")]
 	public class MXFFiller : MXFSegment
 	{
 		public MXFFiller(IKLVStreamReader reader, MXFPack pack)

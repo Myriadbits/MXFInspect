@@ -23,7 +23,7 @@
 
 using System.Collections.Generic;
 
-namespace Myriadbits.MXF.Identifiers.UL
+namespace Myriadbits.MXF.Identifiers
 {
     public class SMPTEUL_DictionaryComparer : IEqualityComparer<ByteArray>
     {
@@ -34,7 +34,8 @@ namespace Myriadbits.MXF.Identifiers.UL
             for (int i = 0; i < x.ArrayLength; i++)
             {
                 // bypass klv syntaxes (i.e. 0x7F == 0x06 or 0x53) which is the sixth byte of an UL
-                if (i == 5)
+                // bypass also version byte 
+                if (i == 5 || i == 7)
                 {
                     continue;
                 }
@@ -57,7 +58,12 @@ namespace Myriadbits.MXF.Identifiers.UL
                 for (int i = 0; i < theBytes.ArrayLength; i++)
                 {
                     // bypass klv syntaxes (i.e. 0x7F == 0x06 or 0x53) which is the sixth byte of an UL
-                    if (i != 5)
+                    // bypass also version byte 
+                    if (i == 5 || i == 7)
+                    {
+                        continue;
+                    }
+                    else
                     {
                         hash = (hash ^ theBytes[i]) * p;
                     }

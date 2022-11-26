@@ -42,7 +42,7 @@ namespace Myriadbits.MXF
 
         public static bool IsFiller(this MXFObject obj)
         {
-            return obj is MXFFiller;
+            return obj is MXFFillerData;
         }
 
         public static bool IsEssenceElement(this MXFObject obj)

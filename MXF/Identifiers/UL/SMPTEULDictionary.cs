@@ -26,8 +26,9 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
 using System.Diagnostics;
+using static Myriadbits.MXF.KLVKey;
 
-namespace Myriadbits.MXF.Identifiers.UL
+namespace Myriadbits.MXF.Identifiers
 {
     public static class SMPTEULDictionary
     {
@@ -65,7 +66,6 @@ namespace Myriadbits.MXF.Identifiers.UL
                 AddEntries(dictionary, regEntries, ns);
 
                 var values = dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
-
                 return dictionary;
             }
         }

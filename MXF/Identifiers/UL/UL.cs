@@ -21,14 +21,12 @@
 //
 #endregion
 
-using Myriadbits.MXF.Identifiers;
-using Myriadbits.MXF.Identifiers.UL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace Myriadbits.MXF
+namespace Myriadbits.MXF.Identifiers
 {
     public class UL : AUID
     {

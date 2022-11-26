@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;

@@ -30,7 +30,7 @@ namespace Myriadbits.MXFInspect
     {
         public bool Filter(object modelObject)
         {
-            return modelObject.GetType() != typeof(MXFFiller);
+            return !((modelObject as MXFPack)?.IsFiller() ?? false);
         }
 
     }

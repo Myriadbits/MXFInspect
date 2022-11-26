@@ -21,12 +21,12 @@
 //
 #endregion
 
-using Myriadbits.MXF.Identifiers.UL;
+using Myriadbits.MXF.Identifiers;
 using System;
 
 namespace Myriadbits.MXF
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public abstract class ULBaseAttribute : Attribute
     {
         public string SMPTEULString { get; set; }

@@ -26,7 +26,7 @@ using System;
 
 namespace Myriadbits.MXF
 {
-    
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class ULElementAttribute : ULBaseAttribute
     {
         public ULElementAttribute(string smpteULString) : base(smpteULString)

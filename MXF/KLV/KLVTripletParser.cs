@@ -76,8 +76,8 @@ namespace Myriadbits.MXF
         {
             Seek(offset);
 
-            var ul = keyParsingFunction();
-            var length = lengthEncParsingFunction();
+            K ul = keyParsingFunction();
+            L length = lengthEncParsingFunction();
             Stream ss = new SubStream(klvStream, offset, ul.ArrayLength + length.Value);
             return new KLVTriplet<K, L, V>(ul, length, currentKLVOffset, ss);
         }

@@ -24,7 +24,7 @@
 
 using System.ComponentModel;
 
-namespace Myriadbits.MXF
+namespace Myriadbits.MXF.Identifiers
 {
     public enum ULCategories
     {

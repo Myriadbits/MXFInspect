@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 using Myriadbits.MXF.KLV;
+using Myriadbits.MXF.Identifiers;
 
 namespace Myriadbits.MXF
 {
@@ -192,6 +193,21 @@ namespace Myriadbits.MXF
                     sw.Restart();
                     CreateLogicalTree();
                     Debug.WriteLine("Logical tree created in {0} ms", sw.ElapsedMilliseconds);
+
+
+                    // TEST
+                    var filler = packList.OfType<MXFPack>().Where(p => p.Number == 81).SingleOrDefault();
+                    var hash = filler.Key.GetHashCode();
+
+                    var partialUL = SMPTEULDictionary.GetByteArrayFromSMPTEULString("urn:smpte:ul:060e2b34.01010102.03010210.01000000");
+                    if (partialUL is PartialUL p)
+                    {
+                        var h = p.GetHashCode();
+                        var e = (hash == h);
+                    }
+                    var hash1 = partialUL.GetHashCode();
+
+                    var b = (hash == hash1);
 
                     // Finished, return this (MXFFile)
                     overallProgress?.Report(new TaskReport(100, "Done"));

@@ -21,39 +21,18 @@
 //
 #endregion
 
-using System.ComponentModel;
-using Myriadbits.MXF.Identifiers;
+
+using System.Linq;
 using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-    public class MXFDescriptiveObject : MXFInterchangeObject
+    [ULElement("urn:smpte:ul:060e2b34.01010102.03010210.01000000")]
+    public class MXFFillerData : MXFPack
 	{
-		public readonly UL linkedObjPluginID_Key = new UL(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x0c,0x05,0x20,0x07,0x01,0x11,0x00,0x00,0x00);
-
-		public MXFDescriptiveObject(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Descriptive Object")
-		{
-		}
-
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
-		{
-			if (localTag.Key != null)
-			{
-				switch (localTag.Key)
-				{
-					case var _ when localTag.Key == linkedObjPluginID_Key:
-						this.AddChild(reader.ReadReference<MXFDescriptiveMarker>("LinkedDescriptiveObjectPluginID")); 
-						return true;
-				}
-			}
-
-			return base.ParseLocalTag(reader, localTag);
-		}
-
+        public MXFFillerData(IKLVStreamReader reader, MXFPack pack)
+            : base(pack)
+        {
+        }
 	}
 }
