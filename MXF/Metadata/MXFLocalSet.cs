@@ -36,8 +36,6 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFLocalSet : MXFPack
     {
-        //public override List<MXFLokalTag> Value { get;  }
-
         public MXFLocalSet(IKLVStreamReader reader, MXFPack pack)
             : base(pack)
         {
@@ -46,50 +44,18 @@ namespace Myriadbits.MXF
                 this.Key.Name ??= "LocalSet";
             }
 
-            ParseTags(reader);
+            AttachTags(reader);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="reader"></param>
-        private void ParseTags(IKLVStreamReader reader)
+        public void AttachTags(IKLVStreamReader reader)
         {
-            // Make sure we read at the data position
-            reader.Seek(this.RelativeValueOffset);
-
-            // Read all local tags
-            while(!reader.EOF)
-            //while (reader.Position + 4 < klvEnd)
-            {
-                MXFLocalTag tag = new MXFLocalTag(reader);
-
-                // TODO hm???
-                if (tag.Size == 0)
-                    break;
-                
-                long next = tag.DataOffset + tag.Size;
-                AddRefKeyFromPrimerPack(tag);
-
-                // Allow derived classes to handle the data
-                if (!ParseLocalTag(reader, tag))
-                {
-                    // Not processed, use default
-                    tag.Parse(reader);
-
-                }
-
-                // Add to the collection
-                AddChild(tag);
-
-                reader.Seek(next);
-            }
-
-            // Allow derived classes to do some final work
-
             reader.Seek(this.RelativeValueOffset);
             var ms = new MemoryStream(reader.ReadBytes((int)this.TotalLength));
-            var localTagParser = new MXFLocalTagParser(ms);
+            var localTagParser = new MXFLocalTagParser(ms, this.ValueOffset);
 
             while (localTagParser.HasNext())
             {
@@ -97,38 +63,21 @@ namespace Myriadbits.MXF
                 this.AddChild(tag);
             }
 
-            PostInitialize();
-        }
-
-        public void ParseTagsAgain(IKLVStreamReader reader)
-        {
-            var tags = this.Children.OfType<MXFLocalTag>();
-            foreach (var tag in tags)
-            {
-                AddRefKeyFromPrimerPack(tag);
-                tag.Parse(reader);
-            }
-
             // Allow derived classes to do some final work
             PostInitialize();
         }
 
-
-        /// <summary>
-        ///	Tries to find the local tag in the primer pack and if so,
-        ///	adds the referring key to the tag.
-        /// </summary>
-        /// <param name="tag"></param>
-        private void AddRefKeyFromPrimerPack(MXFLocalTag tag)
+        public void ParseTags()
         {
-            var primerEntries = GetPrimerEntries();
+            var reader = new KLVStreamReader(this.Stream);
+            var localTags = this.Children.OfType<MXFLocalTag>();
 
-            if (primerEntries != null)
+            // ToList() materialization absolutely needed as the inner method call
+            // could potentially modify the iterating list by calling "AddChild"
+            foreach (var lt in localTags.ToList())
             {
-                if (primerEntries.TryGetValue(tag.Tag, out MXFEntryPrimer primerEntry))
-                {
-                    tag.Key = primerEntry.AliasUID;
-                }
+                reader.Seek(lt.ValueOffset - this.Offset);
+                ParseLocalTag(reader, lt);
             }
         }
 
@@ -136,25 +85,23 @@ namespace Myriadbits.MXF
         {
             var primerEntries = GetPrimerEntries();
 
-            if(primerEntries != null)
+            if (primerEntries != null)
             {
-                var localTags = this.Children.OfType<MXFLokalTag>();
+                var localTags = this.Children.OfType<MXFLocalTag>();
                 foreach (var tag in localTags)
                 {
-                    if (primerEntries.TryGetValue(tag.TagValue, out MXFEntryPrimer primerEntry))
+                    if (primerEntries.TryGetValue(tag.TagValue, out MXFPrimerEntry primerEntry))
                     {
-                        //MXFEntryPrimer entry = this.Partition.PrimerKeys[tag.Tag];
                         tag.AliasUID = primerEntry.AliasUID;
                     }
                 }
             }
         }
 
-        private IReadOnlyDictionary<UInt16, MXFEntryPrimer> GetPrimerEntries()
+        private IReadOnlyDictionary<UInt16, MXFPrimerEntry> GetPrimerEntries()
         {
             var parentPartition = this.Ancestors().OfType<MXFPartition>().FirstOrDefault();
             var primerPack = parentPartition?.Children.OfType<MXFPrimerPack>().FirstOrDefault();
-            //parentPartition = null;
             return primerPack?.PrimerEntries;
         }
 

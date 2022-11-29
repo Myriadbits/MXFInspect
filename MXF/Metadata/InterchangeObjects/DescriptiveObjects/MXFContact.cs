@@ -50,17 +50,17 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == contactID_Key: 
+                    case var _ when localTag.AliasUID == contactID_Key: 
                         this.ContactID = reader.ReadUUID() ; return true;
-                    case var _ when localTag.Key == addressObjects_Key:
+                    case var _ when localTag.AliasUID == addressObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("Address Objects", "Address Object")); 
                         return true;
                     // TODO replace generic MXFObject with class NameValue once implemented
-                    case var _ when localTag.Key == nameValueObjects_Key: 
+                    case var _ when localTag.AliasUID == nameValueObjects_Key: 
                         this.AddChild(reader.ReadReferenceSet<MXFObject>("NameValue Objects", "NameValue Object")); 
                         return true;
                 }

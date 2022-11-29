@@ -42,9 +42,9 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
-                case 0x5212: this.MIMEEncoding = reader.ReadUTF16String(localTag.Size); return true;
+                case 0x5212: this.MIMEEncoding = reader.ReadUTF16String(localTag.Length.Value); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

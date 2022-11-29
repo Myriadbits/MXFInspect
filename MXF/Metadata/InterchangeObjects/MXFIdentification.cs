@@ -80,17 +80,17 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-			switch (localTag.Tag)
+			switch (localTag.TagValue)
 			{
 				case 0x3C09: this.GenerationID = reader.ReadUUID(); return true;
-				case 0x3C01: this.ApplicationSupplierName = reader.ReadUTF16String(localTag.Size); return true;
-				case 0x3C02: this.ApplicationName = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x3C01: this.ApplicationSupplierName = reader.ReadUTF16String(localTag.Length.Value); return true;
+				case 0x3C02: this.ApplicationName = reader.ReadUTF16String(localTag.Length.Value); return true;
 				case 0x3C03: this.ApplicationVersion = reader.ReadProductVersion(); return true;
-				case 0x3C04: this.ApplicationVersionString = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x3C04: this.ApplicationVersionString = reader.ReadUTF16String(localTag.Length.Value); return true;
 				case 0x3C05: this.ApplicationProductId = reader.ReadAUID(); return true;
 				case 0x3C06: this.FileModificationDate = reader.ReadTimestamp(); return true;
 				case 0x3C07: this.ToolkitVersion = reader.ReadProductVersion(); return true;
-				case 0x3C08: this.ApplicationPlatform = reader.ReadUTF16String(localTag.Size); return true;
+				case 0x3C08: this.ApplicationPlatform = reader.ReadUTF16String(localTag.Length.Value); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

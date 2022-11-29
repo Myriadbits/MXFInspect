@@ -42,11 +42,11 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-			if (localTag.Key != null)
+			if (localTag.AliasUID != null)
 			{
-				switch (localTag.Key)
+				switch (localTag.AliasUID)
 				{
-					case var _ when localTag.Key == linkedObjPluginID_Key:
+					case var _ when localTag.AliasUID == linkedObjPluginID_Key:
 						this.AddChild(reader.ReadReference<MXFDescriptiveMarker>("LinkedDescriptiveObjectPluginID")); 
 						return true;
 				}

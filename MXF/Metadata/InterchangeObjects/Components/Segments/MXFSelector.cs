@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x0F01: this.AddChild(reader.ReadReference<MXFSegment>("SelectedSegment")); return true;
                 case 0x0F02: this.AddChild(reader.ReadReferenceSet<MXFSegment>("AlternateSegments", "AlternateSegment")); return true;

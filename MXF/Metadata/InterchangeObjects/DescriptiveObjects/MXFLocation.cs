@@ -53,12 +53,12 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == locDescription_Key: this.LocationDescription = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == locKind_Key: this.LocationKind = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.AliasUID == locDescription_Key: this.LocationDescription = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == locKind_Key: this.LocationKind = reader.ReadUTF16String(localTag.Length.Value); return true;
                 }
             }
 

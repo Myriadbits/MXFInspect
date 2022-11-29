@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x000c: IsOptional = reader.ReadBoolean(); return true;
                 case 0x000b: PropertyType = reader.ReadAUID(); return true;

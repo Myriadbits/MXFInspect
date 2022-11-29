@@ -45,11 +45,11 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == SoundfieldGroupLinkId_Key: this.SoundfieldGroupLinkID = reader.ReadUUID(); return true;
+                    case var _ when localTag.AliasUID == SoundfieldGroupLinkId_Key: this.SoundfieldGroupLinkID = reader.ReadUUID(); return true;
                 }
             }
             return base.ParseLocalTag(reader, localTag);

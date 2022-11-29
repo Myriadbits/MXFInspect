@@ -45,17 +45,17 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == personObjects_Key:
+                    case var _ when localTag.AliasUID == personObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("PersonObjects", "PersonObject")); 
                         return true;
-                    case var _ when localTag.Key == organizationObjects_Key: 
+                    case var _ when localTag.AliasUID == organizationObjects_Key: 
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("OrganizationObjects", "OrganizationObject")); 
                         return true;
-                    case var _ when localTag.Key == locationObjects_Key: 
+                    case var _ when localTag.AliasUID == locationObjects_Key: 
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("LocationObjects", "LocationObject")); 
                         return true;
                 }

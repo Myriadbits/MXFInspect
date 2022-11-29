@@ -29,8 +29,8 @@ namespace Myriadbits.MXF.KLV
         uint ReadUInt32();
         int ReadInt32();
         ulong ReadUInt64();
-        string ReadUTF16String(int length);
-        string ReadUTF8String(int length);
+        string ReadUTF16String(long length);
+        string ReadUTF8String(long length);
         #endregion
 
         #region ref types

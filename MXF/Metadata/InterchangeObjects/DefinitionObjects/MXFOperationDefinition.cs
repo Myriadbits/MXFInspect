@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x1e02: IsTimeWarp = reader.ReadBoolean(); return true;
                 case 0x1e07: OperationInputCount = reader.ReadInt32(); return true;

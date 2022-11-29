@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 // TODO: this is a risky operation reading the array like this
                 case 0x0018: ElementCount = reader.ReadUInt32(); return true;

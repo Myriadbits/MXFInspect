@@ -55,11 +55,11 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x1601: this.TimecodeStreamSampleRate = reader.ReadRational(); return true;
                 case 0x1603: this.TimecodeSource = (MXFTCSource?)reader.ReadByte(); return true;
-                case 0x1602: this.TimecodeStreamData = reader.ReadBytes(localTag.Size); return true;
+                case 0x1602: this.TimecodeStreamData = reader.ReadBytes((int)localTag.Length.Value); return true;
             }
 
             return base.ParseLocalTag(reader, localTag);

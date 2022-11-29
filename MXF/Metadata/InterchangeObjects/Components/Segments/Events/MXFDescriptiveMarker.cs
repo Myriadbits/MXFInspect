@@ -67,18 +67,18 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x6102:
-                    this.DescribedTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Size / sizeof(UInt32));
+                    this.DescribedTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Length.Value / sizeof(UInt32));
                     return true;
                 case 0x6101: this.AddChild(reader.ReadReference<MXFDescriptiveFramework>("DescriptiveFrameworkObject")); return true;
-                case var _ when localTag.Key == metadataScheme_Key:
+                case var _ when localTag.AliasUID == metadataScheme_Key:
                     this.DescriptiveMetadataScheme = reader.ReadAUID(); 
                     return true;
-                case var _ when localTag.Key == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUID(); return true;
-                case var _ when localTag.Key == metadataApplicationEnvironmentID_Key: 
-                    this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Size); 
+                case var _ when localTag.AliasUID == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUID(); return true;
+                case var _ when localTag.AliasUID == metadataApplicationEnvironmentID_Key: 
+                    this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Length.Value); 
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

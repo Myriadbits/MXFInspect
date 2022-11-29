@@ -45,9 +45,9 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
-                case 0x001d: MemberNames = reader.ReadUTF16String(localTag.Size).Split((char)0x00); return true;
+                case 0x001d: MemberNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00); return true;
                 case 0x001c: this.AddChild(reader.ReadReferenceSet<MXFTypeDefinition>("MemberTypes", "MemberType")); return true;
             }
             return base.ParseLocalTag(reader, localTag);

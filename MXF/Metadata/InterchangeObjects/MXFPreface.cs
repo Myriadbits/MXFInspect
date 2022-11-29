@@ -76,7 +76,7 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x3B01: this.ByteOrder = reader.ReadUInt16(); return true;
                 case 0x3B02: this.FileLastModified = reader.ReadTimestamp(); return true;
@@ -90,7 +90,7 @@ namespace Myriadbits.MXF
                 case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
                     // TODO review how the metadataschemes are read (especially if there are no schemes present)
                 case 0x3B0B: this.AddChild(reader.ReadAUIDSet("Descriptive Metadata Schemes", "DM scheme")); return true;
-                case var _ when localTag.Key == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBoolean(); return true;
+                case var _ when localTag.AliasUID == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBoolean(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

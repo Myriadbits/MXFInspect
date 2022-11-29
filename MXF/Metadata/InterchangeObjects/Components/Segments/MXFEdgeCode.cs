@@ -59,9 +59,9 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
-                case 0x0404: this.EdgeCodeHeader = reader.ReadBytes(localTag.Size); return true;
+                case 0x0404: this.EdgeCodeHeader = reader.ReadBytes((int)localTag.Length.Value); return true;
                 case 0x0401: this.EdgeCodeStart = reader.ReadUInt64(); return true;
                 case 0x0403: this.EdgeCodeFormat = (MXFEdge)reader.ReadUInt16(); return true;
                 case 0x0402: this.EdgeCodeFilmFormat = (MXFFilm)reader.ReadUInt16(); return true;

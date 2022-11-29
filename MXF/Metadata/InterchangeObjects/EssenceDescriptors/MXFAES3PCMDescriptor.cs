@@ -81,19 +81,19 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-			switch (localTag.Tag)
+			switch (localTag.TagValue)
 			{
 				case 0x3D0D: this.Emphasis = (MXFEmphasis)reader.ReadByte(); return true;
 				case 0x3D0F: this.BlockStartOffset = reader.ReadUInt16(); return true;
 				case 0x3D08: this.AuxiliaryBitsMode = (MXFAuxBitsMode)reader.ReadByte(); return true;
                 case 0x3D10: this.ChannelStatusMode = reader.ReadArray(reader.ReadChannelstatusMode, 8); return true;
                 case 0x3D11:
-						this.FixedChannelStatusData = reader.ReadBytes(localTag.Size);
+						this.FixedChannelStatusData = reader.ReadBytes((int)localTag.Length.Value);
 						return true;
 				case 0x3D12:
 					this.UserDataMode = reader.ReadArray(reader.ReadUserDataMode, 2); return true;
 				case 0x3D13:
-						this.FixedUserData = reader.ReadBytes(localTag.Size);
+						this.FixedUserData = reader.ReadBytes((int)localTag.Length.Value);
 						return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

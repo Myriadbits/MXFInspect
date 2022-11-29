@@ -70,16 +70,16 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == cryptoContextId_Key: this.CryptographicContextID = reader.ReadUUID(); return true;
-                    case var _ when localTag.Key == cipherAlgorithm_Key: this.CipherAlgorithm = reader.ReadAUID(); return true;
-                    case var _ when localTag.Key == cryptoKeyID_Key: this.CryptographicKeyID = reader.ReadAUID(); return true;
-                    case var _ when localTag.Key == mICAlgorithm_Key: this.MICAlgorithm = reader.ReadAUID(); return true;
-                    case var _ when localTag.Key == sourceContainerFormat_Key: this.SourceContainerFormat = reader.ReadAUID(); return true;
-                    case var _ when localTag.Key == mICCarriage_Key: this.MICCarriage = reader.ReadAUID(); return true;
+                    case var _ when localTag.AliasUID == cryptoContextId_Key: this.CryptographicContextID = reader.ReadUUID(); return true;
+                    case var _ when localTag.AliasUID == cipherAlgorithm_Key: this.CipherAlgorithm = reader.ReadAUID(); return true;
+                    case var _ when localTag.AliasUID == cryptoKeyID_Key: this.CryptographicKeyID = reader.ReadAUID(); return true;
+                    case var _ when localTag.AliasUID == mICAlgorithm_Key: this.MICAlgorithm = reader.ReadAUID(); return true;
+                    case var _ when localTag.AliasUID == sourceContainerFormat_Key: this.SourceContainerFormat = reader.ReadAUID(); return true;
+                    case var _ when localTag.AliasUID == mICCarriage_Key: this.MICCarriage = reader.ReadAUID(); return true;
 
                 }
             }

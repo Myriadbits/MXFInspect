@@ -85,7 +85,7 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-			switch (localTag.Tag)
+			switch (localTag.TagValue)
 			{
 				case 0x3406: this.ComponentMaxRef = reader.ReadUInt32(); return true;
 				case 0x3407: this.ComponentMinRef = reader.ReadUInt32(); return true;
@@ -93,7 +93,7 @@ namespace Myriadbits.MXF
 				case 0x3409: this.AlphaMinRef = reader.ReadUInt32(); return true;
 				case 0x3405: this.ScanningDirection = (MXFScanningDirection) reader.ReadByte(); return true;
 				case 0x3401: this.PixelLayout = reader.ReadRGBALayout(); return true;
-				case 0x3403: this.Palette = reader.ReadBytes(localTag.Size); return true; 
+				case 0x3403: this.Palette = reader.ReadBytes((int)localTag.Length.Value); return true; 
 				case 0x3404: this.PaletteLayout = reader.ReadRGBALayout(); return true;
 			}
 			return base.ParseLocalTag(reader, localTag);

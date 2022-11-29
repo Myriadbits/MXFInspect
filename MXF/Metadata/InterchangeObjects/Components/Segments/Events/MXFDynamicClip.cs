@@ -63,12 +63,12 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x5801: this.DynamicSourcePackageID = reader.ReadUMIDKey(); return true;
-                case 0x5802: reader.ReadArray(reader.ReadUInt32, localTag.Size); return true;
-                case 0x5803: this.SourceIndex = reader.ReadBytes(localTag.Size); return true;
-                case 0x5804: this.SourceSpecies = reader.ReadBytes(localTag.Size); return true;
+                case 0x5802: reader.ReadArray(reader.ReadUInt32, localTag.Length.Value); return true;
+                case 0x5803: this.SourceIndex = reader.ReadBytes((int)localTag.Length.Value); return true;
+                case 0x5804: this.SourceSpecies = reader.ReadBytes((int)localTag.Length.Value); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

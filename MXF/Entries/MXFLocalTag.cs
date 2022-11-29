@@ -25,72 +25,49 @@ using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using System;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
+using static Myriadbits.MXF.KLV.KLVLength;
+using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFLocalTag : MXFObject
+    public class MXFLocalTag : KLVTriplet<KLVKey, KLVLength, ByteArray>
     {
-        private const string CATEGORYNAME = "LocalTag";
+        // TODO add Alias Universal Label?
+        public AUID AliasUID { get; set; }
 
-        [Category(CATEGORYNAME)]
-        public long DataOffset { get; set; }
+        [Browsable(false)]
+        public UInt16 TagValue { get { return (UInt16)((UInt16)(Key[0] << 8) + Key[1]); } }
 
-        [Category(CATEGORYNAME)]
-        public UInt16 Tag { get; set; }
-
-        [Category(CATEGORYNAME)]
-        public UInt16 Size { get; set; }
-
-        [Category(CATEGORYNAME)]
-        public AUID Key { get; set; }
-
-        [Category(CATEGORYNAME)]
-        public object Value { get; set; }
-
-
-        public MXFLocalTag(IKLVStreamReader reader)
-            : base(reader)
+        public MXFLocalTag(KLVKey key, KLVLength length, long offset, Stream stream) : base(key, length, offset, stream)
         {
-            this.Tag = reader.ReadUInt16();
-            this.Size = reader.ReadUInt16();
-            this.DataOffset = reader.Position;
-            this.TotalLength = this.Size;
-        }
-
-        /// <summary>
-        /// Parse this tag
-        /// </summary>
-        /// <param name="reader"></param>
-        public void Parse(IKLVStreamReader reader)
-        {
-            if (this.Size == 1)
-                this.Value = reader.ReadByte();
-            else if (this.Size == 2)
-                this.Value = reader.ReadUInt16();
-            else if (this.Size == 4)
-                this.Value = reader.ReadUInt32();
-            else if (this.Size == 8)
-                this.Value = reader.ReadUInt64();
-            else
+            // check passed parameters 
+            if (Key.KeyLength != KeyLengths.TwoBytes)
             {
-                this.Value = reader.ReadBytes(this.Size);
+                throw new ArgumentException($"The key for a local tag must be two bytes long, instead is: {Key.KeyLength}.");
+            }
+
+            if (Length.LengthEncoding != LengthEncodings.TwoBytes)
+            {
+                throw new ArgumentException($"The length encoding for a local tag must be two bytes long, instead is: {Length.LengthEncoding}.");
             }
         }
+
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            if (Key is UL ul)
+            if (AliasUID is UL ul)
             {
-                sb.Append($"LocalTag 0x{this.Tag:X4} [len {this.Size}] -> {ul.Name} ");
+                sb.Append($"LocalTag {this.Key:X4} [len {this.Length.Value}] -> {ul.Name} ");
             }
             else
             {
-                sb.Append($"LocalTag 0x{this.Tag:X4} [len {this.Size}] -> <Unknown tag> ");
+                sb.Append($"LocalTag {this.Key:X4} [len {this.Length.Value}] -> <Unknown tag> ");
             }
             return sb.ToString();
         }
-
     }
 }

@@ -32,6 +32,7 @@ using System.Threading;
 using System.IO;
 using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Identifiers;
+using System.Collections.Concurrent;
 
 namespace Myriadbits.MXF
 {
@@ -97,7 +98,7 @@ namespace Myriadbits.MXF
             {
                 Stopwatch sw = Stopwatch.StartNew();
                 int currentPercentage = 0;
-                int previousPercentage = 0;             
+                int previousPercentage = 0;
 
                 using (var fileStream = new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
                 {
@@ -171,24 +172,10 @@ namespace Myriadbits.MXF
 
                     // Now process the pack list (partition packs, treat special cases)
                     overallProgress?.Report(new TaskReport(65, "Process packs"));
-                    ProcessPacks(packList);
+                    ProcessAndAttachPacks(packList);
 
-                    // Set property description by reading the description attribute (for all types)
-                    MXFPackFactory.SetDescriptionFromAttributeForAllTypes();
-
-                    // link local tag keys to primer entry keys
-                    var localSets = packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLokalTag>().Any());
-
-                    foreach (var ls in localSets)
-                    {
-                        ls.LookUpLocalTagKeys();
-                    }
-
-                    // parse all local tags, as now we know the primerpackage aliases
-                    ReparseLocalTags(packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any()));
-
-
-
+                    // Reparse all local tags, as now we know the primerpackage aliases
+                    ResolveAndParseLocalTags(packList);
 
                     // Progress should now be 80%
                     overallProgress?.Report(new TaskReport(73, "Update tree"));
@@ -204,6 +191,9 @@ namespace Myriadbits.MXF
                     sw.Restart();
                     CreateLogicalTree();
                     Debug.WriteLine("Logical tree created in {0} ms", sw.ElapsedMilliseconds);
+
+                    // Set property description by reading the description attribute (for all types)
+                    MXFPackFactory.SetDescriptionFromAttributeForAllTypes();
 
                     // Finished, return this (MXFFile)
                     overallProgress?.Report(new TaskReport(100, "Done"));
@@ -281,7 +271,7 @@ namespace Myriadbits.MXF
             }
         }
 
-        private void ProcessPacks(IEnumerable<MXFObject> packList)
+        private void ProcessAndAttachPacks(IEnumerable<MXFObject> packList)
         {
             MXFPartition currentPartition = null;
             int partitionNumber = 0;
@@ -311,14 +301,14 @@ namespace Myriadbits.MXF
                         }
                         break;
 
-                    case MXFPrimerPack primer:
-                        if (currentPartition != null)
-                        {
-                            // Let the partition know all primer keys
-                            currentPartition.PrimerKeys = primer.PrimerEntries;
-                            currentPartition.AddChild(primer); // Add the primer 
-                        }
-                        break;
+                    //case MXFPrimerPack primer:
+                    //    if (currentPartition != null)
+                    //    {
+                    //        // Let the partition know all primer keys
+                    //        currentPartition.PrimerKeys = primer.PrimerEntries;
+                    //        currentPartition.AddChild(primer); // Add the primer 
+                    //    }
+                    //    break;
 
                     case MXFSystemItem si:
                         if (currentPartition != null)
@@ -370,14 +360,16 @@ namespace Myriadbits.MXF
             }
         }
 
-        private void ReparseLocalTags(IEnumerable<MXFLocalSet> localSetList)
+        private void ResolveAndParseLocalTags(IEnumerable<MXFObject> packList)
         {
-            using (var byteReader = new KLVStreamReader(new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240)))
+            var localSetList = packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any());
+            foreach (var ls in localSetList.ToList())
             {
-                foreach (var ls in localSetList)
-                {
-                    ls.ParseTagsAgain(byteReader);
-                }
+                // link local tag keys to primer entry keys
+                ls.LookUpLocalTagKeys();
+
+                // now parse tags
+                ls.ParseTags();
             }
         }
 

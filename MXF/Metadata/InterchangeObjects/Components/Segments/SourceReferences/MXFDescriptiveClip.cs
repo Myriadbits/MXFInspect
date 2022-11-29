@@ -49,10 +49,10 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-			switch (localTag.Tag)
+			switch (localTag.TagValue)
 			{
 				case 0x6103: this.DescriptiveClipDescribedTrackIDs = 
-						reader.ReadArray(reader.ReadUInt32, localTag.Size / sizeof(UInt32)); 
+						reader.ReadArray(reader.ReadUInt32, localTag.Length.Value / sizeof(UInt32)); 
 					return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 

@@ -96,9 +96,9 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
-                case 0x8007: this.LensAttributes = reader.ReadUTF8String(localTag.Size); return true;
+                case 0x8007: this.LensAttributes = reader.ReadUTF8String(localTag.Length.Value); return true;
                 case 0x8000: this.IrisFNumber = reader.ReadUInt16(); return true;
                 case 0x8001: this.FocusPositionFromImagePlane = reader.ReadUInt16();  return true;
                 case 0x8002: this.FocusPositionFromFrontLensVertex = reader.ReadUInt16(); return true;

@@ -75,44 +75,44 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == frameworkTitle_Key: 
-                        this.FrameworkTitle = reader.ReadUTF16String(localTag.Size); 
+                    case var _ when localTag.AliasUID == frameworkTitle_Key: 
+                        this.FrameworkTitle = reader.ReadUTF16String(localTag.Length.Value); 
                         return true;
-                    case var _ when localTag.Key == extTextLanguageCode_Key: 
-                        this.FrameworkExtendedTextLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                    case var _ when localTag.AliasUID == extTextLanguageCode_Key: 
+                        this.FrameworkExtendedTextLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
                         return true;
-                    case var _ when localTag.Key == primExtSpokenLanguageCode_Key: 
-                        this.PrimaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                    case var _ when localTag.AliasUID == primExtSpokenLanguageCode_Key: 
+                        this.PrimaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
                         return true;
-                    case var _ when localTag.Key == secExtSpokenLanguageCode_Key: 
-                        this.SecondaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                    case var _ when localTag.AliasUID == secExtSpokenLanguageCode_Key: 
+                        this.SecondaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
                         return true;
-                    case var _ when localTag.Key == orgExtSpokenLanguageCode_Key: 
-                        this.OriginalExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Size); 
+                    case var _ when localTag.AliasUID == orgExtSpokenLanguageCode_Key: 
+                        this.OriginalExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
                         return true;
-                    case var _ when localTag.Key == thesaurusName_Key: 
-                        this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Size); 
+                    case var _ when localTag.AliasUID == thesaurusName_Key: 
+                        this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Length.Value); 
                         return true;
-                    case var _ when localTag.Key == contactsListObject_Key:
+                    case var _ when localTag.AliasUID == contactsListObject_Key:
                         this.AddChild(reader.ReadReference<MXFContactsList>("ContactsList Object")); 
                         return true;
-                    case var _ when localTag.Key == locations_Key:
+                    case var _ when localTag.AliasUID == locations_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFLocation>("LocationObjects", "LocationObject")); 
                         return true;
-                    case var _ when localTag.Key == titlesObjects_Key:
+                    case var _ when localTag.AliasUID == titlesObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("Titles Objects", "TitlesObject")); 
                         return true;
-                    case var _ when localTag.Key == annotationObjects_Key:
+                    case var _ when localTag.AliasUID == annotationObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("AnnotationObjects", "AnnotationObject")); 
                         return true;
-                    case var _ when localTag.Key == participantObjects_Key:
+                    case var _ when localTag.AliasUID == participantObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ParticipantObjects", "ParticipantObjects")); 
                         return true;
-                    case var _ when localTag.Key == metadataServerLocators_Key:
+                    case var _ when localTag.AliasUID == metadataServerLocators_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFLocator>("MetadataServerLocators", "MetadataServerLocator")); 
                         return true;
                 }

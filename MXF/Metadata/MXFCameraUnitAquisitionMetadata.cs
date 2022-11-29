@@ -150,10 +150,10 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
-                case 0x8113: this.CameraSettingFileURI = reader.ReadUTF8String(localTag.Size); return true;
-                case 0x8114: this.CameraAttributes = reader.ReadUTF8String(localTag.Size); return true;
+                case 0x8113: this.CameraSettingFileURI = reader.ReadUTF8String(localTag.Length.Value); return true;
+                case 0x8114: this.CameraAttributes = reader.ReadUTF8String(localTag.Length.Value); return true;
                 case 0x3210: this.TransferCharacteristic = reader.ReadUL(); return true;
                 case 0x8106: this.CaptureFrameRate = reader.ReadRational(); return true;
                 case 0x8100: this.AutoExposureMode = reader.ReadUL(); return true;
@@ -169,7 +169,7 @@ namespace Myriadbits.MXF
                 case 0x810b: this.ISOSensitivity = reader.ReadUInt16(); return true;
                 case 0x810c: this.ElectricalExtenderMagnification = reader.ReadUInt16(); return true;
                 case 0x8115: this.ExposureIndexOfPhotoMeter = reader.ReadUInt16(); return true;
-                case 0x8118: this.ColorMatrix = reader.ReadArray(reader.ReadRational, localTag.Size); return true;
+                case 0x8118: this.ColorMatrix = reader.ReadArray(reader.ReadRational, localTag.Length.Value); return true;
                 case 0x810d: this.AutoWhiteBalanceMode = (MXFAutoWhiteBalanceMode)reader.ReadByte(); return true;
                 case 0x810e: this.WhiteBalance = reader.ReadUInt16(); return true;
                 case 0x810f: this.CameraMasterBlackLevel = (short)reader.ReadUInt16(); return true;

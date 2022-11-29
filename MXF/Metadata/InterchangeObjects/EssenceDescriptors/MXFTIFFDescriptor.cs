@@ -64,11 +64,11 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Tag)
+                switch (localTag.TagValue)
                 {
-                    case 0x3706: this.TIFFSummary = reader.ReadBytes(localTag.Size); return true;
+                    case 0x3706: this.TIFFSummary = reader.ReadBytes((int)localTag.Length.Value); return true;
                     case 0x3703: this.LeadingLines = reader.ReadInt32(); return true;
                     case 0x3704: this.TrailingLines = reader.ReadInt32(); return true;
                     case 0x3701: this.IsUniform = reader.ReadBoolean(); return true;

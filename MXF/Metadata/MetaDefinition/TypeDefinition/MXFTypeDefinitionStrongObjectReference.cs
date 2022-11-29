@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x0011: ReferencedType = reader.ReadAUID(); return true;
                 // TODO maybe this is more appropriate?

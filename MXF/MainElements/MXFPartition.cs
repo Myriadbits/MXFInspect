@@ -105,7 +105,7 @@ namespace Myriadbits.MXF
         public MXFEssenceElement FirstPictureEssenceElement { get; set; }
 
         [Browsable(false)]
-        public IReadOnlyDictionary<UInt16, MXFEntryPrimer> PrimerKeys { get; set; }
+        public IReadOnlyDictionary<UInt16, MXFPrimerEntry> PrimerKeys { get; set; }
 
         [Browsable(false)]
         public MXFFile File { get; set; }

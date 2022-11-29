@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x0013: this.AddChild(reader.ReadAUIDSet("TargetSet", "Target")); return true;
                 case 0x0012: WeakReferencedType = reader.ReadAUID(); return true;

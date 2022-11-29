@@ -57,10 +57,10 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
-                case var _ when localTag.Key == audioBitRate_Key: this.MPEGAudioBitRate = reader.ReadUInt32(); return true;
-                case var _ when localTag.Key == channelAssignment_Key: this.MPEGAudioChannelAssignment = reader.ReadUL(); return true;
+                case var _ when localTag.AliasUID == audioBitRate_Key: this.MPEGAudioBitRate = reader.ReadUInt32(); return true;
+                case var _ when localTag.AliasUID == channelAssignment_Key: this.MPEGAudioChannelAssignment = reader.ReadUL(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

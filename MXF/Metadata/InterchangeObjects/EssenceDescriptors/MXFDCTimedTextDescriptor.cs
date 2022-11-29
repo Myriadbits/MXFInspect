@@ -96,17 +96,17 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == resourceID_Key: this.ResourceID = reader.ReadUUID(); return true;
-                    case var _ when localTag.Key == namespaceURI_Key: this.NamespaceURI = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == rFC5646LanguageTagList_Key: this.RFC5646LanguageTagList = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == uCSEncoding_Key: this.UCSEncoding = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == displayType_Key: this.DisplayType = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == intrinsicPictureResolution_Key: this.IntrinsicPictureResolution = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == zpositionInUse_Key: this.ZpositionInUse = reader.ReadByte(); return true;
+                    case var _ when localTag.AliasUID == resourceID_Key: this.ResourceID = reader.ReadUUID(); return true;
+                    case var _ when localTag.AliasUID == namespaceURI_Key: this.NamespaceURI = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == rFC5646LanguageTagList_Key: this.RFC5646LanguageTagList = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == uCSEncoding_Key: this.UCSEncoding = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == displayType_Key: this.DisplayType = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == intrinsicPictureResolution_Key: this.IntrinsicPictureResolution = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == zpositionInUse_Key: this.ZpositionInUse = reader.ReadByte(); return true;
                 }
             }
             return base.ParseLocalTag(reader, localTag);

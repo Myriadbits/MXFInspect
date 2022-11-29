@@ -34,14 +34,21 @@ namespace Myriadbits.MXF
     {
         private long currentPackNumber = 0;
 
+        public long SubStreamOffset { get; }
+
         public MXFPackParser(Stream stream) : base(stream)
         {
+        }
+
+        public MXFPackParser(Stream stream, long subStreamOffset) : base(stream)
+        {
+            this.SubStreamOffset = subStreamOffset;
         }
 
         public override MXFPack GetNext()
         {
 
-            var klv = CreateKLV(currentKLVOffset, ParseUL, ParseBERKLVLength);
+            var klv = CreateKLV(SubStreamOffset + currentKLVOffset, ParseUL, ParseBERKLVLength);
             var ss = new SubStream(klvStream, klv.Offset, klv.TotalLength);
 
             var pack = new MXFPack(klv.Key, klv.Length, klv.Offset, ss);

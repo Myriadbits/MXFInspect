@@ -55,7 +55,7 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x0D03: this.PulldownDirection = (MXFPulldownDirection?)reader.ReadByte(); return true;
                 case 0x0D02: this.PulldownKind = (MXFPulldownKind?)reader.ReadByte(); return true;

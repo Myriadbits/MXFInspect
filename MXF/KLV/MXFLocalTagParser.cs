@@ -33,19 +33,23 @@ namespace Myriadbits.MXF
 {
     public class MXFLocalTagParser : KLVTripletParser<KLVKey, KLVLength, ByteArray>
     {
+        private readonly long absoluteOffset;
 
-        public MXFLocalTagParser(Stream stream) : base(stream)
+        public MXFLocalTagParser(Stream stream, long absOffset) : base(stream)
         {
+            absoluteOffset = absOffset;
         }
 
-        public override MXFLokalTag GetNext()
+        public override MXFLocalTag GetNext()
         {
             Seek(currentKLVOffset);
 
             KLVKey ul = ParseTwoBytesLocalTagKey();
             KLVLength length = ParseLocalTagLength();
             Stream ss = new SubStream(klvStream, currentKLVOffset, ul.ArrayLength + length.Value);
-            MXFLokalTag tag = new MXFLokalTag(ul, length, currentKLVOffset, ss);
+            long tagOffset = absoluteOffset + currentKLVOffset;
+            MXFLocalTag tag = new MXFLocalTag(ul, length, tagOffset, ss);
+            Current = tag;
             
             // advance to next pack
             Seek(currentKLVOffset + tag.TotalLength);

@@ -59,12 +59,12 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x3c0a: InstanceId = reader.ReadUUID(); return true;
-                case 0x0006: MetaDefinitionName = reader.ReadUTF16String(localTag.Size); return true;
+                case 0x0006: MetaDefinitionName = reader.ReadUTF16String(localTag.Length.Value); return true;
                 case 0x0005: MetaDefinitionIdentification = reader.ReadAUID(); return true;
-                case 0x0007: MetaDefinitionDescription = reader.ReadUTF16String(localTag.Size); return true;
+                case 0x0007: MetaDefinitionDescription = reader.ReadUTF16String(localTag.Length.Value); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

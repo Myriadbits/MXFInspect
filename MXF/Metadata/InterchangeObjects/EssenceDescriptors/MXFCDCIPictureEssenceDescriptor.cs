@@ -81,7 +81,7 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x3301: this.ComponentDepth = reader.ReadUInt32(); return true;
                 case 0x3302: this.HorizontalSubsampling = reader.ReadUInt32(); return true;

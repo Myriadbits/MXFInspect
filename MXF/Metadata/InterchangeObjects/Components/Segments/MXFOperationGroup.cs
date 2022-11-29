@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x0B01: this.AddChild(reader.ReadReference<MXFOperationDefinition>("Operation")); return true;
                 case 0x0B04: this.BypassOverride = reader.ReadUInt32(); return true;

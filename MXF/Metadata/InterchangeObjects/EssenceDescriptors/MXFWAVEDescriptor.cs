@@ -43,11 +43,11 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Tag)
+                switch (localTag.TagValue)
                 {
-                    case 0x3801: this.WaveSummary = reader.ReadBytes(localTag.Size); return true;
+                    case 0x3801: this.WaveSummary = reader.ReadBytes((int)localTag.Length.Value); return true;
                 }
             }
             return base.ParseLocalTag(reader, localTag);

@@ -114,14 +114,7 @@ namespace Myriadbits.MXFInspect
 
         private long GetObjectLength(MXFObject obj)
         {
-            switch (obj)
-            {
-                case MXFLocalTag tag:
-                    return tag.DataOffset - tag.Offset + tag.Size;
-
-                default:
-                    return obj.TotalLength;
-            }
+            return obj.TotalLength;
         }
 
         private string GetHexDump(long startOffset, long len, int maxNumOfDigits, int bytesPerLine, byte[] data)

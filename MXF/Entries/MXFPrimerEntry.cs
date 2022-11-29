@@ -28,7 +28,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
-    public class MXFEntryPrimer : MXFObject
+    public class MXFPrimerEntry : MXFObject
 	{
 		private const string CATEGORYNAME = "PrimerEntry";
 
@@ -38,7 +38,7 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public AUID AliasUID { get; set; }
 
-		public MXFEntryPrimer(IKLVStreamReader reader, long offset)
+		public MXFPrimerEntry(IKLVStreamReader reader, long offset)
 			: base(reader)
 		{
 			this.Offset = offset;
@@ -53,7 +53,11 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("Tag 0x{0:X4} -> {1}", this.Tag, this.AliasUID.ToString());
+            //return $"<{this[0]:x2}.{this[1]:x2}>";
+
+            //sb.Append($"LocalTag {this.Key:X4} [len {this.Length.Value}] -> {ul.Name} ");
+
+            return string.Format("Tag 0x{0:X4} -> {1}", this.Tag, this.AliasUID.ToString());
 		}
 	}
 }

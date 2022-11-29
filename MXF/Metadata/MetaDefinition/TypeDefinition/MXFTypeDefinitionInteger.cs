@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x000F: Size = reader.ReadByte(); return true;
                 case 0x0010: IsSigned = reader.ReadBoolean(); return true;

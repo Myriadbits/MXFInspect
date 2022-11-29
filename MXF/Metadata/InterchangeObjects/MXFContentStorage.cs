@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-			switch (localTag.Tag)
+			switch (localTag.TagValue)
 			{
 				case 0x1901: this.AddChild(reader.ReadReferenceSet<MXFPackage>("Packages", "Package")); return true;
 				case 0x1902: this.AddChild(reader.ReadReferenceSet<MXFEssenceContainerData>("EssenceContainer data", "Essencecontainer data")); return true;

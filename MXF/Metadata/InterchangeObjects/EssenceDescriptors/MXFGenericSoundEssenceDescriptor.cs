@@ -102,7 +102,7 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x3D03: this.AudioSamplingRate = reader.ReadRational(); return true;
                 case 0x3D02: this.Locked = reader.ReadBoolean(); return true;
@@ -112,8 +112,8 @@ namespace Myriadbits.MXF
                 case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
                 case 0x3D0C: this.DialNorm = reader.ReadSByte(); return true;
                 case 0x3D06: this.SoundEssenceCoding = reader.ReadUL(); return true;
-                case var _ when localTag.Key == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
-                case var _ when localTag.Key == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
+                case var _ when localTag.AliasUID == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
+                case var _ when localTag.AliasUID == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

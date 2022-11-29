@@ -103,20 +103,20 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == initMetadata_Key: this.VC1InitializationMetadata = reader.ReadBytes(localTag.Size); return true;
-                    case var _ when localTag.Key == singleSequence_Key: this.VC1SingleSequence = reader.ReadBoolean(); return true;
-                    case var _ when localTag.Key == codedContent_Key: this.VC1CodedContentType = (MXFCodedContentScanning)reader.ReadByte(); return true;
-                    case var _ when localTag.Key == identicalGOP_Key: this.VC1IdenticalGOP = reader.ReadBoolean(); return true;
-                    case var _ when localTag.Key == maxGOP_Key: this.VC1MaxGOP = reader.ReadUInt16(); return true;
-                    case var _ when localTag.Key == pictureCount_Key: this.VC1BPictureCount = reader.ReadUInt16(); return true;
-                    case var _ when localTag.Key == avgBitRate_Key: this.VC1AverageBitRate = reader.ReadUInt32(); return true;
-                    case var _ when localTag.Key == maxBitRate_Key: this.VC1MaximumBitRate = reader.ReadUInt32(); return true;
-                    case var _ when localTag.Key == profile_Key: this.VC1Profile = reader.ReadByte(); return true;
-                    case var _ when localTag.Key == level_Key: this.VC1Level = reader.ReadByte(); return true;
+                    case var _ when localTag.AliasUID == initMetadata_Key: this.VC1InitializationMetadata = reader.ReadBytes((int)localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == singleSequence_Key: this.VC1SingleSequence = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == codedContent_Key: this.VC1CodedContentType = (MXFCodedContentScanning)reader.ReadByte(); return true;
+                    case var _ when localTag.AliasUID == identicalGOP_Key: this.VC1IdenticalGOP = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == maxGOP_Key: this.VC1MaxGOP = reader.ReadUInt16(); return true;
+                    case var _ when localTag.AliasUID == pictureCount_Key: this.VC1BPictureCount = reader.ReadUInt16(); return true;
+                    case var _ when localTag.AliasUID == avgBitRate_Key: this.VC1AverageBitRate = reader.ReadUInt32(); return true;
+                    case var _ when localTag.AliasUID == maxBitRate_Key: this.VC1MaximumBitRate = reader.ReadUInt32(); return true;
+                    case var _ when localTag.AliasUID == profile_Key: this.VC1Profile = reader.ReadByte(); return true;
+                    case var _ when localTag.AliasUID == level_Key: this.VC1Level = reader.ReadByte(); return true;
                 }
             }
 

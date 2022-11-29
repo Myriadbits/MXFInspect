@@ -41,12 +41,12 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-			switch (localTag.Tag)
+			switch (localTag.TagValue)
 			{
 				case 0x2F01:
 					this.AddChild(reader.ReadReferenceSet<MXFLocator>("Locators", "Locator")); 
 					return true;
-				case var _ when localTag.Key == subDescriptorKey: 
+				case var _ when localTag.AliasUID == subDescriptorKey: 
 					this.AddChild(reader.ReadReferenceSet<MXFSubDescriptor>("SubDescriptors", "SubDescriptor")); 
 					return true;
 			}

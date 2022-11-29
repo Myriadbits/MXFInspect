@@ -39,7 +39,7 @@ namespace Myriadbits.MXF
 		/// <param name="localTag"></param>
 		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
 				case 0x0C01: this.AddChild(reader.ReadReferenceSet<MXFSegment>("NestedScopeTracks", "NestedScopeTrack")); return true;
 			}

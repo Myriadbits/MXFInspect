@@ -47,20 +47,20 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == pictureFormatObject_Key:
+                    case var _ when localTag.AliasUID == pictureFormatObject_Key:
                         this.AddChild(reader.ReadReference<MXFDescriptiveObject>("PictureFormatObject"));
                         return true;
-                    case var _ when localTag.Key == projectObject_Key:
+                    case var _ when localTag.AliasUID == projectObject_Key:
                         this.AddChild(reader.ReadReference<MXFDescriptiveObject>("ProjectObject"));
                         return true;
-                    case var _ when localTag.Key == captionsDescriptionObjects_Key:
+                    case var _ when localTag.AliasUID == captionsDescriptionObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("CaptionsDescriptionObjects", "CaptionsDescriptionObject"));
                         return true;
-                    case var _ when localTag.Key == contractObjects_Key:
+                    case var _ when localTag.AliasUID == contractObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ContractObjects", "ContractObject"));
                         return true;
                 }

@@ -59,13 +59,13 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x3C0A: this.InstanceID = reader.ReadUUID(); return true;
                 case 0x0102: this.LinkedGenerationID = reader.ReadUUID(); return true;
                 case 0x0101: this.ObjectClass = reader.ReadAUID(); return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
-                case var _ when localTag.Key == appPluginObjects_Key: 
+                case var _ when localTag.AliasUID == appPluginObjects_Key: 
                     this.AddChild(reader.ReadReferenceSet<MXFObject>("Application Plugin Objects", "Application Plugin Object")); 
                     return true;
             }

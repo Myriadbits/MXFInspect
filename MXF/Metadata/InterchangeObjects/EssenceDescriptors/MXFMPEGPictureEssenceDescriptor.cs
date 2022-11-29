@@ -102,20 +102,20 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == bitRate_Key: this.BitRate = reader.ReadUInt32(); return true;
-                    case var _ when localTag.Key == identicalGOPIndicator_Key: this.IdenticalGOPIndicator = reader.ReadBoolean(); return true;
-                    case var _ when localTag.Key == maxGOPSize_Key: this.MaximumGOPSize = reader.ReadUInt16(); return true;
-                    case var _ when localTag.Key == maxBPictureCount_Key: this.MaximumBPictureCount = reader.ReadUInt16(); return true;
-                    case var _ when localTag.Key == constantBPictureFlag_Key: this.ConstantBPictureFlag = reader.ReadBoolean(); return true;
-                    case var _ when localTag.Key == codedContentScanningKind_Key: this.CodedContentScanningKind = (MXFCodedContentScanning)reader.ReadByte(); return true;
-                    case var _ when localTag.Key == profileAndLevel_Key: this.ProfileAndLevel = reader.ReadByte(); return true;
-                    case var _ when localTag.Key == singleSequenceFlag_Key: this.SingleSequenceFlag = reader.ReadBoolean(); return true;
-                    case var _ when localTag.Key == closedGOP_Key: this.ClosedGOPIndicator = reader.ReadBoolean(); return true;
-                    case var _ when localTag.Key == lowDelay_Key: this.LowDelayIndicator = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == bitRate_Key: this.BitRate = reader.ReadUInt32(); return true;
+                    case var _ when localTag.AliasUID == identicalGOPIndicator_Key: this.IdenticalGOPIndicator = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == maxGOPSize_Key: this.MaximumGOPSize = reader.ReadUInt16(); return true;
+                    case var _ when localTag.AliasUID == maxBPictureCount_Key: this.MaximumBPictureCount = reader.ReadUInt16(); return true;
+                    case var _ when localTag.AliasUID == constantBPictureFlag_Key: this.ConstantBPictureFlag = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == codedContentScanningKind_Key: this.CodedContentScanningKind = (MXFCodedContentScanning)reader.ReadByte(); return true;
+                    case var _ when localTag.AliasUID == profileAndLevel_Key: this.ProfileAndLevel = reader.ReadByte(); return true;
+                    case var _ when localTag.AliasUID == singleSequenceFlag_Key: this.SingleSequenceFlag = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == closedGOP_Key: this.ClosedGOPIndicator = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == lowDelay_Key: this.LowDelayIndicator = reader.ReadBoolean(); return true;
                 }
             }
 

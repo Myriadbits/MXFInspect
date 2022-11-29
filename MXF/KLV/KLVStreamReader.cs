@@ -113,18 +113,18 @@ namespace Myriadbits.MXF.KLV
         /// Reads a string in UTF8 coding
         /// </summary>
         /// <param name="length">The length of the string to read</param>
-        public string ReadUTF8String(int length)
+        public string ReadUTF8String(long length)
         {
-            return System.Text.Encoding.UTF8.GetString(this.ReadBytes(length));
+            return System.Text.Encoding.UTF8.GetString(this.ReadBytes((int)length));
         }
 
         /// <summary>
         /// Reads a string
         /// </summary>
         /// <param name="length">The length of the string to read</param>
-        public string ReadUTF16String(int length)
+        public string ReadUTF16String(long length)
         {
-            return System.Text.Encoding.BigEndianUnicode.GetString(this.ReadBytes(length));
+            return System.Text.Encoding.BigEndianUnicode.GetString(this.ReadBytes((int)length));
         }
 
         #endregion

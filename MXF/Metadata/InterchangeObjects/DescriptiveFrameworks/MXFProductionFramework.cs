@@ -55,27 +55,27 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == integrationIndication_Key: this.IntegrationIndication = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == groupRelationshipObjects_Key:
+                    case var _ when localTag.AliasUID == integrationIndication_Key: this.IntegrationIndication = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == groupRelationshipObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("GroupRelationshipObjects", "GroupRelationshipObject")); 
                         return true;
-                    case var _ when localTag.Key == identificationObjects_Key:
+                    case var _ when localTag.AliasUID == identificationObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("IdentificationObjects", "IdentificationObject"));
                         return true;
-                    case var _ when localTag.Key == brandingObjects_Key:
+                    case var _ when localTag.AliasUID == brandingObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("BrandingObjects", "BrandingObject"));
                         return true;
-                    case var _ when localTag.Key == eventObjects_Key:
+                    case var _ when localTag.AliasUID == eventObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("EventObjects", "EventObject"));
                         return true;
-                    case var _ when localTag.Key == awardObjects_Key:
+                    case var _ when localTag.AliasUID == awardObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("AwardObjects", "AwardObject"));
                         return true;
-                    case var _ when localTag.Key == prodSettingPerObjects_Key:
+                    case var _ when localTag.AliasUID == prodSettingPerObjects_Key:
                         this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ProductionSettingPeriodObjects", "ProductionSettingPeriodObject"));
                         return true;
                 }

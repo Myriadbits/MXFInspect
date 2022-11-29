@@ -55,7 +55,6 @@ namespace Myriadbits.MXF
         {
             reader.Seek(this.RelativeValueOffset); // Seek to the start of the data
 
-            //long end = this.RelativeValueOffset + this.Length.Value;
             byte[] byteArray;
 
             while (!reader.EOF)
@@ -124,7 +123,7 @@ namespace Myriadbits.MXF
                     // KLV metadata
                     case 0x88:
                         var ms = new MemoryStream(byteArray);
-                        var klvParser = new MXFPackParser(ms);
+                        var klvParser = new MXFPackParser(ms, this.Offset + pos);
                         var pack = klvParser.GetNext();
                         this.AddChild(pack);
                         break;

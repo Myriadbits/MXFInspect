@@ -36,10 +36,10 @@ namespace Myriadbits.MXF
 		public UInt32 PrimerEntriesCount { get; set; }
 
 		[Browsable(false)]
-		private readonly Dictionary<UInt16, MXFEntryPrimer> primerEntries = new Dictionary<UInt16, MXFEntryPrimer>();
+		private readonly Dictionary<UInt16, MXFPrimerEntry> primerEntries = new Dictionary<UInt16, MXFPrimerEntry>();
 		
 		[Browsable(false)]
-		public IReadOnlyDictionary<UInt16, MXFEntryPrimer> PrimerEntries { get { return primerEntries; } }
+		public IReadOnlyDictionary<UInt16, MXFPrimerEntry> PrimerEntries { get { return primerEntries; } }
 
 		/// <summary>
 		/// Primerpack constructor 
@@ -73,7 +73,7 @@ namespace Myriadbits.MXF
 			{
 				for (int n = 0; n < numOfPrimerEntries; n++)
 				{
-					MXFEntryPrimer entry = new MXFEntryPrimer(reader, this.Offset + reader.Position);
+					MXFPrimerEntry entry = new MXFPrimerEntry(reader, this.Offset + reader.Position);
 					primerEntries.Add(entry.Tag, entry); // Add to our own internal list
 					this.AddChild(entry); // And add the entry as one of our children
 				}

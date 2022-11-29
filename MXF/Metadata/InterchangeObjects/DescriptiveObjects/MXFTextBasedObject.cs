@@ -65,14 +65,14 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            if (localTag.Key != null)
+            if (localTag.AliasUID != null)
             {
-                switch (localTag.Key)
+                switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.Key == rfc5646TextLanguageCode_Key: this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == textDataDescription_Key: this.TextDataDescription = reader.ReadUTF16String(localTag.Size); return true;
-                    case var _ when localTag.Key == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadUUID(); return true;
-                    case var _ when localTag.Key == textMIMEMediaType_Key: this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Size); return true;
+                    case var _ when localTag.AliasUID == rfc5646TextLanguageCode_Key: this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == textDataDescription_Key: this.TextDataDescription = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadUUID(); return true;
+                    case var _ when localTag.AliasUID == textMIMEMediaType_Key: this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Length.Value); return true;
                 }
             }
 

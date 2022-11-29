@@ -113,7 +113,7 @@ namespace Myriadbits.MXF
         /// <param name="localTag"></param>
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
-            switch (localTag.Tag)
+            switch (localTag.TagValue)
             {
                 case 0x3D0A: this.BlockAlign = reader.ReadUInt16(); return true;
                 case 0x3D0B: this.SequenceOffset = reader.ReadByte(); return true;
@@ -127,7 +127,7 @@ namespace Myriadbits.MXF
                 case 0x3D2E: this.PeakFrames = reader.ReadUInt32(); return true;
                 case 0x3D2F: this.PeakOfPeaksPosition = reader.ReadUInt64(); return true;
                 case 0x3D30: this.PeakEnvelopeTimestamp = reader.ReadTimestamp(); return true;
-                case 0x3D31: this.PeakEnvelopeData = reader.ReadBytes(localTag.Size); return true;
+                case 0x3D31: this.PeakEnvelopeData = reader.ReadBytes((int)localTag.Length.Value); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
