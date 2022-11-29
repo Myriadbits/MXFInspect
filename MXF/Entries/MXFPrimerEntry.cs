@@ -53,11 +53,8 @@ namespace Myriadbits.MXF
 		/// <returns></returns>
 		public override string ToString()
 		{
-            //return $"<{this[0]:x2}.{this[1]:x2}>";
-
-            //sb.Append($"LocalTag {this.Key:X4} [len {this.Length.Value}] -> {ul.Name} ");
-
-            return string.Format("Tag 0x{0:X4} -> {1}", this.Tag, this.AliasUID.ToString());
+			var bytes = BitConverter.GetBytes(this.Tag);
+            return $"Tag <{bytes[1]:X2}.{bytes[0]:X2}> -> {this.AliasUID}";
 		}
 	}
 }
