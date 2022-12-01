@@ -83,7 +83,7 @@ namespace Myriadbits.MXF
 
             K ul = keyParsingFunction();
             L length = lengthEncParsingFunction();
-            SubStream ss = new SubStream(klvStream, offset, ul.ArrayLength + length.Value);
+            Stream ss = new SubStream(klvStream, offset, ul.ArrayLength + length.Value);
             return new KLVTriplet<K, L, V>(ul, length, baseOffset + currentKLVOffset, ss);
         }
     }

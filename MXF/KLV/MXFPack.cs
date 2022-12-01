@@ -54,7 +54,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return $"{Key.SMPTEInformation?.Name ?? Key.Name} [len {this.TotalLength}]";
+            return $"{Key.SMPTEInformation?.Name ?? Key.Name} [len {this.Length.Value}]";
         }
     }
 }

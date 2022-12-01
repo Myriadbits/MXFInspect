@@ -41,11 +41,11 @@ namespace Myriadbits.MXF
         {
             Seek(currentKLVOffset);
 
-            KLVKey ul = ParseTwoBytesLocalTagKey();
+            KLVKey key = ParseTwoBytesLocalTagKey();
             KLVLength length = ParseLocalTagLength();
-            SubStream ss = new SubStream(klvStream, currentKLVOffset, ul.ArrayLength + length.Value);
+            SubStream ss = new SubStream(klvStream, currentKLVOffset, key.ArrayLength + length.Value);
             long tagOffset = baseOffset + currentKLVOffset;
-            MXFLocalTag tag = new MXFLocalTag(ul, length, tagOffset, ss);
+            MXFLocalTag tag = new MXFLocalTag(key, length, tagOffset, ss);
             Current = tag;
             
             // advance to next pack

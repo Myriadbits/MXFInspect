@@ -175,7 +175,7 @@ namespace Myriadbits.MXF
                     ProcessAndAttachPacks(packList);
 
                     // Reparse all local tags, as now we know the primerpackage aliases
-                    ResolveAndParseLocalTags(packList);
+                    ResolveAndParseLocalTags();
 
                     // Progress should now be 80%
                     overallProgress?.Report(new TaskReport(73, "Update tree"));
@@ -360,9 +360,10 @@ namespace Myriadbits.MXF
             }
         }
 
-        private void ResolveAndParseLocalTags(IEnumerable<MXFObject> packList)
+        private void ResolveAndParseLocalTags()
         {
-            var localSetList = packList.OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any());
+            var localSetList = this.Descendants().OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any());
+
             foreach (var ls in localSetList.ToList())
             {
                 // link local tag keys to primer entry keys
