@@ -40,16 +40,15 @@ namespace Myriadbits.MXF
         {
         }
 
-        public MXFPackParser(Stream stream, long subStreamOffset) : base(stream)
+        public MXFPackParser(Stream stream, long baseStreamOffset) : base(stream, baseStreamOffset)
         {
-            this.SubStreamOffset = subStreamOffset;
         }
 
         public override MXFPack GetNext()
         {
 
-            var klv = CreateKLV(SubStreamOffset + currentKLVOffset, ParseUL, ParseBERKLVLength);
-            var ss = new SubStream(klvStream, klv.Offset, klv.TotalLength);
+            var klv = CreateKLV(currentKLVOffset, ParseUL, ParseBERKLVLength);
+            var ss = new SubStream(klvStream, currentKLVOffset, klv.TotalLength);
 
             var pack = new MXFPack(klv.Key, klv.Length, klv.Offset, ss);
             // TODO wrap into using/ try...catch

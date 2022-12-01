@@ -24,9 +24,6 @@
 using Myriadbits.MXF.KLV;
 using System;
 using System.IO;
-using System.Linq;
-using static Myriadbits.MXF.KLV.KLVLength;
-using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
@@ -37,16 +34,24 @@ namespace Myriadbits.MXF
     {
         protected readonly IKLVStreamReader reader;
         protected long currentKLVOffset = 0;
+        protected long baseOffset = 0;
         protected readonly Stream klvStream;
         protected readonly Func<K> keyParsingFunction;
         protected readonly Func<L> lengthEncParsingFunction;
 
         public KLVTriplet<K, L, V> Current { get; protected set; }
 
+
+
         public KLVTripletParser(Stream stream)
         {
             klvStream = stream;
             reader = new KLVStreamReader(stream);
+        }
+
+        public KLVTripletParser(Stream stream, long baseOffset) : this(stream)
+        {
+            this.baseOffset = baseOffset;
         }
 
         public virtual KLVTriplet<K, L, V> GetNext()
@@ -78,8 +83,8 @@ namespace Myriadbits.MXF
 
             K ul = keyParsingFunction();
             L length = lengthEncParsingFunction();
-            Stream ss = new SubStream(klvStream, offset, ul.ArrayLength + length.Value);
-            return new KLVTriplet<K, L, V>(ul, length, currentKLVOffset, ss);
+            SubStream ss = new SubStream(klvStream, offset, ul.ArrayLength + length.Value);
+            return new KLVTriplet<K, L, V>(ul, length, baseOffset + currentKLVOffset, ss);
         }
     }
 }
