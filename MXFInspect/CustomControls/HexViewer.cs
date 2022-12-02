@@ -42,10 +42,6 @@ namespace Myriadbits.MXFInspect
 
         protected MXFObject ObjectToShow { get; set; }
 
-        public HexViewer()
-        {
-        }
-
         /// <summary>
         /// Read the data of an mxf object and display it as hex dump
         /// </summary>
@@ -66,8 +62,9 @@ namespace Myriadbits.MXFInspect
             else if (len > 0)
             {
                 byte[] data = GetObjectDataValue(obj);
-                int maxNumOfDigits = GetDigitCountOfLastKLV(obj);
-                this.Text = GetHexDump(obj.Offset, len, maxNumOfDigits, BytesPerLine, data);
+                long maxOffset = obj.GetTreeMaxOffset();
+                int digitCount = Helper.GetDigitCount(maxOffset);
+                this.Text = GetHexDump(obj.Offset, len, digitCount, BytesPerLine, data);
             }
         }
 
@@ -84,17 +81,6 @@ namespace Myriadbits.MXFInspect
                 byteReader.Seek(obj.Offset);
                 return byteReader.ReadBytes(data.Length);
             }
-        }
-
-        private int GetDigitCountOfLastKLV(MXFObject obj)
-        {
-            // get the object with the greatest offset value
-            long maxOffset = obj.Root().Descendants().Max(o => o.Offset);
-
-            // count the digits
-            int digits = 1;
-            while ((maxOffset /= 10) != 0) ++digits;
-            return digits;
         }
 
         public void RefreshView()

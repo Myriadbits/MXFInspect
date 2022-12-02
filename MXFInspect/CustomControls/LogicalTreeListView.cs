@@ -81,5 +81,11 @@ namespace Myriadbits.MXFInspect
             }
 
         }
+
+        protected override void CalculateOffsetMaxDigitCount()
+        {
+            long maxOffset = this.Objects?.OfType<MXFLogicalObject>().FirstOrDefault()?.Root().Descendants().Max(o => o.Object.Offset) ?? 0;
+            maxDigitCount = Helper.GetDigitCount(maxOffset);
+        }
     }
 }

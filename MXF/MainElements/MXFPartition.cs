@@ -163,14 +163,19 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
+            var root = this.Root() as MXFFile;
+            int partitionCount = root?.PartitionCount ?? 0;
+            int digitCount = Helper.GetDigitCount(partitionCount);
+            string partitionNumberPadded = this.PartitionNumber.ToString().PadLeft(digitCount, '0');
+
             if (this.PartitionType == PartitionType.Body)
             {
                 if (this.FirstSystemItem != null)
-                    return string.Format("Body Partition #{0} - {1}", this.PartitionNumber, this.FirstSystemItem.UserDateFullFrameNb);
+                    return $"Body Partition #{partitionNumberPadded} - {this.FirstSystemItem.UserDateFullFrameNb}";
                 else
-                    return string.Format("Body Partition #{0}", this.PartitionNumber);
+                    return $"Body Partition #{partitionNumberPadded}";
             }
-            return string.Format("{0} Partition", Enum.GetName(typeof(PartitionType), this.PartitionType));
+            return $"{Enum.GetName<PartitionType>(this.PartitionType)} Partition";
         }
 
 

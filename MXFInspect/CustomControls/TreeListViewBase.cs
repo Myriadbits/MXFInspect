@@ -80,7 +80,7 @@ namespace Myriadbits.MXFInspect
             // Clear tree and set objects
             this.Items.Clear();
             this.SetObjects(objects);
-            maxDigitCount = GetMaxDigitCount();
+            this.CalculateOffsetMaxDigitCount();   
         }
 
         public void RevealAndSelectObject(T objToSelect)
@@ -96,7 +96,6 @@ namespace Myriadbits.MXFInspect
         public void SetOffsetStyle(bool showOffsetAsHex)
         {
             ShowOffsetAsHex = showOffsetAsHex;
-            //this.ColumnOffset.AspectToStringFormat = ShowOffsetAsHex ? "0x{0:X}" : "{0:N0}";
             this.ColumnOffset.AspectToStringConverter = delegate (object x)
             {
                 if (ShowOffsetAsHex)
@@ -113,6 +112,8 @@ namespace Myriadbits.MXFInspect
         }
 
         protected abstract void Tree_FormatCell(object sender, FormatCellEventArgs e);
+
+        protected abstract void CalculateOffsetMaxDigitCount();
 
         #region private methods
 
@@ -195,20 +196,6 @@ namespace Myriadbits.MXFInspect
             {
                 return Color.FromArgb(0, 0, 0);
             };
-        }
-
-
-        private int GetMaxDigitCount()
-        {
-            // get the object with the greatest offset value
-            long maxOffset = this.Objects.OfType<MXFObject>()
-                                .FirstOrDefault()
-                                ?.Root().Descendants().Max(o => o.Offset) ?? 0;
-
-            // count the digits
-            int digits = 1;
-            while ((maxOffset /= 10) != 0) ++digits;
-            return digits;
         }
 
         #endregion

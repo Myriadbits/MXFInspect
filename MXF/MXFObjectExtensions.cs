@@ -71,5 +71,10 @@ namespace Myriadbits.MXF
             return obj.Descendants().Any() &&
                 obj.Descendants().All(d => d is MXFEntryDelta || d is MXFEntryIndex);
         }
+
+        public static long GetTreeMaxOffset(this MXFObject obj)
+        {
+            return obj.Root().Descendants().Max(o => o.Offset);
+        }
     }
 }

@@ -141,7 +141,11 @@ namespace Myriadbits.MXFInspect
 
         #region private methods
 
-
+        protected override void CalculateOffsetMaxDigitCount()
+        {
+            long maxOffset = this.Objects?.OfType<MXFObject>()?.FirstOrDefault()?.GetTreeMaxOffset() ?? 0;
+            maxDigitCount = Helper.GetDigitCount(maxOffset);
+        }
 
         private void SetupColumns()
         {
