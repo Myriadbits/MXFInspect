@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
         where V : ByteArray
 
     {
-        private const string CATEGORYNAME = "MXFPack";
+        private const string CATEGORYNAME = "KLV";
         private const int CATEGORYPOS = 1;
 
         protected Stream Stream { get; }

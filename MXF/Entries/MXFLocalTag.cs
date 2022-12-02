@@ -23,9 +23,11 @@
 
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
+using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using static Myriadbits.MXF.KLV.KLVLength;
@@ -33,9 +35,13 @@ using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public class MXFLocalTag : KLVTriplet<KLVKey, KLVLength, ByteArray>
     {
-        // TODO add Alias Universal Label?
+        private const string CATEGORYNAME = "LocalTag";
+        private const int CATEGORYPOS = 1;
+
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public AUID AliasUID { get; set; }
 
         [Browsable(false)]
@@ -58,14 +64,18 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
+            long maxLocalTagLen = this.Parent?.Children?.OfType<MXFLocalTag>().Max(lt => lt.Length.Value) ?? 0;
+            int lenDigitCount = Helper.GetDigitCount(maxLocalTagLen);
+            string lenstring = this.Length.Value.ToString().PadLeft(lenDigitCount, '0');
+
             StringBuilder sb = new StringBuilder();
             if (AliasUID is UL ul)
             {
-                sb.Append($"LocalTag {this.Key:X4} [len {this.Length.Value}] -> {ul.Name} ");
+                sb.Append($"LocalTag {this.Key:X4} [len {lenstring}] -> {ul.Name} ");
             }
             else
             {
-                sb.Append($"LocalTag {this.Key:X4} [len {this.Length.Value}] -> <Unknown tag> ");
+                sb.Append($"LocalTag {this.Key:X4} [len {lenstring}] -> <Not in PrimerPack> ");
             }
             return sb.ToString();
         }
