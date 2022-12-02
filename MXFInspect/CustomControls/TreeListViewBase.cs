@@ -34,6 +34,8 @@ namespace Myriadbits.MXFInspect
 {
     public abstract class TreeListViewBase<T> : TreeListView where T : Node<T>
     {
+        protected int maxDigitCount = 0;
+
         public bool ShowOffsetAsHex { get; protected set; }
 
         private OLVColumn ColumnFirst { get; set; } = new OLVColumn();
@@ -48,9 +50,9 @@ namespace Myriadbits.MXFInspect
             // first column triggers an exception, we make a fake column 
             // with its width equal to 0 (hack)
             // TODO same hack is needed in report tree list
-            this.ColumnFirst.Text = "Index";
             this.ColumnFirst.MaximumWidth = 0;
             this.ColumnFirst.Width = 0;
+            this.ColumnFirst.Text = "Index";
 
             this.AllColumns.Add(ColumnFirst);
             this.AllColumns.Add(ColumnOffset);
@@ -58,6 +60,7 @@ namespace Myriadbits.MXFInspect
 
             this.ColumnFirst.Hideable = false;
             this.ColumnOffset.Hideable = false;
+            this.ColumnOffset.TextAlign = HorizontalAlignment.Right;
             this.ColumnMXFObject.Hideable = false;
 
             //this.Columns.AddRange(new ColumnHeader[] { ColumnFirst, ColumnOffset, ColumnMXFObject });
@@ -72,11 +75,12 @@ namespace Myriadbits.MXFInspect
             this.FormatCell += Tree_FormatCell;
         }
 
-        public void FillTree(IEnumerable<object> objects)
+        public void FillTree(IEnumerable<T> objects)
         {
             // Clear tree and set objects
             this.Items.Clear();
             this.SetObjects(objects);
+            maxDigitCount = GetMaxDigitCount();
         }
 
         public void RevealAndSelectObject(T objToSelect)
@@ -92,7 +96,18 @@ namespace Myriadbits.MXFInspect
         public void SetOffsetStyle(bool showOffsetAsHex)
         {
             ShowOffsetAsHex = showOffsetAsHex;
-            this.ColumnOffset.AspectToStringFormat = ShowOffsetAsHex ? "0x{0:X}" : "";
+            //this.ColumnOffset.AspectToStringFormat = ShowOffsetAsHex ? "0x{0:X}" : "{0:N0}";
+            this.ColumnOffset.AspectToStringConverter = delegate (object x)
+            {
+                if (ShowOffsetAsHex)
+                {
+                    string offset = x.ToString().PadLeft(maxDigitCount, '0');
+                    return $"0x{offset:X}";
+                }
+                else
+                    return $"{x:N0}";
+            };
+
             this.RebuildColumns();
             this.Refresh();
         }
@@ -180,6 +195,20 @@ namespace Myriadbits.MXFInspect
             {
                 return Color.FromArgb(0, 0, 0);
             };
+        }
+
+
+        private int GetMaxDigitCount()
+        {
+            // get the object with the greatest offset value
+            long maxOffset = this.Objects.OfType<MXFObject>()
+                                .FirstOrDefault()
+                                ?.Root().Descendants().Max(o => o.Offset) ?? 0;
+
+            // count the digits
+            int digits = 1;
+            while ((maxOffset /= 10) != 0) ++digits;
+            return digits;
         }
 
         #endregion
