@@ -22,7 +22,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
@@ -32,7 +34,7 @@ namespace Myriadbits.MXF
     public class IndexEntryFlags
     {
         private readonly byte _bitfield;
-        
+
         public bool RandomAccess { get; private set; }
         public bool SequenceHeader { get; private set; }
         public bool ForwardPredictionFlag { get; private set; }
@@ -85,7 +87,6 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(UInt32ArrayConverter))]
         public UInt32[] SliceOffsets { get; set; }
         [Category(CATEGORYNAME)]
-
         public MXFRational[] PosTable { get; set; }
 
         public MXFEntryIndex(UInt64 index, IKLVStreamReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)
@@ -119,7 +120,26 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("Index[{0}] - TemporalOffset {1}, KeyFrameOffset {2}, Offset {3}", this.Index, this.TemporalOffset, this.KeyFrameOffset, this.StreamOffset);
+            // calculate correct paddings
+            // TODO optimize
+            IEnumerable<MXFEntryIndex> siblings = this.Parent?.Children?.OfType<MXFEntryIndex>();
+            long maxIndexEntryCount = siblings?.Count() ?? 0;
+            int lenDigitCount = Helper.GetDigitCount(maxIndexEntryCount);
+            string indexString = this.Index.ToString().PadLeft(lenDigitCount, '0');
+
+            long maxTempOffset = siblings?.Select(e => Math.Abs(e.TemporalOffset ?? 0)).Max() ?? 0;
+            int maxTempOffsetDigitCount = Helper.GetDigitCount(maxTempOffset);
+            string tempOffString = this.TemporalOffset.ToString().PadLeft(maxTempOffsetDigitCount + 1);
+
+            long maxKeyFrameOffset = siblings?.Select(e => Math.Abs(e.KeyFrameOffset ?? 0)).Max() ?? 0;
+            int maxKeyFrameOffsetDigitCount = Helper.GetDigitCount(maxKeyFrameOffset);
+            string keyFrameOffString = this.KeyFrameOffset.ToString().PadLeft(maxKeyFrameOffsetDigitCount + 1);
+
+            long maxStreamOffset = siblings?.Select(e => Math.Abs((long)(e.StreamOffset ?? 0))).Max() ?? 0;
+            int maxStreamOffsetDigitCount = Helper.GetDigitCount(maxStreamOffset);
+            string streamOffsetString = this.StreamOffset.ToString().PadLeft(maxStreamOffsetDigitCount);
+
+            return $"Index[{indexString}] - TempOffs: {tempOffString}, KeyOffs: {keyFrameOffString}, Offset: {streamOffsetString}";
         }
 
     }
