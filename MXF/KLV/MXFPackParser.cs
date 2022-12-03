@@ -30,7 +30,7 @@ using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPackParser : KLVTripletParser<UL, KLVBERLength, ByteArray>
+    public class MXFPackParser : KLVTripletParser<MXFPack>
     {
         private long currentPackNumber = 0;
 

@@ -27,21 +27,16 @@ using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public abstract class KLVTripletParser<K, L, V>
-        where K : KLVKey
-        where L : KLVLengthBase
-        where V : ByteArray
+    public abstract class KLVTripletParser<U> : IKLVTripletParser<U> where U : KLVTriplet
     {
         protected readonly IKLVStreamReader reader;
         protected long currentKLVOffset = 0;
         protected long baseOffset = 0;
         protected readonly Stream klvStream;
-        protected readonly Func<K> keyParsingFunction;
-        protected readonly Func<L> lengthEncParsingFunction;
+        protected readonly Func<KLVKey> keyParsingFunction;
+        protected readonly Func<KLVLengthBase> lengthEncParsingFunction;
 
-        public KLVTriplet<K, L, V> Current { get; protected set; }
-
-
+        public U Current { get; protected set; }
 
         public KLVTripletParser(Stream stream)
         {
@@ -54,7 +49,7 @@ namespace Myriadbits.MXF
             this.baseOffset = baseOffset;
         }
 
-        public virtual KLVTriplet<K, L, V> GetNext()
+        public virtual U GetNext()
         {
 
             var klv = CreateKLV(currentKLVOffset, keyParsingFunction, lengthEncParsingFunction);
@@ -77,14 +72,22 @@ namespace Myriadbits.MXF
             currentKLVOffset = position;
         }
 
-        protected KLVTriplet<K, L, V> CreateKLV(long offset, Func<K> keyParsingFunction, Func<L> lengthEncParsingFunction)
+        protected U CreateKLV(long offset, Func<KLVKey> keyParsingFunction, Func<KLVLengthBase> lengthEncParsingFunction)
         {
             Seek(offset);
 
-            K ul = keyParsingFunction();
-            L length = lengthEncParsingFunction();
-            Stream ss = new SubStream(klvStream, offset, ul.ArrayLength + length.Value);
-            return new KLVTriplet<K, L, V>(ul, length, baseOffset + currentKLVOffset, ss);
+            KLVKey key = keyParsingFunction();
+            KLVLengthBase length = lengthEncParsingFunction();
+            Stream ss = new SubStream(klvStream, offset, key.ArrayLength + length.Value);
+            return (U)Activator.CreateInstance(typeof(U), key, length, baseOffset + currentKLVOffset, ss);
         }
+    }
+
+
+    public interface IKLVTripletParser<U> where U : KLVTriplet
+    {
+        public U Current { get; }
+        public bool HasNext();
+        public U GetNext();
     }
 }

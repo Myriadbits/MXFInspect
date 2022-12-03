@@ -30,11 +30,19 @@ using System.Reflection;
 
 namespace Myriadbits.MXF
 {
-    [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class MXFPack : KLVTriplet<UL, KLVBERLength, ByteArray>
+    //[TypeConverter(typeof(ExpandableObjectConverter))]
+    public class MXFPack : KLVTriplet
     {
         private const string CATEGORYNAME = "MXFPack";
         private const int CATEGORYPOS = 1;
+
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [Description("Universal label as key")]
+        public override UL Key => (UL)base.Key;
+        
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [Description("BER Length")]
+        public override KLVBERLength Length => (KLVBERLength)base.Length;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Consecutive pack number")]
