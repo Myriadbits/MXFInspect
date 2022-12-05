@@ -34,6 +34,7 @@ namespace Myriadbits.MXF
 		public MXFANCFrameElement(IKLVStreamReader reader, MXFPack pack)
 			: base(reader, pack)
         {
+			reader.Seek(this.RelativeValueOffset);
 			UInt16 nofPackets = reader.ReadUInt16();
 			for(int n = 0; n < nofPackets; n++)
 			{

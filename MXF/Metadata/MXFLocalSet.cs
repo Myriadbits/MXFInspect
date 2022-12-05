@@ -125,7 +125,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return string.Format("{0} [len {1}]", this.Key, this.Length);
+            return string.Format("{0} [len {1}]", this.Key, this.Length.Value);
         }
     }
 }
