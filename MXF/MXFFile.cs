@@ -177,7 +177,6 @@ namespace Myriadbits.MXF
                     // Reparse all local tags, as now we know the primerpackage aliases
                     ResolveAndParseLocalTags();
 
-                    // Progress should now be 80%
                     overallProgress?.Report(new TaskReport(73, "Update tree"));
 
                     // Resolve the references
@@ -369,8 +368,15 @@ namespace Myriadbits.MXF
                 // link local tag keys to primer entry keys
                 ls.LookUpLocalTagKeys();
 
-                // now parse tags
-                ls.ParseTags();
+                try
+                {
+                    // now parse tags
+                    ls.ParseTags();
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
 

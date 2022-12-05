@@ -30,7 +30,6 @@ using System.Reflection;
 
 namespace Myriadbits.MXF
 {
-    //[TypeConverter(typeof(ExpandableObjectConverter))]
     public class MXFPack : KLVTriplet
     {
         private const string CATEGORYNAME = "MXFPack";
@@ -52,10 +51,7 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public MXFPartition Partition { get; set; }
 
-        public MXFPack(UL key, KLVBERLength length, long offset, Stream stream) : base(key, length, offset, stream)
-        {
-        }
-
+        // copy ctor
         public MXFPack(MXFPack pack) : base(pack.Key, pack.Length, pack.Offset, pack.Stream)
         {
         }

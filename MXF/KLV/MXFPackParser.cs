@@ -26,6 +26,7 @@ using Myriadbits.MXF.KLV;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
@@ -34,23 +35,24 @@ namespace Myriadbits.MXF
     {
         private long currentPackNumber = 0;
 
-        public long SubStreamOffset { get; }
-
-        public MXFPackParser(Stream stream) : base(stream)
+        public MXFPackParser(Stream stream)
+            : base(stream)
         {
         }
 
-        public MXFPackParser(Stream stream, long baseStreamOffset) : base(stream, baseStreamOffset)
+        public MXFPackParser(Stream stream, long baseOffset) : base(stream, baseOffset)
         {
+
         }
 
         public override MXFPack GetNext()
         {
 
-            var klv = CreateKLV(currentKLVOffset, ParseUL, ParseBERKLVLength);
-            var ss = new SubStream(klvStream, currentKLVOffset, klv.TotalLength);
+            var pack = CreateKLV(currentKLVOffset, ParseKLVKey, ParseKLVLength);
+            var ss = new SubStream(klvStream, currentKLVOffset, pack.TotalLength);
 
-            var pack = new MXFPack(klv.Key, klv.Length, klv.Offset, ss);
+            //var pack = new MXFPack(klv.Key, klv.Length, klv.Offset, ss);
+            //var pack = new MX
             // TODO wrap into using/ try...catch
             var byteReader = new KLVStreamReader(ss);
             var typedPack = MXFPackFactory.CreatePack(pack, byteReader);
@@ -59,12 +61,45 @@ namespace Myriadbits.MXF
             Current = typedPack;
 
             // advance to next pack
-            Seek(currentKLVOffset + klv.TotalLength);
+            Seek(currentKLVOffset + pack.TotalLength);
 
             return typedPack;
         }
 
-        private KLVBERLength ParseBERKLVLength()
+        public bool SeekForNextPotentialKey(out long newOffset)
+        {
+            int foundBytes = 0;
+
+            // TODO implement Boyer-Moore algorithm
+            while (!reader.EOF)
+            {
+                if (reader.ReadByte() == UL.ValidULPrefix[foundBytes])
+                {
+                    foundBytes++;
+
+                    if (foundBytes == 4)
+                    {
+                        Seek(reader.Position - 4);
+                        newOffset = reader.Position;
+                        return true;
+                    }
+                }
+                else
+                {
+                    foundBytes = 0;
+                }
+            }
+            // TODO what does the caller have to do in this case?
+            newOffset = reader.Position;
+            return false;
+        }
+
+        protected override UL ParseKLVKey()
+        {
+            return new UL(reader.ReadBytes((int)KeyLengths.SixteenBytes));
+        }
+
+        protected override KLVBERLength ParseKLVLength()
         {
             byte[] bytes = new byte[] { reader.ReadByte() };
 
@@ -97,39 +132,5 @@ namespace Myriadbits.MXF
                     return new KLVBERLength(lengthValue, bytes);
             }
         }
-
-        private UL ParseUL()
-        {
-            return new UL(reader.ReadBytes((int)KeyLengths.SixteenBytes));
-        }
-
-        public bool SeekForNextPotentialKey(out long newOffset)
-        {
-            int foundBytes = 0;
-
-            // TODO implement Boyer-Moore algorithm
-            while (!reader.EOF)
-            {
-                if (reader.ReadByte() == UL.ValidULPrefix[foundBytes])
-                {
-                    foundBytes++;
-
-                    if (foundBytes == 4)
-                    {
-                        Seek(reader.Position - 4);
-                        newOffset = reader.Position;
-                        return true;
-                    }
-                }
-                else
-                {
-                    foundBytes = 0;
-                }
-            }
-            // TODO what does the caller have to do in this case?
-            newOffset = reader.Position;
-            return false;
-        }
-
     }
 }

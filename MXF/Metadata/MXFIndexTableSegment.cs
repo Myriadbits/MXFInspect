@@ -129,11 +129,18 @@ namespace Myriadbits.MXF
 							{
 								long next = reader.Position + entryLength;
 
-								MXFEntryIndex newEntry = new MXFEntryIndex((ulong) this.IndexStartPosition + i, reader, this.SliceCount, this.PositionTableCount, entryLength);
-								this.IndexEntries.Add(newEntry); // Also add this entry to the local list
+								try
+								{
+                                    MXFEntryIndex newEntry = new MXFEntryIndex((ulong)this.IndexStartPosition + i, reader, this.SliceCount, this.PositionTableCount, entryLength);
+                                    this.IndexEntries.Add(newEntry); // Also add this entry to the local list
 
-								// And to the child collection
-								indexCollection.AddChild(newEntry);
+                                    // And to the child collection
+                                    indexCollection.AddChild(newEntry);
+                                }
+								catch (Exception ex)
+								{
+
+								}
 
 								reader.Seek(next);
 							}

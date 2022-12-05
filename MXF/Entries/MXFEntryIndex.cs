@@ -140,6 +140,8 @@ namespace Myriadbits.MXF
             string streamOffsetString = this.StreamOffset.ToString().PadLeft(maxStreamOffsetDigitCount);
 
             return $"Index[{indexString}] - TempOffs: {tempOffString}, KeyOffs: {keyFrameOffString}, Offset: {streamOffsetString}";
+
+            //return this.Index.ToString();
         }
 
     }

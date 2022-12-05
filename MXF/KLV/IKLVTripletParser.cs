@@ -21,32 +21,13 @@
 //
 #endregion
 
-using Myriadbits.MXF.Identifiers;
-using Myriadbits.MXF.KLV;
-using System;
-using System.IO;
-using System.Linq;
-using static Myriadbits.MXF.KLV.KLVLength;
-using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFLocalTagParser : KLVTripletParser<MXFLocalTag>
+    public interface IKLVTripletParser<T> where T : KLVTriplet
     {
-        public MXFLocalTagParser(Stream stream, long baseOffset) : base(stream, baseOffset)
-        {
-        }
-
-        protected override KLVKey ParseKLVKey()
-        {
-            var keyLength = KeyLengths.TwoBytes;
-            return new KLVKey(keyLength, reader.ReadBytes((int)keyLength));
-        }
-
-        protected override KLVLengthBase ParseKLVLength()
-        {
-            var lengthEncoding = LengthEncodings.TwoBytes;
-            return new KLVLength(lengthEncoding, reader.ReadBytes((int)lengthEncoding));
-        }
+        public T Current { get; }
+        public bool HasNext();
+        public T GetNext();
     }
 }

@@ -33,6 +33,7 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "KLV";
         private const int CATEGORYPOS = 1;
 
+        // Substream from klv offset (thus including key and length enc) to klv end (=its total length)
         protected Stream Stream { get; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
