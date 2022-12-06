@@ -49,7 +49,7 @@ namespace Myriadbits.MXFInspect
             // since after the migration to .NET5 a click on the 
             // first column triggers an exception, we make a fake column 
             // with its width equal to 0 (hack)
-            // TODO same hack is needed in report tree list
+            // same hack is needed in report tree list
             this.ColumnFirst.MaximumWidth = 0;
             this.ColumnFirst.Width = 0;
             this.ColumnFirst.Text = "Index";

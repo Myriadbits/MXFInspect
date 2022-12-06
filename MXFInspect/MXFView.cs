@@ -155,6 +155,7 @@ namespace Myriadbits.MXFInspect
             {
                 MessageBox.Show(ex.Message, "Error while opening the file");
                 this.ParentMainForm.SetActivityText(string.Format($"Error while opening the file {this.FileInfo.FullName}"));
+                this.Close();
             }
             finally
             {

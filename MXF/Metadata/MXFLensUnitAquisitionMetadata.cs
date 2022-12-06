@@ -27,9 +27,8 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-    // urn:smpte:ul:060e2b34.027f0101.0c020101.01010000
-    // TODO add ULGroup attribute
     // TODO add InstanceID property and check the inheritance tree, does it really derive from metadatabase class?
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0c020101.01010000")]
     public class MXFLensUnitAquisitionMetadata : MXFMetadataBaseclass
     {
         private const string CATEGORYNAME = "LensUnitAquisitionMetadata";
