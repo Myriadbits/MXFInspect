@@ -28,8 +28,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.02210000")]
     public class MXFTypeDefinitionIndirect : MXFTypeDefinition
     {
-        public MXFTypeDefinitionIndirect(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFTypeDefinitionIndirect(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "TypeDefinitionIndirect";
         }

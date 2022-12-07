@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UUID InstanceId { get; set; }
 
-        public MXFMetaDictionary(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "MetaDictionary")
+        public MXFMetaDictionary(MXFPack pack)
+            : base(pack, "MetaDictionary")
         {
         }
 

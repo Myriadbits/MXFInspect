@@ -193,8 +193,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Generic Picture Essence Descriptor")
+        public MXFGenericPictureEssenceDescriptor(MXFPack pack)
+            : base(pack, "Generic Picture Essence Descriptor")
         {
         }
 
@@ -203,8 +203,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, metadataName)
+        public MXFGenericPictureEssenceDescriptor(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
         {
         }
 

@@ -36,11 +36,11 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010105.0301020a.02000000")]
         public string ItemValue_ISO7 { get; set; }
 
-        public MXFItemValue_ISO7(IKLVStreamReader reader, MXFPack pack)
+        public MXFItemValue_ISO7(MXFPack pack)
             : base(pack)
         {
             this.Key.Name ??= "Item Value ISO7";
-            Initialize(reader);
+            Initialize(this.GetReader());
         }
 
         private void Initialize(IKLVStreamReader reader)

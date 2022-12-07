@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
         public readonly UL captionsDescriptionObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x0c, 0x00);
         public readonly UL contractObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x19, 0x00);
 
-        public MXFProductionClipFramework(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFProductionClipFramework(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "ProductionClipFramework";
         }

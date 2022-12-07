@@ -39,9 +39,10 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.05300404.01000000")]
 		public string EventComment { get; set; }
 
-		public MXFEvent(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, "Event")
+		public MXFEvent(MXFPack pack, string metadataName)
+			: base(pack, "Event")
 		{
+			// TODO check passing the string parameter
 		}
 
 		/// <summary>

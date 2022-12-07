@@ -52,8 +52,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.14010000")]
         public string MetaDefinitionDescription { get; set; }
 
-        public MXFMetaDefinition(IKLVStreamReader reader, MXFPack pack, string metaDataName)
-            : base(reader, pack, metaDataName)
+        public MXFMetaDefinition(MXFPack pack, string metaDataName)
+            : base(pack, metaDataName)
         {
         }
 

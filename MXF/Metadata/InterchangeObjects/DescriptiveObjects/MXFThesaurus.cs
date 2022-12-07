@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string ThesaurusName { get; set; }
 
-        public MXFThesaurus(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFThesaurus(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "Thesaurus";
         }

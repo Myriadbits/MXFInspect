@@ -90,8 +90,8 @@ namespace Myriadbits.MXF
         public List<MXFEntryIndex> IndexEntries { get; set; }
 
 
-        public MXFIndexTableSegment(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "IndexTableSegment") //base(pack, "IndexTableSegment", KeyType.IndexSegment)
+        public MXFIndexTableSegment(MXFPack pack)
+            : base(pack, "IndexTableSegment") //base(pack, "IndexTableSegment", KeyType.IndexSegment)
         {
         }
 

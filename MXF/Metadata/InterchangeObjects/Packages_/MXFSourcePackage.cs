@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013700")]
 	public class MXFSourcePackage : MXFPackage
 	{
-		public MXFSourcePackage(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Source Package")
+		public MXFSourcePackage(MXFPack pack)
+			: base(pack, "Source Package")
 		{
 		}
 

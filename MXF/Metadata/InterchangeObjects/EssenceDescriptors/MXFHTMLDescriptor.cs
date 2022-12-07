@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
     public class MXFHTMLDescriptor : MXFFileDescriptor
     {
         
-        public MXFHTMLDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "HTMLDescriptor")
+        public MXFHTMLDescriptor(MXFPack pack)
+            : base(pack, "HTMLDescriptor")
         {
         }
     }

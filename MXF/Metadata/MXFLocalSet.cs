@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFLocalSet : MXFPack
     {
-        public MXFLocalSet(IKLVStreamReader reader, MXFPack pack)
+        public MXFLocalSet(MXFPack pack)
             : base(pack)
         {
             if (Key.SMPTEInformation != null)
@@ -44,7 +44,7 @@ namespace Myriadbits.MXF
                 this.Key.Name ??= "LocalSet";
             }
 
-            AttachTags(reader);
+            AttachTags(this.GetReader());
         }
 
         /// <summary>

@@ -69,8 +69,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.05200701.01000000")]
         public AUID GenerationID { get; set; }
 
-		public MXFIdentification(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Identification")
+		public MXFIdentification(MXFPack pack)
+			: base(pack, "Identification")
 		{
 		}
 

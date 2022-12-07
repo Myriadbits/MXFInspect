@@ -126,10 +126,12 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		public MXFSystemItem(IKLVStreamReader reader, MXFPack pack)
+		public MXFSystemItem(MXFPack pack)
 			: base(pack)
         {
-			this.Key.Name ??= "SystemItem (CP)";
+            IKLVStreamReader reader = this.GetReader();
+
+            this.Key.Name ??= "SystemItem (CP)";
 			if (this.Key[12] == 0x14)
 				this.Key.Name = "SystemItem (GC)";
 

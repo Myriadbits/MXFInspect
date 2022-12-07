@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
     public class MXFSelector : MXFSegment
     {
 
-        public MXFSelector(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, "Selector")
+        public MXFSelector(MXFPack pack, string metadataName)
+            : base(pack, "Selector")
         {
         }
 

@@ -46,13 +46,8 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public MXFPosition? PackageMarkOutPosition { get; set; }
 
-		public MXFTimelineTrack(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Timeline Track")
-		{
-		}
-
-		public MXFTimelineTrack(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, metadataName)
+		public MXFTimelineTrack(MXFPack pack)
+			: base(pack, "Timeline Track")
 		{
 		}
 

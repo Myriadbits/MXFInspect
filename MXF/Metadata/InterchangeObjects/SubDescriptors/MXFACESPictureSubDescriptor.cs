@@ -60,8 +60,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010e.0401060a.05000000")]
         public UInt32? ACESMasteringDisplayMinimumLuminance { get; set; }
 
-        public MXFACESPictureSubDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "ACESPictureSubDescriptor")
+        public MXFACESPictureSubDescriptor(MXFPack pack)
+            : base(pack, "ACESPictureSubDescriptor")
         {
         }
 

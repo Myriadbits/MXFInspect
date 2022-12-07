@@ -32,8 +32,8 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "TypeDefinitionString";
 
-        public MXFTypeDefinitionString(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFTypeDefinitionString(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "TypeDefinitionString";
         }

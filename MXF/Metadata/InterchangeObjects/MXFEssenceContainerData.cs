@@ -77,8 +77,8 @@ namespace Myriadbits.MXF
         public byte[] SampleIndex { get; set; }
 
 
-        public MXFEssenceContainerData(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "EssenceContainerData")
+        public MXFEssenceContainerData(MXFPack pack)
+            : base(pack, "EssenceContainerData")
         {
         }
 

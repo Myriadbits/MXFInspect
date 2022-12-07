@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03030302.01000000")]
         public byte[] WaveSummary { get; set; }
         
-        public MXFWAVEDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "WAVEDescriptor")
+        public MXFWAVEDescriptor(MXFPack pack)
+            : base(pack, "WAVEDescriptor")
         {
         }
 

@@ -37,8 +37,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010107.09000000")]
         public AUID ReferencedType { get; set; }
 
-        public MXFTypeDefinitionStrongObjectReference(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFTypeDefinitionStrongObjectReference(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "TypeDefinitionStrongObjectReference ";
         }

@@ -138,8 +138,8 @@ namespace Myriadbits.MXF
 
 
 
-        public MXFCameraUnitAquisitionMetadata(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "CameraUnitAquisitionMetadata")
+        public MXFCameraUnitAquisitionMetadata(MXFPack pack)
+            : base(pack, "CameraUnitAquisitionMetadata")
         {
         }
 

@@ -30,8 +30,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011f00")]
     public class MXFCodecDefinition : MXFDefinitionObject
     {
-        public MXFCodecDefinition(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFCodecDefinition(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "CodecDefinition";
         }

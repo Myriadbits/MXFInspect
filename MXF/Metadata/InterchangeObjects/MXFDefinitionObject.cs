@@ -45,8 +45,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03020301.02010000")]
         public string DefinitionObjectDescription { get; set; }
 
-        public MXFDefinitionObject(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "DefinitionObject")
+        public MXFDefinitionObject(MXFPack pack)
+            : base(pack, "DefinitionObject")
         {
         }
 

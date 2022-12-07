@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFTIFFPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "TIFFEssenceDescriptor")
+		public MXFTIFFPictureEssenceDescriptor(MXFPack pack)
+			: base(pack, "TIFFEssenceDescriptor")
 		{
 		}
 	}

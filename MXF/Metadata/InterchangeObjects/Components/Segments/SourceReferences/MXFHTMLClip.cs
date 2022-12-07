@@ -40,8 +40,8 @@ namespace Myriadbits.MXF
         public string EndAnchor { get; set; }
 
 
-        public MXFHTMLClip(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFHTMLClip(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "HTMLClip";
         }

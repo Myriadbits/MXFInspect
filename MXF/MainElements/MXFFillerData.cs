@@ -30,7 +30,7 @@ namespace Myriadbits.MXF
     [ULElement("urn:smpte:ul:060e2b34.01010102.03010210.01000000")]
     public class MXFFillerData : MXFPack
 	{
-        public MXFFillerData(IKLVStreamReader reader, MXFPack pack)
+        public MXFFillerData(MXFPack pack)
             : base(pack)
         {
         }

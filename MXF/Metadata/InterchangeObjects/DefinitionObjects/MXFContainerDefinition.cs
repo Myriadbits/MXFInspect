@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.03010201.03000000")]
         public bool EssenceIsIdentified { get; set; }
 
-        public MXFContainerDefinition(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFContainerDefinition(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "ContainerDefinition";
         }

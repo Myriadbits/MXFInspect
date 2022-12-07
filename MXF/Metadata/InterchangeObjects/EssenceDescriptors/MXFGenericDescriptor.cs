@@ -30,8 +30,8 @@ namespace Myriadbits.MXF
 	public class MXFGenericDescriptor : MXFInterchangeObject
 	{
 		private readonly UL subDescriptorKey = new UL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x09,0x06,0x01,0x01,0x04,0x06,0x10,0x00,0x00);
-		public MXFGenericDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, metadataName)
+		public MXFGenericDescriptor(MXFPack pack, string metadataName)
+			: base(pack, metadataName)
 		{
 		}
 

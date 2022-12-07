@@ -57,8 +57,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.06080201.00000000")]
         public bool IsContiguous { get; set; }
 
-        public MXFTIFFDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "TIFFDescriptor")
+        public MXFTIFFDescriptor(MXFPack pack)
+            : base(pack, "TIFFDescriptor")
         {
         }
 

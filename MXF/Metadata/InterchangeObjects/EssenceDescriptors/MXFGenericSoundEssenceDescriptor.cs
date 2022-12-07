@@ -81,8 +81,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericSoundEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Generic Sound Essence Descriptor")
+        public MXFGenericSoundEssenceDescriptor(MXFPack pack)
+            : base(pack, "Generic Sound Essence Descriptor")
         {
         }
 
@@ -91,8 +91,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericSoundEssenceDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, metadataName)
+        public MXFGenericSoundEssenceDescriptor(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
         {
         }
 

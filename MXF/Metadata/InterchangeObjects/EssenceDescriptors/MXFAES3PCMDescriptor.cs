@@ -69,8 +69,8 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFAES3PCMDescriptor(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "AES3 PCM Descriptor")
+		public MXFAES3PCMDescriptor(MXFPack pack)
+			: base(pack, "AES3 PCM Descriptor")
 		{
 		}
 

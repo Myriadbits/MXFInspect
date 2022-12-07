@@ -28,8 +28,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010300")]
 	public class MXFSegment : MXFStructuralComponent
 	{
-		public MXFSegment(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, metadataName)
+		public MXFSegment(MXFPack pack, string metadataName)
+			: base(pack, metadataName)
 		{
 		}
 

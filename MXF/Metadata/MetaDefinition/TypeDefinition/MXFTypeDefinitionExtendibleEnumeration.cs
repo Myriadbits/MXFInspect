@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03010203.07000000")]
         public string[] ExtendibleEnumerationElementNames { get; set; }
 
-        public MXFTypeDefinitionExtendibleEnumeration(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFTypeDefinitionExtendibleEnumeration(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "TypeDefinitionExtendibleEnumeration";
         }

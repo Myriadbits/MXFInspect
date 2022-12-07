@@ -32,9 +32,10 @@ namespace Myriadbits.MXF
     {
         private int nofSizeSize = 2;
 
-        public MXFPackageMetaData(IKLVStreamReader reader, MXFPack pack)
+        public MXFPackageMetaData(MXFPack pack)
             : base(pack)
         {
+            IKLVStreamReader reader = this.GetReader();
             if (this.Key[5] == 0x63)
                 nofSizeSize = 4;
             switch (this.Key[14])

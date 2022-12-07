@@ -29,10 +29,10 @@ namespace Myriadbits.MXF
 {
     public class MXFRIP : MXFPack
 	{
-		public MXFRIP(IKLVStreamReader reader, MXFPack pack)
+		public MXFRIP(MXFPack pack)
 			: base(pack)
         {
-			Initialize(reader);
+			Initialize(this.GetReader());
 		}
 
 		private void Initialize(IKLVStreamReader reader)

@@ -92,8 +92,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFWAVEPCMDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "WAVE PCM Descriptor")
+        public MXFWAVEPCMDescriptor(MXFPack pack)
+            : base(pack, "WAVE PCM Descriptor")
         {
         }
 
@@ -102,8 +102,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFWAVEPCMDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, metadataName)
+        public MXFWAVEPCMDescriptor(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
         {
         }
 

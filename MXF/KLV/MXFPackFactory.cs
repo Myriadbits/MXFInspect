@@ -286,11 +286,11 @@ namespace Myriadbits.MXF
 
             if (dict.TryGetValue(pack.Key, out Type foundType))
             {
-                return (MXFPack)Activator.CreateInstance(foundType, pack.GetReader(), pack);
+                return (MXFPack)Activator.CreateInstance(foundType, pack);
             }
             else if (pack.Key.IdentifiesLocalSet_2BytesLength2BytesTag())
             {
-                return new MXFLocalSet(pack.GetReader(), pack);
+                return new MXFLocalSet(pack);
             }
             else
             {

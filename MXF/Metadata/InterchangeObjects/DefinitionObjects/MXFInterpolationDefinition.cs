@@ -28,8 +28,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012100")]
     public class MXFInterpolationDefinition : MXFDefinitionObject
     {
-        public MXFInterpolationDefinition(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFInterpolationDefinition(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "InterpolationDefinition";
         }

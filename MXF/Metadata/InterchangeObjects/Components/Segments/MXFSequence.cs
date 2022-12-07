@@ -28,15 +28,10 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010f00")]
 	public class MXFSequence : MXFSegment
 	{
-		public MXFSequence(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Sequence")
+		public MXFSequence(MXFPack pack)
+			: base(pack, "Sequence")
 		{
 			this.MetaDataName = "Sequence";
-		}
-
-		public MXFSequence(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, metadataName)
-		{
 		}
 
 		/// <summary>

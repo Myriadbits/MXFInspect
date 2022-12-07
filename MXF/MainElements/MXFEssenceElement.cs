@@ -69,7 +69,7 @@ namespace Myriadbits.MXF
         // TODO helper property for indexvalidator that should be avoided
         public bool Indexed { get; set; }
 
-        public MXFEssenceElement(IKLVStreamReader reader, MXFPack pack)
+        public MXFEssenceElement(MXFPack pack)
             : base(pack)
         {
             this.Key.Name ??= "EssenceElement";

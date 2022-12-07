@@ -38,8 +38,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public UUID ContactID { get; set; }
 
-        public MXFContact(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFContact(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "Contact";
         }

@@ -45,14 +45,14 @@ namespace Myriadbits.MXF
         public string TrackName { get; set; }
 
 
-		public MXFTrack(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Generic Track")
+		public MXFTrack(MXFPack pack)
+			: base(pack, "Generic Track")
 		{
 		}
 
 
-		public MXFTrack(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, metadataName)
+		public MXFTrack(MXFPack pack, string metadataName)
+			: base(pack, metadataName)
 		{
 		}
 

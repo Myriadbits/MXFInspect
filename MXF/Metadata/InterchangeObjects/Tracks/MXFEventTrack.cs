@@ -39,8 +39,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010105.07020103.010b0000")]
 		public MXFPosition? EventTrackOrigin { get; set; }
 
-		public MXFEventTrack(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Event Track")
+		public MXFEventTrack(MXFPack pack)
+			: base(pack, "Event Track")
 		{
 		}
 

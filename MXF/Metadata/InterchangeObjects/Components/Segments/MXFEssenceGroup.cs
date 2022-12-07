@@ -28,8 +28,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010500")]
     public class MXFEssenceGroup : MXFSegment
     {
-        public MXFEssenceGroup(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "EssenceGroup")
+        public MXFEssenceGroup(MXFPack pack)
+            : base(pack, "EssenceGroup")
         {
         }
 

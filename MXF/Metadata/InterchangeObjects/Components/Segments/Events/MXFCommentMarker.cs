@@ -29,8 +29,8 @@ namespace Myriadbits.MXF
     public class MXFCommentMarker : MXFEvent
     {
 
-        public MXFCommentMarker(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Comment Marker")
+        public MXFCommentMarker(MXFPack pack)
+            : base(pack, "Comment Marker")
         {
         }
 

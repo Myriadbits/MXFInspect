@@ -83,8 +83,8 @@ namespace Myriadbits.MXF
 
 
 
-        public MXFLensUnitAquisitionMetadata(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "LensUnitAquisitionMetadata")
+        public MXFLensUnitAquisitionMetadata(MXFPack pack)
+            : base(pack, "LensUnitAquisitionMetadata")
         {
         }
 

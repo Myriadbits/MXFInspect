@@ -37,8 +37,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.0101010e.01030701.06000000")]
 		public UUID SoundfieldGroupLinkID { get; set; }
 		
-		public MXFAudioChannelLabelSubDescriptor(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack)
+		public MXFAudioChannelLabelSubDescriptor(MXFPack pack)
+			: base(pack)
 		{
 			this.MetaDataName = "AudioChannelLabelSubDescriptor";
 		}

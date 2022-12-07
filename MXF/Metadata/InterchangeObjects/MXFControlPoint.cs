@@ -44,8 +44,8 @@ namespace Myriadbits.MXF
 		public MXFRational ControlPointTime { get; set; }
 
 
-		public MXFControlPoint(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "ControlPoint")
+		public MXFControlPoint(MXFPack pack)
+			: base(pack, "ControlPoint")
 		{
 		}
 

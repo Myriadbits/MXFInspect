@@ -64,8 +64,8 @@ namespace Myriadbits.MXF
         public DateTime? FileLastModified { get; set; }
 
 
-        public MXFPreface(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Preface")
+        public MXFPreface(MXFPack pack)
+            : base(pack, "Preface")
         {
         }
 

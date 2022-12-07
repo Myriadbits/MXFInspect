@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFDCPCMSoundDescriptor(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "DC PCM Descriptor")
+		public MXFDCPCMSoundDescriptor(MXFPack pack)
+			: base(pack, "DC PCM Descriptor")
 		{
 		}
 	}

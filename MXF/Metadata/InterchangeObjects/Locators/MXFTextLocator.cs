@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.01040102.01000000")]
 		public string LocationName { get; set; }
 
-		public MXFTextLocator(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Text Locator")
+		public MXFTextLocator(MXFPack pack)
+			: base(pack, "Text Locator")
 		{
 		}
 

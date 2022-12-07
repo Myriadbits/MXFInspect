@@ -55,8 +55,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.0101010c.05200701.10000000")]
         public string DescriptiveMetadataApplicationEnvironmentID { get; set; }
 
-        public MXFDescriptiveMarker(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFDescriptiveMarker(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "Descriptive Marker";
         }

@@ -72,8 +72,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFFileDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Descriptor")
+        public MXFFileDescriptor(MXFPack pack)
+            : base(pack, "FileDescriptor")
         {
             if (m_metaTypes.ContainsKey(this.Key[14]))
                 this.MetaDataName = m_metaTypes[this.Key[14]];
@@ -84,8 +84,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFFileDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, metadataName)
+        public MXFFileDescriptor(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
         {
         }
 

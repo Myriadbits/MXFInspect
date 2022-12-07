@@ -31,8 +31,8 @@ namespace Myriadbits.MXF
     public class MXFTypeDefinitionRename : MXFTypeDefinition
     {
 
-        public MXFTypeDefinitionRename(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFTypeDefinitionRename(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "TypeDefinitionRename";
         }

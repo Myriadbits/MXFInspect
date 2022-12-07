@@ -74,8 +74,8 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFRGBAPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "RGBA Picture Essence Descriptor")
+		public MXFRGBAPictureEssenceDescriptor(MXFPack pack)
+			: base(pack, "RGBA Picture Essence Descriptor")
 		{
 		}
 

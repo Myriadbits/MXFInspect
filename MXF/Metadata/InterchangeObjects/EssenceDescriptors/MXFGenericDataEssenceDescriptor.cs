@@ -41,8 +41,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericDataEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Generic Data Essence Descriptor")
+        public MXFGenericDataEssenceDescriptor(MXFPack pack)
+            : base(pack, "Generic Data Essence Descriptor")
         {
             // TODO remove code, once implemented the subclasses
             if (pack.Key[14] == 0x5B)
@@ -57,8 +57,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericDataEssenceDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, metadataName)
+        public MXFGenericDataEssenceDescriptor(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
         {
         }
 

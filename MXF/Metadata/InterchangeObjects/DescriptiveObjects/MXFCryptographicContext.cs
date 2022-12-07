@@ -58,8 +58,8 @@ namespace Myriadbits.MXF
 
 
 
-        public MXFCryptographicContext(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFCryptographicContext(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "CryptographicContext";
         }

@@ -47,10 +47,11 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFPrimerPack(IKLVStreamReader reader, MXFPack pack)
+		public MXFPrimerPack(MXFPack pack)
 			: base(pack)
         {
-            this.PrimerEntriesCount = ReadPrimerEntries(reader, "Primer Entries");
+            IKLVStreamReader reader = this.GetReader();
+            this.PrimerEntriesCount = ReadPrimerEntries(reader);
 		}
 
 		/// <summary>
@@ -59,7 +60,7 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		/// <param name="categoryName"></param>
 		/// <returns></returns>
-		protected UInt32 ReadPrimerEntries(IKLVStreamReader reader, string categoryName)
+		protected UInt32 ReadPrimerEntries(IKLVStreamReader reader)
 		{
 			reader.Seek(this.RelativeValueOffset);
 			UInt32 numOfPrimerEntries = reader.ReadUInt32();

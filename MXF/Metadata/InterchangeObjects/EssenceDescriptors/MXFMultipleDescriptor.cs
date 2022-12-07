@@ -33,8 +33,8 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="pack"></param>
-		public MXFMultipleDescriptor(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Multiple Descriptor")
+		public MXFMultipleDescriptor(MXFPack pack)
+			: base(pack, "Multiple Descriptor")
 		{
 		}
 

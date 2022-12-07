@@ -74,8 +74,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFDCTimedTextDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "DC Timed Text Descriptor")
+        public MXFDCTimedTextDescriptor(MXFPack pack)
+            : base(pack, "DC Timed Text Descriptor")
         {
             this.MetaDataName = this.Key.Name;
         }
@@ -85,8 +85,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFDCTimedTextDescriptor(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, metadataName)
+        public MXFDCTimedTextDescriptor(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
         {
 
 

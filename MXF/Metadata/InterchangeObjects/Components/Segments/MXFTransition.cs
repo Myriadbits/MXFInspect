@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01060000")]
 		public MXFPosition? CutPoint { get; set; }
 		
-		public MXFTransition(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, "Transition")
+		public MXFTransition(MXFPack pack, string metadataName)
+			: base(pack, "Transition")
 		{
 		}
 

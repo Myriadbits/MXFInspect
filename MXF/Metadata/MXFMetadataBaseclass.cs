@@ -39,8 +39,8 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public string MetaDataName { get; protected set; }
 
-        public MXFMetadataBaseclass(IKLVStreamReader reader, MXFPack pack, string metaDataName)
-            : base(reader, pack)
+        public MXFMetadataBaseclass(MXFPack pack, string metaDataName)
+            : base(pack)
         {
             MetaDataName = metaDataName;
         }

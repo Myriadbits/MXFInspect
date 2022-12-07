@@ -37,8 +37,8 @@ namespace Myriadbits.MXF
 		[TypeConverter(typeof(UInt32ArrayConverter))]
 		public UInt32[] DescriptiveClipDescribedTrackIDs { get; set; }
         
-        public MXFDescriptiveClip(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack)
+        public MXFDescriptiveClip(MXFPack pack)
+			: base(pack)
 		{
 			this.MetaDataName = "DescriptiveClip";
 		}

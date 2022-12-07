@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         public UUID ParameterDefinitionReference { get; set; }
 
 
-        public MXFParameter(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Parameter")
+        public MXFParameter(MXFPack pack)
+            : base(pack, "Parameter")
         {
         }
 

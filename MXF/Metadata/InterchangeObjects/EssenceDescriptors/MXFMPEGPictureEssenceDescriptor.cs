@@ -90,8 +90,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFMPEGPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFMPEGPictureEssenceDescriptor(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "MPEG Picture Essence Descriptor";
         }

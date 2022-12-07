@@ -91,8 +91,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFVC1VideoDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFVC1VideoDescriptor(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "VC1 Video Descriptor";
         }

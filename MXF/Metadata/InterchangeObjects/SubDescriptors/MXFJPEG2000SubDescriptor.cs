@@ -129,8 +129,8 @@ namespace Myriadbits.MXF
         public UInt16[] J2KCorrespondingProfile { get; set; }
 
 
-        public MXFJPEG2000SubDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "JPEG2000SubDescriptor")
+        public MXFJPEG2000SubDescriptor(MXFPack pack)
+            : base(pack, "JPEG2000SubDescriptor")
         {
         }
 

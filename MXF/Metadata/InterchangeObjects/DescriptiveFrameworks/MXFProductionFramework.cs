@@ -43,8 +43,8 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string IntegrationIndication { get; set; }
 
-        public MXFProductionFramework(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFProductionFramework(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "ProductionFramework";
         }

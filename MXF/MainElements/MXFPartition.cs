@@ -117,9 +117,10 @@ namespace Myriadbits.MXF
         public bool IsLoaded { get; set; }
 
 
-        public MXFPartition(IKLVStreamReader reader, MXFPack pack)
+        public MXFPartition(MXFPack pack)
             : base(pack)
         {
+            IKLVStreamReader reader = this.GetReader();
             this.IsLoaded = false;
 
             // Determine the partition type

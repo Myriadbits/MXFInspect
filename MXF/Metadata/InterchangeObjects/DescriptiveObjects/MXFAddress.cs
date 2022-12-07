@@ -75,8 +75,8 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public string AstronomicalBodyName { get; set; }
 
-		public MXFAddress(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack)
+		public MXFAddress(MXFPack pack)
+			: base(pack)
 		{
 			this.MetaDataName = "Address";
 		}

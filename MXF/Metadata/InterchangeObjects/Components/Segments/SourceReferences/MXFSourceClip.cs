@@ -52,8 +52,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010101.05300502.00000000")]
         public MXFFade? FadeOutType { get; set; }
 
-        public MXFSourceClip(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFSourceClip(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "SourceClip";
         }

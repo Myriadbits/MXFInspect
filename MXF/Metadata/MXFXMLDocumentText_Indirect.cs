@@ -35,10 +35,10 @@ namespace Myriadbits.MXF.Metadata
         [ULElement("urn:smpte:ul:060e2b34.01010105.03010220.01000000")]
         public string Text { get; set; }
 
-        public MXFXMLDocumentText_Indirect(IKLVStreamReader reader, MXFPack pack)
+        public MXFXMLDocumentText_Indirect(MXFPack pack)
             : base(pack)
         {
-            Initialize(reader);
+            Initialize(this.GetReader());
         }
 
         private void Initialize(IKLVStreamReader reader)

@@ -74,8 +74,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.05000000")]
         public UInt32? ColorRange { get; set; }
 
-        public MXFCDCIPictureEssenceDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "CDCI Picture Essence Descriptor")
+        public MXFCDCIPictureEssenceDescriptor(MXFPack pack)
+            : base(pack, "CDCI Picture Essence Descriptor")
         {
         }
 

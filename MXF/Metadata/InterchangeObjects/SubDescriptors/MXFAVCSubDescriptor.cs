@@ -111,8 +111,8 @@ namespace Myriadbits.MXF
         public UInt32? AVCAverageBitRate { get; set; }
 
 
-        public MXFAVCSubDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "AVCSubDescriptor")
+        public MXFAVCSubDescriptor(MXFPack pack)
+            : base(pack, "AVCSubDescriptor")
         {
         }
 

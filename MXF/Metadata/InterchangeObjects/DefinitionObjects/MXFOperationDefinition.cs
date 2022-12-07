@@ -49,8 +49,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.0530050a.00000000")]
         public AUID OperationCategory { get; set; }
 
-        public MXFOperationDefinition(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFOperationDefinition(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "OperationDefinition";
         }

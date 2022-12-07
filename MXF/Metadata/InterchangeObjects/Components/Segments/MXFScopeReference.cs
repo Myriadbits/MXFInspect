@@ -40,8 +40,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010102.06010103.04000000")]
 		public UInt32? RelativeTrack { get; set; }
 		
-		public MXFScopeReference(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, "ScopeReference")
+		public MXFScopeReference(MXFPack pack, string metadataName)
+			: base(pack, "ScopeReference")
 		{
 		}
 

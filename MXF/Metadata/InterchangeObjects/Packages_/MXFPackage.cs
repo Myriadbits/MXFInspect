@@ -52,13 +52,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010107.05010108.00000000")]
         public UInt16? PackageUsage { get; set; }
 
-        public MXFPackage(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "Generic Package")
-        {
-        }
-
-        public MXFPackage(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, metadataName)
+        public MXFPackage(MXFPack pack, string metadataName)
+            : base(pack, "Generic Package")
         {
         }
 

@@ -28,8 +28,8 @@ namespace Myriadbits.MXF
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013100")]
 	public class MXFLocator : MXFInterchangeObject
 	{
-		public MXFLocator(IKLVStreamReader reader, MXFPack pack, string metadataName)
-			: base(reader, pack, "Locator")
+		public MXFLocator(MXFPack pack, string metadataName)
+			: base(pack, "Locator")
 		{
 		}
 

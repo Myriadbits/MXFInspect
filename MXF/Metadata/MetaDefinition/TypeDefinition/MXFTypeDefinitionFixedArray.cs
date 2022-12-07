@@ -36,8 +36,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.03010203.03000000")]
         public UInt32 ElementCount { get; set; }
 
-        public MXFTypeDefinitionFixedArray(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFTypeDefinitionFixedArray(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "TypeDefinitionFixedArray";
         }

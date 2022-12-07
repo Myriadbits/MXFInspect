@@ -35,8 +35,8 @@ namespace Myriadbits.MXF
 		[ULElement("urn:smpte:ul:060e2b34.01010101.01020101.01000000")]
 		public string URLString { get; set; }
 
-		public MXFNetworkLocator(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "Network Locator")
+		public MXFNetworkLocator(MXFPack pack)
+			: base(pack, "Network Locator")
 		{
 			this.MetaDataName = "Network Locator";
 		}

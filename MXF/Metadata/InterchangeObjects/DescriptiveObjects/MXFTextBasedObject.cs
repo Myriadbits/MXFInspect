@@ -53,8 +53,8 @@ namespace Myriadbits.MXF
         public string TextMIMEMediaType { get; set; }
 
 
-        public MXFTextBasedObject(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack)
+        public MXFTextBasedObject(MXFPack pack)
+            : base(pack)
         {
             this.MetaDataName = "Text Based Object";
         }

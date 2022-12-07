@@ -44,8 +44,8 @@ namespace Myriadbits.MXF
         [TypeConverter(typeof(ByteArrayConverter))]
         public byte[] TimecodeStreamData { get; private set; }
 
-        public MXFTimecodeStream(IKLVStreamReader reader, MXFPack pack, string metadataName)
-            : base(reader, pack, "TimecodeStream")
+        public MXFTimecodeStream(MXFPack pack, string metadataName)
+            : base(pack, "TimecodeStream")
         {
         }
 

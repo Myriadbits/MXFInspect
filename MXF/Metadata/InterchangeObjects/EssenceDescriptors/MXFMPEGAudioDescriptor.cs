@@ -50,8 +50,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFMPEGAudioDescriptor(IKLVStreamReader reader, MXFPack pack)
-            : base(reader, pack, "MPEG AudioDescriptor")
+        public MXFMPEGAudioDescriptor(MXFPack pack)
+            : base(pack, "MPEG AudioDescriptor")
         {
         }
 

@@ -42,8 +42,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFAIFCDescriptor(IKLVStreamReader reader, MXFPack pack)
-			: base(reader, pack, "AIFCDescriptor")
+        public MXFAIFCDescriptor(MXFPack pack)
+			: base(pack, "AIFCDescriptor")
 		{
 		}
 
