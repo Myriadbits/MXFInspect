@@ -1,11 +1,11 @@
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 # Preface
-This is a fork of the wonderful project [MXF Inspect](https://github.com/Myriadbits/MXFInspect) created by Jochem Bakker. Unfortunately he is not responding to merge requests anymore and the original project seems to be dead :cry:. This fork tries to keep the project alive, as I have implemented a couple of improvements w.r.t. the original.
+This is a fork of the wonderful project [MXF Inspect](https://github.com/Myriadbits/MXFInspect) created by Jochem Bakker. This fork tries to keep the project alive, as I have ~~implemented a couple of improvements w.r.t. the original.~~ completely revamped the entire code.
 
 **Improvements:**
 
-- The project has been migrated to .NET5, thus allowing MXFInspect to be shipped as a single-file-application without any dependencies on installed .NET frameworks
+- The project has been migrated to .NET6, thus allowing MXFInspect to be shipped as a single-file-application without any dependencies on installed .NET frameworks
 - Further SMPTE Standards Implementation
   - Addition of new metadata classes (e.g. MPEGPictureEssenceDescriptor, JPEG2000PictureSubDescriptor). A hierarchical inheritance tree of MXF classes can be found [here](https://registry.smpte-ra.org/view/published/Groups_inheritance_tree.html). See this [TODO list](/tree.md) for the classes that still have to be implemented. 
   - New MXF types (e.g. CodedContentScanningKind, ProductVersion, FrameLayout, Emphasis). A list of MXF types can be found [here](https://registry.smpte-ra.org/view/published/ul_hierarchy.html?rgr=t)
@@ -22,7 +22,6 @@ This is a fork of the wonderful project [MXF Inspect](https://github.com/Myriadb
   - code base clean up (clean *.csproj file, remove unused files, polish .gitignore)
  
 However, there is still a long **TODO list:**
-- migration to the coming .NET6
 - implement additional/more thorough file checks/validations such as:
   - Is KAG Size consistent?
   - Is Edit Unit Size constant?
