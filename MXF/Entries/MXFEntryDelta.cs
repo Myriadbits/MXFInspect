@@ -38,9 +38,10 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public UInt32 ElementDelta { get; set; }
 
-		public MXFEntryDelta(IKLVStreamReader reader, UInt32 length)
+		public MXFEntryDelta(IKLVStreamReader reader, long offset, UInt32 length)
 			: base(reader)
 		{
+			this.Offset = offset;
 			this.TotalLength = length;
 			this.PosTableIndex = reader.ReadSByte();
 			this.Slice = reader.ReadByte();

@@ -126,14 +126,14 @@ namespace Myriadbits.MXF
                         if (NbIndexEntries > 0)
                         {
                             this.IndexEntries = new List<MXFEntryIndex>();
-                            MXFObject indexCollection = new MXFNamedObject("IndexEntries", reader.Position);
+                            MXFObject indexCollection = new MXFNamedObject("IndexEntries", localTag.Offset);
 
                             for (UInt64 i = 0; i < NbIndexEntries; i++)
                             {
                                 long next = reader.Position + entryLength;
+                                long offset = this.Offset + reader.Position;
 
-
-                                MXFEntryIndex newEntry = new MXFEntryIndex((ulong)this.IndexStartPosition + i, reader, localTag.Offset, this.SliceCount, this.PositionTableCount, entryLength);
+                                MXFEntryIndex newEntry = new MXFEntryIndex((ulong)this.IndexStartPosition + i, reader, offset, this.SliceCount, this.PositionTableCount, entryLength);
                                 this.IndexEntries.Add(newEntry); // Also add this entry to the local list
 
                                 // And to the child collection
@@ -153,11 +153,13 @@ namespace Myriadbits.MXF
                         UInt32 entryLength = reader.ReadUInt32();
                         if (NbDeltaEntries > 0)
                         {
-                            MXFObject deltaCollection = new MXFNamedObject("DeltaEntries", reader.Position);
+                            MXFObject deltaCollection = new MXFNamedObject("DeltaEntries", localTag.Offset);
                             for (int i = 0; i < NbDeltaEntries; i++)
                             {
                                 long next = reader.Position + entryLength;
-                                deltaCollection.AddChild(new MXFEntryDelta(reader, entryLength));
+                                long offset = this.Offset + reader.Position;
+
+                                deltaCollection.AddChild(new MXFEntryDelta(reader, offset, entryLength));
                                 reader.Seek(next);
                             }
                             localTag.AddChild(deltaCollection);

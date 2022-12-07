@@ -93,7 +93,7 @@ namespace Myriadbits.MXF
             : base(reader)
         {
             this.TotalLength = length;
-            this.Offset = offset + reader.Position;
+            this.Offset = offset;
             this.Index = index;
             this.TemporalOffset = reader.ReadSByte();
             this.KeyFrameOffset = reader.ReadSByte();

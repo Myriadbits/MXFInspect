@@ -300,15 +300,6 @@ namespace Myriadbits.MXF
                         }
                         break;
 
-                    //case MXFPrimerPack primer:
-                    //    if (currentPartition != null)
-                    //    {
-                    //        // Let the partition know all primer keys
-                    //        currentPartition.PrimerKeys = primer.PrimerEntries;
-                    //        currentPartition.AddChild(primer); // Add the primer 
-                    //    }
-                    //    break;
-
                     case MXFSystemItem si:
                         if (currentPartition != null)
                         {
@@ -368,15 +359,8 @@ namespace Myriadbits.MXF
                 // link local tag keys to primer entry keys
                 ls.LookUpLocalTagKeys();
 
-                try
-                {
-                    // now parse tags
-                    ls.ParseTags();
-                }
-                catch (Exception ex)
-                {
-
-                }
+                // now parse tags
+                ls.ParseTags();
             }
         }
 

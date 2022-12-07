@@ -76,6 +76,7 @@ namespace Myriadbits.MXF
             // could potentially modify the iterating list by calling "AddChild"
             foreach (var lt in localTags.ToList())
             {
+                // TODO pass the reader of the local tag instead of the reader of the pack
                 reader.Seek(lt.ValueOffset - this.Offset);
                 ParseLocalTag(reader, lt);
             }
