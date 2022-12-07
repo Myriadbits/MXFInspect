@@ -43,6 +43,7 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void pbLogo_Click(object sender, EventArgs e)
 		{
+			// TODO this raises an exception
 			System.Diagnostics.Process.Start("http://www.myriadbits.com");
 		}
 
@@ -73,7 +74,8 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void llMyriadbits_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://www.myriadbits.com");
+            // TODO this raises an exception
+            System.Diagnostics.Process.Start("http://www.myriadbits.com");
 		}
 
 		/// <summary>
@@ -103,7 +105,8 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://objectlistview.sourceforge.net/cs/index.html");
+            // TODO this raises an exception
+            System.Diagnostics.Process.Start("http://objectlistview.sourceforge.net/cs/index.html");
 		}
 	}
 }
