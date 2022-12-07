@@ -54,6 +54,10 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public UInt16 TagValue { get { return (UInt16)((UInt16)(Key[0] << 8) + Key[1]); } }
 
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [Description("Value of local tag")]
+        public object PropertyValue { get; set; }
+
         public MXFLocalTag(KLVKey key, KLVLength length, long offset, Stream stream) : base(key, length, offset, stream)
         {
             // check passed parameters 
@@ -71,19 +75,29 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            long maxLocalTagLen = this.Parent?.Children?.OfType<MXFLocalTag>().Max(lt => lt.Length.Value) ?? 0;
+            long maxLocalTagLen = this.Parent?.Children?.OfType<MXFLocalTag>()?.Max(lt => lt.Length.Value) ?? 0;
             int lenDigitCount = Helper.GetDigitCount(maxLocalTagLen);
             string lenstring = this.Length.Value.ToString().PadLeft(lenDigitCount, '0');
 
             StringBuilder sb = new StringBuilder();
+
+            sb.Append($"LocalTag {this.Key} [len {lenstring}] ");
+
             if (AliasUID is UL ul)
             {
-                sb.Append($"LocalTag {this.Key:X4} [len {lenstring}] -> {ul.Name} ");
+                sb.Append($"-> {ul.Name} ");
             }
-            else
+
+            if (this.Children.Any())
             {
-                sb.Append($"LocalTag {this.Key:X4} [len {lenstring}] -> <Not in PrimerPack> ");
+                sb.Append($"[{this.Children.Count} items] ");
             }
+
+            if (this.PropertyValue != null)
+            {
+                sb.Append($"= {this.PropertyValue}");
+            }
+
             return sb.ToString();
         }
     }

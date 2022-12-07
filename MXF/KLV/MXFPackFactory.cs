@@ -281,21 +281,21 @@ namespace Myriadbits.MXF
         /// <param name="reader"></param>
         /// <param name="currentPartition"></param>
         /// <returns></returns>
-        public static MXFPack CreatePack(MXFPack pack, IKLVStreamReader reader)
+        public static MXFPack CreateStronglyTypedPack(MXFPack pack)
         {
 
             if (dict.TryGetValue(pack.Key, out Type foundType))
             {
-                return (MXFPack)Activator.CreateInstance(foundType, reader, pack);
+                return (MXFPack)Activator.CreateInstance(foundType, pack.GetReader(), pack);
             }
             else if (pack.Key.IdentifiesLocalSet_2BytesLength2BytesTag())
             {
-                // TODO we need something that make the object that is not found in dict distinctable 
-                // TODO this could be handled also with a partial UL, check if better approach
-                return new MXFLocalSet(reader, pack);
+                return new MXFLocalSet(pack.GetReader(), pack);
             }
-
-            return pack;
+            else
+            {
+                return pack;
+            }
         }
 
         public static void SetDescriptionFromAttributeForAllTypes()

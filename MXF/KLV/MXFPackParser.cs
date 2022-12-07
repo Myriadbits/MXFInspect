@@ -49,13 +49,9 @@ namespace Myriadbits.MXF
         {
 
             var pack = CreateKLV(currentKLVOffset, ParseKLVKey, ParseKLVLength);
-            var ss = new SubStream(klvStream, currentKLVOffset, pack.TotalLength);
 
-            //var pack = new MXFPack(klv.Key, klv.Length, klv.Offset, ss);
-            //var pack = new MX
             // TODO wrap into using/ try...catch
-            var byteReader = new KLVStreamReader(ss);
-            var typedPack = MXFPackFactory.CreatePack(pack, byteReader);
+            var typedPack = MXFPackFactory.CreateStronglyTypedPack(pack);
 
             typedPack.Number = currentPackNumber++;
             Current = typedPack;

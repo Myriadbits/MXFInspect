@@ -47,8 +47,12 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x001f: ExtendibleEnumerationElementNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00); return true;
-                case 0x0020: this.AddChild(reader.ReadAUIDSet("ExtendibleEnumerationElementValues", "ExtendibleEnumerationElementValue")); return true;
+                case 0x001f: 
+                    ExtendibleEnumerationElementNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00); 
+                    return true;
+                case 0x0020: 
+                    this.AddChildren(reader.ReadAUIDSet("ExtendibleEnumerationElementValue", localTag.Length.Value)); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

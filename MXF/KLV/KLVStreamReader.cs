@@ -1,6 +1,7 @@
 ﻿using Myriadbits.MXF.Identifiers;
 using System;
 using System.Buffers.Binary;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Myriadbits.MXF.KLV
@@ -159,27 +160,83 @@ namespace Myriadbits.MXF.KLV
             return new UUID(this.ReadBytes((int)KLVKey.KeyLengths.SixteenBytes));
         }
 
-        /// <summary>
-        /// Reads a list of AUIDs and returns a MXFObject containing the AUIDs as children
-        /// </summary>
-        /// <param name="groupName">The name of the MXFObject acting as group container</param>
-        /// <param name="singleItem">The name of the single items</param>
-        public MXFObject ReadAUIDSet(string groupName, string singleItem)
+        public IEnumerable<MXFObject> ReadAUIDSet(string singleItemName, long tagLength)
+        {
+            if (IsSetSmallerThanTagLength(tagLength, out long setLength, out UInt32 itemCount))
+            {
+                if (itemCount < UInt32.MaxValue)
+                {
+                    for (int n = 0; n < itemCount; n++)
+                    {
+                        long pos = this.Position;
+                        AUID auid = ReadAUID();
+                        yield return new MXFAUID(singleItemName, pos, auid);
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception($"Item count and/or size ({setLength} exceeding length of tag ({tagLength}).");
+            }
+        }
+
+        public IEnumerable<MXFObject> GetReferenceSet<T>(string singleItemName, long tagLength) where T : MXFObject
+        {
+            if (IsSetSmallerThanTagLength(tagLength, out long setLength, out UInt32 itemCount))
+            {
+                if (itemCount < UInt32.MaxValue)
+                {
+                    for (int n = 0; n < itemCount; n++)
+                    {
+                        yield return new MXFReference<T>(this, singleItemName);
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception($"Item count and/or size ({setLength} exceeding length of tag ({tagLength}).");
+            }
+        }
+
+        private bool IsSetSmallerThanTagLength(long tagLength, out long setLength, out UInt32 itemCount)
+        {
+            itemCount = this.ReadUInt32();
+            UInt32 itemLength = this.ReadUInt32();
+            setLength = itemCount * itemLength;
+
+            // check if the set fits into the tag length (minus the four bytes of itemCount and minus four bytes itemLength) 
+            return (setLength <= tagLength - 2 * 4);
+        }
+
+
+        // TODO transform into function returning the enumerable
+        public MXFObject ReadReferenceSet<T>(string referringSetName, string singleItemName) where T : MXFObject
         {
             UInt32 nofItems = this.ReadUInt32();
-            UInt32 objectSize = this.ReadUInt32(); // TODO useless size of objects, always 16 according to specs
+            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
 
-            MXFObject auidGroup = new MXFNamedObject(groupName, this.Position, objectSize);
+            MXFObject referenceSet = new MXFNamedObject(referringSetName, this.Position, objectSize);
+
+            // TODO what if this condition is not met? should we throw an exception?
             if (nofItems < UInt32.MaxValue)
             {
                 for (int n = 0; n < nofItems; n++)
                 {
-                    AUID auid = ReadAUID();
-                    MXFAUID mxfAUID = new MXFAUID(singleItem, this.Position, auid);
-                    auidGroup.AddChild(mxfAUID);
+                    var reference = new MXFReference<T>(this, singleItemName);
+                    referenceSet.AddChild(reference);
                 }
             }
-            return auidGroup;
+
+            return referenceSet;
+        }
+
+        /// <summary>
+        /// Reads a strong reference
+        /// </summary>
+        /// <param name="reader"></param>
+        public MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject
+        {
+            return new MXFReference<T>(this, referringItemName);
         }
 
         #endregion
@@ -330,34 +387,6 @@ namespace Myriadbits.MXF.KLV
             return retval;
         }
 
-        public MXFObject ReadReferenceSet<T>(string referringSetName, string singleItemName) where T : MXFObject
-        {
-            UInt32 nofItems = this.ReadUInt32();
-            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
-
-            MXFObject referenceSet = new MXFNamedObject(referringSetName, this.Position, objectSize);
-
-            // TODO what if this condition is not met? should we throw an exception?
-            if (nofItems < UInt32.MaxValue)
-            {
-                for (int n = 0; n < nofItems; n++)
-                {
-                    var reference = new MXFReference<T>(this, singleItemName);
-                    referenceSet.AddChild(reference);
-                }
-            }
-
-            return referenceSet;
-        }
-
-        /// <summary>
-        /// Reads a strong reference
-        /// </summary>
-        /// <param name="reader"></param>
-        public MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject
-        {
-            return new MXFReference<T>(this, referringItemName);
-        }
         #endregion
     }
 }

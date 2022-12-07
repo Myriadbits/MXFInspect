@@ -89,10 +89,11 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public MXFRational[] PosTable { get; set; }
 
-        public MXFEntryIndex(UInt64 index, IKLVStreamReader reader, byte? sliceCount, byte? posTableCount, UInt32 length)
+        public MXFEntryIndex(UInt64 index, IKLVStreamReader reader, long offset, byte? sliceCount, byte? posTableCount, UInt32 length)
             : base(reader)
         {
             this.TotalLength = length;
+            this.Offset = offset + reader.Position;
             this.Index = index;
             this.TemporalOffset = reader.ReadSByte();
             this.KeyFrameOffset = reader.ReadSByte();
@@ -121,7 +122,7 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             // calculate correct paddings
-            // TODO optimize
+            // TODO optimize, could explode in users face
             IEnumerable<MXFEntryIndex> siblings = this.Parent?.Children?.OfType<MXFEntryIndex>();
             long maxIndexEntryCount = siblings?.Count() ?? 0;
             int lenDigitCount = Helper.GetDigitCount(maxIndexEntryCount);

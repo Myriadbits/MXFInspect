@@ -1,5 +1,6 @@
 ﻿using Myriadbits.MXF.Identifiers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Myriadbits.MXF.KLV
@@ -46,11 +47,12 @@ namespace Myriadbits.MXF.KLV
         MXFChannelStatusMode ReadChannelstatusMode();
         MXFColorPrimary ReadColorPrimary();
         T[] ReadArray<T>(Func<T> readFunction, long count);
-        MXFObject ReadAUIDSet(string groupName, string singleItem);
+        IEnumerable<MXFObject> ReadAUIDSet(string singleItemName, long localTagLength);
         MXFTimeStamp ReadBCDTimeCode(double frameRate);
         MXFVersion ReadVersion();
         MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject;
         MXFObject ReadReferenceSet<T>(string referringSetName, string singleItemName) where T : MXFObject;
+        public IEnumerable<MXFObject> GetReferenceSet<T>(string singleItemName, long tagLength) where T : MXFObject;
         MXFRGBAComponent ReadRGBAComponent();
         MXFRGBAComponent[] ReadRGBALayout();
 

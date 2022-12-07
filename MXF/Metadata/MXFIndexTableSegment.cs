@@ -85,6 +85,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010105.07020201.01020000")]
         public MXFPosition? IndexDuration { get; set; }
 
+        // TODO get rid of this property
         [Browsable(false)]
         public List<MXFEntryIndex> IndexEntries { get; set; }
 
@@ -118,6 +119,8 @@ namespace Myriadbits.MXF
                 case 0x3F0B: this.IndexEditRate = reader.ReadRational(); return true;
                 case 0x3F0A:  // Index entry array
                     {
+
+                        // TODO use reader function to check the set size
                         UInt32 NbIndexEntries = reader.ReadUInt32();
                         UInt32 entryLength = reader.ReadUInt32();
                         if (NbIndexEntries > 0)
@@ -130,7 +133,7 @@ namespace Myriadbits.MXF
                                 long next = reader.Position + entryLength;
 
 
-                                MXFEntryIndex newEntry = new MXFEntryIndex((ulong)this.IndexStartPosition + i, reader, this.SliceCount, this.PositionTableCount, entryLength);
+                                MXFEntryIndex newEntry = new MXFEntryIndex((ulong)this.IndexStartPosition + i, reader, localTag.Offset, this.SliceCount, this.PositionTableCount, entryLength);
                                 this.IndexEntries.Add(newEntry); // Also add this entry to the local list
 
                                 // And to the child collection
@@ -138,13 +141,14 @@ namespace Myriadbits.MXF
 
                                 reader.Seek(next);
                             }
-                            this.AddChild(indexCollection);
+                            localTag.AddChild(indexCollection);
                         }
                     }
                     return true;
 
                 case 0x3F09:  // Delta entry array
                     {
+                        // TODO use reader function to check the set size
                         UInt32 NbDeltaEntries = reader.ReadUInt32();
                         UInt32 entryLength = reader.ReadUInt32();
                         if (NbDeltaEntries > 0)
@@ -156,7 +160,7 @@ namespace Myriadbits.MXF
                                 deltaCollection.AddChild(new MXFEntryDelta(reader, entryLength));
                                 reader.Seek(next);
                             }
-                            this.AddChild(deltaCollection);
+                            localTag.AddChild(deltaCollection);
                         }
                     }
                     return true;

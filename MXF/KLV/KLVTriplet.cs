@@ -86,6 +86,11 @@ namespace Myriadbits.MXF
             Stream = stream;
         }
 
+        public IKLVStreamReader GetReader()
+        {
+            return new KLVStreamReader(this.Stream);
+        } 
+
         //// TODO this should not be the responsibility of the class to read its content
         //public V GetValue(SubStream ss)
         //{

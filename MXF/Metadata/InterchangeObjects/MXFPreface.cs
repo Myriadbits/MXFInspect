@@ -67,7 +67,6 @@ namespace Myriadbits.MXF
         public MXFPreface(IKLVStreamReader reader, MXFPack pack)
             : base(reader, pack, "Preface")
         {
-            //this.Key.Type = KeyType.Preface;
         }
 
         /// <summary>
@@ -78,19 +77,49 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3B01: this.ByteOrder = reader.ReadUInt16(); return true;
-                case 0x3B02: this.FileLastModified = reader.ReadTimestamp(); return true;
-                case 0x3B03: this.AddChild(reader.ReadReference<MXFContentStorage>("ContentStorage")); return true;
-                case 0x3B04: this.AddChild(reader.ReadReference<MXFDictionary>("Dictionary")); return true;
-                case 0x3B05: this.FormatVersion = reader.ReadVersion(); return true;
-                case 0x3B06: this.AddChild(reader.ReadReferenceSet<MXFIdentification>("Identifications", "Identification")); return true;
-                case 0x3B07: this.ObjectModelVersion = reader.ReadUInt32(); return true;
-                case 0x3B08: this.AddChild(reader.ReadReference<MXFPackage>("PrimaryPackage")); return true;
-                case 0x3B09: this.OperationalPattern = reader.ReadUL(); return true;
-                case 0x3B0A: this.AddChild(reader.ReadAUIDSet("EssenceContainers", "EssenceContainer")); return true;
-                    // TODO review how the metadataschemes are read (especially if there are no schemes present)
-                case 0x3B0B: this.AddChild(reader.ReadAUIDSet("Descriptive Metadata Schemes", "DM scheme")); return true;
-                case var _ when localTag.AliasUID == isRIPPresent_Key: this.IsRIPPresent = reader.ReadBoolean(); return true;
+                case 0x3B01: 
+                    this.ByteOrder = reader.ReadUInt16();
+                    localTag.PropertyValue = this.ByteOrder;
+                    return true;
+                case 0x3B02: 
+                    this.FileLastModified = reader.ReadTimestamp();
+                    localTag.PropertyValue = this.FileLastModified;
+                    return true;
+                case 0x3B03: 
+                    localTag.AddChild(reader.ReadReference<MXFContentStorage>("ContentStorage")); 
+                    return true;
+                case 0x3B04: 
+                    localTag.AddChild(reader.ReadReference<MXFDictionary>("Dictionary")); 
+                    return true;
+                case 0x3B05:
+                    this.FormatVersion = reader.ReadVersion();
+                    localTag.PropertyValue = this.FormatVersion;
+                    return true;
+                case 0x3B06: 
+                    localTag.AddChildren(reader.GetReferenceSet<MXFIdentification>("Identification", localTag.Length.Value)); 
+                    return true;
+                case 0x3B07:
+                    this.ObjectModelVersion = reader.ReadUInt32();
+                    localTag.PropertyValue = this.ObjectModelVersion;
+                    return true;
+                case 0x3B08: 
+                    localTag.AddChild(reader.ReadReference<MXFPackage>("PrimaryPackage")); 
+                    return true;
+                case 0x3B09:
+                    this.OperationalPattern = reader.ReadUL();
+                    localTag.PropertyValue = this.OperationalPattern;
+                    return true;
+                case 0x3B0A:
+                    localTag.AddChildren(reader.ReadAUIDSet("EssenceContainer", localTag.Length.Value));
+                    return true;
+                // TODO review how the metadataschemes are read (especially if there are no schemes present)
+                case 0x3B0B: 
+                    localTag.AddChildren(reader.ReadAUIDSet("DM scheme", localTag.Length.Value)); 
+                    return true;
+                case var _ when localTag.AliasUID == isRIPPresent_Key: 
+                    this.IsRIPPresent = reader.ReadBoolean();
+                    localTag.PropertyValue = this.IsRIPPresent;
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

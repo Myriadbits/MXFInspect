@@ -56,7 +56,7 @@ namespace Myriadbits.MXF
         {
             if (KeyLength == KeyLengths.TwoBytes)
             {
-                return $"<{this[0]:x2}.{this[1]:x2}>";
+                return $"<{this[0]:X2}.{this[1]:X2}>";
             }
             else
             {

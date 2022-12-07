@@ -37,18 +37,11 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public AUID Key { get; set; }
 
-		public MXFAUID(IKLVStreamReader reader, string name)
-			: base(reader.Position)
-		{
-			this.Name = name;
-			this.Key = reader.ReadAUID();
-			this.TotalLength = (long)this.Key.KeyLength;
-		}
-
 		public MXFAUID(string name, long offset, AUID auid) : base(name, offset)
 		{
 			Key = auid;
-		}
+            TotalLength = (long)Key.KeyLength;
+        }
 
         public override string ToString()
 		{

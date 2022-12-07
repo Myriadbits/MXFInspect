@@ -48,8 +48,12 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x0013: this.AddChild(reader.ReadAUIDSet("TargetSet", "Target")); return true;
-                case 0x0012: WeakReferencedType = reader.ReadAUID(); return true;
+                case 0x0013: 
+                    this.AddChildren(reader.ReadAUIDSet("Target", localTag.Length.Value)); 
+                    return true;
+                case 0x0012: 
+                    WeakReferencedType = reader.ReadAUID(); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }
