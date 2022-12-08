@@ -10,6 +10,13 @@
     <StartupObject>Myriadbits.MXFInspect.Program</StartupObject> 
     <ApplicationIcon>MXFInspect.ico</ApplicationIcon> 
   </PropertyGroup>
+
+	<PropertyGroup>
+		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+		<Version>4.0.0</Version>
+		<AssemblyVersion>4.0.*</AssemblyVersion>
+		<Deterministic>false</Deterministic>
+	</PropertyGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\MXF\MXF.csproj">
@@ -52,8 +59,4 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
-
-
-
 </Project>
