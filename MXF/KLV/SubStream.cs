@@ -39,6 +39,7 @@ namespace Myriadbits.MXF.KLV
             if (!baseStream.CanRead) throw new ArgumentException("Can't read base stream.");
             if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
             if (length < 1) throw new ArgumentException("Length must be greater than zero.");
+            //if(baseStream.Length - offset < length) throw new ArgumentOutOfRangeException(nameof(length));
 
             this.baseStream = baseStream;
             this.offset = offset;
@@ -55,16 +56,15 @@ namespace Myriadbits.MXF.KLV
         {
             CheckDisposed();
             long remaining = _length - _position;
-            if (remaining <= 0) return 0;
-            if (remaining < count) count = (int)remaining;
+
+            if (remaining <= 0 || remaining < count)
+            {
+                throw new EndOfStreamException();
+            }
+
             int read = baseStream.Read(buffer, offset, count);
             _position += read;
             return read;
-        }
-
-        private void CheckDisposed()
-        {
-            if (baseStream == null) throw new ObjectDisposedException(GetType().Name);
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -78,8 +78,12 @@ namespace Myriadbits.MXF.KLV
             else if (origin == SeekOrigin.Current)
                 pos += offset;
 
-            _position = baseStream.Seek(this.offset + pos, SeekOrigin.Begin) - this.offset;
+            if (pos > _length)
+            {
+                throw new EndOfStreamException();
+            }
 
+            _position = baseStream.Seek(this.offset + pos, SeekOrigin.Begin) - this.offset;
             return pos;
         }
 
@@ -114,6 +118,11 @@ namespace Myriadbits.MXF.KLV
             {
                 baseStream.Dispose();
             }
+        }
+
+        private void CheckDisposed()
+        {
+            if (baseStream == null) throw new ObjectDisposedException(GetType().Name);
         }
     }
 }

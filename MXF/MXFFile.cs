@@ -30,9 +30,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
-using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Identifiers;
-using System.Collections.Concurrent;
 
 namespace Myriadbits.MXF
 {
@@ -102,9 +100,6 @@ namespace Myriadbits.MXF
 
                 using (var fileStream = new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
                 {
-                    // Prepare
-                    //this.Filesize = fileStream.Length;
-
                     // Create root node
                     MXFObject root = new MXFNamedObject("Partitions", 0);
                     this.AddChild(root);
@@ -168,7 +163,7 @@ namespace Myriadbits.MXF
                         }
                     }
 
-                    Debug.WriteLine("Finished parsing file '{0}' in {1} ms", this.File.FullName, sw.ElapsedMilliseconds);
+                    Debug.WriteLine($"Finished parsing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
 
                     // Now process the pack list (partition packs, treat special cases)
                     overallProgress?.Report(new TaskReport(65, "Process packs"));
