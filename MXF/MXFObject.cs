@@ -45,33 +45,13 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "Object";
         private const int CATEGORYPOS = 0;
 
-        private long m_lLength = -1;            // Length in bytes of this object
-
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Offset from the beginning of file in terms of bytes")]
         public virtual long Offset { get; protected set; } = 0;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        //TODO this is not the length of KLV but the length of the object!!!
-        public virtual long TotalLength
-        {
-            get
-            {
-                if (m_lLength == -1)
-                {
-                    // Not set, try to get the parent length
-                    if (this.Parent != null)
-                        return this.Parent.TotalLength + this.Parent.Offset - this.Offset;
-                    return 0; // Unknown
-                }
-                else
-                    return m_lLength;
-            }
-            set
-            {
-                m_lLength = value;
-            }
-        }
+        [Description("Total length of object in term of bytes. If KLV then sum of Key length + Length length + Value length")]
+        public virtual long TotalLength { get; protected set; } = 0;
 
         [Browsable(false)]
         // TODO find better name
@@ -101,21 +81,6 @@ namespace Myriadbits.MXF
         protected MXFObject(long offset)
         {
             this.Offset = offset;
-        }
-
-        /// <summary>
-        /// Adds a child an sets reference of parent to this
-        /// </summary>
-        /// <param name="child"></param>
-        /// <returns></returns>
-        public override void AddChild(MXFObject child)
-        {
-            base.AddChild(child);
-            // TODO not really clean?!
-            if (child.Offset < this.Offset)
-            {
-                child.Offset = this.Offset + child.Offset;
-            }
         }
 
         public MXFObject FindNextObjectOfType(Type typeToFind)

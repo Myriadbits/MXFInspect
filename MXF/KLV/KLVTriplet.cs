@@ -56,14 +56,11 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Total length of KLV (= sum of lengths of key, KLV-length and value)
         /// </summary>
-        //[Description("Total length of KLV in bytes (Key length + Length length + Value length)")]
-        public override long TotalLength { get; set; }
+        public override long TotalLength { get; protected set; }
 
         /// <summary>
         /// Offset of the value (=data), i.e. where the payload begins.
         /// </summary>
-        //[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        //[Description("Offset of the value part of the KLV in term of bytes from beginning of the file")]
         [Browsable(false)]
         public long ValueOffset { get; }
 

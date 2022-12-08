@@ -47,18 +47,12 @@ namespace Myriadbits.MXF
 
         public override MXFPack GetNext()
         {
-
-            var pack = CreateKLV(currentKLVOffset, ParseKLVKey, ParseKLVLength);
+            var pack = base.GetNext();
 
             // TODO wrap into using/ try...catch
-            var typedPack = MXFPackFactory.CreateStronglyTypedPack(pack);
-
+            MXFPack typedPack = MXFPackFactory.CreateStronglyTypedPack(pack);
             typedPack.Number = currentPackNumber++;
             Current = typedPack;
-
-            // advance to next pack
-            Seek(currentKLVOffset + pack.TotalLength);
-
             return typedPack;
         }
 
