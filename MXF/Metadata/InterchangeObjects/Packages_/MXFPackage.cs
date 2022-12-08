@@ -53,7 +53,7 @@ namespace Myriadbits.MXF
         public UInt16? PackageUsage { get; set; }
 
         public MXFPackage(MXFPack pack, string metadataName)
-            : base(pack, "Generic Package")
+            : base(pack, metadataName)
         {
         }
 
