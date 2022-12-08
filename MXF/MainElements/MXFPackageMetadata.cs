@@ -1,4 +1,4 @@
-﻿#region licenseBER ShortForm
+﻿#region license
 //
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
