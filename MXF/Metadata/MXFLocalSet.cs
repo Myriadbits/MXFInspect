@@ -69,15 +69,14 @@ namespace Myriadbits.MXF
 
         public void ParseTags()
         {
-            var reader = new KLVStreamReader(this.Stream);
             var localTags = this.Children.OfType<MXFLocalTag>();
 
             // ToList() materialization absolutely needed as the inner method call
             // could potentially modify the iterating list by calling "AddChild"
             foreach (var lt in localTags.ToList())
             {
-                // TODO pass the reader of the local tag instead of the reader of the pack
-                reader.Seek(lt.ValueOffset - this.Offset);
+                IKLVStreamReader reader = lt.GetReader();
+                reader.Seek(lt.RelativeValueOffset);
                 ParseLocalTag(reader, lt);
             }
         }

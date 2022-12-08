@@ -131,7 +131,7 @@ namespace Myriadbits.MXF
                             for (UInt64 i = 0; i < NbIndexEntries; i++)
                             {
                                 long next = reader.Position + entryLength;
-                                long offset = this.Offset + reader.Position;
+                                long offset = localTag.Offset + reader.Position;
 
                                 MXFEntryIndex newEntry = new MXFEntryIndex((ulong)this.IndexStartPosition + i, reader, offset, this.SliceCount, this.PositionTableCount, entryLength);
                                 this.IndexEntries.Add(newEntry); // Also add this entry to the local list
@@ -157,7 +157,7 @@ namespace Myriadbits.MXF
                             for (int i = 0; i < NbDeltaEntries; i++)
                             {
                                 long next = reader.Position + entryLength;
-                                long offset = this.Offset + reader.Position;
+                                long offset = localTag.Offset + reader.Position;
 
                                 deltaCollection.AddChild(new MXFEntryDelta(reader, offset, entryLength));
                                 reader.Seek(next);
