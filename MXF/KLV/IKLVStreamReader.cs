@@ -47,7 +47,7 @@ namespace Myriadbits.MXF.KLV
         MXFChannelStatusMode ReadChannelstatusMode();
         MXFColorPrimary ReadColorPrimary();
         T[] ReadArray<T>(Func<T> readFunction, long count);
-        IEnumerable<MXFObject> ReadAUIDSet(string singleItemName, long localTagLength);
+        IEnumerable<MXFObject> ReadAUIDSet(string singleItemName, long baseOffset, long localTagLength);
         MXFTimeStamp ReadBCDTimeCode(double frameRate);
         MXFVersion ReadVersion();
         MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject;

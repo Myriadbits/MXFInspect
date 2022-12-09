@@ -34,22 +34,11 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public string Name { get; set; }
 
-
         /// <summary>
         /// MXF Object constructor
         /// </summary>
         /// <param name="reader"></param>
-        public MXFNamedObject(long offset)
-            : base(offset)
-        {
-        }
-
-
-        /// <summary>
-        /// MXF Object constructor
-        /// </summary>
-        /// <param name="reader"></param>
-        public MXFNamedObject(string name, long offset) : this(offset)
+        public MXFNamedObject(string name, long offset) : base(offset)
         {
             Name = name;
         }

@@ -110,11 +110,11 @@ namespace Myriadbits.MXF
                     localTag.PropertyValue = this.OperationalPattern;
                     return true;
                 case 0x3B0A:
-                    localTag.AddChildren(reader.ReadAUIDSet("EssenceContainer", localTag.Length.Value));
+                    localTag.AddChildren(reader.ReadAUIDSet("EssenceContainer", localTag.Offset, localTag.Length.Value));
                     return true;
                 // TODO review how the metadataschemes are read (especially if there are no schemes present)
                 case 0x3B0B: 
-                    localTag.AddChildren(reader.ReadAUIDSet("DM scheme", localTag.Length.Value)); 
+                    localTag.AddChildren(reader.ReadAUIDSet("DM scheme", localTag.Offset, localTag.Length.Value)); 
                     return true;
                 case var _ when localTag.AliasUID == isRIPPresent_Key: 
                     this.IsRIPPresent = reader.ReadBoolean();

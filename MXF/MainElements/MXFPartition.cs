@@ -156,8 +156,8 @@ namespace Myriadbits.MXF
             this.BodySID = reader.ReadUInt32();
 
             this.OperationalPattern = reader.ReadUL();
-            MXFNamedObject essenceContainers = new MXFNamedObject("EssenceContainers", reader.Position);
-            essenceContainers.AddChildren(reader.ReadAUIDSet("EssenceContainer", this.TotalLength - reader.Position));
+            MXFNamedObject essenceContainers = new MXFNamedObject("EssenceContainers", this.Offset + reader.Position, this.TotalLength - reader.Position);
+            essenceContainers.AddChildren(reader.ReadAUIDSet("EssenceContainer", this.Offset, this.TotalLength - reader.Position));
             this.AddChild(essenceContainers);
         }
 

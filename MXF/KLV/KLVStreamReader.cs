@@ -160,7 +160,8 @@ namespace Myriadbits.MXF.KLV
             return new UUID(this.ReadBytes((int)KLVKey.KeyLengths.SixteenBytes));
         }
 
-        public IEnumerable<MXFObject> ReadAUIDSet(string singleItemName, long tagLength)
+        // TODO AUIDSet offset bug
+        public IEnumerable<MXFObject> ReadAUIDSet(string singleItemName, long baseOffset, long tagLength)
         {
             if (IsSetSmallerThanTagLength(tagLength, out long setLength, out UInt32 itemCount))
             {
@@ -168,7 +169,7 @@ namespace Myriadbits.MXF.KLV
                 {
                     for (int n = 0; n < itemCount; n++)
                     {
-                        long pos = this.Position;
+                        long pos = baseOffset + this.Position;
                         AUID auid = ReadAUID();
                         yield return new MXFAUID(singleItemName, pos, auid);
                     }

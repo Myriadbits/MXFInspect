@@ -243,7 +243,7 @@ namespace Myriadbits.MXF
                 case 0x321A: this.CodingEquations = reader.ReadUL(); return true;
                 case 0x3219: this.ColorPrimaries = reader.ReadUL(); return true;
                 case var _ when localTag.AliasUID == altCenterCuts_Key:
-                    this.AddChildren(reader.ReadAUIDSet("AlternativeCenterCut", localTag.Length.Value)); 
+                    this.AddChildren(reader.ReadAUIDSet("AlternativeCenterCut", localTag.Offset, localTag.Length.Value)); 
                     return true;
                 case var _ when localTag.AliasUID == activeHeight_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
                 case var _ when localTag.AliasUID == activeWidth_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
