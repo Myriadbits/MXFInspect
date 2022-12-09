@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
 			while (reader.Position + 12 < klvEnd)
 			{
 				// Add to the collection
-				AddChild(new MXFEntryRIP(reader));
+				AddChild(new MXFEntryRIP(reader, this.Offset));
 			}
 		}
 

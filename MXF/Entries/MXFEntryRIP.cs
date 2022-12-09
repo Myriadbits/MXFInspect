@@ -28,29 +28,31 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     public class MXFEntryRIP : MXFObject
-	{
-		private const string CATEGORYNAME = "RIPEntry";
+    {
+        private const string CATEGORYNAME = "RIPEntry";
 
-		[Category(CATEGORYNAME)]
-		public UInt32 BodySID { get; set; }
-		[Category(CATEGORYNAME)]
-		public UInt64 PartitionOffset { get; set; }
+        [Category(CATEGORYNAME)]
+        public UInt32 BodySID { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        public UInt64 PartitionOffset { get; set; }
 
-		public MXFEntryRIP(IKLVStreamReader reader)
-			: base(reader)
-		{
-			this.BodySID = reader.ReadUInt32();
-			this.PartitionOffset = reader.ReadUInt64();
-			this.TotalLength = 12; // Fixed length
-		}
+        public MXFEntryRIP(IKLVStreamReader reader, long offset)
+            : base(reader)
+        {
+            this.Offset = offset + reader.Position;
+            this.BodySID = reader.ReadUInt32();
+            this.PartitionOffset = reader.ReadUInt64();
+            this.TotalLength = 12; // Fixed length
+        }
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return string.Format("RIPEntry - BodySID {0}, PartitionOffset {1}", this.BodySID, this.PartitionOffset);
-		}
-	}
+        /// <summary>
+        /// Some output
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("RIPEntry - BodySID {0}, PartitionOffset {1}", this.BodySID, this.PartitionOffset);
+        }
+    }
 }
