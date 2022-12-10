@@ -52,7 +52,7 @@ namespace Myriadbits.MXF.KLV
         MXFVersion ReadVersion();
         MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject;
         MXFObject ReadReferenceSet<T>(string referringSetName, string singleItemName) where T : MXFObject;
-        public IEnumerable<MXFObject> GetReferenceSet<T>(string singleItemName, long tagLength) where T : MXFObject;
+        public IEnumerable<MXFObject> GetReferenceSet<T>(string singleItemName, long baseOffset, long tagLength) where T : MXFObject;
         MXFRGBAComponent ReadRGBAComponent();
         MXFRGBAComponent[] ReadRGBALayout();
 

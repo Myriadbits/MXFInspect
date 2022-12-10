@@ -181,7 +181,7 @@ namespace Myriadbits.MXF.KLV
             }
         }
 
-        public IEnumerable<MXFObject> GetReferenceSet<T>(string singleItemName, long tagLength) where T : MXFObject
+        public IEnumerable<MXFObject> GetReferenceSet<T>(string singleItemName, long baseOffset, long tagLength) where T : MXFObject
         {
             if (IsSetSmallerThanTagLength(tagLength, out long setLength, out UInt32 itemCount))
             {
@@ -189,7 +189,8 @@ namespace Myriadbits.MXF.KLV
                 {
                     for (int n = 0; n < itemCount; n++)
                     {
-                        yield return new MXFReference<T>(this, singleItemName);
+                        long pos = baseOffset + this.Position;
+                        yield return new MXFReference<T>(this, pos, singleItemName);
                     }
                 }
             }
@@ -223,7 +224,7 @@ namespace Myriadbits.MXF.KLV
             {
                 for (int n = 0; n < nofItems; n++)
                 {
-                    var reference = new MXFReference<T>(this, singleItemName);
+                    var reference = new MXFReference<T>(this, this.Position, singleItemName);
                     referenceSet.AddChild(reference);
                 }
             }
@@ -237,7 +238,7 @@ namespace Myriadbits.MXF.KLV
         /// <param name="reader"></param>
         public MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject
         {
-            return new MXFReference<T>(this, referringItemName);
+            return new MXFReference<T>(this, this.Position, referringItemName);
         }
 
         #endregion

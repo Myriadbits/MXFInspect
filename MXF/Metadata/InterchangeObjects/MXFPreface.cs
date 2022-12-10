@@ -96,7 +96,7 @@ namespace Myriadbits.MXF
                     localTag.PropertyValue = this.FormatVersion;
                     return true;
                 case 0x3B06: 
-                    localTag.AddChildren(reader.GetReferenceSet<MXFIdentification>("Identification", localTag.Length.Value)); 
+                    localTag.AddChildren(reader.GetReferenceSet<MXFIdentification>("Identification", localTag.Offset, localTag.Length.Value)); 
                     return true;
                 case 0x3B07:
                     this.ObjectModelVersion = reader.ReadUInt32();
