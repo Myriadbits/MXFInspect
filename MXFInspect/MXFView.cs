@@ -85,7 +85,6 @@ namespace Myriadbits.MXFInspect
         private FileParseMode FileParseMode { get; set; }
 
         private Stopwatch sw = new Stopwatch();
-        private int m_lastPercentage = 0;
         private bool m_fDoNotSelectOther = false;
 
 
@@ -137,17 +136,18 @@ namespace Myriadbits.MXFInspect
             // Open the selected file to read.
             try
             {
+                this.ParentMainForm.SetActivityText($"Opening file file '{this.FileInfo.FullName}'..."); 
                 this.File = await MXFFile.CreateAsync(this.FileInfo, overallProgressHandler, singleProgressHandler, cts.Token);
 
                 FillTrees();
                 this.splitMain.Visible = true;
                 this.tabMain.SelectedIndex = 0;
-                this.ParentMainForm.SetActivityText(string.Format("Finished reading file '{0}' in {1:N0} ms", this.FileInfo.FullName, sw.ElapsedMilliseconds));
+                this.ParentMainForm.SetActivityText($"Finished reading file '{this.FileInfo.FullName}' in {sw.ElapsedMilliseconds:N0} ms");
             }
             catch (OperationCanceledException ex)
             {
                 Debug.WriteLine("Operation aborted by user {0}", ex);
-                this.ParentMainForm.SetActivityText(string.Format("Operation aborted by user"));
+                this.ParentMainForm.SetActivityText(string.Format("File opening aborted by user"));
                 this.Close();
 
             }
