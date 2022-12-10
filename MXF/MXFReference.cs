@@ -34,11 +34,12 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public string Name { get; set; }
         [Category(CATEGORYNAME)]
+        [Browsable(false)]
         public T Reference { get; set; }
         [Category(CATEGORYNAME)]
         public UUID Identifier { get; set; }
 
-        public MXFReference(IKLVStreamReader reader, string name) : base(reader.Position)
+        public MXFReference(IKLVStreamReader reader, long offset, string name) : base(offset)
         {
             Name = name;
             Identifier = reader.ReadUUID();
