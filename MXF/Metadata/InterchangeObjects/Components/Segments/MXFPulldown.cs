@@ -60,7 +60,7 @@ namespace Myriadbits.MXF
                 case 0x0D03: this.PulldownDirection = (MXFPulldownDirection?)reader.ReadByte(); return true;
                 case 0x0D02: this.PulldownKind = (MXFPulldownKind?)reader.ReadByte(); return true;
                 case 0x0D04: this.PhaseFrame = reader.ReadUInt32(); return true;
-                case 0x0D01: this.AddChild(reader.ReadReference<MXFSegment>("InputSegment")); return true;
+                case 0x0D01: this.AddChild(reader.ReadReference<MXFSegment>("InputSegment", localTag.Offset)); return true;
             }
 
             return base.ParseLocalTag(reader, localTag);

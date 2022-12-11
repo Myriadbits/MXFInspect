@@ -102,7 +102,7 @@ namespace Myriadbits.MXF
                 case 0x3002: this.ContainerDuration = reader.ReadUInt64(); return true;
                 case 0x3004: this.EssenceContainer = reader.ReadUL(); return true;
                 case 0x3005:
-                    this.AddChild(reader.ReadReference<MXFCodecDefinition>("Codec"));
+                    this.AddChild(reader.ReadReference<MXFCodecDefinition>("Codec", localTag.Offset));
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

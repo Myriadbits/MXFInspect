@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x2301:
-                    this.AddChild(reader.ReadReference<MXFClassDefinition>("FileDescriptorClass"));
+                    this.AddChild(reader.ReadReference<MXFClassDefinition>("FileDescriptorClass", localTag.Offset));
                     return true;
                 case 0x2302:
                     this.AddChild(reader.ReadReferenceSet<MXFDataDefinition>("CodecDataDefinitions", "CodecDataDefinition"));

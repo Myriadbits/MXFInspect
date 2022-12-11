@@ -86,10 +86,10 @@ namespace Myriadbits.MXF
                     localTag.PropertyValue = this.FileLastModified;
                     return true;
                 case 0x3B03: 
-                    localTag.AddChild(reader.ReadReference<MXFContentStorage>("ContentStorage")); 
+                    localTag.AddChild(reader.ReadReference<MXFContentStorage>("ContentStorage", localTag.Offset)); 
                     return true;
                 case 0x3B04: 
-                    localTag.AddChild(reader.ReadReference<MXFDictionary>("Dictionary")); 
+                    localTag.AddChild(reader.ReadReference<MXFDictionary>("Dictionary", localTag.Offset)); 
                     return true;
                 case 0x3B05:
                     this.FormatVersion = reader.ReadVersion();
@@ -103,7 +103,7 @@ namespace Myriadbits.MXF
                     localTag.PropertyValue = this.ObjectModelVersion;
                     return true;
                 case 0x3B08: 
-                    localTag.AddChild(reader.ReadReference<MXFPackage>("PrimaryPackage")); 
+                    localTag.AddChild(reader.ReadReference<MXFPackage>("PrimaryPackage", localTag.Offset)); 
                     return true;
                 case 0x3B09:
                     this.OperationalPattern = reader.ReadUL();

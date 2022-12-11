@@ -49,9 +49,9 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x0B01: this.AddChild(reader.ReadReference<MXFOperationDefinition>("Operation")); return true;
+                case 0x0B01: this.AddChild(reader.ReadReference<MXFOperationDefinition>("Operation", localTag.Offset)); return true;
                 case 0x0B04: this.BypassOverride = reader.ReadUInt32(); return true;
-                case 0x0B05: this.AddChild(reader.ReadReference<MXFSourceReference>("Rendering")); return true;
+                case 0x0B05: this.AddChild(reader.ReadReference<MXFSourceReference>("Rendering", localTag.Offset)); return true;
                 case 0x0B02: this.AddChild(reader.ReadReferenceSet<MXFSegment>("InputSegments", "InputSegment")); return true;
                 case 0x0B03: this.AddChild(reader.ReadReferenceSet<MXFParameter>("Parameters", "Parameter")); return true;
             }

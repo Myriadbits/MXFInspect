@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
             {
                 // TODO: this is a risky operation reading the array like this
                 case 0x0018: ElementCount = reader.ReadUInt32(); return true;
-                case 0x0017: this.AddChild(reader.ReadReference<MXFTypeDefinition>("FixedArrayElementType")); return true;
+                case 0x0017: this.AddChild(reader.ReadReference<MXFTypeDefinition>("FixedArrayElementType", localTag.Offset)); return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

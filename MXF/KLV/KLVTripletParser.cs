@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
     {
         protected readonly IKLVStreamReader reader;
         protected long currentKLVOffset = 0;
-        protected long baseOffset = 0;
+        protected readonly long baseOffset = 0;
         protected readonly Stream klvStream;
         protected abstract KLVKey ParseKLVKey();
         protected abstract KLVLengthBase ParseKLVLength();

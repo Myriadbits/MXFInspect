@@ -15,25 +15,12 @@ namespace Myriadbits.MXF.KLV
         /// <summary>
         /// Returns the current file position
         /// </summary>
-        public long Position
-        {
-            get
-            {
-                return this.klvStream.Position;
-            }
-        }
-
+        public long Position => this.klvStream.Position;
 
         /// <summary>
         /// Returns true when the end-of-file is reached
         /// </summary>
-        public bool EOF
-        {
-            get
-            {
-                return this.klvStream.Position >= this.klvStream.Length;
-            }
-        }
+        public bool EOF => this.klvStream.Position >= this.klvStream.Length;
 
         #endregion
 
@@ -236,9 +223,9 @@ namespace Myriadbits.MXF.KLV
         /// Reads a strong reference
         /// </summary>
         /// <param name="reader"></param>
-        public MXFReference<T> ReadReference<T>(string referringItemName) where T : MXFObject
+        public MXFReference<T> ReadReference<T>(string referringItemName, long baseOffset) where T : MXFObject
         {
-            return new MXFReference<T>(this, this.Position, referringItemName);
+            return new MXFReference<T>(this, baseOffset + this.Position, referringItemName);
         }
 
         #endregion

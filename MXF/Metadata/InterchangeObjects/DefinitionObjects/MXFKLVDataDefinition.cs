@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x4d12:
-                    this.AddChild(reader.ReadReference<MXFTypeDefinition>("KLVDataType")); 
+                    this.AddChild(reader.ReadReference<MXFTypeDefinition>("KLVDataType", localTag.Offset));
                     return true;
                 case 0x4d11:
                     this.AddChild(reader.ReadReferenceSet<MXFPropertyDefinition>("KLVDataParentProperties", "KLVDataParentProperty"));

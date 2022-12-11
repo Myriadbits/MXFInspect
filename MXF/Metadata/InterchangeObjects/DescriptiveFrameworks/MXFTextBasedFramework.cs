@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 				switch (localTag.AliasUID)
 				{
 					case var _ when localTag.AliasUID == textBasedObject_Key:
-						this.AddChild(reader.ReadReference<MXFTextBasedObject>("TextBasedObject")); 
+						this.AddChild(reader.ReadReference<MXFTextBasedObject>("TextBasedObject", localTag.Offset)); 
 						return true;
 				}
 			}

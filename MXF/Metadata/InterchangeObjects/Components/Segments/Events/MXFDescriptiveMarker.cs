@@ -72,7 +72,7 @@ namespace Myriadbits.MXF
                 case 0x6102:
                     this.DescribedTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Length.Value / sizeof(UInt32));
                     return true;
-                case 0x6101: this.AddChild(reader.ReadReference<MXFDescriptiveFramework>("DescriptiveFrameworkObject")); return true;
+                case 0x6101: this.AddChild(reader.ReadReference<MXFDescriptiveFramework>("DescriptiveFrameworkObject", localTag.Offset)); return true;
                 case var _ when localTag.AliasUID == metadataScheme_Key:
                     this.DescriptiveMetadataScheme = reader.ReadAUID(); 
                     return true;
