@@ -31,9 +31,9 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "Contact";
 
-        public readonly UL contactID_Key = new UL(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x08,0x01,0x01,0x15,0x40,0x01,0x02,0x00,0x00);
-        public readonly UL addressObjects_Key = new UL(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x05,0x06,0x01,0x01,0x04,0x05,0x40,0x17,0x00);
-        public readonly UL nameValueObjects_Key = new UL(0x06,0x0e,0x2b,0x34,0x01,0x01,0x01,0x05,0x06,0x01,0x01,0x04,0x05,0x40,0x1f,0x02);
+        public readonly UL contactID_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x08, 0x01, 0x01, 0x15, 0x40, 0x01, 0x02, 0x00, 0x00);
+        public readonly UL addressObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x17, 0x00);
+        public readonly UL nameValueObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x1f, 0x02);
 
         [Category(CATEGORYNAME)]
         public UUID ContactID { get; set; }
@@ -54,14 +54,15 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == contactID_Key: 
-                        this.ContactID = reader.ReadUUID() ; return true;
+                    case var _ when localTag.AliasUID == contactID_Key:
+                        this.ContactID = reader.ReadUUID(); 
+                        return true;
                     case var _ when localTag.AliasUID == addressObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("Address Objects", "Address Object")); 
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("Address Object", localTag.Offset, localTag.Length.Value));
                         return true;
                     // TODO replace generic MXFObject with class NameValue once implemented
-                    case var _ when localTag.AliasUID == nameValueObjects_Key: 
-                        this.AddChild(reader.ReadReferenceSet<MXFObject>("NameValue Objects", "NameValue Object")); 
+                    case var _ when localTag.AliasUID == nameValueObjects_Key:
+                        this.AddChildren(reader.GetReferenceSet<MXFObject>("NameValue Object", localTag.Offset, localTag.Length.Value));
                         return true;
                 }
             }

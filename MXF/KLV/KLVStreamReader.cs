@@ -97,19 +97,11 @@ namespace Myriadbits.MXF.KLV
             return BinaryPrimitives.ReadUInt64BigEndian(ReadBytes(8));
         }
 
-        /// <summary>
-        /// Reads a string in UTF8 coding
-        /// </summary>
-        /// <param name="length">The length of the string to read</param>
         public string ReadUTF8String(long length)
         {
             return System.Text.Encoding.UTF8.GetString(this.ReadBytes((int)length));
         }
 
-        /// <summary>
-        /// Reads a string
-        /// </summary>
-        /// <param name="length">The length of the string to read</param>
         public string ReadUTF16String(long length)
         {
             return System.Text.Encoding.BigEndianUnicode.GetString(this.ReadBytes((int)length));
@@ -195,28 +187,6 @@ namespace Myriadbits.MXF.KLV
 
             // check if the set fits into the tag length (minus the four bytes of itemCount and minus four bytes itemLength) 
             return (setLength <= tagLength - 2 * 4);
-        }
-
-
-        // TODO transform into function returning the enumerable
-        public MXFObject ReadReferenceSet<T>(string referringSetName, string singleItemName) where T : MXFObject
-        {
-            UInt32 nofItems = this.ReadUInt32();
-            UInt32 objectSize = this.ReadUInt32(); // useless size of objects, always 16 according to specs
-
-            MXFObject referenceSet = new MXFNamedObject(referringSetName, this.Position, objectSize);
-
-            // TODO what if this condition is not met? should we throw an exception?
-            if (nofItems < UInt32.MaxValue)
-            {
-                for (int n = 0; n < nofItems; n++)
-                {
-                    var reference = new MXFReference<T>(this, this.Position, singleItemName);
-                    referenceSet.AddChild(reference);
-                }
-            }
-
-            return referenceSet;
         }
 
         /// <summary>

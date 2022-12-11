@@ -65,16 +65,31 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x4401: this.PackageID = reader.ReadUMIDKey(); return true;
-                case 0x4402: this.PackageName = reader.ReadUTF16String(localTag.Length.Value); return true;
-                case 0x4403: this.AddChild(reader.ReadReferenceSet<MXFTrack>("Tracks", "Track")); return true;
-                case 0x4404: this.ModifiedDate = reader.ReadTimestamp(); return true;
-                case 0x4405: this.CreationDate = reader.ReadTimestamp(); return true;
-                case 0x4406: this.AddChild(reader.ReadReferenceSet<MXFTaggedValue>("PackageUserComments", "PackageUserComment")); return true;
-                    // TODO change to KLVData once implemented
-                case 0x4407: this.AddChild(reader.ReadReferenceSet<MXFObject>("PackageKLVData", "PackageKLVData")); return true;
-                case 0x4408: this.PackageUsage = reader.ReadUInt16(); return true;
-                case 0x4409: this.AddChild(reader.ReadReferenceSet<MXFTaggedValue>("PackageAttributes", "PackageAttribute")); return true;
+                case 0x4401:
+                    this.PackageID = reader.ReadUMIDKey();
+                    return true;
+                case 0x4402:
+                    this.PackageName = reader.ReadUTF16String(localTag.Length.Value);
+                    return true;
+                case 0x4403:
+                    this.AddChildren(reader.GetReferenceSet<MXFTrack>("Track", localTag.Offset, localTag.Length.Value));
+                    return true;
+                case 0x4404:
+                    this.ModifiedDate = reader.ReadTimestamp(); 
+                    return true;
+                case 0x4405:
+                    this.CreationDate = reader.ReadTimestamp(); 
+                    return true;
+                case 0x4406:
+                    this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageUserComment", localTag.Offset, localTag.Length.Value));
+                    return true;
+                // TODO change to KLVData once implemented
+                case 0x4407: this.AddChildren(reader.GetReferenceSet<MXFObject>("PackageKLVData", localTag.Offset, localTag.Length.Value));
+                    return true;
+                case 0x4408: this.PackageUsage = reader.ReadUInt16(); 
+                    return true;
+                case 0x4409: this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageAttribute", localTag.Offset, localTag.Length.Value));
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

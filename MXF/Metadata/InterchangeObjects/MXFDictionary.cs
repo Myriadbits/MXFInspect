@@ -44,31 +44,31 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x2603:
-                    this.AddChild(reader.ReadReferenceSet<MXFOperationDefinition>("OperationDefinitions", "OperationDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFOperationDefinition>("OperationDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2604:
-                    this.AddChild(reader.ReadReferenceSet<MXFParameterDefinition>("ParameterDefinitions", "ParameterDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("ParameterDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2605:
-                    this.AddChild(reader.ReadReferenceSet<MXFDataDefinition>("DataDefinitions", "DataDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFDataDefinition>("DataDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2606:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("PluginDefinitions", "PluginDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFObject>("PluginDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2607:
-                    this.AddChild(reader.ReadReferenceSet<MXFCodecDefinition>("CodecDefinitions", "CodecDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFCodecDefinition>("CodecDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2608:
-                    this.AddChild(reader.ReadReferenceSet<MXFContainerDefinition>("ContainerDefinitions", "ContainerDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFContainerDefinition>("ContainerDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2609:
-                    this.AddChild(reader.ReadReferenceSet<MXFInterpolationDefinition>("InterpolationDefinitions", "InterpolationDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFInterpolationDefinition>("InterpolationDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x260a:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("KLVDataDefinitions", "KLVDataDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFObject>("KLVDataDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x260b:
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("TaggedValueDefinitions", "TaggedValueDefinitions"));
+                    this.AddChildren(reader.GetReferenceSet<MXFObject>("TaggedValueDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
 
             }

@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x260b:
-                    this.AddChild(reader.ReadReferenceSet<MXFPropertyDefinition>("TaggedValueParentProperties", "TaggedValueParentProperty")); 
+                    this.AddChildren(reader.GetReferenceSet<MXFPropertyDefinition>("TaggedValueParentProperty", localTag.Offset, localTag.Length.Value));
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

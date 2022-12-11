@@ -48,10 +48,13 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x0008:
-                    this.AddChild(reader.ReadReference<MXFClassDefinition>("ParentClass", localTag.Offset)); return true;
+                    this.AddChild(reader.ReadReference<MXFClassDefinition>("ParentClass", localTag.Offset)); 
+                    return true;
                 case 0x0009:
-                    this.AddChild(reader.ReadReferenceSet<MXFPropertyDefinition>("Properties", "Property")); return true;
-                case 0x000a: IsConcrete = reader.ReadBoolean(); return true;
+                    this.AddChildren(reader.GetReferenceSet<MXFPropertyDefinition>("Property", localTag.Offset, localTag.Length.Value));
+                    return true;
+                case 0x000a: IsConcrete = reader.ReadBoolean(); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

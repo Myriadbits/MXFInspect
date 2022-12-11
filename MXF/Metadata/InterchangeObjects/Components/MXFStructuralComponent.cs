@@ -30,42 +30,52 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01010200")]
-	public class MXFStructuralComponent : MXFInterchangeObject
-	{
-		private const string CATEGORYNAME = "StructuralComponent";
-		private const int CATEGORYPOS = 3;
+    public class MXFStructuralComponent : MXFInterchangeObject
+    {
+        private const string CATEGORYNAME = "StructuralComponent";
+        private const int CATEGORYPOS = 3;
 
-		// TODO this should be a UUID?
-		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		[ULElement("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
-		public AUID DataDefinition { get; set; }
+        // TODO this should be a UUID?
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04070100.00000000")]
+        public AUID DataDefinition { get; set; }
 
-		[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-		[ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
-		public MXFLength? Duration { get; set; }
+        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020201.01030000")]
+        public MXFLength? Duration { get; set; }
 
-		public MXFStructuralComponent(MXFPack pack, string metadataName)
-			: base(pack, metadataName)
-		{
-		}
+        public MXFStructuralComponent(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
+        {
+        }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.TagValue)
-			{
-				case 0x0201: this.DataDefinition = reader.ReadAUID(); return true;
-				case 0x0202: this.Duration = reader.ReadUInt64(); return true;
-				// TODO replace generic MXFObject with class KLVData once implemented
-				case 0x0203: this.AddChild(reader.ReadReferenceSet<MXFObject>("KLV Data", "KLV Data")); return true;
-				case 0x0204: this.AddChild(reader.ReadReferenceSet<MXFTaggedValue>("User Comments", "User Comment")); return true;
-				case 0x0205: this.AddChild(reader.ReadReferenceSet<MXFTaggedValue>("Attributes", "Attribute")); return true;
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.TagValue)
+            {
+                case 0x0201: 
+                    this.DataDefinition = reader.ReadAUID(); 
+                    return true;
+                case 0x0202: 
+                    this.Duration = reader.ReadUInt64(); 
+                    return true;
+                // TODO replace generic MXFObject with class KLVData once implemented
+                case 0x0203:
+                    this.AddChildren(reader.GetReferenceSet<MXFObject>("KLV Data", localTag.Offset, localTag.Length.Value));
+                    return true;
+                case 0x0204:
+                    this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("User Comment", localTag.Offset, localTag.Length.Value));
+                    return true;
+                case 0x0205:
+                    this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("Attribute", localTag.Offset, localTag.Length.Value));
+                    return true;
             }
-			return base.ParseLocalTag(reader, localTag); 
-		}
+            return base.ParseLocalTag(reader, localTag);
+        }
 
-	}
+    }
 }

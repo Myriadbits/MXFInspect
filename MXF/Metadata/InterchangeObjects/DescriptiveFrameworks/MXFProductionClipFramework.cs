@@ -58,10 +58,10 @@ namespace Myriadbits.MXF
                         this.AddChild(reader.ReadReference<MXFDescriptiveObject>("ProjectObject", localTag.Offset));
                         return true;
                     case var _ when localTag.AliasUID == captionsDescriptionObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("CaptionsDescriptionObjects", "CaptionsDescriptionObject"));
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("CaptionsDescriptionObjects", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == contractObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ContractObjects", "ContractObject"));
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("ContractObjects", localTag.Offset, localTag.Length.Value));
                         return true;
                 }
             }

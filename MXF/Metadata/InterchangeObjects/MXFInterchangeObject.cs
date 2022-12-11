@@ -61,12 +61,19 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3C0A: this.InstanceID = reader.ReadUUID(); return true;
-                case 0x0102: this.LinkedGenerationID = reader.ReadUUID(); return true;
-                case 0x0101: this.ObjectClass = reader.ReadAUID(); return true;
+                case 0x3C0A: 
+                    this.InstanceID = reader.ReadUUID(); 
+                    localTag.PropertyValue = this.InstanceID;
+                    return true;
+                case 0x0102: 
+                    this.LinkedGenerationID = reader.ReadUUID(); 
+                    return true;
+                case 0x0101: 
+                    this.ObjectClass = reader.ReadAUID(); 
+                    return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
-                case var _ when localTag.AliasUID == appPluginObjects_Key: 
-                    this.AddChild(reader.ReadReferenceSet<MXFObject>("Application Plugin Objects", "Application Plugin Object")); 
+                case var _ when localTag.AliasUID == appPluginObjects_Key:
+                    this.AddChildren(reader.GetReferenceSet<MXFObject>("Application Plugin Object", localTag.Offset, localTag.Length.Value)); 
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

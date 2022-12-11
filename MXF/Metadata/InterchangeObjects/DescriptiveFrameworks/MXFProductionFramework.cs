@@ -61,22 +61,22 @@ namespace Myriadbits.MXF
                 {
                     case var _ when localTag.AliasUID == integrationIndication_Key: this.IntegrationIndication = reader.ReadUTF16String(localTag.Length.Value); return true;
                     case var _ when localTag.AliasUID == groupRelationshipObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("GroupRelationshipObjects", "GroupRelationshipObject")); 
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("GroupRelationshipObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == identificationObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("IdentificationObjects", "IdentificationObject"));
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("IdentificationObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == brandingObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("BrandingObjects", "BrandingObject"));
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("BrandingObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == eventObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("EventObjects", "EventObject"));
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("EventObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == awardObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("AwardObjects", "AwardObject"));
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("AwardObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == prodSettingPerObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("ProductionSettingPeriodObjects", "ProductionSettingPeriodObject"));
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("ProductionSettingPeriodObject", localTag.Offset, localTag.Length.Value));
                         return true;
                 }
             }

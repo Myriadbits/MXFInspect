@@ -50,13 +50,13 @@ namespace Myriadbits.MXF
                 switch (localTag.AliasUID)
                 {
                     case var _ when localTag.AliasUID == personObjects_Key:
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("PersonObjects", "PersonObject")); 
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("PersonObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == organizationObjects_Key: 
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("OrganizationObjects", "OrganizationObject")); 
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("OrganizationObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == locationObjects_Key: 
-                        this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("LocationObjects", "LocationObject")); 
+                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("LocationObject", localTag.Offset, localTag.Length.Value));
                         return true;
                 }
             }

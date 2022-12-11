@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
         public string[] MemberNames { get; set; }
 
         public MXFTypeDefinitionRecord(MXFPack pack)
-            : base( pack)
+            : base(pack)
         {
             this.MetaDataName = "TypeDefinitionRecord";
         }
@@ -47,8 +47,12 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x001d: MemberNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00); return true;
-                case 0x001c: this.AddChild(reader.ReadReferenceSet<MXFTypeDefinition>("MemberTypes", "MemberType")); return true;
+                case 0x001d:
+                    MemberNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00);
+                    return true;
+                case 0x001c:
+                    this.AddChildren(reader.GetReferenceSet<MXFTypeDefinition>("MemberType", localTag.Offset, localTag.Length.Value));
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

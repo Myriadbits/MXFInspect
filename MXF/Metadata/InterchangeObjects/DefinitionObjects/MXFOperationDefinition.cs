@@ -71,11 +71,11 @@ namespace Myriadbits.MXF
                     return true;
                 case 0x1e06: OperationCategory = reader.ReadAUID(); return true;
                 case 0x1e09:
-                    this.AddChild(reader.ReadReferenceSet<MXFParameterDefinition>("OperationParametersDefined", "OperationParametersDefined"));
+                    this.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("OperationParametersDefined", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x1e03:
                     // TODO replace generic MXFObject with class KLVData once implemented
-                    this.AddChild(reader.ReadReferenceSet<MXFOperationDefinition>("DegradeTo", "DegradeTo"));
+                    this.AddChildren(reader.GetReferenceSet<MXFOperationDefinition>("DegradeTo", localTag.Offset, localTag.Length.Value));
                     return true;
 
             }

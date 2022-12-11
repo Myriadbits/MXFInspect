@@ -42,8 +42,12 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x0F01: this.AddChild(reader.ReadReference<MXFSegment>("SelectedSegment", localTag.Offset)); return true;
-                case 0x0F02: this.AddChild(reader.ReadReferenceSet<MXFSegment>("AlternateSegments", "AlternateSegment")); return true;
+                case 0x0F01: 
+                    this.AddChild(reader.ReadReference<MXFSegment>("SelectedSegment", localTag.Offset)); 
+                    return true;
+                case 0x0F02:
+                    this.AddChildren(reader.GetReferenceSet<MXFSegment>("AlternateSegment", localTag.Offset, localTag.Length.Value)); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

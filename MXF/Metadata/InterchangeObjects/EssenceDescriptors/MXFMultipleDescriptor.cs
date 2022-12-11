@@ -47,8 +47,8 @@ namespace Myriadbits.MXF
 			switch (localTag.TagValue)
 			{
 				case 0x3F01: 
-					this.AddChild(reader.ReadReferenceSet<MXFFileDescriptor>("Subdescriptor UIDs", "Subdescriptor UID")); 
-					return true;
+					this.AddChildren(reader.GetReferenceSet<MXFFileDescriptor>("Subdescriptor UIDs", localTag.Offset, localTag.Length.Value));
+                    return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
 		}

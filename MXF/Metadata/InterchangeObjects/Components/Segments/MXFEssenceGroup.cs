@@ -41,8 +41,12 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x0502: this.AddChild(reader.ReadReference<MXFSourceReference>("StillFrame", localTag.Offset)); return true;
-                case 0x0501: this.AddChild(reader.ReadReferenceSet<MXFSourceReference>("Choices", "Choice")); return true;
+                case 0x0502: 
+                    this.AddChild(reader.ReadReference<MXFSourceReference>("StillFrame", localTag.Offset)); 
+                    return true;
+                case 0x0501:
+                    this.AddChildren(reader.GetReferenceSet<MXFSourceReference>("Choice", localTag.Offset, localTag.Length.Value));
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

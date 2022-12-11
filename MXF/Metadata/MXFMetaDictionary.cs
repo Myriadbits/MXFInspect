@@ -48,9 +48,11 @@ namespace Myriadbits.MXF
             {
                 case 0x3c0a: this.InstanceId = reader.ReadUUID(); return true;
                 case 0x0003:
-                    this.AddChild(reader.ReadReferenceSet<MXFClassDefinition>("ClassDefinitions", "ClassDefinition")); return true;
+                    this.AddChildren(reader.GetReferenceSet<MXFClassDefinition>("ClassDefinition", localTag.Offset, localTag.Length.Value));
+                    return true;
                 case 0x0004:
-                    this.AddChild(reader.ReadReferenceSet<MXFTypeDefinition>("TypeDefinitions", "TypeDefinition")); return true;
+                    this.AddChildren(reader.GetReferenceSet<MXFTypeDefinition>("TypeDefinition", localTag.Offset, localTag.Length.Value));
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

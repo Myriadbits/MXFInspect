@@ -92,12 +92,12 @@ namespace Myriadbits.MXF
 				switch (localTag.AliasUID)
 				{
 					case var _ when localTag.AliasUID == commObjects_Key:
-						this.AddChild(reader.ReadReferenceSet<MXFDescriptiveObject>("CommunicationObjects", "CommunicationObject")); 
+						this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("CommunicationObject", localTag.Offset, localTag.Length.Value));
 						return true;
 					// TODO replace generic MXFObject with class NameValue once implemented
 					case var _ when localTag.AliasUID == addrNameValueObjects_Key: 
-						this.AddChild(reader.ReadReferenceSet<MXFObject>("AddressNameValueObjects", "AddressNameValueObject")); 
-						return true;
+						this.AddChildren(reader.GetReferenceSet<MXFObject>("AddressNameValueObject", localTag.Offset, localTag.Length.Value));
+                        return true;
 					case var _ when localTag.AliasUID == roomSuiteNumber_Key: 
 						this.RoomSuiteNumber = reader.ReadUTF16String(localTag.Length.Value); 
 						return true;
