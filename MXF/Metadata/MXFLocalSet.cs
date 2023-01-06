@@ -24,6 +24,7 @@
 using Myriadbits.MXF.KLV;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -75,9 +76,17 @@ namespace Myriadbits.MXF
             // could potentially modify the iterating list by calling "AddChild"
             foreach (var lt in localTags.ToList())
             {
-                IKLVStreamReader reader = lt.GetReader();
-                reader.Seek(lt.RelativeValueOffset);
-                ParseLocalTag(reader, lt);
+                try
+                {
+                    IKLVStreamReader reader = lt.GetReader();
+                    reader.Seek(lt.RelativeValueOffset);
+                    ParseLocalTag(reader, lt);
+
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
             }
         }
 

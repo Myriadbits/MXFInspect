@@ -29,7 +29,7 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012900")]
-	public class MXFRGBAPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
+	public class MXFRGBAPictureEssenceDescriptor : MXFPictureDescriptor
 	{
 		private const string CATEGORYNAME = "RGBAPictureEssenceDescriptor";
 		private const int CATEGORYPOS = 3;

@@ -98,8 +98,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
             - [ ] DateTimeDescriptor [0/4] :scroll: :dart:
         - [ ] FilmDescriptor [0/8] :scroll: :dart:
         - [ ] TapeDescriptor [0/8]:scroll:
-        - [ ] PhysicalDescriptor [0/0] *(abstract)*
-            - [ ] ImportDescriptor [0/0]
+        - [x] PhysicalDescriptor [0/0] *(abstract)*
+            - [x] ImportDescriptor [0/0]
                 - [ ] BWFImportDescriptor [0/11]:scroll:
             - [ ] RecordingDescriptor [0/0]
             - [ ] AuxiliaryDescriptor [0/2]:scroll: :dart: 

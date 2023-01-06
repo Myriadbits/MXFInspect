@@ -51,12 +51,12 @@ namespace Myriadbits.MXF
             return file.GetBodies().Where(b => b.Children.OfType<MXFEssenceElement>().Any());
         }
 
-        public static MXFCDCIPictureEssenceDescriptor GetPictureDescriptorInHeader(this MXFFile file)
+        public static MXFCDCIDescriptor GetPictureDescriptorInHeader(this MXFFile file)
         {
             return file
                     .GetHeader()
                     .Children
-                    .OfType<MXFCDCIPictureEssenceDescriptor>()
+                    .OfType<MXFCDCIDescriptor>()
                     .SingleOrDefault();
         }
 

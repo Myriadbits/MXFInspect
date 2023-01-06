@@ -31,7 +31,7 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012500")]
-    public class MXFFileDescriptor : MXFGenericDescriptor
+    public class MXFFileDescriptor : MXFEssenceDescriptor
     {
         private const string CATEGORYNAME = "FileDescriptor";
         private const int CATEGORYPOS = 3;

@@ -25,19 +25,15 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014a00")]
+    public class MXFImportDescriptor : MXFPhysicalDescriptor
+    {
+        
+        public MXFImportDescriptor(MXFPack pack)
+            : base(pack)
+        {
+            MetaDataName = "Import Descriptor";
+        }
 
-    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016900")]
-	public class MXFTIFFPictureEssenceDescriptor : MXFPictureDescriptor
-	{
-
-		/// <summary>
-		/// Constructor, set the correct descriptor name
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="pack"></param>
-		public MXFTIFFPictureEssenceDescriptor(MXFPack pack)
-			: base(pack, "TIFFEssenceDescriptor")
-		{
-		}
-	}
+    }
 }

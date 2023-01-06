@@ -29,7 +29,7 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01016400")]
-    public class MXFDCTimedTextDescriptor : MXFGenericDataEssenceDescriptor
+    public class MXFDCTimedTextDescriptor : MXFDataEssenceDescriptor
     {
         private const string CATEGORYNAME = "DC Timed Text Descriptor";
 

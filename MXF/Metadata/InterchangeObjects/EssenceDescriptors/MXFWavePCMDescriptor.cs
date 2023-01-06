@@ -29,7 +29,7 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014800")]
-    public class MXFWAVEPCMDescriptor : MXFGenericSoundEssenceDescriptor
+    public class MXFWAVEPCMDescriptor : MXFSoundEssenceDescriptor
     {
         private const string CATEGORYNAME = "WAVE PCM Descriptor";
 

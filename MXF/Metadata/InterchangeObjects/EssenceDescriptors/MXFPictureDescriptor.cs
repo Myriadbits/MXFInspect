@@ -30,9 +30,9 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012700")]
-    public class MXFGenericPictureEssenceDescriptor : MXFFileDescriptor
+    public class MXFPictureDescriptor : MXFFileDescriptor
     {
-        private const string CATEGORYNAME = "GenericPictureEssenceDescriptor";
+        private const string CATEGORYNAME = "PictureDescriptor";
         private const int CATEGORYPOS = 4;
 
         private readonly UL altCenterCuts_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0e, 0x04, 0x01, 0x03, 0x02, 0x0b, 0x00, 0x00, 0x00);
@@ -193,8 +193,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericPictureEssenceDescriptor(MXFPack pack)
-            : base(pack, "Generic Picture Essence Descriptor")
+        public MXFPictureDescriptor(MXFPack pack)
+            : base(pack, "Picture Descriptor")
         {
         }
 
@@ -203,7 +203,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericPictureEssenceDescriptor(MXFPack pack, string metadataName)
+        public MXFPictureDescriptor(MXFPack pack, string metadataName)
             : base(pack, metadataName)
         {
         }

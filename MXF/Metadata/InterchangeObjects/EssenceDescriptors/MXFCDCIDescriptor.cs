@@ -29,9 +29,9 @@ using System.ComponentModel;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012800")]
-    public class MXFCDCIPictureEssenceDescriptor : MXFGenericPictureEssenceDescriptor
+    public class MXFCDCIDescriptor : MXFPictureDescriptor
     {
-        private const string CATEGORYNAME = "CDCIPictureEssenceDescriptor";
+        private const string CATEGORYNAME = "CDCIDescriptor";
         private const int CATEGORYPOS = 4;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
@@ -74,8 +74,8 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010102.04010503.05000000")]
         public UInt32? ColorRange { get; set; }
 
-        public MXFCDCIPictureEssenceDescriptor(MXFPack pack)
-            : base(pack, "CDCI Picture Essence Descriptor")
+        public MXFCDCIDescriptor(MXFPack pack)
+            : base(pack, "CDCI Descriptor")
         {
         }
 

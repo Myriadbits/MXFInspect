@@ -28,9 +28,9 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014300")]
-    public class MXFGenericDataEssenceDescriptor : MXFFileDescriptor
+    public class MXFDataEssenceDescriptor : MXFFileDescriptor
     {
-        private const string CATEGORYNAME = "GenericDataEssenceDescriptor";
+        private const string CATEGORYNAME = "DataEssenceDescriptor";
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010103.04030302.00000000")]
@@ -41,8 +41,8 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericDataEssenceDescriptor(MXFPack pack)
-            : base(pack, "Generic Data Essence Descriptor")
+        public MXFDataEssenceDescriptor(MXFPack pack)
+            : base(pack, "Data Essence Descriptor")
         {
             // TODO remove code, once implemented the subclasses
             if (pack.Key[14] == 0x5B)
@@ -57,7 +57,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="pack"></param>
-        public MXFGenericDataEssenceDescriptor(MXFPack pack, string metadataName)
+        public MXFDataEssenceDescriptor(MXFPack pack, string metadataName)
             : base(pack, metadataName)
         {
         }
