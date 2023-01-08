@@ -22,6 +22,8 @@
 #endregion
 
 using System;
+using System.Diagnostics;
+using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -43,9 +45,8 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void pbLogo_Click(object sender, EventArgs e)
 		{
-			// TODO this raises an exception
-			System.Diagnostics.Process.Start("http://www.myriadbits.com");
-		}
+            Process.Start("explorer", "http://www.myriadbits.com");
+        }
 
 		/// <summary>
 		/// Show GPL license when button is clicked (first hide all other info)
@@ -74,9 +75,8 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void llMyriadbits_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-            // TODO this raises an exception
-            System.Diagnostics.Process.Start("http://www.myriadbits.com");
-		}
+            Process.Start("explorer", "http://www.myriadbits.com");
+        }
 
 		/// <summary>
 		/// Close is close
@@ -105,8 +105,7 @@ namespace Myriadbits.MXFInspect
 		/// <param name="e"></param>
 		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-            // TODO this raises an exception
-            System.Diagnostics.Process.Start("http://objectlistview.sourceforge.net/cs/index.html");
-		}
+            Process.Start("explorer", "http://objectlistview.sourceforge.net/cs/index.html");
+        }
 	}
 }
