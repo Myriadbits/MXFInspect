@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.KLV;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,10 @@ namespace Myriadbits.MXF
                 catch (Exception e)
                 {
                     Debug.WriteLine(e);
+                    if(this.Root() is MXFFile file)
+                    {
+                        file.ParsingExceptions.Add(new MXFLocalTagParsingException(lt, e));
+                    }
                 }
             }
         }

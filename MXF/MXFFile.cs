@@ -21,16 +21,16 @@
 //
 #endregion
 
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using System.IO;
-using Myriadbits.MXF.Identifiers;
+using System.Threading.Tasks;
 
 namespace Myriadbits.MXF
 {
@@ -53,6 +53,8 @@ namespace Myriadbits.MXF
         public MXFRIP RIP { get; set; }
 
         public List<MXFValidationResult> Results { get { return m_results; } }
+
+        public List<Exception> ParsingExceptions { get; } = new List<Exception>();
         public MXFSystemItem FirstSystemItem { get; set; }
         public MXFSystemItem LastSystemItem { get; set; }
 
@@ -145,7 +147,6 @@ namespace Myriadbits.MXF
                             {
                                 packList.Add(new MXFNamedObject("Non-Parseable Data", lastgoodPos, newOffset - lastgoodPos));
                             }
-
                         }
 
                         // Only report progress when the percentage has changed
@@ -197,6 +198,11 @@ namespace Myriadbits.MXF
             }, ct);
 
             return result;
+        }
+
+        public override string ToString()
+        {
+            return $"{File.FullName} ({File.Length:N0})";
         }
 
         /// <summary>

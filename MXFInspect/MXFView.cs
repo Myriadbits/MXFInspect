@@ -132,13 +132,11 @@ namespace Myriadbits.MXFInspect
             var singleProgressHandler = new Progress<TaskReport>(prgForm.ReportSingleProgress);
             var progressFormTask = prgForm.ShowDialogAsync();
             sw.Start();
-
             // Open the selected file to read.
             try
             {
-                this.ParentMainForm.SetActivityText($"Opening file file '{this.FileInfo.FullName}'..."); 
+                this.ParentMainForm.SetActivityText($"Opening file '{this.FileInfo.FullName}'...");
                 this.File = await MXFFile.CreateAsync(this.FileInfo, overallProgressHandler, singleProgressHandler, cts.Token);
-
                 FillTrees();
                 this.splitMain.Visible = true;
                 this.tabMain.SelectedIndex = 0;
@@ -163,6 +161,11 @@ namespace Myriadbits.MXFInspect
                 prgForm.Close();
                 await progressFormTask;
                 ParentMainForm.EnableUI(true);
+
+                if (this.File?.ParsingExceptions.Any() ?? false)
+                {
+                    MessageBox.Show("Error(s) occured during parsing of the file. See the log for more information", "Parsing Error(s)");
+                }
             }
         }
 
