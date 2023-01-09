@@ -41,7 +41,7 @@ namespace Myriadbits.MXF.KLV
             LengthEncoding = lengthEncoding;
             Value = bytes.ToLong(); 
            
-            // TODO do we need to check if each byte does not exceed 0x7F?
+            // TODO where do we check if each byte does not exceed 0x7F?
             if (bytes.Length != (int)lengthEncoding)
             {
                 throw new ArgumentException($"Declared length encoding ({lengthEncoding}) does not correspond to given array length ({bytes.Length})");

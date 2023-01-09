@@ -54,7 +54,7 @@ namespace Myriadbits.MXF
         public bool ResolveReference(IUUIDIdentifiable obj)
         {
             // TODO: save the resolve status (=i.e. the return value of this function) into a property,
-            // so that it can be checked by a validator later on (if there are unresolved ones.
+            // so that it can be checked by a validator later on (if there are unresolved ones).
             if (Identifier.Equals(obj.GetUUID()))
             {
                 if (obj is T)

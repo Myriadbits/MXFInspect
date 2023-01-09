@@ -36,7 +36,7 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "MetaDefinition";
         private const int CATEGORYPOS = 2;
 
-        // TODO is not really part of MetaDefinition
+        // TODO is not really part of MetaDefinition?
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public UUID InstanceId { get; set; }
 

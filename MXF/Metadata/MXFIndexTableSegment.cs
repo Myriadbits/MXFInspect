@@ -85,7 +85,7 @@ namespace Myriadbits.MXF
         [ULElement("urn:smpte:ul:060e2b34.01010105.07020201.01020000")]
         public MXFPosition? IndexDuration { get; set; }
 
-        // TODO get rid of this property
+        // TODO helper property for indexvalidator that should be avoided
         [Browsable(false)]
         public List<MXFEntryIndex> IndexEntries { get; set; }
 

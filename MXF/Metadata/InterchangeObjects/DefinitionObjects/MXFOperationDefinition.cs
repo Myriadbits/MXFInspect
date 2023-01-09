@@ -74,7 +74,6 @@ namespace Myriadbits.MXF
                     this.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("OperationParametersDefined", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x1e03:
-                    // TODO replace generic MXFObject with class KLVData once implemented
                     this.AddChildren(reader.GetReferenceSet<MXFOperationDefinition>("DegradeTo", localTag.Offset, localTag.Length.Value));
                     return true;
 
