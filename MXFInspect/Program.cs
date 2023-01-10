@@ -21,22 +21,48 @@
 //
 #endregion
 
+using Serilog;
 using System;
+using System.Configuration;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-	static class Program
-	{
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main()
-		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormMain());
-		}
-	}
+    static class Program
+    {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            //string folderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            var path = Path.GetDirectoryName(configFile);
+            string logFile = Path.Combine(path, "MXFInspect_log_.txt");
+
+            using var log = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.File(logFile,
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}",
+                    rollingInterval: RollingInterval.Day,
+                    fileSizeLimitBytes: 80000000)
+            .Enrich.FromLogContext()
+            .CreateLogger();
+
+            Log.Logger = log;
+           
+            Log.ForContext(typeof(Program)).Information($"Application started from '{Application.ExecutablePath}'");
+            Log.ForContext(typeof(Program)).Information($"Application Version: {Application.ProductVersion}");
+            Log.ForContext(typeof(Program)).Information($"Operating System: {System.Environment.OSVersion}");
+            Log.ForContext(typeof(Program)).Information($"Current Username: {System.Environment.UserName}, Computer Name: {System.Environment.MachineName}");
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FormMain());
+
+            Log.CloseAndFlush();
+        }
+    }
 }
