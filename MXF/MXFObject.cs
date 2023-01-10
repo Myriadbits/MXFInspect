@@ -107,16 +107,16 @@ namespace Myriadbits.MXF
         }
 
         // TODO remove log methods
-        public void LogInfo(string format, params object[] args) { this.Log(MXFLogType.Info, format, args); }
-        public void LogWarning(string format, params object[] args) { this.Log(MXFLogType.Warning, format, args); }
-        public void LogError(string format, params object[] args) { this.Log(MXFLogType.Error, format, args); }
+        public void LogInfo(string format, params object[] args) { this.Log1(MXFLogType.Info, format, args); }
+        public void LogWarning(string format, params object[] args) { this.Log1(MXFLogType.Warning, format, args); }
+        public void LogError(string format, params object[] args) { this.Log1(MXFLogType.Error, format, args); }
 
         /// <summary>
         /// Generic log message
         /// </summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public void Log(MXFLogType type, string format, params object[] args)
+        public void Log1(MXFLogType type, string format, params object[] args)
         {
             string s = string.Format("{0}: {1}", type.ToString(), string.Format(format, args));
             Debug.WriteLine(s);

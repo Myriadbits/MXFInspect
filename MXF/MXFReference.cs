@@ -24,6 +24,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using Myriadbits.MXF.KLV;
+using Serilog;
 
 namespace Myriadbits.MXF
 {
@@ -57,13 +58,13 @@ namespace Myriadbits.MXF
             // so that it can be checked by a validator later on (if there are unresolved ones).
             if (Identifier.Equals(obj.GetUUID()))
             {
-                if (obj is T)
+                if (obj is T t)
                 {
-                    Reference = (T)obj;
-                    Debug.WriteLine(string.Format("Reference resolved: {0} -> {1}", this.ToString(), Reference.ToString()));
+                    Reference = t;
+                    Log.ForContext<MXFReference<T>>().Debug($"Reference resolved: {this} -> {Reference}");
                     return true;
                 }
-                Debug.WriteLine(string.Format("Reference not resolveable as types don't match: {0} -> {1}", this.GetType(), obj.GetType()));
+                Log.ForContext<MXFReference<T>>().Warning($"Reference not resolveable as types don't match: {this.GetType()} -> {obj.GetType()}");
             }
             return false;
         }

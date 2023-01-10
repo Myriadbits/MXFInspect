@@ -1,4 +1,5 @@
 ﻿using Myriadbits.MXF.Identifiers;
+using Serilog;
 using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
@@ -245,9 +246,9 @@ namespace Myriadbits.MXF.KLV
             {
                 return new DateTime(year, month, day, hour, minute, second, millisecond);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO do not "eat" exception
+                Log.ForContext<KLVStreamReader>().Error(ex, $"Exception occured during parsing of timestamp @{this.BaseStream.Position}:");
                 return new DateTime();
             }
         }

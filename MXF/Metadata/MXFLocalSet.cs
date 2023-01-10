@@ -23,6 +23,7 @@
 
 using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.KLV;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -86,10 +87,11 @@ namespace Myriadbits.MXF
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e);
-                    if(this.Root() is MXFFile file)
+                    var ex = new MXFLocalTagParsingException(lt, e);
+                    Log.ForContext<MXFLocalSet>().Error(ex, $"Exception occured during parsing of local tag {lt} @{lt.Offset} of MXFPack {lt.Parent}:");
+                    if (this.Root() is MXFFile file)
                     {
-                        file.ParsingExceptions.Add(new MXFLocalTagParsingException(lt, e));
+                        file.ParsingExceptions.Add(ex);
                     }
                 }
             }
@@ -139,7 +141,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return string.Format("{0} [len {1}]", this.Key, this.Length.Value);
+            return string.Format($"{this.Key} [len {this.Length.Value}]");
         }
     }
 }

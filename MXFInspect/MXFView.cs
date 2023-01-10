@@ -23,6 +23,7 @@
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -135,24 +136,27 @@ namespace Myriadbits.MXFInspect
             // Open the selected file to read.
             try
             {
+                Log.ForContext<MXFView>().Information("Opening file {fileName}: {@fi}", this.FileInfo.FullName, this.FileInfo);
                 this.ParentMainForm.SetActivityText($"Opening file '{this.FileInfo.FullName}'...");
                 this.File = await MXFFile.CreateAsync(this.FileInfo, overallProgressHandler, singleProgressHandler, cts.Token);
                 FillTrees();
                 this.splitMain.Visible = true;
                 this.tabMain.SelectedIndex = 0;
                 this.ParentMainForm.SetActivityText($"Finished reading file '{this.FileInfo.FullName}' in {sw.ElapsedMilliseconds:N0} ms");
+                Log.ForContext<MXFView>().Information($"Parsing of file '{this.FileInfo.FullName}' done in {sw.ElapsedMilliseconds} ms.");
             }
             catch (OperationCanceledException ex)
             {
-                Debug.WriteLine("Operation aborted by user {0}", ex);
-                this.ParentMainForm.SetActivityText(string.Format("File opening aborted by user"));
+                Log.ForContext<MXFView>().Warning(ex, $"File opening aborted by user:");
+                this.ParentMainForm.SetActivityText("File opening aborted by user");
                 this.Close();
 
             }
             catch (Exception ex)
             {
+                Log.ForContext<MXFView>().Error(ex, $"Exception occured while opening the file:");
                 MessageBox.Show(ex.Message, "Error while opening the file");
-                this.ParentMainForm.SetActivityText(string.Format($"Error while opening the file {this.FileInfo.FullName}"));
+                this.ParentMainForm.SetActivityText($"Error while opening the file {this.FileInfo.FullName}");
                 this.Close();
             }
             finally

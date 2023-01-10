@@ -31,6 +31,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Myriadbits.MXF
 {
@@ -164,7 +165,7 @@ namespace Myriadbits.MXF
                         }
                     }
 
-                    Debug.WriteLine($"Finished parsing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
+                    Log.ForContext<MXFFile>().Information($"Finished parsing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
 
                     // Now process the pack list (partition packs, treat special cases)
                     overallProgress?.Report(new TaskReport(65, "Process packs"));
@@ -173,19 +174,19 @@ namespace Myriadbits.MXF
                     // Reparse all local tags, as now we know the primerpackage aliases
                     ResolveAndParseLocalTags();
 
-                    overallProgress?.Report(new TaskReport(73, "Update tree"));
+                    overallProgress?.Report(new TaskReport(73, "Updating tree"));
 
                     // Resolve the references
                     sw.Restart();
                     overallProgress?.Report(new TaskReport(81, "Resolving references"));
                     int numOfResolved = ResolveReferences();
-                    Debug.WriteLine("{0} references resolved in {1} ms", numOfResolved, sw.ElapsedMilliseconds);
+                    Log.ForContext<MXFFile>().Information($"{numOfResolved} references resolved in {sw.ElapsedMilliseconds} ms");
 
                     // Create the logical tree
                     overallProgress?.Report(new TaskReport(95, "Creating Logical tree"));
                     sw.Restart();
                     CreateLogicalTree();
-                    Debug.WriteLine("Logical tree created in {0} ms", sw.ElapsedMilliseconds);
+                    Log.ForContext<MXFFile>().Information($"Logical tree created in {sw.ElapsedMilliseconds} ms");
 
                     // Set property description by reading the description attribute (for all types)
                     MXFPackFactory.SetDescriptionFromAttributeForAllTypes();
@@ -193,7 +194,6 @@ namespace Myriadbits.MXF
                     // Finished, return this (MXFFile)
                     overallProgress?.Report(new TaskReport(100, "Done"));
                     return this;
-
                 }
             }, ct);
 
