@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF;
+using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Specialized;
 using System.IO;
@@ -38,6 +39,9 @@ namespace Myriadbits.MXFInspect
         public FormMain()
         {
             InitializeComponent();
+
+            // Load SMPTE dictionary as soon as possible to avoid one-time-lag when opening the first MXF File
+            SMPTEULDictionary.GetEntries();
         }
 
         /// <summary>
@@ -51,8 +55,8 @@ namespace Myriadbits.MXFInspect
             this.m_mru = Properties.Settings.Default.MRU;
             FillMRU();
             this.UpdateMenu();
-            this.tslVersion.Text = string.Format("Version: {0}", typeof(FormMain).Assembly.GetName().Version.ToString());
-
+            this.tslVersion.Text = $"Version: {typeof(FormMain).Assembly.GetName().Version}";
+            
             RefreshStatusStrip();
         }
 
