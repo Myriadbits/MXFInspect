@@ -30,12 +30,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="FormMultiLineStringShowDlg.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="CustomControls\TreeListViewBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="FormMultiLineStringShowDlg.cs" />
+    <Compile Update="CustomControls\TreeListViewBase.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

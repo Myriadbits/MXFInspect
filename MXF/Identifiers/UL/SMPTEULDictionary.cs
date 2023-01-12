@@ -25,48 +25,51 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
-using System.Diagnostics;
-using static Myriadbits.MXF.KLVKey;
+using Serilog;
 
 namespace Myriadbits.MXF.Identifiers
 {
     public static class SMPTEULDictionary
     {
-        private static Dictionary<ByteArray, ULDescription> dictionary { get; set; }
+        private static Dictionary<ByteArray, ULDescription> Dictionary { get; set; }
 
         public static Dictionary<ByteArray, ULDescription> GetEntries()
         {
             // if already initialized return it
-            if (dictionary != null)
+            if (Dictionary != null)
             {
-                return dictionary;
+                return Dictionary;
             }
             else
             {
-                dictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
+                Dictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
 
                 //Parse SMPTE Labels register
 
-                XElement regEntries;
+                XElement regEntries = XElement.Parse(Properties.Resources.Labels); ;
                 XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
-
-                regEntries = XElement.Parse(Properties.Resources.Labels);
-                AddEntries(dictionary, regEntries, ns);
+                AddEntries(Dictionary, regEntries, ns);
+                long count = Dictionary.Count;
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {count} SMPTE label register entries added to SMPTE dictionary");
 
                 // Parse SMPTE Elements register
 
                 ns = "http://www.smpte-ra.org/schemas/335/2012";
                 regEntries = XElement.Parse(Properties.Resources.Elements);
-                AddEntries(dictionary, regEntries, ns);
+                AddEntries(Dictionary, regEntries, ns);
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {Dictionary.Count-count} SMPTE elements register entries added to SMPTE dictionary");
+                count = Dictionary.Count;
 
                 //Parse SMPTE Groups register
 
                 ns = "http://www.smpte-ra.org/ns/395/2016";
                 regEntries = XElement.Parse(Properties.Resources.Groups);
-                AddEntries(dictionary, regEntries, ns);
+                AddEntries(Dictionary, regEntries, ns);
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {Dictionary.Count-count} SMPTE groups register entries added to SMPTE dictionary");
 
-                var values = dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
-                return dictionary;
+                var values = Dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"SMPTE Dictionary with {Dictionary.Count} entries loaded");
+                return Dictionary;
             }
         }
 
@@ -79,12 +82,17 @@ namespace Myriadbits.MXF.Identifiers
                 {
                     if (dict.TryAdd(entry.Value.Key, entry.Value.Value) == false)
                     {
-                        // TODO: raise an exception! (or at least log)
-                        Debug.WriteLine("Entry already present!");
+                        Log.ForContext(typeof(SMPTEULDictionary)).Warning($"Unable to add SMPTE entry {entry} to SMPTE dictionary as entry is already present: {@e}", entry);
                     }
+                    Log.ForContext(typeof(SMPTEULDictionary)).Debug($"SMPTE entry {entry} added successfully to SMPTE dictionary");
+                    Log.ForContext(typeof(SMPTEULDictionary)).Verbose($"Details of SMPTE entry: {@e}", entry);
                 }
-                // TODO: heavy performance degrade on this debug statement!?
-                //Debug.WriteLine("Unable to parse entry!");
+                else
+                {
+                    // TODO if entry not parseable it is null
+                    // TODO catch this on a lower level, maybe via an exception
+                    Log.ForContext(typeof(SMPTEULDictionary)).Warning($"Unable to parse SMPTE entry {entry}: {@e}", entry);
+                }
             }
         }
 

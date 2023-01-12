@@ -45,12 +45,12 @@ namespace Myriadbits.MXFInspect
             string jsonLogFile = Path.Combine(path, "MXFInspect_log_.json");
 
             using var log = new LoggerConfiguration()
-            .MinimumLevel.Debug()
+            .MinimumLevel.Verbose()
             .Enrich.WithThreadId()
             .Enrich.WithThreadName()
             .Enrich.FromLogContext()
             .Enrich.WithExceptionDetails()
-            .WriteTo.Debug()
+            .WriteTo.Debug(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
             .WriteTo.File(new JsonFormatter(renderMessage: true), jsonLogFile)
             .WriteTo.File(txtLogFile,
                     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext}) <{ThreadId}:{ThreadName}> {Message:lj}{NewLine}{Exception}",
