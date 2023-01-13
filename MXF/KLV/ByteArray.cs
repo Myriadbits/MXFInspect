@@ -26,6 +26,8 @@ using System.Collections;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
+using static Myriadbits.MXF.KLVKey;
+using System.Text;
 
 namespace Myriadbits.MXF
 {
@@ -87,15 +89,26 @@ namespace Myriadbits.MXF
 
         }
 
-        public long ToLong()
+
+        public override string ToString()
         {
-            long lengthValue = 0;
-            for (int i = 0; i < theBytes.Length; i++)
+            StringBuilder sb = new StringBuilder();
+            for (int n = 0; n < this.ArrayLength; n++)
             {
-                lengthValue = lengthValue << 8 | theBytes[i];
+                if (n > 0 && n < 16)
+                {
+                    sb.Append('.');
+                }
+                if (n >= 16)
+                {
+                    sb.Append("...");
+                    break;
+                }
+                sb.Append(string.Format("{0:x2}", this[n]));
             }
-            return lengthValue;
+            return sb.ToString();
         }
+
 
         #region Equals
         public bool Equals(ByteArray other)
