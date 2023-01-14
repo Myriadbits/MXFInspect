@@ -23,7 +23,9 @@
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
+using Serilog;
 using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -89,7 +91,7 @@ namespace Myriadbits.MXFInspect
             // Clear tree and set objects
             this.Items.Clear();
             this.SetObjects(objects);
-            this.CalculateOffsetMaxDigitCount();   
+            this.CalculateOffsetMaxDigitCount();
         }
 
         public void RevealAndSelectObject(T objToSelect)
@@ -107,13 +109,18 @@ namespace Myriadbits.MXFInspect
             ShowOffsetAsHex = showOffsetAsHex;
             this.ColumnOffset.AspectToStringConverter = delegate (object x)
             {
-                if (ShowOffsetAsHex)
+                long offset;
+                try
                 {
-                    string offset = x.ToString().PadLeft(maxDigitCount, '0');
-                    return $"0x{offset:X}";
+                    offset = Convert.ToInt64(x);
                 }
-                else
-                    return $"{x:N0}";
+                catch (InvalidCastException ex)
+                {
+
+                    Log.ForContext(typeof(TreeListViewBase<T>)).Error($"Exception occured during conversion of offset: {@ex}", ex);
+                    return "";
+                }
+                return ShowOffsetAsHex ? "0x" + offset.ToString("X"+ maxDigitCount) : $"{offset:N0}";
             };
 
             this.RebuildColumns();
