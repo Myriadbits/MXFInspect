@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using System;
@@ -47,8 +48,8 @@ namespace Myriadbits.MXF
 
         public override MXFPack GetNext()
         {
-            var pack = base.GetNext();
 
+            var pack = base.GetNext();
             // TODO wrap into using/ try...catch
             MXFPack typedPack = MXFPackFactory.CreateStronglyTypedPack(pack);
             typedPack.Number = currentPackNumber++;
@@ -58,6 +59,16 @@ namespace Myriadbits.MXF
 
         public bool SeekForNextPotentialKey(out long newOffset)
         {
+            // See to last good position
+            if(Current != null)
+            {
+                Seek(Current.Offset + Current.TotalLength);
+            }
+            else
+            {
+                Seek(0);
+            }
+
             int foundBytes = 0;
 
             // TODO implement Boyer-Moore algorithm

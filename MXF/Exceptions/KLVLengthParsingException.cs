@@ -21,12 +21,14 @@
 //
 #endregion
 using System;
-using System.Net.Http;
 
 namespace Myriadbits.MXF.Exceptions
 {
-    public class MXFParsingException : Exception
+    public class KLVLengthParsingException : Exception
     {
+        public KLVLengthParsingException(Exception innerException) : base(null, innerException)
+        {
 
+        }
     }
 }

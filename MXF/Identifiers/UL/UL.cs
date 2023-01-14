@@ -137,11 +137,11 @@ namespace Myriadbits.MXF.Identifiers
 
         private static void ValidateByteArray(byte[] bytes)
         {
-            if (bytes.Length != (int)KeyLengths.SixteenBytes)
-            {
-                throw new ArgumentException("Wrong number of bytes. A SMPTE Universal Label must consist of exactly 16 bytes");
-            }
-            else if (!HasValidULPrefix(bytes))
+            //if (bytes.Length != (int)KeyLengths.SixteenBytes)
+            //{
+            //    throw new ArgumentException("Wrong number of bytes. A SMPTE Universal Label must consist of exactly 16 bytes");
+            //}
+            if (!HasValidULPrefix(bytes))
             {
                 throw new ArgumentException("Wrong byte value. A SMPTE Universal Label must start with the following byte sequence: 0x06, 0x0e, 0x2b, 0x34");
             }
