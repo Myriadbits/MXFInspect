@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format($"RIPEntry - BodySID {this.BodySID}, PartitionOffset {this.PartitionOffset:N0}");
+            return string.Format($"RIPEntry - BodySID {this.BodySID}, PartitionOffset {this.PartitionOffset:N0} (0x{this.PartitionOffset:X})");
         }
     }
 }
