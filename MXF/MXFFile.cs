@@ -32,6 +32,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
+using Myriadbits.MXF.Exceptions;
 
 namespace Myriadbits.MXF
 {
@@ -103,10 +104,6 @@ namespace Myriadbits.MXF
 
                 using (var fileStream = new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
                 {
-                    // Create root node
-                    MXFObject root = new MXFNamedObject("Partitions", 0);
-                    this.AddChild(root);
-
                     // Parse Packs 
                     MXFPackParser parser = new MXFPackParser(fileStream);
                     List<MXFObject> packList = new List<MXFObject>();
@@ -120,34 +117,39 @@ namespace Myriadbits.MXF
                             ct.ThrowIfCancellationRequested();
                         }
                         // TODO be more selective with the exception
-                        catch (ArgumentException e)
+                        catch (KLVKeyParsingException ex)
                         {
-                            // error in klv-stream
+                            long lastgoodPos = 0;
+                            // klv stream error
+                            if (parser.Current != null)
+                            {
+                                lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
+                            }
 
-                            long lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
+                            // reposition klvstream
+
                             if (!parser.SeekForNextPotentialKey(out long newOffset))
                             {
                                 // we have reached end of file, exceptional case so handle it
                             }
                             else
                             {
-                                packList.Add(new MXFNamedObject("Non-KLV Data", lastgoodPos, newOffset - lastgoodPos));
+                                if (packList.Any())
+                                {
+                                    packList.Add(new MXFNamedObject("Non-KLV Data", lastgoodPos, newOffset - lastgoodPos));
+                                }
+                                else
+                                {
+                                    this.AddChild(new MXFNamedObject("Run-In", lastgoodPos, newOffset - lastgoodPos));
+                                }
                             }
 
+                            continue;
                         }
-                        catch (Exception e) when (e is not OperationCanceledException)
+                        catch (KLVStreamException ex)
                         {
-                            // error in klv-stream
-
-                            long lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
-                            if (!parser.SeekForNextPotentialKey(out long newOffset))
-                            {
-                                // we have reached end of file, exceptional case so handle it
-                            }
-                            else
-                            {
-                                packList.Add(new MXFNamedObject("Non-Parseable Data", lastgoodPos, newOffset - lastgoodPos));
-                            }
+                            //TODO must be handled
+                            break;
                         }
 
                         // Only report progress when the percentage has changed
@@ -275,16 +277,22 @@ namespace Myriadbits.MXF
         {
             MXFPartition currentPartition = null;
             int partitionNumber = 0;
+            MXFObject partitionRoot = null;
 
             foreach (var obj in packList)
             {
                 switch (obj)
                 {
                     case MXFPartition partition:
+                        if (partitionRoot == null)
+                        {
+                            partitionRoot = new MXFNamedObject("Partitions", partition.Offset);
+                            this.AddChild(partitionRoot);
+                        }
                         currentPartition = partition;
                         currentPartition.File = this;
                         currentPartition.PartitionNumber = partitionNumber++;
-                        this.Children.First().AddChild(currentPartition);
+                        partitionRoot.AddChild(currentPartition);
                         this.Partitions.Add(currentPartition);
                         break;
 

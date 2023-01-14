@@ -87,7 +87,7 @@ namespace Myriadbits.MXF
                 }
                 catch (Exception e)
                 {
-                    var ex = new MXFLocalTagParsingException(lt, e);
+                    var ex = new LocalTagParsingException(lt, e);
                     Log.ForContext<MXFLocalSet>().Error(ex, $"Exception occured during parsing of local tag {lt} @{lt.Offset} of MXFPack {lt.Parent}:");
                     if (this.Root() is MXFFile file)
                     {

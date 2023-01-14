@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.KLV;
 using System;
 using System.IO;
@@ -77,10 +78,40 @@ namespace Myriadbits.MXF
 
         protected T CreateKLV(long offset)
         {
+            K key;
+            L length;
+
             Seek(offset);
-            K key = ParseKLVKey();
-            L length = ParseKLVLength();
-            Stream ss = new SubStream(klvStream, offset, key.ArrayLength + length.ArrayLength + length.Value);
+            
+            try
+            {
+                // TODO before parsing check if we have enough bytes to read
+                key = ParseKLVKey();
+            }
+            catch(Exception e)
+            {
+                throw new KLVKeyParsingException(e);
+            }
+
+            try
+            {
+                // TODO before parsing check if we have enough bytes to read
+                length = ParseKLVLength();
+            }
+            catch (Exception e)
+            {
+                throw new KLVLengthParsingException(e);
+            }
+
+            long subStreamLength = key.ArrayLength + length.ArrayLength + length.Value;
+
+            // check if substream not longer than the parent stream
+            if (offset + subStreamLength > klvStream.Length)
+            {
+                throw new KLVStreamException("The parsed length exceeds the stream length");
+            }
+
+            Stream ss = new SubStream(klvStream, offset, subStreamLength);
             return InstantiateKLV(key, length, baseOffset + currentKLVOffset, ss);
         }
     }
