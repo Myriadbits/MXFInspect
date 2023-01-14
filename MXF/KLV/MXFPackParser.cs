@@ -31,7 +31,7 @@ using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPackParser : KLVTripletParser<MXFPack>
+    public class MXFPackParser : KLVTripletParser<MXFPack, UL, KLVBERLength>
     {
         private long currentPackNumber = 0;
 
@@ -121,6 +121,11 @@ namespace Myriadbits.MXF
                     bytes = bytes.Concat(additionalOctets).ToArray();
                     return new KLVBERLength(lengthValue, bytes);
             }
+        }
+
+        protected override MXFPack InstantiateKLV(UL key, KLVBERLength length, long offset, Stream stream)
+        {
+            return new MXFPack(key, length, offset, stream);
         }
     }
 }
