@@ -27,14 +27,18 @@ using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public abstract class KLVTripletParser<T> : IKLVTripletParser<T> where T : KLVTriplet
+    public abstract class KLVTripletParser<T, K, L> : IKLVTripletParser<T, K, L>
+        where T : KLVTriplet
+        where K : KLVKey
+        where L : KLVLengthBase
     {
         protected readonly IKLVStreamReader reader;
         protected long currentKLVOffset = 0;
         protected readonly long baseOffset = 0;
         protected readonly Stream klvStream;
-        protected abstract KLVKey ParseKLVKey();
-        protected abstract KLVLengthBase ParseKLVLength();
+        protected abstract K ParseKLVKey();
+        protected abstract L ParseKLVLength();
+        protected abstract T InstantiateKLV(K key, L length, long offset, Stream stream);
 
         public T Current { get; protected set; }
 
@@ -52,12 +56,11 @@ namespace Myriadbits.MXF
         public virtual T GetNext()
         {
 
-            var klv = CreateKLV(currentKLVOffset, ParseKLVKey, ParseKLVLength);
+            var klv = CreateKLV(currentKLVOffset);
             Current = klv;
 
             // advance to next pack
             Seek(currentKLVOffset + klv.TotalLength);
-
             return klv;
         }
 
@@ -72,14 +75,13 @@ namespace Myriadbits.MXF
             currentKLVOffset = position;
         }
 
-        protected T CreateKLV(long offset, Func<KLVKey> parseKLVKey, Func<KLVLengthBase> parseKLVLength)
+        protected T CreateKLV(long offset)
         {
             Seek(offset);
-
-            KLVKey key = parseKLVKey();
-            KLVLengthBase length = parseKLVLength();
+            K key = ParseKLVKey();
+            L length = ParseKLVLength();
             Stream ss = new SubStream(klvStream, offset, key.ArrayLength + length.ArrayLength + length.Value);
-            return (T)Activator.CreateInstance(typeof(T), key, length, baseOffset + currentKLVOffset, ss);
+            return InstantiateKLV(key, length, baseOffset + currentKLVOffset, ss);
         }
     }
 }
