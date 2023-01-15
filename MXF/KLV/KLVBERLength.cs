@@ -88,11 +88,11 @@ namespace Myriadbits.MXF
         {
             if (BERForm == BERForms.LongForm)
             {
-                return $"BER {BERForm}, 1 + {AdditionalOctets} Octets ({Value})";
+                return $"{Value} (BER {BERForm}, 1 + {AdditionalOctets} Octets)";
             }
             else
             {
-                return $"BER {BERForm} ({Value})";
+                return $"{Value} (BER {BERForm})";
             }
         }
 
