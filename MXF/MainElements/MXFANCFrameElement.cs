@@ -29,19 +29,22 @@ namespace Myriadbits.MXF
 {
     public class MXFANCFrameElement : MXFEssenceElement
 	{
-		private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>();
-
 		public MXFANCFrameElement(MXFPack pack)
 			: base(pack)
         {
 			IKLVStreamReader reader = this.GetReader();
 			reader.Seek(this.RelativeValueOffset);
-			UInt16 nofPackets = reader.ReadUInt16();
-			for(int n = 0; n < nofPackets; n++)
+			// TODO make reading more robust if we encounter end of stream
+			// i.e. if declared klv length is wrong
+			if (!reader.EOF)
 			{
-				MXFANCPacket newpacket = new MXFANCPacket(reader);
-				this.AddChild(newpacket);
-			}
+                UInt16 nofPackets = reader.ReadUInt16();
+                for (int n = 0; n < nofPackets; n++)
+                {
+                    MXFANCPacket newpacket = new MXFANCPacket(reader);
+                    this.AddChild(newpacket);
+                }
+            }
 		}
 		
 		public override string ToString()
