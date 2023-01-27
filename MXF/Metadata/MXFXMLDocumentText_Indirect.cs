@@ -38,6 +38,8 @@ namespace Myriadbits.MXF.Metadata
         public MXFXMLDocumentText_Indirect(MXFPack pack)
             : base(pack)
         {
+            // TODO inline this method or roll out for all mxf packs for
+            // better error handling
             Initialize(this.GetReader());
         }
 
