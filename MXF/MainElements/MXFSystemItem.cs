@@ -102,11 +102,12 @@ namespace Myriadbits.MXF
 		public AUID SMPTE { get; set; }
 
 		[Category(CATEGORYNAME)]
-		public string CreationDate { get; set; }
+		public MXFTimeStamp CreationDate { get; set; }
 		
 		[Category(CATEGORYNAME)]
 		public MXFTimeStamp UserDate { get; set; }
 		
+		// TODO helper property for validator? that should be removed
 		[Category(CATEGORYNAME)]
 		public string UserDateFullFrameNb { get; set; }
 
@@ -164,10 +165,8 @@ namespace Myriadbits.MXF
 
 			this.SMPTE = reader.ReadAUID(); // Always read even if zero
 
-			MXFTimeStamp creationTimeStamp = reader.ReadBCDTimeCode(this.PackageRate);
-			this.CreationDate = creationTimeStamp.ToString();
-
-			this.UserDate = reader.ReadBCDTimeCode(this.PackageRate);
+			this.CreationDate = reader.ReadBCDTimeCode(this.PackageRate);
+            this.UserDate = reader.ReadBCDTimeCode(this.PackageRate);
 			this.UserDateFullFrameNb = this.UserDate.GetString(true);
 		}
 

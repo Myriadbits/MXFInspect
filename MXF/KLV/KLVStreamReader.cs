@@ -2,6 +2,7 @@
 using Serilog;
 using System;
 using System.Buffers.Binary;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -272,17 +273,25 @@ namespace Myriadbits.MXF.KLV
         public MXFTimeStamp ReadBCDTimeCode(double frameRate)
         {
             // TODO If MJD is set, time is milliseconds since X
-            byte type = this.ReadByte();
+            // A creation date / time stamp value should be entered in the system metadata pack according to
+            // SMPTE 326M. Note that the format of this item is defined by the first byte that has the metadata
+            // type value of “81h” (timecode)or “82h” (date - timecode) as defined in SMPTE 331M. In compliance
+            // with SMPTE 331M, of the 17 bytes available, only the first 9 bytes are used and the last 8
+            // bytes are zero filled.
 
-            MXFTimeStamp timeStamp = new MXFTimeStamp();
-            timeStamp.ParseBCDTimeCode(this, frameRate);
+            byte[] arr = this.ReadBytes(17);
 
-            this.ReadByte(); // BG7 + BG8
+            return new MXFTimeStamp(arr, frameRate);
 
-            // Read 8 dummy bytes (always zero)
-            this.ReadUInt64();
+            //MXFTimeStamp timeStamp = new MXFTimeStamp();
+            //timeStamp.ParseBCDTimeCode(this, frameRate);
 
-            return timeStamp;
+            //this.ReadByte(); // BG7 + BG8
+
+            //// Read 8 dummy bytes (always zero)
+            //this.ReadUInt64();
+
+            //return timeStamp;
         }
 
 
