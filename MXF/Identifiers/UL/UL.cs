@@ -31,7 +31,6 @@ namespace Myriadbits.MXF.Identifiers
     public class UL : AUID
     {
         private const string CATEGORYNAME = "Key";
-        private static readonly Dictionary<ByteArray, ULDescription> smpteDictionary = SMPTEULDictionary.GetEntries();
         public static readonly byte[] ValidULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
 
         #region properties
@@ -79,14 +78,8 @@ namespace Myriadbits.MXF.Identifiers
             VersionNumber = this[7];
             ItemDesignator = bytes.Skip(8).ToArray();
 
-            // TODO outsource this info gathering to another class?
-            // get additional information from SMPTE registers
-            if (smpteDictionary.TryGetValue(this, out var keyDescription))
-            {
-                SMPTEInformation = keyDescription;
-                Name = SMPTEInformation.Name;
-            }
-
+            SMPTEInformation = SMPTEULDictionary.GetDescription(this);
+            Name = SMPTEInformation?.Name;
         }
 
         public static bool HasValidULPrefix(params byte[] bytes)
