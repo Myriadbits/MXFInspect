@@ -26,51 +26,84 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
 using Serilog;
+using System.Collections;
 
 namespace Myriadbits.MXF.Identifiers
 {
     public static class SMPTEULDictionary
     {
-        private static Dictionary<ByteArray, ULDescription> Dictionary { get; set; }
+        private static bool Initialized { get; set; }
+        private static Dictionary<ByteArray, ULDescription> LabelsDictionary { get; set; }
+        private static Dictionary<ByteArray, ULDescription> ElementsDictionary { get; set; }
+        private static Dictionary<ByteArray, ULDescription> GroupsDictionary { get; set; }
+        private static Dictionary<ByteArray, ULDescription> EssencesDictionary { get; set; }
 
-        public static Dictionary<ByteArray, ULDescription> GetEntries()
+        public static int TotalEntriesCount { get; private set; } = 0;
+
+        public static void Initialize()
         {
-            // if already initialized return it
-            if (Dictionary != null)
+            if (!Initialized)
             {
-                return Dictionary;
+                LabelsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
+                ElementsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
+                GroupsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
+                EssencesDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
+
+                FillDictionary(Properties.Resources.Labels, LabelsDictionary);
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {LabelsDictionary.Count} SMPTE labels register entries added to SMPTE dictionary");
+
+                FillDictionary(Properties.Resources.Elements, ElementsDictionary);
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {ElementsDictionary.Count} SMPTE elements register entries added to SMPTE dictionary");
+
+                FillDictionary(Properties.Resources.Groups, GroupsDictionary);
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {GroupsDictionary.Count} SMPTE groups register entries added to SMPTE dictionary");
+
+                FillDictionary(Properties.Resources.Essence, EssencesDictionary);
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {EssencesDictionary.Count} SMPTE essences register entries added to SMPTE dictionary");
+
+                TotalEntriesCount = LabelsDictionary.Count + ElementsDictionary.Count + GroupsDictionary.Count + EssencesDictionary.Count;
+                Log.ForContext(typeof(SMPTEULDictionary)).Information($"SMPTE Dictionary with a total of {TotalEntriesCount} entries loaded");
+               
+                Initialized = true;
             }
-            else
+        }
+
+        public static ULDescription GetDescription(ByteArray array)
+        {
+
+            Initialize();
+
+            if (LabelsDictionary.TryGetValue(array, out var smpteDescription))
             {
-                Dictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
-
-                //Parse SMPTE Labels register
-
-                XElement regEntries = XElement.Parse(Properties.Resources.Labels); ;
-                XNamespace ns = "http://www.smpte-ra.org/schemas/400/2012";
-                AddEntries(Dictionary, regEntries, ns);
-                long count = Dictionary.Count;
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {count} SMPTE label register entries added to SMPTE dictionary");
-
-                // Parse SMPTE Elements register
-
-                ns = "http://www.smpte-ra.org/schemas/335/2012";
-                regEntries = XElement.Parse(Properties.Resources.Elements);
-                AddEntries(Dictionary, regEntries, ns);
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {Dictionary.Count-count} SMPTE elements register entries added to SMPTE dictionary");
-                count = Dictionary.Count;
-
-                //Parse SMPTE Groups register
-
-                ns = "http://www.smpte-ra.org/ns/395/2016";
-                regEntries = XElement.Parse(Properties.Resources.Groups);
-                AddEntries(Dictionary, regEntries, ns);
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {Dictionary.Count-count} SMPTE groups register entries added to SMPTE dictionary");
-
-                var values = Dictionary.Values.OrderBy(s => s.Name).Select(o => o.Name).ToList();
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"SMPTE Dictionary with {Dictionary.Count} entries loaded");
-                return Dictionary;
+                return smpteDescription;
             }
+            else if (ElementsDictionary.TryGetValue(array, out smpteDescription))
+            {
+                return smpteDescription;
+            }
+            else if (GroupsDictionary.TryGetValue(array, out smpteDescription))
+            {
+                return smpteDescription;
+            }
+            else if (EssencesDictionary.TryGetValue(array, out smpteDescription))
+            {
+                return smpteDescription;
+            }
+            else return null;
+
+        }
+
+        public static ByteArray GetByteArrayFromSMPTEULString(string smpteString)
+        {
+            var bytes = GetBytesFromSMPTEULString(smpteString);
+            return new ByteArray(bytes);
+        }
+
+        private static void FillDictionary(string s, IDictionary<ByteArray, ULDescription> dict)
+        {
+            XElement regEntries = XElement.Parse(s);
+            string ns = regEntries.Name.NamespaceName;
+            AddEntries(dict, regEntries, ns);
         }
 
         private static void AddEntries(IDictionary<ByteArray, ULDescription> dict, XElement regEntries, XNamespace ns)
@@ -120,12 +153,6 @@ namespace Myriadbits.MXF.Identifiers
             return null;
         }
 
-        public static ByteArray GetByteArrayFromSMPTEULString(string smpteString)
-        {
-            var bytes = GetBytesFromSMPTEULString(smpteString);
-            return new ByteArray(bytes);
-        }
-
         private static byte[] GetBytesFromSMPTEULString(string smpteString)
         {
             int hexBase = 16;
@@ -136,6 +163,22 @@ namespace Myriadbits.MXF.Identifiers
                 byteArray[i] = Convert.ToByte(ulString.Substring(j, 2), hexBase);
             }
             return byteArray;
+        }
+
+        internal class KeyPartialMatchComparer : IEqualityComparer<ByteArray>
+        {
+            // if the keys to compare are of the same category (meaning the same hash) compare
+            // whether the byte sequence is equal
+            public bool Equals(ByteArray x, ByteArray y)
+            {
+                return x.IsWildCardEqual(y);
+            }
+
+            public int GetHashCode(ByteArray obj)
+            {
+                // hash only the first 12 bytes (prefix is 4 bytes + 5th byte = key category)
+                return 0;
+            }
         }
     }
 }

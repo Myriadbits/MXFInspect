@@ -89,6 +89,24 @@ namespace Myriadbits.MXF
 
         }
 
+        public bool IsWildCardEqual(ByteArray other)
+        {
+            int smallerLength = Math.Min(this.ArrayLength, other.ArrayLength);
+
+            for (int i = 0; i < smallerLength; i++)
+            {
+                if (this[i] != other[i])
+                {
+                    return false;
+                }
+                if (this[i] == 0x7F || other[i] == 7F)
+                {
+                    continue;
+                }
+            }
+            return true;
+        }
+
 
         public override string ToString()
         {

@@ -135,7 +135,7 @@ namespace Myriadbits.MXF
 				this.TotalLength = 4 * (this.PayloadSampleCount / 3); // 3 samples are stored in 4 bytes 
 			}
 
-			// Skip 8 bytes (seems to be data but cannot find any meaning in the spec!)
+			// TODO Skip 8 bytes (seems to be data but cannot find any meaning in the spec!)
 			UInt32 unknownData1 = reader.ReadUInt32();
 			UInt32 unknownData2 = reader.ReadUInt32();
 

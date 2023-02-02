@@ -41,7 +41,7 @@ namespace Myriadbits.MXFInspect
             InitializeComponent();
 
             // Load SMPTE dictionary as soon as possible to avoid one-time-lag when opening the first MXF File
-            SMPTEULDictionary.GetEntries();
+            SMPTEULDictionary.Initialize();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Myriadbits.MXFInspect
             FillMRU();
             this.UpdateMenu();
             this.tslVersion.Text = $"Version: {typeof(FormMain).Assembly.GetName().Version}";
-            SetActivityText($"{SMPTEULDictionary.GetEntries().Count:N0} SMPTE entries loaded");
+            SetActivityText($"{SMPTEULDictionary.TotalEntriesCount:N0} SMPTE entries loaded");
             RefreshStatusStrip();
         }
 

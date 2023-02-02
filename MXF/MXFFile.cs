@@ -151,6 +151,10 @@ namespace Myriadbits.MXF
                             //TODO must be handled
                             break;
                         }
+                        catch (Exception ex) when (ex is not OperationCanceledException)
+                        {
+                            // TODO log error
+                        }
 
                         // Only report progress when the percentage has changed
                         currentPercentage = (int)((parser.Current.Offset + parser.Current.TotalLength) * 100 / this.File.Length);

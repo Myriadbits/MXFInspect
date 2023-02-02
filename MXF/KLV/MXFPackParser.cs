@@ -48,19 +48,27 @@ namespace Myriadbits.MXF
 
         public override MXFPack GetNext()
         {
-
             var pack = base.GetNext();
-            // TODO wrap into using/ try...catch
-            MXFPack typedPack = MXFPackFactory.CreateStronglyTypedPack(pack);
-            typedPack.Number = currentPackNumber++;
-            Current = typedPack;
-            return typedPack;
+            try
+            {
+                pack = MXFPackFactory.CreateStronglyTypedPack(pack);
+            }
+            catch (Exception)
+            {
+                // TODO log/handle error
+            }
+            finally
+            {
+                pack.Number = currentPackNumber++;
+                Current = pack;
+            }
+            return pack;
         }
 
         public bool SeekForNextPotentialKey(out long newOffset)
         {
             // See to last good position
-            if(Current != null)
+            if (Current != null)
             {
                 Seek(Current.Offset + Current.TotalLength);
             }
