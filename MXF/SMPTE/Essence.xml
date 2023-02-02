@@ -1,0 +1,817 @@
+<!--
+Copyright (c) 2021 SMPTE All rights reserved.
+
+The latest version of this document can be retrieved at
+
+http://smpte-ra.org/smpte-metadata-registry
+
+The document is constructed according to 
+
+ST 2088:2019  -  Essence Element Key Register Structure,
+
+which is available at http://dx.doi.org/10.5594/SMPTE.ST2088.2019
+
+Use of this file without consulting the corresponding SMPTE Engineering Document is NOT supported.  Interoperability will generally require adherence to additional guidelines and constraints specified in the corresponding prose document.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<EssenceRegister xmlns="http://www.smpte-ra.org/schemas/2088/2019">
+    <Entries>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019</NamespaceName>
+            <Symbol>ESSENCEDICTIONARY</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.00000000.00000000</UL>
+            <Kind>NODE</Kind>
+            <Name>ESSENCE DICTIONARY</Name>
+            <Definition>CATALOGUE OF ESSENCE ITEMS</Definition>
+            <DefiningDocument>SMPTE ST 2088</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13</NamespaceName>
+            <Symbol>OrganizationallyRegisteredforPublicUse</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d000000.00000000</UL>
+            <Kind>NODE</Kind>
+            <Name>Organizationally Registered for Public Use</Name>
+            <Definition>Organizationally Registered for Public Use</Definition>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1</NamespaceName>
+            <Symbol>AAFAssociation</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010000.00000000</UL>
+            <Kind>NODE</Kind>
+            <Name>AAF Association</Name>
+            <Definition>Metadata registered by the AAF Association for public use</Definition>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>GenericContainerApplication</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010300.00000000</UL>
+            <Kind>NODE</Kind>
+            <Name>Generic Container Application</Name>
+            <Definition>MXF Generic Container Application</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>GenericContainerVersion</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.00000000</UL>
+            <Kind>NODE</Kind>
+            <Name>Generic Container Version</Name>
+            <Definition>Version 1 of the MXF Generic Container</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CPPictureItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.05000000</UL>
+            <Kind>NODE</Kind>
+            <Name>CP Picture Item</Name>
+            <Definition>Identifies CP-compatible Picture item</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>TypeD10Element</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.0501017f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Type D-10 Element</Name>
+            <Definition>Identifies a Type D-10 constrained MPEG2 4:2:2 coded element (see SMPTE 331)</Definition>
+            <DefiningDocument>SMPTE ST 386</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CPSoundItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.06000000</UL>
+            <Kind>NODE</Kind>
+            <Name>CP Sound Item</Name>
+            <Definition>Identifies CP-compatible Sound Item</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>_8ChAES3Element</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.0601107f</UL>
+            <Kind>LEAF</Kind>
+            <Name>8-Ch AES3 Element</Name>
+            <Definition>Identifies a 8 channel AES3 audio data element</Definition>
+            <DefiningDocument>SMPTE ST 386</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CPDataItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.07000000</UL>
+            <Kind>NODE</Kind>
+            <Name>CP Data Item</Name>
+            <Definition>Identifies CP-compatible Data Item</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>VBILineElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.077f207f</UL>
+            <Kind>LEAF</Kind>
+            <Name>VBI Line Element</Name>
+            <Definition>Identifies a VBI line data element</Definition>
+            <DefiningDocument>SMPTE ST 331</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ANCPacketElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.077f217f</UL>
+            <Kind>LEAF</Kind>
+            <Name>ANC Packet Element</Name>
+            <Definition>Identifies a Ancillary Packet data element</Definition>
+            <DefiningDocument>SMPTE ST 331</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>GeneralDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.077f227f</UL>
+            <Kind>LEAF</Kind>
+            <Name>General Data Element</Name>
+            <Definition>Identifies a General data element</Definition>
+            <DefiningDocument>SMPTE ST 331</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>BWFElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.077f407f</UL>
+            <Kind>LEAF</Kind>
+            <Name>BWF Element</Name>
+            <Definition>Identifies a VBI line data element</Definition>
+            <DefiningDocument>SMPTE ST 331</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>JFIFElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.077f417f</UL>
+            <Kind>LEAF</Kind>
+            <Name>JFIF Element</Name>
+            <Definition>Identifies a JFIF data element</Definition>
+            <DefiningDocument>SMPTE ST 331</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>TIFFElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.077f427f</UL>
+            <Kind>LEAF</Kind>
+            <Name>TIFF Element</Name>
+            <Definition>Identifies a TIFF data element</Definition>
+            <DefiningDocument>SMPTE ST 331</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ControlElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.077f787f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Control Element</Name>
+            <Definition>Identifies a Control data element</Definition>
+            <DefiningDocument>SMPTE ST 331</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>GCPictureItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.15000000</UL>
+            <Kind>NODE</Kind>
+            <Name>GC Picture Item</Name>
+            <Definition>Identifies GC Picture Item</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>TypeD11ElementFrameWrapped</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.15010101</UL>
+            <Kind>LEAF</Kind>
+            <Name>Type D-11 Element (Frame-Wrapped)</Name>
+            <Definition>Identifies a frame-wrapped Type D-11 picture element</Definition>
+            <DefiningDocument>SMPTE ST 387</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f027f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped Picture Element</Name>
+            <Definition>Identifies a frame-wrapped uncompressed picture element</Definition>
+            <DefiningDocument>SMPTE ST 384</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f037f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped Picture Element</Name>
+            <Definition>Identifies a clip-wrapped uncompressed picture element</Definition>
+            <DefiningDocument>SMPTE ST 384</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>LineWrappedPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f047f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Line-wrapped Picture Element</Name>
+            <Definition>Identifies a line-wrapped uncompressed picture element</Definition>
+            <DefiningDocument>SMPTE ST 384</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedMPEGPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f057f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped MPEG Picture Element</Name>
+            <Definition>Identifies a frame-wrapped MPEG picture element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedMPEGPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f067f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped MPEG Picture Element</Name>
+            <Definition>Identifies a clip-wrapped MPEG picture element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CustomWrappedMPEGPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f077f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Custom-wrapped MPEG Picture Element</Name>
+            <Definition>Identifies a custom-wrapped MPEG picture element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedJPEG2000PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f087f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped JPEG 2000 Picture Element</Name>
+            <Definition>Identifies a frame-wrapped JPEG 2000 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 422</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedJPEG2000PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f097f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped JPEG 2000 Picture Element</Name>
+            <Definition>Identifies a clip-wrapped JPEG 2000 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 422</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedVC1PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f0a7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped VC-1 Picture Element</Name>
+            <Definition>Identifies a frame-wrapped VC-1 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2037</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedVC1PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f0b7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped VC-1 Picture Element</Name>
+            <Definition>Identifies a clip-wrapped VC-1 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2037</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedVC3PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f0c7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped VC-3 Picture Element</Name>
+            <Definition>Identifies a frame-wrapped VC-3 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2019-4</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedVC3PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f0d7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped VC-3 Picture Element</Name>
+            <Definition>Identifies a clip-wrapped VC-3 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2019-4</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedTIFF_EPPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f0e7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped TIFF/EP Picture Element</Name>
+            <Definition>Identifies a frame-wrapped TIFF/EP Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2055</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedTIFF_EPPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f0f7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped TIFF/EP Picture Element</Name>
+            <Definition>Identifies a clip-wrapped TIFF/EP Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2055</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedVC2PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f107f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped VC-2 Picture Element</Name>
+            <Definition>Identifies a frame-wrapped VC-2 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2042-4</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedVC2PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f117f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped VC-2 Picture Element</Name>
+            <Definition>Identifies a clip-wrapped VC-2 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2042-4</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedACESPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f127f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped ACES Picture Element</Name>
+            <Definition>Identifies a frame-wrapped ACES Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2065-5</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedACESPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f137f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped ACES Picture Element</Name>
+            <Definition>Identifies a clip-wrapped ACES Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2065-5</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedVC5PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f147f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped VC-5 Picture Element</Name>
+            <Definition>Identifies a frame-wrapped VC-5 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2073-10</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedVC5PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f157f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped VC-5 Picture Element</Name>
+            <Definition>Identifies a clip-wrapped VC-5 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2073-10</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CustomWrappedVC5PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f167f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Custom-wrapped VC-5 Picture Element</Name>
+            <Definition>Identifies a custom-wrapped VC-5 Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2073-10</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedProResPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f177f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped ProRes Picture Element</Name>
+            <Definition>Identifies a frame-wrapped ProRes Picture Element </Definition>
+            <DefiningDocument>SMPTE RDD 44</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>  
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedDNxPackedPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f187f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped DNxPacked Picture Element</Name>
+            <Definition>Identifies Frame-wrapped DNxPacked Picture Element</Definition>
+            <DefiningDocument>SMPTE RDD 50</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedDNxPackedPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f197f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped DNxPacked Picture Element</Name>
+            <Definition>Identifies Clip-wrapped DNxPacked Picture Element</Definition>
+            <DefiningDocument>SMPTE RDD 50</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>GCSoundItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.16000000</UL>
+            <Kind>NODE</Kind>
+            <Name>GC Sound Item</Name>
+            <Definition>Key values for GC Sound Elements</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>WaveFrameWrappedSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f017f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Wave Frame-wrapped Sound Element</Name>
+            <Definition>Identifies a frame-wrapped Broadcast Wave sound element</Definition>
+            <DefiningDocument>SMPTE ST 382</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>WaveClipWrappedSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f027f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Wave Clip-wrapped Sound Element</Name>
+            <Definition>Identifies a clip-wrapped Broadcast Wave sound element</Definition>
+            <DefiningDocument>SMPTE ST 382</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>AES3FrameWrappedSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f037f</UL>
+            <Kind>LEAF</Kind>
+            <Name>AES3 Frame-wrapped Sound Element</Name>
+            <Definition>Identifies a frame-wrapped AES3 sound element</Definition>
+            <DefiningDocument>SMPTE ST 382</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>AES3ClipWrappedSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f047f</UL>
+            <Kind>LEAF</Kind>
+            <Name>AES3 Clip-wrapped Sound Element</Name>
+            <Definition>Identifies a clip-wrapped AES3 sound element</Definition>
+            <DefiningDocument>SMPTE ST 382</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedMPEGSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f057f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped MPEG Sound Element</Name>
+            <Definition>Identifies a frame-wrapped MPEG coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedMPEGSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f067f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped MPEG Sound Element</Name>
+            <Definition>Identifies a clip-wrapped MPEG coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CustomWrappedMPEGSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f077f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Custom-wrapped MPEG Sound Element</Name>
+            <Definition>Identifies a custom-wrapped MPEG coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedAlawSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f087f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped A-law Sound Element</Name>
+            <Definition>Identifies a frame-wrapped A-law coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 388</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedAlawSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f097f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped A-law Sound Element</Name>
+            <Definition>Identifies a clip-wrapped A-law coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 388</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CustomWrappedAlawSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f0a7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Custom-wrapped A-law Sound Element</Name>
+            <Definition>Identifies a custom-wrapped A-law coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 388</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>WaveCustomWrappedSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f0b7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Wave Custom-wrapped Sound Element</Name>
+            <Definition>Identifies a custom-wrapped Wav coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 382</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>AES3CustomWrappedSoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f0c7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>AES3 Custom-wrapped Sound Element</Name>
+            <Definition>Identifies a custom-wrapped AES3 coded sound element</Definition>
+            <DefiningDocument>SMPTE ST 382</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>IMF_IABEssenceClipWrappedElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f0d7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>IMF IAB Essence Clip-Wrapped Element</Name>
+            <Definition>Identifies a clip-wrapped Immersive Audio Bitstream sound element</Definition>
+            <DefiningDocument>SMPTE ST 2067-201</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>GCDataItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.17000000</UL>
+            <Kind>NODE</Kind>
+            <Name>GC Data Item</Name>
+            <Definition>Key values for GC Data Elements</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedVBIDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f0101</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-Wrapped VBI Data Element</Name>
+            <Definition>Identifies a frame-Wrapped VBI Data Element</Definition>
+            <DefiningDocument>SMPTE ST 436</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedANCDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f0201</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-Wrapped ANC Data Element</Name>
+            <Definition>Identifies a frame-Wrapped ANC Data Element</Definition>
+            <DefiningDocument>SMPTE ST 436</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedMPEGDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f057f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped MPEG Data Element</Name>
+            <Definition>Identifies a frame-wrapped MPEG data element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedMPEGDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f067f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped MPEG Data Element</Name>
+            <Definition>Identifies a clip-wrapped MPEG data element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>CustomWrappedMPEGDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f077f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Custom-wrapped MPEG Data Element</Name>
+            <Definition>Identifies a custom-wrapped MPEG data element</Definition>
+            <DefiningDocument>SMPTE ST 381</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>LineWrappedPictureDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f087f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Line-wrapped Picture Data Element</Name>
+            <Definition>Identifies a line-wrapped picture data element</Definition>
+            <DefiningDocument>SMPTE ST 384</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>LineWrappedPictureVANCDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f097f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Line-wrapped Picture V-ANC Data Element</Name>
+            <Definition>Identifies a line-wrapped picture V-Anc packet data element</Definition>
+            <DefiningDocument>SMPTE ST 384</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>LineWrappedPictureHANCDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f0a7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Line-wrapped Picture H-ANC Data Element</Name>
+            <Definition>Identifies a line-wrapped picture H-Anc packet data element</Definition>
+            <DefiningDocument>SMPTE ST 384</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>TimedTextDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f0b7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Timed Text Data Element</Name>
+            <Definition>Identifies a timed text data element</Definition>
+            <DefiningDocument>SMPTE ST 429-5</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>AuxDataEssence</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f0d7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Aux Data Essence</Name>
+            <Definition>Identifies an Auxiliary Data Essence element</Definition>
+            <DefiningDocument>SMPTE ST 429-14</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedDMCVTElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f0e7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped DMCVT Element</Name>
+            <Definition>Identifies Frame-wrapped DMCVT Element</Definition>
+            <DefiningDocument>SMPTE ST 2094-2</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>GCCompoundItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.18000000</UL>
+            <Kind>NODE</Kind>
+            <Name>GC Compound Item</Name>
+            <Definition>Key values for GC Compound Elements</Definition>
+            <DefiningDocument>SMPTE ST 379</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>DVDIFFrameWrapped</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.187f017f</UL>
+            <Kind>LEAF</Kind>
+            <Name>DV-DIF Frame-wrapped</Name>
+            <Definition>Identifies a frame-wrapped DV-DIF compound element</Definition>
+            <DefiningDocument>SMPTE ST 383</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>DVDIFClipWrapped</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.187f027f</UL>
+            <Kind>LEAF</Kind>
+            <Name>DV-DIF Clip-wrapped</Name>
+            <Definition>Identifies a clip-wrapped DV-DIF compound element</Definition>
+            <DefiningDocument>SMPTE ST 383</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+    </Entries>
+</EssenceRegister>
