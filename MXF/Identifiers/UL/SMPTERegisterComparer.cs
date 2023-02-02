@@ -25,10 +25,9 @@ using System.Collections.Generic;
 
 namespace Myriadbits.MXF.Identifiers
 {
-    public class SMPTEUL_DictionaryComparer : IEqualityComparer<ByteArray>
+    public class SMPTERegisterComparer : IEqualityComparer<ByteArray>
     {
-        // if the keys to compare are of the same category (meaning the same hash) compare
-        // whether the byte sequence is equal
+        //TOO bypassing of version byte shall be a settable property
         public bool Equals(ByteArray x, ByteArray y)
         {
             for (int i = 0; i < x.ArrayLength; i++)
@@ -39,14 +38,13 @@ namespace Myriadbits.MXF.Identifiers
                 {
                     continue;
                 }
-                else if (x[i] != x[i])
+                else if (x[i] != y[i])
                 {
                     return false;
                 }
             }
             return true;
         }
-
 
         public int GetHashCode(ByteArray theBytes)
         {
