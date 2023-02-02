@@ -19,7 +19,7 @@ namespace Myriadbits.MXF.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -94,6 +94,28 @@ namespace Myriadbits.MXF.Properties {
         internal static string Elements {
             get {
                 return ResourceManager.GetString("Elements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!--
+        ///Copyright (c) 2021 SMPTE All rights reserved.
+        ///
+        ///The latest version of this document can be retrieved at
+        ///
+        ///http://smpte-ra.org/smpte-metadata-registry
+        ///
+        ///The document is constructed according to 
+        ///
+        ///ST 2088:2019  -  Essence Element Key Register Structure,
+        ///
+        ///which is available at http://dx.doi.org/10.5594/SMPTE.ST2088.2019
+        ///
+        ///Use of this file without consulting the corresponding SMPTE Engineering Document is NOT supported.  Interoperability will generally require adherence to additional guidelines and constraints [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Essence {
+            get {
+                return ResourceManager.GetString("Essence", resourceCulture);
             }
         }
         
