@@ -24,13 +24,11 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using System.Linq;
 using Serilog;
-using System.Collections;
 
 namespace Myriadbits.MXF.Identifiers
 {
-    public static class SMPTEULDictionary
+    public static class SMPTERegisters
     {
         private static bool Initialized { get; set; }
         private static Dictionary<ByteArray, ULDescription> LabelsDictionary { get; set; }
@@ -44,25 +42,25 @@ namespace Myriadbits.MXF.Identifiers
         {
             if (!Initialized)
             {
-                LabelsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
-                ElementsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
-                GroupsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
-                EssencesDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEUL_DictionaryComparer());
+                LabelsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTERegisterComparer());
+                ElementsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTERegisterComparer());
+                GroupsDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTERegisterComparer());
+                EssencesDictionary = new Dictionary<ByteArray, ULDescription>(new SMPTEEssenceRegisterComparer());
 
                 FillDictionary(Properties.Resources.Labels, LabelsDictionary);
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {LabelsDictionary.Count} SMPTE labels register entries added to SMPTE dictionary");
+                Log.ForContext(typeof(SMPTERegisters)).Information($"A total of {LabelsDictionary.Count} SMPTE labels register entries added to SMPTE dictionary");
 
                 FillDictionary(Properties.Resources.Elements, ElementsDictionary);
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {ElementsDictionary.Count} SMPTE elements register entries added to SMPTE dictionary");
+                Log.ForContext(typeof(SMPTERegisters)).Information($"A total of {ElementsDictionary.Count} SMPTE elements register entries added to SMPTE dictionary");
 
                 FillDictionary(Properties.Resources.Groups, GroupsDictionary);
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {GroupsDictionary.Count} SMPTE groups register entries added to SMPTE dictionary");
+                Log.ForContext(typeof(SMPTERegisters)).Information($"A total of {GroupsDictionary.Count} SMPTE groups register entries added to SMPTE dictionary");
 
                 FillDictionary(Properties.Resources.Essence, EssencesDictionary);
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"A total of {EssencesDictionary.Count} SMPTE essences register entries added to SMPTE dictionary");
+                Log.ForContext(typeof(SMPTERegisters)).Information($"A total of {EssencesDictionary.Count} SMPTE essences register entries added to SMPTE dictionary");
 
                 TotalEntriesCount = LabelsDictionary.Count + ElementsDictionary.Count + GroupsDictionary.Count + EssencesDictionary.Count;
-                Log.ForContext(typeof(SMPTEULDictionary)).Information($"SMPTE Dictionary with a total of {TotalEntriesCount} entries loaded");
+                Log.ForContext(typeof(SMPTERegisters)).Information($"SMPTE Dictionary with a total of {TotalEntriesCount} entries loaded");
                
                 Initialized = true;
             }
@@ -115,16 +113,16 @@ namespace Myriadbits.MXF.Identifiers
                 {
                     if (dict.TryAdd(entry.Value.Key, entry.Value.Value) == false)
                     {
-                        Log.ForContext(typeof(SMPTEULDictionary)).Warning($"Unable to add SMPTE entry {entry} to SMPTE dictionary as entry is already present: {@e}", entry);
+                        Log.ForContext(typeof(SMPTERegisters)).Warning($"Unable to add SMPTE entry {entry} to SMPTE dictionary as entry is already present: {@e}", entry);
                     }
-                    Log.ForContext(typeof(SMPTEULDictionary)).Debug($"SMPTE entry {entry} added successfully to SMPTE dictionary");
-                    Log.ForContext(typeof(SMPTEULDictionary)).Verbose($"Details of SMPTE entry: {@e}", entry);
+                    Log.ForContext(typeof(SMPTERegisters)).Debug($"SMPTE entry {entry} added successfully to SMPTE dictionary");
+                    Log.ForContext(typeof(SMPTERegisters)).Verbose($"Details of SMPTE entry: {@e}", entry);
                 }
                 else
                 {
                     // TODO if entry not parseable it is null
                     // TODO catch this on a lower level, maybe via an exception
-                    Log.ForContext(typeof(SMPTEULDictionary)).Warning($"Unable to parse SMPTE entry {entry}: {@e}", entry);
+                    Log.ForContext(typeof(SMPTERegisters)).Warning($"Unable to parse SMPTE entry {entry}: {@e}", entry);
                 }
             }
         }
@@ -163,22 +161,6 @@ namespace Myriadbits.MXF.Identifiers
                 byteArray[i] = Convert.ToByte(ulString.Substring(j, 2), hexBase);
             }
             return byteArray;
-        }
-
-        internal class KeyPartialMatchComparer : IEqualityComparer<ByteArray>
-        {
-            // if the keys to compare are of the same category (meaning the same hash) compare
-            // whether the byte sequence is equal
-            public bool Equals(ByteArray x, ByteArray y)
-            {
-                return x.IsWildCardEqual(y);
-            }
-
-            public int GetHashCode(ByteArray obj)
-            {
-                // hash only the first 12 bytes (prefix is 4 bytes + 5th byte = key category)
-                return 0;
-            }
         }
     }
 }

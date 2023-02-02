@@ -78,7 +78,7 @@ namespace Myriadbits.MXF.Identifiers
             VersionNumber = this[7];
             ItemDesignator = bytes.Skip(8).ToArray();
 
-            SMPTEInformation = SMPTEULDictionary.GetDescription(this);
+            SMPTEInformation = SMPTERegisters.GetDescription(this);
             Name = SMPTEInformation?.Name;
         }
 
