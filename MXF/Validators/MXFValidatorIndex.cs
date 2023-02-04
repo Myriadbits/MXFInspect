@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Serilog;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -56,7 +57,7 @@ namespace Myriadbits.MXF
             FindIndexTablesSystemItemsEssenceElements();
 
             ReportProgress(55);
-            LogInfo("Found {0} index table segments in {1} ms", this.m_indexTables.Count, sw.ElapsedMilliseconds);
+            Log.ForContext<MXFValidatorIndex>().Information($"Found {this.m_indexTables.Count} index table segments in {sw.ElapsedMilliseconds} ms");
             sw.Restart();
 
             // Check if first index table is CBE
@@ -250,7 +251,7 @@ namespace Myriadbits.MXF
                 if (validCt == 0 && invalidCt == 0)
                     valResult.SetError(string.Format("No valid indexes found in this file!"));
             }
-            LogInfo("Validation completed in {0} msec", sw.ElapsedMilliseconds);
+            Log.ForContext<MXFValidatorIndex>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
 
 
             // Check system item range
