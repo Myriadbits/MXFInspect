@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x0013: 
-                    this.AddChildren(reader.ReadAUIDSet("Target", localTag.Offset, localTag.Length.Value)); 
+                    localTag.AddChildren(reader.ReadAUIDSet("Target", localTag.Offset, localTag.Length.Value)); 
                     return true;
                 case 0x0012: 
                     WeakReferencedType = reader.ReadAUID(); 

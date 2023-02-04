@@ -44,10 +44,10 @@ namespace Myriadbits.MXF
 			switch (localTag.TagValue)
 			{
 				case 0x2F01:
-					this.AddChildren(reader.GetReferenceSet<MXFLocator>("Locator", localTag.Offset, localTag.Length.Value));
+					localTag.AddChildren(reader.GetReferenceSet<MXFLocator>("Locator", localTag.Offset, localTag.Length.Value));
                     return true;
-				case var _ when localTag.AliasUID == subDescriptorKey: 
-					this.AddChildren(reader.GetReferenceSet<MXFSubDescriptor>("SubDescriptor", localTag.Offset, localTag.Length.Value));
+				case var _ when localTag.AliasUID == subDescriptorKey:
+                    localTag.AddChildren(reader.GetReferenceSet<MXFSubDescriptor>("SubDescriptor", localTag.Offset, localTag.Length.Value));
                     return true;
 			}
 			return base.ParseLocalTag(reader, localTag); 

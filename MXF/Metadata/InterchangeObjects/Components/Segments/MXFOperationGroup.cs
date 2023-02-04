@@ -59,10 +59,10 @@ namespace Myriadbits.MXF
                     this.AddChild(reader.ReadReference<MXFSourceReference>("Rendering", localTag.Offset)); 
                     return true;
                 case 0x0B02: 
-                    this.AddChildren(reader.GetReferenceSet<MXFSegment>("InputSegment", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFSegment>("InputSegment", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x0B03: 
-                    this.AddChildren(reader.GetReferenceSet<MXFParameter>("Parameter", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFParameter>("Parameter", localTag.Offset, localTag.Length.Value));
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

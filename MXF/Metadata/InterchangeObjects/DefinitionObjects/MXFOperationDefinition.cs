@@ -67,14 +67,14 @@ namespace Myriadbits.MXF
                 case 0x1e07: OperationInputCount = reader.ReadInt32(); return true;
                 case 0x1e08: Bypass = reader.ReadUInt32(); return true;
                 case 0x1e01:
-                    this.AddChild(reader.ReadReference<MXFDataDefinition>("OperationDataDefinition", localTag.Offset));
+                    localTag.AddChild(reader.ReadReference<MXFDataDefinition>("OperationDataDefinition", localTag.Offset));
                     return true;
                 case 0x1e06: OperationCategory = reader.ReadAUID(); return true;
                 case 0x1e09:
-                    this.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("OperationParametersDefined", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("OperationParametersDefined", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x1e03:
-                    this.AddChildren(reader.GetReferenceSet<MXFOperationDefinition>("DegradeTo", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFOperationDefinition>("DegradeTo", localTag.Offset, localTag.Length.Value));
                     return true;
 
             }

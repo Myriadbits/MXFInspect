@@ -58,11 +58,11 @@ namespace Myriadbits.MXF
                         this.ContactID = reader.ReadUUID(); 
                         return true;
                     case var _ when localTag.AliasUID == addressObjects_Key:
-                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("Address Object", localTag.Offset, localTag.Length.Value));
+                        localTag.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("Address Object", localTag.Offset, localTag.Length.Value));
                         return true;
                     // TODO replace generic MXFObject with class NameValue once implemented
                     case var _ when localTag.AliasUID == nameValueObjects_Key:
-                        this.AddChildren(reader.GetReferenceSet<MXFObject>("NameValue Object", localTag.Offset, localTag.Length.Value));
+                        localTag.AddChildren(reader.GetReferenceSet<MXFObject>("NameValue Object", localTag.Offset, localTag.Length.Value));
                         return true;
                 }
             }

@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
                     this.AddChild(reader.ReadReference<MXFClassDefinition>("FileDescriptorClass", localTag.Offset));
                     return true;
                 case 0x2302:
-                    this.AddChildren(reader.GetReferenceSet<MXFDataDefinition>("CodecDataDefinitions", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFDataDefinition>("CodecDataDefinitions", localTag.Offset, localTag.Length.Value));
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

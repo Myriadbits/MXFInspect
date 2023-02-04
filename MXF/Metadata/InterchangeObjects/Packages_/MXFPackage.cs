@@ -72,7 +72,7 @@ namespace Myriadbits.MXF
                     this.PackageName = reader.ReadUTF16String(localTag.Length.Value);
                     return true;
                 case 0x4403:
-                    this.AddChildren(reader.GetReferenceSet<MXFTrack>("Track", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFTrack>("Track", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x4404:
                     this.ModifiedDate = reader.ReadTimestamp(); 
@@ -81,14 +81,17 @@ namespace Myriadbits.MXF
                     this.CreationDate = reader.ReadTimestamp(); 
                     return true;
                 case 0x4406:
-                    this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageUserComment", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageUserComment", localTag.Offset, localTag.Length.Value));
                     return true;
                 // TODO change to KLVData once implemented
-                case 0x4407: this.AddChildren(reader.GetReferenceSet<MXFObject>("PackageKLVData", localTag.Offset, localTag.Length.Value));
+                case 0x4407: 
+                    localTag.AddChildren(reader.GetReferenceSet<MXFObject>("PackageKLVData", localTag.Offset, localTag.Length.Value));
                     return true;
-                case 0x4408: this.PackageUsage = reader.ReadUInt16(); 
+                case 0x4408: 
+                    this.PackageUsage = reader.ReadUInt16(); 
                     return true;
-                case 0x4409: this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageAttribute", localTag.Offset, localTag.Length.Value));
+                case 0x4409: 
+                    localTag.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageAttribute", localTag.Offset, localTag.Length.Value));
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

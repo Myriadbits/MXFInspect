@@ -101,19 +101,19 @@ namespace Myriadbits.MXF
                         this.AddChild(reader.ReadReference<MXFContactsList>("ContactsListObject", localTag.Offset)); 
                         return true;
                     case var _ when localTag.AliasUID == locations_Key:
-                        this.AddChildren(reader.GetReferenceSet<MXFLocation>("LocationObject", localTag.Offset, localTag.Length.Value));
+                        localTag.AddChildren(reader.GetReferenceSet<MXFLocation>("LocationObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == titlesObjects_Key:
-                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("TitlesObject", localTag.Offset, localTag.Length.Value));
+                        localTag.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("TitlesObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == annotationObjects_Key:
-                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("AnnotationObject", localTag.Offset, localTag.Length.Value));
+                        localTag.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("AnnotationObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == participantObjects_Key:
-                        this.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("ParticipantObject", localTag.Offset, localTag.Length.Value));
+                        localTag.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("ParticipantObject", localTag.Offset, localTag.Length.Value));
                         return true;
                     case var _ when localTag.AliasUID == metadataServerLocators_Key:
-                        this.AddChildren(reader.GetReferenceSet<MXFLocator>("MetadataServerLocator", localTag.Offset, localTag.Length.Value));
+                        localTag.AddChildren(reader.GetReferenceSet<MXFLocator>("MetadataServerLocator", localTag.Offset, localTag.Length.Value));
                         return true;
                 }
             }

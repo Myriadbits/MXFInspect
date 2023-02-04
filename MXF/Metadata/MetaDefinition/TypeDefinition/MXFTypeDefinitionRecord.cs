@@ -51,7 +51,7 @@ namespace Myriadbits.MXF
                     MemberNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00);
                     return true;
                 case 0x001c:
-                    this.AddChildren(reader.GetReferenceSet<MXFTypeDefinition>("MemberType", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFTypeDefinition>("MemberType", localTag.Offset, localTag.Length.Value));
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);
