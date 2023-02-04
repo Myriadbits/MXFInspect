@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Serilog.Core;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -73,13 +74,14 @@ namespace Myriadbits.MXF
             : base(pack)
         {
             this.Key.Name ??= "EssenceElement";
-            if(essenceTypes.TryGetValue(this.Key[12], out string itemType)){
+            if (essenceTypes.TryGetValue(this.Key[12], out string itemType))
+            {
                 this.EssenceType = itemType;
             }
             else
             {
                 this.EssenceType = "<unknown>";
-            }               
+            }
             this.IsPicture = (this.Key[12] == 0x05 || this.Key[12] == 0x15);
             this.ElementCount = this.Key[13];
             this.ElementType = this.Key[14];
@@ -88,7 +90,14 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return $"{this.Key.Name ?? this.EssenceType} [len {this.Length.Value}]";
+            if(ElementCount > 1)
+            {
+                return $"{this.Key.Name ?? this.EssenceType} ch={ElementNumber} [len {this.Length.Value}]";
+            }
+            else
+            {
+                return $"{this.Key.Name ?? this.EssenceType} [len {this.Length.Value}]";
+            }
         }
     }
 }
