@@ -27,17 +27,18 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+    // TODO rename into MXFANCElement?
     public class MXFANCFrameElement : MXFEssenceElement
-	{
-		public MXFANCFrameElement(MXFPack pack)
-			: base(pack)
+    {
+        public MXFANCFrameElement(MXFPack pack)
+            : base(pack)
         {
-			IKLVStreamReader reader = this.GetReader();
-			reader.Seek(this.RelativeValueOffset);
-			// TODO make reading more robust if we encounter end of stream
-			// i.e. if declared klv length is wrong
-			if (!reader.EOF)
-			{
+            IKLVStreamReader reader = this.GetReader();
+            reader.Seek(this.RelativeValueOffset);
+            // TODO make reading more robust if we encounter end of stream
+            // i.e. if declared klv length is wrong
+            if (!reader.EOF)
+            {
                 UInt16 nofPackets = reader.ReadUInt16();
                 for (int n = 0; n < nofPackets; n++)
                 {
@@ -45,13 +46,11 @@ namespace Myriadbits.MXF
                     this.AddChild(newpacket);
                 }
             }
-		}
-		
-		public override string ToString()
-		{
-			if (this.Children != null)
-				return string.Format("ANC Frame Element [packets {0}]", this.Children.Count);
-			return string.Format("ANC Frame Element [packets 0]");
-		}
-	}
+        }
+
+        public override string ToString()
+        {
+            return $"{this.Key.Name ?? "ANC Frame Element"} [packets {this.Children.Count}]";
+        }
+    }
 }
