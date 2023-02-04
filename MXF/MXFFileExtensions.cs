@@ -27,7 +27,7 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public static class MXFileExtensions
+    public static class MXFFileExtensions
     {
         public static MXFPartition GetHeader(this MXFFile file)
         {
