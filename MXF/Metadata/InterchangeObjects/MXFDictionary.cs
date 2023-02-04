@@ -44,31 +44,31 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x2603:
-                    this.AddChildren(reader.GetReferenceSet<MXFOperationDefinition>("OperationDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFOperationDefinition>("OperationDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2604:
-                    this.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("ParameterDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("ParameterDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2605:
-                    this.AddChildren(reader.GetReferenceSet<MXFDataDefinition>("DataDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFDataDefinition>("DataDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2606:
-                    this.AddChildren(reader.GetReferenceSet<MXFObject>("PluginDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFObject>("PluginDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2607:
-                    this.AddChildren(reader.GetReferenceSet<MXFCodecDefinition>("CodecDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFCodecDefinition>("CodecDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2608:
-                    this.AddChildren(reader.GetReferenceSet<MXFContainerDefinition>("ContainerDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFContainerDefinition>("ContainerDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x2609:
-                    this.AddChildren(reader.GetReferenceSet<MXFInterpolationDefinition>("InterpolationDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFInterpolationDefinition>("InterpolationDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x260a:
-                    this.AddChildren(reader.GetReferenceSet<MXFObject>("KLVDataDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFObject>("KLVDataDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x260b:
-                    this.AddChildren(reader.GetReferenceSet<MXFObject>("TaggedValueDefinition", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFObject>("TaggedValueDefinition", localTag.Offset, localTag.Length.Value));
                     return true;
 
             }

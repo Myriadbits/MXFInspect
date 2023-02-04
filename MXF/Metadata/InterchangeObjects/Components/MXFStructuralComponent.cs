@@ -65,13 +65,13 @@ namespace Myriadbits.MXF
                     return true;
                 // TODO replace generic MXFObject with class KLVData once implemented
                 case 0x0203:
-                    this.AddChildren(reader.GetReferenceSet<MXFObject>("KLV Data", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFObject>("KLV Data", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x0204:
-                    this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("User Comment", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("User Comment", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x0205:
-                    this.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("Attribute", localTag.Offset, localTag.Length.Value));
+                    localTag.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("Attribute", localTag.Offset, localTag.Length.Value));
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

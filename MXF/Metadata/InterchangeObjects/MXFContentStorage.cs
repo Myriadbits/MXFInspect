@@ -42,10 +42,10 @@ namespace Myriadbits.MXF
 			switch (localTag.TagValue)
 			{
 				case 0x1901: 
-					this.AddChildren(reader.GetReferenceSet<MXFPackage>("Package", localTag.Offset, localTag.Length.Value));
+					localTag.AddChildren(reader.GetReferenceSet<MXFPackage>("Package", localTag.Offset, localTag.Length.Value));
                     return true;
-				case 0x1902: 
-					this.AddChildren(reader.GetReferenceSet<MXFEssenceContainerData>("EssenceContainer data", localTag.Offset, localTag.Length.Value));
+				case 0x1902:
+                    localTag.AddChildren(reader.GetReferenceSet<MXFEssenceContainerData>("EssenceContainer data", localTag.Offset, localTag.Length.Value));
                     return true;
 			}
 			return base.ParseLocalTag(reader, localTag);
