@@ -23,7 +23,6 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -31,7 +30,7 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "EssenceElement";
 
-        private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>()
+        private static readonly Dictionary<int, string> essenceTypes = new Dictionary<int, string>()
         {
             {0x05, "CP Picture (SMPTE 326M)"},
             {0x06, "CP Sound (SMPTE 326M)"},
@@ -43,7 +42,7 @@ namespace Myriadbits.MXF
         };
 
         [Category(CATEGORYNAME)]
-        public string ItemType { get; set; }
+        public string EssenceType { get; set; }
         [Category(CATEGORYNAME)]
         public byte ElementCount { get; set; }
         [Category(CATEGORYNAME)]
@@ -51,6 +50,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         public byte ElementNumber { get; set; }
         [Browsable(false)]
+        // TODO helper property for indexvalidator that should be avoided
         public bool IsPicture { get; set; }
 
         [Category(CATEGORYNAME)]
@@ -73,10 +73,13 @@ namespace Myriadbits.MXF
             : base(pack)
         {
             this.Key.Name ??= "EssenceElement";
-            if (m_itemTypes.ContainsKey(this.Key[12]))
-                this.ItemType = m_itemTypes[this.Key[12]];
+            if(essenceTypes.TryGetValue(this.Key[12], out string itemType)){
+                this.EssenceType = itemType;
+            }
             else
-                this.ItemType = "<unknown>";
+            {
+                this.EssenceType = "<unknown>";
+            }               
             this.IsPicture = (this.Key[12] == 0x05 || this.Key[12] == 0x15);
             this.ElementCount = this.Key[13];
             this.ElementType = this.Key[14];
@@ -85,7 +88,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return string.Format("{0} Essence [len {1}]", this.ItemType, this.Length.Value);
+            return $"{this.Key.Name ?? this.EssenceType} [len {this.Length.Value}]";
         }
     }
 }
