@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
             {
                 case 0x1f03: ParameterDisplayUnits = reader.ReadUTF16String(localTag.Length.Value); return true;
                 case 0x1f01:
-                    this.AddChild(reader.ReadReference<MXFTypeDefinition>("ParameterType", localTag.Offset)); 
+                    localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("ParameterType", localTag.Offset)); 
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

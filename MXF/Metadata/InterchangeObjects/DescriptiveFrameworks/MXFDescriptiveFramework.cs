@@ -48,7 +48,7 @@ namespace Myriadbits.MXF
 				switch (localTag.AliasUID)
 				{
 					case var _ when localTag.AliasUID == linkedDMPluginID_Key: 
-						this.AddChild(reader.ReadReference<MXFDescriptiveMarker>("LinkedDescriptiveFrameworkPluginID", localTag.Offset)); return true;
+						localTag.AddChild(reader.ReadReference<MXFDescriptiveMarker>("LinkedDescriptiveFrameworkPluginID", localTag.Offset)); return true;
 				}
 			}
 

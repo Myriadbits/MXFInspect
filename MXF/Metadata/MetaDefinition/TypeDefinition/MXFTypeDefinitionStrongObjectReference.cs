@@ -48,9 +48,9 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x0011: ReferencedType = reader.ReadAUID(); return true;
-                // TODO maybe this is more appropriate?
-                //case 0x0011: this.AddChild(reader.ReadReference<MXFTypeDefinition>("ReferencedType")); return true;
+                case 0x0011:
+                    localTag.AddChild(reader.ReadReference<MXFClassDefinition>("ReferencedType", localTag.Offset));
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

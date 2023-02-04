@@ -98,7 +98,7 @@ namespace Myriadbits.MXF
                         this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Length.Value); 
                         return true;
                     case var _ when localTag.AliasUID == contactsListObject_Key:
-                        this.AddChild(reader.ReadReference<MXFContactsList>("ContactsListObject", localTag.Offset)); 
+                        localTag.AddChild(reader.ReadReference<MXFContactsList>("ContactsListObject", localTag.Offset)); 
                         return true;
                     case var _ when localTag.AliasUID == locations_Key:
                         localTag.AddChildren(reader.GetReferenceSet<MXFLocation>("LocationObject", localTag.Offset, localTag.Length.Value));

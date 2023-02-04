@@ -42,7 +42,9 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x001e: this.AddChild(reader.ReadReference<MXFTypeDefinition>("RenamedType", localTag.Offset)); return true;
+                case 0x001e: 
+                    localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("RenamedType", localTag.Offset)); 
+                    return true;
             }
             return base.ParseLocalTag(reader, localTag);
         }

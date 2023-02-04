@@ -52,10 +52,10 @@ namespace Myriadbits.MXF
                 switch (localTag.AliasUID)
                 {
                     case var _ when localTag.AliasUID == pictureFormatObject_Key:
-                        this.AddChild(reader.ReadReference<MXFDescriptiveObject>("PictureFormatObject", localTag.Offset));
+                        localTag.AddChild(reader.ReadReference<MXFDescriptiveObject>("PictureFormatObject", localTag.Offset));
                         return true;
                     case var _ when localTag.AliasUID == projectObject_Key:
-                        this.AddChild(reader.ReadReference<MXFDescriptiveObject>("ProjectObject", localTag.Offset));
+                        localTag.AddChild(reader.ReadReference<MXFDescriptiveObject>("ProjectObject", localTag.Offset));
                         return true;
                     case var _ when localTag.AliasUID == captionsDescriptionObjects_Key:
                         localTag.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("CaptionsDescriptionObjects", localTag.Offset, localTag.Length.Value));
