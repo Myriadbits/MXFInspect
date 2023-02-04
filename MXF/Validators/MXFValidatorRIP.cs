@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Serilog;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -77,9 +78,8 @@ namespace Myriadbits.MXF
 			}
 
 			valResult.SetSuccess("Random Index Pack (RIP) is valid.");
-			
-			LogInfo("Validation completed in {0} msec", sw.ElapsedMilliseconds);
-		}
+			Log.ForContext<MXFValidatorRIP>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
+        }
 
 
 		

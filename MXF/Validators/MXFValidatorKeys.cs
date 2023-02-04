@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -46,8 +47,7 @@ namespace Myriadbits.MXF
 				valResult.Object = klvUnknownKey;
 				results.Add(valResult);
 			}
-
-			LogInfo("MXF Key check completed in {0} msec", sw.ElapsedMilliseconds);
+            Log.ForContext<MXFValidatorKeys>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
 		}
 	}
 }

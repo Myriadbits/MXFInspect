@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Serilog;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -114,8 +115,7 @@ namespace Myriadbits.MXF
 			}
 				
 			valResult.SetSuccess("Partition structure is valid.");
-			
-			LogInfo("Validation completed in {0} msec", sw.ElapsedMilliseconds);
-		}	
+            Log.ForContext<MXFValidatorPartitions>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
+        }	
 	}
 }
