@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 				switch (localTag.AliasUID)
 				{
 					case var _ when localTag.AliasUID == linkedObjPluginID_Key:
-						this.AddChild(reader.ReadReference<MXFDescriptiveMarker>("LinkedDescriptiveObjectPluginID", localTag.Offset)); 
+						localTag.AddChild(reader.ReadReference<MXFDescriptiveMarker>("LinkedDescriptiveObjectPluginID", localTag.Offset)); 
 						return true;
 				}
 			}
