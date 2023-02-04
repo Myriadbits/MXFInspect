@@ -79,11 +79,11 @@ namespace Myriadbits.MXF
             {
                 case 0x3B01: 
                     this.ByteOrder = reader.ReadUInt16();
-                    localTag.PropertyValue = this.ByteOrder;
+                    localTag.Value = this.ByteOrder;
                     return true;
                 case 0x3B02: 
                     this.FileLastModified = reader.ReadTimestamp();
-                    localTag.PropertyValue = this.FileLastModified;
+                    localTag.Value = this.FileLastModified;
                     return true;
                 case 0x3B03: 
                     localTag.AddChild(reader.ReadReference<MXFContentStorage>("ContentStorage", localTag.Offset)); 
@@ -93,21 +93,21 @@ namespace Myriadbits.MXF
                     return true;
                 case 0x3B05:
                     this.FormatVersion = reader.ReadVersion();
-                    localTag.PropertyValue = this.FormatVersion;
+                    localTag.Value = this.FormatVersion;
                     return true;
                 case 0x3B06: 
                     localTag.AddChildren(reader.GetReferenceSet<MXFIdentification>("Identification", localTag.Offset, localTag.Length.Value)); 
                     return true;
                 case 0x3B07:
                     this.ObjectModelVersion = reader.ReadUInt32();
-                    localTag.PropertyValue = this.ObjectModelVersion;
+                    localTag.Value = this.ObjectModelVersion;
                     return true;
                 case 0x3B08: 
                     localTag.AddChild(reader.ReadReference<MXFPackage>("PrimaryPackage", localTag.Offset)); 
                     return true;
                 case 0x3B09:
                     this.OperationalPattern = reader.ReadUL();
-                    localTag.PropertyValue = this.OperationalPattern;
+                    localTag.Value = this.OperationalPattern;
                     return true;
                 case 0x3B0A:
                     localTag.AddChildren(reader.ReadAUIDSet("EssenceContainer", localTag.Offset, localTag.Length.Value));
@@ -118,7 +118,7 @@ namespace Myriadbits.MXF
                     return true;
                 case var _ when localTag.AliasUID == isRIPPresent_Key: 
                     this.IsRIPPresent = reader.ReadBoolean();
-                    localTag.PropertyValue = this.IsRIPPresent;
+                    localTag.Value = this.IsRIPPresent;
                     return true;
             }
             return base.ParseLocalTag(reader, localTag);

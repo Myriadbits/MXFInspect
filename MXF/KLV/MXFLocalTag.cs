@@ -56,7 +56,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Value of local tag")]
-        public object PropertyValue { get; set; }
+        public object Value { get; set; }
 
         public MXFLocalTag(KLVKey key, KLVLength length, long offset, Stream stream) : base(key, length, offset, stream)
         {
@@ -93,9 +93,9 @@ namespace Myriadbits.MXF
                 sb.Append($"[{this.Children.Count} items] ");
             }
 
-            if (this.PropertyValue != null)
+            if (this.Value != null)
             {
-                sb.Append($"= {this.PropertyValue}");
+                sb.Append($"= {this.Value}");
             }
 
             return sb.ToString();
