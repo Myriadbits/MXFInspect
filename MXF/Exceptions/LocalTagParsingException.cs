@@ -24,12 +24,13 @@ using System;
 
 namespace Myriadbits.MXF.Exceptions
 {
-    public class LocalTagParsingException : Exception
+    public class LocalTagParsingException : KLVParsingException
     {
-        public LocalTagParsingException(MXFLocalTag tag, Exception innerException) : base(null, innerException)
+        public MXFLocalTag LocalTag { get; }
+
+        public LocalTagParsingException(MXFLocalTag tag, Exception innerException) : base(innerException)
         {
             LocalTag = tag;
         }
-        public MXFLocalTag LocalTag { get; }
     }
 }

@@ -24,9 +24,9 @@ using System;
 
 namespace Myriadbits.MXF.Exceptions
 {
-    public class KLVKeyParsingException : Exception
+    public class KLVKeyParsingException : KLVParsingException
     {
-        public KLVKeyParsingException(Exception innerException) : base(null, innerException)
+        public KLVKeyParsingException(long offset, Exception innerException) : base(offset, innerException)
         {
 
         }

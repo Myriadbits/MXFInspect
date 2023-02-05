@@ -24,9 +24,9 @@ using System;
 
 namespace Myriadbits.MXF.Exceptions
 {
-    public class KLVLengthParsingException : Exception
+    public class KLVLengthParsingException : KLVParsingException
     {
-        public KLVLengthParsingException(Exception innerException) : base(null, innerException)
+        public KLVLengthParsingException(long offset, Exception innerException) : base(offset, innerException)
         {
 
         }
