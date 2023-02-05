@@ -24,10 +24,8 @@ using System;
 
 namespace Myriadbits.MXF.Exceptions
 {
-    public class KLVStreamException : Exception
+    public class KLVStreamException : KLVParsingException
     {
-        public long Offset { get; }
-
         public KLVStreamException(string message) : base(message)
         {
 

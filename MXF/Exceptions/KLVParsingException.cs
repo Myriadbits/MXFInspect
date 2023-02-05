@@ -26,6 +26,21 @@ namespace Myriadbits.MXF.Exceptions
 {
     public class KLVParsingException : Exception
     {
+        public long Offset { get; protected set; }
 
+        public KLVParsingException(Exception innerException) : base(null, innerException)
+        {
+
+        }
+
+        public KLVParsingException(string message) : base(message)
+        {
+
+        }
+
+        public KLVParsingException(long offset, Exception innerException) : base(null, innerException)
+        {
+            Offset = offset;
+        }
     }
 }

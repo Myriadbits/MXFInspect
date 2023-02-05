@@ -90,7 +90,7 @@ namespace Myriadbits.MXF
             }
             catch(Exception e)
             {
-                throw new KLVKeyParsingException(e);
+                throw new KLVKeyParsingException(offset, e);
             }
 
             try
@@ -100,7 +100,7 @@ namespace Myriadbits.MXF
             }
             catch (Exception e)
             {
-                throw new KLVLengthParsingException(e);
+                throw new KLVLengthParsingException(klvStream.Position, e);
             }
 
             long subStreamLength = key.ArrayLength + length.ArrayLength + length.Value;
@@ -108,6 +108,7 @@ namespace Myriadbits.MXF
             // check if substream not longer than the parent stream
             if (offset + subStreamLength > klvStream.Length)
             {
+                // TODO add more context like offset to exception
                 throw new KLVStreamException("The parsed length exceeds the stream length");
             }
 
