@@ -71,7 +71,10 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public UInt16 PayloadSampleCount { get; set; }
 		[Category(CATEGORYNAME)]
-		public byte DID { get; set; }
+        public UInt32 PayloadArrayCount { get; set; }
+        private UInt32 PayloadArrayElementLength { get; set; }
+        [Category(CATEGORYNAME)]
+        public byte DID { get; set; }
 		[Category(CATEGORYNAME)]
 		public byte SDID { get; set; }
 		[Category(CATEGORYNAME)]
@@ -85,6 +88,7 @@ namespace Myriadbits.MXF
 		/// <summary>
 		/// Static constructor, read all DID's from file
 		/// </summary>
+		/// TODO modify in same way as smpte dictionaries
 		static MXFANCPacket()
 		{
 			m_DIDDescription = new Dictionary<ushort, string>();
@@ -113,35 +117,28 @@ namespace Myriadbits.MXF
 						}
 						catch (Exception ex)
 						{
+							// TODO don't eat exception
 						}
 					}
 				}
 			}
 		}
 
-		public MXFANCPacket(IKLVStreamReader reader)
+		public MXFANCPacket(IKLVStreamReader reader, long offset)
 			: base(reader)
 		{
-			this.LineNumber = reader.ReadUInt16();
+            this.Offset = offset + reader.Position;
+            this.LineNumber = reader.ReadUInt16();
 			this.WrappingType = (MXFANCWrappingType) reader.ReadByte();
 			this.PayloadSamplingCoding = (MXFANCPayloadCoding) reader.ReadByte();
 			this.PayloadSampleCount = reader.ReadUInt16();
 
-			this.TotalLength = this.PayloadSampleCount;
-			if (this.PayloadSamplingCoding == MXFANCPayloadCoding.Coding_10_bit_luma_samples ||
-				this.PayloadSamplingCoding == MXFANCPayloadCoding.Coding_10_bit_color_difference_samples ||
-				this.PayloadSamplingCoding == MXFANCPayloadCoding.Coding_10_bit_luma_and_color_difference_samples)
-			{
-				this.TotalLength = 4 * (this.PayloadSampleCount / 3); // 3 samples are stored in 4 bytes 
-			}
+            // as per SMPTE 436:2011 the array count(n) is the number of payload data bytes in the array including any padding bytes.
+			// The Payload Array Element Length shall be 1.
+            this.PayloadArrayCount = reader.ReadUInt32(); // because of padding different from PayloadSampleCount
+			this.PayloadArrayElementLength = reader.ReadUInt32(); // always 1 
 
-			// TODO Skip 8 bytes (seems to be data but cannot find any meaning in the spec!)
-			UInt32 unknownData1 = reader.ReadUInt32();
-			UInt32 unknownData2 = reader.ReadUInt32();
-
-			// Length Alignment
-			this.TotalLength = 4 * ((this.TotalLength + 3) / 4);
-
+			this.TotalLength = PayloadArrayCount + 14; //as we have read 14 bytes till here
 			if (this.TotalLength > 3)
 			{
 				// Read the DID
@@ -165,8 +162,6 @@ namespace Myriadbits.MXF
 					case 0x4302: // OP47
 						break;
 					default:
-						// Read the real payload without the did/sdid/size
-						this.Payload = reader.ReadBytes((int)(this.TotalLength - 3));
 						break;
 				}
 			}

@@ -40,10 +40,13 @@ namespace Myriadbits.MXF
             if (!reader.EOF)
             {
                 UInt16 nofPackets = reader.ReadUInt16();
+                long packetBegin;
                 for (int n = 0; n < nofPackets; n++)
                 {
-                    MXFANCPacket newpacket = new MXFANCPacket(reader);
-                    this.AddChild(newpacket);
+                    packetBegin = reader.Position;
+                    MXFANCPacket packet = new MXFANCPacket(reader, this.Offset);
+                    this.AddChild(packet);
+                    reader.Seek(packetBegin + packet.TotalLength);
                 }
             }
         }
