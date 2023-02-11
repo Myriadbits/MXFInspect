@@ -38,8 +38,8 @@ namespace Myriadbits.MXF
 		[Category(CATEGORYNAME)]
 		public string DataString { get; set; }
 
-		public MXFEntrySVCInfo(IKLVStreamReader reader)
-			: base(reader)
+		public MXFEntrySVCInfo(IKLVStreamReader reader, long offset)
+			: base(offset)
 		{
 			this.TotalLength = 7; // Fixed
 

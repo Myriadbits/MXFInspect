@@ -37,11 +37,12 @@ namespace Myriadbits.MXF
 		public byte? PacketChecksum { get; set; }
 
 
-		public MXFCDPFooter(IKLVStreamReader reader)
-			: base(reader)
+		public MXFCDPFooter(IKLVStreamReader reader, long offset)
+			: base(offset)
 		{
 			this.SequenceCounter = reader.ReadUInt16();
 			this.PacketChecksum = reader.ReadByte();
+			this.TotalLength = 3; // fixed Length
 		}
 
 		/// <summary>

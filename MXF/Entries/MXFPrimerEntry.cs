@@ -39,9 +39,8 @@ namespace Myriadbits.MXF
 		public AUID AliasUID { get; set; }
 
 		public MXFPrimerEntry(IKLVStreamReader reader, long offset)
-			: base(reader)
+			: base(offset)
 		{
-			this.Offset = offset;
 			this.Tag = reader.ReadUInt16();
 			this.AliasUID = reader.ReadAUID();
 			this.TotalLength = 18; // Fixed length (16 bytes key + 2 bytes tag)

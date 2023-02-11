@@ -37,8 +37,8 @@ namespace Myriadbits.MXF
 		public byte[] Data { get; set; }
 
 
-		public MXFCDPFuture(IKLVStreamReader reader, byte sectionID)
-			: base(reader)
+		public MXFCDPFuture(IKLVStreamReader reader, long offset, byte sectionID)
+			: base(offset)
 		{
 			this.SectionID = sectionID;
 			this.TotalLength = reader.ReadByte();
