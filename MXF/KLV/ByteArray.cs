@@ -122,7 +122,7 @@ namespace Myriadbits.MXF
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(ByteArray)) return false;
+            if (obj is not ByteArray) return false;
             return Equals((ByteArray)obj);
         }
 
