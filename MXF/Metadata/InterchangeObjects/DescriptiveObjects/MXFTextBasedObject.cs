@@ -27,8 +27,7 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-    // namespace http://www.smpte-ra.org/reg/395/2014/13/1/aaf 	
-    // urn:smpte:ul:060e2b34.027f0101.0d010401.04030100
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.04030100")]
     public class MXFTextBasedObject : MXFDescriptiveObject
     {
         private const string CATEGORYNAME = "TextBasedObject";

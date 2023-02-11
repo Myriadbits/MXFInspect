@@ -28,20 +28,21 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.04020100")]
-    public class MXFGenericStreamTextBasedSet : MXFTextBasedObject
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.04020200")]
+    public class MXFUTF8TextBasedSet : MXFTextBasedObject
     {
-        private const string CATEGORYNAME = "GenericStreamTextBasedSet";
+        private const string CATEGORYNAME = "UTF8 Textbased Set";
 
-        public readonly UL genericStreamID_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x01, 0x03, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00);
+        public readonly UL utf8textdata_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x0d, 0x03, 0x01, 0x02, 0x20, 0x03, 0x01, 0x00, 0x00);
 
         [Category(CATEGORYNAME)]
-        public UInt32 GenericStreamID { get; set; }
+        [MultiLine]
+        public string UTF8TextData { get; private set; }
 
-        public MXFGenericStreamTextBasedSet(MXFPack pack)
+        public MXFUTF8TextBasedSet(MXFPack pack)
             : base(pack)
         {
-            this.MetaDataName = "Generic Stream Text Based Object";
+            this.MetaDataName ="UTF8 Textbased Set";
         }
 
         /// <summary>
@@ -54,7 +55,9 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == genericStreamID_Key: this.GenericStreamID = reader.ReadUInt32(); return true;
+                    case var _ when localTag.AliasUID == utf8textdata_Key: 
+                        this.UTF8TextData = reader.ReadUTF8String(localTag.Length.Value); 
+                        return true;
                 }
             }
 

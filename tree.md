@@ -184,7 +184,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [x] TextBasedObject [4/4]
       - [x] GenericStreamTextBasedSet [1/1]
         - [ ] AS_07_GSP_DMS_Object
-      - [ ] UTF8TextBasedSet
+      - [x] UTF8TextBasedSet
       - [ ] UTF16TextBasedSet
     - [ ] AS_12_DescriptiveObject [0] *(abstract)*
       - [ ] DMS_AS_12_AdID_Slate
