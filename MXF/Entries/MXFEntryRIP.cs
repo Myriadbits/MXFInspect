@@ -38,9 +38,8 @@ namespace Myriadbits.MXF
         public UInt64 PartitionOffset { get; set; }
 
         public MXFEntryRIP(IKLVStreamReader reader, long offset)
-            : base(reader)
+            : base(offset + reader.Position)
         {
-            this.Offset = offset + reader.Position;
             this.BodySID = reader.ReadUInt32();
             this.PartitionOffset = reader.ReadUInt64();
             this.TotalLength = 12; // Fixed length

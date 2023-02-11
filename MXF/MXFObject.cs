@@ -69,16 +69,6 @@ namespace Myriadbits.MXF
         /// Constructor
         /// </summary>
         /// <param name="reader"></param>
-        protected MXFObject(IKLVStreamReader reader)
-        {
-            this.Offset = reader.Position;
-        }
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="reader"></param>
         protected MXFObject(long offset)
         {
             this.Offset = offset;

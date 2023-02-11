@@ -77,12 +77,14 @@ namespace Myriadbits.MXF
 		public MXFTimeStamp TimeCode { get; set; }
 		
 
-		public MXFCDPPacket(IKLVStreamReader reader)
-			: base(reader)
+		public MXFCDPPacket(IKLVStreamReader reader, long offset)
+			: base(offset)
 		{
-			UInt16 identifier = reader.ReadUInt16();
+            long readerOffset = reader.Position;
+            UInt16 identifier = reader.ReadUInt16();
 			if (identifier == 0x9669)
 			{
+				
 				this.TotalLength = reader.ReadByte();
 				this.FrameRateE = (MXFCDFFrameRate) ((reader.ReadByte() & 0xF0) >> 4);
 
@@ -109,9 +111,9 @@ namespace Myriadbits.MXF
 				this.SequenceCounter = reader.ReadUInt16();
 
 				byte count = 0;
-				long endPos = this.Offset + this.TotalLength;
-				while (reader.Position < endPos)
+                while (reader.Position - readerOffset < TotalLength)
 				{
+					long entryOffset;
 					identifier = reader.ReadByte();
 					switch (identifier)
 					{
@@ -122,18 +124,26 @@ namespace Myriadbits.MXF
 						case 0x72:
 							count = (byte)(reader.ReadByte() & 0x1F);
 							for (int n = 0; n < count; n++)
-								this.AddChild(new MXFEntryCCData(reader));
+							{
+								entryOffset = this.Offset + reader.Position - readerOffset;
+                                this.AddChild(new MXFEntryCCData(reader, entryOffset));
+                            }
 							break;
 						case 0x73:
 							count = (byte)(reader.ReadByte() & 0x0F);
 							for (int n = 0; n < count; n++)
-								this.AddChild(new MXFEntrySVCInfo(reader));
+							{
+                                entryOffset = this.Offset + reader.Position - readerOffset;
+                                this.AddChild(new MXFEntrySVCInfo(reader, entryOffset));
+                            }
 							break;
 						case 0x74:
-							this.AddChild(new MXFCDPFooter(reader));
+                            entryOffset = this.Offset + reader.Position - readerOffset;
+                            this.AddChild(new MXFCDPFooter(reader, entryOffset));
 							break;	
 						default:
-							this.AddChild(new MXFCDPFuture(reader, (byte) identifier));
+                            entryOffset = this.Offset + reader.Position - readerOffset;
+                            this.AddChild(new MXFCDPFuture(reader, entryOffset, (byte) identifier));
 							break;
 					}
 				}

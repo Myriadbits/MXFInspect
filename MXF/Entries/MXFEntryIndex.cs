@@ -90,10 +90,9 @@ namespace Myriadbits.MXF
         public MXFRational[] PosTable { get; set; }
 
         public MXFEntryIndex(UInt64 index, IKLVStreamReader reader, long offset, byte? sliceCount, byte? posTableCount, UInt32 length)
-            : base(reader)
+            : base(offset)
         {
             this.TotalLength = length;
-            this.Offset = offset;
             this.Index = index;
             this.TemporalOffset = reader.ReadSByte();
             this.KeyFrameOffset = reader.ReadSByte();
