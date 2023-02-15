@@ -325,7 +325,7 @@ namespace Myriadbits.MXF
 
                 if (ul != null)
                 {
-                    var keyDescription = SMPTERegisters.GetDescription(ul);
+                    var keyDescription = SMPTERegisters.GetULDescription(ul);
                     if (keyDescription != null)
                     {
                         prop.AddAttribute(new DescriptionAttribute(keyDescription.Definition));
