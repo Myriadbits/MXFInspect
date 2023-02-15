@@ -23,7 +23,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Linq;
+using Microsoft.Win32;
 using Serilog;
 
 namespace Myriadbits.MXF.Identifiers
@@ -35,6 +37,7 @@ namespace Myriadbits.MXF.Identifiers
         private static Dictionary<ByteArray, ULDescription> ElementsDictionary { get; set; }
         private static Dictionary<ByteArray, ULDescription> GroupsDictionary { get; set; }
         private static Dictionary<ByteArray, ULDescription> EssencesDictionary { get; set; }
+        private static Dictionary<(byte, byte), DIDDescription> DIDDictionary { get; set; }
 
         public static int TotalEntriesCount { get; private set; } = 0;
 
@@ -61,12 +64,15 @@ namespace Myriadbits.MXF.Identifiers
 
                 TotalEntriesCount = LabelsDictionary.Count + ElementsDictionary.Count + GroupsDictionary.Count + EssencesDictionary.Count;
                 Log.ForContext(typeof(SMPTERegisters)).Information($"SMPTE Dictionary with a total of {TotalEntriesCount} entries loaded");
-               
+
+                FillDIDDictionary();
+                Log.ForContext(typeof(SMPTERegisters)).Information($"A total of {DIDDictionary.Count} ANC Identifier Descriptions added to dictionary");
+
                 Initialized = true;
             }
         }
 
-        public static ULDescription GetDescription(ByteArray array)
+        public static ULDescription GetULDescription(ByteArray array)
         {
 
             Initialize();
@@ -90,6 +96,19 @@ namespace Myriadbits.MXF.Identifiers
             else return null;
 
         }
+
+
+        public static DIDDescription GetDIDDescription(byte did, byte sdid)
+        {
+            Initialize();
+
+            if (DIDDictionary.TryGetValue((did, sdid), out var smpteDescription))
+            {
+                return smpteDescription;
+            }
+            else return null;
+        }
+
 
         public static ByteArray GetByteArrayFromSMPTEULString(string smpteString)
         {
@@ -161,6 +180,47 @@ namespace Myriadbits.MXF.Identifiers
                 byteArray[i] = Convert.ToByte(ulString.Substring(j, 2), hexBase);
             }
             return byteArray;
+        }
+
+        private static void FillDIDDictionary()
+        {
+            DIDDictionary = new Dictionary<(byte, byte), DIDDescription>();
+
+            string allText = Properties.Resources.ANC_Identifiers;
+            string[] allLines = allText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            if (allLines.Length > 0)
+            {
+                for (int n = 1; n < allLines.Length; n++) // Start at 1, skip the header
+                {
+                    string[] parts = allLines[n].Split(';');
+                    if (parts.Length > 5)
+                    {
+                        try
+                        {
+                            Byte.TryParse(parts[0].Trim(' '), out byte dataType);
+                            Byte.TryParse(parts[1].Trim(' ', 'h'), NumberStyles.HexNumber,null, out byte did);
+                            Byte.TryParse(parts[2].Trim(' ', 'h'), NumberStyles.HexNumber, null, out byte sdid);
+
+                            var description = new DIDDescription
+                            {
+                                DataType = dataType,
+                                DID = did,
+                                SDID = sdid,
+                                Status = parts[3],
+                                UsedWhere = parts[4],
+                                Application = parts[5],
+                                LastModifiedTime = parts[6]
+                            };
+
+                            DIDDictionary.Add((did, sdid), description);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.ForContext(typeof(SMPTERegisters)).Warning($"Unable to parse ANC Description entry {allLines[n]}: {@ex}", allLines[n]);
+                        }
+                    }
+                }
+            }
         }
     }
 }
