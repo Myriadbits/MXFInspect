@@ -104,7 +104,9 @@
             // tlvPhysical
             // 
             this.tlvPhysical.AlternateRowBackColor = System.Drawing.Color.WhiteSmoke;
-            this.tlvPhysical.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlvPhysical.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tlvPhysical.EmptyListMsg = "No items present";
             this.tlvPhysical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tlvPhysical.FullRowSelect = true;
@@ -140,19 +142,17 @@
             // tlvLogical
             // 
             this.tlvLogical.AlternateRowBackColor = System.Drawing.Color.WhiteSmoke;
-            this.tlvLogical.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlvLogical.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlvLogical.EmptyListMsg = "No items present";
             this.tlvLogical.EmptyListMsgFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tlvLogical.FullRowSelect = true;
-            this.tlvLogical.Location = new System.Drawing.Point(6, 6);
+            this.tlvLogical.Location = new System.Drawing.Point(3, 3);
             this.tlvLogical.MultiSelect = false;
             this.tlvLogical.Name = "tlvLogical";
             this.tlvLogical.RowHeight = 19;
             this.tlvLogical.SelectedBackColor = System.Drawing.SystemColors.Highlight;
             this.tlvLogical.ShowGroups = false;
-            this.tlvLogical.Size = new System.Drawing.Size(536, 532);
+            this.tlvLogical.Size = new System.Drawing.Size(542, 538);
             this.tlvLogical.TabIndex = 16;
             this.tlvLogical.TintSortColumn = true;
             this.tlvLogical.UnfocusedSelectedBackColor = System.Drawing.SystemColors.Highlight;
@@ -179,7 +179,7 @@
             // splitRight.Panel2
             // 
             this.splitRight.Panel2.Controls.Add(this.rtfHexViewer);
-            this.splitRight.Size = new System.Drawing.Size(608, 576);
+            this.splitRight.Size = new System.Drawing.Size(600, 576);
             this.splitRight.SplitterDistance = 407;
             this.splitRight.SplitterWidth = 6;
             this.splitRight.TabIndex = 16;
@@ -195,7 +195,7 @@
             this.propGrid.Name = "propGrid";
             this.propGrid.PropertySort = System.Windows.Forms.PropertySort.Categorized;
             this.propGrid.ReadOnly = true;
-            this.propGrid.Size = new System.Drawing.Size(599, 379);
+            this.propGrid.Size = new System.Drawing.Size(591, 379);
             this.propGrid.TabIndex = 1;
             this.propGrid.ToolbarVisible = false;
             this.propGrid.ViewForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -213,7 +213,7 @@
             this.rtfHexViewer.Location = new System.Drawing.Point(3, 3);
             this.rtfHexViewer.Name = "rtfHexViewer";
             this.rtfHexViewer.ReadOnly = true;
-            this.rtfHexViewer.Size = new System.Drawing.Size(599, 148);
+            this.rtfHexViewer.Size = new System.Drawing.Size(591, 140);
             this.rtfHexViewer.TabIndex = 16;
             this.rtfHexViewer.Text = "";
             // 

@@ -155,7 +155,9 @@ namespace Myriadbits.MXFInspect
             // 
             this.ColumnOffset.AspectName = "Offset";
             this.ColumnOffset.Text = "Offset";
-            this.ColumnOffset.Width = 84;
+            this.ColumnOffset.Width = 85;
+            this.ColumnOffset.MinimumWidth = 50;
+            this.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             this.ColumnOffset.Renderer = null;
             // 
             // MXFObject Column
@@ -170,6 +172,8 @@ namespace Myriadbits.MXFInspect
             Pen pen = new Pen(Color.Black, 1.001f);
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
             this.TreeColumnRenderer.LinePen = pen;
+
+            this.RebuildColumns();
         }
 
         private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
