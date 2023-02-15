@@ -1,4 +1,4 @@
-﻿#region license
+#region license
 //
 // MXFInspect - Myriadbits MXF Viewer. 
 // Inspect MXF Files.
@@ -161,7 +161,9 @@ namespace Myriadbits.MXFInspect
             // 
             this.ColumnOffset.AspectName = "Offset";
             this.ColumnOffset.Text = "Offset";
-            this.ColumnOffset.Width = 84;
+            this.ColumnOffset.Width = 85;
+            this.ColumnOffset.MinimumWidth = 50;
+            this.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             this.ColumnOffset.Renderer = null;
             // 
             // MXFObject Column
