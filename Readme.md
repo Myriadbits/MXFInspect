@@ -70,7 +70,6 @@ However, there is still a long **TODO list:**
   - add general file info dialog
   - add report (in xml) for conformance check
   - add checksum to file
-- [Future Work](#Future-Work) of original project
 
 **Any help/contribution is greatly appreciated!!!**
 
