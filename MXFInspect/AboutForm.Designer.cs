@@ -50,7 +50,7 @@
 			// 
 			this.lblTitle.BackColor = System.Drawing.Color.Transparent;
 			this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.lblTitle.Location = new System.Drawing.Point(74, 305);
+			this.lblTitle.Location = new System.Drawing.Point(27, 302);
 			this.lblTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.lblTitle.Name = "lblTitle";
 			this.lblTitle.Size = new System.Drawing.Size(568, 89);
@@ -72,7 +72,7 @@
 			// lblVersion
 			// 
 			this.lblVersion.AutoSize = true;
-			this.lblVersion.Location = new System.Drawing.Point(76, 384);
+			this.lblVersion.Location = new System.Drawing.Point(27, 383);
 			this.lblVersion.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.lblVersion.Name = "lblVersion";
 			this.lblVersion.Size = new System.Drawing.Size(166, 32);
@@ -82,7 +82,7 @@
 			// llMyriadbits
 			// 
 			this.llMyriadbits.AutoSize = true;
-			this.llMyriadbits.Location = new System.Drawing.Point(76, 572);
+			this.llMyriadbits.Location = new System.Drawing.Point(27, 561);
 			this.llMyriadbits.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.llMyriadbits.Name = "llMyriadbits";
 			this.llMyriadbits.Size = new System.Drawing.Size(232, 32);
@@ -94,7 +94,7 @@
 			// lblCopyright
 			// 
 			this.lblCopyright.AutoSize = true;
-			this.lblCopyright.Location = new System.Drawing.Point(76, 418);
+			this.lblCopyright.Location = new System.Drawing.Point(27, 415);
 			this.lblCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.lblCopyright.Name = "lblCopyright";
 			this.lblCopyright.Size = new System.Drawing.Size(362, 32);
@@ -105,7 +105,7 @@
 			// 
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(76, 639);
+			this.label4.Location = new System.Drawing.Point(27, 639);
 			this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(464, 32);
@@ -116,7 +116,7 @@
 			// 
 			this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.linkLabel2.AutoSize = true;
-			this.linkLabel2.Location = new System.Drawing.Point(531, 639);
+			this.linkLabel2.Location = new System.Drawing.Point(473, 639);
 			this.linkLabel2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.linkLabel2.Name = "linkLabel2";
 			this.linkLabel2.Size = new System.Drawing.Size(62, 32);
@@ -129,7 +129,7 @@
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(593, 639);
+			this.label5.Location = new System.Drawing.Point(532, 639);
 			this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(221, 32);
@@ -141,12 +141,12 @@
 			this.txtLicense.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtLicense.Location = new System.Drawing.Point(26, 305);
+			this.txtLicense.Location = new System.Drawing.Point(15, 305);
 			this.txtLicense.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
 			this.txtLicense.Multiline = true;
 			this.txtLicense.Name = "txtLicense";
 			this.txtLicense.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtLicense.Size = new System.Drawing.Size(1079, 320);
+			this.txtLicense.Size = new System.Drawing.Size(1105, 320);
 			this.txtLicense.TabIndex = 6;
 			this.txtLicense.Visible = false;
 			// 
@@ -154,7 +154,7 @@
 			// 
 			this.bntClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.bntClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.bntClose.Location = new System.Drawing.Point(947, 647);
+			this.bntClose.Location = new System.Drawing.Point(958, 646);
 			this.bntClose.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
 			this.bntClose.Name = "bntClose";
 			this.bntClose.Size = new System.Drawing.Size(162, 57);
@@ -167,7 +167,7 @@
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(74, 671);
+			this.label1.Location = new System.Drawing.Point(27, 671);
 			this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(360, 32);
@@ -178,7 +178,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(670, 671);
+			this.label2.Location = new System.Drawing.Point(613, 671);
 			this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(203, 32);
@@ -189,7 +189,7 @@
 			// 
 			this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(434, 671);
+			this.linkLabel1.Location = new System.Drawing.Point(379, 671);
 			this.linkLabel1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(243, 32);
@@ -201,7 +201,7 @@
 			// lblContributors
 			// 
 			this.lblContributors.AutoSize = true;
-			this.lblContributors.Location = new System.Drawing.Point(76, 459);
+			this.lblContributors.Location = new System.Drawing.Point(27, 447);
 			this.lblContributors.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
 			this.lblContributors.Name = "lblContributors";
 			this.lblContributors.Size = new System.Drawing.Size(541, 96);

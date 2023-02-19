@@ -130,14 +130,16 @@
 			// 
 			// txtSum
 			// 
-			this.txtSum.Location = new System.Drawing.Point(16, 510);
+			this.txtSum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSum.Location = new System.Drawing.Point(16, 523);
 			this.txtSum.Margin = new System.Windows.Forms.Padding(8);
 			this.txtSum.MinimumSize = new System.Drawing.Size(0, 32);
 			this.txtSum.Multiline = true;
 			this.txtSum.Name = "txtSum";
 			this.txtSum.ReadOnly = true;
 			this.txtSum.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtSum.Size = new System.Drawing.Size(963, 100);
+			this.txtSum.Size = new System.Drawing.Size(963, 87);
 			this.txtSum.TabIndex = 21;
 			// 
 			// btnExecuteAllTests
@@ -163,7 +165,7 @@
 			// 
 			this.prbProcessing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.prbProcessing.Location = new System.Drawing.Point(16, 482);
+			this.prbProcessing.Location = new System.Drawing.Point(15, 492);
 			this.prbProcessing.Margin = new System.Windows.Forms.Padding(8);
 			this.prbProcessing.Name = "prbProcessing";
 			this.prbProcessing.Size = new System.Drawing.Size(963, 19);
@@ -175,7 +177,6 @@
 			this.AcceptButton = this.bntClose;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoSize = true;
 			this.CancelButton = this.bntClose;
 			this.ClientSize = new System.Drawing.Size(994, 698);
 			this.Controls.Add(this.prbProcessing);
