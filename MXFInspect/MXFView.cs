@@ -109,7 +109,7 @@ namespace Myriadbits.MXFInspect
         {
             this.ParentMainForm = this.MdiParent as FormMain;
 
-            ObjectListView.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+            //ObjectListView.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
             this.Text = this.FileInfo.FullName;
 
             this.MinimizeBox = false;

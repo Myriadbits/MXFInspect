@@ -28,6 +28,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -44,7 +45,7 @@ namespace Myriadbits.MXFInspect
 
         protected TreeListViewBase() : base()
         {
-            SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+            //SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
 
             // since after the migration to .NET5 a click on the 
             // first column triggers an exception, we make a fake column 
@@ -75,7 +76,15 @@ namespace Myriadbits.MXFInspect
             this.FormatCell += Tree_FormatCell;
         }
 
-        public void FillTree(IEnumerable<T> objects)
+		[SupportedOSPlatform("windows")]
+		protected void SetupTreeColumnRenderer()
+		{
+			Pen pen = new Pen(Color.Black, 1.001f);
+			pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+			this.TreeColumnRenderer.LinePen = pen;
+		}
+
+		public void FillTree(IEnumerable<T> objects)
         {
             // Clear tree and set objects
             this.Items.Clear();

@@ -114,9 +114,12 @@ namespace Myriadbits.MXFInspect
 			OLVColumn col1 = (OLVColumn)this.tlvResults.Columns[2];
 			col1.Renderer = null;// this.tlvResults.TreeColumnRenderer;
 
-			Pen pen = new Pen(Color.Black, 1.001f);
-			pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-			this.tlvResults.TreeColumnRenderer.LinePen = pen;
+			if (OperatingSystem.IsWindows())
+			{
+				Pen pen = new Pen(Color.Black, 1.001f);
+				pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+				this.tlvResults.TreeColumnRenderer.LinePen = pen;
+			}
 
 			StringBuilder summary = new StringBuilder();
 			int errorCnt = 0;
