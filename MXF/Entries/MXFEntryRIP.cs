@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,35 +19,40 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEntryRIP : MXFObject
-	{
-		[CategoryAttribute("RIPEntry"), ReadOnly(true)]
-		public UInt32 BodySID { get; set; }
-		[CategoryAttribute("RIPEntry"), ReadOnly(true)]
-		public UInt64 PartitionOffset { get; set; }
+    public class MXFEntryRIP : MXFObject
+    {
+        private const string CATEGORYNAME = "RIPEntry";
 
-		public MXFEntryRIP(MXFReader reader)
-			: base(reader)
-		{
-			this.m_eType = MXFObjectType.RIP;
-			this.BodySID = reader.ReadD();
-			this.PartitionOffset = reader.ReadL();
-			this.Length = 12; // Fixed length
-		}
+        [Category(CATEGORYNAME)]
+        public UInt32 BodySID { get; set; }
+        
+        [Category(CATEGORYNAME)]
+        public UInt64 PartitionOffset { get; set; }
 
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return string.Format("RIPEntry - BodySID {0}, ParitionOffset {1}", this.BodySID, this.PartitionOffset);
-		}
-	}
+        public MXFEntryRIP(IKLVStreamReader reader, long offset)
+            : base(reader)
+        {
+            this.Offset = offset + reader.Position;
+            this.BodySID = reader.ReadUInt32();
+            this.PartitionOffset = reader.ReadUInt64();
+            this.TotalLength = 12; // Fixed length
+        }
+
+        /// <summary>
+        /// Some output
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format($"RIPEntry - BodySID {this.BodySID}, PartitionOffset {this.PartitionOffset:N0}");
+        }
+    }
 }

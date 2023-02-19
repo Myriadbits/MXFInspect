@@ -1,3 +1,47 @@
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+
+# Preface
+This is a fork of the wonderful project [MXF Inspect](https://github.com/Myriadbits/MXFInspect) created by Jochem Bakker. This fork tries to keep the project alive, as I have ~~implemented a couple of improvements w.r.t. the original.~~ completely revamped the entire code.
+
+**Improvements:**
+
+- The project has been migrated to .NET6, thus allowing MXFInspect to be shipped as a single-file-application without any dependencies on installed .NET frameworks
+- Further SMPTE Standards Implementation
+  - Addition of new metadata classes (e.g. MPEGPictureEssenceDescriptor, JPEG2000PictureSubDescriptor). A hierarchical inheritance tree of MXF classes can be found [here](https://registry.smpte-ra.org/view/published/Groups_inheritance_tree.html). See this [TODO list](/tree.md) for the classes that still have to be implemented. 
+  - New MXF types (e.g. CodedContentScanningKind, ProductVersion, FrameLayout, Emphasis). A list of MXF types can be found [here](https://registry.smpte-ra.org/view/published/ul_hierarchy.html?rgr=t)
+  - Parsing of MXF File Version (e.g. 1.2, 1.3)
+- drag and drop of MXF file in order to open it
+- show data offset in hexadecimal
+
+- Overall code improvement (using new C# language features)
+  - MXF library code refactoring
+  - use of region statements (e.g. for license preface in source files)
+  - use of linq whenever possibile
+  - gentle use of extension methods
+  - fix typos, inconsistencies, doc
+  - code base clean up (clean *.csproj file, remove unused files, polish .gitignore)
+ 
+However, there is still a long **TODO list:**
+- implement additional/more thorough file checks/validations such as:
+  - Is KAG Size consistent?
+  - Is Edit Unit Size constant?
+- implementation of validators, that check whether a MXF file conforms to the [ARD ZDF profiles](https://www.irt.de/en/publications/technical-guidelines/technical-guidelines-download/mxf)
+- true MDI application, where multiple MXF files can be opened side-by-side
+- pimp up the property grid (colors, hyperlinks for UMIDs)
+- use a better control for the hex view 
+- migrate code from using backgroundWorker to async/await
+  - make file loading abortable (cancellable)
+- optimize the MXFReader class to reduce file loading time
+- reorganize the file check dialog
+  - investigate on making tests hierarchical
+  - add general file info dialog
+  - add report (in xml) for conformance check
+  - add checksum to file
+- [Future Work](#Future-Work) of original project
+
+
+**Any help/contribution is greatly appreciated!!!**
+
 # MXF Inspect
 
 MXF Inspect is a **fully functional and completely free** Windows tool to display the internal structure of a MXF (Material eXchange Format) file. It can NOT play the MXF movie itself. There is no demo and advanced mode, it is completely free. The application is tested on Windows 7, 8 and 10.
@@ -36,15 +80,15 @@ Some screenshots:
 
 Report screen showing the new ‘Execute all tests’ button
 
-![Report screen showing the new ‘Execute all tests’ button](https://www.myriadbits.com/wp-content/uploads/2015/01/Report1.png)
+![Report screen showing the new ‘Execute all tests’ button](doc/screenshots/Report.png)
 
 Logical view
 
-![Logical view](https://www.myriadbits.com/wp-content/uploads/2015/01/Logical.png)
+![Logical view](doc/screenshots/Logical.png)
 
 MXF file tree (with 'syntax' coloring)
 
-![MXF file tree (with 'syntax' coloring)](https://www.myriadbits.com/wp-content/uploads/2015/01/WholeFile2.png)
+![MXF file tree (with 'syntax' coloring)](doc/screenshots/WholeFile2.png)
 
 
 ## Future work

@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,73 +19,73 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
-{	
-	public class MXFEssenceElement : MXFKLV
-	{
-		private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>();
+{
+    public class MXFEssenceElement : MXFPack
+    {
+        private const string CATEGORYNAME = "EssenceElement";
 
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
-		public string ItemType { get; set; }
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
-		public byte ElementCount { get; set; }
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
-		public byte ElementType { get; set; }
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
-		public byte ElementNumber { get; set; }
-		[Browsable(false)]
-		public bool IsPicture { get; set; }
+        private static Dictionary<int, string> m_itemTypes = new Dictionary<int, string>()
+        {
+            {0x05, "CP Picture (SMPTE 326M)"},
+            {0x06, "CP Sound (SMPTE 326M)"},
+            {0x07, "CP Data (SMPTE 326M)"},
+            {0x15, "GC Picture"},
+            {0x16, "GC Sound"},
+            {0x17, "GC Data"},
+            {0x18, "GC Compound"}
+        };
 
-		[CategoryAttribute("EssenceElement"), ReadOnly(true)]
-		public long EssenceOffset
-		{
-			get
-			{
-				if (this.Partition == null) return this.Offset; // Unknown
-				if (this.Partition.FirstPictureEssenceElement == null) return this.Offset; // Unknown
-				return (this.Offset - this.Partition.FirstPictureEssenceElement.Offset) + ((long)this.Partition.BodyOffset);
-			}
-		}
+        [Category(CATEGORYNAME)]
+        public string ItemType { get; set; }
+        [Category(CATEGORYNAME)]
+        public byte ElementCount { get; set; }
+        [Category(CATEGORYNAME)]
+        public byte ElementType { get; set; }
+        [Category(CATEGORYNAME)]
+        public byte ElementNumber { get; set; }
+        [Browsable(false)]
+        public bool IsPicture { get; set; }
 
-		[Browsable(false)]
-		public bool Indexed { get; set; }
+        [Category(CATEGORYNAME)]
+        // TODO helper property for indexvalidator that should be avoided
+        public long EssenceOffset
+        {
+            get
+            {
+                if (this.Partition == null) return this.Offset; // Unknown
+                if (this.Partition.FirstPictureEssenceElement == null) return this.Offset; // Unknown
+                return (this.Offset - this.Partition.FirstPictureEssenceElement.Offset) + ((long)this.Partition.BodyOffset);
+            }
+        }
 
-		/// <summary>
-		/// Static constructor to initialize the static array
-		/// </summary>
-		static MXFEssenceElement()
-		{
-			// Add all meta data 
-			m_itemTypes.Add(0x05, "CP Picture (SMPTE 326M)");
-			m_itemTypes.Add(0x06, "CP Sound (SMPTE 326M)");
-			m_itemTypes.Add(0x07, "CP Data (SMPTE 326M)");
-			m_itemTypes.Add(0x15, "GC Picture");
-			m_itemTypes.Add(0x16, "GC Sound");
-			m_itemTypes.Add(0x17, "GC Data");
-			m_itemTypes.Add(0x18, "GC Compound");
-		}
+        [Browsable(false)]
+        // TODO helper property for indexvalidator that should be avoided
+        public bool Indexed { get; set; }
 
-		public MXFEssenceElement(MXFReader reader, MXFKLV headerKLV)
-			: base(headerKLV, "EssenceElement", KeyType.Essence)
-		{
-			this.m_eType = MXFObjectType.Essence;
-			if (m_itemTypes.ContainsKey(this.Key[12]))
-				this.ItemType = m_itemTypes[this.Key[12]];
-			else
-				this.ItemType = "<unknown>";
-			this.IsPicture = (this.Key[12] == 0x05 || this.Key[12] == 0x15);
-			this.ElementCount = this.Key[13];
-			this.ElementType = this.Key[14];
-			this.ElementNumber = this.Key[15];
-		}
-		
-		public override string ToString()
-		{
-			return string.Format("{0} Essence [len {1}]", this.ItemType, this.Length);
-		}
-	}
+        public MXFEssenceElement(MXFPack pack)
+            : base(pack)
+        {
+            this.Key.Name ??= "EssenceElement";
+            if (m_itemTypes.ContainsKey(this.Key[12]))
+                this.ItemType = m_itemTypes[this.Key[12]];
+            else
+                this.ItemType = "<unknown>";
+            this.IsPicture = (this.Key[12] == 0x05 || this.Key[12] == 0x15);
+            this.ElementCount = this.Key[13];
+            this.ElementType = this.Key[14];
+            this.ElementNumber = this.Key[15];
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} Essence [len {1}]", this.ItemType, this.Length.Value);
+        }
+    }
 }
