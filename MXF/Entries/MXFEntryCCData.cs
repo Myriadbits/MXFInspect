@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
 
 			// When this object is not valid, set the type to filler
 			// TODO this does not seem to be the correct thing to do!
-			if (this.Valid.HasValue && !this.Valid.Value);
+			//if (this.Valid.HasValue && !this.Valid.Value);
 				//this.m_eType = MXFObjectType.Filler;			
 		}
 

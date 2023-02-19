@@ -61,6 +61,7 @@ namespace Myriadbits.MXFInspect
 				vis = false;
 
 			this.lblTitle.Visible = !vis;
+			this.lblContributors.Visible = !vis;
 			this.lblVersion.Visible = !vis;
 			this.lblCopyright.Visible = !vis;
 			this.llMyriadbits.Visible = !vis;

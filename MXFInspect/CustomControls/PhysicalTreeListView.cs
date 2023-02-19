@@ -23,10 +23,12 @@
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -122,12 +124,16 @@ namespace Myriadbits.MXFInspect
             else if (e.Column == ColumnMXFObject)
             {
                 MXFObject obj = e.Model as MXFObject;
-                SetFontFormat(e, obj);
+                if (OperatingSystem.IsWindows())
+                {
+                    SetFontFormat(e, obj);
+                }
                 e.SubItem.ForeColor = GetColor(obj);
             }
         }
 
-        private void SetFontFormat(FormatCellEventArgs e, MXFObject obj)
+		[SupportedOSPlatform("windows")]
+		private void SetFontFormat(FormatCellEventArgs e, MXFObject obj)
         {
             if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
             {
@@ -167,12 +173,13 @@ namespace Myriadbits.MXFInspect
             this.ColumnMXFObject.Width = 276;
             this.ColumnMXFObject.Renderer = TreeColumnRenderer;
 
-            Pen pen = new Pen(Color.Black, 1.001f);
-            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            this.TreeColumnRenderer.LinePen = pen;
-        }
+			if (OperatingSystem.IsWindows())
+			{
+				base.SetupTreeColumnRenderer();
+			}
+		}
 
-        private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
+		private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
         {
             if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
             {

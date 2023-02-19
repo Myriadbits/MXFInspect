@@ -120,10 +120,9 @@ namespace Myriadbits.MXF
                             ct.ThrowIfCancellationRequested();
                         }
                         // TODO be more selective with the exception
-                        catch (ArgumentException e)
+                        catch (ArgumentException)
                         {
                             // error in klv-stream
-
                             long lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
                             if (!parser.SeekForNextPotentialKey(out long newOffset))
                             {

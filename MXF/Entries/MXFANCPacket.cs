@@ -111,7 +111,7 @@ namespace Myriadbits.MXF
 							m_DIDDescription.Add(combinedDID, string.Format("{0} ({1})", parts[5], parts[4]));
 							//Debug.WriteLine("combinedDID = {0:X4}, Name = {1} ({2})", combinedDID, parts[5], parts[4]);
 						}
-						catch (Exception ex)
+						catch (Exception)
 						{
 						}
 					}

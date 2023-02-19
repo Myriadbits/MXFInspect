@@ -28,6 +28,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -59,12 +60,13 @@ namespace Myriadbits.MXFInspect
             this.ColumnMXFObject.Width = 276;
             this.ColumnMXFObject.Renderer = TreeColumnRenderer;
 
-            Pen pen = new Pen(Color.Black, 1.001f);
-            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            this.TreeColumnRenderer.LinePen = pen;
+            if (OperatingSystem.IsWindows())
+            {
+                base.SetupTreeColumnRenderer();
+            }
 
             this.RebuildColumns();
-        }
+        }		
 
         protected override void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
