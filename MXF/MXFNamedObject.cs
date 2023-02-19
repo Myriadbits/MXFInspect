@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,71 +19,46 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System.ComponentModel;
+using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	/// <summary>
-	/// Named object type (collectionname)
-	/// </summary>
-	public class MXFNamedObject : MXFObject
-	{
-		[Browsable(false)]
-		public string Name { get; set; }
+    /// <summary>
+    /// Named object type (collectionname)
+    /// </summary>
+    public class MXFNamedObject : MXFObject
+    {
+        [Browsable(false)]
+        public string Name { get; set; }
 
+        /// <summary>
+        /// MXF Object constructor
+        /// </summary>
+        /// <param name="reader"></param>
+        public MXFNamedObject(string name, long offset) : base(offset)
+        {
+            Name = name;
+        }
 
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(long offset)
-			: base(offset)
-		{
-		}
+        /// <summary>
+        /// MXF Object constructor
+        /// </summary>
+        public MXFNamedObject(string name, long offset, long length) : this(name, offset)
+        {
+            TotalLength = length;
+        }
 
-		
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string collectionName, long offset)
-			: base(offset)
-		{
-			this.Name = collectionName;
-		}
-
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string collectionName, long offset, MXFObjectType type)
-			: base(offset)
-		{
-			this.Name = collectionName;
-			this.m_eType = type;
-		}
-
-		/// <summary>
-		/// MXF Object constructor
-		/// </summary>
-		/// <param name="reader"></param>
-		public MXFNamedObject(string collectionName, long offset, long length)
-			: base(offset)
-		{
-			this.Name = collectionName;
-			this.Length = length;
-		}
-
-		/// <summary>
-		/// Some output
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			if (this.Children == null)
-				return this.Name;
-			return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
-		}
-	}
+        /// <summary>
+        /// Some output
+        /// </summary>
+        public override string ToString()
+        {
+            if (!this.Children.Any())
+                return this.Name;
+            return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
+        }
+    }
 }

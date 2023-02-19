@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,43 +19,46 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
+
+using System.Linq;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
-{	
-	public class MXFRIP : MXFKLV
+{
+    public class MXFRIP : MXFPack
 	{
-		public MXFRIP(MXFReader reader, MXFKLV headerKLV)
-			: base(headerKLV, "RIP", KeyType.RIP)
-		{
-			this.m_eType = MXFObjectType.RIP;
-			Initialize(reader);
+		public MXFRIP(MXFPack pack)
+			: base(pack)
+        {
+			Initialize(this.GetReader());
 		}
 
-		private void Initialize(MXFReader reader)
+		private void Initialize(IKLVStreamReader reader)
 		{
 			// Make sure we read at the data position
-			reader.Seek(this.DataOffset);
+			reader.Seek(this.RelativeValueOffset);
 
 			// Read all local tags
-			long klvEnd = this.DataOffset + this.Length;
+			long klvEnd = this.RelativeValueOffset + this.Length.Value;
 			while (reader.Position + 12 < klvEnd)
 			{
 				// Add to the collection
-				AddChild(new MXFEntryRIP(reader));
+				AddChild(new MXFEntryRIP(reader, this.Offset));
 			}
 		}
 
 		public override string ToString()
 		{
-			if (this.Children == null)
+			if (!this.Children.Any())
 				return string.Format("RIP [0 items]");
 			return string.Format("RIP [{0} items]", this.Children.Count);
 		}
 
 		public MXFEntryRIP GetPartition(int partitionIndex)
 		{
-			return this.GetChild(partitionIndex) as MXFEntryRIP;
+			return this.Children.ElementAtOrDefault(partitionIndex) as MXFEntryRIP;
 		}
 	}
 }

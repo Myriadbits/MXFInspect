@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,33 +19,39 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFPrimerPack : MXFKLV
-	{		
-		[CategoryAttribute("PrimerPack"), ReadOnly(true)] 
-		public UInt32 LocalTagCount { get; set; }
+    public class MXFPrimerPack : MXFPack
+	{
+		private const string CATEGORYNAME = "PrimerPack";
+
+		[Category(CATEGORYNAME)] 
+		public UInt32 PrimerEntriesCount { get; set; }
 
 		[Browsable(false)]
-		private Dictionary<UInt16, MXFEntryPrimer> m_PrimerKeys = null;
+		private readonly Dictionary<UInt16, MXFPrimerEntry> primerEntries = new Dictionary<UInt16, MXFPrimerEntry>();
+		
 		[Browsable(false)]
-		public Dictionary<UInt16, MXFEntryPrimer> AllKeys { get { return m_PrimerKeys; } }
+		public IReadOnlyDictionary<UInt16, MXFPrimerEntry> PrimerEntries { get { return primerEntries; } }
 
 		/// <summary>
 		/// Primerpack constructor 
-		/// All keys will be passed to the partition and used in the metadatabase class to describe unkown/optional tags
+		/// All keys will be passed to the partition and used in the metadatabase class to describe unknown/optional tags
 		/// </summary>
 		/// <param name="reader"></param>
-		/// <param name="headerKLV"></param>
-		public MXFPrimerPack(MXFReader reader, MXFKLV headerKLV)
-			: base(headerKLV, "PrimerPack", KeyType.PrimerPack)
-		{
-			this.LocalTagCount = ReadTagList(reader, "LocalTags");
+		/// <param name="pack"></param>
+		public MXFPrimerPack(MXFPack pack)
+			: base(pack)
+        {
+            IKLVStreamReader reader = this.GetReader();
+            this.PrimerEntriesCount = ReadPrimerEntries(reader);
 		}
 
 		/// <summary>
@@ -53,32 +60,32 @@ namespace Myriadbits.MXF
 		/// <param name="reader"></param>
 		/// <param name="categoryName"></param>
 		/// <returns></returns>
-		protected UInt32 ReadTagList(MXFReader reader, string categoryName)
+		protected UInt32 ReadPrimerEntries(IKLVStreamReader reader)
 		{
-			UInt32 nofItems = reader.ReadD();
-			UInt32 objectSize = reader.ReadD(); // useless size of objects, always 16 according to specs
+			reader.Seek(this.RelativeValueOffset);
+			UInt32 numOfPrimerEntries = reader.ReadUInt32();
 
-			MXFObject keylist = new MXFNamedObject(categoryName, reader.Position);
-			if (nofItems > 0 && nofItems < UInt32.MaxValue)
+            // TODO useless size of objects, always 2(=tag) + 16(=UL) -> 18 according to specs
+            UInt32 primerEntrySize = reader.ReadUInt32(); 
+
+			// TODO do a minimum of checks here
+			// TODO allow duplicate entries and complain afterwards when validating
+			if (numOfPrimerEntries > 0 && numOfPrimerEntries < UInt32.MaxValue)
 			{
-				m_PrimerKeys = new Dictionary<UInt16, MXFEntryPrimer>();
-				for (int n = 0; n < nofItems; n++)
+				for (int n = 0; n < numOfPrimerEntries; n++)
 				{
-					MXFEntryPrimer entry = new MXFEntryPrimer(reader);
-					m_PrimerKeys.Add(entry.LocalTag, entry); // Add to our own internal list
-					keylist.AddChild(entry); // And add the entry as one of our children
+					MXFPrimerEntry entry = new MXFPrimerEntry(reader, this.Offset + reader.Position);
+					primerEntries.Add(entry.Tag, entry); // Add to our own internal list
+					this.AddChild(entry); // And add the entry as one of our children
 				}
 			}
-			this.AddChild(keylist);
-			return nofItems;
+			return numOfPrimerEntries;
 		}
 
 
 		public override string ToString()
 		{
-			if (this.LocalTagCount == 0)
-				return "PrimerPack";
-			return string.Format("PrimerPack [{0} items]", this.LocalTagCount );
+			return (this.PrimerEntriesCount == 0) ? "PrimerPack" : $"PrimerPack [{this.PrimerEntriesCount} items]";
 		}
 	}
 }

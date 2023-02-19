@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,25 +19,29 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System;
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFCDPFooter : MXFObject
+    public class MXFCDPFooter : MXFObject
 	{
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)] 
+		private const string CATEGORYNAME = "CDPFooter";
+
+		[Category(CATEGORYNAME)] 
 		public UInt16? SequenceCounter { get; set; }
-		[CategoryAttribute("CDPFooter"), ReadOnly(true)]
+		[Category(CATEGORYNAME)]
 		public byte? PacketChecksum { get; set; }
 
 
-		public MXFCDPFooter(MXFReader reader)
+		public MXFCDPFooter(IKLVStreamReader reader)
 			: base(reader)
 		{
-			this.SequenceCounter = reader.ReadW();
-			this.PacketChecksum = reader.ReadB();
+			this.SequenceCounter = reader.ReadUInt16();
+			this.PacketChecksum = reader.ReadByte();
 		}
 
 		/// <summary>

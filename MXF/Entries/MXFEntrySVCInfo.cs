@@ -1,4 +1,5 @@
-﻿//
+﻿#region license
+//
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
 // Copyright (C) 2015 Myriadbits, Jochem Bakker
@@ -18,33 +19,37 @@
 //
 // For more information, contact me at: info@myriadbits.com
 //
+#endregion
 
 using System.ComponentModel;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
-	public class MXFEntrySVCInfo : MXFObject
+    public class MXFEntrySVCInfo : MXFObject
 	{
-		[CategoryAttribute("SVC Info"), ReadOnly(true)]
+		private const string CATEGORYNAME = "SVC Info";
+
+		[Category(CATEGORYNAME)]
 		public byte? CaptionServiceNumber { get; set; }
-		[CategoryAttribute("SVC Info "), ReadOnly(true)]
+		[Category(CATEGORYNAME)]
+        [TypeConverter(typeof(ByteArrayConverter))]
 		public byte[] Data { get; set; }
-		[CategoryAttribute("SVC Info "), ReadOnly(true)]
+		[Category(CATEGORYNAME)]
 		public string DataString { get; set; }
 
-		public MXFEntrySVCInfo(MXFReader reader)
+		public MXFEntrySVCInfo(IKLVStreamReader reader)
 			: base(reader)
 		{
-			this.Length = 7; // Fixed
+			this.TotalLength = 7; // Fixed
 
-			byte b0 = reader.ReadB();
+			byte b0 = reader.ReadByte();
 			if ((b0 & 0x40) != 0)
 				this.CaptionServiceNumber = (byte)(b0 & 0x1F);
 			else
 				this.CaptionServiceNumber = (byte)(b0 & 0x3F);
 
-			this.Data = new byte[6];
-			reader.Read(this.Data, 6);
+			this.Data = reader.ReadBytes(6);
 
 			this.DataString = System.Text.Encoding.ASCII.GetString(this.Data);
 		}

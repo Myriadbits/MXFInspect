@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Myriadbits.MXFInspect.HexViewer">
+    <Position X="9.25" Y="0.5" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABEBAABIAACAiACABAAAAgAAAAAEAABAAAAAgA=</HashCode>
+      <FileName>CustomControls\HexViewer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXFInspect.LogicalTreeListView">
+    <Position X="7.5" Y="5.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\LogicalTreeListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXFInspect.PhysicalTreeListView">
+    <Position X="3.25" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAEEAAAACAAAAAAACgAAAAAAADAgAAIAA=</HashCode>
+      <FileName>CustomControls\PhysicalTreeListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXFInspect.TreeListViewBase&lt;T&gt;">
+    <Position X="5.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAABAABgAAAAAACIABAAAAAAAACACACAAAAICgA=</HashCode>
+      <FileName>CustomControls\TreeListViewBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXFInspect.ReadOnlyPropertyGrid">
+    <Position X="11.5" Y="5.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIgAAAgAAgAAAAAAAAAAAAEAAAAIAAAAAAA=</HashCode>
+      <FileName>CustomControls\ReadOnlyPropertyGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
