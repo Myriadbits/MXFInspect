@@ -53,7 +53,7 @@ namespace Myriadbits.MXF
             {
                 pack = MXFPackFactory.CreateStronglyTypedPack(pack);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // TODO log/handle error
             }

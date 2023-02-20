@@ -34,7 +34,7 @@ namespace Myriadbits.MXF
         where L : KLVLengthBase
     {
         protected readonly IKLVStreamReader reader;
-        protected long currentKLVOffset = 0;
+        protected long currentOffset = 0;
         protected readonly long baseOffset = 0;
         protected readonly Stream klvStream;
         protected abstract K ParseKLVKey();
@@ -57,23 +57,23 @@ namespace Myriadbits.MXF
         public virtual T GetNext()
         {
 
-            var klv = CreateKLV(currentKLVOffset);
+            var klv = CreateKLV(currentOffset);
             Current = klv;
 
             // advance to next pack
-            Seek(currentKLVOffset + klv.TotalLength);
+            Seek(currentOffset + klv.TotalLength);
             return klv;
         }
 
         public bool HasNext()
         {
-            return !reader.EOF;
+            return !(currentOffset >= klvStream.Length);
         }
 
         protected void Seek(long position)
         {
             reader.Seek(position);
-            currentKLVOffset = position;
+            currentOffset = position;
         }
 
         protected T CreateKLV(long offset)
@@ -113,7 +113,7 @@ namespace Myriadbits.MXF
             }
 
             Stream ss = new SubStream(klvStream, offset, subStreamLength);
-            return InstantiateKLV(key, length, baseOffset + currentKLVOffset, ss);
+            return InstantiateKLV(key, length, baseOffset + currentOffset, ss);
         }
     }
 }
