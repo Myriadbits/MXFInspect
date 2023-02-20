@@ -186,11 +186,13 @@ namespace Myriadbits.MXFInspect
                 this.tlvPhysical.HideFillers(this.FillerHidden);
                 this.tlvPhysical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-                var logicalList = new List<MXFLogicalObject>() { this.File.LogicalTreeRoot };
-                this.tlvLogical.FillTree(logicalList);
-                this.tlvLogical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-
-                this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count():N0} items]";
+                if(this.File.LogicalTreeRoot != null)
+                {
+                    var logicalList = new List<MXFLogicalObject>() { this.File.LogicalTreeRoot };
+                    this.tlvLogical.FillTree(logicalList);
+                    this.tlvLogical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count():N0} items]";
+                }
             }
             catch (Exception ex)
             {
