@@ -138,10 +138,8 @@ namespace Myriadbits.MXF.Identifiers
                     Log.ForContext(typeof(SMPTERegisters)).Verbose($"Details of SMPTE entry: {@e}", entry);
                 }
                 else
-                {
-                    // TODO if entry not parseable it is null
-                    // TODO catch this on a lower level, maybe via an exception
-                    Log.ForContext(typeof(SMPTERegisters)).Warning($"Unable to parse SMPTE entry {entry}: {@e}", entry);
+                {           
+                    Log.ForContext(typeof(SMPTERegisters)).Warning($"Unable to parse SMPTE entry {e}: {@e}", e);
                 }
             }
         }
