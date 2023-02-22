@@ -24,7 +24,9 @@
 using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
+using Serilog;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection.PortableExecutable;
@@ -35,6 +37,8 @@ namespace Myriadbits.MXF
     public class MXFPackParser : KLVTripletParser<MXFPack, UL, KLVBERLength>
     {
         private long currentPackNumber = 0;
+        private List<Exception> exceptions = new List<Exception>();
+        public IReadOnlyList<Exception> Exceptions { get { return exceptions.AsReadOnly(); } }
 
         public MXFPackParser(Stream stream)
             : base(stream)
@@ -55,7 +59,8 @@ namespace Myriadbits.MXF
             }
             catch (Exception ex)
             {
-                // TODO log/handle error
+                Log.ForContext(typeof(MXFPackParser)).Error($"Error occured while parsing {pack}: {@ex}", pack);
+                exceptions.Add(ex);
             }
             finally
             {

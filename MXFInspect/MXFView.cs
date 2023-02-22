@@ -196,7 +196,7 @@ namespace Myriadbits.MXFInspect
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error while populating the trees");
+                MessageBox.Show(ex.Message, "Error occured while populating the trees");
                 this.Close();
             }
         }
