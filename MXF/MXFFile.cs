@@ -171,6 +171,8 @@ namespace Myriadbits.MXF
                         }
                     }
 
+                    this.ParsingExceptions.AddRange(parser.Exceptions);
+
                     Log.ForContext<MXFFile>().Information($"Finished parsing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
 
                     // Now process the pack list (partition packs, treat special cases)
