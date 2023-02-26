@@ -36,16 +36,13 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "FileDescriptor";
         private const int CATEGORYPOS = 3;
 
-        // TODO remove this field, once all specialized subclasses have been implemented
-        private static Dictionary<int, string> m_metaTypes = new Dictionary<int, string>();
-
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.06010103.05000000")]
         public UInt32? LinkedTrackId { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04060101.00000000")]
-        public MXFRational SampleRate { get; set; }
+        public MXFRational? SampleRate { get; set; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04060102.00000000")]
@@ -54,30 +51,6 @@ namespace Myriadbits.MXF
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.06010104.01020000")]
         public UL EssenceContainer { get; set; }
-
-
-        /// <summary>
-        /// Static constructor to initialize the static array
-        /// </summary>
-        static MXFFileDescriptor()
-        {
-            // Add all meta data 
-            m_metaTypes.Add(0x14, "Descriptor: Timecode");
-            m_metaTypes.Add(0x23, "Descriptor: Data container");
-            m_metaTypes.Add(0x5C, "Descriptor: ANC Data Descriptor, SMPTE 436 - 7.3");
-        }
-
-        /// <summary>
-        /// Constructor, set the correct descriptor name
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="pack"></param>
-        public MXFFileDescriptor(MXFPack pack)
-            : base(pack, "FileDescriptor")
-        {
-            if (m_metaTypes.ContainsKey(this.Key[14]))
-                this.MetaDataName = m_metaTypes[this.Key[14]];
-        }
 
         /// <summary>
         /// Constructor when used as base class
