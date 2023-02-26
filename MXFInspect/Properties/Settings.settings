@@ -9,7 +9,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PartialLoadThresholdMB" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">-1</Value>
     </Setting>
     <Setting Name="Color_Partition" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Blue</Value>
@@ -36,7 +36,7 @@
       <Value Profile="(Default)">LightSeaGreen</Value>
     </Setting>
     <Setting Name="PartialLoadWarning" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ShowOffsetAsHex" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

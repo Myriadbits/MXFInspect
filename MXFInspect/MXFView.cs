@@ -83,18 +83,16 @@ namespace Myriadbits.MXFInspect
 
         private FormMain ParentMainForm { get; set; }
 
-        private FileParseMode FileParseMode { get; set; }
+        private FileParseMode FileParseMode { get; init; }
 
         private Stopwatch sw = new Stopwatch();
         private bool m_fDoNotSelectOther = false;
-
-
 
         public MXFView(FileInfo fi, FileParseMode fileParseMode)
         {
             InitializeComponent();
             this.FileInfo = fi;
-            this.FileParseMode = fileParseMode;
+            this.FileParseMode = FileParseMode.Full; // always full for now
             this.FillerHidden = true;
             this.MainPanel = this.mainPanel; // Do this AFTER the InitializeComponent call!!!
 

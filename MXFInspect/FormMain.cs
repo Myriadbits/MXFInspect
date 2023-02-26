@@ -215,7 +215,7 @@ namespace Myriadbits.MXFInspect
             long fileThreshold = ((long)MXFInspect.Properties.Settings.Default.PartialLoadThresholdMB) * 1024 * 1024;
 
             // if setting is no partial load at all then threshold is negative
-            if (fi.Length > fileThreshold && fileThreshold >= 0)
+            if (fileThreshold >= 0 && fi.Length > fileThreshold)
             {
                 return FileParseMode.Partial;
             }
