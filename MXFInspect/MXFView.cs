@@ -191,6 +191,9 @@ namespace Myriadbits.MXFInspect
                     this.tlvLogical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
                     this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count():N0} items]";
                 }
+
+                tlvPhysical.AutoResizeColumns();
+                tlvLogical.AutoResizeColumns();
             }
             catch (Exception ex)
             {

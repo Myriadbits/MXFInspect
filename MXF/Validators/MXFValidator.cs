@@ -25,60 +25,39 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Myriadbits.MXF
 {
-	// TODO should this class inherit from MXFObject?
-	public class MXFValidator : MXFObject
-	{
-		public MXFFile File { get; set; }
-		public BackgroundWorker Worker { get; set; }
-		public List<MXFValidationResult> Results { get; set; }
-		public string Task { get; set; }
+    public class MXFValidator
+    {
+        public MXFFile File { get; set; }
+        public string Description { get; set; }
 
-		/// <summary>
-		/// Initialize this test
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="file"></param>
-		/// <param name="worker"></param>
-		public void Initialize(MXFFile file, BackgroundWorker worker)
-		{
-			this.File = file;
-			this.Worker = worker;
-		}
+        public MXFValidator(MXFFile file)
+        {
+            File = file;
+        }
 
-		/// <summary>
-		/// Change the progress
-		/// </summary>
-		/// <param name="percentage"></param>
-		protected void ReportProgress(int percentage)
-		{
-			if (this.Worker != null)
-				this.Worker.ReportProgress(percentage, this.Task);
-		}
+        public async Task<List<MXFValidationResult>> Validate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            List<MXFValidationResult> results = await OnValidate(progress, ct);
+            Debug.WriteLine("Validation test run in {0} ms", sw.ElapsedMilliseconds);
+            return results;
+        }
 
-		/// <summary>
-		/// Execute the test
-		/// </summary>
-		/// <param name="results"></param>
-		public void ExecuteTest(ref List<MXFValidationResult> results)
-		{
-			Stopwatch sw = Stopwatch.StartNew();
-			this.Worker.ReportProgress(0, string.Format("Test {0} started", this.Task));
-			OnExecuteTest(ref results);
-			this.Worker.ReportProgress(100, string.Format("Test {0} is completed", this.Task));
-			Debug.WriteLine("Validation test run in {0} ms", sw.ElapsedMilliseconds);
-		}
-
-
-		/// <summary>
-		/// Override in derived classes
-		/// </summary>
-		public virtual void OnExecuteTest(ref List<MXFValidationResult> results)
-		{
-		}
-	}
+        /// <summary>
+        /// Override in derived classes
+        /// </summary>
+        public virtual async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        {
+            List<MXFValidationResult> result = await Task.Run(() =>
+            {
+                return new List<MXFValidationResult>();
+            }, ct);
+            return result;
+        }
+    }
 }

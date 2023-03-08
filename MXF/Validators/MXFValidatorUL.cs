@@ -21,48 +21,48 @@
 //
 #endregion
 
+using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
-using Serilog;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Myriadbits.MXF
 {
-    public class MXFValidatorInfo : MXFValidator
-    {
-        public MXFValidatorInfo(MXFFile file) : base(file)
+    public class MXFValidatorUL : MXFValidator
+	{
+        public MXFValidatorUL(MXFFile file) : base(file)
         {
 
         }
 
-        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
-        {
+		public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+		{
             List<MXFValidationResult> result = await Task.Run(() =>
             {
+                this.Description = "Checking MXF Keys";
                 var retval = new List<MXFValidationResult>();
                 Stopwatch sw = Stopwatch.StartNew();
 
-                this.Description = "Track Info";
-                MXFMaterialPackage mp = this.File.GetContentStorage()?.GetFirstMaterialPackage();
-                List<MXFTrack> tracks = mp.GetGenericTracks().ToList();
+                var klvsWithUnknownUL = this.File.Descendants()
+                                                .OfType<MXFPack>()
+                                                .Where(klv => klv.Key.SMPTEInformation == null)
+                                                .OrderBy(klv => klv.Offset);
 
-                foreach (var t in tracks)
+                foreach (var klv in klvsWithUnknownUL)
                 {
-                    int n = tracks.IndexOf(t);
-                    progress?.Report(new TaskReport(n * 100 / tracks.Count, ""));
-                    MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
-                    valResult.Category = "Track Info";
-                    valResult.SetInfo(this.File.GetTrackInfo(t));
-                    retval.Add(valResult); // And directly add the results
+                    MXFValidationResult valResult = new MXFValidationResult("UL");
+                    valResult.SetWarning($"Unknown UL {klv.Key} @ {klv.Offset}.");
+                    valResult.Object = klv;
+                    retval.Add(valResult);
                 }
-                Log.ForContext<MXFValidatorInfo>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
+                Log.ForContext<MXFValidatorUL>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
                 return retval;
             }, ct);
 
             return result;
         }
-    }
+	}
 }

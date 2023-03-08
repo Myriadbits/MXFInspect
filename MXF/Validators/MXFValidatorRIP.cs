@@ -22,66 +22,83 @@
 #endregion
 
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Myriadbits.MXF
 {
 	public class MXFValidatorRIP : MXFValidator
 	{
+
+        public MXFValidatorRIP(MXFFile file) : base(file)
+        {
+
+        }
+
 		/// <summary>
 		/// Check if the RIP is present and valid
 		/// </summary>
 		/// <param name="this.File"></param>
 		/// <param name="results"></param>
-		public override void OnExecuteTest(ref List<MXFValidationResult> results)
+		public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
 		{
-			MXFValidationResult valResult = new MXFValidationResult("Random Index Pack Test");
-			results.Add(valResult);
-			valResult.Category = "Random Index Pack";
-
-			Stopwatch sw = Stopwatch.StartNew();
-
-			if (this.File.RIP == null)
+			List<MXFValidationResult> result = await Task.Run(() =>
 			{
-				valResult.SetError(string.Format("Error! No RIP found."));
-				return;
-			}
+				var retval = new List<MXFValidationResult>();
+				Stopwatch sw = Stopwatch.StartNew();
 
-			if (this.File.RIPEntryCount != this.File.PartitionCount)
-			{
-				valResult.SetError(string.Format("Error! Number of RIP entries is not equal to the number of partitions ({0} vs {1}).", this.File.RIPEntryCount, this.File.PartitionCount));
-				return;
-			}
+				this.Description = "Validating partitions";
 
-			int ripErrorCount = 0;
-			for(int n = 0; n < this.File.RIPEntryCount; n++)
-			{
-				MXFEntryRIP rip = this.File.RIP.Children[n] as MXFEntryRIP;
-				if (rip != null)
+				MXFValidationResult valResult = new MXFValidationResult("Random Index Pack Test");
+				retval.Add(valResult);
+				valResult.Category = "Random Index Pack";
+
+
+				if (this.File.RIP == null)
 				{
-					MXFPartition part = this.File.Partitions.Where(a => (ulong) a.Offset == rip.PartitionOffset).FirstOrDefault();
-					if (part == null)
+					valResult.SetError(string.Format("Error! No RIP found."));
+					return retval;
+				}
+
+				if (this.File.RIPEntryCount != this.File.PartitionCount)
+				{
+					valResult.SetError(string.Format("Error! Number of RIP entries is not equal to the number of partitions ({0} vs {1}).", this.File.RIPEntryCount, this.File.PartitionCount));
+					return retval;
+				}
+
+				int ripErrorCount = 0;
+				for (int n = 0; n < this.File.RIPEntryCount; n++)
+				{
+					MXFEntryRIP rip = this.File.RIP.Children[n] as MXFEntryRIP;
+					if (rip != null)
 					{
-						ripErrorCount++;
-						valResult.AddError(string.Format("Error! RIP entry {0} not pointing to a valid partion.", n));
-						return;
+						MXFPartition part = this.File.Partitions.Where(a => (ulong)a.Offset == rip.PartitionOffset).FirstOrDefault();
+						if (part == null)
+						{
+							ripErrorCount++;
+							valResult.AddError(string.Format("Error! RIP entry {0} not pointing to a valid partion.", n));
+							return retval;
+						}
 					}
 				}
-			}
-			if (ripErrorCount > 0)
-			{
-				valResult.SetError(string.Format("Error! {0} RIP entries are not pointing to a valid partion.", ripErrorCount));
-				return;
-			}
+				if (ripErrorCount > 0)
+				{
+					valResult.SetError(string.Format("Error! {0} RIP entries are not pointing to a valid partion.", ripErrorCount));
+					return retval;
+				}
 
-			valResult.SetSuccess("Random Index Pack (RIP) is valid.");
-			Log.ForContext<MXFValidatorRIP>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
-        }
+				valResult.SetSuccess("Random Index Pack (RIP) is valid.");
+				Log.ForContext<MXFValidatorRIP>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
 
+				return retval;
+			}, ct);
+			return result;
 
-		
+		}
 	}
 }

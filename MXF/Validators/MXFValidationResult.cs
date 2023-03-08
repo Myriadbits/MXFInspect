@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace Myriadbits.MXF
 {
-	public enum MXFValidationState
+	public enum MXFValidationSeverity
 	{
 		Success = 1,
 		Warning = 2,
@@ -36,23 +36,34 @@ namespace Myriadbits.MXF
 
 	public class MXFValidationDetails
 	{
-		public MXFValidationState State { get; set; }
-		public string Result { get; set; }
-		public string Category { get; set; }
+        public MXFValidationSeverity Severity { get; set; }
+		public long Offset { get; set; }
+        public string Category { get; set; }
+        public string Result { get; set; }
 
-		public MXFValidationDetails(MXFValidationState state, string result)
+		public MXFValidationDetails(MXFValidationSeverity severity, string result)
 		{
-			this.State = state;
+			this.Severity = severity;
+			//this.Offset = offset;
+			//this.Category = category;
 			this.Result = result;
 		}
-	}
 
+        public MXFValidationDetails(MXFValidationSeverity severity, long offset, string result)
+        {
+            this.Severity = severity;
+            this.Offset = offset;
+            //this.Category = category;
+            this.Result = result;
+        }
+    }
 
 	
 	public class MXFValidationResult : List<MXFValidationDetails>
 	{
 		public string Category { get; set; }
-		public MXFValidationState State { get; set; }
+        public long Offset { get; set; }
+        public MXFValidationSeverity Severity { get; set; }
 		public string Result { get; set; }
         public MXFObject Object { get; set; }
 
@@ -60,51 +71,59 @@ namespace Myriadbits.MXF
 		{
 			this.Category = category;
 		}
+		public MXFValidationResult()
+		{
+
+		}
 
 		public void SetSuccess(string result)
 		{
-			this.State = MXFValidationState.Success;
+			this.Severity = MXFValidationSeverity.Success;
 			this.Result = result;
 		}
 
 		public void SetWarning(string result)
 		{
-			this.State = MXFValidationState.Warning;
+			this.Severity = MXFValidationSeverity.Warning;
 			this.Result = result;
 		}
 
 		public void SetError(string result)
 		{
-			this.State = MXFValidationState.Error;
+			this.Severity = MXFValidationSeverity.Error;
 			this.Result = result;
 		}
 
 		public void SetInfo(string result)
 		{
-			this.State = MXFValidationState.Info;
+			this.Severity = MXFValidationSeverity.Info;
 			this.Result = result;
 		}
 
 		public void SetQuestion(string result)
 		{
-			this.State = MXFValidationState.Question;
+			this.Severity = MXFValidationSeverity.Question;
 			this.Result = result;
 		}
 
 		public void AddSuccess(string result)
 		{
-			this.Add(new MXFValidationDetails(MXFValidationState.Success, result));
+			this.Add(new MXFValidationDetails(MXFValidationSeverity.Success, result));
 		}
 
 		public void AddWarning(string result)
 		{
-			this.Add(new MXFValidationDetails(MXFValidationState.Warning, result));
+			this.Add(new MXFValidationDetails(MXFValidationSeverity.Warning, result));
 		}
 	
 		public void AddError(string result)
 		{
-			this.Add(new MXFValidationDetails(MXFValidationState.Error, result));
+			this.Add(new MXFValidationDetails(MXFValidationSeverity.Error, result));
 		}
 
-	}
+        public void AddError(string result, long offset)
+        {
+            this.Add(new MXFValidationDetails(MXFValidationSeverity.Error, offset, result));
+        }
+    }
 }

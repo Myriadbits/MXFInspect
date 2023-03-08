@@ -22,10 +22,13 @@
 #endregion
 
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Myriadbits.MXF
 {
@@ -35,239 +38,243 @@ namespace Myriadbits.MXF
 		private List<MXFSystemItem> m_systemItems = new List<MXFSystemItem>();
 		private List<MXFEssenceElement> m_pictureItems = new List<MXFEssenceElement>();
 
-        /// <summary>
-        /// Check all index tables
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="results"></param>
-        public override void OnExecuteTest(ref List<MXFValidationResult> results)
+        public MXFValidatorIndex(MXFFile file) : base(file)
         {
-            MXFValidationResult valResult = new MXFValidationResult("Index Tables");
-            results.Add(valResult); // And directly add the results
 
-            Stopwatch sw = Stopwatch.StartNew();
+        }
 
-            // Clear list
-            m_indexTables = new List<MXFIndexTableSegment>();
-            m_systemItems = new List<MXFSystemItem>();
-            m_pictureItems = new List<MXFEssenceElement>();
-
-            LoadAllPartitions();
-
-            FindIndexTablesSystemItemsEssenceElements();
-
-            ReportProgress(55);
-            Log.ForContext<MXFValidatorIndex>().Information($"Found {this.m_indexTables.Count} index table segments in {sw.ElapsedMilliseconds} ms");
-            sw.Restart();
-
-            // Check if first index table is CBE
-            if (this.m_indexTables.Count == 0)
+        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        {
+            List<MXFValidationResult> result = await Task.Run(() =>
             {
-                valResult.SetError(string.Format("No index tables found!", m_indexTables.Count));
-                return;
-            }
+                var retval = new List<MXFValidationResult>();
+                MXFValidationResult valResult = new MXFValidationResult("Index Tables");
+                retval.Add(valResult); // And directly add the results
 
+                Stopwatch sw = Stopwatch.StartNew();
+                progress?.Report(new TaskReport(12, "Locating index tables"));
+                
+                // Clear list
+                m_indexTables = new List<MXFIndexTableSegment>();
+                m_systemItems = new List<MXFSystemItem>();
+                m_pictureItems = new List<MXFEssenceElement>();
 
-            MXFIndexTableSegment firstTable = this.m_indexTables.FirstOrDefault();
-            if (firstTable != null)
-            {
-                // is Index table CBE or VBE?
-                if (firstTable.EditUnitByteCount > 0)
+                //LoadAllPartitions();
+
+                FindIndexTablesSystemItemsEssenceElements();
+
+                progress?.Report(new TaskReport(55, "Checking indices"));
+                Log.ForContext<MXFValidatorIndex>().Information($"Found {this.m_indexTables.Count} index table segments in {sw.ElapsedMilliseconds} ms");
+                sw.Restart();
+
+                // Check if first index table is CBE
+                if (this.m_indexTables.Count == 0)
                 {
-                    // Check other tables
-                    for (int n = 1; n < this.m_indexTables.Count; n++ )
-                    {
-                        if (this.m_indexTables[n].EditUnitByteCount != firstTable.EditUnitByteCount &&
-                            this.m_indexTables[n].BodySID == firstTable.BodySID)
-                        {
-                            valResult.SetError(string.Format("Constant Bytes per Element ({0} bytes) but index table {1} has other CBE: {2} (both have BodySID {3}).", firstTable.EditUnitByteCount, n, this.m_indexTables[n].EditUnitByteCount, firstTable.BodySID));
-                            return;
-                        }
-                    }
-
-                    // CBE for this BodySID
-                    if (firstTable.IndexDuration == 0 && firstTable.IndexStartPosition == 0)
-                    {
-                        valResult.SetSuccess(string.Format("Constant Bytes per Element ({0} bytes) for the whole duration of BodySID {1}", firstTable.EditUnitByteCount, firstTable.BodySID));
-                        // TODO Check if the size of all compounds is the same??
-                        return;
-                    }
-                    else
-                    {
-                        // Complicated, mixed file
-                        valResult.SetWarning(string.Format("Constant Bytes per Element ({0} bytes) but not for the whole file for BodySID {1}. Duration: {2}, StartOffset: {3}", firstTable.EditUnitByteCount, firstTable.BodySID, firstTable.IndexDuration, firstTable.IndexStartPosition));
-                        return;
-                    }
+                    valResult.SetError(string.Format("No index tables found!", m_indexTables.Count));
+                    return retval;
                 }
-            }
 
-            // Check if there are multiple index table segments pointing to the same data
-            int invalidCt = 0;
-            int validCt = 0;
-            int totalSystemItems = 0;
-            int counter = 0;
-            this.Task = "Checking for duplicates";
-            foreach (MXFIndexTableSegment ids in this.m_indexTables)
-            {
-                ReportProgress(55 + (counter * 20) / this.m_indexTables.Count());
 
-                // And all index entries
-                if (ids.IndexEntries != null)
+                MXFIndexTableSegment firstTable = this.m_indexTables.FirstOrDefault();
+                if (firstTable != null)
                 {
-                    List<MXFIndexTableSegment> sameStuff = this.m_indexTables.Where(a => a != ids && a.IndexSID == ids.IndexSID && a.IndexStartPosition == ids.IndexStartPosition).ToList();
-                    foreach (MXFIndexTableSegment sameIds in sameStuff)
+                    // is Index table CBE or VBE?
+                    if (firstTable.EditUnitByteCount > 0)
                     {
-                        if (sameIds.IndexEntries.Count != ids.IndexEntries.Count)
+                        // Check other tables
+                        for (int n = 1; n < this.m_indexTables.Count; n++)
                         {
-                            valResult.AddError(string.Format("Index {0} in partition {1} is not the same length as in partition {2}!", sameIds.IndexSID, sameIds.Partition.ToString(), ids.Partition.ToString()));
-                            invalidCt++;
+                            if (this.m_indexTables[n].EditUnitByteCount != firstTable.EditUnitByteCount &&
+                                this.m_indexTables[n].BodySID == firstTable.BodySID)
+                            {
+                                valResult.SetError(string.Format("Constant Bytes per Element ({0} bytes) but index table {1} has other CBE: {2} (both have BodySID {3}).", firstTable.EditUnitByteCount, n, this.m_indexTables[n].EditUnitByteCount, firstTable.BodySID));
+                                return retval;
+                            }
+                        }
+
+                        // CBE for this BodySID
+                        if (firstTable.IndexDuration == 0 && firstTable.IndexStartPosition == 0)
+                        {
+                            valResult.SetSuccess(string.Format("Constant Bytes per Element ({0} bytes) for the whole duration of BodySID {1}", firstTable.EditUnitByteCount, firstTable.BodySID));
+                            // TODO Check if the size of all compounds is the same??
+                            return retval;
                         }
                         else
                         {
-                            for (int n = 0; n < sameIds.IndexEntries.Count; n++)
-                            {
-                                if (ids.IndexEntries[n].KeyFrameOffset != sameIds.IndexEntries[n].KeyFrameOffset ||
-                                    ids.IndexEntries[n].StreamOffset != sameIds.IndexEntries[n].StreamOffset ||
-                                    ids.IndexEntries[n].TemporalOffset != sameIds.IndexEntries[n].TemporalOffset)
-                                {
-                                    valResult.AddError(string.Format("The indexentry {0} of Index {1} in partition {2} is not the same data as in partition {3}!", n, sameIds.IndexSID, sameIds.Partition.ToString(), ids.Partition.ToString()));
-                                    invalidCt++;
-                                    break;
-                                }
-                            }
+                            // Complicated, mixed file
+                            valResult.SetWarning(string.Format("Constant Bytes per Element ({0} bytes) but not for the whole file for BodySID {1}. Duration: {2}, StartOffset: {3}", firstTable.EditUnitByteCount, firstTable.BodySID, firstTable.IndexDuration, firstTable.IndexStartPosition));
+                            return retval;
                         }
                     }
                 }
-                counter++;
-            }
 
-
-            // First try to match system items
-            if (m_systemItems.Count != 0)
-            {
-                // For each index table segment				
-                totalSystemItems = m_systemItems.Count();
-                counter = 0;
-                this.Task = "Checking essence offsets";
-                foreach(MXFIndexTableSegment ids in this.m_indexTables)
+                // Check if there are multiple index table segments pointing to the same data
+                int invalidCt = 0;
+                int validCt = 0;
+                int totalSystemItems = 0;
+                int counter = 0;
+                this.Description = "Checking for duplicates";
+                foreach (MXFIndexTableSegment ids in this.m_indexTables)
                 {
-                    ReportProgress(75 + (counter * 20) / this.m_indexTables.Count());
+                    progress?.Report(new TaskReport(55 + (counter * 20) / this.m_indexTables.Count(), "Checking indices"));
 
                     // And all index entries
                     if (ids.IndexEntries != null)
                     {
-                        foreach (MXFEntryIndex index in ids.IndexEntries)
+                        List<MXFIndexTableSegment> sameStuff = this.m_indexTables.Where(a => a != ids && a.IndexSID == ids.IndexSID && a.IndexStartPosition == ids.IndexStartPosition).ToList();
+                        foreach (MXFIndexTableSegment sameIds in sameStuff)
                         {
-                            // Check if there is a system item at this offset
-                            long searchIndex = (long)(index.StreamOffset);
-                            MXFSystemItem si = this.m_systemItems.Where(a => a.EssenceOffset == searchIndex).FirstOrDefault();
-                            if (si != null)
+                            if (sameIds.IndexEntries.Count != ids.IndexEntries.Count)
                             {
-                                // Yes, found
-                                validCt++;
-                                si.Indexed = true;
+                                valResult.AddError(string.Format("Index {0} in partition {1} is not the same length as in partition {2}!", sameIds.IndexSID, sameIds.Partition.ToString(), ids.Partition.ToString()));
+                                invalidCt++;
                             }
                             else
                             {
-                                // Not found
-                                valResult.AddError(string.Format("Index {0} not pointing to valid essence!", index.Index));
-                                invalidCt++;
+                                for (int n = 0; n < sameIds.IndexEntries.Count; n++)
+                                {
+                                    if (ids.IndexEntries[n].KeyFrameOffset != sameIds.IndexEntries[n].KeyFrameOffset ||
+                                        ids.IndexEntries[n].StreamOffset != sameIds.IndexEntries[n].StreamOffset ||
+                                        ids.IndexEntries[n].TemporalOffset != sameIds.IndexEntries[n].TemporalOffset)
+                                    {
+                                        valResult.AddError(string.Format("The indexentry {0} of Index {1} in partition {2} is not the same data as in partition {3}!", n, sameIds.IndexSID, sameIds.Partition.ToString(), ids.Partition.ToString()));
+                                        invalidCt++;
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
                     counter++;
                 }
-            }
-            else if (m_pictureItems.Count != 0)
-            {
-                // Now try to match the picture essences
 
-                // For each index table segment				
-                counter = 0;
-                totalSystemItems = m_pictureItems.Count();
-                this.Task = "Checking picture offsets";
-                foreach (MXFIndexTableSegment ids in this.m_indexTables)
+
+                // First try to match system items
+                if (m_systemItems.Count != 0)
                 {
-                    ReportProgress(75 + (counter * 20) / this.m_indexTables.Count());
-
-                    // And all index entries
-                    if (ids.IndexEntries != null)
+                    // For each index table segment				
+                    totalSystemItems = m_systemItems.Count();
+                    counter = 0;
+                    this.Description = "Checking essence offsets";
+                    foreach (MXFIndexTableSegment ids in this.m_indexTables)
                     {
-                        foreach (MXFEntryIndex index in ids.IndexEntries)
+                        progress?.Report(new TaskReport(75 + (counter * 20) / this.m_indexTables.Count(), "Checking system items"));
+
+                        // And all index entries
+                        if (ids.IndexEntries != null)
                         {
-                            // Check if there is a system item at this offset
-                            long searchIndex = (long)(index.StreamOffset);
-                            MXFEssenceElement ee = this.m_pictureItems.Where(a => a.EssenceOffset == searchIndex).FirstOrDefault();
-                            if (ee != null)
+                            foreach (MXFEntryIndex index in ids.IndexEntries)
                             {
-                                // Yes, found
-                                validCt++;
-                                ee.Indexed = true;
+                                // Check if there is a system item at this offset
+                                long searchIndex = (long)(index.StreamOffset);
+                                MXFSystemItem si = this.m_systemItems.Where(a => a.EssenceOffset == searchIndex).FirstOrDefault();
+                                if (si != null)
+                                {
+                                    // Yes, found
+                                    validCt++;
+                                    si.Indexed = true;
+                                }
+                                else
+                                {
+                                    // Not found
+                                    valResult.AddError(string.Format("Index {0} not pointing to valid essence!", index.Index));
+                                    invalidCt++;
+                                }
                             }
-                            else
+                        }
+                        counter++;
+                    }
+                }
+                else if (m_pictureItems.Count != 0)
+                {
+                    // Now try to match the picture essences
+
+                    // For each index table segment				
+                    counter = 0;
+                    totalSystemItems = m_pictureItems.Count();
+                    this.Description = "Checking picture offsets";
+                    foreach (MXFIndexTableSegment ids in this.m_indexTables)
+                    {
+                        progress?.Report(new TaskReport(75 + (counter * 20) / this.m_indexTables.Count(), ""));
+
+                        // And all index entries
+                        if (ids.IndexEntries != null)
+                        {
+                            foreach (MXFEntryIndex index in ids.IndexEntries)
                             {
-                                // Not found
-                                valResult.AddError(string.Format("Index {0} not pointing to a valid picture essence!", index.Index));
-                                invalidCt++;
+                                // Check if there is a system item at this offset
+                                long searchIndex = (long)(index.StreamOffset);
+                                MXFEssenceElement ee = this.m_pictureItems.Where(a => a.EssenceOffset == searchIndex).FirstOrDefault();
+                                if (ee != null)
+                                {
+                                    // Yes, found
+                                    validCt++;
+                                    ee.Indexed = true;
+                                }
+                                else
+                                {
+                                    // Not found
+                                    valResult.AddError(string.Format("Index {0} not pointing to a valid picture essence!", index.Index));
+                                    invalidCt++;
+                                }
                             }
                         }
                     }
                 }
-            }
-            else
-            {
-                valResult.SetError(string.Format("No system items and/or picture essences found (found {0} index table segments)", m_indexTables.Count));
-                return;
-            }
-
-
-            bool fError = false;
-            if (this.m_systemItems.Count() > 0)
-            {
-                if (this.m_systemItems.Count(a => !a.Indexed) != 0)
+                else
                 {
-                    // Hmm still some items left in the array
-                    valResult.SetError(string.Format("There are {0} essence elements (of the total {1}) that are not referenced in an index table!", this.m_systemItems.Count, totalSystemItems));
-                    fError = true;
+                    valResult.SetError(string.Format("No system items and/or picture essences found (found {0} index table segments)", m_indexTables.Count));
+                    return retval;
                 }
-            }
-            else if (this.m_pictureItems.Count() > 0)
-            {
-                if (this.m_pictureItems.Count(a => !a.Indexed) != 0)
+
+
+                bool fError = false;
+                if (this.m_systemItems.Count() > 0)
                 {
-                    // Hmm still some items left in the array
-                    valResult.SetError(string.Format("There are {0} essence elements (of the total {1}) that are not referenced in an index table!", this.m_pictureItems.Count, totalSystemItems));
-                    fError = true;
+                    if (this.m_systemItems.Count(a => !a.Indexed) != 0)
+                    {
+                        // Hmm still some items left in the array
+                        valResult.SetError(string.Format("There are {0} essence elements (of the total {1}) that are not referenced in an index table!", this.m_systemItems.Count, totalSystemItems));
+                        fError = true;
+                    }
                 }
-            }
+                else if (this.m_pictureItems.Count() > 0)
+                {
+                    if (this.m_pictureItems.Count(a => !a.Indexed) != 0)
+                    {
+                        // Hmm still some items left in the array
+                        valResult.SetError(string.Format("There are {0} essence elements (of the total {1}) that are not referenced in an index table!", this.m_pictureItems.Count, totalSystemItems));
+                        fError = true;
+                    }
+                }
 
 
-            if (!fError)
-            {
-                if (invalidCt > 0)
-                    valResult.SetError(string.Format("Found {0} index errors! There are {0} indices that are NOT pointing to valid essence data (valid {1})!", invalidCt, validCt));
-                else if (validCt > 0)
-                    valResult.SetSuccess(string.Format("Index table is valid! All {0} index entries point to valid essences!", validCt));
-                if (validCt == 0 && invalidCt == 0)
-                    valResult.SetError(string.Format("No valid indexes found in this file!"));
-            }
-            Log.ForContext<MXFValidatorIndex>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
+                if (!fError)
+                {
+                    if (invalidCt > 0)
+                        valResult.SetError(string.Format("Found {0} index errors! There are {0} indices that are NOT pointing to valid essence data (valid {1})!", invalidCt, validCt));
+                    else if (validCt > 0)
+                        valResult.SetSuccess(string.Format("Index table is valid! All {0} index entries point to valid essences!", validCt));
+                    if (validCt == 0 && invalidCt == 0)
+                        valResult.SetError(string.Format("No valid indexes found in this file!"));
+                }
+                Log.ForContext<MXFValidatorIndex>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
 
 
-            // Check system item range
-            if (this.m_systemItems.Count() > 0)
-            {
-                CheckUserDates(this.File, results);
-                CheckContinuityCounter(this.File, results);
-            }
-            ReportProgress(100);
-
+                // Check system item range
+                if (this.m_systemItems.Count() > 0)
+                {
+                   retval.AddRange(CheckUserDates(this.File));
+                   retval.AddRange(CheckContinuityCounter(this.File));
+                }
+                return retval;
+            }, ct);
+            return result;
         }
-
         private void FindIndexTablesSystemItemsEssenceElements()
         {
             // Find all index tables, system items and essence elements
-            this.Task = "Locating index tables, essence";
+            this.Description = "Locating index tables, essence";
 
             m_indexTables = this.File.GetDescendantsOfType<MXFIndexTableSegment>().ToList();
             m_systemItems = this.File.GetDescendantsOfType<MXFSystemItem>().ToList();
@@ -284,18 +291,18 @@ namespace Myriadbits.MXF
             }
         }
 
-        private void LoadAllPartitions()
-        {
-            // Load all partitions
-            this.Task = "Loading partitions";
-            List<MXFPartition> partitionsToLoad = this.File.Partitions.Where(a => !a.IsLoaded).ToList();
-            for (int n = 0; n < partitionsToLoad.Count(); n++)
-            {
-                int progress = (n * 50) / partitionsToLoad.Count();
-                ReportProgress(progress);
-                partitionsToLoad[n].Load();
-            }
-        }
+        //private void LoadAllPartitions()
+        //{
+        //    // Load all partitions
+        //    this.Description = "Loading partitions";
+        //    List<MXFPartition> partitionsToLoad = this.File.Partitions.Where(a => !a.IsLoaded).ToList();
+        //    for (int n = 0; n < partitionsToLoad.Count(); n++)
+        //    {
+        //        int progress = (n * 50) / partitionsToLoad.Count();
+        //        ReportProgress(progress);
+        //        partitionsToLoad[n].Load();
+        //    }
+        //}
 
 
         /// <summary>
@@ -303,8 +310,10 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="file"></param>
         /// <param name="results"></param>
-        protected void CheckUserDates(MXFFile file, List<MXFValidationResult> results)
+        protected List<MXFValidationResult> CheckUserDates(MXFFile file)
 		{
+            var retval = new List<MXFValidationResult>();
+
 			List<MXFSystemItem> items = this.m_systemItems.OrderBy(a => a.ContinuityCount).ToList();
 			if (items.Count > 1)
 			{
@@ -312,7 +321,7 @@ namespace Myriadbits.MXF
 				if (ts != null)
 				{
 					MXFValidationResult valResult = new MXFValidationResult("System Items");
-					results.Add(valResult); // And directly add the results
+                    retval.Add(valResult); // And directly add the results
 
 					MXFTimeStamp tsLast = null;
 					for (int n = 1; n < items.Count() - 1; n++) // Skip last one (always invalid??)
@@ -323,7 +332,7 @@ namespace Myriadbits.MXF
 							if (!items[n].UserDate.IsSame(ts))
 							{
 								valResult.SetError(string.Format("Invalid user date at offset {0} (was {1}, expected {2})!", items[n].Offset, items[n].UserDate, ts));
-								return;
+								return retval;
 							}
 							tsLast = items[n].UserDate;
 						}
@@ -332,9 +341,10 @@ namespace Myriadbits.MXF
 						valResult.SetSuccess(string.Format("UserDates are continious from {0} to {1}, at {2} fps!", items.First().UserDate, tsLast, ts.FrameRate));
 					else
 						valResult.SetSuccess(string.Format("UserDates are continious!"));
-				}
-			}
-		}
+                }
+            }
+            return retval;
+        }
 
 
 		/// <summary>
@@ -342,10 +352,11 @@ namespace Myriadbits.MXF
 		/// </summary>
 		/// <param name="file"></param>
 		/// <param name="results"></param>
-		protected void CheckContinuityCounter(MXFFile file, List<MXFValidationResult> results)
+		protected List<MXFValidationResult> CheckContinuityCounter(MXFFile file)
 		{
+            var retval = new List<MXFValidationResult>();
 			MXFValidationResult valResult = new MXFValidationResult("System Items");
-            results.Add(valResult); // And directly add the results
+            retval.Add(valResult); // And directly add the results
             
             // Check for continous range
             // Continuity count = modulo 65536 count as per SMPTE 326M.Note that the continuity
@@ -379,6 +390,8 @@ namespace Myriadbits.MXF
 			{
 				valResult.SetSuccess(string.Format("Continuity counter values are correct!"));
 			}
+
+            return retval;
         }
 
 	}

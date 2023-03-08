@@ -33,6 +33,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 using Myriadbits.MXF.Exceptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Myriadbits.MXF
 {
@@ -47,14 +48,16 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFFile : MXFObject
     {
-        private List<MXFValidationResult> m_results;
-
+        private List<MXFValidationResult> validationResults = new List<MXFValidationResult>();
         public FileInfo File { get; }
 
-        public List<MXFPartition> Partitions { get; set; }
+        public List<MXFPartition> Partitions { get; set; } = new List<MXFPartition>();
         public MXFRIP RIP { get; set; }
 
-        public List<MXFValidationResult> Results { get { return m_results; } }
+        public IReadOnlyList<MXFValidationResult> ValidationResults
+        {
+            get => validationResults;
+        }
 
         public List<Exception> ParsingExceptions { get; } = new List<Exception>();
         public MXFSystemItem FirstSystemItem { get; set; }
@@ -84,8 +87,6 @@ namespace Myriadbits.MXF
         private MXFFile(FileInfo fi)
         {
             this.File = fi;
-            this.Partitions = new List<MXFPartition>();
-            this.m_results = new List<MXFValidationResult>();
         }
 
         public static Task<MXFFile> CreateAsync(FileInfo fi, IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
@@ -247,36 +248,53 @@ namespace Myriadbits.MXF
             }
         }
 
-        public void ExecuteValidationTest(BackgroundWorker worker, bool extendedTest)
+        public async Task<List<MXFValidationResult>> ExecuteValidationTest(bool extendedTest, IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
+            List<MXFValidationResult> results = new List<MXFValidationResult>();
+
             // Reset results
-            this.m_results.Clear();
+            this.validationResults.Clear();
 
             // Execute validation tests
             List<MXFValidator> allTests = new List<MXFValidator>
             {
-                new MXFValidatorInfo(),
-                new MXFValidatorPartitions(),
-                new MXFValidatorRIP(),
-                new MXFValidatorKeys()
+                new MXFValidatorInfo(this),
+                new MXFValidatorPartitions(this),
+                new MXFValidatorRIP(this),
+                new MXFValidatorUL(this)
             };
 
             if (extendedTest)
             {
-                allTests.Add(new MXFValidatorIndex());
+                allTests.Add(new MXFValidatorIndex(this));
             }
             foreach (MXFValidator mxfTest in allTests)
             {
-                mxfTest.Initialize(this, worker);
-                mxfTest.ExecuteTest(ref m_results);
+                //mxfTest.Initialize(this, worker);
+                //validationResults.Add(mxfTest.ExecuteTest(ref m_results));
+                results.AddRange(await mxfTest.Validate(progress, ct));
             }
 
             if (!extendedTest)
             {
                 MXFValidationResult valResult = new MXFValidationResult("Index Table");
-                this.m_results.Add(valResult);
+                this.validationResults.Add(valResult);
                 valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
             }
+
+           
+            foreach (var ex in ParsingExceptions)
+            {
+                var r = new MXFValidationResult(ex.GetType().Name);
+                if(ex is KLVParsingException klvEx)
+                {
+                    r.Object = this.Descendants().Where(o => o.Offset == klvEx.Offset).FirstOrDefault();
+                }
+                r.SetError(ex.InnerException.Message);
+                results.Add(r);
+            }
+
+            return results;
         }
 
         private void ProcessAndAttachPacks(IEnumerable<MXFObject> packList)
