@@ -70,7 +70,7 @@ namespace Myriadbits.MXF
                 // Check if first index table is CBE
                 if (this.m_indexTables.Count == 0)
                 {
-                    valResult.SetError(string.Format("No index tables found!", m_indexTables.Count));
+                    valResult.SetWarning(string.Format("No index table segments found", m_indexTables.Count));
                     return retval;
                 }
 

@@ -29,26 +29,29 @@ namespace Myriadbits.MXF
 {
     public static class MXFFileExtensions
     {
+        public static IEnumerable<MXFPartition> GetPartitions(this MXFFile file)
+        {
+            return file.Descendants().OfType<MXFPartition>();
+        }
         public static MXFPartition GetHeader(this MXFFile file)
         {
             //TODO should we return all found elements or use single explicitly
-            return file.Partitions.SingleOrDefault(p => p.PartitionType == PartitionType.Header);
-
+            return file.GetPartitions().SingleOrDefault(p => p.PartitionType == PartitionType.Header);
         }
 
         public static MXFPartition GetFooter(this MXFFile file)
         {
-            return file.Partitions.SingleOrDefault(p => p.PartitionType == PartitionType.Footer);
+            return file.GetPartitions().SingleOrDefault(p => p.PartitionType == PartitionType.Footer);
         }
 
-        public static IEnumerable<MXFPartition> GetBodies(this MXFFile file)
+        public static IEnumerable<MXFPartition> GetBodyPartitions(this MXFFile file)
         {
-            return file.Partitions.Where(p => p.PartitionType == PartitionType.Body);
+            return file.GetPartitions().Where(p => p.PartitionType == PartitionType.Body);
         }
 
         public static IEnumerable<MXFPartition> GetBodiesContainingEssences(this MXFFile file)
         {
-            return file.GetBodies().Where(b => b.Children.OfType<MXFEssenceElement>().Any());
+            return file.GetBodyPartitions().Where(b => b.Children.OfType<MXFEssenceElement>().Any());
         }
 
         public static MXFCDCIDescriptor GetPictureDescriptorInHeader(this MXFFile file)
@@ -79,12 +82,12 @@ namespace Myriadbits.MXF
             return file.Partitions.All(p => p.OperationalPattern == op1a);
         }
 
-        public static bool IsFooterClosedAndComplete(this MXFFile file)
+        public static bool IsFooterPartitionClosedAndComplete(this MXFFile file)
         {
             return file.GetFooter().IsPartitionClosedAndComplete();
         }
 
-        public static bool IsHeaderStatusClosedAndComplete(this MXFFile file)
+        public static bool IsHeaderPartitionClosedAndComplete(this MXFFile file)
         {
             return !(file.GetHeader().IsPartitionClosedAndComplete());
         }

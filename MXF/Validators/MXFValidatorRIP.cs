@@ -61,7 +61,7 @@ namespace Myriadbits.MXF
 
 				if (this.File.RIP == null)
 				{
-					valResult.SetError(string.Format("Error! No RIP found."));
+					valResult.SetWarning(string.Format("No RIP present"));
 					return retval;
 				}
 
@@ -92,7 +92,7 @@ namespace Myriadbits.MXF
 					return retval;
 				}
 
-				valResult.SetSuccess("Random Index Pack (RIP) is valid.");
+				valResult.SetSuccess("Random Index Pack (RIP) is valid.", File.RIP.Offset);
 				Log.ForContext<MXFValidatorRIP>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
 
 				return retval;

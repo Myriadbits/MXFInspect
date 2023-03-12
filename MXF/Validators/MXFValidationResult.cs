@@ -25,29 +25,29 @@ using System.Collections.Generic;
 
 namespace Myriadbits.MXF
 {
-	public enum MXFValidationSeverity
-	{
-		Success = 1,
-		Warning = 2,
-		Error = 3,
-		Info = 4,
-		Question = 5
-	};
+    public enum MXFValidationSeverity
+    {
+        Success = 1,
+        Warning = 2,
+        Error = 3,
+        Info = 4,
+        Question = 5
+    };
 
-	public class MXFValidationDetails
-	{
+    public class MXFValidationDetails
+    {
         public MXFValidationSeverity Severity { get; set; }
-		public long Offset { get; set; }
+        public long Offset { get; set; }
         public string Category { get; set; }
         public string Result { get; set; }
 
-		public MXFValidationDetails(MXFValidationSeverity severity, string result)
-		{
-			this.Severity = severity;
-			//this.Offset = offset;
-			//this.Category = category;
-			this.Result = result;
-		}
+        public MXFValidationDetails(MXFValidationSeverity severity, string result)
+        {
+            this.Severity = severity;
+            //this.Offset = offset;
+            //this.Category = category;
+            this.Result = result;
+        }
 
         public MXFValidationDetails(MXFValidationSeverity severity, long offset, string result)
         {
@@ -58,68 +58,82 @@ namespace Myriadbits.MXF
         }
     }
 
-	
-	public class MXFValidationResult : List<MXFValidationDetails>
-	{
-		public string Category { get; set; }
+
+    public class MXFValidationResult : List<MXFValidationDetails>
+    {
+        public string Category { get; set; }
         public long Offset { get; set; }
         public MXFValidationSeverity Severity { get; set; }
-		public string Result { get; set; }
+        public string Result { get; set; }
         public MXFObject Object { get; set; }
 
         public MXFValidationResult(string category)
-		{
-			this.Category = category;
-		}
-		public MXFValidationResult()
-		{
+        {
+            this.Category = category;
+        }
+        public MXFValidationResult()
+        {
 
-		}
+        }
 
-		public void SetSuccess(string result)
-		{
-			this.Severity = MXFValidationSeverity.Success;
-			this.Result = result;
-		}
+        public void SetSuccess(string result)
+        {
+            this.Severity = MXFValidationSeverity.Success;
+            this.Result = result;
+        }
 
-		public void SetWarning(string result)
-		{
-			this.Severity = MXFValidationSeverity.Warning;
-			this.Result = result;
-		}
+        public void SetSuccess(string result, long offset)
+        {
+            this.Severity = MXFValidationSeverity.Success;
+            this.Result = result;
+            this.Offset = offset;
+        }
 
-		public void SetError(string result)
-		{
-			this.Severity = MXFValidationSeverity.Error;
-			this.Result = result;
-		}
+        public void SetWarning(string result)
+        {
+            this.Severity = MXFValidationSeverity.Warning;
+            this.Result = result;
+        }
 
-		public void SetInfo(string result)
-		{
-			this.Severity = MXFValidationSeverity.Info;
-			this.Result = result;
-		}
+        public void SetError(string result)
+        {
+            this.Severity = MXFValidationSeverity.Error;
+            this.Result = result;
+        }
 
-		public void SetQuestion(string result)
-		{
-			this.Severity = MXFValidationSeverity.Question;
-			this.Result = result;
-		}
+        public void SetError(string result, long offset)
+        {
+            this.Severity = MXFValidationSeverity.Error;
+            this.Result = result;
+            this.Offset = offset;
+        }
 
-		public void AddSuccess(string result)
-		{
-			this.Add(new MXFValidationDetails(MXFValidationSeverity.Success, result));
-		}
+        public void SetInfo(string result)
+        {
+            this.Severity = MXFValidationSeverity.Info;
+            this.Result = result;
+        }
 
-		public void AddWarning(string result)
-		{
-			this.Add(new MXFValidationDetails(MXFValidationSeverity.Warning, result));
-		}
-	
-		public void AddError(string result)
-		{
-			this.Add(new MXFValidationDetails(MXFValidationSeverity.Error, result));
-		}
+        public void SetQuestion(string result)
+        {
+            this.Severity = MXFValidationSeverity.Question;
+            this.Result = result;
+        }
+
+        public void AddSuccess(string result)
+        {
+            this.Add(new MXFValidationDetails(MXFValidationSeverity.Success, result));
+        }
+
+        public void AddWarning(string result)
+        {
+            this.Add(new MXFValidationDetails(MXFValidationSeverity.Warning, result));
+        }
+
+        public void AddError(string result)
+        {
+            this.Add(new MXFValidationDetails(MXFValidationSeverity.Error, result));
+        }
 
         public void AddError(string result, long offset)
         {

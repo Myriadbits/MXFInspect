@@ -282,15 +282,20 @@ namespace Myriadbits.MXF
                 valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
             }
 
-           
+            // add exceptions
             foreach (var ex in ParsingExceptions)
             {
                 var r = new MXFValidationResult(ex.GetType().Name);
-                if(ex is KLVParsingException klvEx)
+                if (ex is KLVParsingException klvEx)
                 {
                     r.Object = this.Descendants().Where(o => o.Offset == klvEx.Offset).FirstOrDefault();
+                    r.SetError(ex.InnerException.Message, klvEx.Offset);
                 }
-                r.SetError(ex.InnerException.Message);
+                else
+                {
+                    r.SetError(ex.InnerException.Message);
+                }
+
                 results.Add(r);
             }
 

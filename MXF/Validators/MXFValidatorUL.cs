@@ -53,9 +53,14 @@ namespace Myriadbits.MXF
 
                 foreach (var klv in klvsWithUnknownUL)
                 {
-                    MXFValidationResult valResult = new MXFValidationResult("UL");
-                    valResult.SetWarning($"Unknown UL {klv.Key} @ {klv.Offset}.");
-                    valResult.Object = klv;
+                    MXFValidationResult valResult = new MXFValidationResult
+                    {
+                        Severity = MXFValidationSeverity.Warning,
+                        Category = "Universal Label",
+                        Result = $"Unknown UL: {klv.Key}",
+                        Offset = klv.Offset,
+                        Object = klv
+                    };
                     retval.Add(valResult);
                 }
                 Log.ForContext<MXFValidatorUL>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
