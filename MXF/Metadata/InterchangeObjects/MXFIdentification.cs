@@ -54,6 +54,7 @@ namespace Myriadbits.MXF
         public AUID ApplicationProductId { get; set; }
 
 		[Category(CATEGORYNAME)]
+        [TypeConverter(typeof(DateTimeTypeConverter))]
         [ULElement("urn:smpte:ul:060e2b34.01010102.07020110.02030000")]
         public DateTime? FileModificationDate { get; set; }
 
@@ -88,7 +89,7 @@ namespace Myriadbits.MXF
 				case 0x3C03: this.ApplicationVersion = reader.ReadProductVersion(); return true;
 				case 0x3C04: this.ApplicationVersionString = reader.ReadUTF16String(localTag.Length.Value); return true;
 				case 0x3C05: this.ApplicationProductId = reader.ReadAUID(); return true;
-				case 0x3C06: this.FileModificationDate = reader.ReadTimestamp(); return true;
+				case 0x3C06: this.FileModificationDate = reader.ReadTimeStamp(); return true;
 				case 0x3C07: this.ToolkitVersion = reader.ReadProductVersion(); return true;
 				case 0x3C08: this.ApplicationPlatform = reader.ReadUTF16String(localTag.Length.Value); return true;
 			}

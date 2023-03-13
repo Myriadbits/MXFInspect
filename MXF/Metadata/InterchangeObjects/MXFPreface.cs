@@ -60,6 +60,7 @@ namespace Myriadbits.MXF
         public bool? IsRIPPresent { get; set; }
 
         [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(DateTimeTypeConverter))]
         [ULElement("urn:smpte:ul:060e2b34.01010102.07020110.02040000")]
         public DateTime? FileLastModified { get; set; }
 
@@ -82,7 +83,7 @@ namespace Myriadbits.MXF
                     localTag.Value = this.ByteOrder;
                     return true;
                 case 0x3B02: 
-                    this.FileLastModified = reader.ReadTimestamp();
+                    this.FileLastModified = reader.ReadTimeStamp();
                     localTag.Value = this.FileLastModified;
                     return true;
                 case 0x3B03: 

@@ -78,6 +78,7 @@ namespace Myriadbits.MXF
         public MXFPosition? PeakOfPeaksPosition { get; set; }
 
         [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(DateTimeTypeConverter))]
         [ULElement("urn:smpte:ul:060e2b34.01010108.04020301.0d000000")]
         public DateTime? PeakEnvelopeTimestamp { get; set; }
 
@@ -126,7 +127,7 @@ namespace Myriadbits.MXF
                 case 0x3D2D: this.PeakChannels = reader.ReadUInt32(); return true;
                 case 0x3D2E: this.PeakFrames = reader.ReadUInt32(); return true;
                 case 0x3D2F: this.PeakOfPeaksPosition = reader.ReadUInt64(); return true;
-                case 0x3D30: this.PeakEnvelopeTimestamp = reader.ReadTimestamp(); return true;
+                case 0x3D30: this.PeakEnvelopeTimestamp = reader.ReadTimeStamp(); return true;
                 case 0x3D31: this.PeakEnvelopeData = reader.ReadBytes((int)localTag.Length.Value); return true;
             }
             return base.ParseLocalTag(reader, localTag);

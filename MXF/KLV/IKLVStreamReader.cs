@@ -41,7 +41,7 @@ namespace Myriadbits.MXF.KLV
         UMID ReadUMIDKey();
         UUID ReadUUID();
         MXFRational ReadRational();
-        DateTime ReadTimestamp();
+        DateTime ReadTimeStamp();
         MXFProductVersion ReadProductVersion();
         MXFUserDataMode ReadUserDataMode();
         MXFChannelStatusMode ReadChannelstatusMode();

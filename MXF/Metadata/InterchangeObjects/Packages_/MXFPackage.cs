@@ -41,10 +41,12 @@ namespace Myriadbits.MXF
         public string PackageName { get; set; }
 
         [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(DateTimeTypeConverter))]
         [ULElement("urn:smpte:ul:060e2b34.01010102.07020110.02050000")]
         public DateTime? ModifiedDate { get; set; }
 
         [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(DateTimeTypeConverter))]
         [ULElement("urn:smpte:ul:060e2b34.01010102.07020110.01030000")]
         public DateTime? CreationDate { get; set; }
 
@@ -75,10 +77,10 @@ namespace Myriadbits.MXF
                     localTag.AddChildren(reader.GetReferenceSet<MXFTrack>("Track", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x4404:
-                    this.ModifiedDate = reader.ReadTimestamp(); 
+                    this.ModifiedDate = reader.ReadTimeStamp(); 
                     return true;
                 case 0x4405:
-                    this.CreationDate = reader.ReadTimestamp(); 
+                    this.CreationDate = reader.ReadTimeStamp(); 
                     return true;
                 case 0x4406:
                     localTag.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageUserComment", localTag.Offset, localTag.Length.Value));

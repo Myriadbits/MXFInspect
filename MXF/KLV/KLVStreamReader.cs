@@ -234,7 +234,7 @@ namespace Myriadbits.MXF.KLV
         /// <summary>
         /// Reads a timestamp
         /// </summary>
-        public DateTime ReadTimestamp()
+        public DateTime ReadTimeStamp()
         {
             UInt16 year = this.ReadUInt16();
             byte month = this.ReadByte();
@@ -242,16 +242,8 @@ namespace Myriadbits.MXF.KLV
             byte hour = this.ReadByte();
             byte minute = this.ReadByte();
             byte second = this.ReadByte();
-            byte millisecond = this.ReadByte();
-            try
-            {
-                return new DateTime(year, month, day, hour, minute, second, millisecond);
-            }
-            catch (Exception ex)
-            {
-                Log.ForContext<KLVStreamReader>().Error(ex, $"Exception occured during parsing of timestamp @{this.BaseStream.Position}:");
-                return new DateTime();
-            }
+            int millisecond = this.ReadByte() * 4;
+            return new DateTime(year, month, day, hour, minute, second, millisecond);
         }
 
         /// <summary>
