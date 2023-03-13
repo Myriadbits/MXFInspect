@@ -79,7 +79,7 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.07020103.010a0000")]
-        public UInt64? IndexStartPosition { get; set; }
+        public MXFPosition? IndexStartPosition { get; set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.07020201.01020000")]
