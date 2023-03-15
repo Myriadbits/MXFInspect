@@ -28,6 +28,8 @@ namespace Myriadbits.MXF.Identifiers
 {
     public class SMPTEEssenceRegisterComparer : IEqualityComparer<ByteArray>
     {
+        private const byte WILDCARD_BYTE = 0x7f;
+
         public bool Equals(ByteArray x, ByteArray y)
         {
             return IsWildCardEqual(x, y);
@@ -35,7 +37,7 @@ namespace Myriadbits.MXF.Identifiers
 
         public int GetHashCode(ByteArray obj)
         {
-            // TODO think about hashing, but at the moment du to dictionary size let's keep it simple
+            // TODO think about hashing, but at the moment due to dictionary size let's keep it simple
             return 0;
         }
 
@@ -45,7 +47,7 @@ namespace Myriadbits.MXF.Identifiers
 
             for (int i = 0; i < smallerLength; i++)
             {
-                if (b1[i] == 0x7F || b2[i] == 0x7F)
+                if (b1[i] == WILDCARD_BYTE || b2[i] == WILDCARD_BYTE)
                 {
                     continue;
                 }
