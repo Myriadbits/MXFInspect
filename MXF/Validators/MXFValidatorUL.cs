@@ -32,14 +32,14 @@ using System.Threading.Tasks;
 namespace Myriadbits.MXF
 {
     public class MXFValidatorUL : MXFValidator
-	{
+    {
         public MXFValidatorUL(MXFFile file) : base(file)
         {
 
         }
 
-		public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
-		{
+        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        {
             List<MXFValidationResult> result = await Task.Run(() =>
             {
                 this.Description = "Checking MXF Keys";
@@ -48,8 +48,11 @@ namespace Myriadbits.MXF
 
                 var klvsWithUnknownUL = this.File.Descendants()
                                                 .OfType<MXFPack>()
-                                                .Where(klv => klv.Key.SMPTEInformation == null)
-                                                .OrderBy(klv => klv.Offset);
+                                                .Where(klv => klv.Key.SMPTEInformation == null);
+
+                klvsWithUnknownUL = klvsWithUnknownUL
+                                        .Except(klvsWithUnknownUL.OfType<MXFPackageMetaData>())
+                                        .Except(klvsWithUnknownUL.OfType<MXFSystemItem>());
 
                 foreach (var klv in klvsWithUnknownUL)
                 {
@@ -57,10 +60,15 @@ namespace Myriadbits.MXF
                     {
                         Severity = MXFValidationSeverity.Warning,
                         Category = "Universal Label",
-                        Result = $"Unknown UL: {klv.Key}",
+                        Result = $"Unknown Universal Label: {klv.Key}",
                         Offset = klv.Offset,
                         Object = klv
                     };
+
+                    if (klv.Key.IdentifiesPrivatelyRegisteredUL())
+                    {
+                        valResult.Result = $"Privately Registered Universal Label: {klv.Key}";
+                    }
                     retval.Add(valResult);
                 }
                 Log.ForContext<MXFValidatorUL>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
@@ -69,5 +77,5 @@ namespace Myriadbits.MXF
 
             return result;
         }
-	}
+    }
 }

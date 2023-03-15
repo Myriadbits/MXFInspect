@@ -29,12 +29,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace Myriadbits.MXF
 {
 
     /// <summary>
-    /// Create the correct MXF (sub) object 
+    /// Create the correct MXF pack 
     /// </summary>
     public class MXFPackFactory
     {
@@ -292,8 +293,22 @@ namespace Myriadbits.MXF
             {
                 return new MXFLocalSet(pack);
             }
+            else if (pack.Key.IdentifiesEssence())
+            {
+                return new MXFEssenceElement(pack);
+            }
+            else if (pack.Key.IdentifiesPrivatelyRegisteredUL())
+            {
+                pack.Key.Name = $"Privately Registered UL";
+                return pack;
+            }
             else
             {
+                if (pack.Key.Name == null)
+                {
+                    string desc = Helper.GetAttributeOfType<DescriptionAttribute>(pack.Key.CategoryDesignator).Description;
+                    pack.Key.Name = $"{desc} - {pack.Key}";
+                }
                 return pack;
             }
         }

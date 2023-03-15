@@ -56,6 +56,8 @@ namespace Myriadbits.MXF
                     MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
                     valResult.Category = "Track Info";
                     valResult.SetInfo(this.File.GetTrackInfo(t));
+                    valResult.Offset = t.Offset;
+                    valResult.Object = t;
                     retval.Add(valResult); // And directly add the results
                 }
                 Log.ForContext<MXFValidatorInfo>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");

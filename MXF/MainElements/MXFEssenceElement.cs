@@ -31,7 +31,7 @@ namespace Myriadbits.MXF
     {
         private const string CATEGORYNAME = "EssenceElement";
 
-        private static readonly Dictionary<int, string> essenceTypes = new Dictionary<int, string>()
+        private static readonly IDictionary<int, string> essenceTypes = new Dictionary<int, string>()
         {
             {0x05, "CP Picture (SMPTE 326M)"},
             {0x06, "CP Sound (SMPTE 326M)"},
@@ -73,7 +73,6 @@ namespace Myriadbits.MXF
         public MXFEssenceElement(MXFPack pack)
             : base(pack)
         {
-            this.Key.Name ??= "EssenceElement";
             if (essenceTypes.TryGetValue(this.Key[12], out string itemType))
             {
                 this.EssenceType = itemType;
@@ -82,6 +81,12 @@ namespace Myriadbits.MXF
             {
                 this.EssenceType = "<unknown>";
             }
+
+            if(this.Key.Name == null)
+            {
+                this.Key.Name = $"EssenceElement - {this.EssenceType}";
+            }
+
             this.IsPicture = (this.Key[12] == 0x05 || this.Key[12] == 0x15);
             this.ElementCount = this.Key[13];
             this.ElementType = this.Key[14];
@@ -92,11 +97,11 @@ namespace Myriadbits.MXF
         {
             if(ElementCount > 1)
             {
-                return $"{this.Key.Name ?? this.EssenceType} ch={ElementNumber} [len {this.Length.Value}]";
+                return $"{this.Key.Name} ch={ElementNumber} [len {this.Length.Value}]";
             }
             else
             {
-                return $"{this.Key.Name ?? this.EssenceType} [len {this.Length.Value}]";
+                return $"{this.Key.Name} [len {this.Length.Value}]";
             }
         }
     }

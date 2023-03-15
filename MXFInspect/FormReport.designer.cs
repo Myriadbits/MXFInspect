@@ -168,7 +168,6 @@
             this.tabValidationReport.TabIndex = 0;
             this.tabValidationReport.Text = "Validation Report";
             this.tabValidationReport.UseVisualStyleBackColor = true;
-            this.tabValidationReport.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // prbProcessing
             // 

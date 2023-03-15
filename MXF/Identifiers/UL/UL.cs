@@ -118,6 +118,17 @@ namespace Myriadbits.MXF.Identifiers
                 RegistryDesignator == ULRegistries.LocalSet_2Bytes_2Bytes;
         }
 
+        public bool IdentifiesEssence()
+        {
+            return CategoryDesignator == ULCategories.Elements &&
+                RegistryDesignator == ULRegistries.EssenceDictionaries;
+        }
+
+        public bool IdentifiesPrivatelyRegisteredUL()
+        {
+            return this[8] == 0x0e;
+        }
+
         public override string ToString()
         {
             if (SMPTEInformation?.Name != null)
@@ -303,6 +314,7 @@ namespace Myriadbits.MXF.Identifiers
                     break;
             }
         }
+
 
     }
 

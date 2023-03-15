@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public class QuickInfo
+    public class MXFQuickInfo
     {
         public readonly MXFFile mxfFile;
 
@@ -53,7 +53,7 @@ namespace Myriadbits.MXF
 
         public int? TrackCount {get; }
 
-        public long? EditUnitsCount { get; }
+        public MXFLength? EditUnitsCount { get; }
 
         public int? PartitionsCount { get; }
 
@@ -67,7 +67,7 @@ namespace Myriadbits.MXF
 
         MXFTimeStamp LastSystemItemTimeStamp { get; }
 
-        public QuickInfo(MXFFile file)
+        public MXFQuickInfo(MXFFile file)
         {
             mxfFile = file;
             FilePathName = file.File.FullName;
@@ -80,10 +80,15 @@ namespace Myriadbits.MXF
             ApplicationVersion = file.Descendants().OfType<MXFIdentification>()?.FirstOrDefault()?.ApplicationVersion;
             LastModified = file.Descendants().OfType<MXFIdentification>()?.FirstOrDefault()?.FileModificationDate;
             TrackCount = file.Descendants().OfType<MXFMaterialPackage>()?.FirstOrDefault()?.Children?.OfType<MXFTrack>()?.Count();
-            // EditUnitsCount
+
             PartitionsCount = file.Descendants().OfType<MXFPartition>()?.Count();
-            MXFTimecodeComponent timecodePack = file.Descendants().OfType<MXFMaterialPackage>()?.FirstOrDefault()?
-                                                    .Descendants()?.OfType<MXFTimecodeComponent>()?.FirstOrDefault();
+
+            var materialPackageLObj = file.LogicalTreeRoot.FirstOrDefaultDescendantOfWrappedType<MXFMaterialPackage>();
+
+            TrackCount = materialPackageLObj.DescendantsOfWrappedType<MXFTimelineTrack>().Count();
+
+            var timecodePack = materialPackageLObj?.FirstOrDefaultDescendantOfWrappedType<MXFTimecodeComponent>()?.UnWrapAs<MXFTimecodeComponent>();
+            EditUnitsCount = timecodePack?.Duration;
             SourceStartTimeCode = timecodePack?.StartTimecode;
             TimeCodeBase = timecodePack?.FramesPerSecond;
             DropFrame = timecodePack?.DropFrame;
@@ -102,7 +107,7 @@ namespace Myriadbits.MXF
             retval.Add("App. Supplier", ApplicationSupplierName ?? string.Empty);
             retval.Add("App. Name", ApplicationName ?? string.Empty);
             retval.Add("App. Version", ApplicationVersion?.ToString() ?? string.Empty);
-            retval.Add("Last modified", LastModified.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"));
+            retval.Add("Last modified", LastModified?.ToString("yyyy'-'MM'-'dd'  'HH':'mm':'ss'.'fff"));
             retval.Add("Track Count", TrackCount?.ToString() ?? string.Empty);
             retval.Add("Edit Units Count", EditUnitsCount?.ToString() ?? string.Empty);
             retval.Add("Partition Count", PartitionsCount?.ToString() ?? string.Empty);

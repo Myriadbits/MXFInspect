@@ -23,11 +23,14 @@
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
+using Serilog;
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
@@ -35,56 +38,23 @@ namespace Myriadbits.MXFInspect
     public partial class FormReport : Form
     {
         private readonly MXFFile mxfFile = null;
-        
+
         public FormReport(MXFFile file)
         {
             InitializeComponent();
-            mxfFile = file;
-
+            if (file != null)
+            {
+                mxfFile = file;
+            }
+            else throw new ArgumentNullException(nameof(file));
         }
 
-        private void ReportForm_Load(object sender, EventArgs e)
+        private async void ReportForm_Load(object sender, EventArgs e)
         {
             InitValidationResultTreeListView();
-            InitQuickInfoListView();
+            PopulateQuickInfoListView();
+            await ValidateMXFFile();
         }
-
-        private void InitQuickInfoListView()
-        {
-            try
-            {
-                var qi = new QuickInfo(mxfFile);
-                olvQuickInfo.SetObjects(qi.ToKeyValue());
-                olvQuickInfo.AutoResizeColumns();
-            }
-            catch
-            {
-                // TODO
-            }
-        }
-
-        private void DisplayFileInfo()
-        {
-            StringBuilder summary = new StringBuilder();
-            int errorCnt = 0;
-            int warningCnt = 0;
-            if (this.mxfFile != null)
-            {
-                errorCnt = this.mxfFile.ValidationResults.Count(a => a.Severity == MXFValidationSeverity.Error);
-                warningCnt = this.mxfFile.ValidationResults.Count(a => a.Severity == MXFValidationSeverity.Warning);
-                if (errorCnt == 0 && warningCnt == 0)
-                    summary.AppendLine(string.Format("There are no errors found, file seems to be ok!"));
-                else
-                    summary.AppendLine(string.Format("Found {0} errors and {1} warnings!", errorCnt, warningCnt));
-                summary.AppendLine(string.Format("(Double click on an item to see more details)"));
-            }
-            else
-            {
-                summary.AppendLine(string.Format("ERROR WHILE PARSING THE MXF FILE"));
-            }
-        }
-
-
 
         private void InitValidationResultTreeListView()
         {
@@ -145,28 +115,43 @@ namespace Myriadbits.MXFInspect
                 //this.tlvResults.TreeColumnRenderer.LinePen = pen;
                 this.tlvValidationResults.TreeColumnRenderer.IsShowLines = false;
                 this.tlvValidationResults.TreeColumnRenderer.UseTriangles = true;
-
-
             }
         }
 
-        private string GetFileInfo()
+        private void PopulateQuickInfoListView()
         {
+            try
+            {
+                var qi = new MXFQuickInfo(mxfFile);
+                olvQuickInfo.SetObjects(qi.ToKeyValue());
+                olvQuickInfo.AutoResizeColumns();
+            }
+            catch (Exception ex)
+            {
+                Log.ForContext<FormReport>().Error(ex, $"Exception occured while showing quick info:");
+                MessageBox.Show(ex.Message, "Error while showing quick info");
+            }
+        }
+
+        private void DisplayFileInfo()
+        {
+            StringBuilder sb = new StringBuilder();
+            int errorCnt = 0;
+            int warningCnt = 0;
             if (this.mxfFile != null)
             {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine(string.Format("Filename: {0}", this.mxfFile.File.FullName));
-                sb.AppendLine(string.Format("File size: {0:0.00} Mb", (this.mxfFile.File.Length) / (1024 * 1024)));
-                sb.AppendLine(string.Format("Number of partitions: {0}", this.mxfFile.PartitionCount));
-                if (this.mxfFile.RIP != null)
-                    sb.AppendLine(string.Format("RIP Found (containing {0} entries)", this.mxfFile.RIPEntryCount));
-                if (this.mxfFile.FirstSystemItem != null)
-                    sb.AppendLine(string.Format("First system item time: {0}", this.mxfFile.FirstSystemItem.UserDateFullFrameNb));
-                if (this.mxfFile.LastSystemItem != null)
-                    sb.AppendLine(string.Format("Last system item time: {0}", this.mxfFile.LastSystemItem.UserDateFullFrameNb));
-                return sb.ToString();
+                errorCnt = this.mxfFile.ValidationResults.Count(a => a.Severity == MXFValidationSeverity.Error);
+                warningCnt = this.mxfFile.ValidationResults.Count(a => a.Severity == MXFValidationSeverity.Warning);
+                if (errorCnt == 0 && warningCnt == 0)
+                    sb.AppendLine(string.Format("There are no errors found, file seems to be ok!"));
+                else
+                    sb.AppendLine(string.Format("Found {0} errors and {1} warnings!", errorCnt, warningCnt));
+                sb.AppendLine(string.Format("(Double click on an item to see more details)"));
             }
-            return "";
+            else
+            {
+                sb.AppendLine(string.Format("ERROR WHILE PARSING THE MXF FILE"));
+            }
         }
 
         /// <summary>
@@ -186,51 +171,53 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         private async void btnExecuteAllTests_Click(object sender, EventArgs e)
         {
-            if (this.mxfFile != null)
-            {
-                this.tlvValidationResults.ClearObjects();
-                this.prbProcessing.Visible = true;
-                this.Enabled = false;
+            await ValidateMXFFile();
+        }
 
-                var cts = new CancellationTokenSource();
-                var progressHandler = new Progress<TaskReport>(this.ReportProgress);
+        private async Task ValidateMXFFile()
+        {
+            this.tlvValidationResults.ClearObjects();
+            this.prbProcessing.Visible = true;
+            this.Enabled = false;
 
-                var results = await mxfFile.ExecuteValidationTest(true, progressHandler, cts.Token);
+            var cts = new CancellationTokenSource();
+            var progressHandler = new Progress<TaskReport>(this.ReportProgress);
 
-                // display the one with biggest offset first, then autoresize columns executes
-                // correctly and finally reverse order, i.e. lowest offset first
-                this.tlvValidationResults.SetObjects(results.OrderByDescending(vr => vr.Offset));
-                this.tlvValidationResults.AutoResizeColumns();
-                this.tlvValidationResults.PrimarySortColumn = colOffset;
-                this.tlvValidationResults.PrimarySortOrder = SortOrder.Ascending;
-                this.tlvValidationResults.Sort();
+            var results = await mxfFile.ExecuteValidationTest(true, progressHandler, cts.Token);
 
-                this.prbProcessing.Visible = false;
-                this.Enabled = true;
+            // display the one with biggest offset first, then autoresize columns executes
+            // correctly and finally reverse order, i.e. lowest offset first
+            this.tlvValidationResults.SetObjects(results.OrderByDescending(vr => vr.Offset));
+            this.tlvValidationResults.AutoResizeColumns();
+            this.tlvValidationResults.PrimarySortColumn = colOffset;
+            this.tlvValidationResults.PrimarySortOrder = SortOrder.Ascending;
+            this.tlvValidationResults.Sort();
 
-                DisplayFileInfo();
-            }
+            this.prbProcessing.Visible = false;
+            this.Enabled = true;
         }
 
         private void tlvResults_SelectionChanged(object sender, EventArgs e)
         {
-            var selResult = tlvValidationResults.SelectedObject as MXFValidationResult;
-
-            if (selResult?.Object != null)
+            var frmMain = this.Owner as FormMain;
+            if (tlvValidationResults.SelectedObject is MXFValidationResult selResult)
             {
-                var frmMain = this.Owner as FormMain;
-                frmMain.ActiveView.RevealAndSelect(selResult?.Object);
+                if (selResult.Object != null)
+                {
+                    frmMain.ActiveView.RevealAndSelect(selResult?.Object);
+                }
+                else
+                {
+                    var selObj = this.mxfFile.Descendants().Where(d => d.Offset == selResult.Offset).FirstOrDefault();
+                    frmMain.ActiveView.RevealAndSelect(selObj);
+                }
             }
         }
 
-        public void ReportProgress(TaskReport report)
+        private void ReportProgress(TaskReport report)
         {
             this.prbProcessing.SetValueFast(report.Percent);
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

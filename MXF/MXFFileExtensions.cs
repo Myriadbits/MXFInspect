@@ -159,23 +159,6 @@ namespace Myriadbits.MXF
                     .UnWrapAs<MXFSequence>();
         }
 
-
-        public static IEnumerable<MXFLogicalObject> OfWrappedType<T>(this IEnumerable<MXFLogicalObject> lObjects)
-        {
-            return lObjects.Where(o => o.Object is T);
-        }
-
-        public static T UnWrapAs<T>(this MXFLogicalObject lObj) where T : MXFObject
-        {
-            return lObj.Object as T;
-        }
-
-        public static IEnumerable<T> UnWrapAs<T>(this IEnumerable<MXFLogicalObject> lObjs) where T : MXFObject
-        {
-            return lObjs.Select(o => o.Object as T);
-        }
-
-
         public static IEnumerable<T> GetDescendantsOfType<T>(this MXFFile file) where T : MXFObject
         {
             file.LoadAllParitions();

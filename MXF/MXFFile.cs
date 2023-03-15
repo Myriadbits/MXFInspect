@@ -228,14 +228,14 @@ namespace Myriadbits.MXF
                     MXFSequence seq = genericTrack.GetFirstMXFSequence();
                     if (seq != null && seq.DataDefinition != null && seq.DataDefinition is UL ul)
                     {
-                        sb.Append(seq.DataDefinition.ToString());
+                        sb.Append((seq.DataDefinition as UL)?.Name);
                     }
 
                     if (genericTrack is MXFTimelineTrack timeLineTrack)
                     {
-                        sb.Append(string.Format(" @ {0}, ", timeLineTrack.EditRate));
+                        sb.Append($" @ {timeLineTrack.EditRate.ToString(true)}");
                     }
-                    sb.Append(string.Format(@"""{0}"", ", genericTrack.TrackName));
+                    sb.Append($" {{{genericTrack.TrackName}}}");
 
                     return sb.ToString();
 

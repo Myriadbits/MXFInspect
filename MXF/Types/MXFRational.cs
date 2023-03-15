@@ -47,12 +47,17 @@ namespace Myriadbits.MXF
 			return string.Format("{0:.00} ({1}/{2})", this.Value, this.Num, this.Den);
 		}
 
-		/// <summary>
-		/// Checks whether two rationals are equal?
-		/// </summary>
-		/// <param name="other">The other rational to be compared</param>
-		/// <returns>True if the two rationals are equal</returns>
-		public bool Equals(MXFRational other)
+        public string ToString(bool f)
+        {
+            return $"{this.Value:.00}";
+        }
+
+        /// <summary>
+        /// Checks whether two rationals are equal?
+        /// </summary>
+        /// <param name="other">The other rational to be compared</param>
+        /// <returns>True if the two rationals are equal</returns>
+        public bool Equals(MXFRational other)
 		{
 			if (ReferenceEquals(null, other)) return false;
 			if (ReferenceEquals(this, other)) return true;
