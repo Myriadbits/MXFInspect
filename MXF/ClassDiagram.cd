@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Myriadbits.MXF.Node&lt;T&gt;">
-    <Position X="10.25" Y="3.5" Width="1.5" />
+    <Position X="10.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAECAAAAAEQAAAAAAAAAAAIAAAAAEAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAECAAAAQEQAAAAAgAAAAAIAAAAAEAAAA=</HashCode>
       <FileName>Node\Node.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -18,7 +18,7 @@
   <Class Name="Myriadbits.MXF.MXFObject">
     <Position X="11.25" Y="6.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IgAAAAAAAAAAGAAEAgIAAAAAIAgIABAAiAAAAAAAgAQ=</HashCode>
+      <HashCode>IAAAAAAAAAAACAAEAgIAAAAAAAAAABAAiAAAAAAAgAA=</HashCode>
       <FileName>MXFObject.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -39,7 +39,7 @@
   <Class Name="Myriadbits.MXF.MXFLocalSet">
     <Position X="6.5" Y="17.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAEAAABAEAAgAAAAAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AggAAAAAIAAAAAAEAAABAAAAgAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Metadata\MXFLocalSet.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -67,7 +67,7 @@
   <Interface Name="Myriadbits.MXF.INode&lt;T&gt;">
     <Position X="7.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAECAAAAAEQAAAAAAAAAAAIAAAAAEAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAECAAAAAEQAAAAAgAAAAAIAAAAAEAAAA=</HashCode>
       <FileName>Node\INode.cs</FileName>
     </TypeIdentifier>
   </Interface>
