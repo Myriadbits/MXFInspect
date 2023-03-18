@@ -306,7 +306,7 @@ namespace Myriadbits.MXF
             {
                 if (pack.Key.Name == null)
                 {
-                    string desc = Helper.GetAttributeOfType<DescriptionAttribute>(pack.Key.CategoryDesignator).Description;
+                    string desc = Helper.GetAttributeOfType<DescriptionAttribute>(pack.Key.CategoryDesignator)?.Description ?? string.Empty;
                     pack.Key.Name = $"{desc} - {pack.Key}";
                 }
                 return pack;
