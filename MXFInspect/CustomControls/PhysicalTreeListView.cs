@@ -99,21 +99,6 @@ namespace Myriadbits.MXFInspect
             this.EnsureModelVisible(selObj);
         }
         
-        // TODO should this method really remain here? move it to the extensions class?
-        // TODO what if there are no partitions at all?
-        public MXFObject GetFirstPartition()
-        {
-            var mxfObjects = this.Objects.OfType<MXFObject>();
-            return mxfObjects
-                        .FirstOrDefault()?
-                        .Root()
-                        .Descendants()
-                        .OfType<MXFPartition>()
-                        .OrderBy(p => p.Offset)
-                        .FirstOrDefault();
-
-        }
-
         protected override void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
             if (e.Column == ColumnOffset)

@@ -180,11 +180,11 @@ namespace Myriadbits.MXFInspect
             try
             {
                 this.tlvPhysical.FillTree(this.File.Children.OrderBy(c => c.Offset));
-                this.tlvPhysical.RevealAndSelectObject(this.tlvPhysical.GetFirstPartition());
+                this.tlvPhysical.RevealAndSelectObject(this.File.GetPartitions().First());
                 this.tlvPhysical.HideFillers(this.FillerHidden);
                 this.tlvPhysical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-                if(this.File.LogicalTreeRoot != null)
+                if (this.File.LogicalTreeRoot != null)
                 {
                     var logicalList = new List<MXFLogicalObject>() { this.File.LogicalTreeRoot };
                     this.tlvLogical.FillTree(logicalList);

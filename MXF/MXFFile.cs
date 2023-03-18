@@ -70,7 +70,6 @@ namespace Myriadbits.MXF
             }
         }
 
-
         private MXFFile(FileInfo fi)
         {
             this.File = fi;
@@ -257,8 +256,6 @@ namespace Myriadbits.MXF
             }
             foreach (MXFValidator mxfTest in allTests)
             {
-                //mxfTest.Initialize(this, worker);
-                //validationResults.Add(mxfTest.ExecuteTest(ref m_results));
                 results.AddRange(await mxfTest.Validate(progress, ct));
             }
 
@@ -440,7 +437,6 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Loop through all resolvable items and try to find the object with a matching UUID 
         /// </summary>
-        /// <param name="parent"></param>
         /// <returns>the number of successfully resolved references</returns>  
         private int ResolveReferences()
         {

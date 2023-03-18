@@ -21,24 +21,13 @@
 //
 #endregion
 
-using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    // TODO remove log type
-    public enum MXFLogType
-    {
-        Info,
-        Warning,
-        Error
-    };
-
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public abstract class MXFObject : Node<MXFObject> //ILazyLoadable
     {
