@@ -68,7 +68,7 @@ namespace Myriadbits.MXFInspect
             }
 
             this.RebuildColumns();
-        }		
+        }
 
         protected override void Tree_FormatCell(object sender, FormatCellEventArgs e)
         {
@@ -88,8 +88,18 @@ namespace Myriadbits.MXFInspect
 
         protected override void CalculateOffsetMaxDigitCount()
         {
-            long maxOffset = this.Objects?.OfType<MXFLogicalObject>().FirstOrDefault()?.Root().Descendants().Max(o => o.Object.Offset) ?? 0;
-            maxDigitCount = Helper.GetDigitCount(maxOffset);
+            var logicalRoot = this.Objects?.OfType<MXFLogicalObject>()?.FirstOrDefault()?.Root();
+            if (logicalRoot != null)
+            {
+                var descendants = logicalRoot.Descendants();
+                if (descendants.Any())
+                {
+                    long maxOffset = descendants.Max(o => o.Object.Offset);
+                    maxDigitCount = Helper.GetDigitCount(maxOffset);
+                }
+                maxDigitCount = 0;
+            }
+            maxDigitCount = 0;
         }
     }
 }

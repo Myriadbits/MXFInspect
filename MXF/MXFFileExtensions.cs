@@ -31,11 +31,13 @@ namespace Myriadbits.MXF
     {
         public static IEnumerable<MXFPartition> GetPartitions(this MXFFile file)
         {
-            return file.Descendants().OfType<MXFPartition>();
+            var partitionRoot = file.Children.Last(obj => obj is not MXFRIP);
+            return partitionRoot?.Children.OfType<MXFPartition>();
         }
+
         public static MXFPartition GetHeader(this MXFFile file)
         {
-            //TODO should we return all found elements or use single explicitly
+            //TODO should we return all found elements or use single explicitly?
             return file.GetPartitions().SingleOrDefault(p => p.PartitionType == PartitionType.Header);
         }
 
@@ -73,13 +75,13 @@ namespace Myriadbits.MXF
 
         public static bool IsKAGSizeOfAllPartitionsEqual(this MXFFile file, uint size)
         {
-            return file.Partitions.All(p => p.KagSize == size);
+            return file.GetPartitions().All(p => p.KagSize == size);
         }
 
         public static bool AreAllPartitionsOP1a(this MXFFile file)
         {
             UL op1a = new UL(0x06, 0x0E, 0x2B, 0x34, 0x04, 0x01, 0x01, 0x01, 0x0D, 0x01, 0x02, 0x01, 0x01, 0x01, 0x09, 0x00);
-            return file.Partitions.All(p => p.OperationalPattern == op1a);
+            return file.GetPartitions().All(p => p.OperationalPattern == op1a);
         }
 
         public static bool IsFooterPartitionClosedAndComplete(this MXFFile file)
@@ -161,13 +163,13 @@ namespace Myriadbits.MXF
 
         public static IEnumerable<T> GetDescendantsOfType<T>(this MXFFile file) where T : MXFObject
         {
-            file.LoadAllParitions();
+            file.LoadAllPartitions();
             return file.Descendants().OfType<T>();
         }
 
-        public static void LoadAllParitions(this MXFFile file)
+        public static void LoadAllPartitions(this MXFFile file)
         {
-            foreach (MXFPartition p in file.Partitions)
+            foreach (MXFPartition p in file.GetPartitions())
             {
                 p.Load();
             }

@@ -24,7 +24,6 @@
 using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -33,7 +32,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 using Myriadbits.MXF.Exceptions;
-using System.ComponentModel.DataAnnotations;
 
 namespace Myriadbits.MXF
 {
@@ -51,7 +49,6 @@ namespace Myriadbits.MXF
         private List<MXFValidationResult> validationResults = new List<MXFValidationResult>();
         public FileInfo File { get; }
 
-        public List<MXFPartition> Partitions { get; set; } = new List<MXFPartition>();
         public MXFRIP RIP { get; set; }
 
         public IReadOnlyList<MXFValidationResult> ValidationResults
@@ -64,16 +61,6 @@ namespace Myriadbits.MXF
         public MXFSystemItem LastSystemItem { get; set; }
 
         public MXFLogicalObject LogicalTreeRoot { get; set; }
-
-        public int PartitionCount
-        {
-            get
-            {
-                if (this.Partitions == null)
-                    return 0;
-                return this.Partitions.Count;
-            }
-        }
 
         public int RIPEntryCount
         {
@@ -322,7 +309,6 @@ namespace Myriadbits.MXF
                         currentPartition.File = this;
                         currentPartition.PartitionNumber = partitionNumber++;
                         partitionRoot.AddChild(currentPartition);
-                        this.Partitions.Add(currentPartition);
                         break;
 
                     case MXFRIP rip:

@@ -65,9 +65,9 @@ namespace Myriadbits.MXF
 					return retval;
 				}
 
-				if (this.File.RIPEntryCount != this.File.PartitionCount)
+				if (this.File.RIPEntryCount != this.File.GetPartitions().Count())
 				{
-					valResult.SetError(string.Format("Error! Number of RIP entries is not equal to the number of partitions ({0} vs {1}).", this.File.RIPEntryCount, this.File.PartitionCount));
+					valResult.SetError(string.Format("Error! Number of RIP entries is not equal to the number of partitions ({0} vs {1}).", this.File.RIPEntryCount, this.File.GetPartitions().Count()));
 					return retval;
 				}
 
@@ -77,7 +77,7 @@ namespace Myriadbits.MXF
 					MXFEntryRIP rip = this.File.RIP.Children[n] as MXFEntryRIP;
 					if (rip != null)
 					{
-						MXFPartition part = this.File.Partitions.Where(a => (ulong)a.Offset == rip.PartitionOffset).FirstOrDefault();
+						MXFPartition part = this.File.GetPartitions().Where(a => (ulong)a.Offset == rip.PartitionOffset).FirstOrDefault();
 						if (part == null)
 						{
 							ripErrorCount++;

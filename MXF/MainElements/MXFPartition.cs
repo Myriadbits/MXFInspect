@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 
@@ -165,7 +166,7 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             var root = this.Root() as MXFFile;
-            int partitionCount = root?.PartitionCount ?? 0;
+            int partitionCount = root?.GetPartitions().Count() ?? 0;
             int digitCount = Helper.GetDigitCount(partitionCount);
             string partitionNumberPadded = this.PartitionNumber.ToString().PadLeft(digitCount, '0');
 
