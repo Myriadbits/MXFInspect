@@ -63,23 +63,23 @@ namespace Myriadbits.MXF
                 var (tag, size) = GetTag(reader);
                 var pos = reader.Position;
                 byteArray = reader.ReadBytes((int)size);
-
+                long childOffset = this.Offset + pos;
                 switch (tag)
                 {
                     
                     // Metadata link
                     case 0x80:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Metadata link", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Metadata link", childOffset, size));
                         break;
 
                     // SMPTE 12M time-code
                     case 0x81:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 12M time-code", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 12M time-code", childOffset, size));
                         break;
 
                     // SMPTE 309M date-time stamp
                     case 0x82:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 309M date-time stamp", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 309M date-time stamp", childOffset, size));
                         break;
 
                     // UMID
@@ -87,12 +87,12 @@ namespace Myriadbits.MXF
                         if (size == 64)
                         {
                             var umid = new ExtendedUMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<ExtendedUMID>(umid, "ExtendedUMID", pos, size));
+                            this.AddChild(new MXFWrapperObject<ExtendedUMID>(umid, "ExtendedUMID", childOffset, size));
                         }
                         else if (size == 32)
                         {
                             var umid = new UMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<UMID>(umid, "UMID", pos, size));
+                            this.AddChild(new MXFWrapperObject<UMID>(umid, "UMID", childOffset, size));
                         }
                         else
                         {
@@ -103,35 +103,35 @@ namespace Myriadbits.MXF
 
                     // MPEG-2 picture editing
                     case 0x84:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG-2 picture editing", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG-2 picture editing", childOffset, size));
                         break;
 
                     // 8-channel AES3 editing
                     case 0x85:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "8-channel AES3 editing", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "8-channel AES3 editing", childOffset, size));
                         break;
 
                     // Picture bit-stream splicing
                     case 0x86:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Picture bit-stream splicing", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Picture bit-stream splicing", childOffset, size));
                         break;
 
                     // MPEG decoder buffer delay
                     case 0x87:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG decoder buffer delay", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG decoder buffer delay", childOffset, size));
                         break;
 
                     // KLV metadata
                     case 0x88:
                         var ms = new MemoryStream(byteArray);
-                        var klvParser = new MXFPackParser(ms, this.Offset + pos);
+                        var klvParser = new MXFPackParser(ms, childOffset);
                         var pack = klvParser.GetNext();
                         this.AddChild(pack);
                         break;
 
                     // AES3 non-audio metadata
                     case 0x89:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "AES3 non-audio metadata", pos, size));
+                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "AES3 non-audio metadata", childOffset, size));
                         break;
 
                     default:
