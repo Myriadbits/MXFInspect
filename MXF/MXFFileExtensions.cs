@@ -29,13 +29,17 @@ namespace Myriadbits.MXF
 {
     public static class MXFFileExtensions
     {
-        public static IEnumerable<MXFPartition> GetPartitions(this MXFFile file)
+        public static MXFObject GetPartitionRoot (this MXFFile file)
         {
-            var partitionRoot = file.Children.Last(obj => obj is not MXFRIP);
-            return partitionRoot?.Children.OfType<MXFPartition>();
+            return file.Children.Last(obj => obj is not MXFRIP);
         }
 
-        public static MXFPartition GetHeader(this MXFFile file)
+        public static IEnumerable<MXFPartition> GetPartitions(this MXFFile file)
+        {
+            return file.GetPartitionRoot()?.Children.OfType<MXFPartition>();
+        }
+
+        public static MXFPartition GetHeaderPartition(this MXFFile file)
         {
             //TODO should we return all found elements or use single explicitly?
             return file.GetPartitions().SingleOrDefault(p => p.PartitionType == PartitionType.Header);
@@ -59,7 +63,7 @@ namespace Myriadbits.MXF
         public static MXFCDCIDescriptor GetPictureDescriptorInHeader(this MXFFile file)
         {
             return file
-                    .GetHeader()
+                    .GetHeaderPartition()
                     .Children
                     .OfType<MXFCDCIDescriptor>()
                     .SingleOrDefault();
@@ -68,7 +72,7 @@ namespace Myriadbits.MXF
         public static IEnumerable<MXFAES3PCMDescriptor> GetAudioEssenceDescriptorsInHeader(this MXFFile file)
         {
             return file
-                .GetHeader()
+                .GetHeaderPartition()
                 .Children
                 .OfType<MXFAES3PCMDescriptor>();
         }
@@ -91,7 +95,7 @@ namespace Myriadbits.MXF
 
         public static bool IsHeaderPartitionClosedAndComplete(this MXFFile file)
         {
-            return !(file.GetHeader().IsPartitionClosedAndComplete());
+            return !(file.GetHeaderPartition().IsPartitionClosedAndComplete());
         }
 
         public static bool IsPartitionClosedAndComplete(this MXFPartition p)
@@ -101,7 +105,7 @@ namespace Myriadbits.MXF
 
         public static bool AreEssencesInHeader(this MXFFile file)
         {
-            return !file.GetHeader().Children.OfType<MXFEssenceElement>().Any();
+            return !file.GetHeaderPartition().Children.OfType<MXFEssenceElement>().Any();
         }
 
         public static bool ISRIPPresent(this MXFFile file)

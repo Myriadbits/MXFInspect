@@ -25,6 +25,7 @@ using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Myriadbits.MXF
 {
@@ -50,6 +51,15 @@ namespace Myriadbits.MXF
             return obj is MXFEssenceElement;
         }
 
+        public static bool IsFooterPartition(this MXFPartition p)
+        {
+            return p.PartitionType == PartitionType.Footer;
+        }
+
+        public static bool IsHeaderPartition(this MXFPartition p)
+        {
+            return p.PartitionType == PartitionType.Header;
+        }
 
         public static bool IsIndexLike(this MXFObject obj)
         {
@@ -61,9 +71,19 @@ namespace Myriadbits.MXF
             return obj is MXFSystemItem;
         }
 
+        public static bool ContainsIndexTableSegments(this MXFObject obj)
+        {
+            return obj.Children.Any(c => c is MXFIndexTableSegment);
+        }
+
         public static bool IsMetadataLike(this MXFObject obj)
         {
             return obj is MXFMetadataBaseclass or MXFPackageMetaData or MXFPrimerPack;
+        }
+
+        public static bool IsHeaderMetadataLike(this MXFObject obj)
+        {
+            return obj is MXFMetadataBaseclass or MXFPrimerPack;
         }
 
         public static bool IsIndexCollection(this MXFObject obj)

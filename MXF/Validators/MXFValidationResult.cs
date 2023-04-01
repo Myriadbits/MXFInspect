@@ -37,7 +37,7 @@ namespace Myriadbits.MXF
     public class MXFValidationDetails
     {
         public MXFValidationSeverity Severity { get; set; }
-        public long Offset { get; set; }
+        public long Offset { get; set; } = 0;
         public string Category { get; set; }
         public string Result { get; set; }
 
@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
     public class MXFValidationResult : List<MXFValidationDetails>
     {
         public string Category { get; set; }
-        public long Offset { get; set; }
+        public long Offset { get { return Object?.Offset ?? 0; } set { } }
         public MXFValidationSeverity Severity { get; set; }
         public string Result { get; set; }
         public MXFObject Object { get; set; }

@@ -24,11 +24,13 @@
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Reflection.PortableExecutable;
+using System.Diagnostics.Metrics;
+using System.Timers;
 
 namespace Myriadbits.MXF
 {
@@ -39,6 +41,145 @@ namespace Myriadbits.MXF
         {
 
         }
+
+        public bool AnyPartitionsPresent()
+        {
+            return this.File.GetPartitions().Any();
+        }
+
+        public bool IsFooterPartitionPresent()
+        {
+            var lastPartition = this.File.GetPartitions()?.Last();
+            return lastPartition != null && lastPartition.IsFooterPartition();
+        }
+
+        public bool IsHeaderPartitionPresent()
+        {
+            var firstPartition = this.File.GetPartitions()?.First();
+            return firstPartition != null && firstPartition.IsHeaderPartition();
+        }
+
+        public bool IsHeaderPartitionUnique()
+        {
+            return this.File.GetPartitions().Where(p => p.IsHeaderPartition()).Count() == 1;
+        }
+
+        public bool IsFooterPartitionUnique()
+        {
+            return this.File.GetPartitions().Where(p => p.IsFooterPartition()).Count() == 1;
+        }
+
+        public bool AreBodyPartitionsPresent()
+        {
+            return this.File.GetBodyPartitions().Count() > 0;
+        }
+
+        public bool AreIndexTableSegmentsInBodyPartitions()
+        {
+            return this.File.GetBodyPartitions()?.Where(p => p.ContainsIndexTableSegments()).Any() ?? false;
+        }
+
+        public bool HeaderPartitionContainsIndexTableSegments()
+        {
+            if (IsHeaderPartitionPresent() && IsHeaderPartitionUnique())
+            {
+                return this.File.GetPartitions()?.First().ContainsIndexTableSegments() ?? false;
+            }
+            else return false;
+        }
+
+        public bool HeaderPartitionContainsMetadata()
+        {
+            if (IsHeaderPartitionPresent() && IsHeaderPartitionUnique())
+            {
+                return this.File.GetPartitions()?.First().Children.Any(c => c.IsMetadataLike()) ?? false;
+            }
+            else return false;
+        }
+
+        public bool IsOperationalPatternConsistent()
+        {
+            if (AnyPartitionsPresent())
+            {
+                return this.File.GetPartitions().GroupBy(p => p.OperationalPattern).Count() == 1;
+            }
+            else return false;
+        }
+
+        public bool FooterPartitionContainsIndexTableSegments()
+        {
+            if (IsFooterPartitionPresent() && IsFooterPartitionUnique())
+            {
+                return this.File.GetPartitions()?.Last().Children.Where(c => c is MXFIndexTableSegment).Any() ?? false;
+            }
+            else return false;
+        }
+
+        public bool IsThisPartitionCorrect(MXFPartition p)
+        {
+            return (ulong)p.Offset == p.ThisPartition;
+        }
+
+        public bool IsHeaderByteCountCorrect(MXFPartition p)
+        {
+            // according to SMPTE 377:2011 this is the Count of Bytes used for Header Metadata and
+            // Primer Pack. This starts at the first byte of the key of the Primer Pack and ends after
+            // any trailing KLV Fill item which is included within this HeaderByteCount.
+            ulong headerByteCount = 0;
+            
+            var primerPack = p.Children.FirstOrDefault(c => c is MXFPrimerPack);
+            var lastHeaderMetadata = p.Children.LastOrDefault(c => c.IsHeaderMetadataLike());
+
+            if (lastHeaderMetadata != null)
+            {
+                int index = p.Children.ToList().IndexOf(lastHeaderMetadata);
+                if (index + 1 <= p.Children.Count)
+                {
+                    if (p.Children[index + 1].IsFiller())
+                    {
+                        lastHeaderMetadata = p.Children[index + 1];
+                    };
+                }
+            }
+
+            if (primerPack != null && lastHeaderMetadata != null)
+            {
+                headerByteCount = (ulong)(lastHeaderMetadata.Offset + lastHeaderMetadata.TotalLength) - (ulong)primerPack.Offset;
+            }
+
+            return p.HeaderByteCount == headerByteCount; 
+
+        }
+
+        public bool IsHeaderPartitionOpen()
+        {
+            if (IsHeaderPartitionPresent())
+            {
+                return this.File.GetPartitions().First().Closed == false;
+            }
+            return false;
+        }
+
+        //public MXFValidationResult AreAllPartitionsPointingToFooter()
+        //{
+        //    var partitions = this.File.GetPartitions();
+        //    foreach (var p in partitions)
+        //    {
+        //        if (p.Closed && p.FooterPartition != )
+        //        {
+        //            return new MXFValidationResult
+        //            {
+        //                Severity = MXFValidationSeverity.Info,
+        //                Result = "Body partition(s) present"
+        //            };
+        //        }
+        //    }
+        //    if (this.File.GetPartitions().Any())
+        //    {
+
+        //    }
+        //    else return null;
+        //}
 
         /// <summary>
         /// Check if all partitions are valid 
@@ -58,37 +199,168 @@ namespace Myriadbits.MXF
                 valResult.Category = "Partitions";
 
 
-                if (!this.File.GetPartitions().Any())
+                if (AnyPartitionsPresent())
                 {
-                    valResult.SetError(string.Format("Error! No partitions detected."));
-                    return retval;
+                    if (AreBodyPartitionsPresent())
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Object = File.GetPartitionRoot(),
+                            Severity = MXFValidationSeverity.Success,
+                            Result = $"{this.File.GetBodyPartitions().Count()} Body Partition(s) present"
+                        });
+
+                        if (AreIndexTableSegmentsInBodyPartitions())
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Severity = MXFValidationSeverity.Success,
+                                Result = $"At least one Body Partition contains Index Table Segments"
+                            });
+                        }
+
+                        if (!IsOperationalPatternConsistent())
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = File.GetPartitionRoot(),
+                                Severity = MXFValidationSeverity.Error,
+                                Result = $"The Operational Pattern property is not consistent across all partitions"
+                            });
+                        }
+                    }
+
+                    // Header partition checks
+
+                    if (!IsHeaderPartitionUnique())
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Offset = 0,
+                            Severity = MXFValidationSeverity.Error,
+                            Result = "Invalid partition structure. Only the first partition shall be a Header Partition"
+                        });
+                    }
+
+                    if (!IsHeaderPartitionPresent())
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Object = this.File.GetPartitions()?.First(),
+                            Severity = MXFValidationSeverity.Error,
+                            Result = "Invalid partition structure. The first partition must be a Header Partition"
+                        });
+                    }
+                    else
+                    {
+                        if (IsHeaderPartitionOpen())
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = this.File.GetPartitions()?.First(),
+                                Severity = MXFValidationSeverity.Success,
+                                Result = "Header Partition status is \"open\" (= required values may be absent)"
+                            });
+                        }
+
+                        if (!HeaderPartitionContainsMetadata())
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = this.File.GetPartitions()?.First(),
+                                Severity = MXFValidationSeverity.Error,
+                                Result = "Header Partition does not contain header metadata"
+                            });
+                        }
+
+                        if (HeaderPartitionContainsIndexTableSegments())
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = this.File.GetPartitions()?.First(),
+                                Severity = MXFValidationSeverity.Success,
+                                Result = $"Header Partition contains Index Table Segments"
+                            });
+                        }
+                    }
+
+                    // Footer partition checks
+
+                    if (!IsFooterPartitionUnique())
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Offset = 0,
+                            Severity = MXFValidationSeverity.Error,
+                            Result = "Invalid partition structure. Only the last partition can be a Footer Partition"
+                        });
+                    }
+
+                    if (IsFooterPartitionPresent())
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Object = this.File.GetPartitions().Last(),
+                            Severity = MXFValidationSeverity.Success,
+                            Result = "Footer Partition present"
+                        });
+
+                        if (FooterPartitionContainsIndexTableSegments())
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = this.File.GetPartitions().Last(),
+                                Severity = MXFValidationSeverity.Success,
+                                Result = $"Footer Partition contains Index Table Segments"
+                            });
+                        }
+                    }
+                    else
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Object = this.File.GetPartitions().Last(),
+                            Severity = MXFValidationSeverity.Error,
+                            Result = "Invalid partition structure. The last partition is not a Footer Partition"
+                        });
+                    }
+
+                    // checks for all partitions 
+
+                    foreach (var p in this.File.GetPartitions())
+                    {
+                        if (!IsThisPartitionCorrect(p))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = p,
+                                Severity = MXFValidationSeverity.Error,
+                                Result = $"Partition #{p.PartitionNumber} has incorrect value for ThisPartition"
+                            });
+                        }
+
+                        if (!IsHeaderByteCountCorrect(p))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = p,
+                                Severity = MXFValidationSeverity.Error,
+                                Result = $"Partition #{p.PartitionNumber} has incorrect value for HeaderByteCount"
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    retval.Add(new MXFValidationResult
+                    {
+                        // TODO make Offset nullable?
+                        Offset = 0,
+                        Severity = MXFValidationSeverity.Error,
+                        Result = "No partitions detected."
+                    });
                 }
 
-                if (this.File.GetFooter() != null)
-                {
-                    valResult.SetInfo("Footer partition detected");
-                }
-
-
-                // Check if only a single header is present
-                if (this.File.GetPartitions().Where(a => a.PartitionType == PartitionType.Header).Count() > 1)
-                {
-                    valResult.SetError(string.Format("Error! More then 1 header partion present!"));
-                    return retval;
-                }
-                MXFPartition header = this.File.GetPartitions().Where(a => a.PartitionType == PartitionType.Header).FirstOrDefault();
-                if (header == null)
-                {
-                    valResult.SetError(string.Format("Error! No header partition present!"));
-                    return retval;
-                }
-
-                // Check if only a single footer is present
-                if (this.File.GetPartitions().Where(a => a.PartitionType == PartitionType.Footer).Count() > 1)
-                {
-                    valResult.SetError(string.Format("Error! More then 1 footer partion present!"));
-                    return retval;
-                }
                 MXFPartition footer = this.File.GetPartitions().Where(a => a.PartitionType == PartitionType.Footer).FirstOrDefault();
                 long footerExpected = 0;
                 if (footer == null)
@@ -129,11 +401,11 @@ namespace Myriadbits.MXF
                 if (errorCount > 0)
                 {
                     valResult.SetWarning(string.Format("There are {0} partitions that do not point to the footer partition.", errorCount));
-                    return retval;
+                    return retval.Where(r => r is not null).ToList();
                 }
 
-                valResult.SetSuccess("Partition structure is valid.");
                 Log.ForContext<MXFValidatorPartitions>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
+
                 return retval;
             }, ct);
             return result;
