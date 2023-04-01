@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
         public AUID AliasUID { get; set; }
 
         [Browsable(false)]
-        public UInt16 TagValue { get { return (UInt16)((UInt16)(Key[0] << 8) + Key[1]); } }
+        public UInt16 TagValue { get; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Value of local tag")]
@@ -60,16 +60,25 @@ namespace Myriadbits.MXF
 
         public MXFLocalTag(KLVKey key, KLVLength length, long offset, Stream stream) : base(key, length, offset, stream)
         {
-            // check passed parameters 
-            if (Key.KeyLength != KeyLengths.TwoBytes)
+            //// check passed parameters 
+            if (Key.KeyLength == KeyLengths.TwoBytes)
             {
-                throw new ArgumentException($"The key for a local tag must be two bytes long, instead is: {Key.KeyLength}.");
+                TagValue = (UInt16)((UInt16)(Key[0] << 8) + Key[1]);
+            }
+            else if (Key.KeyLength == KeyLengths.OneByte)
+            {
+                TagValue = (UInt16)Key[0];
+            }
+            else
+            {
+                throw new ArgumentException($"The key for a local tag must be 1 or 2 bytes long, instead is: {Key.KeyLength}.");
             }
 
-            if (Length.LengthEncoding != LengthEncodings.TwoBytes)
-            {
-                throw new ArgumentException($"The length encoding for a local tag must be two bytes long, instead is: {Length.LengthEncoding}.");
-            }
+            // TODO 
+            //if (Length.LengthEncoding != LengthEncodings.TwoBytes)
+            //{
+            //    throw new ArgumentException($"The length encoding for a local tag must be two bytes long, instead is: {Length.LengthEncoding}.");
+            //}
         }
 
 

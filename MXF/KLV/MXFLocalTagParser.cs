@@ -33,20 +33,24 @@ namespace Myriadbits.MXF
 {
     public class MXFLocalTagParser : KLVTripletParser<MXFLocalTag, KLVKey, KLVLength>
     {
-        public MXFLocalTagParser(Stream stream, long baseOffset) : base(stream, baseOffset)
+        public KeyLengths KeyLength { get;}
+
+        public LengthEncodings LengthEncoding { get; }
+
+        public MXFLocalTagParser(Stream stream, long baseOffset, KeyLengths keyLength, LengthEncodings lenEncLength) : base(stream, baseOffset)
         {
+            KeyLength = keyLength;
+            LengthEncoding = lenEncLength;
         }
 
         protected override KLVKey ParseKLVKey()
         {
-            var keyLength = KeyLengths.TwoBytes;
-            return new KLVKey(keyLength, reader.ReadBytes((int)keyLength));
+            return new KLVKey(KeyLength, reader.ReadBytes((int)KeyLength));
         }
 
         protected override KLVLength ParseKLVLength()
         {
-            var lengthEncoding = LengthEncodings.TwoBytes;
-            return new KLVLength(lengthEncoding, reader.ReadBytes((int)lengthEncoding));
+            return new KLVLength(LengthEncoding, reader.ReadBytes((int)LengthEncoding));
         }
 
         protected override MXFLocalTag InstantiateKLV(KLVKey key, KLVLength length, long offset, Stream stream)

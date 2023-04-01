@@ -22,6 +22,7 @@
 #endregion
 
 using Myriadbits.MXF.Exceptions;
+using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Serilog;
 using System;
@@ -58,7 +59,8 @@ namespace Myriadbits.MXF
         {
             reader.Seek(this.RelativeValueOffset);
             SubStream ss = new SubStream(this.Stream, this.RelativeValueOffset, this.Length.Value);
-            var localTagParser = new MXFLocalTagParser(ss, this.ValueOffset);
+
+            var localTagParser = InitializeLocalTagParser(ss, this.ValueOffset);
 
             while (localTagParser.HasNext())
             {
@@ -142,6 +144,24 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             return string.Format($"{this.Key} [len {this.Length.Value}]");
+        }
+
+        private MXFLocalTagParser InitializeLocalTagParser(SubStream ss, long valueOffset)
+        {
+            switch (this.Key.RegistryDesignator)
+            {
+                case ULRegistries.LocalSet_2Bytes_2Bytes:
+                    return new MXFLocalTagParser(ss, valueOffset, KLVKey.KeyLengths.TwoBytes, KLVLength.LengthEncodings.TwoBytes);
+
+                case ULRegistries.LocalSet_2Bytes_1Byte:
+                    return new MXFLocalTagParser(ss, valueOffset, KLVKey.KeyLengths.OneByte, KLVLength.LengthEncodings.TwoBytes);
+
+                case ULRegistries.LocalSet_4Bytes_1Byte:
+                    return new MXFLocalTagParser(ss, valueOffset, KLVKey.KeyLengths.OneByte, KLVLength.LengthEncodings.FourBytes);
+
+                default:
+                    return null;
+            }
         }
     }
 }

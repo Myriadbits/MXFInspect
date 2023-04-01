@@ -58,6 +58,10 @@ namespace Myriadbits.MXF
             {
                 return $"<{this[0]:X2}.{this[1]:X2}>";
             }
+            else if (KeyLength == KeyLengths.OneByte) 
+            {
+                return $"<{this[0]:X2}>";
+            }
             else
             {
                 StringBuilder sb = new StringBuilder();
@@ -76,6 +80,6 @@ namespace Myriadbits.MXF
                 return sb.ToString();
             }
 
-            }
         }
     }
+}

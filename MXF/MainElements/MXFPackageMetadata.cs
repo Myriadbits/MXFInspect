@@ -23,12 +23,14 @@
 
 using Myriadbits.MXF.KLV;
 using System;
+using System.Collections;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPackageMetaData : MXFPack
+    public class MXFPackageMetaData : MXFLocalSet
     {
         private int nofSizeSize = 2;
 
@@ -48,7 +50,7 @@ namespace Myriadbits.MXF
             }
 
             // TODO parse elements via local tag parser, thus inherit from local set
-            ParseElements(reader);
+            //ParseElements(reader);
         }
 
 
@@ -67,7 +69,7 @@ namespace Myriadbits.MXF
                 long childOffset = this.Offset + pos;
                 switch (tag)
                 {
-                    
+
                     // Metadata link
                     case 0x80:
                         this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Metadata link", childOffset, size));
@@ -83,24 +85,24 @@ namespace Myriadbits.MXF
                         this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 309M date-time stamp", childOffset, size));
                         break;
 
-                    // UMID
-                    case 0x83:
-                        if (size == 64)
-                        {
-                            var umid = new ExtendedUMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<ExtendedUMID>(umid, "ExtendedUMID", childOffset, size));
-                        }
-                        else if (size == 32)
-                        {
-                            var umid = new UMID(byteArray);
-                            this.AddChild(new MXFWrapperObject<UMID>(umid, "UMID", childOffset, size));
-                        }
-                        else
-                        {
-                            // TODO raise an exception, don't eat it
-                            Debug.WriteLine("Invalid tag size for UMID. Must be 32 bytes or 64 for extended UMID");
-                        }
-                        break;
+                    //// UMID
+                    //case 0x83:
+                    //    if (size == 64)
+                    //    {
+                    //        var umid = new ExtendedUMID(byteArray);
+                    //        this.AddChild(new MXFWrapperObject<ExtendedUMID>(umid, "ExtendedUMID", childOffset, size));
+                    //    }
+                    //    else if (size == 32)
+                    //    {
+                    //        var umid = new UMID(byteArray);
+                    //        this.AddChild(new MXFWrapperObject<UMID>(umid, "UMID", childOffset, size));
+                    //    }
+                    //    else
+                    //    {
+                    //        // TODO raise an exception, don't eat it
+                    //        Debug.WriteLine("Invalid tag size for UMID. Must be 32 bytes or 64 for extended UMID");
+                    //    }
+                    //    break;
 
                     // MPEG-2 picture editing
                     case 0x84:
@@ -122,13 +124,13 @@ namespace Myriadbits.MXF
                         this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG decoder buffer delay", childOffset, size));
                         break;
 
-                    // KLV metadata
-                    case 0x88:
-                        var ms = new MemoryStream(byteArray);
-                        var klvParser = new MXFPackParser(ms, childOffset);
-                        var pack = klvParser.GetNext();
-                        this.AddChild(pack);
-                        break;
+                    //// KLV metadata
+                    //case 0x88:
+                    //    var ms = new MemoryStream(byteArray);
+                    //    var klvParser = new MXFPackParser(ms, childOffset);
+                    //    var pack = klvParser.GetNext();
+                    //    this.AddChild(pack);
+                    //    break;
 
                     // AES3 non-audio metadata
                     case 0x89:
@@ -159,6 +161,54 @@ namespace Myriadbits.MXF
 
 
             return (tag, size);
+        }
+
+
+        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        {
+            byte[] byteArray = reader.ReadBytes((int)localTag.Length.Value);
+
+            switch (localTag.TagValue)
+            {
+                case 0x83:
+                    if (localTag.Length.Value == 64)
+                    {
+                        ExtendedUMID umid = new ExtendedUMID(byteArray);
+                        localTag.Value = umid;
+                        return true;
+                    }
+                    else if (localTag.Length.Value == 32)
+                    {
+                        ExtendedUMID umid = new ExtendedUMID(byteArray);
+                        localTag.Value = umid;
+                        return true;
+                    }
+                    else
+                    {
+                        // TODO raise an exception, don't eat it
+                        Debug.WriteLine("Invalid tag size for UMID. Must be 32 bytes or 64 for extended UMID");
+                        return false;
+                    }
+
+                case 0x88:
+                    var ms = new MemoryStream(byteArray);
+                    var klvParser = new MXFPackParser(ms, localTag.ValueOffset);
+                    var pack = klvParser.GetNext();
+                    if(pack is MXFLocalSet ls)
+                    {
+                        ls.ParseTags();
+                    }
+                    localTag.AddChild(pack);
+                    break;
+            }
+            return base.ParseLocalTag(reader, localTag);
+        }
+
+
+
+        public override string ToString()
+        {
+            return Key.Name;
         }
     }
 }
