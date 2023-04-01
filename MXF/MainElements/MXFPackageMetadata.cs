@@ -22,24 +22,16 @@
 #endregion
 
 using Myriadbits.MXF.KLV;
-using System;
-using System.Collections;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 
 namespace Myriadbits.MXF
 {
     public class MXFPackageMetaData : MXFLocalSet
     {
-        private int nofSizeSize = 2;
-
         public MXFPackageMetaData(MXFPack pack)
             : base(pack)
         {
-            IKLVStreamReader reader = this.GetReader();
-            if (this.Key[5] == 0x63)
-                nofSizeSize = 4;
             switch (this.Key[14])
             {
                 case 0x02: this.Key.Name = "Package Metadata Set"; break;
@@ -48,128 +40,31 @@ namespace Myriadbits.MXF
                 case 0x05: this.Key.Name = "Data Metadata Set"; break;
                 case 0x06: this.Key.Name = "Control Metadata Set"; break;
             }
-
-            // TODO parse elements via local tag parser, thus inherit from local set
-            //ParseElements(reader);
         }
-
-
-        // Add all meta data see spec: SMPTE ST 331:2011
-        private void ParseElements(IKLVStreamReader reader)
-        {
-            reader.Seek(this.RelativeValueOffset); // Seek to the start of the data
-
-            byte[] byteArray;
-
-            while (!reader.EOF)
-            {
-                var (tag, size) = GetTag(reader);
-                var pos = reader.Position;
-                byteArray = reader.ReadBytes((int)size);
-                long childOffset = this.Offset + pos;
-                switch (tag)
-                {
-
-                    // Metadata link
-                    case 0x80:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Metadata link", childOffset, size));
-                        break;
-
-                    // SMPTE 12M time-code
-                    case 0x81:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 12M time-code", childOffset, size));
-                        break;
-
-                    // SMPTE 309M date-time stamp
-                    case 0x82:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 309M date-time stamp", childOffset, size));
-                        break;
-
-                    //// UMID
-                    //case 0x83:
-                    //    if (size == 64)
-                    //    {
-                    //        var umid = new ExtendedUMID(byteArray);
-                    //        this.AddChild(new MXFWrapperObject<ExtendedUMID>(umid, "ExtendedUMID", childOffset, size));
-                    //    }
-                    //    else if (size == 32)
-                    //    {
-                    //        var umid = new UMID(byteArray);
-                    //        this.AddChild(new MXFWrapperObject<UMID>(umid, "UMID", childOffset, size));
-                    //    }
-                    //    else
-                    //    {
-                    //        // TODO raise an exception, don't eat it
-                    //        Debug.WriteLine("Invalid tag size for UMID. Must be 32 bytes or 64 for extended UMID");
-                    //    }
-                    //    break;
-
-                    // MPEG-2 picture editing
-                    case 0x84:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG-2 picture editing", childOffset, size));
-                        break;
-
-                    // 8-channel AES3 editing
-                    case 0x85:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "8-channel AES3 editing", childOffset, size));
-                        break;
-
-                    // Picture bit-stream splicing
-                    case 0x86:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Picture bit-stream splicing", childOffset, size));
-                        break;
-
-                    // MPEG decoder buffer delay
-                    case 0x87:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG decoder buffer delay", childOffset, size));
-                        break;
-
-                    //// KLV metadata
-                    //case 0x88:
-                    //    var ms = new MemoryStream(byteArray);
-                    //    var klvParser = new MXFPackParser(ms, childOffset);
-                    //    var pack = klvParser.GetNext();
-                    //    this.AddChild(pack);
-                    //    break;
-
-                    // AES3 non-audio metadata
-                    case 0x89:
-                        this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "AES3 non-audio metadata", childOffset, size));
-                        break;
-
-                    default:
-                        break;
-                }
-
-                // seek to next tag position
-                reader.Seek(pos + size);
-            }
-        }
-
-        private (byte Tag, UInt32 Size) GetTag(IKLVStreamReader reader)
-        {
-            byte tag = reader.ReadByte();
-            UInt32 size = 0;
-            if (nofSizeSize == 2)
-            {
-                size = reader.ReadUInt16();
-            }
-            else
-            {
-                size = reader.ReadUInt32();
-            }
-
-
-            return (tag, size);
-        }
-
 
         protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             byte[] byteArray = reader.ReadBytes((int)localTag.Length.Value);
-
+            
+            // Add all meta data see spec: SMPTE ST 331:2011
             switch (localTag.TagValue)
             {
+                // Metadata link
+                case 0x80:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Metadata link", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                // SMPTE 12M time-code
+                case 0x81:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 12M time-code", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                // SMPTE 309M date-time stamp
+                case 0x82:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "SMPTE 309M date-time stamp", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                // UMID
                 case 0x83:
                     if (localTag.Length.Value == 64)
                     {
@@ -190,21 +85,48 @@ namespace Myriadbits.MXF
                         return false;
                     }
 
+                // MPEG-2 picture editing
+                case 0x84:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG-2 picture editing", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                // 8-channel AES3 editing
+                case 0x85:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "8-channel AES3 editing", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                // Picture bit-stream splicing
+                case 0x86:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "Picture bit-stream splicing", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                // MPEG decoder buffer delay
+                case 0x87:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "MPEG decoder buffer delay", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                // KLV metadata
                 case 0x88:
                     var ms = new MemoryStream(byteArray);
                     var klvParser = new MXFPackParser(ms, localTag.ValueOffset);
                     var pack = klvParser.GetNext();
-                    if(pack is MXFLocalSet ls)
+                    if (pack is MXFLocalSet ls)
                     {
                         ls.ParseTags();
                     }
                     localTag.AddChild(pack);
                     break;
+
+                // AES3 non-audio metadata
+                case 0x89:
+                    this.AddChild(new MXFWrapperObject<byte[]>(byteArray, "AES3 non-audio metadata", localTag.Offset, localTag.Length.Value));
+                    break;
+
+                default:
+                    break;
             }
             return base.ParseLocalTag(reader, localTag);
         }
-
-
 
         public override string ToString()
         {
