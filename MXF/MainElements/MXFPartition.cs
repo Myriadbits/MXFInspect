@@ -100,7 +100,7 @@ namespace Myriadbits.MXF
         public UInt32 BodySID { get; set; }
 
         [Browsable(false)]
-        public MXFSystemItem FirstSystemItem { get; set; }
+        public MXFSystemMetaDataPack FirstSystemItem { get; set; }
 
         [Browsable(false)]
         public MXFEssenceElement FirstPictureEssenceElement { get; set; }

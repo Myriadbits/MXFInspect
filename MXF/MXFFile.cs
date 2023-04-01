@@ -57,8 +57,8 @@ namespace Myriadbits.MXF
         }
 
         public List<Exception> ParsingExceptions { get; } = new List<Exception>();
-        public MXFSystemItem FirstSystemItem { get; set; }
-        public MXFSystemItem LastSystemItem { get; set; }
+        public MXFSystemMetaDataPack FirstSystemItem { get; set; }
+        public MXFSystemMetaDataPack LastSystemItem { get; set; }
 
         public MXFLogicalObject LogicalTreeRoot { get; set; }
 
@@ -329,7 +329,7 @@ namespace Myriadbits.MXF
                         }
                         break;
 
-                    case MXFSystemItem si:
+                    case MXFSystemMetaDataPack si:
                         if (currentPartition != null)
                         {
                             // Store the first system item for every partition

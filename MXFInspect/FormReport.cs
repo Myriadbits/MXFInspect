@@ -129,7 +129,7 @@ namespace Myriadbits.MXFInspect
             catch (Exception ex)
             {
                 Log.ForContext<FormReport>().Error(ex, $"Exception occured while showing quick info:");
-                MessageBox.Show(ex.Message, "Error while showing quick info");
+                MessageBox.Show(ex.Message, "Error occured while showing quick info");
             }
         }
 
@@ -185,6 +185,7 @@ namespace Myriadbits.MXFInspect
 
             var results = await mxfFile.ExecuteValidationTest(true, progressHandler, cts.Token);
 
+            //results = results.Where(r => r != null).ToList();
             // display the one with biggest offset first, then autoresize columns executes
             // correctly and finally reverse order, i.e. lowest offset first
             this.tlvValidationResults.SetObjects(results.OrderByDescending(vr => vr.Offset));

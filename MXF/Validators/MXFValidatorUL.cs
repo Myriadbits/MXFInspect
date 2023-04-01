@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
 
                 klvsWithUnknownUL = klvsWithUnknownUL
                                         .Except(klvsWithUnknownUL.OfType<MXFPackageMetaData>())
-                                        .Except(klvsWithUnknownUL.OfType<MXFSystemItem>());
+                                        .Except(klvsWithUnknownUL.OfType<MXFSystemMetaDataPack>());
 
                 foreach (var klv in klvsWithUnknownUL)
                 {

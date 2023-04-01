@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
 	public class MXFValidatorIndex : MXFValidator
 	{
 		private List<MXFIndexTableSegment> m_indexTables = new List<MXFIndexTableSegment>();
-		private List<MXFSystemItem> m_systemItems = new List<MXFSystemItem>();
+		private List<MXFSystemMetaDataPack> m_systemItems = new List<MXFSystemMetaDataPack>();
 		private List<MXFEssenceElement> m_pictureItems = new List<MXFEssenceElement>();
 
         public MXFValidatorIndex(MXFFile file) : base(file)
@@ -56,7 +56,7 @@ namespace Myriadbits.MXF
                 
                 // Clear list
                 m_indexTables = new List<MXFIndexTableSegment>();
-                m_systemItems = new List<MXFSystemItem>();
+                m_systemItems = new List<MXFSystemMetaDataPack>();
                 m_pictureItems = new List<MXFEssenceElement>();
 
                 //LoadAllPartitions();
@@ -167,7 +167,7 @@ namespace Myriadbits.MXF
                             {
                                 // Check if there is a system item at this offset
                                 long searchIndex = (long)(index.StreamOffset);
-                                MXFSystemItem si = this.m_systemItems.Where(a => a.EssenceOffset == searchIndex).FirstOrDefault();
+                                MXFSystemMetaDataPack si = this.m_systemItems.Where(a => a.EssenceOffset == searchIndex).FirstOrDefault();
                                 if (si != null)
                                 {
                                     // Yes, found
@@ -277,7 +277,7 @@ namespace Myriadbits.MXF
             this.Description = "Locating index tables, essence";
 
             m_indexTables = this.File.GetDescendantsOfType<MXFIndexTableSegment>().ToList();
-            m_systemItems = this.File.GetDescendantsOfType<MXFSystemItem>().ToList();
+            m_systemItems = this.File.GetDescendantsOfType<MXFSystemMetaDataPack>().ToList();
             m_pictureItems = this.File.GetDescendantsOfType<MXFEssenceElement>().Where(e => e.IsPicture).ToList();
 
             foreach (var si in m_systemItems)
@@ -291,6 +291,20 @@ namespace Myriadbits.MXF
             }
         }
 
+
+        private long? GetStreamOffset(MXFEssenceElement el)
+        {
+            
+            if (el.Parent is MXFPartition p)
+            {
+                return el.Offset - ((long)p.BodyOffset);
+            }
+            else return null;
+
+
+            //if (this.Partition.FirstPictureEssenceElement == null) return this.Offset; // Unknown
+            //return (this.Offset - this.Partition.FirstPictureEssenceElement.Offset) + ((long)this.Partition.BodyOffset);
+        }
         //private void LoadAllPartitions()
         //{
         //    // Load all partitions
@@ -314,7 +328,7 @@ namespace Myriadbits.MXF
 		{
             var retval = new List<MXFValidationResult>();
 
-			List<MXFSystemItem> items = this.m_systemItems.OrderBy(a => a.ContinuityCount).ToList();
+			List<MXFSystemMetaDataPack> items = this.m_systemItems.OrderBy(a => a.ContinuityCount).ToList();
 			if (items.Count > 1)
 			{
 				MXFTimeStamp ts = new MXFTimeStamp(items.First().UserDate);
@@ -368,7 +382,7 @@ namespace Myriadbits.MXF
             int cc = -1;
 			int errorCount = 0;
             this.m_systemItems = this.m_systemItems.OrderBy(si => si.ContinuityCount).ToList();
-            foreach (MXFSystemItem si in this.m_systemItems)
+            foreach (MXFSystemMetaDataPack si in this.m_systemItems)
             {
                 if (si.ContinuityCount - cc != 1)
                 {

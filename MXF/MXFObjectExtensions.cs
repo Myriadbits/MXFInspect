@@ -66,9 +66,9 @@ namespace Myriadbits.MXF
             return obj is MXFIndexTableSegment or MXFEntryDelta or MXFEntryIndex;
         }
 
-        public static bool IsSystemItem(this MXFObject obj)
+        public static bool IsSystemMetaData(this MXFObject obj)
         {
-            return obj is MXFSystemItem;
+            return obj is MXFSystemMetaDataPack;
         }
 
         public static bool ContainsIndexTableSegments(this MXFObject obj)

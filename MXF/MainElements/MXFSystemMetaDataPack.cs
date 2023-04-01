@@ -70,9 +70,9 @@ namespace Myriadbits.MXF
 		Reserved = 3,
 	};
 
-	public class MXFSystemItem : MXFPack
+	public class MXFSystemMetaDataPack : MXFPack
 	{
-		private const string CATEGORYNAME = "SystemItem";
+		private const string CATEGORYNAME = "SystemMetadata";
 
 		[Category(CATEGORYNAME)]
 		public SystemBitmap SystemBitmap { get; set; }
@@ -127,14 +127,14 @@ namespace Myriadbits.MXF
 			}
 		}
 
-		public MXFSystemItem(MXFPack pack)
+		public MXFSystemMetaDataPack(MXFPack pack)
 			: base(pack)
         {
             IKLVStreamReader reader = this.GetReader();
 
-            this.Key.Name ??= "SystemItem (CP)";
+            this.Key.Name ??= "System Metadata Pack (CP)";
 			if (this.Key[12] == 0x14)
-				this.Key.Name = "SystemItem (GC)";
+				this.Key.Name = "System Metadata Pack (GC)";
 
 			reader.Seek(this.RelativeValueOffset); // Seek to the start of the data
 
@@ -173,7 +173,7 @@ namespace Myriadbits.MXF
 
 		public override string ToString()
 		{
-			return string.Format("{0}, Count {1} [{2}]", this.Key.Name, this.ContinuityCount, this.UserDateFullFrameNb);
+			return $"{this.Key.Name}, Count {this.ContinuityCount} [{this.UserDateFullFrameNb}]";
 		}		
 	}
 }

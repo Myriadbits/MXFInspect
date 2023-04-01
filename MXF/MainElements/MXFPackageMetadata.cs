@@ -40,13 +40,14 @@ namespace Myriadbits.MXF
                 nofSizeSize = 4;
             switch (this.Key[14])
             {
-                case 0x02: this.Key.Name = "Package Metadata set"; break;
-                case 0x03: this.Key.Name = "Picture Metadata set"; break;
-                case 0x04: this.Key.Name = "Sound Metadata set"; break;
-                case 0x05: this.Key.Name = "Data Metadata set"; break;
-                case 0x06: this.Key.Name = "Control Metadata set"; break;
+                case 0x02: this.Key.Name = "Package Metadata Set"; break;
+                case 0x03: this.Key.Name = "Picture Metadata Set"; break;
+                case 0x04: this.Key.Name = "Sound Metadata Set"; break;
+                case 0x05: this.Key.Name = "Data Metadata Set"; break;
+                case 0x06: this.Key.Name = "Control Metadata Set"; break;
             }
 
+            // TODO parse elements via local tag parser, thus inherit from local set
             ParseElements(reader);
         }
 

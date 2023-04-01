@@ -339,15 +339,16 @@ namespace Myriadbits.MXF
                             });
                         }
 
-                        if (!IsHeaderByteCountCorrect(p))
-                        {
-                            retval.Add(new MXFValidationResult
-                            {
-                                Object = p,
-                                Severity = MXFValidationSeverity.Error,
-                                Result = $"Partition #{p.PartitionNumber} has incorrect value for HeaderByteCount"
-                            });
-                        }
+                        // TODO disabled as implementation is buggy
+                        //if (!IsHeaderByteCountCorrect(p))
+                        //{
+                        //    retval.Add(new MXFValidationResult
+                        //    {
+                        //        Object = p,
+                        //        Severity = MXFValidationSeverity.Error,
+                        //        Result = $"Partition #{p.PartitionNumber} has incorrect value for HeaderByteCount"
+                        //    });
+                        //}
                     }
                 }
                 else

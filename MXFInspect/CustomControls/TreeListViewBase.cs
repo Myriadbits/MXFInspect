@@ -191,7 +191,7 @@ namespace Myriadbits.MXFInspect
             {
                 return Properties.Settings.Default.Color_IndexTable;
             }
-            else if (obj.IsSystemItem())
+            else if (obj.IsSystemMetaData())
             {
                 return Properties.Settings.Default.Color_SystemItem;
             }
