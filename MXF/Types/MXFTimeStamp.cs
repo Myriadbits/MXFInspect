@@ -73,11 +73,14 @@ namespace Myriadbits.MXF
 
             switch (array[0])
             {
-                case 0x81: Type = TimeStampType.TimeCode;
+                case 0x81:
+                    Type = TimeStampType.TimeCode;
                     break;
-                case 0x82: Type = TimeStampType.DateTimeCode;
+                case 0x82:
+                    Type = TimeStampType.DateTimeCode;
                     break;
-                default: Type = TimeStampType.Unknown;
+                default:
+                    Type = TimeStampType.Unknown;
                     break;
             }
 
@@ -329,7 +332,7 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public string GetString(bool fullFrame)
         {
-            string time = string.Format("{0:00}:{1:00}:{2:00}.{3:00}", this.Hour, this.Minute, this.Second, this.Frame);
+            string time = $"{this.Hour:00}:{this.Minute:00}:{this.Second:00}.{this.Frame:00}";
             if (this.HasFields)
             {
                 if (fullFrame)
@@ -339,7 +342,9 @@ namespace Myriadbits.MXF
             }
 
             if (this.Day != 0)
-                time = string.Format("{0}-{1:00}-{2:00} {3}", this.Year, this.Month, this.Day, time);
+            {
+                time = $"{this.Year}-{this.Month:00}-{this.Day:00} {time}";
+            }               
             return time;
         }
 
