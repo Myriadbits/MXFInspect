@@ -27,8 +27,6 @@ using Myriadbits.MXF.KLV;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 namespace Myriadbits.MXF
@@ -62,14 +60,23 @@ namespace Myriadbits.MXF
 
             var localTagParser = InitializeLocalTagParser(ss, this.ValueOffset);
 
-            while (localTagParser.HasNext())
+            if (localTagParser != null)
             {
-                var tag = localTagParser.GetNext();
-                this.AddChild(tag);
+                while (localTagParser.HasNext())
+                {
+                    var tag = localTagParser.GetNext();
+                    this.AddChild(tag);
+                }
+
+                // Allow derived classes to do some final work
+                PostInitialize();
+            }
+            else
+            {
+                // TODO maybe raise an exception
+                Log.ForContext<MXFLocalSet>().Warning($"Local tags of {this} cannot be parsed, since Local Set @{this.Offset} is of type {this.Key.RegistryDesignator}");
             }
 
-            // Allow derived classes to do some final work
-            PostInitialize();
         }
 
         public void ParseTags()
