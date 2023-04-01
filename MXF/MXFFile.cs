@@ -118,6 +118,8 @@ namespace Myriadbits.MXF
                             if (!parser.SeekForNextPotentialKey(out long newOffset))
                             {
                                 // we have reached end of file, exceptional case so handle it
+                                // TODO handle if exceeding 65536 bytes
+                                throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.");
                             }
                             else
                             {
@@ -135,7 +137,8 @@ namespace Myriadbits.MXF
                         }
                         catch (KLVStreamException ex)
                         {
-                            //TODO must be handled
+                            Log.ForContext<MXFFile>().Error(ex, $"Exception occured during parsing of MXF pack.");
+                            this.ParsingExceptions.Add(ex);
                             break;
                         }
                         catch (Exception ex) when (ex is not OperationCanceledException)
@@ -221,8 +224,10 @@ namespace Myriadbits.MXF
                     {
                         sb.Append($" @ {timeLineTrack.EditRate.ToString(true)}");
                     }
-                    sb.Append($" {{{genericTrack.TrackName}}}");
-
+                    if (!string.IsNullOrEmpty(genericTrack.TrackName))
+                    {
+                        sb.Append($" {{{genericTrack.TrackName}}}");
+                    }
                     return sb.ToString();
 
                 }
@@ -250,6 +255,24 @@ namespace Myriadbits.MXF
                 new MXFValidatorUL(this)
             };
 
+            // add exceptions
+            foreach (var ex in ParsingExceptions)
+            {
+                var r = new MXFValidationResult(ex.GetType().Name);
+                if (ex is KLVParsingException klvEx)
+                {
+                    r.Object = this.Descendants().Where(o => o.Offset == klvEx.Offset).FirstOrDefault();
+                    r.SetError(ex.InnerException?.Message ?? ex.Message, klvEx.Offset);
+                }
+                else
+                {
+                    r.SetError(ex.InnerException?.Message ?? ex.Message);
+                }
+
+                results.Add(r);
+            }
+
+
             if (extendedTest)
             {
                 allTests.Add(new MXFValidatorIndex(this));
@@ -266,22 +289,7 @@ namespace Myriadbits.MXF
                 valResult.SetQuestion("Index table test not executed in partial loading mode (to execute test press the execute all test button).");
             }
 
-            // add exceptions
-            foreach (var ex in ParsingExceptions)
-            {
-                var r = new MXFValidationResult(ex.GetType().Name);
-                if (ex is KLVParsingException klvEx)
-                {
-                    r.Object = this.Descendants().Where(o => o.Offset == klvEx.Offset).FirstOrDefault();
-                    r.SetError(ex.InnerException.Message, klvEx.Offset);
-                }
-                else
-                {
-                    r.SetError(ex.InnerException.Message);
-                }
 
-                results.Add(r);
-            }
 
             return results;
         }
