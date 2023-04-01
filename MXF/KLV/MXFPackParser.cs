@@ -21,7 +21,6 @@
 //
 #endregion
 
-using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Serilog;
@@ -29,7 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
@@ -72,7 +70,7 @@ namespace Myriadbits.MXF
 
         public bool SeekForNextPotentialKey(out long newOffset)
         {
-            // See to last good position
+            // Seek to last good position
             if (Current != null)
             {
                 Seek(Current.Offset + Current.TotalLength);
