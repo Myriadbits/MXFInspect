@@ -61,10 +61,22 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x0404: this.EdgeCodeHeader = reader.ReadBytes((int)localTag.Length.Value); return true;
-                case 0x0401: this.EdgeCodeStart = reader.ReadUInt64(); return true;
-                case 0x0403: this.EdgeCodeFormat = (MXFEdge)reader.ReadUInt16(); return true;
-                case 0x0402: this.EdgeCodeFilmFormat = (MXFFilm)reader.ReadUInt16(); return true;
+                case 0x0404: 
+                    this.EdgeCodeHeader = reader.ReadBytes((int)localTag.Length.Value); 
+                    localTag.Value = this.EdgeCodeHeader; 
+                    return true;
+                case 0x0401: 
+                    this.EdgeCodeStart = reader.ReadUInt64();
+                    localTag.Value = this.EdgeCodeStart;
+                    return true;
+                case 0x0403: 
+                    this.EdgeCodeFormat = (MXFEdge)reader.ReadUInt16();
+                    localTag.Value = this.EdgeCodeFormat;
+                    return true;
+                case 0x0402: 
+                    this.EdgeCodeFilmFormat = (MXFFilm)reader.ReadUInt16();
+                    localTag.Value = this.EdgeCodeFilmFormat;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

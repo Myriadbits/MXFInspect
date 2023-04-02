@@ -52,7 +52,10 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == thesaurusName_Key: this.ThesaurusName = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == thesaurusName_Key:
+                        this.ThesaurusName = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.ThesaurusName;
+                        return true;
                 }
             }
 

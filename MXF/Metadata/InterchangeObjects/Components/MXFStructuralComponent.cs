@@ -58,10 +58,12 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x0201: 
-                    this.DataDefinition = reader.ReadAUID(); 
+                    this.DataDefinition = reader.ReadAUID();
+                    localTag.Value = this.DataDefinition;
                     return true;
                 case 0x0202: 
-                    this.Duration = reader.ReadUInt64(); 
+                    this.Duration = reader.ReadUInt64();
+                    localTag.Value = this.Duration;
                     return true;
                 // TODO replace generic MXFObject with class KLVData once implemented
                 case 0x0203:

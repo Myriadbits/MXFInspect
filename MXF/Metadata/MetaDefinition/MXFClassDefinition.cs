@@ -53,7 +53,9 @@ namespace Myriadbits.MXF
                 case 0x0009:
                     localTag.AddChildren(reader.GetReferenceSet<MXFPropertyDefinition>("Property", localTag.Offset, localTag.Length.Value));
                     return true;
-                case 0x000a: IsConcrete = reader.ReadBoolean(); 
+                case 0x000a: 
+                    IsConcrete = reader.ReadBoolean();
+                    localTag.Value = IsConcrete;
                     return true;
             }
             return base.ReadLocalTagValue(reader, localTag);

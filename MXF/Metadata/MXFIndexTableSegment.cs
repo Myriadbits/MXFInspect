@@ -104,19 +104,58 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3F05: this.EditUnitByteCount = reader.ReadUInt32(); return true;
-                case 0x3F06: this.IndexSID = reader.ReadUInt32(); return true;
-                case 0x3F07: this.BodySID = reader.ReadUInt32(); return true;
-                case 0x3F08: this.SliceCount = reader.ReadByte(); return true;
-                case 0x3F0C: this.IndexStartPosition = reader.ReadUInt64(); return true;
-                case 0x3F0D: this.IndexDuration = reader.ReadUInt64(); return true;
-                case 0x3F0E: this.PositionTableCount = reader.ReadByte(); return true;
-                case 0x3F0F: this.ExtStartOffset = reader.ReadUInt64(); return true;
-                case 0x3F10: this.VBEByteCount = reader.ReadUInt64(); return true;
-                case 0x3F11: this.SingleIndexLocation = reader.ReadBoolean(); return true;
-                case 0x3F12: this.SingleEssenceLocation = reader.ReadBoolean(); return true;
-                case 0x3F13: this.ForwardIndexDirection = reader.ReadBoolean(); return true;
-                case 0x3F0B: this.IndexEditRate = reader.ReadRational(); return true;
+                case 0x3F05:
+                    this.EditUnitByteCount = reader.ReadUInt32();
+                    localTag.Value = this.EditUnitByteCount;
+                    return true;
+                case 0x3F06:
+                    this.IndexSID = reader.ReadUInt32();
+                    localTag.Value = this.IndexSID;
+                    return true;
+                case 0x3F07:
+                    this.BodySID = reader.ReadUInt32();
+                    localTag.Value = this.BodySID;
+                    return true;
+                case 0x3F08:
+                    this.SliceCount = reader.ReadByte();
+                    localTag.Value = this.SliceCount;
+                    return true;
+                case 0x3F0C:
+                    this.IndexStartPosition = reader.ReadUInt64();
+                    localTag.Value = this.IndexStartPosition;
+                    return true;
+                case 0x3F0D:
+                    this.IndexDuration = reader.ReadUInt64();
+                    localTag.Value = this.IndexDuration;
+                    return true;
+                case 0x3F0E:
+                    this.PositionTableCount = reader.ReadByte();
+                    localTag.Value = this.PositionTableCount;
+                    return true;
+                case 0x3F0F:
+                    this.ExtStartOffset = reader.ReadUInt64();
+                    localTag.Value = this.ExtStartOffset;
+                    return true;
+                case 0x3F10:
+                    this.VBEByteCount = reader.ReadUInt64();
+                    localTag.Value = this.VBEByteCount;
+                    return true;
+                case 0x3F11:
+                    this.SingleIndexLocation = reader.ReadBoolean();
+                    localTag.Value = this.SingleIndexLocation;
+                    return true;
+                case 0x3F12:
+                    this.SingleEssenceLocation = reader.ReadBoolean();
+                    localTag.Value = this.SingleEssenceLocation;
+                    return true;
+                case 0x3F13:
+                    this.ForwardIndexDirection = reader.ReadBoolean();
+                    localTag.Value = this.ForwardIndexDirection;
+                    return true;
+                case 0x3F0B:
+                    this.IndexEditRate = reader.ReadRational();
+                    localTag.Value = this.IndexEditRate;
+                    return true;
                 case 0x3F0A:  // Index entry array
                     {
 

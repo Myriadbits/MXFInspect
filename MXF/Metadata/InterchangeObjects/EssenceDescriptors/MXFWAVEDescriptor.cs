@@ -47,7 +47,10 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.TagValue)
                 {
-                    case 0x3801: this.WaveSummary = reader.ReadBytes((int)localTag.Length.Value); return true;
+                    case 0x3801: 
+                        this.WaveSummary = reader.ReadBytes((int)localTag.Length.Value);
+                        localTag.Value = this.WaveSummary;
+                        return true;
                 }
             }
             return base.ReadLocalTagValue(reader, localTag);

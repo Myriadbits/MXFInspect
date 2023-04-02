@@ -42,7 +42,9 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x4701: localTag.AddChild(reader.ReadReference<MXFEssenceDescriptor>("EssenceDescription", localTag.Offset)); return true;
+				case 0x4701: 
+					localTag.AddChild(reader.ReadReference<MXFEssenceDescriptor>("EssenceDescription", localTag.Offset)); 
+					return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag); 
 		}

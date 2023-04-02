@@ -59,7 +59,10 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == integrationIndication_Key: this.IntegrationIndication = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == integrationIndication_Key: 
+                        this.IntegrationIndication = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.IntegrationIndication;
+                        return true;
                     case var _ when localTag.AliasUID == groupRelationshipObjects_Key:
                         localTag.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("GroupRelationshipObject", localTag.Offset, localTag.Length.Value));
                         return true;

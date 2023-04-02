@@ -83,15 +83,42 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x3C09: this.GenerationID = reader.ReadUUID(); return true;
-				case 0x3C01: this.ApplicationSupplierName = reader.ReadUTF16String(localTag.Length.Value); return true;
-				case 0x3C02: this.ApplicationName = reader.ReadUTF16String(localTag.Length.Value); return true;
-				case 0x3C03: this.ApplicationVersion = reader.ReadProductVersion(); return true;
-				case 0x3C04: this.ApplicationVersionString = reader.ReadUTF16String(localTag.Length.Value); return true;
-				case 0x3C05: this.ApplicationProductId = reader.ReadAUID(); return true;
-				case 0x3C06: this.FileModificationDate = reader.ReadTimeStamp(); return true;
-				case 0x3C07: this.ToolkitVersion = reader.ReadProductVersion(); return true;
-				case 0x3C08: this.ApplicationPlatform = reader.ReadUTF16String(localTag.Length.Value); return true;
+				case 0x3C09: 
+					this.GenerationID = reader.ReadUUID();
+                    localTag.Value = this.GenerationID; 
+					return true;
+				case 0x3C01: 
+					this.ApplicationSupplierName = reader.ReadUTF16String(localTag.Length.Value); 
+					localTag.Value = this.ApplicationSupplierName;
+					return true;
+				case 0x3C02: 
+					this.ApplicationName = reader.ReadUTF16String(localTag.Length.Value); 
+					localTag.Value = this.ApplicationName;
+					return true;
+				case 0x3C03: 
+					this.ApplicationVersion = reader.ReadProductVersion();
+						localTag.Value = this.ApplicationVersion;
+					return true;
+				case 0x3C04: 
+					this.ApplicationVersionString = reader.ReadUTF16String(localTag.Length.Value); 
+					localTag.Value = this.ApplicationVersionString;
+					return true;
+				case 0x3C05: 
+					this.ApplicationProductId = reader.ReadAUID(); 
+					localTag.Value = this.ApplicationProductId;
+					return true;
+				case 0x3C06: 
+					this.FileModificationDate = reader.ReadTimeStamp();
+					localTag.Value = this.FileModificationDate;
+					return true;
+				case 0x3C07: 
+					this.ToolkitVersion = reader.ReadProductVersion(); 
+					localTag.Value = this.ToolkitVersion;
+					return true;
+				case 0x3C08: 
+					this.ApplicationPlatform = reader.ReadUTF16String(localTag.Length.Value); 
+					localTag.Value = this.ApplicationPlatform;
+					return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag);
 		}

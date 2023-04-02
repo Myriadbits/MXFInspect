@@ -106,16 +106,46 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == bitRate_Key: this.BitRate = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == identicalGOPIndicator_Key: this.IdenticalGOPIndicator = reader.ReadBoolean(); return true;
-                    case var _ when localTag.AliasUID == maxGOPSize_Key: this.MaximumGOPSize = reader.ReadUInt16(); return true;
-                    case var _ when localTag.AliasUID == maxBPictureCount_Key: this.MaximumBPictureCount = reader.ReadUInt16(); return true;
-                    case var _ when localTag.AliasUID == constantBPictureFlag_Key: this.ConstantBPictureFlag = reader.ReadBoolean(); return true;
-                    case var _ when localTag.AliasUID == codedContentScanningKind_Key: this.CodedContentScanningKind = (MXFCodedContentScanning)reader.ReadByte(); return true;
-                    case var _ when localTag.AliasUID == profileAndLevel_Key: this.ProfileAndLevel = reader.ReadByte(); return true;
-                    case var _ when localTag.AliasUID == singleSequenceFlag_Key: this.SingleSequenceFlag = reader.ReadBoolean(); return true;
-                    case var _ when localTag.AliasUID == closedGOP_Key: this.ClosedGOPIndicator = reader.ReadBoolean(); return true;
-                    case var _ when localTag.AliasUID == lowDelay_Key: this.LowDelayIndicator = reader.ReadBoolean(); return true;
+                    case var _ when localTag.AliasUID == bitRate_Key: 
+                        this.BitRate = reader.ReadUInt32();
+                        localTag.Value = this.BitRate;
+                        return true;
+                    case var _ when localTag.AliasUID == identicalGOPIndicator_Key:
+                        this.IdenticalGOPIndicator = reader.ReadBoolean();
+                        localTag.Value = this.IdenticalGOPIndicator;
+                        return true;
+                    case var _ when localTag.AliasUID == maxGOPSize_Key:
+                        this.MaximumGOPSize = reader.ReadUInt16();
+                        localTag.Value = this.MaximumGOPSize;
+                        return true;
+                    case var _ when localTag.AliasUID == maxBPictureCount_Key: 
+                        this.MaximumBPictureCount = reader.ReadUInt16();
+                        localTag.Value = this.MaximumBPictureCount;
+                        return true;
+                    case var _ when localTag.AliasUID == constantBPictureFlag_Key: 
+                        this.ConstantBPictureFlag = reader.ReadBoolean();
+                        localTag.Value = this.ConstantBPictureFlag;
+                        return true;
+                    case var _ when localTag.AliasUID == codedContentScanningKind_Key: 
+                        this.CodedContentScanningKind = (MXFCodedContentScanning)reader.ReadByte();
+                        localTag.Value = this.CodedContentScanningKind;
+                        return true;
+                    case var _ when localTag.AliasUID == profileAndLevel_Key:
+                        this.ProfileAndLevel = reader.ReadByte();
+                        localTag.Value = this.ProfileAndLevel;
+                        return true;
+                    case var _ when localTag.AliasUID == singleSequenceFlag_Key: 
+                        this.SingleSequenceFlag = reader.ReadBoolean();
+                        localTag.Value = this.SingleSequenceFlag;
+                        return true;
+                    case var _ when localTag.AliasUID == closedGOP_Key:
+                        this.ClosedGOPIndicator = reader.ReadBoolean();
+                        localTag.Value = this.ClosedGOPIndicator;
+                        return true;
+                    case var _ when localTag.AliasUID == lowDelay_Key: 
+                        this.LowDelayIndicator = reader.ReadBoolean();
+                        localTag.Value = this.LowDelayIndicator;
+                        return true;
                 }
             }
 

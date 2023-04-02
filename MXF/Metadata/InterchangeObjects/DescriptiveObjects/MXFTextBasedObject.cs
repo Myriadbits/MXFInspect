@@ -68,10 +68,22 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == rfc5646TextLanguageCode_Key: this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Length.Value); return true;
-                    case var _ when localTag.AliasUID == textDataDescription_Key: this.TextDataDescription = reader.ReadUTF16String(localTag.Length.Value); return true;
-                    case var _ when localTag.AliasUID == textBasedMetadataPayloadSchemeID_Key: this.TextBasedMetadataPayloadSchemeID = reader.ReadUUID(); return true;
-                    case var _ when localTag.AliasUID == textMIMEMediaType_Key: this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == rfc5646TextLanguageCode_Key: 
+                        this.RFC5646TextLanguageCode = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.RFC5646TextLanguageCode;
+                        return true;
+                    case var _ when localTag.AliasUID == textDataDescription_Key: 
+                        this.TextDataDescription = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.TextDataDescription;
+                        return true;
+                    case var _ when localTag.AliasUID == textBasedMetadataPayloadSchemeID_Key: 
+                        this.TextBasedMetadataPayloadSchemeID = reader.ReadUUID();
+                        localTag.Value = this.TextBasedMetadataPayloadSchemeID;
+                        return true;
+                    case var _ when localTag.AliasUID == textMIMEMediaType_Key:
+                        this.TextMIMEMediaType = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.TextMIMEMediaType;
+                        return true;
                 }
             }
 

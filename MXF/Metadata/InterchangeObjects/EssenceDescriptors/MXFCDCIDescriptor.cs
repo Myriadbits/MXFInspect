@@ -83,16 +83,46 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3301: this.ComponentDepth = reader.ReadUInt32(); return true;
-                case 0x3302: this.HorizontalSubsampling = reader.ReadUInt32(); return true;
-                case 0x3308: this.VerticalSubsampling = reader.ReadUInt32(); return true;
-                case 0x3303: this.ColorSiting = (MXFColorSiting)reader.ReadByte(); return true;
-                case 0x330B: this.ReversedByteOrder = reader.ReadBoolean(); return true;
-                case 0x3307: this.PaddingBits = (Int16)reader.ReadUInt16(); return true;
-                case 0x3309: this.AlphaSampleDepth = reader.ReadUInt32(); return true;
-                case 0x3304: this.BlackRefLevel = reader.ReadUInt32(); return true;
-                case 0x3305: this.WhiteRefLevel = reader.ReadUInt32(); return true;
-                case 0x3306: this.ColorRange = reader.ReadUInt32(); return true;
+                case 0x3301: 
+                    this.ComponentDepth = reader.ReadUInt32();
+                    localTag.Value = this.ComponentDepth;
+                    return true;
+                case 0x3302: 
+                    this.HorizontalSubsampling = reader.ReadUInt32();
+                    localTag.Value = this.HorizontalSubsampling;
+                    return true;
+                case 0x3308: 
+                    this.VerticalSubsampling = reader.ReadUInt32();
+                    localTag.Value = this.VerticalSubsampling;
+                    return true;
+                case 0x3303: 
+                    this.ColorSiting = (MXFColorSiting)reader.ReadByte();
+                    localTag.Value = this.ColorSiting;
+                    return true;
+                case 0x330B: 
+                    this.ReversedByteOrder = reader.ReadBoolean();
+                    localTag.Value = this.ReversedByteOrder;
+                    return true;
+                case 0x3307: 
+                    this.PaddingBits = (Int16)reader.ReadUInt16();
+                    localTag.Value = this.PaddingBits;
+                    return true;
+                case 0x3309: 
+                    this.AlphaSampleDepth = reader.ReadUInt32();
+                    localTag.Value = this.AlphaSampleDepth;
+                    return true;
+                case 0x3304: 
+                    this.BlackRefLevel = reader.ReadUInt32();
+                    localTag.Value = this.BlackRefLevel;
+                    return true;
+                case 0x3305: 
+                    this.WhiteRefLevel = reader.ReadUInt32();
+                    localTag.Value = this.WhiteRefLevel;
+                    return true;
+                case 0x3306: 
+                    this.ColorRange = reader.ReadUInt32();
+                    localTag.Value = this.ColorRange;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

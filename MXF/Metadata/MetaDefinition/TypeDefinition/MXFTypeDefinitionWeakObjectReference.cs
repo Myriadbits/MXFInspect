@@ -53,6 +53,7 @@ namespace Myriadbits.MXF
                     return true;
                 case 0x0012: 
                     WeakReferencedType = reader.ReadAUID(); 
+                    localTag.Value = WeakReferencedType;
                     return true;
             }
             return base.ReadLocalTagValue(reader, localTag);

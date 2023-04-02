@@ -50,7 +50,10 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x1f03: ParameterDisplayUnits = reader.ReadUTF16String(localTag.Length.Value); return true;
+                case 0x1f03:
+                    ParameterDisplayUnits = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = ParameterDisplayUnits;
+                    return true;
                 case 0x1f01:
                     localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("ParameterType", localTag.Offset)); 
                     return true;

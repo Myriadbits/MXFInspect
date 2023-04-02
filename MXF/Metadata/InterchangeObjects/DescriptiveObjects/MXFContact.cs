@@ -55,7 +55,8 @@ namespace Myriadbits.MXF
                 switch (localTag.AliasUID)
                 {
                     case var _ when localTag.AliasUID == contactID_Key:
-                        this.ContactID = reader.ReadUUID(); 
+                        this.ContactID = reader.ReadUUID();
+                        localTag.Value = this.ContactID;
                         return true;
                     case var _ when localTag.AliasUID == addressObjects_Key:
                         localTag.AddChildren(reader.GetReferenceSet<MXFDescriptiveObject>("Address Object", localTag.Offset, localTag.Length.Value));

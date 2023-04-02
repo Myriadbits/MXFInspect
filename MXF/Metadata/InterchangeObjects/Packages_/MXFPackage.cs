@@ -69,18 +69,22 @@ namespace Myriadbits.MXF
             {
                 case 0x4401:
                     this.PackageID = reader.ReadUMIDKey();
+                    localTag.Value = this.PackageID;
                     return true;
                 case 0x4402:
                     this.PackageName = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = this.PackageName;
                     return true;
                 case 0x4403:
                     localTag.AddChildren(reader.GetReferenceSet<MXFTrack>("Track", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x4404:
-                    this.ModifiedDate = reader.ReadTimeStamp(); 
+                    this.ModifiedDate = reader.ReadTimeStamp();
+                    localTag.Value = this.ModifiedDate;
                     return true;
                 case 0x4405:
-                    this.CreationDate = reader.ReadTimeStamp(); 
+                    this.CreationDate = reader.ReadTimeStamp();
+                    localTag.Value = this.CreationDate;
                     return true;
                 case 0x4406:
                     localTag.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageUserComment", localTag.Offset, localTag.Length.Value));
@@ -90,7 +94,8 @@ namespace Myriadbits.MXF
                     localTag.AddChildren(reader.GetReferenceSet<MXFObject>("PackageKLVData", localTag.Offset, localTag.Length.Value));
                     return true;
                 case 0x4408: 
-                    this.PackageUsage = reader.ReadUInt16(); 
+                    this.PackageUsage = reader.ReadUInt16();
+                    localTag.Value = this.PackageUsage;
                     return true;
                 case 0x4409: 
                     localTag.AddChildren(reader.GetReferenceSet<MXFTaggedValue>("PackageAttribute", localTag.Offset, localTag.Length.Value));

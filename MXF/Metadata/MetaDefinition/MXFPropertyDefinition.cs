@@ -60,10 +60,22 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x000c: IsOptional = reader.ReadBoolean(); return true;
-                case 0x000b: PropertyType = reader.ReadAUID(); return true;
-                case 0x000d: LocalIdentification = reader.ReadUInt16(); return true;
-                case 0x000e: IsUniqueIdentifier = reader.ReadBoolean(); return true;
+                case 0x000c:
+                    IsOptional = reader.ReadBoolean();
+                    localTag.Value = IsOptional;
+                    return true;
+                case 0x000b:
+                    PropertyType = reader.ReadAUID();
+                    localTag.Value = PropertyType;
+                    return true;
+                case 0x000d:
+                    LocalIdentification = reader.ReadUInt16();
+                    localTag.Value = LocalIdentification;
+                    return true;
+                case 0x000e:
+                    IsUniqueIdentifier = reader.ReadBoolean();
+                    localTag.Value = IsUniqueIdentifier;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

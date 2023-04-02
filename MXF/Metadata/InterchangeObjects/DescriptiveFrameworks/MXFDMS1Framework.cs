@@ -80,22 +80,28 @@ namespace Myriadbits.MXF
                 switch (localTag.AliasUID)
                 {
                     case var _ when localTag.AliasUID == frameworkTitle_Key: 
-                        this.FrameworkTitle = reader.ReadUTF16String(localTag.Length.Value); 
+                        this.FrameworkTitle = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.FrameworkTitle;
                         return true;
                     case var _ when localTag.AliasUID == extTextLanguageCode_Key: 
-                        this.FrameworkExtendedTextLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
+                        this.FrameworkExtendedTextLanguageCode = reader.ReadUTF8String(localTag.Length.Value);
+                        localTag.Value = this.FrameworkExtendedTextLanguageCode;
                         return true;
                     case var _ when localTag.AliasUID == primExtSpokenLanguageCode_Key: 
-                        this.PrimaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
+                        this.PrimaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value);
+                        localTag.Value = this.PrimaryExtendedSpokenLanguageCode;
                         return true;
                     case var _ when localTag.AliasUID == secExtSpokenLanguageCode_Key: 
-                        this.SecondaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
+                        this.SecondaryExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value);
+                        localTag.Value = this.SecondaryExtendedSpokenLanguageCode;
                         return true;
                     case var _ when localTag.AliasUID == orgExtSpokenLanguageCode_Key: 
-                        this.OriginalExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value); 
+                        this.OriginalExtendedSpokenLanguageCode = reader.ReadUTF8String(localTag.Length.Value);
+                        localTag.Value = this.OriginalExtendedSpokenLanguageCode;
                         return true;
                     case var _ when localTag.AliasUID == thesaurusName_Key: 
-                        this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Length.Value); 
+                        this.FrameworkThesaurusName = reader.ReadUTF8String(localTag.Length.Value);
+                        localTag.Value = this.FrameworkThesaurusName;
                         return true;
                     case var _ when localTag.AliasUID == contactsListObject_Key:
                         localTag.AddChild(reader.ReadReference<MXFContactsList>("ContactsListObject", localTag.Offset)); 

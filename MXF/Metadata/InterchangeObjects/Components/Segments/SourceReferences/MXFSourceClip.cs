@@ -66,11 +66,26 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x1201: this.StartPosition = reader.ReadUInt64(); return true;
-                case 0x1202: this.FadeInLength = reader.ReadUInt64(); return true;
-                case 0x1203: this.FadeInType = (MXFFade?) reader.ReadByte(); return true;
-                case 0x1204: this.FadeOutLength = reader.ReadUInt64(); return true;
-                case 0x1205: this.FadeOutType = (MXFFade?) reader.ReadByte(); return true;
+                case 0x1201: 
+                    this.StartPosition = reader.ReadUInt64();
+                    localTag.Value = this.StartPosition;
+                    return true;
+                case 0x1202: 
+                    this.FadeInLength = reader.ReadUInt64();
+                    localTag.Value = this.FadeInLength;
+                    return true;
+                case 0x1203: 
+                    this.FadeInType = (MXFFade?) reader.ReadByte();
+                    localTag.Value = this.FadeInType;
+                    return true;
+                case 0x1204: 
+                    this.FadeOutLength = reader.ReadUInt64();
+                    localTag.Value = this.FadeOutLength;
+                    return true;
+                case 0x1205: 
+                    this.FadeOutType = (MXFFade?) reader.ReadByte();
+                    localTag.Value = this.FadeOutType;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

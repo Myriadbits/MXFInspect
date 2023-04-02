@@ -56,7 +56,8 @@ namespace Myriadbits.MXF
                 switch (localTag.AliasUID)
                 {
                     case var _ when localTag.AliasUID == utf8textdata_Key: 
-                        this.UTF8TextData = reader.ReadUTF8String(localTag.Length.Value); 
+                        this.UTF8TextData = reader.ReadUTF8String(localTag.Length.Value);
+                        localTag.Value = this.UTF8TextData;
                         return true;
                 }
             }

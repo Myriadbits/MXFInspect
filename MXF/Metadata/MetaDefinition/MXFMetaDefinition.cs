@@ -61,10 +61,22 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3c0a: InstanceId = reader.ReadUUID(); return true;
-                case 0x0006: MetaDefinitionName = reader.ReadUTF16String(localTag.Length.Value); return true;
-                case 0x0005: MetaDefinitionIdentification = reader.ReadAUID(); return true;
-                case 0x0007: MetaDefinitionDescription = reader.ReadUTF16String(localTag.Length.Value); return true;
+                case 0x3c0a: 
+                    InstanceId = reader.ReadUUID();
+                    localTag.Value = InstanceId; 
+                    return true;
+                case 0x0006: 
+                    MetaDefinitionName = reader.ReadUTF16String(localTag.Length.Value); 
+                    localTag.Value = MetaDefinitionName;
+                    return true;
+                case 0x0005: 
+                    MetaDefinitionIdentification = reader.ReadAUID(); 
+                    localTag.Value = MetaDefinitionIdentification;
+                    return true;
+                case 0x0007: 
+                    MetaDefinitionDescription = reader.ReadUTF16String(localTag.Length.Value); 
+                    localTag.Value = MetaDefinitionDescription;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

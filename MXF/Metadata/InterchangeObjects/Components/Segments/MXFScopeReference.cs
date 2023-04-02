@@ -53,8 +53,14 @@ namespace Myriadbits.MXF
 		{
             switch (localTag.TagValue)
             {
-				case 0x0E01: this.RelativeScope = reader.ReadUInt32(); return true;
-				case 0x0E02: this.RelativeTrack = reader.ReadUInt32(); return true;
+				case 0x0E01: 
+					this.RelativeScope = reader.ReadUInt32();
+					localTag.Value = this.RelativeScope;
+					return true;
+				case 0x0E02: 
+					this.RelativeTrack = reader.ReadUInt32();
+					localTag.Value = this.RelativeTrack;
+					return true;
 			}
 			
 			return base.ReadLocalTagValue(reader, localTag); 

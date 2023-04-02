@@ -48,9 +48,16 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x5001: this.Tag = reader.ReadUTF16String(localTag.Length.Value); return true;
-                case 0x5003: this.IndirectValue = reader.ReadArray<byte>(reader.ReadByte, localTag.Length.Value); return true;
+                case 0x5001: 
+                    this.Tag = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = this.Tag;
+                    return true;
+                case 0x5003: 
+                    this.IndirectValue = reader.ReadBytes((int)localTag.Length.Value);
+                    localTag.Value = this.IndirectValue;
+                    return true;
             }
+
             return base.ReadLocalTagValue(reader, localTag);
         }
 

@@ -53,7 +53,8 @@ namespace Myriadbits.MXF
                     localTag.AddChild(reader.ReadReference<MXFOperationDefinition>("Operation", localTag.Offset)); 
                     return true;
                 case 0x0B04: 
-                    this.BypassOverride = reader.ReadUInt32(); 
+                    this.BypassOverride = reader.ReadUInt32();
+                    localTag.Value = this.BypassOverride;
                     return true;
                 case 0x0B05:
                     localTag.AddChild(reader.ReadReference<MXFSourceReference>("Rendering", localTag.Offset)); 

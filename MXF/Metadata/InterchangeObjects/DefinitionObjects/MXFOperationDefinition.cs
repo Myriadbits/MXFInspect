@@ -63,13 +63,25 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x1e02: IsTimeWarp = reader.ReadBoolean(); return true;
-                case 0x1e07: OperationInputCount = reader.ReadInt32(); return true;
-                case 0x1e08: Bypass = reader.ReadUInt32(); return true;
+                case 0x1e02: 
+                    IsTimeWarp = reader.ReadBoolean();
+                    localTag.Value = IsTimeWarp;
+                    return true;
+                case 0x1e07: 
+                    OperationInputCount = reader.ReadInt32();
+                    localTag.Value = OperationInputCount;
+                    return true;
+                case 0x1e08: 
+                    Bypass = reader.ReadUInt32();
+                    localTag.Value = Bypass;
+                    return true;
                 case 0x1e01:
                     localTag.AddChild(reader.ReadReference<MXFDataDefinition>("OperationDataDefinition", localTag.Offset));
                     return true;
-                case 0x1e06: OperationCategory = reader.ReadAUID(); return true;
+                case 0x1e06: 
+                    OperationCategory = reader.ReadAUID();
+                    localTag.Value = OperationCategory;
+                    return true;
                 case 0x1e09:
                     localTag.AddChildren(reader.GetReferenceSet<MXFParameterDefinition>("OperationParametersDefined", localTag.Offset, localTag.Length.Value));
                     return true;

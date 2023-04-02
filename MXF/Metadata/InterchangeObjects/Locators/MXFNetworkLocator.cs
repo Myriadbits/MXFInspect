@@ -49,7 +49,10 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x4001: URLString = reader.ReadUTF16String(localTag.Length.Value); return true;
+				case 0x4001: 
+					URLString = reader.ReadUTF16String(localTag.Length.Value);
+					localTag.Value = URLString;
+					return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag); 
 		}

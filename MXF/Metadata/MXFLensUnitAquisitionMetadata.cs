@@ -40,43 +40,43 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.01000000")]
         public UInt16? IrisFNumber { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.02000000")]
         public UInt16? FocusPositionFromImagePlane { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.03000000")]
         public UInt16? FocusPositionFromFrontLensVertex { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.04000000")]
         public bool? MacroSetting { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.05000000")]
         public UInt16? LensZoom35mmStillCameraEquivalent { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.06000000")]
         public UInt16? LensZoomActualFocalLength { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010d.04200202.07000000")]
         public UInt16? OpticalExtenderMagnification { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.08000000")]
         public UInt16? IrisTNumber { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.09000000")]
         public UInt16? IrisRingPosition { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.0a000000")]
         public UInt16? FocusRingPosition { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04200202.0b000000")]
         public UInt16? ZoomRingPosition { get; set; }
@@ -97,18 +97,54 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x8007: this.LensAttributes = reader.ReadUTF8String(localTag.Length.Value); return true;
-                case 0x8000: this.IrisFNumber = reader.ReadUInt16(); return true;
-                case 0x8001: this.FocusPositionFromImagePlane = reader.ReadUInt16();  return true;
-                case 0x8002: this.FocusPositionFromFrontLensVertex = reader.ReadUInt16(); return true;
-                case 0x8003: this.MacroSetting = reader.ReadBoolean(); return true;
-                case 0x8004: this.LensZoom35mmStillCameraEquivalent = reader.ReadUInt16(); return true;
-                case 0x8005: this.LensZoomActualFocalLength= reader.ReadUInt16(); return true;
-                case 0x8006: this.OpticalExtenderMagnification = reader.ReadUInt16(); return true;
-                case 0x8008: this.IrisTNumber= reader.ReadUInt16(); return true;
-                case 0x8009: this.IrisRingPosition= reader.ReadUInt16(); return true;
-                case 0x800a: this.FocusRingPosition= reader.ReadUInt16(); return true;
-                case 0x800b: this.ZoomRingPosition = reader.ReadUInt16();return true;
+                case 0x8007:
+                    this.LensAttributes = reader.ReadUTF8String(localTag.Length.Value);
+                    localTag.Value = this.LensAttributes;
+                    return true;
+                case 0x8000:
+                    this.IrisFNumber = reader.ReadUInt16();
+                    localTag.Value = this.IrisFNumber;
+                    return true;
+                case 0x8001:
+                    this.FocusPositionFromImagePlane = reader.ReadUInt16();
+                    localTag.Value = this.FocusPositionFromImagePlane;
+                    return true;
+                case 0x8002:
+                    this.FocusPositionFromFrontLensVertex = reader.ReadUInt16();
+                    localTag.Value = this.FocusPositionFromFrontLensVertex;
+                    return true;
+                case 0x8003:
+                    this.MacroSetting = reader.ReadBoolean();
+                    localTag.Value = this.MacroSetting;
+                    return true;
+                case 0x8004:
+                    this.LensZoom35mmStillCameraEquivalent = reader.ReadUInt16();
+                    localTag.Value = this.LensZoom35mmStillCameraEquivalent;
+                    return true;
+                case 0x8005:
+                    this.LensZoomActualFocalLength = reader.ReadUInt16();
+                    localTag.Value = this.LensZoomActualFocalLength;
+                    return true;
+                case 0x8006:
+                    this.OpticalExtenderMagnification = reader.ReadUInt16();
+                    localTag.Value = this.OpticalExtenderMagnification;
+                    return true;
+                case 0x8008:
+                    this.IrisTNumber = reader.ReadUInt16();
+                    localTag.Value = this.IrisTNumber;
+                    return true;
+                case 0x8009:
+                    this.IrisRingPosition = reader.ReadUInt16();
+                    localTag.Value = this.IrisRingPosition;
+                    return true;
+                case 0x800a:
+                    this.FocusRingPosition = reader.ReadUInt16();
+                    localTag.Value = this.FocusRingPosition;
+                    return true;
+                case 0x800b:
+                    this.ZoomRingPosition = reader.ReadUInt16();
+                    localTag.Value = this.ZoomRingPosition;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

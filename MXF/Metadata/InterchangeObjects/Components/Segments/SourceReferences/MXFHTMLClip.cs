@@ -54,8 +54,14 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x1401: this.BeginAnchor = reader.ReadUTF16String(localTag.Length.Value); return true;
-                case 0x1402: this.EndAnchor = reader.ReadUTF16String(localTag.Length.Value); return true;
+                case 0x1401: 
+                    this.BeginAnchor = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = this.BeginAnchor;
+                    return true;
+                case 0x1402: 
+                    this.EndAnchor = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = this.EndAnchor;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

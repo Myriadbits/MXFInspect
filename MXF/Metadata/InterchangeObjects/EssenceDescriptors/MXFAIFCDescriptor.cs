@@ -27,14 +27,14 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01012600")]
-	public class MXFAIFCDescriptor : MXFFileDescriptor
-	{
-		private const string CATEGORYNAME = "AIFCDescriptor";
+    public class MXFAIFCDescriptor : MXFFileDescriptor
+    {
+        private const string CATEGORYNAME = "AIFCDescriptor";
 
-		[Category(CATEGORYNAME)]
-		[ULElement("urn:smpte:ul:060e2b34.01010102.03030302.02000000")]
-		[TypeConverter(typeof(ByteArrayConverter))]
-		public byte[] AIFCSummary { get; set; }
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.03030302.02000000")]
+        [TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] AIFCSummary { get; set; }
 
 
         /// <summary>
@@ -43,22 +43,25 @@ namespace Myriadbits.MXF
         /// <param name="reader"></param>
         /// <param name="pack"></param>
         public MXFAIFCDescriptor(MXFPack pack)
-			: base(pack, "AIFCDescriptor")
-		{
-		}
+            : base(pack, "AIFCDescriptor")
+        {
+        }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.TagValue)
-			{
-				case 0x3101: this.AIFCSummary = reader.ReadBytes((int)localTag.Length.Value); return true;
-			}
-			return base.ReadLocalTagValue(reader, localTag);
-		}
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.TagValue)
+            {
+                case 0x3101:
+                    this.AIFCSummary = reader.ReadBytes((int)localTag.Length.Value);
+                    localTag.Value = this.AIFCSummary;
+                    return true;
+            }
+            return base.ReadLocalTagValue(reader, localTag);
+        }
 
-	}
+    }
 }

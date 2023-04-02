@@ -59,13 +59,34 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x4B01: this.EditRate = reader.ReadRational(); return true;
-				case 0x4B02: this.Origin = reader.ReadUInt64(); return true;
-				case 0x4B03: this.MarkIn = reader.ReadUInt64(); return true;
-				case 0x4B05: this.UserPosition = reader.ReadUInt64(); return true;
-				case 0x4B06: this.PackageMarkInPosition = reader.ReadUInt64(); return true;
-				case 0x4B04: this.MarkOut = reader.ReadUInt64(); return true;
-				case 0x4B07: this.PackageMarkOutPosition = reader.ReadUInt64(); return true;
+				case 0x4B01:
+					this.EditRate = reader.ReadRational();
+                    localTag.Value = this.EditRate; 
+					return true;
+				case 0x4B02:
+					this.Origin = reader.ReadUInt64();
+					localTag.Value = this.Origin;
+					return true;
+				case 0x4B03:
+					this.MarkIn = reader.ReadUInt64();
+					localTag.Value = this.MarkIn;
+					return true;
+				case 0x4B05:
+					this.UserPosition = reader.ReadUInt64(); 
+					localTag.Value = this.UserPosition;
+					return true;
+				case 0x4B06:
+					this.PackageMarkInPosition = reader.ReadUInt64();
+					localTag.Value = this.PackageMarkInPosition;
+					return true;
+				case 0x4B04:
+					this.MarkOut = reader.ReadUInt64(); 
+					localTag.Value = this.MarkOut;
+					return true;
+				case 0x4B07:
+					this.PackageMarkOutPosition = reader.ReadUInt64();
+					localTag.Value = this.PackageMarkOutPosition;
+					return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag); 
 		}

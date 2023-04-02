@@ -47,11 +47,13 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                // TODO: this is a risky operation reading the array like this
                 case 0x0018:
-                    ElementCount = reader.ReadUInt32(); return true;
+                    ElementCount = reader.ReadUInt32();
+                    localTag.Value = ElementCount;
+                    return true;
                 case 0x0017:
-                    localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("FixedArrayElementType", localTag.Offset)); return true;
+                    localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("FixedArrayElementType", localTag.Offset));
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

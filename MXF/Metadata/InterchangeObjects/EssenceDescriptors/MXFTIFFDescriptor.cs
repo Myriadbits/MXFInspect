@@ -68,12 +68,30 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.TagValue)
                 {
-                    case 0x3706: this.TIFFSummary = reader.ReadBytes((int)localTag.Length.Value); return true;
-                    case 0x3703: this.LeadingLines = reader.ReadInt32(); return true;
-                    case 0x3704: this.TrailingLines = reader.ReadInt32(); return true;
-                    case 0x3701: this.IsUniform = reader.ReadBoolean(); return true;
-                    case 0x3705: this.JPEGTableID = reader.ReadInt32(); return true;
-                    case 0x3702: this.IsContiguous = reader.ReadBoolean(); return true;
+                    case 0x3706: 
+                        this.TIFFSummary = reader.ReadBytes((int)localTag.Length.Value);
+                        localTag.Value = this.TIFFSummary;
+                        return true;
+                    case 0x3703: 
+                        this.LeadingLines = reader.ReadInt32();
+                        localTag.Value = this.LeadingLines;
+                        return true;
+                    case 0x3704: 
+                        this.TrailingLines = reader.ReadInt32();
+                        localTag.Value = this.TrailingLines;
+                        return true;
+                    case 0x3701: 
+                        this.IsUniform = reader.ReadBoolean();
+                        localTag.Value = this.IsUniform;
+                        return true;
+                    case 0x3705: 
+                        this.JPEGTableID = reader.ReadInt32();
+                        localTag.Value = this.JPEGTableID;
+                        return true;
+                    case 0x3702: 
+                        this.IsContiguous = reader.ReadBoolean();
+                        localTag.Value = this.IsContiguous;
+                        return true;
                 }
             }
             return base.ReadLocalTagValue(reader, localTag);

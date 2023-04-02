@@ -63,10 +63,22 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x1101: this.SourcePackageID = reader.ReadUMIDKey(); return true;
-                case 0x1102: this.SourceTrackId = reader.ReadUInt32(); return true;
-                case 0x1103: this.ChannelIDs = reader.ReadArray(reader.ReadUInt32, localTag.Length.Value); return true;
-                case 0x1104: this.MonoSourceTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Length.Value); return true;
+                case 0x1101:
+                    this.SourcePackageID = reader.ReadUMIDKey(); 
+                    localTag.Value = this.SourcePackageID; 
+                    return true;
+                case 0x1102:
+                    this.SourceTrackId = reader.ReadUInt32();
+                    localTag.Value = this.SourceTrackId;
+                    return true;
+                case 0x1103:
+                    this.ChannelIDs = reader.ReadArray(reader.ReadUInt32, localTag.Length.Value);
+                    localTag.Value = this.ChannelIDs;
+                    return true;
+                case 0x1104:
+                    this.MonoSourceTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Length.Value);
+                    localTag.Value = this.MonoSourceTrackIDs;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

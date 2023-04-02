@@ -99,44 +99,57 @@ namespace Myriadbits.MXF
 						localTag.AddChildren(reader.GetReferenceSet<MXFObject>("AddressNameValueObject", localTag.Offset, localTag.Length.Value));
                         return true;
 					case var _ when localTag.AliasUID == roomSuiteNumber_Key: 
-						this.RoomSuiteNumber = reader.ReadUTF16String(localTag.Length.Value); 
+						this.RoomSuiteNumber = reader.ReadUTF16String(localTag.Length.Value);
+						localTag.Value = this.RoomSuiteNumber;
 						return true;
 					case var _ when localTag.AliasUID == streetNumber_Key: 
-						this.StreetNumber = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.StreetNumber = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.StreetNumber;
+                        return true;
 					case var _ when localTag.AliasUID == streetName_Key: 
-						this.StreetNumber = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.StreetName = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.StreetName;
+                        return true;
 					case var _ when localTag.AliasUID == postalTown_Key: 
-						this.PostalTown = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.PostalTown = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.PostalTown;
+                        return true;
 					case var _ when localTag.AliasUID == city_Key: 
-						this.City = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.City = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.City;
+                        return true;
 					case var _ when localTag.AliasUID == stateProvinceCountry_Key: 
-						this.StateProvinceCounty = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.StateProvinceCounty = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.StateProvinceCounty;
+                        return true;
 					case var _ when localTag.AliasUID == postalCode_Key: 
-						this.PostalCode = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.PostalCode = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.PostalCode;
+                        return true;
 					case var _ when localTag.AliasUID == country_Key: 
-						this.Country = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.Country = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.Country;
+                        return true;
 					case var _ when localTag.AliasUID == roomSuiteName_Key: 
-						this.RoomSuiteName = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.RoomSuiteName = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.RoomSuiteName;
+                        return true;
 					case var _ when localTag.AliasUID == buildingName_Key: 
-						this.BuildingName = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.BuildingName = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.BuildingName;
+                        return true;
 					case var _ when localTag.AliasUID == placeName_Key: 
-						this.PlaceName = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.PlaceName = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.PlaceName;
+                        return true;
 					case var _ when localTag.AliasUID == geoCoordinates_Key: 
-						this.GeographicalCoordinates = reader.ReadBytes(12); 
-						return true;
+						this.GeographicalCoordinates = reader.ReadBytes(12);
+                        localTag.Value = this.GeographicalCoordinates;
+                        return true;
 					case var _ when localTag.AliasUID == astroBodyName_Key: 
-						this.AstronomicalBodyName = reader.ReadUTF16String(localTag.Length.Value); 
-						return true;
+						this.AstronomicalBodyName = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.AstronomicalBodyName;
+                        return true;
 				}
 			}
 

@@ -57,9 +57,18 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x1a04: this.EditHint = (MXFEditHint)reader.ReadByte(); return true;
-				case 0x1a02: this.ControlPointValue = reader.ReadArray<byte>(reader.ReadByte, localTag.Length.Value); return true;
-				case 0x1a03: this.ControlPointTime = reader.ReadRational(); return true;
+				case 0x1a04: 
+					this.EditHint = (MXFEditHint)reader.ReadByte();
+                    localTag.Value = this.EditHint; 
+					return true;
+				case 0x1a02: 
+					this.ControlPointValue = reader.ReadArray<byte>(reader.ReadByte, localTag.Length.Value);
+					localTag.Value = this.ControlPointValue;
+					return true;
+				case 0x1a03: 
+					this.ControlPointTime = reader.ReadRational(); 
+					localTag.Value = this.ControlPointTime;
+					return true;
 			}	
 			return base.ReadLocalTagValue(reader, localTag);
 		}

@@ -44,7 +44,10 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x5212: this.MIMEEncoding = reader.ReadUTF16String(localTag.Length.Value); return true;
+                case 0x5212: 
+                    this.MIMEEncoding = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = this.MIMEEncoding;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

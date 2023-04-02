@@ -71,14 +71,22 @@ namespace Myriadbits.MXF
             {
                 case 0x6102:
                     this.DescribedTrackIDs = reader.ReadArray(reader.ReadUInt32, localTag.Length.Value / sizeof(UInt32));
+                    localTag.Value = this.DescribedTrackIDs;
                     return true;
-                case 0x6101: localTag.AddChild(reader.ReadReference<MXFDescriptiveFramework>("DescriptiveFrameworkObject", localTag.Offset)); return true;
+                case 0x6101: 
+                    localTag.AddChild(reader.ReadReference<MXFDescriptiveFramework>("DescriptiveFrameworkObject", localTag.Offset)); 
+                    return true;
                 case var _ when localTag.AliasUID == metadataScheme_Key:
-                    this.DescriptiveMetadataScheme = reader.ReadAUID(); 
+                    this.DescriptiveMetadataScheme = reader.ReadAUID();
+                    localTag.Value = this.DescriptiveMetadataScheme;
                     return true;
-                case var _ when localTag.AliasUID == metadataPlugInID_Key: this.DescriptiveMetadataPlugInID = reader.ReadUUID(); return true;
+                case var _ when localTag.AliasUID == metadataPlugInID_Key: 
+                    this.DescriptiveMetadataPlugInID = reader.ReadUUID();
+                    localTag.Value = this.DescriptiveMetadataPlugInID;
+                    return true;
                 case var _ when localTag.AliasUID == metadataApplicationEnvironmentID_Key: 
-                    this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Length.Value); 
+                    this.DescriptiveMetadataApplicationEnvironmentID = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = this.DescriptiveMetadataApplicationEnvironmentID;
                     return true;
             }
             return base.ReadLocalTagValue(reader, localTag);

@@ -28,46 +28,55 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01011400")]
-	public class MXFTimecodeComponent : MXFSegment
-	{
-		private const string CATEGORYNAME = "TimecodeComponent";
+    public class MXFTimecodeComponent : MXFSegment
+    {
+        private const string CATEGORYNAME = "TimecodeComponent";
 
-		[Category(CATEGORYNAME)]
-		[ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01050000")]
-		public MXFPosition? StartTimecode { get; set; }
-		
-		[Category(CATEGORYNAME)]
-		[ULElement("urn:smpte:ul:060e2b34.01010102.04040101.02060000")]
-		public UInt16? FramesPerSecond { get; set; }
-		
-		[Category(CATEGORYNAME)]
-		[ULElement("urn:smpte:ul:060e2b34.01010101.04040101.05000000")]
-		public bool? DropFrame { get; set; }
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01050000")]
+        public MXFPosition? StartTimecode { get; set; }
 
-		public MXFTimecodeComponent(MXFPack pack)
-			: base(pack, "TimeCodeComponent")
-		{
-		}
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.04040101.02060000")]
+        public UInt16? FramesPerSecond { get; set; }
 
-		public MXFTimecodeComponent(MXFPack pack, string metadataName)
-			: base(pack, metadataName)
-		{
-		}
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.04040101.05000000")]
+        public bool? DropFrame { get; set; }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.TagValue)
-			{
-				case 0x1501: this.StartTimecode = reader.ReadUInt64(); return true;
-				case 0x1502: this.FramesPerSecond = reader.ReadUInt16(); return true;
-				case 0x1503: this.DropFrame = (reader.ReadByte() != 0); return true;
-			}
-			return base.ReadLocalTagValue(reader, localTag); 
-		}
+        public MXFTimecodeComponent(MXFPack pack)
+            : base(pack, "TimeCodeComponent")
+        {
+        }
 
-	}
+        public MXFTimecodeComponent(MXFPack pack, string metadataName)
+            : base(pack, metadataName)
+        {
+        }
+
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.TagValue)
+            {
+                case 0x1501:
+                    this.StartTimecode = reader.ReadUInt64();
+                    localTag.Value = this.StartTimecode;
+                    return true;
+                case 0x1502:
+                    this.FramesPerSecond = reader.ReadUInt16();
+                    localTag.Value = this.FramesPerSecond;
+                    return true;
+                case 0x1503:
+                    this.DropFrame = reader.ReadBoolean();
+                    localTag.Value = this.DropFrame;
+                    return true;
+            }
+            return base.ReadLocalTagValue(reader, localTag);
+        }
+
+    }
 }

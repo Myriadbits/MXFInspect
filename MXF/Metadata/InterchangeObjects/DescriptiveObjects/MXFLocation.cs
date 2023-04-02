@@ -57,8 +57,14 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == locDescription_Key: this.LocationDescription = reader.ReadUTF16String(localTag.Length.Value); return true;
-                    case var _ when localTag.AliasUID == locKind_Key: this.LocationKind = reader.ReadUTF16String(localTag.Length.Value); return true;
+                    case var _ when localTag.AliasUID == locDescription_Key: 
+                        this.LocationDescription = reader.ReadUTF16String(localTag.Length.Value); 
+                        localTag.Value = this.LocationDescription;
+                        return true;
+                    case var _ when localTag.AliasUID == locKind_Key: 
+                        this.LocationKind = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.LocationKind;
+                        return true;
                 }
             }
 

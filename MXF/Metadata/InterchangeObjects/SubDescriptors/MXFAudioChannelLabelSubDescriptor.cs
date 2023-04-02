@@ -49,7 +49,10 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == SoundfieldGroupLinkId_Key: this.SoundfieldGroupLinkID = reader.ReadUUID(); return true;
+                    case var _ when localTag.AliasUID == SoundfieldGroupLinkId_Key: 
+                        this.SoundfieldGroupLinkID = reader.ReadUUID();
+                        localTag.Value = this.SoundfieldGroupLinkID;
+                        return true;
                 }
             }
             return base.ReadLocalTagValue(reader, localTag);

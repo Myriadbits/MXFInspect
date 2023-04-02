@@ -51,8 +51,10 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x6103: this.DescriptiveClipDescribedTrackIDs = 
-						reader.ReadArray(reader.ReadUInt32, localTag.Length.Value / sizeof(UInt32)); 
+				case 0x6103: 
+					this.DescriptiveClipDescribedTrackIDs = 
+						reader.ReadArray(reader.ReadUInt32, localTag.Length.Value / sizeof(UInt32));
+					localTag.Value = this.DescriptiveClipDescribedTrackIDs;
 					return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag); 

@@ -90,15 +90,42 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x2701: this.LinkedPackageID = reader.ReadUMIDKey(); return true;
-                case 0x3F06: this.IndexSID = reader.ReadUInt32(); return true;
-                case 0x3F07: this.EssenceSID = reader.ReadUInt32(); return true;
-                case 0x2702: this.EssenceStream = reader.ReadBytes((int)localTag.Length.Value); return true;
-                case 0x2B01: this.SampleIndex = reader.ReadBytes((int)localTag.Length.Value); return true;
-                case var _ when localTag.AliasUID == precedingIndexTable_Key: this.PrecedingIndexTable = reader.ReadBoolean(); return true;
-                case var _ when localTag.AliasUID == followingIndexTable_Key: this.FollowingIndexTable = reader.ReadBoolean(); return true;
-                case var _ when localTag.AliasUID == isSparse_Key: this.IsSparse = reader.ReadBoolean(); return true;
-                case var _ when localTag.AliasUID == singularPartitionUsage_Key: this.SingularPartitionUsage = reader.ReadBoolean(); return true;
+                case 0x2701:
+                    this.LinkedPackageID = reader.ReadUMIDKey();
+                    localTag.Value = this.LinkedPackageID; 
+                    return true;
+                case 0x3F06:
+                    this.IndexSID = reader.ReadUInt32(); 
+                    localTag.Value = this.IndexSID;
+                    return true;
+                case 0x3F07:
+                    this.EssenceSID = reader.ReadUInt32(); 
+                    localTag.Value = this.EssenceSID;
+                    return true;
+                case 0x2702:
+                    this.EssenceStream = reader.ReadBytes((int)localTag.Length.Value);
+                    localTag.Value = this.EssenceStream;
+                    return true;
+                case 0x2B01:
+                    this.SampleIndex = reader.ReadBytes((int)localTag.Length.Value); 
+                    localTag.Value = this.SampleIndex;
+                    return true;
+                case var _ when localTag.AliasUID == precedingIndexTable_Key: 
+                    this.PrecedingIndexTable = reader.ReadBoolean(); 
+                    localTag.Value = this.PrecedingIndexTable;
+                    return true;
+                case var _ when localTag.AliasUID == followingIndexTable_Key: 
+                    this.FollowingIndexTable = reader.ReadBoolean(); 
+                    localTag.Value = this.FollowingIndexTable;
+                    return true;
+                case var _ when localTag.AliasUID == isSparse_Key: 
+                    this.IsSparse = reader.ReadBoolean(); 
+                    localTag.Value = this.IsSparse;
+                    return true;
+                case var _ when localTag.AliasUID == singularPartitionUsage_Key: 
+                    this.SingularPartitionUsage = reader.ReadBoolean(); 
+                    localTag.Value = this.SingularPartitionUsage;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

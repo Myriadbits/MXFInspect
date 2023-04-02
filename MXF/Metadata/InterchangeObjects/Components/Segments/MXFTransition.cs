@@ -49,8 +49,13 @@ namespace Myriadbits.MXF
 		{
             switch (localTag.TagValue)
             {
-				case 0x1801: localTag.AddChild(reader.ReadReference<MXFOperationGroup>("TransitionOperation", localTag.Offset)); return true;
-				case 0x1802: this.CutPoint = reader.ReadUInt64(); return true;
+				case 0x1801: 
+					localTag.AddChild(reader.ReadReference<MXFOperationGroup>("TransitionOperation", localTag.Offset)); 
+					return true;
+				case 0x1802: 
+					this.CutPoint = reader.ReadUInt64();
+					localTag.Value = this.CutPoint;
+					return true;
 			}
 			
 			return base.ReadLocalTagValue(reader, localTag); 

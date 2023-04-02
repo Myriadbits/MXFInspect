@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.04020301.04000000")]
         public bool? Locked { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04020101.03000000")]
         public sbyte? AudioRefLevel { get; set; }
@@ -51,7 +51,7 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010101.04020101.01000000")]
         public MXFElectroSpatialFormulation? ElectroSpatialFormulation { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020101.04000000")]
         public UInt32? ChannelCount { get; set; }
@@ -59,19 +59,19 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.04020303.04000000")]
         public UInt32? QuantizationBits { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020701.00000000")]
         public sbyte? DialNorm { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.04020402.00000000")]
         public UL SoundEssenceCoding { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04020101.06000000")]
         public MXFRational ReferenceImageEditRate { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.04020101.07000000")]
         public byte? ReferenceAudioAlignmentLevel { get; set; }
@@ -104,16 +104,46 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3D03: this.AudioSamplingRate = reader.ReadRational(); return true;
-                case 0x3D02: this.Locked = reader.ReadBoolean(); return true;
-                case 0x3D04: this.AudioRefLevel = reader.ReadSByte(); return true;
-                case 0x3D05: this.ElectroSpatialFormulation = (MXFElectroSpatialFormulation)reader.ReadByte(); return true;
-                case 0x3D07: this.ChannelCount = reader.ReadUInt32(); return true;
-                case 0x3D01: this.QuantizationBits = reader.ReadUInt32(); return true;
-                case 0x3D0C: this.DialNorm = reader.ReadSByte(); return true;
-                case 0x3D06: this.SoundEssenceCoding = reader.ReadUL(); return true;
-                case var _ when localTag.AliasUID == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
-                case var _ when localTag.AliasUID == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
+                case 0x3D03:
+                    this.AudioSamplingRate = reader.ReadRational();
+                    localTag.Value = this.AudioSamplingRate;
+                    return true;
+                case 0x3D02:
+                    this.Locked = reader.ReadBoolean();
+                    localTag.Value = this.Locked;
+                    return true;
+                case 0x3D04:
+                    this.AudioRefLevel = reader.ReadSByte();
+                    localTag.Value = this.AudioRefLevel;
+                    return true;
+                case 0x3D05:
+                    this.ElectroSpatialFormulation = (MXFElectroSpatialFormulation)reader.ReadByte();
+                    localTag.Value = this.ElectroSpatialFormulation;
+                    return true;
+                case 0x3D07:
+                    this.ChannelCount = reader.ReadUInt32();
+                    localTag.Value = this.ChannelCount;
+                    return true;
+                case 0x3D01:
+                    this.QuantizationBits = reader.ReadUInt32();
+                    localTag.Value = this.QuantizationBits;
+                    return true;
+                case 0x3D0C:
+                    this.DialNorm = reader.ReadSByte();
+                    localTag.Value = this.DialNorm;
+                    return true;
+                case 0x3D06:
+                    this.SoundEssenceCoding = reader.ReadUL();
+                    localTag.Value = this.SoundEssenceCoding;
+                    return true;
+                case var _ when localTag.AliasUID == refImageEditRate_Key:
+                    this.ReferenceImageEditRate = reader.ReadRational();
+                    localTag.Value = this.ReferenceImageEditRate;
+                    return true;
+                case var _ when localTag.AliasUID == refAudioAlignmentLevel:
+                    this.ReferenceAudioAlignmentLevel = reader.ReadByte();
+                    localTag.Value = this.ReferenceAudioAlignmentLevel;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

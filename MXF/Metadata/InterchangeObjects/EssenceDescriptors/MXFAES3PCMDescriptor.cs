@@ -28,75 +28,91 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01014700")]
-	public class MXFAES3PCMDescriptor : MXFWAVEPCMDescriptor
-	{
-		private const string CATEGORYNAME = "AES3 PCM Descriptor";
+    public class MXFAES3PCMDescriptor : MXFWAVEPCMDescriptor
+    {
+        private const string CATEGORYNAME = "AES3 PCM Descriptor";
 
-		[CategoryAttribute(CATEGORYNAME)]
+        [CategoryAttribute(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.06000000")]
         public MXFEmphasis? Emphasis { get; set; }
 
-		[CategoryAttribute(CATEGORYNAME)]
+        [CategoryAttribute(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020302.03000000")]
         public UInt16? BlockStartOffset { get; set; }
 
-		[CategoryAttribute(CATEGORYNAME)]
+        [CategoryAttribute(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.01000000")]
         public MXFAuxBitsMode? AuxiliaryBitsMode { get; set; }
 
-		[CategoryAttribute(CATEGORYNAME)]
+        [CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(EnumArrayConverter<MXFChannelStatusMode>))]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.02000000")]
         public MXFChannelStatusMode[] ChannelStatusMode { get; set; }
 
-		[CategoryAttribute(CATEGORYNAME)]
+        [CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.03000000")]
         public byte[] FixedChannelStatusData { get; set; }
 
-		[CategoryAttribute(CATEGORYNAME)]
+        [CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(EnumArrayConverter<MXFUserDataMode>))]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.04000000")]
         public MXFUserDataMode[] UserDataMode { get; set; }
 
-		[CategoryAttribute(CATEGORYNAME)]
+        [CategoryAttribute(CATEGORYNAME)]
         [TypeConverter(typeof(ByteArrayConverter))]
         [ULElement("urn:smpte:ul:060e2b34.01010105.04020501.05000000")]
-        public byte[] FixedUserData { get; set; }		
-		
-		/// <summary>
-		/// Constructor, set the correct descriptor name
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="pack"></param>
-		public MXFAES3PCMDescriptor(MXFPack pack)
-			: base(pack, "AES3 PCM Descriptor")
-		{
-		}
+        public byte[] FixedUserData { get; set; }
 
-		
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.TagValue)
-			{
-				case 0x3D0D: this.Emphasis = (MXFEmphasis)reader.ReadByte(); return true;
-				case 0x3D0F: this.BlockStartOffset = reader.ReadUInt16(); return true;
-				case 0x3D08: this.AuxiliaryBitsMode = (MXFAuxBitsMode)reader.ReadByte(); return true;
-                case 0x3D10: this.ChannelStatusMode = reader.ReadArray(reader.ReadChannelstatusMode, 8); return true;
+        /// <summary>
+        /// Constructor, set the correct descriptor name
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="pack"></param>
+        public MXFAES3PCMDescriptor(MXFPack pack)
+            : base(pack, "AES3 PCM Descriptor")
+        {
+        }
+
+
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.TagValue)
+            {
+                case 0x3D0D:
+                    this.Emphasis = (MXFEmphasis)reader.ReadByte();
+                    localTag.Value = this.Emphasis;
+                    return true;
+                case 0x3D0F:
+                    this.BlockStartOffset = reader.ReadUInt16();
+                    localTag.Value = this.BlockStartOffset;
+                    return true;
+                case 0x3D08:
+                    this.AuxiliaryBitsMode = (MXFAuxBitsMode)reader.ReadByte();
+                    localTag.Value = this.AuxiliaryBitsMode;
+                    return true;
+                case 0x3D10:
+                    this.ChannelStatusMode = reader.ReadArray(reader.ReadChannelstatusMode, 8);
+                    localTag.Value = this.ChannelStatusMode;
+                    return true;
                 case 0x3D11:
-						this.FixedChannelStatusData = reader.ReadBytes((int)localTag.Length.Value);
-						return true;
-				case 0x3D12:
-					this.UserDataMode = reader.ReadArray(reader.ReadUserDataMode, 2); return true;
-				case 0x3D13:
-						this.FixedUserData = reader.ReadBytes((int)localTag.Length.Value);
-						return true;
-			}
-			return base.ReadLocalTagValue(reader, localTag);
-		}
+                    this.FixedChannelStatusData = reader.ReadBytes((int)localTag.Length.Value);
+                    localTag.Value = this.FixedChannelStatusData;
+                    return true;
+                case 0x3D12:
+                    this.UserDataMode = reader.ReadArray(reader.ReadUserDataMode, 2);
+                    localTag.Value = this.UserDataMode;
+                    return true;
+                case 0x3D13:
+                    this.FixedUserData = reader.ReadBytes((int)localTag.Length.Value);
+                    localTag.Value = this.FixedUserData;
+                    return true;
+            }
+            return base.ReadLocalTagValue(reader, localTag);
+        }
     }
 }

@@ -216,43 +216,145 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3215: this.SignalStandard = (MXFSignalStandard)reader.ReadByte(); return true;
-                case 0x320C: this.FrameLayout = (MXFFrameLayout)reader.ReadByte(); return true;
-                case 0x3203: this.StoredWidth = reader.ReadUInt32(); return true;
-                case 0x3202: this.StoredHeight = reader.ReadUInt32(); return true;
-                case 0x3216: this.StoredF2Offset = reader.ReadInt32(); return true;
-                case 0x3205: this.SampledWidth = reader.ReadUInt32(); return true;
-                case 0x3204: this.SampledHeight = reader.ReadUInt32(); return true;
-                case 0x3206: this.SampledXOffset = reader.ReadInt32(); return true;
-                case 0x3207: this.SampledYOffset = reader.ReadInt32(); return true;
-                case 0x3208: this.DisplayHeight = reader.ReadUInt32(); return true;
-                case 0x3209: this.DisplayWidth = reader.ReadUInt32(); return true;
-                case 0x320A: this.DisplayXOffset = reader.ReadInt32(); return true;
-                case 0x320B: this.DisplayYOffset = reader.ReadInt32(); return true;
-                case 0x3217: this.DisplayF2Offset = reader.ReadInt32(); return true;
-                case 0x320E: this.ImageAspectRatio = reader.ReadRational(); return true;
-                case 0x3218: this.ActiveFormatDescriptor = reader.ReadByte(); return true;
-                case 0x320D: this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4); return true;
-                case 0x320F: this.AlphaTransparency = (MXFAlphaTransparency)reader.ReadByte(); return true;
-                case 0x3210: this.TransferCharacteristic = reader.ReadUL(); return true;
-                case 0x3211: this.ImageAlignmentFactor = reader.ReadUInt32(); return true;
-                case 0x3213: this.ImageStartOffset = reader.ReadUInt32(); return true;
-                case 0x3214: this.ImageEndOffset = reader.ReadUInt32(); return true;
-                case 0x3212: this.FieldDominance = (MXFFieldNumber)reader.ReadByte(); return true;
-                case 0x3201: this.PictureCompression = reader.ReadUL(); return true;
-                case 0x321A: this.CodingEquations = reader.ReadUL(); return true;
-                case 0x3219: this.ColorPrimaries = reader.ReadUL(); return true;
+                case 0x3215: 
+                    this.SignalStandard = (MXFSignalStandard)reader.ReadByte();
+                    localTag.Value = this.SignalStandard;
+                    return true;
+                case 0x320C: 
+                    this.FrameLayout = (MXFFrameLayout)reader.ReadByte();
+                    localTag.Value = this.FrameLayout;
+                    return true;
+                case 0x3203: 
+                    this.StoredWidth = reader.ReadUInt32();
+                    localTag.Value = this.StoredWidth;
+                    return true;
+                case 0x3202: 
+                    this.StoredHeight = reader.ReadUInt32();
+                    localTag.Value = this.StoredHeight;
+                    return true;
+                case 0x3216: 
+                    this.StoredF2Offset = reader.ReadInt32();
+                    localTag.Value = this.StoredF2Offset;
+                    return true;
+                case 0x3205: 
+                    this.SampledWidth = reader.ReadUInt32(); 
+                    localTag.Value = this.SampledWidth;
+                    return true;
+                case 0x3204: 
+                    this.SampledHeight = reader.ReadUInt32();
+                    localTag.Value = this.SampledHeight;
+                    return true;
+                case 0x3206: 
+                    this.SampledXOffset = reader.ReadInt32();
+                    localTag.Value = this.SampledXOffset;
+                    return true;
+                case 0x3207: 
+                    this.SampledYOffset = reader.ReadInt32();
+                    localTag.Value = this.SampledYOffset;
+                    return true;
+                case 0x3208: 
+                    this.DisplayHeight = reader.ReadUInt32();
+                    localTag.Value = this.DisplayHeight;
+                    return true;
+                case 0x3209: 
+                    this.DisplayWidth = reader.ReadUInt32();
+                    localTag.Value = this.DisplayWidth; 
+                    return true;
+                case 0x320A: 
+                    this.DisplayXOffset = reader.ReadInt32();
+                    localTag.Value = this.DisplayXOffset;
+                    return true;
+                case 0x320B: 
+                    this.DisplayYOffset = reader.ReadInt32();
+                    localTag.Value = this.DisplayYOffset;
+                    return true;
+                case 0x3217: 
+                    this.DisplayF2Offset = reader.ReadInt32();
+                    localTag.Value = this.DisplayF2Offset;
+                    return true;
+                case 0x320E: 
+                    this.ImageAspectRatio = reader.ReadRational();
+                    localTag.Value = this.ImageAspectRatio;
+                    return true;
+                case 0x3218: 
+                    this.ActiveFormatDescriptor = reader.ReadByte(); 
+                    localTag.Value = this.ActiveFormatDescriptor;
+                    return true;
+                case 0x320D: 
+                    this.VideoLineMap = reader.ReadArray(reader.ReadInt32, 4);
+                    localTag.Value = this.VideoLineMap;
+                    return true;
+                case 0x320F: 
+                    this.AlphaTransparency = (MXFAlphaTransparency)reader.ReadByte();
+                    localTag.Value = this.AlphaTransparency;
+                    return true;
+                case 0x3210: 
+                    this.TransferCharacteristic = reader.ReadUL();
+                    localTag.Value = this.TransferCharacteristic;
+                    return true;
+                case 0x3211: 
+                    this.ImageAlignmentFactor = reader.ReadUInt32();
+                    localTag.Value = this.ImageAlignmentFactor;
+                    return true;
+                case 0x3213: 
+                    this.ImageStartOffset = reader.ReadUInt32();
+                    localTag.Value = this.ImageStartOffset;
+                    return true;
+                case 0x3214: 
+                    this.ImageEndOffset = reader.ReadUInt32();
+                    localTag.Value = this.ImageEndOffset;
+                    return true;
+                case 0x3212: 
+                    this.FieldDominance = (MXFFieldNumber)reader.ReadByte();
+                    localTag.Value = this.FieldDominance;
+                    return true;
+                case 0x3201: 
+                    this.PictureCompression = reader.ReadUL();
+                    localTag.Value = this.PictureCompression;
+                    return true;
+                case 0x321A: 
+                    this.CodingEquations = reader.ReadUL();
+                    localTag.Value = this.CodingEquations;
+                    return true;
+                case 0x3219: 
+                    this.ColorPrimaries = reader.ReadUL();
+                    localTag.Value = this.ColorPrimaries;
+                    return true;
                 case var _ when localTag.AliasUID == altCenterCuts_Key:
                     localTag.AddChildren(reader.ReadAUIDSet("AlternativeCenterCut", localTag.Offset, localTag.Length.Value)); 
                     return true;
-                case var _ when localTag.AliasUID == activeHeight_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var _ when localTag.AliasUID == activeWidth_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var _ when localTag.AliasUID == activeXOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var _ when localTag.AliasUID == activeYOffset_Key: this.ActiveHeight = reader.ReadUInt32(); return true;
-                case var _ when localTag.AliasUID == displayPrimaries_Key: this.MasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3);  return true;
-                case var _ when localTag.AliasUID == displayWhitePointChromaticity_Key: this.MasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
-                case var _ when localTag.AliasUID == displayMaxLuminance_Key: this.MasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
-                case var _ when localTag.AliasUID == displayMinLuminance_Key: this.MasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
+                case var _ when localTag.AliasUID == activeHeight_Key: 
+                    this.ActiveHeight = reader.ReadUInt32();
+                    localTag.Value = this.ActiveHeight; 
+                    return true;
+                case var _ when localTag.AliasUID == activeWidth_Key: 
+                    this.ActiveWidth = reader.ReadUInt32();
+                    localTag.Value = this.ActiveWidth;
+                    return true;
+                case var _ when localTag.AliasUID == activeXOffset_Key: 
+                    this.ActiveXOffset = reader.ReadUInt32();
+                    localTag.Value = this.ActiveXOffset;
+                    return true;
+                case var _ when localTag.AliasUID == activeYOffset_Key: 
+                    this.ActiveYOffset = reader.ReadUInt32();
+                    localTag.Value = this.ActiveYOffset;
+                    return true;
+                case var _ when localTag.AliasUID == displayPrimaries_Key: 
+                    this.MasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3); 
+                    localTag.Value = this.MasteringDisplayPrimaries;
+                    return true;
+                case var _ when localTag.AliasUID == displayWhitePointChromaticity_Key: 
+                    this.MasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary();
+                    localTag.Value = this.MasteringDisplayWhitePointChromaticity;
+                    return true;
+                case var _ when localTag.AliasUID == displayMaxLuminance_Key:
+                    this.MasteringDisplayMaximumLuminance = reader.ReadUInt32(); 
+                    localTag.Value = this.MasteringDisplayMaximumLuminance;
+                    return true;
+                case var _ when localTag.AliasUID == displayMinLuminance_Key:
+                    this.MasteringDisplayMinimumLuminance = reader.ReadUInt32(); 
+                    localTag.Value = this.MasteringDisplayMinimumLuminance;
+                    return true;
 
             }
             return base.ReadLocalTagValue(reader, localTag);

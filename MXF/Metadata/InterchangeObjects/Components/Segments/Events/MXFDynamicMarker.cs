@@ -54,10 +54,18 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x5701: this.ToleranceMode = (MXFToleranceMode)reader.ReadByte(); return true;
-                case 0x5703: this.ToleranceWindow = reader.ReadArray<byte>(reader.ReadByte, localTag.Length.Value); return true;
+                case 0x5701: 
+                    this.ToleranceMode = (MXFToleranceMode)reader.ReadByte();
+                    localTag.Value = this.ToleranceMode;
+                    return true;
+                case 0x5703: 
+                    this.ToleranceWindow = reader.ReadArray<byte>(reader.ReadByte, localTag.Length.Value); 
+                    localTag.Value = this.ToleranceWindow;
+                    return true;
                 // TODO replace generic MXFObject with class ApplicationPluginObject once implemented
-                case 0x5702: localTag.AddChild(reader.ReadReference<MXFObject>("InterpolationDefinition", localTag.Offset)); return true;
+                case 0x5702: 
+                    localTag.AddChild(reader.ReadReference<MXFObject>("InterpolationDefinition", localTag.Offset)); 
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

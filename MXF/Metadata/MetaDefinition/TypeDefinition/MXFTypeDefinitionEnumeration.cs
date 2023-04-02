@@ -57,13 +57,15 @@ namespace Myriadbits.MXF
             {
                 // TODO: this is a risky operation reading the array like this
                 case 0x0015: 
-                    ElementNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00); 
+                    ElementNames = reader.ReadUTF16String(localTag.Length.Value).Split((char)0x00);
+                    localTag.Value = ElementNames;
                     return true;
                 case 0x0016: 
-                    ElementValues = reader.ReadArray<UInt64>(reader.ReadUInt64, localTag.Length.Value/8); 
+                    ElementValues = reader.ReadArray(reader.ReadUInt64, localTag.Length.Value/8);
+                    localTag.Value = ElementValues;
                     return true;
                 case 0x0014: 
-                    localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("ElementType", localTag.Offset)); 
+                    localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("ElementType", localTag.Offset));
                     return true;
             }
             return base.ReadLocalTagValue(reader, localTag);

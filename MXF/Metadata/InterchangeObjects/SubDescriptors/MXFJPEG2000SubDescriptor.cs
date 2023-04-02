@@ -144,36 +144,73 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == rsiz: this.Rsiz = reader.ReadUInt16(); return true;
-                    case var _ when localTag.AliasUID == xsiz: this.Xsiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == ysiz: this.Ysiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == xOsiz: this.XOsiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == yOsiz: this.YOsiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == xTsiz: this.XTsiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == yTsiz: this.YTsiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == xTOsiz: this.XTOsiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == yTOsiz: this.YTOsiz = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == csiz: this.Csiz = reader.ReadUInt16(); return true;
+                    case var _ when localTag.AliasUID == rsiz: 
+                        this.Rsiz = reader.ReadUInt16(); 
+                        localTag.Value = this.Rsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == xsiz: 
+                        this.Xsiz = reader.ReadUInt32(); 
+                        localTag.Value = this.Xsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == ysiz: 
+                        this.Ysiz = reader.ReadUInt32(); 
+                        localTag.Value = this.Ysiz;
+                        return true;
+                    case var _ when localTag.AliasUID == xOsiz:
+                        this.XOsiz = reader.ReadUInt32();
+                        localTag.Value = this.XOsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == yOsiz:
+                        this.YOsiz = reader.ReadUInt32();
+                        localTag.Value = this.YOsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == xTsiz:
+                        this.XTsiz = reader.ReadUInt32();
+                        localTag.Value = this.XTsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == yTsiz:
+                        this.YTsiz = reader.ReadUInt32();
+                        localTag.Value = this.YTsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == xTOsiz:
+                        this.XTOsiz = reader.ReadUInt32();
+                        localTag.Value = this.XTOsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == yTOsiz:
+                        this.YTOsiz = reader.ReadUInt32();
+                        localTag.Value = this.YTOsiz;
+                        return true;
+                    case var _ when localTag.AliasUID == csiz: 
+                        this.Csiz = reader.ReadUInt16();
+                        localTag.Value = this.Csiz; 
+                        return true;
                     case var _ when localTag.AliasUID == pictureComponentSizing:
                         this.PictureComponentSizing = reader.ReadBytes((int)localTag.Length.Value);
+                        localTag.Value = this.PictureComponentSizing;
                         return true;
                     case var _ when localTag.AliasUID == codingStyleDefault:
                         this.CodingStyleDefault = reader.ReadBytes((int)localTag.Length.Value);
+                        localTag.Value = this.CodingStyleDefault;
                         return true;
                     case var _ when localTag.AliasUID == quantizationDefault:
                         this.QuantizationDefault = reader.ReadBytes((int)localTag.Length.Value);
+                        localTag.Value = this.QuantizationDefault;
                         return true;
                     case var _ when localTag.AliasUID == j2CLayout:
                         this.J2CLayout = reader.ReadRGBALayout();
+                        localTag.Value = this.J2CLayout;
                         return true;
                     case var _ when localTag.AliasUID == j2KExtendedCapabilities:
                         this.J2KExtendedCapabilities = reader.ReadBytes((int)localTag.Length.Value);
+                        localTag.Value = this.J2KExtendedCapabilities;
                         return true;
                     case var _ when localTag.AliasUID == j2KProfile:
                         this.J2KProfile = reader.ReadArray(reader.ReadUInt16, localTag.Length.Value);
+                        localTag.Value = this.J2KProfile;
                         return true;
                     case var _ when localTag.AliasUID == j2KCorrespondingProfile:
                         this.J2KCorrespondingProfile = reader.ReadArray(reader.ReadUInt16, localTag.Length.Value);
+                        localTag.Value = this.J2KCorrespondingProfile;
                         return true;
                 }
             }

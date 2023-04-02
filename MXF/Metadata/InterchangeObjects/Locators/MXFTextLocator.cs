@@ -27,31 +27,34 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013300")]
-	public class MXFTextLocator : MXFLocator
-	{
-		private const string CATEGORYNAME = "TextLocator";
+    public class MXFTextLocator : MXFLocator
+    {
+        private const string CATEGORYNAME = "TextLocator";
 
-		[Category(CATEGORYNAME)]
-		[ULElement("urn:smpte:ul:060e2b34.01010102.01040102.01000000")]
-		public string LocationName { get; set; }
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.01040102.01000000")]
+        public string LocationName { get; set; }
 
-		public MXFTextLocator(MXFPack pack)
-			: base(pack, "Text Locator")
-		{
-		}
+        public MXFTextLocator(MXFPack pack)
+            : base(pack, "Text Locator")
+        {
+        }
 
-		/// <summary>
-		/// Overridden method to process local tags
-		/// </summary>
-		/// <param name="localTag"></param>
-		protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
-		{
-			switch (localTag.TagValue)
-			{
-				case 0x4101: LocationName = reader.ReadUTF16String(localTag.Length.Value); return true;
-			}
-			return base.ReadLocalTagValue(reader, localTag); 
-		}
+        /// <summary>
+        /// Overridden method to process local tags
+        /// </summary>
+        /// <param name="localTag"></param>
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
+        {
+            switch (localTag.TagValue)
+            {
+                case 0x4101:
+                    LocationName = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = LocationName;
+                    return true;
+            }
+            return base.ReadLocalTagValue(reader, localTag);
+        }
 
-	}
+    }
 }

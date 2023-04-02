@@ -74,12 +74,30 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == cryptoContextId_Key: this.CryptographicContextID = reader.ReadUUID(); return true;
-                    case var _ when localTag.AliasUID == cipherAlgorithm_Key: this.CipherAlgorithm = reader.ReadAUID(); return true;
-                    case var _ when localTag.AliasUID == cryptoKeyID_Key: this.CryptographicKeyID = reader.ReadAUID(); return true;
-                    case var _ when localTag.AliasUID == mICAlgorithm_Key: this.MICAlgorithm = reader.ReadAUID(); return true;
-                    case var _ when localTag.AliasUID == sourceContainerFormat_Key: this.SourceContainerFormat = reader.ReadAUID(); return true;
-                    case var _ when localTag.AliasUID == mICCarriage_Key: this.MICCarriage = reader.ReadAUID(); return true;
+                    case var _ when localTag.AliasUID == cryptoContextId_Key: 
+                        this.CryptographicContextID = reader.ReadUUID();
+                        localTag.Value = this.CryptographicContextID;
+                        return true;
+                    case var _ when localTag.AliasUID == cipherAlgorithm_Key: 
+                        this.CipherAlgorithm = reader.ReadAUID();
+                        localTag.Value = this.CipherAlgorithm;
+                        return true;
+                    case var _ when localTag.AliasUID == cryptoKeyID_Key: 
+                        this.CryptographicKeyID = reader.ReadAUID();
+                        localTag.Value = this.CryptographicKeyID;
+                        return true;
+                    case var _ when localTag.AliasUID == mICAlgorithm_Key: 
+                        this.MICAlgorithm = reader.ReadAUID();
+                        localTag.Value = this.MICAlgorithm;
+                        return true;
+                    case var _ when localTag.AliasUID == sourceContainerFormat_Key: 
+                        this.SourceContainerFormat = reader.ReadAUID();
+                        localTag.Value = this.SourceContainerFormat;
+                        return true;
+                    case var _ when localTag.AliasUID == mICCarriage_Key: 
+                        this.MICCarriage = reader.ReadAUID();
+                        localTag.Value = this.MICCarriage;
+                        return true;
 
                 }
             }

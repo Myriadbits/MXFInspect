@@ -75,11 +75,25 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == aCESAuthoringInformation_Key: this.ACESAuthoringInformation = reader.ReadUTF16String(localTag.Length.Value); return true;
-                    case var _ when localTag.AliasUID == aCESMasteringDisplayPrimaries_Key: this.ACESMasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3); return true;
-                    case var _ when localTag.AliasUID == aCESMasteringDisplayWhitePointChromaticity_Key: this.ACESMasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary(); return true;
-                    case var _ when localTag.AliasUID == aCESMasteringDisplayMaximumLuminance_Key: this.ACESMasteringDisplayMaximumLuminance = reader.ReadUInt32(); return true;
-                    case var _ when localTag.AliasUID == aCESMasteringDisplayMinimumLuminance_Key: this.ACESMasteringDisplayMinimumLuminance = reader.ReadUInt32(); return true;
+                    case var _ when localTag.AliasUID == aCESAuthoringInformation_Key: 
+                        this.ACESAuthoringInformation = reader.ReadUTF16String(localTag.Length.Value);
+                        localTag.Value = this.ACESAuthoringInformation;
+                        return true;
+                    case var _ when localTag.AliasUID == aCESMasteringDisplayPrimaries_Key: 
+                        this.ACESMasteringDisplayPrimaries = reader.ReadArray(reader.ReadColorPrimary, 3);
+                        localTag.Value = this.ACESMasteringDisplayPrimaries;
+                        return true;
+                    case var _ when localTag.AliasUID == aCESMasteringDisplayWhitePointChromaticity_Key: this.ACESMasteringDisplayWhitePointChromaticity = reader.ReadColorPrimary();
+                        localTag.Value = this.ACESMasteringDisplayWhitePointChromaticity;
+                        return true;
+                    case var _ when localTag.AliasUID == aCESMasteringDisplayMaximumLuminance_Key: 
+                        this.ACESMasteringDisplayMaximumLuminance = reader.ReadUInt32();
+                        localTag.Value = this.ACESMasteringDisplayMaximumLuminance;
+                        return true;
+                    case var _ when localTag.AliasUID == aCESMasteringDisplayMinimumLuminance_Key: 
+                        this.ACESMasteringDisplayMinimumLuminance = reader.ReadUInt32();
+                        localTag.Value = this.ACESMasteringDisplayMinimumLuminance;
+                        return true;
                 }
             }
             return base.ReadLocalTagValue(reader, localTag);

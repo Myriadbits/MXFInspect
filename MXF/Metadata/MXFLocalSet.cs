@@ -92,7 +92,6 @@ namespace Myriadbits.MXF
                     IKLVStreamReader reader = lt.GetReader();
                     reader.Seek(lt.RelativeValueOffset);
                     ReadLocalTagValue(reader, lt);
-
                 }
                 catch (Exception e)
                 {

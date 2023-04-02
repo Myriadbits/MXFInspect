@@ -50,7 +50,10 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x2401: EssenceIsIdentified = reader.ReadBoolean(); return true;
+                case 0x2401: 
+                    EssenceIsIdentified = reader.ReadBoolean();
+                    localTag.Value = EssenceIsIdentified;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

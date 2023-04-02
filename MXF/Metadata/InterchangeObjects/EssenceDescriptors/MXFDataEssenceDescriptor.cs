@@ -70,7 +70,10 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3E01: this.DataEssenceCoding = reader.ReadUL(); return true;
+                case 0x3E01: 
+                    this.DataEssenceCoding = reader.ReadUL();
+                    localTag.Value = this.DataEssenceCoding;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

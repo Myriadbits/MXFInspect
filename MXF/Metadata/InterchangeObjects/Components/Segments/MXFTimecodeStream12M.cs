@@ -48,7 +48,10 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x1701: this.IncludeSync = reader.ReadBoolean(); return true;
+                case 0x1701: 
+                    this.IncludeSync = reader.ReadBoolean();
+                    localTag.Value = this.IncludeSync;
+                    return true;
             }
 
             return base.ReadLocalTagValue(reader, localTag);

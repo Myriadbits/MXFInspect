@@ -71,16 +71,20 @@ namespace Myriadbits.MXF
             switch (localTag.TagValue)
             {
                 case 0x3006: 
-                    this.LinkedTrackId = reader.ReadUInt32(); 
+                    this.LinkedTrackId = reader.ReadUInt32();
+                    localTag.Value = this.LinkedTrackId;
                     return true;
                 case 0x3001: 
-                    this.SampleRate = reader.ReadRational(); 
+                    this.SampleRate = reader.ReadRational();
+                    localTag.Value = this.SampleRate;
                     return true;
                 case 0x3002: 
-                    this.ContainerDuration = reader.ReadUInt64(); 
+                    this.ContainerDuration = reader.ReadUInt64();
+                    localTag.Value = this.ContainerDuration;
                     return true;
                 case 0x3004: 
-                    this.EssenceContainer = reader.ReadUL(); 
+                    this.EssenceContainer = reader.ReadUL();
+                    localTag.Value = this.EssenceContainer;
                     return true;
                 case 0x3005:
                     localTag.AddChild(reader.ReadReference<MXFCodecDefinition>("Codec", localTag.Offset));

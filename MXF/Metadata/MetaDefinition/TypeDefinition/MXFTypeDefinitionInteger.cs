@@ -51,8 +51,13 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x000F: Size = reader.ReadByte(); return true;
-                case 0x0010: IsSigned = reader.ReadBoolean(); return true;
+                case 0x000F:
+                    Size = reader.ReadByte(); localTag.Value = Size;
+                    return true;
+                case 0x0010:
+                    IsSigned = reader.ReadBoolean(); 
+                    localTag.Value = IsSigned;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }

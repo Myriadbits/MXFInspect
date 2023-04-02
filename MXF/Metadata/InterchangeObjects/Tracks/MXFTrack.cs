@@ -65,17 +65,20 @@ namespace Myriadbits.MXF
 			switch (localTag.TagValue)
 			{
 				case 0x4801: 
-					this.TrackID = reader.ReadUInt32(); 
-					return true;
+					this.TrackID = reader.ReadUInt32();
+                    localTag.Value = this.TrackID;
+                    return true;
 				case 0x4802: 
-					this.TrackName = reader.ReadUTF16String(localTag.Length.Value); 
-					return true;
+					this.TrackName = reader.ReadUTF16String(localTag.Length.Value);
+                    localTag.Value = this.TrackName;
+                    return true;
 				case 0x4803: 
 					localTag.AddChild(reader.ReadReference<MXFSegment>("TrackSegment", localTag.Offset)); 
 					return true;
 				case 0x4804: 
-					this.EssenceTrackNumber = reader.ReadUInt32(); 
-					return true;
+					this.EssenceTrackNumber = reader.ReadUInt32();
+                    localTag.Value = this.EssenceTrackNumber;
+                    return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag); 
 		}

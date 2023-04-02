@@ -52,8 +52,14 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x4901: this.EventTrackEditRate = reader.ReadRational(); return true;
-				case 0x4902: this.EventTrackOrigin = reader.ReadUInt64(); return true;
+				case 0x4901:
+					this.EventTrackEditRate = reader.ReadRational();
+                    localTag.Value = this.EventTrackEditRate;
+                    return true;
+				case 0x4902: 
+					this.EventTrackOrigin = reader.ReadUInt64();
+                    localTag.Value = this.EventTrackOrigin;
+                    return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag); 
 		}

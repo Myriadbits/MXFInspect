@@ -48,7 +48,10 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x0801: this.ActiveState = reader.ReadBoolean(); return true;
+				case 0x0801: 
+					this.ActiveState = reader.ReadBoolean(); 
+					localTag.Value = this.ActiveState;
+                    return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag); 
 		}

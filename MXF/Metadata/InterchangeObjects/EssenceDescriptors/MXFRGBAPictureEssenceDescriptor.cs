@@ -87,14 +87,38 @@ namespace Myriadbits.MXF
 		{
 			switch (localTag.TagValue)
 			{
-				case 0x3406: this.ComponentMaxRef = reader.ReadUInt32(); return true;
-				case 0x3407: this.ComponentMinRef = reader.ReadUInt32(); return true;
-				case 0x3408: this.AlphaMaxRef = reader.ReadUInt32(); return true;
-				case 0x3409: this.AlphaMinRef = reader.ReadUInt32(); return true;
-				case 0x3405: this.ScanningDirection = (MXFScanningDirection) reader.ReadByte(); return true;
-				case 0x3401: this.PixelLayout = reader.ReadRGBALayout(); return true;
-				case 0x3403: this.Palette = reader.ReadBytes((int)localTag.Length.Value); return true; 
-				case 0x3404: this.PaletteLayout = reader.ReadRGBALayout(); return true;
+				case 0x3406:
+					this.ComponentMaxRef = reader.ReadUInt32();
+                    localTag.Value = this.ComponentMaxRef; 
+					return true;
+				case 0x3407:
+					this.ComponentMinRef = reader.ReadUInt32(); 
+					localTag.Value = this.ComponentMinRef;
+					return true;
+				case 0x3408:
+					this.AlphaMaxRef = reader.ReadUInt32(); 
+					localTag.Value = this.AlphaMaxRef;
+					return true;
+				case 0x3409:
+					this.AlphaMinRef = reader.ReadUInt32(); 
+					localTag.Value = this.AlphaMinRef;
+					return true;
+				case 0x3405:
+					this.ScanningDirection = (MXFScanningDirection) reader.ReadByte(); 
+					localTag.Value = this.ScanningDirection;
+					return true;
+				case 0x3401:
+					this.PixelLayout = reader.ReadRGBALayout();
+					localTag.Value = this.PixelLayout;
+					return true;
+				case 0x3403:
+					this.Palette = reader.ReadBytes((int)localTag.Length.Value); 
+					localTag.Value = this.Palette;
+					return true; 
+				case 0x3404:
+					this.PaletteLayout = reader.ReadRGBALayout(); 
+					localTag.Value = this.PaletteLayout;
+					return true;
 			}
 			return base.ReadLocalTagValue(reader, localTag);
 		}

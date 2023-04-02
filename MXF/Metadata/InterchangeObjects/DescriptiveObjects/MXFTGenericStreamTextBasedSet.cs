@@ -54,7 +54,10 @@ namespace Myriadbits.MXF
             {
                 switch (localTag.AliasUID)
                 {
-                    case var _ when localTag.AliasUID == genericStreamID_Key: this.GenericStreamID = reader.ReadUInt32(); return true;
+                    case var _ when localTag.AliasUID == genericStreamID_Key: 
+                        this.GenericStreamID = reader.ReadUInt32();
+                        localTag.Value = this.GenericStreamID;
+                        return true;
                 }
             }
 

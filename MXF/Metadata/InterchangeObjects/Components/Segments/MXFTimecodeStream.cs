@@ -57,9 +57,18 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x1601: this.TimecodeStreamSampleRate = reader.ReadRational(); return true;
-                case 0x1603: this.TimecodeSource = (MXFTCSource?)reader.ReadByte(); return true;
-                case 0x1602: this.TimecodeStreamData = reader.ReadBytes((int)localTag.Length.Value); return true;
+                case 0x1601: 
+                    this.TimecodeStreamSampleRate = reader.ReadRational();
+                    localTag.Value = this.TimecodeStreamSampleRate;
+                    return true;
+                case 0x1603: 
+                    this.TimecodeSource = (MXFTCSource?)reader.ReadByte();
+                    localTag.Value = this.TimecodeSource;
+                    return true;
+                case 0x1602: 
+                    this.TimecodeStreamData = reader.ReadBytes((int)localTag.Length.Value);
+                    localTag.Value = this.TimecodeStreamData;
+                    return true;
             }
 
             return base.ReadLocalTagValue(reader, localTag);

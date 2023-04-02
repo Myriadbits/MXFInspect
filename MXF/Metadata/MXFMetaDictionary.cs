@@ -46,7 +46,10 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3c0a: this.InstanceId = reader.ReadUUID(); return true;
+                case 0x3c0a: 
+                    this.InstanceId = reader.ReadUUID();
+                    localTag.Value = this.InstanceId;
+                    return true;
                 case 0x0003:
                     localTag.AddChildren(reader.GetReferenceSet<MXFClassDefinition>("ClassDefinition", localTag.Offset, localTag.Length.Value));
                     return true;

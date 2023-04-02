@@ -116,19 +116,58 @@ namespace Myriadbits.MXF
         {
             switch (localTag.TagValue)
             {
-                case 0x3D0A: this.BlockAlign = reader.ReadUInt16(); return true;
-                case 0x3D0B: this.SequenceOffset = reader.ReadByte(); return true;
-                case 0x3D09: this.AverageBytesPerSecond = reader.ReadUInt32(); return true;
-                case 0x3D32: this.ChannelAssignment = reader.ReadUL(); return true;
-                case 0x3D29: this.PeakEnvelopeVersion = reader.ReadUInt32(); return true;
-                case 0x3D2A: this.PeakEnvelopeFormat = reader.ReadUInt32(); return true;
-                case 0x3D2B: this.PointsPerPeakValue = reader.ReadUInt32(); return true;
-                case 0x3D2C: this.PeakEnvelopeBlockSize = reader.ReadUInt32(); return true;
-                case 0x3D2D: this.PeakChannels = reader.ReadUInt32(); return true;
-                case 0x3D2E: this.PeakFrames = reader.ReadUInt32(); return true;
-                case 0x3D2F: this.PeakOfPeaksPosition = reader.ReadUInt64(); return true;
-                case 0x3D30: this.PeakEnvelopeTimestamp = reader.ReadTimeStamp(); return true;
-                case 0x3D31: this.PeakEnvelopeData = reader.ReadBytes((int)localTag.Length.Value); return true;
+                case 0x3D0A: 
+                    this.BlockAlign = reader.ReadUInt16();
+                    localTag.Value = this.BlockAlign; 
+                    return true;
+                case 0x3D0B: 
+                    this.SequenceOffset = reader.ReadByte(); 
+                    localTag.Value = this.SequenceOffset;
+                    return true;
+                case 0x3D09: 
+                    this.AverageBytesPerSecond = reader.ReadUInt32(); 
+                    localTag.Value = this.AverageBytesPerSecond;
+                    return true;
+                case 0x3D32: 
+                    this.ChannelAssignment = reader.ReadUL(); 
+                    localTag.Value = this.ChannelAssignment;
+                    return true;
+                case 0x3D29: 
+                    this.PeakEnvelopeVersion = reader.ReadUInt32(); 
+                    localTag.Value = this.PeakEnvelopeVersion;
+                    return true;
+                case 0x3D2A: 
+                    this.PeakEnvelopeFormat = reader.ReadUInt32(); 
+                    localTag.Value = this.PeakEnvelopeFormat;
+                    return true;
+                case 0x3D2B: 
+                    this.PointsPerPeakValue = reader.ReadUInt32();
+                    localTag.Value = this.PointsPerPeakValue;
+                    return true;
+                case 0x3D2C: 
+                    this.PeakEnvelopeBlockSize = reader.ReadUInt32(); 
+                    localTag.Value = this.PeakEnvelopeBlockSize;
+                    return true;
+                case 0x3D2D: 
+                    this.PeakChannels = reader.ReadUInt32();
+                    localTag.Value = this.PeakChannels;
+                    return true;
+                case 0x3D2E: 
+                    this.PeakFrames = reader.ReadUInt32(); 
+                    localTag.Value = this.PeakFrames;
+                    return true;
+                case 0x3D2F: 
+                    this.PeakOfPeaksPosition = reader.ReadUInt64();
+                    localTag.Value = this.PeakOfPeaksPosition;
+                    return true;
+                case 0x3D30: 
+                    this.PeakEnvelopeTimestamp = reader.ReadTimeStamp(); 
+                    localTag.Value = this.PeakEnvelopeTimestamp;
+                    return true;
+                case 0x3D31: 
+                    this.PeakEnvelopeData = reader.ReadBytes((int)localTag.Length.Value); 
+                    localTag.Value = this.PeakEnvelopeData;
+                    return true;
             }
             return base.ReadLocalTagValue(reader, localTag);
         }
