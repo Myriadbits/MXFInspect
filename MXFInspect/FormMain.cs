@@ -55,7 +55,7 @@ namespace Myriadbits.MXFInspect
             this.m_mru = Properties.Settings.Default.MRU;
             FillMRU();
             this.UpdateMenu();
-            this.tslVersion.Text = $"Version: {typeof(FormMain).Assembly.GetName().Version}";
+            this.tslVersion.Text = $"Version: {typeof(FormMain).Assembly.GetName().Version.ToString(3)}";
             SetActivityText($"{SMPTERegisters.TotalEntriesCount:N0} SMPTE entries loaded");
             RefreshStatusStrip();
         }

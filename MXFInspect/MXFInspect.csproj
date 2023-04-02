@@ -13,8 +13,8 @@
 
 	<PropertyGroup>
 		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-		<Version>4.0.8</Version>
-		<AssemblyVersion>4.0.8</AssemblyVersion>
+		<Version>4.1.2</Version>
+		<AssemblyVersion>4.1.2</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 	</PropertyGroup>
   

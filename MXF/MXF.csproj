@@ -5,14 +5,14 @@
     <Company>Myriadbits</Company>
     <Description>MXF .NET 6 Parsing Library</Description>
     <Copyright>Copyright © 2015 by Myriadbits.com</Copyright>
-    <PackageProjectUrl>https://github.com/rayden84/MXFInspect</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/rayden84/MXFInspect</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Myriadbits/MXFInspect</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Myriadbits/MXFInspect</RepositoryUrl>
     <PackageId>MXF Inspect Library</PackageId>
     <Authors>Jochem Bakker, rayden84</Authors>
     <Product>MXF Inspect</Product>
-    <AssemblyVersion>4.0.8</AssemblyVersion>
-    <FileVersion>4.0.8</FileVersion>
-    <Version>4.0.8</Version>
+    <AssemblyVersion>4.1.2</AssemblyVersion>
+    <FileVersion>4.1.2</FileVersion>
+    <Version>4.1.2</Version>
     <AssemblyName>Myriadbits.MXF</AssemblyName>
     <RootNamespace>Myriadbits.MXF</RootNamespace>
   </PropertyGroup>
