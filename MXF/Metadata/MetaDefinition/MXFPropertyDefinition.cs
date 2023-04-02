@@ -56,7 +56,7 @@ namespace Myriadbits.MXF
         }
 
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -65,7 +65,7 @@ namespace Myriadbits.MXF
                 case 0x000d: LocalIdentification = reader.ReadUInt16(); return true;
                 case 0x000e: IsUniqueIdentifier = reader.ReadBoolean(); return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -72,7 +72,7 @@ namespace Myriadbits.MXF
                 case 0x1204: this.FadeOutLength = reader.ReadUInt64(); return true;
                 case 0x1205: this.FadeOutType = (MXFFade?) reader.ReadByte(); return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
 
     }

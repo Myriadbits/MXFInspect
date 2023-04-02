@@ -79,7 +79,7 @@ namespace Myriadbits.MXF
         {
         }
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -94,7 +94,7 @@ namespace Myriadbits.MXF
                 case 0x3305: this.WhiteRefLevel = reader.ReadUInt32(); return true;
                 case 0x3306: this.ColorRange = reader.ReadUInt32(); return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
 
     }

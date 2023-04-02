@@ -38,7 +38,7 @@ namespace Myriadbits.MXF
         }
 
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -46,7 +46,7 @@ namespace Myriadbits.MXF
                     localTag.AddChild(reader.ReadReference<MXFTypeDefinition>("RenamedType", localTag.Offset)); 
                     return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
     }
 }

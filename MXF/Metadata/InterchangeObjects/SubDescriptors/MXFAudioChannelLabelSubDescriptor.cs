@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
 			this.MetaDataName = "AudioChannelLabelSubDescriptor";
 		}
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.AliasUID != null)
             {
@@ -52,7 +52,7 @@ namespace Myriadbits.MXF
                     case var _ when localTag.AliasUID == SoundfieldGroupLinkId_Key: this.SoundfieldGroupLinkID = reader.ReadUUID(); return true;
                 }
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
     }
 }

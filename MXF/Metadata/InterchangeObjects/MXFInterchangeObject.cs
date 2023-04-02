@@ -57,7 +57,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -78,7 +78,7 @@ namespace Myriadbits.MXF
                     localTag.AddChildren(reader.GetReferenceSet<MXFObject>("Application Plugin Object", localTag.Offset, localTag.Length.Value)); 
                     return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
 
         public UUID GetUUID()

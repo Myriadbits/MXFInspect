@@ -48,14 +48,14 @@ namespace Myriadbits.MXF
 		/// Overridden method to process local tags
 		/// </summary>
 		/// <param name="localTag"></param>
-		protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+		protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
 		{
 			switch (localTag.TagValue)
 			{
 				case 0x4901: this.EventTrackEditRate = reader.ReadRational(); return true;
 				case 0x4902: this.EventTrackOrigin = reader.ReadUInt64(); return true;
 			}
-			return base.ParseLocalTag(reader, localTag); 
+			return base.ReadLocalTagValue(reader, localTag); 
 		}
 
 	}

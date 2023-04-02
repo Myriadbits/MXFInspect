@@ -100,7 +100,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -115,7 +115,7 @@ namespace Myriadbits.MXF
                 case var _ when localTag.AliasUID == refImageEditRate_Key: this.ReferenceImageEditRate = reader.ReadRational(); return true;
                 case var _ when localTag.AliasUID == refAudioAlignmentLevel: this.ReferenceAudioAlignmentLevel = reader.ReadByte(); return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
 
     }

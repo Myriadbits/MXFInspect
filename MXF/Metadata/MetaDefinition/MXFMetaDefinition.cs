@@ -57,7 +57,7 @@ namespace Myriadbits.MXF
         {
         }
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -66,7 +66,7 @@ namespace Myriadbits.MXF
                 case 0x0005: MetaDefinitionIdentification = reader.ReadAUID(); return true;
                 case 0x0007: MetaDefinitionDescription = reader.ReadUTF16String(localTag.Length.Value); return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
 
         public UUID GetUUID()

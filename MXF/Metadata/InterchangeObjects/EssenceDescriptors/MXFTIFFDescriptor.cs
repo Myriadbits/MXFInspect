@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
         {
         }
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             if (localTag.AliasUID != null)
             {
@@ -76,7 +76,7 @@ namespace Myriadbits.MXF
                     case 0x3702: this.IsContiguous = reader.ReadBoolean(); return true;
                 }
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
     }
 }

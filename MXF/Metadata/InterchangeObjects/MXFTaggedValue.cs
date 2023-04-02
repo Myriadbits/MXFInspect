@@ -44,14 +44,14 @@ namespace Myriadbits.MXF
         {
         }
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
                 case 0x5001: this.Tag = reader.ReadUTF16String(localTag.Length.Value); return true;
                 case 0x5003: this.IndirectValue = reader.ReadArray<byte>(reader.ReadByte, localTag.Length.Value); return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
 
     }

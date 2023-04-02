@@ -79,7 +79,7 @@ namespace Myriadbits.MXF
 
         }
 
-        public void ParseTags()
+        public void ReadLocalTagValues()
         {
             var localTags = this.Children.OfType<MXFLocalTag>();
 
@@ -91,13 +91,13 @@ namespace Myriadbits.MXF
                 {
                     IKLVStreamReader reader = lt.GetReader();
                     reader.Seek(lt.RelativeValueOffset);
-                    ParseLocalTag(reader, lt);
+                    ReadLocalTagValue(reader, lt);
 
                 }
                 catch (Exception e)
                 {
                     var ex = new LocalTagParsingException(lt, e);
-                    Log.ForContext<MXFLocalSet>().Error(ex, $"Exception occured during parsing of local tag {lt} @{lt.Offset} of MXFPack {lt.Parent}:");
+                    Log.ForContext<MXFLocalSet>().Error(ex, $"Exception occured during reading of local tag {lt} @{lt.Offset} of MXFPack {lt.Parent}:");
                     if (this.Root() is MXFFile file)
                     {
                         file.ParsingExceptions.Add(ex);
@@ -134,7 +134,7 @@ namespace Myriadbits.MXF
         /// Allow derived classes to process the local tag
         /// </summary>
         /// <param name="localTag"></param>
-        protected virtual bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected virtual bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             return false;
         }

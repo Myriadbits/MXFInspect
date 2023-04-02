@@ -42,7 +42,7 @@ namespace Myriadbits.MXF
             }
         }
 
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             byte[] byteArray = reader.ReadBytes((int)localTag.Length.Value);
             
@@ -112,7 +112,7 @@ namespace Myriadbits.MXF
                     var pack = klvParser.GetNext();
                     if (pack is MXFLocalSet ls)
                     {
-                        ls.ParseTags();
+                        ls.ReadLocalTagValues();
                     }
                     localTag.AddChild(pack);
                     break;
@@ -125,7 +125,7 @@ namespace Myriadbits.MXF
                 default:
                     break;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
 
         public override string ToString()

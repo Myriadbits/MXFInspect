@@ -93,7 +93,7 @@ namespace Myriadbits.MXF
         /// Overridden method to process local tags
         /// </summary>
         /// <param name="localTag"></param>
-        protected override bool ParseLocalTag(IKLVStreamReader reader, MXFLocalTag localTag)
+        protected override bool ReadLocalTagValue(IKLVStreamReader reader, MXFLocalTag localTag)
         {
             switch (localTag.TagValue)
             {
@@ -110,7 +110,7 @@ namespace Myriadbits.MXF
                 case 0x800a: this.FocusRingPosition= reader.ReadUInt16(); return true;
                 case 0x800b: this.ZoomRingPosition = reader.ReadUInt16();return true;
             }
-            return base.ParseLocalTag(reader, localTag);
+            return base.ReadLocalTagValue(reader, localTag);
         }
     }
 }
