@@ -71,7 +71,7 @@ jobs:
 
         - name: Publish release (selfcontained-singlefile) in subfolder
           if: ${{ matrix.fw-flavor == 'selfcontained-singlefile' }}
-          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
 
         - name: Create a file and zip it
           shell: bash
