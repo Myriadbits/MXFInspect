@@ -125,7 +125,7 @@ jobs:
       strategy:
         matrix:
           win-version: [x64, x86]
-          fw-flavor: [fwdependent, selfcontained, selfcontained-singlefile, self-contained-includenativelibs, self-contained-includeallcontent]
+          fw-flavor: [fwdependent, selfcontained, selfcontained-singlefile]
       steps:
         - name: Show environment variables (for debugging)       
           run: |
