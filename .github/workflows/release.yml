@@ -33,19 +33,8 @@ jobs:
         ARTIFACT_NAME: "MXFInspect-${{ needs.get_version.outputs.version }}-${{ matrix.fw-flavor }}-win-${{ matrix.win-version }}"
     strategy:
       matrix:
-#        cfg:
-#        - { win-version: x64, fw-flavor: fwdependent}
-#        - { win-version: x86, fw-flavor: fwdependent}
-#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: no-singlefile}
-#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: no-singlefile}
-#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: singlefile}
-#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: singlefile}
-#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includenativelibs}
-#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includenativelibs}
-#        - { win-version: x64, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includeallcontent}
-#        - { win-version: x86, fw-flavor: selfcontained, selfcontained-type: singlefile, inclusion: includeallcontent}
          win-version: [x64, x86]
-         fw-flavor: [fwdependent, selfcontained, selfcontained-singlefile, self-contained-includenativelibs, self-contained-includeallcontent]
+         fw-flavor: [fwdependent, selfcontained, selfcontained-singlefile]
     
     steps:
         - uses: actions/checkout@v3
@@ -74,7 +63,7 @@ jobs:
         
         - name: Publish release (framework dependent) in subfolder 
           if: ${{ matrix.fw-flavor == 'fwdependent' }}
-          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }}
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained false
         
         - name: Publish release (selfcontained) in subfolder 
           if: ${{ matrix.fw-flavor == 'selfcontained' }}
@@ -82,15 +71,7 @@ jobs:
 
         - name: Publish release (selfcontained-singlefile) in subfolder
           if: ${{ matrix.fw-flavor == 'selfcontained-singlefile' }}
-          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true
-
-        - name: Publish relase (selfcontained-includenativelibraries) in subfolder
-          if: ${{ matrix.fw-flavor == 'self-contained-includenativelibs' }}
-          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
-        
-        - name: Publish release (selfcontained-includeallcontent) in subfolder
-          if: ${{ matrix.fw-flavor == 'self-contained-includeallcontent' }}
-          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForselfExtract=true
+          run: dotnet publish MXFInspect -o publish -r win-${{ matrix.win-version }} --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true
 
         - name: Create a file and zip it
           shell: bash
