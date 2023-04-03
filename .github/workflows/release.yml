@@ -19,7 +19,7 @@ jobs:
     steps:
         - name: Get the (cleaned) tag string
           id: get_version
-          run: echo "VERSION::${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
         
         - name: Echo the tag (for debugging)
           run: echo ${{ steps.get_version.outputs.VERSION }}
