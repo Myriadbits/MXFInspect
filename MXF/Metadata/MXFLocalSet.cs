@@ -46,7 +46,10 @@ namespace Myriadbits.MXF
                 this.Key.Name ??= "LocalSet";
             }
 
-            AttachTags(this.GetReader());
+            if (this.Length.Value > 0)
+            {
+                AttachTags(this.GetReader());
+            }
         }
 
         /// <summary>
@@ -149,7 +152,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return string.Format($"{this.Key} [len {this.Length.Value}]");
+            return $"{this.Key} [len {this.Length.Value}]";
         }
 
         private MXFLocalTagParser InitializeLocalTagParser(SubStream ss, long valueOffset)
