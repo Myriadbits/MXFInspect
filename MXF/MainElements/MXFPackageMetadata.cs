@@ -74,7 +74,7 @@ namespace Myriadbits.MXF
                     }
                     else if (localTag.Length.Value == 32)
                     {
-                        ExtendedUMID umid = new ExtendedUMID(byteArray);
+                        UMID umid = new UMID(byteArray);
                         localTag.Value = umid;
                         return true;
                     }
