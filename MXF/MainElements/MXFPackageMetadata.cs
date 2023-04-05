@@ -130,7 +130,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return Key.Name;
+            return $"{this.Key.Name} [len {this.Length.Value}]";
         }
     }
 }

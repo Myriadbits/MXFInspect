@@ -37,8 +37,8 @@ namespace Myriadbits.MXF
         }
 
         public override string ToString()
-		{
-			return this.Key.Name;
-		}
-	}
+        {
+            return $"{this.Key.Name} [len {this.Length.Value}]";
+        }
+    }
 }
