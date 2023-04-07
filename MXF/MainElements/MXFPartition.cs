@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
@@ -33,9 +34,25 @@ namespace Myriadbits.MXF
     public enum PartitionType
     {
         Unknown,
-        Header,
-        Body,
-        Footer
+        Header, //(02h)
+        Body,   //(03h)
+        Footer  //(04h)
+    }
+
+    public enum PartitionStatus
+    {
+        [Description("Open & Incomplete")]  //(01h)
+        OpenIncomplete, 
+        [Description("Closed & Incomplete")]//(02h)
+        ClosedIncomplete,  
+        [Description("Open & Complete")]    //(03h)
+        OpenComplete,      
+        [Description("Closed & Complete")]  //(04h)
+        ClosedComplete,
+        [Description("Generic Stream Partition")]  //(11h)
+        GenericStreamPartition,
+        [Description("Invalid")]
+        Invalid,
     }
 
     public class MXFPartition : MXFPack, ILazyLoadable
@@ -43,70 +60,65 @@ namespace Myriadbits.MXF
         private const string CATEGORYNAME = "PartitionHeader";
 
         [Category(CATEGORYNAME)]
-        public PartitionType PartitionType { get; set; }
+        public PartitionType PartitionType { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.01020203.00000000")]
-        public UL OperationalPattern { get; set; }
+        public UL OperationalPattern { get; }
 
         [Category(CATEGORYNAME)]
-        public bool Closed { get; set; }
-
-        [Category(CATEGORYNAME)]
-        public bool Complete { get; set; }
+        [TypeConverter(typeof(EnumDescriptionConverter))]
+        public PartitionStatus Status { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.03010201.06000000")]
-        public UInt16 MajorVersion { get; set; }
+        public UInt16 MajorVersion { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.03010201.07000000")]
-        public UInt16 MinorVersion { get; set; }
+        public UInt16 MinorVersion { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.03010201.09000000")]
-        public UInt32 KagSize { get; set; }
+        public UInt32 KagSize { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.06101003.01000000")]
-        public UInt64 ThisPartition { get; set; }
+        public UInt64 ThisPartition { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.06101002.01000000")]
-        public UInt64 PreviousPartition { get; set; }
+        public UInt64 PreviousPartition { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.06101005.01000000")]
-        public UInt64 FooterPartition { get; set; }
+        public UInt64 FooterPartition { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.04060901.00000000")]
-        public UInt64 HeaderByteCount { get; set; }
+        public UInt64 HeaderByteCount { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.04060902.00000000")]
-        public UInt64 IndexByteCount { get; set; }
+        public UInt64 IndexByteCount { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01030405.00000000")]
-        public UInt32 IndexSID { get; set; }
+        public UInt32 IndexSID { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.06080102.01030000")]
-        public UInt64 BodyOffset { get; set; }
+        public UInt64 BodyOffset { get; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.01030404.00000000")]
-        public UInt32 BodySID { get; set; }
+        public UInt32 BodySID { get; }
 
         [Browsable(false)]
         public MXFSystemMetaDataPack FirstSystemItem { get; set; }
 
         [Browsable(false)]
         public MXFEssenceElement FirstPictureEssenceElement { get; set; }
-
-        [Browsable(false)]
-        public IReadOnlyDictionary<UInt16, MXFPrimerEntry> PrimerKeys { get; set; }
 
         [Browsable(false)]
         public MXFFile File { get; set; }
@@ -127,9 +139,9 @@ namespace Myriadbits.MXF
             // Determine the partition type
             switch (this.Key[13])
             {
-                case 2: this.PartitionType = PartitionType.Header; break;
-                case 3: this.PartitionType = PartitionType.Body; break;
-                case 4: this.PartitionType = PartitionType.Footer; break;
+                case 0x02: this.PartitionType = PartitionType.Header; break;
+                case 0x03: this.PartitionType = PartitionType.Body; break;
+                case 0x04: this.PartitionType = PartitionType.Footer; break;
                 default:
                     this.PartitionType = PartitionType.Unknown;
                     // TODO remove
@@ -137,8 +149,27 @@ namespace Myriadbits.MXF
                     break;
             }
 
-            this.Closed = (this.PartitionType == PartitionType.Footer) || (this.Key[14] & 0x01) == 0x00;
-            this.Complete = (this.Key[14] > 2);
+            switch (this.Key[14])
+            {
+                case 0x01:
+                    this.Status = PartitionStatus.OpenIncomplete;
+                    break;
+                case 0x02:
+                    this.Status = PartitionStatus.ClosedIncomplete;
+                    break;
+                case 0x03:
+                    this.Status = PartitionStatus.OpenComplete;
+                    break;
+                case 0x04:
+                    this.Status = PartitionStatus.ClosedComplete;
+                    break;
+                case 0x11:
+                    this.Status = PartitionStatus.GenericStreamPartition;
+                    break;
+                default:
+                    this.Status = PartitionStatus.Invalid;
+                    break;
+            }
 
             // Make sure we read at the data position
             reader.Seek(this.RelativeValueOffset);

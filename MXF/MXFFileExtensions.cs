@@ -77,7 +77,7 @@ namespace Myriadbits.MXF
                 .OfType<MXFAES3PCMDescriptor>();
         }
 
-        public static bool IsKAGSizeOfAllPartitionsEqual(this MXFFile file, uint size)
+        public static bool IsKAGSizeOfAllPartitionsEqualTo(this MXFFile file, uint size)
         {
             return file.GetPartitions().All(p => p.KagSize == size);
         }
@@ -90,17 +90,22 @@ namespace Myriadbits.MXF
 
         public static bool IsFooterPartitionClosedAndComplete(this MXFFile file)
         {
-            return file.GetFooter().IsPartitionClosedAndComplete();
+            return file.GetFooter().IsClosedAndComplete();
         }
 
         public static bool IsHeaderPartitionClosedAndComplete(this MXFFile file)
         {
-            return !(file.GetHeaderPartition().IsPartitionClosedAndComplete());
+            return !(file.GetHeaderPartition().IsClosedAndComplete());
         }
 
-        public static bool IsPartitionClosedAndComplete(this MXFPartition p)
+        public static bool IsClosedAndComplete(this MXFPartition p)
         {
-            return !(p.Closed && p.Complete);
+            return p.Status == PartitionStatus.ClosedComplete;
+        }
+
+        public static bool IsClosed(this MXFPartition p)
+        {
+            return p.Status == PartitionStatus.ClosedComplete || p.Status == PartitionStatus.ClosedIncomplete;
         }
 
         public static bool AreEssencesInHeader(this MXFFile file)
@@ -113,9 +118,9 @@ namespace Myriadbits.MXF
             return file.RIP != null;
         }
 
-        public static long CountPictureEssences(this MXFPartition partition)
+        public static long CountPictureEssences(this MXFPartition p)
         {
-            return partition.Children.OfType<MXFEssenceElement>().Count(e => e.IsPicture);
+            return p.Children.OfType<MXFEssenceElement>().Count(e => e.IsPicture);
         }
 
         public static bool IsPartitionDurationBetween(this MXFPartition partition, long min, long max)

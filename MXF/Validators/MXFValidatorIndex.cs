@@ -32,11 +32,11 @@ using System.Threading;
 
 namespace Myriadbits.MXF
 {
-	public class MXFValidatorIndex : MXFValidator
-	{
-		private List<MXFIndexTableSegment> m_indexTables = new List<MXFIndexTableSegment>();
-		private List<MXFSystemMetaDataPack> m_systemItems = new List<MXFSystemMetaDataPack>();
-		private List<MXFEssenceElement> m_pictureItems = new List<MXFEssenceElement>();
+    public class MXFValidatorIndex : MXFValidator
+    {
+        private List<MXFIndexTableSegment> m_indexTables = new List<MXFIndexTableSegment>();
+        private List<MXFSystemMetaDataPack> m_systemItems = new List<MXFSystemMetaDataPack>();
+        private List<MXFEssenceElement> m_pictureItems = new List<MXFEssenceElement>();
 
         public MXFValidatorIndex(MXFFile file) : base(file)
         {
@@ -53,7 +53,7 @@ namespace Myriadbits.MXF
 
                 Stopwatch sw = Stopwatch.StartNew();
                 progress?.Report(new TaskReport(12, "Locating index tables"));
-                
+
                 // Clear list
                 m_indexTables = new List<MXFIndexTableSegment>();
                 m_systemItems = new List<MXFSystemMetaDataPack>();
@@ -167,7 +167,7 @@ namespace Myriadbits.MXF
                             {
                                 // Check if there is a system item at this offset
                                 long searchIndex = (long)(index.StreamOffset);
-                                MXFSystemMetaDataPack si = this.m_systemItems.Where(a => a.EssenceOffset == searchIndex).FirstOrDefault();
+                                MXFSystemMetaDataPack si = this.m_systemItems.Where(a => GetEssenceOffset(a) == searchIndex).FirstOrDefault();
                                 if (si != null)
                                 {
                                     // Yes, found
@@ -264,8 +264,8 @@ namespace Myriadbits.MXF
                 // Check system item range
                 if (this.m_systemItems.Count() > 0)
                 {
-                   retval.AddRange(CheckUserDates(this.File));
-                   retval.AddRange(CheckContinuityCounter(this.File));
+                    retval.AddRange(CheckUserDates(this.File));
+                    retval.AddRange(CheckContinuityCounter(this.File));
                 }
                 return retval;
             }, ct);
@@ -292,19 +292,21 @@ namespace Myriadbits.MXF
         }
 
 
-        private long? GetStreamOffset(MXFEssenceElement el)
+        private long? GetEssenceOffset(MXFPack el)
         {
-            
+
             if (el.Parent is MXFPartition p)
             {
-                return el.Offset - ((long)p.BodyOffset);
+                long? firstEssenceOffset = p.Children.FirstOrDefault(c => c is MXFEssenceElement || c is MXFSystemMetaDataPack)?.Offset;
+                if (firstEssenceOffset != null)
+                {
+
+                }
+                return el.Offset - firstEssenceOffset + ((long)p.BodyOffset);
             }
             else return null;
-
-
-            //if (this.Partition.FirstPictureEssenceElement == null) return this.Offset; // Unknown
-            //return (this.Offset - this.Partition.FirstPictureEssenceElement.Offset) + ((long)this.Partition.BodyOffset);
         }
+
         //private void LoadAllPartitions()
         //{
         //    // Load all partitions
@@ -325,62 +327,62 @@ namespace Myriadbits.MXF
         /// <param name="file"></param>
         /// <param name="results"></param>
         protected List<MXFValidationResult> CheckUserDates(MXFFile file)
-		{
+        {
             var retval = new List<MXFValidationResult>();
 
-			List<MXFSystemMetaDataPack> items = this.m_systemItems.OrderBy(a => a.ContinuityCount).ToList();
-			if (items.Count > 1)
-			{
-				MXFTimeStamp ts = new MXFTimeStamp(items.First().UserDate);
-				if (ts != null)
-				{
-					MXFValidationResult valResult = new MXFValidationResult("System Items");
+            List<MXFSystemMetaDataPack> items = this.m_systemItems.OrderBy(a => a.ContinuityCount).ToList();
+            if (items.Count > 1)
+            {
+                MXFTimeStamp ts = new MXFTimeStamp(items.First().UserDate);
+                if (ts != null)
+                {
+                    MXFValidationResult valResult = new MXFValidationResult("System Items");
                     retval.Add(valResult); // And directly add the results
 
-					MXFTimeStamp tsLast = null;
-					for (int n = 1; n < items.Count() - 1; n++) // Skip last one (always invalid??)
-					{
-						ts.Increase();
-						if (!items[n].UserDate.IsEmpty())
-						{
-							if (!items[n].UserDate.IsSame(ts))
-							{
-								valResult.SetError(string.Format("Invalid user date at offset {0} (was {1}, expected {2})!", items[n].Offset, items[n].UserDate, ts));
-								return retval;
-							}
-							tsLast = items[n].UserDate;
-						}
-					}
-					if (tsLast != null)
-						valResult.SetSuccess(string.Format("UserDates are continious from {0} to {1}, at {2} fps!", items.First().UserDate, tsLast, ts.FrameRate));
-					else
-						valResult.SetSuccess(string.Format("UserDates are continious!"));
+                    MXFTimeStamp tsLast = null;
+                    for (int n = 1; n < items.Count() - 1; n++) // Skip last one (always invalid??)
+                    {
+                        ts.Increase();
+                        if (!items[n].UserDate.IsEmpty())
+                        {
+                            if (!items[n].UserDate.IsSame(ts))
+                            {
+                                valResult.SetError(string.Format("Invalid user date at offset {0} (was {1}, expected {2})!", items[n].Offset, items[n].UserDate, ts));
+                                return retval;
+                            }
+                            tsLast = items[n].UserDate;
+                        }
+                    }
+                    if (tsLast != null)
+                        valResult.SetSuccess(string.Format("UserDates are continious from {0} to {1}, at {2} fps!", items.First().UserDate, tsLast, ts.FrameRate));
+                    else
+                        valResult.SetSuccess(string.Format("UserDates are continious!"));
                 }
             }
             return retval;
         }
 
 
-		/// <summary>
-		/// Check the essence range
-		/// </summary>
-		/// <param name="file"></param>
-		/// <param name="results"></param>
-		protected List<MXFValidationResult> CheckContinuityCounter(MXFFile file)
-		{
+        /// <summary>
+        /// Check the essence range
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="results"></param>
+        protected List<MXFValidationResult> CheckContinuityCounter(MXFFile file)
+        {
             var retval = new List<MXFValidationResult>();
-			MXFValidationResult valResult = new MXFValidationResult("System Items");
+            MXFValidationResult valResult = new MXFValidationResult("System Items");
             retval.Add(valResult); // And directly add the results
-            
+
             // Check for continous range
-            // Continuity count = modulo 65536 count as per SMPTE 326M.Note that the continuity
+            // Continuity count = modulo 65536 count as per SMPTE 326M. Note that the continuity
             // count is not strictly required in many applications of an MXF file because the header metadata
-            // should correctly describe the timeline of the essence container.However, to maintain
+            // should correctly describe the timeline of the essence container. However, to maintain
             // compatibility with the SDTI-CP system item definition, the continuity count must comply
             // with SMPTE 326M.
 
             int cc = -1;
-			int errorCount = 0;
+            int errorCount = 0;
             this.m_systemItems = this.m_systemItems.OrderBy(si => si.ContinuityCount).ToList();
             foreach (MXFSystemMetaDataPack si in this.m_systemItems)
             {
@@ -394,19 +396,19 @@ namespace Myriadbits.MXF
             }
 
             if (errorCount > 0)
-			{
-				if (errorCount >= this.m_systemItems.Count() - 1)
-					valResult.SetWarning(string.Format("All continuity counter values are not set!"));
-				else
-					valResult.SetError(string.Format("Found {0} invalid continuity counter values (total system items {1})!", errorCount, this.m_systemItems.Count()));
-			}
-			else
-			{
-				valResult.SetSuccess(string.Format("Continuity counter values are correct!"));
-			}
+            {
+                if (errorCount >= this.m_systemItems.Count() - 1)
+                    valResult.SetWarning(string.Format("All continuity counter values are not set!"));
+                else
+                    valResult.SetError(string.Format("Found {0} invalid continuity counter values (total system items {1})!", errorCount, this.m_systemItems.Count()));
+            }
+            else
+            {
+                valResult.SetSuccess(string.Format("Continuity counter values are correct!"));
+            }
 
             return retval;
         }
 
-	}
+    }
 }
