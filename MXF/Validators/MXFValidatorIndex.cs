@@ -54,6 +54,10 @@ namespace Myriadbits.MXF
                 Stopwatch sw = Stopwatch.StartNew();
                 progress?.Report(new TaskReport(12, "Locating index tables"));
 
+                 CreateIndexTableDictionary();
+
+                var dict = GetEssencesWithEssenceOffset();
+
                 // Clear list
                 m_indexTables = new List<MXFIndexTableSegment>();
                 m_systemItems = new List<MXFSystemMetaDataPack>();
@@ -185,6 +189,7 @@ namespace Myriadbits.MXF
                         counter++;
                     }
                 }
+                // TODO else???
                 else if (m_pictureItems.Count != 0)
                 {
                     // Now try to match the picture essences
@@ -291,18 +296,125 @@ namespace Myriadbits.MXF
             }
         }
 
+        private Dictionary<(uint, long), MXFPack> GetEssencesWithEssenceOffset()
+        {
+            // Collect essences in single list
+            IEnumerable<MXFEssenceElement> essences = File.Descendants().OfType<MXFEssenceElement>();
+            IEnumerable<MXFSystemMetaDataPack> systemMetadDataPacks = File.Descendants().OfType<MXFSystemMetaDataPack>();
+            IEnumerable<MXFSystemMetaDataSet> systemMetaDataSets = File.Descendants().OfType<MXFSystemMetaDataSet>();
 
-        private long? GetEssenceOffset(MXFPack el)
+            List<MXFPack> essenceList = new List<MXFPack>();
+
+            essenceList.AddRange(essences);
+            essenceList.AddRange(systemMetadDataPacks);
+            essenceList.AddRange(systemMetaDataSets);
+
+            //// group by BodySID
+            //var groups = essenceList.GroupBy(e => GetBodySID(e));
+
+            ////foreach (var g in groups)
+            ////{
+            ////    List<Dictionary<long, MXFPack>> dicts = new List<Dictionary<long, MXFPack>>();
+
+            ////    dicts.Add()
+            ////}
+
+            Dictionary<(uint, long), MXFPack> dict = new Dictionary<(uint, long), MXFPack>();
+
+            foreach (var el in essenceList)
+            {
+                var essenceOffset = GetEssenceOffset(el);
+                var bodySID = GetBodySID(el);
+                if (essenceOffset != null)
+                {
+                    try
+                    {
+                        dict.Add((bodySID.Value, essenceOffset.Value), el);
+                        Debug.WriteLine(dict.Last());
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }
+            return dict;
+        }
+
+
+        private void CreateIndexTableDictionary()
+        {
+            var indexTables = this.File.GetDescendantsOfType<MXFIndexTableSegment>();
+
+            foreach (var table in indexTables)
+            {
+                if (table.BodySID != null)
+                {
+                    var essences = GetEssencesWithBodySID(table.BodySID.Value);
+                    var groups = essences.GroupBy(e => e.Key);
+                    var elementCount = groups.Count();
+                    var essenceDict = essences.ToDictionary(e => GetEssenceOffset(e));
+                    
+                    if (table.EditUnitByteCount > 0)
+                    {
+                        // CBE
+                        // check only delta entries
+                        // assume that the SMPTE 379M (Generic Container Specification) is fullfilled, i.e. the
+                        // order of the elementss shall always be the same in the stored file, so that it agrees
+                        // with the order of the Delta entries.
+                        // TODO this should be checked BEFORE any IndexValidator is called!!!
+                        
+                        // first deltra entry must match with first essence element
+
+
+
+
+                    }
+                    else
+                    {
+                        // VBE
+                    }
+                }
+                else
+                {
+                    // return ValidationError
+                }
+                // get essences  
+
+            }
+        }
+
+
+        private IEnumerable<MXFPack> GetEssencesWithBodySID(uint bodySID)
+        {
+            return File
+                .GetPartitions().Where(p => p.BodySID == bodySID)
+                .SelectMany(p => p.Children)
+                .Where(c => c is MXFEssenceElement || c is MXFSystemMetaDataPack || c is MXFSystemMetaDataSet)
+                .OfType<MXFPack>();
+        }
+
+        private uint? GetBodySID(MXFPack pack)
+        {
+            if (pack.Parent is MXFPartition p)
+            {
+                return p.BodySID;
+            }
+            else return null;
+        }
+
+        private long? GetEssenceOffset(MXFObject obj)
         {
 
-            if (el.Parent is MXFPartition p)
+            if (obj.Parent is MXFPartition p)
             {
-                long? firstEssenceOffset = p.Children.FirstOrDefault(c => c is MXFEssenceElement || c is MXFSystemMetaDataPack)?.Offset;
-                if (firstEssenceOffset != null)
+                MXFObject firstEssence = p.Children
+                    .FirstOrDefault(c => c is MXFEssenceElement || c is MXFSystemMetaDataPack || c is MXFSystemMetaDataSet);
+                if (firstEssence != null)
                 {
-
+                    return obj.Offset - firstEssence.Offset + ((long)p.BodyOffset);
                 }
-                return el.Offset - firstEssenceOffset + ((long)p.BodyOffset);
+                else return null;
             }
             else return null;
         }
