@@ -130,26 +130,16 @@ namespace Myriadbits.MXF
 
         public bool IsPreviousPartitionCorrect(MXFPartition p)
         {
-            var index = File.GetPartitions().ToList().IndexOf(p);
-            switch (index)
+            if (p.PreviousSibling() is MXFPartition prev)
             {
-                case -1:
-                    // not found, should never happen
-                    // TODO throw
-                    return false;
-                case 0:
-                    // first partition
-                    return p.PreviousPartition == 0;
-                default:
-                    // check partition before this one
-                    var previousPartition = File.GetPartitions().ToList()[index - 1];
-                    return p.PreviousPartition == (ulong)previousPartition.Offset;
+                return p.PreviousPartition == (ulong)prev.Offset;
             }
+            else return p.PreviousPartition == 0;
         }
 
         public bool IsPartitionStatusValid(MXFPartition p)
         {
-            return 
+            return
                 p.Status == PartitionStatus.OpenComplete ||
                 p.Status == PartitionStatus.OpenIncomplete ||
                 p.Status == PartitionStatus.ClosedIncomplete ||
@@ -244,7 +234,6 @@ namespace Myriadbits.MXF
                 MXFValidationResult valResult = new MXFValidationResult("Partition Test");
                 retval.Add(valResult);
                 valResult.Category = "Partitions";
-
 
                 if (AnyPartitionsPresent())
                 {

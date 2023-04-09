@@ -28,7 +28,11 @@ namespace Myriadbits.MXF
     public interface INode<T>
     {
         IReadOnlyList<T> Children { get; }
-        
+
+        T NextSibling();
+
+        T PreviousSibling();
+
         T Parent { get; }
 
         INode<T> Root();

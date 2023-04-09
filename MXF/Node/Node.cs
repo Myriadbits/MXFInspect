@@ -30,7 +30,7 @@ namespace Myriadbits.MXF
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public abstract class Node<T> : INode<T> where T : Node<T>
     {
-        private readonly List<T> childrenList = new List<T>(); 
+        private readonly List<T> childrenList = new List<T>();
 
         [Browsable(false)]
         public IReadOnlyList<T> Children
@@ -99,6 +99,26 @@ namespace Myriadbits.MXF
         public void ClearChildren()
         {
             childrenList.Clear();
+        }
+
+        public T NextSibling()
+        {
+            var siblings = this.Parent?.Children?.ToList();
+            if (siblings != null)
+            {
+                return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) + 1);
+            }
+            else return null;
+        }
+
+        public T PreviousSibling()
+        {
+            var siblings = this.Parent?.Children?.ToList();
+            if (siblings != null)
+            {
+                return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) - 1);
+            }
+            else return null;
         }
     }
 }
