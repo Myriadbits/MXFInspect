@@ -67,7 +67,7 @@ namespace Myriadbits.MXF
 
                     if (klv.Key.IdentifiesPrivatelyRegisteredUL())
                     {
-                        valResult.Result = $"Privately Registered Universal Label: {klv.Key}";
+                        valResult.Result = $"{klv.Key.Name} {klv.Key}";
                     }
                     retval.Add(valResult);
                 }
