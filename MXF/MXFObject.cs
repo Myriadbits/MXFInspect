@@ -65,24 +65,16 @@ namespace Myriadbits.MXF
 
         public MXFObject FindNextObjectOfType(Type typeToFind)
         {
-            var flatList = this.Root()
-                                .Descendants()
-                                .Where(o => o.GetType() == typeToFind && o.Offset > this.Offset)
-                                .OrderBy(o => o.Offset)
-                                .ToList();
-
-            return flatList.FirstOrDefault();
+            return this.Root().Descendants()
+                .OrderBy(o => o.Offset)
+                .FirstOrDefault(o => o.GetType() == typeToFind && o.Offset > this.Offset);
         }
 
         public MXFObject FindPreviousObjectOfType(Type typeToFind)
         {
-            var flatList = this.Root()
-                                .Descendants()
-                                .Where(o => o.GetType() == typeToFind && o.Offset < this.Offset)
-                                .OrderByDescending(o => o.Offset)
-                                .ToList();
-
-            return flatList.FirstOrDefault();
+            return this.Root().Descendants()
+                .OrderByDescending(o => o.Offset)
+                .FirstOrDefault(o => o.GetType() == typeToFind && o.Offset < this.Offset);
         }
 
         /// <summary>
