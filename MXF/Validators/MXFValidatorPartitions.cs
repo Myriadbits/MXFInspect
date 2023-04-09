@@ -105,6 +105,15 @@ namespace Myriadbits.MXF
             else return false;
         }
 
+        public bool IsMajorMinorVersionConsistent()
+        {
+            if (AnyPartitionsPresent())
+            {
+                return this.File.GetPartitions().GroupBy(p => new { p.MajorVersion, p.MinorVersion }).Count() == 1;
+            }
+            else return false;
+        }
+
         public bool FooterPartitionContainsIndexTableSegments()
         {
             if (IsFooterPartitionPresent() && IsFooterPartitionUnique())
@@ -119,13 +128,52 @@ namespace Myriadbits.MXF
             return (ulong)p.Offset == p.ThisPartition;
         }
 
+        public bool IsPreviousPartitionCorrect(MXFPartition p)
+        {
+            var index = File.GetPartitions().ToList().IndexOf(p);
+            switch (index)
+            {
+                case -1:
+                    // not found, should never happen
+                    // TODO throw
+                    return false;
+                case 0:
+                    // first partition
+                    return p.PreviousPartition == 0;
+                default:
+                    // check partition before this one
+                    var previousPartition = File.GetPartitions().ToList()[index - 1];
+                    return p.PreviousPartition == (ulong)previousPartition.Offset;
+            }
+        }
+
+        public bool IsPartitionStatusValid(MXFPartition p)
+        {
+            return 
+                p.Status == PartitionStatus.OpenComplete ||
+                p.Status == PartitionStatus.OpenIncomplete ||
+                p.Status == PartitionStatus.ClosedIncomplete ||
+                p.Status == PartitionStatus.ClosedComplete;
+        }
+
+        public bool IsMajorVersionCorrect(MXFPartition p)
+        {
+            return p.MajorVersion == 1;
+        }
+
+        public bool IsMinorVersionCorrect(MXFPartition p)
+        {
+            // SMPTE 377:2011 requires Minor Version 1.3
+            return p.MinorVersion == 3;
+        }
+
         public bool IsHeaderByteCountCorrect(MXFPartition p)
         {
             // according to SMPTE 377:2011 this is the Count of Bytes used for Header Metadata and
             // Primer Pack. This starts at the first byte of the key of the Primer Pack and ends after
             // any trailing KLV Fill item which is included within this HeaderByteCount.
             ulong headerByteCount = 0;
-            
+
             var primerPack = p.Children.FirstOrDefault(c => c is MXFPrimerPack);
             var lastHeaderMetadata = p.Children.LastOrDefault(c => c.IsHeaderMetadataLike());
 
@@ -146,7 +194,7 @@ namespace Myriadbits.MXF
                 headerByteCount = (ulong)(lastHeaderMetadata.Offset + lastHeaderMetadata.TotalLength) - (ulong)primerPack.Offset;
             }
 
-            return p.HeaderByteCount == headerByteCount; 
+            return p.HeaderByteCount == headerByteCount;
 
         }
 
@@ -225,6 +273,16 @@ namespace Myriadbits.MXF
                                 Object = File.GetPartitionRoot(),
                                 Severity = MXFValidationSeverity.Error,
                                 Result = $"The Operational Pattern property is not consistent across all partitions"
+                            });
+                        }
+
+                        if (!IsMajorMinorVersionConsistent())
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = File.GetPartitionRoot(),
+                                Severity = MXFValidationSeverity.Error,
+                                Result = $"The Major/Minor Version property is not consistent across all partitions"
                             });
                         }
                     }
@@ -338,6 +396,48 @@ namespace Myriadbits.MXF
                                 Result = $"Partition #{p.PartitionNumber} has incorrect value for ThisPartition"
                             });
                         }
+
+                        if (!IsPreviousPartitionCorrect(p))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = p,
+                                Severity = MXFValidationSeverity.Error,
+                                Result = $"Partition #{p.PartitionNumber} has incorrect value for PreviousPartition"
+                            });
+                        }
+
+                        if (!IsPartitionStatusValid(p))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = p,
+                                Severity = MXFValidationSeverity.Error,
+                                Result = $"Partition #{p.PartitionNumber} has an invalid PartitionStatus (0x{(byte)p.Status:X2})"
+                            });
+                        }
+
+                        if (!IsMajorVersionCorrect(p))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = p,
+                                Severity = MXFValidationSeverity.Warning,
+                                Result = $"Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MajorVersion}, expected: 1)"
+                            });
+                        }
+
+                        if (!IsMinorVersionCorrect(p))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = p,
+                                Severity = MXFValidationSeverity.Warning,
+                                Result = $"Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MinorVersion}, expected: 3)"
+                            });
+                        }
+
+
 
                         // TODO disabled as implementation is buggy
                         //if (!IsHeaderByteCountCorrect(p))
