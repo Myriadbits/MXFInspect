@@ -41,16 +41,16 @@ namespace Myriadbits.MXF
 
     public enum PartitionStatus
     {
-        [Description("Open & Incomplete")]  //(01h)
-        OpenIncomplete, 
-        [Description("Closed & Incomplete")]//(02h)
-        ClosedIncomplete,  
-        [Description("Open & Complete")]    //(03h)
-        OpenComplete,      
-        [Description("Closed & Complete")]  //(04h)
-        ClosedComplete,
-        [Description("Generic Stream Partition")]  //(11h)
-        GenericStreamPartition,
+        [Description("Open & Incomplete")]
+        OpenIncomplete = 0x01,
+        [Description("Closed & Incomplete")]
+        ClosedIncomplete = 0x02,
+        [Description("Open & Complete")]
+        OpenComplete = 0x03,
+        [Description("Closed & Complete")]
+        ClosedComplete = 0x04,
+        [Description("Generic Stream Partition")]
+        GenericStreamPartition = 0x11,
         [Description("Invalid")]
         Invalid,
     }
