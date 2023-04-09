@@ -35,11 +35,11 @@
       <FileName>Exceptions\LocalTagParsingException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.NotAnMXFFileException">
-    <Position X="14" Y="3.25" Width="2" />
+  <Class Name="Myriadbits.MXF.Exceptions.NotAnMXFFileException">
+    <Position X="14" Y="3.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>NotAnMXFFileException.cs</FileName>
+      <FileName>Exceptions\NotAnMXFFileException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
