@@ -183,15 +183,16 @@ namespace Myriadbits.MXFInspect
             var cts = new CancellationTokenSource();
             var progressHandler = new Progress<TaskReport>(this.ReportProgress);
 
-            var results = await mxfFile.ExecuteValidationTest(true, progressHandler, cts.Token);
+            var results = await mxfFile.ExecuteValidationTest(false, progressHandler, cts.Token);
 
-            //results = results.Where(r => r != null).ToList();
             // display the one with biggest offset first, then autoresize columns executes
             // correctly and finally reverse order, i.e. lowest offset first
             this.tlvValidationResults.SetObjects(results.OrderByDescending(vr => vr.Offset));
             this.tlvValidationResults.AutoResizeColumns();
-            this.tlvValidationResults.PrimarySortColumn = colOffset;
+            this.tlvValidationResults.PrimarySortColumn = colSeverity;
             this.tlvValidationResults.PrimarySortOrder = SortOrder.Ascending;
+            this.tlvValidationResults.SecondarySortColumn = colOffset;
+            this.tlvValidationResults.SecondarySortOrder = SortOrder.Ascending;
             this.tlvValidationResults.Sort();
 
             this.prbProcessing.Visible = false;
