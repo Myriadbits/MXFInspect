@@ -32,7 +32,7 @@ namespace Myriadbits.MXF
 {
     public class EnumDescriptionConverter : EnumConverter
     {
-        private Type enumType;
+        private readonly Type enumType;
 
         public EnumDescriptionConverter(Type type) : base(type)
         {
