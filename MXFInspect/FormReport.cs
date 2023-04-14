@@ -176,27 +176,37 @@ namespace Myriadbits.MXFInspect
 
         private async Task ValidateMXFFile()
         {
-            this.tlvValidationResults.ClearObjects();
-            this.prbProcessing.Visible = true;
-            this.Enabled = false;
+            try
+            {
+                this.tlvValidationResults.ClearObjects();
+                this.prbProcessing.Visible = true;
+                this.Enabled = false;
 
-            var cts = new CancellationTokenSource();
-            var progressHandler = new Progress<TaskReport>(this.ReportProgress);
+                var cts = new CancellationTokenSource();
+                var progressHandler = new Progress<TaskReport>(this.ReportProgress);
 
-            var results = await mxfFile.ExecuteValidationTest(false, progressHandler, cts.Token);
+                var results = await mxfFile.ExecuteValidationTest(false, progressHandler, cts.Token);
 
-            // display the one with biggest offset first, then autoresize columns executes
-            // correctly and finally reverse order, i.e. lowest offset first
-            this.tlvValidationResults.SetObjects(results.OrderByDescending(vr => vr.Offset));
-            this.tlvValidationResults.AutoResizeColumns();
-            this.tlvValidationResults.PrimarySortColumn = colSeverity;
-            this.tlvValidationResults.PrimarySortOrder = SortOrder.Ascending;
-            this.tlvValidationResults.SecondarySortColumn = colOffset;
-            this.tlvValidationResults.SecondarySortOrder = SortOrder.Ascending;
-            this.tlvValidationResults.Sort();
+                // display the one with biggest offset first, then autoresize columns executes
+                // correctly and finally reverse order, i.e. lowest offset first
+                this.tlvValidationResults.SetObjects(results.OrderByDescending(vr => vr.Offset));
+                this.tlvValidationResults.AutoResizeColumns();
+                this.tlvValidationResults.PrimarySortColumn = colSeverity;
+                this.tlvValidationResults.PrimarySortOrder = SortOrder.Ascending;
+                this.tlvValidationResults.SecondarySortColumn = colOffset;
+                this.tlvValidationResults.SecondarySortOrder = SortOrder.Ascending;
+                this.tlvValidationResults.Sort();
 
-            this.prbProcessing.Visible = false;
-            this.Enabled = true;
+                this.prbProcessing.Visible = false;
+                this.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Log.ForContext<FormReport>().Error(ex, $"Exception occured while validating file:");
+                MessageBox.Show(ex.Message, "Exception occured while validating file");
+                this.Close();
+            }
+
         }
 
         private void tlvResults_SelectionChanged(object sender, EventArgs e)
