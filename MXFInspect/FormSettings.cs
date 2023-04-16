@@ -78,8 +78,8 @@ namespace Myriadbits.MXFInspect
             this.pbColorSystemItem.BackColor = settings.Color_SystemItem;
             this.pbColorMeta.BackColor = settings.Color_MetaData;
             this.pbColorFiller.BackColor = settings.Color_Filler;
+            this.pbColorReference.BackColor = settings.Color_Reference;
             this.pbColorSpecial.BackColor = settings.Color_Special;
-
             this.chkPartialLoadMsg.Checked = settings.PartialLoadWarning;
             this.chkOffsetAsHex.Checked = settings.ShowOffsetAsHex;
         }
@@ -104,6 +104,7 @@ namespace Myriadbits.MXFInspect
             settings.Color_SystemItem = this.pbColorSystemItem.BackColor;
             settings.Color_MetaData = this.pbColorMeta.BackColor;
             settings.Color_Filler = this.pbColorFiller.BackColor;
+            settings.Color_Reference = this.pbColorReference.BackColor;
             settings.Color_Special = this.pbColorSpecial.BackColor;
 
 
@@ -150,6 +151,7 @@ namespace Myriadbits.MXFInspect
         private void pbColorMeta_Click(object sender, EventArgs e) { ChangeColor(this.pbColorMeta); }
         private void pbColorFiller_Click(object sender, EventArgs e) { ChangeColor(this.pbColorFiller); }
         private void pbColorSpecial_Click(object sender, EventArgs e) { ChangeColor(this.pbColorSpecial); }
+        private void pbColorReference_Click(object sender, EventArgs e) { ChangeColor(this.pbColorReference); }
 
         private void btnReset_Click(object sender, EventArgs e)
         {

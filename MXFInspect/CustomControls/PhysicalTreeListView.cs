@@ -24,8 +24,6 @@
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Versioning;
@@ -43,19 +41,7 @@ namespace Myriadbits.MXFInspect
         {
             SetupColumns();
 
-            // setup hyperlink style
-            this.HyperlinkStyle = new HyperlinkStyle
-            {
-                Normal = new CellStyle
-                {
-                    ForeColor = DefaultForeColor
-                },
-                Visited = new CellStyle
-                {
-                    ForeColor = DefaultForeColor
-                },
-            };
-
+            SetHyperLinkStyle(Properties.Settings.Default.Color_Reference);
             //// Set tree delegates / event handlers
             this.HyperlinkClicked += Tree_HyperlinkClicked;
             this.IsHyperlink += Tree_IsHyperlink;
@@ -117,7 +103,25 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-		[SupportedOSPlatform("windows")]
+        public void SetHyperLinkStyle(Color color)
+        {
+            // setup hyperlink style
+            this.HyperlinkStyle = new HyperlinkStyle
+            {
+                Normal = new CellStyle
+                {
+                    ForeColor = color
+                },
+                Visited = new CellStyle
+                {
+                    ForeColor = color
+                },
+            };
+        }
+
+        #region private methods
+
+        [SupportedOSPlatform("windows")]
 		private void SetFontFormat(FormatCellEventArgs e, MXFObject obj)
         {
             if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
@@ -129,8 +133,6 @@ namespace Myriadbits.MXFInspect
                 e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
             }
         }
-
-        #region private methods
 
         protected override void CalculateOffsetMaxDigitCount()
         {
@@ -166,7 +168,7 @@ namespace Myriadbits.MXFInspect
 			}
 		}
 
-		private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
+        private void Tree_IsHyperlink(object sender, IsHyperlinkEventArgs e)
         {
             if (e.Model is IResolvable resolvable && resolvable.GetReference() != null)
             {

@@ -144,6 +144,18 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SaddleBrown")]
+        public global::System.Drawing.Color Color_Reference {
+            get {
+                return ((global::System.Drawing.Color)(this["Color_Reference"]));
+            }
+            set {
+                this["Color_Reference"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("LightSeaGreen")]
         public global::System.Drawing.Color Color_Special {
             get {

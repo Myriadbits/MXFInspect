@@ -40,29 +40,32 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pbColorReference = new System.Windows.Forms.PictureBox();
+            this.lblColorSpecial = new System.Windows.Forms.Label();
             this.pbColorSpecial = new System.Windows.Forms.PictureBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lblColorReference = new System.Windows.Forms.Label();
             this.pbColorFiller = new System.Windows.Forms.PictureBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lblColorFiller = new System.Windows.Forms.Label();
             this.pbColorMeta = new System.Windows.Forms.PictureBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.lblColorMetaData = new System.Windows.Forms.Label();
             this.pbColorSystemItem = new System.Windows.Forms.PictureBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblColorSystemItem = new System.Windows.Forms.Label();
             this.pbColorRIP = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblColorRIP = new System.Windows.Forms.Label();
             this.pbColorIndex = new System.Windows.Forms.PictureBox();
             this.pbColorEssence = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblColorIndexTable = new System.Windows.Forms.Label();
+            this.lblColorEssence = new System.Windows.Forms.Label();
             this.pbColorPartition = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblColorPartition = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbColorReference)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorSpecial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorFiller)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorMeta)).BeginInit();
@@ -77,7 +80,7 @@
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOk.Location = new System.Drawing.Point(415, 262);
+            this.btnOk.Location = new System.Drawing.Point(415, 308);
             this.btnOk.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(88, 27);
@@ -97,7 +100,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(582, 240);
+            this.tabControl1.Size = new System.Drawing.Size(582, 286);
             this.tabControl1.TabIndex = 8;
             // 
             // tabGeneral
@@ -114,7 +117,7 @@
             this.tabGeneral.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabGeneral.Size = new System.Drawing.Size(574, 212);
+            this.tabGeneral.Size = new System.Drawing.Size(574, 258);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -238,37 +241,61 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.pbColorReference);
+            this.tabPage2.Controls.Add(this.lblColorSpecial);
             this.tabPage2.Controls.Add(this.pbColorSpecial);
-            this.tabPage2.Controls.Add(this.label12);
+            this.tabPage2.Controls.Add(this.lblColorReference);
             this.tabPage2.Controls.Add(this.pbColorFiller);
-            this.tabPage2.Controls.Add(this.label11);
+            this.tabPage2.Controls.Add(this.lblColorFiller);
             this.tabPage2.Controls.Add(this.pbColorMeta);
-            this.tabPage2.Controls.Add(this.label10);
+            this.tabPage2.Controls.Add(this.lblColorMetaData);
             this.tabPage2.Controls.Add(this.pbColorSystemItem);
-            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.lblColorSystemItem);
             this.tabPage2.Controls.Add(this.pbColorRIP);
-            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.lblColorRIP);
             this.tabPage2.Controls.Add(this.pbColorIndex);
             this.tabPage2.Controls.Add(this.pbColorEssence);
             this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.label3);
+            this.tabPage2.Controls.Add(this.lblColorIndexTable);
+            this.tabPage2.Controls.Add(this.lblColorEssence);
             this.tabPage2.Controls.Add(this.pbColorPartition);
-            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.lblColorPartition);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabPage2.Size = new System.Drawing.Size(574, 212);
+            this.tabPage2.Size = new System.Drawing.Size(574, 258);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Colors";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pbColorReference
+            // 
+            this.pbColorReference.BackColor = System.Drawing.Color.Red;
+            this.pbColorReference.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbColorReference.Location = new System.Drawing.Point(149, 165);
+            this.pbColorReference.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.pbColorReference.Name = "pbColorReference";
+            this.pbColorReference.Size = new System.Drawing.Size(130, 15);
+            this.pbColorReference.TabIndex = 15;
+            this.pbColorReference.TabStop = false;
+            this.pbColorReference.Click += new System.EventHandler(this.pbColorReference_Click);
+            // 
+            // lblColorSpecial
+            // 
+            this.lblColorSpecial.AutoSize = true;
+            this.lblColorSpecial.Location = new System.Drawing.Point(11, 186);
+            this.lblColorSpecial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorSpecial.Name = "lblColorSpecial";
+            this.lblColorSpecial.Size = new System.Drawing.Size(74, 15);
+            this.lblColorSpecial.TabIndex = 14;
+            this.lblColorSpecial.Text = "Special color";
             // 
             // pbColorSpecial
             // 
             this.pbColorSpecial.BackColor = System.Drawing.Color.Red;
             this.pbColorSpecial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorSpecial.Location = new System.Drawing.Point(142, 163);
+            this.pbColorSpecial.Location = new System.Drawing.Point(149, 186);
             this.pbColorSpecial.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorSpecial.Name = "pbColorSpecial";
             this.pbColorSpecial.Size = new System.Drawing.Size(130, 15);
@@ -276,21 +303,21 @@
             this.pbColorSpecial.TabStop = false;
             this.pbColorSpecial.Click += new System.EventHandler(this.pbColorSpecial_Click);
             // 
-            // label12
+            // lblColorReference
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(4, 163);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(74, 15);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "Special color";
+            this.lblColorReference.AutoSize = true;
+            this.lblColorReference.Location = new System.Drawing.Point(11, 165);
+            this.lblColorReference.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorReference.Name = "lblColorReference";
+            this.lblColorReference.Size = new System.Drawing.Size(89, 15);
+            this.lblColorReference.TabIndex = 12;
+            this.lblColorReference.Text = "Reference color";
             // 
             // pbColorFiller
             // 
             this.pbColorFiller.BackColor = System.Drawing.Color.Red;
             this.pbColorFiller.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorFiller.Location = new System.Drawing.Point(142, 138);
+            this.pbColorFiller.Location = new System.Drawing.Point(149, 143);
             this.pbColorFiller.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorFiller.Name = "pbColorFiller";
             this.pbColorFiller.Size = new System.Drawing.Size(130, 15);
@@ -298,21 +325,21 @@
             this.pbColorFiller.TabStop = false;
             this.pbColorFiller.Click += new System.EventHandler(this.pbColorFiller_Click);
             // 
-            // label11
+            // lblColorFiller
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 138);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(62, 15);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Filler color";
+            this.lblColorFiller.AutoSize = true;
+            this.lblColorFiller.Location = new System.Drawing.Point(11, 143);
+            this.lblColorFiller.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorFiller.Name = "lblColorFiller";
+            this.lblColorFiller.Size = new System.Drawing.Size(62, 15);
+            this.lblColorFiller.TabIndex = 10;
+            this.lblColorFiller.Text = "Filler color";
             // 
             // pbColorMeta
             // 
             this.pbColorMeta.BackColor = System.Drawing.Color.Red;
             this.pbColorMeta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorMeta.Location = new System.Drawing.Point(142, 117);
+            this.pbColorMeta.Location = new System.Drawing.Point(149, 121);
             this.pbColorMeta.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorMeta.Name = "pbColorMeta";
             this.pbColorMeta.Size = new System.Drawing.Size(130, 15);
@@ -320,21 +347,21 @@
             this.pbColorMeta.TabStop = false;
             this.pbColorMeta.Click += new System.EventHandler(this.pbColorMeta_Click);
             // 
-            // label10
+            // lblColorMetaData
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 117);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(90, 15);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "Meta data color";
+            this.lblColorMetaData.AutoSize = true;
+            this.lblColorMetaData.Location = new System.Drawing.Point(11, 121);
+            this.lblColorMetaData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorMetaData.Name = "lblColorMetaData";
+            this.lblColorMetaData.Size = new System.Drawing.Size(90, 15);
+            this.lblColorMetaData.TabIndex = 8;
+            this.lblColorMetaData.Text = "Meta data color";
             // 
             // pbColorSystemItem
             // 
             this.pbColorSystemItem.BackColor = System.Drawing.Color.Red;
             this.pbColorSystemItem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorSystemItem.Location = new System.Drawing.Point(142, 95);
+            this.pbColorSystemItem.Location = new System.Drawing.Point(149, 99);
             this.pbColorSystemItem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorSystemItem.Name = "pbColorSystemItem";
             this.pbColorSystemItem.Size = new System.Drawing.Size(130, 15);
@@ -342,21 +369,21 @@
             this.pbColorSystemItem.TabStop = false;
             this.pbColorSystemItem.Click += new System.EventHandler(this.pbColorSystemItem_Click);
             // 
-            // label8
+            // lblColorSystemItem
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(4, 95);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(102, 15);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "System Item color";
+            this.lblColorSystemItem.AutoSize = true;
+            this.lblColorSystemItem.Location = new System.Drawing.Point(11, 99);
+            this.lblColorSystemItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorSystemItem.Name = "lblColorSystemItem";
+            this.lblColorSystemItem.Size = new System.Drawing.Size(102, 15);
+            this.lblColorSystemItem.TabIndex = 6;
+            this.lblColorSystemItem.Text = "System Item color";
             // 
             // pbColorRIP
             // 
             this.pbColorRIP.BackColor = System.Drawing.Color.Red;
             this.pbColorRIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorRIP.Location = new System.Drawing.Point(142, 73);
+            this.pbColorRIP.Location = new System.Drawing.Point(149, 77);
             this.pbColorRIP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorRIP.Name = "pbColorRIP";
             this.pbColorRIP.Size = new System.Drawing.Size(130, 15);
@@ -364,21 +391,21 @@
             this.pbColorRIP.TabStop = false;
             this.pbColorRIP.Click += new System.EventHandler(this.pbColorRIP_Click);
             // 
-            // label5
+            // lblColorRIP
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 73);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 15);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "RIP color";
+            this.lblColorRIP.AutoSize = true;
+            this.lblColorRIP.Location = new System.Drawing.Point(11, 77);
+            this.lblColorRIP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorRIP.Name = "lblColorRIP";
+            this.lblColorRIP.Size = new System.Drawing.Size(54, 15);
+            this.lblColorRIP.TabIndex = 4;
+            this.lblColorRIP.Text = "RIP color";
             // 
             // pbColorIndex
             // 
             this.pbColorIndex.BackColor = System.Drawing.Color.Red;
             this.pbColorIndex.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorIndex.Location = new System.Drawing.Point(142, 51);
+            this.pbColorIndex.Location = new System.Drawing.Point(149, 55);
             this.pbColorIndex.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorIndex.Name = "pbColorIndex";
             this.pbColorIndex.Size = new System.Drawing.Size(130, 15);
@@ -390,7 +417,7 @@
             // 
             this.pbColorEssence.BackColor = System.Drawing.Color.Red;
             this.pbColorEssence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorEssence.Location = new System.Drawing.Point(142, 29);
+            this.pbColorEssence.Location = new System.Drawing.Point(149, 33);
             this.pbColorEssence.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorEssence.Name = "pbColorEssence";
             this.pbColorEssence.Size = new System.Drawing.Size(130, 15);
@@ -402,38 +429,38 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label7.Location = new System.Drawing.Point(7, 192);
+            this.label7.Location = new System.Drawing.Point(11, 216);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(216, 15);
             this.label7.TabIndex = 2;
             this.label7.Text = "Click on the colors to change the colors";
             // 
-            // label6
+            // lblColorIndexTable
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 51);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(95, 15);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Index table color";
+            this.lblColorIndexTable.AutoSize = true;
+            this.lblColorIndexTable.Location = new System.Drawing.Point(11, 55);
+            this.lblColorIndexTable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorIndexTable.Name = "lblColorIndexTable";
+            this.lblColorIndexTable.Size = new System.Drawing.Size(95, 15);
+            this.lblColorIndexTable.TabIndex = 2;
+            this.lblColorIndexTable.Text = "Index table color";
             // 
-            // label3
+            // lblColorEssence
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 29);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Essence color";
+            this.lblColorEssence.AutoSize = true;
+            this.lblColorEssence.Location = new System.Drawing.Point(11, 33);
+            this.lblColorEssence.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorEssence.Name = "lblColorEssence";
+            this.lblColorEssence.Size = new System.Drawing.Size(78, 15);
+            this.lblColorEssence.TabIndex = 2;
+            this.lblColorEssence.Text = "Essence color";
             // 
             // pbColorPartition
             // 
             this.pbColorPartition.BackColor = System.Drawing.Color.Red;
             this.pbColorPartition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbColorPartition.Location = new System.Drawing.Point(142, 7);
+            this.pbColorPartition.Location = new System.Drawing.Point(149, 11);
             this.pbColorPartition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbColorPartition.Name = "pbColorPartition";
             this.pbColorPartition.Size = new System.Drawing.Size(130, 15);
@@ -441,21 +468,21 @@
             this.pbColorPartition.TabStop = false;
             this.pbColorPartition.Click += new System.EventHandler(this.pbColorPartition_Click);
             // 
-            // label2
+            // lblColorPartition
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 7);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Partition color";
+            this.lblColorPartition.AutoSize = true;
+            this.lblColorPartition.Location = new System.Drawing.Point(11, 11);
+            this.lblColorPartition.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorPartition.Name = "lblColorPartition";
+            this.lblColorPartition.Size = new System.Drawing.Size(82, 15);
+            this.lblColorPartition.TabIndex = 0;
+            this.lblColorPartition.Text = "Partition color";
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(510, 262);
+            this.btnCancel.Location = new System.Drawing.Point(510, 308);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 27);
@@ -466,7 +493,7 @@
             // btnReset
             // 
             this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnReset.Location = new System.Drawing.Point(15, 262);
+            this.btnReset.Location = new System.Drawing.Point(15, 308);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(131, 27);
@@ -481,7 +508,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(611, 302);
+            this.ClientSize = new System.Drawing.Size(611, 348);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnCancel);
@@ -500,6 +527,7 @@
             this.tabGeneral.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbColorReference)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorSpecial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorFiller)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorMeta)).EndInit();
@@ -521,30 +549,32 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TabPage tabPage2;
 		private System.Windows.Forms.PictureBox pbColorPartition;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label lblColorPartition;
 		private System.Windows.Forms.ColorDialog colorDialog1;
 		private System.Windows.Forms.PictureBox pbColorEssence;
-		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label lblColorEssence;
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.CheckBox chkShowLines;
 		private System.Windows.Forms.PictureBox pbColorIndex;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label lblColorIndexTable;
 		private System.Windows.Forms.ComboBox cmbTopNumber;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.PictureBox pbColorRIP;
-		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label lblColorRIP;
 		private System.Windows.Forms.PictureBox pbColorSystemItem;
-		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Label lblColorSystemItem;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.CheckBox chkPartialLoadMsg;
 		private System.Windows.Forms.Button btnReset;
 		private System.Windows.Forms.PictureBox pbColorSpecial;
-		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label lblColorReference;
 		private System.Windows.Forms.PictureBox pbColorFiller;
-		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label lblColorFiller;
 		private System.Windows.Forms.PictureBox pbColorMeta;
-		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Label lblColorMetaData;
         private System.Windows.Forms.CheckBox chkOffsetAsHex;
+        private System.Windows.Forms.PictureBox pbColorReference;
+        private System.Windows.Forms.Label lblColorSpecial;
     }
 }

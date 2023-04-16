@@ -355,6 +355,7 @@ namespace Myriadbits.MXFInspect
         {
             this.tlvLogical.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
             this.tlvPhysical.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
+            this.tlvPhysical.SetHyperLinkStyle(Properties.Settings.Default.Color_Reference);
             this.rtfHexViewer.SetOffsetStyle(Properties.Settings.Default.ShowOffsetAsHex);
         }
     }

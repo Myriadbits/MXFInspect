@@ -32,6 +32,9 @@
     <Setting Name="Color_MetaData" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">DarkGreen</Value>
     </Setting>
+    <Setting Name="Color_Reference" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">SaddleBrown</Value>
+    </Setting>
     <Setting Name="Color_Special" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">LightSeaGreen</Value>
     </Setting>

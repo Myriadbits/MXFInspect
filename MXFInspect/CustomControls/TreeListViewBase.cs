@@ -66,8 +66,6 @@ namespace Myriadbits.MXFInspect
             this.ColumnOffset.TextAlign = HorizontalAlignment.Right;
             this.ColumnMXFObject.Hideable = false;
 
-            //this.Columns.AddRange(new ColumnHeader[] { ColumnFirst, ColumnOffset, ColumnMXFObject });
-
             // Set tree delegates
             this.CanExpandGetter = TreeNode_HasChildren;
             this.ChildrenGetter = TreeNode_ChildGetter;
@@ -78,7 +76,7 @@ namespace Myriadbits.MXFInspect
             this.FormatCell += Tree_FormatCell;
         }
 
-		[SupportedOSPlatform("windows")]
+        [SupportedOSPlatform("windows")]
 		protected void SetupTreeColumnRenderer()
 		{
 			Pen pen = new Pen(Color.Black, 1.001f);
