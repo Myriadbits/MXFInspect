@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Reflection;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 
@@ -38,6 +39,11 @@ namespace Myriadbits.MXF
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010105.01020203.00000000")]
         public UL OperationalPattern { get; set; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.01020210.02010000")]
+        [TypeConverter(typeof(AUIDArrayConverter))]
+        public AUID[] EssenceContainers { get; private set; }
 
         [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.0101010e.01020210.02040000")]
@@ -111,7 +117,11 @@ namespace Myriadbits.MXF
                     localTag.Value = this.OperationalPattern;
                     return true;
                 case 0x3B0A:
-                    localTag.AddChildren(reader.ReadAUIDSet("EssenceContainer", localTag.Offset, localTag.Length.Value));
+                    uint itemCount = reader.ReadUInt32();
+                    uint itemLength = reader.ReadUInt32(); // not really needed
+                    this.EssenceContainers = reader.ReadArray(reader.ReadUL, itemCount);
+                    localTag.Value = this.EssenceContainers;
+                    //localTag.AddChildren(reader.ReadAUIDSet("EssenceContainer", localTag.Offset, localTag.Length.Value));
                     return true;
                 // TODO review how the metadataschemes are read (especially if there are no schemes present)
                 case 0x3B0B: 

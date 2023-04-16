@@ -71,6 +71,19 @@ namespace Myriadbits.MXF
         public PartitionStatus Status { get; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010105.01020210.02010000")]
+        [TypeConverter(typeof(AUIDArrayConverter))]
+        public AUID[] EssenceContainers { get; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.01030404.00000000")]
+        public UInt32 BodySID { get; }
+
+        [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.01030405.00000000")]
+        public UInt32 IndexSID { get; }
+
+        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.03010201.06000000")]
         public UInt16 MajorVersion { get; }
 
@@ -103,16 +116,8 @@ namespace Myriadbits.MXF
         public UInt64 IndexByteCount { get; }
 
         [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010104.01030405.00000000")]
-        public UInt32 IndexSID { get; }
-
-        [Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010104.06080102.01030000")]
         public UInt64 BodyOffset { get; }
-
-        [Category(CATEGORYNAME)]
-        [ULElement("urn:smpte:ul:060e2b34.01010104.01030404.00000000")]
-        public UInt32 BodySID { get; }
 
         [Browsable(false)]
         public MXFSystemMetaDataPack FirstSystemItem { get; set; }
@@ -188,9 +193,13 @@ namespace Myriadbits.MXF
             this.BodySID = reader.ReadUInt32();
 
             this.OperationalPattern = reader.ReadUL();
-            MXFNamedObject essenceContainers = new MXFNamedObject("EssenceContainers", this.Offset + reader.Position, this.TotalLength - reader.Position);
-            essenceContainers.AddChildren(reader.ReadAUIDSet("EssenceContainer", this.Offset, this.TotalLength - reader.Position));
-            this.AddChild(essenceContainers);
+
+            uint itemCount = reader.ReadUInt32();
+            uint itemLength = reader.ReadUInt32(); // not really needed
+            this.EssenceContainers = reader.ReadArray(reader.ReadUL, itemCount);
+            //MXFNamedObject essenceContainers = new MXFNamedObject("EssenceContainers", this.Offset + reader.Position, this.TotalLength - reader.Position);
+            //essenceContainers.AddChildren(reader.ReadAUIDSet("EssenceContainer", this.Offset, this.TotalLength - reader.Position));
+            //this.AddChild(essenceContainers);
         }
 
 
