@@ -27,8 +27,6 @@ using Serilog;
 using System;
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -133,27 +131,6 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-        private void DisplayFileInfo()
-        {
-            StringBuilder sb = new StringBuilder();
-            int errorCnt = 0;
-            int warningCnt = 0;
-            if (this.mxfFile != null)
-            {
-                errorCnt = this.mxfFile.ValidationResults.Count(a => a.Severity == MXFValidationSeverity.Error);
-                warningCnt = this.mxfFile.ValidationResults.Count(a => a.Severity == MXFValidationSeverity.Warning);
-                if (errorCnt == 0 && warningCnt == 0)
-                    sb.AppendLine(string.Format("There are no errors found, file seems to be ok!"));
-                else
-                    sb.AppendLine(string.Format("Found {0} errors and {1} warnings!", errorCnt, warningCnt));
-                sb.AppendLine(string.Format("(Double click on an item to see more details)"));
-            }
-            else
-            {
-                sb.AppendLine(string.Format("ERROR WHILE PARSING THE MXF FILE"));
-            }
-        }
-
         /// <summary>
         /// Close this dialog
         /// </summary>
@@ -162,16 +139,6 @@ namespace Myriadbits.MXFInspect
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// Execute all tests
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void btnExecuteAllTests_Click(object sender, EventArgs e)
-        {
-            await ValidateMXFFile();
         }
 
         private async Task ValidateMXFFile()

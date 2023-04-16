@@ -37,7 +37,6 @@
             this.colCategory = new BrightIdeasSoftware.OLVColumn();
             this.colResult = new BrightIdeasSoftware.OLVColumn();
             this.imageListResult = new System.Windows.Forms.ImageList(this.components);
-            this.btnExecuteAllTests = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabValidationReport = new System.Windows.Forms.TabPage();
             this.prbProcessing = new System.Windows.Forms.ProgressBar();
@@ -131,18 +130,6 @@
             this.imageListResult.Images.SetKeyName(2, "Warning");
             this.imageListResult.Images.SetKeyName(3, "Info");
             this.imageListResult.Images.SetKeyName(4, "Question");
-            // 
-            // btnExecuteAllTests
-            // 
-            this.btnExecuteAllTests.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExecuteAllTests.Location = new System.Drawing.Point(611, 431);
-            this.btnExecuteAllTests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnExecuteAllTests.Name = "btnExecuteAllTests";
-            this.btnExecuteAllTests.Size = new System.Drawing.Size(125, 27);
-            this.btnExecuteAllTests.TabIndex = 22;
-            this.btnExecuteAllTests.Text = "Execute All Tests";
-            this.btnExecuteAllTests.UseVisualStyleBackColor = true;
-            this.btnExecuteAllTests.Click += new System.EventHandler(this.btnExecuteAllTests_Click);
             // 
             // tabControl
             // 
@@ -239,7 +226,6 @@
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(840, 465);
             this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.btnExecuteAllTests);
             this.Controls.Add(this.btnClose);
             this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.MaximizeBox = false;
@@ -269,7 +255,6 @@
         private BrightIdeasSoftware.OLVColumn colCategory;
         private BrightIdeasSoftware.OLVColumn colResult;
         private System.Windows.Forms.ImageList imageListResult;
-        private System.Windows.Forms.Button btnExecuteAllTests;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabValidationReport;
         private System.Windows.Forms.TabPage tabQuickInfo;
