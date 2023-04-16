@@ -61,11 +61,6 @@ namespace Myriadbits.MXF
             return p.PartitionType == PartitionType.Header;
         }
 
-        public static bool IsIndexLike(this MXFObject obj)
-        {
-            return obj is MXFIndexTableSegment or MXFEntryDelta or MXFEntryIndex;
-        }
-
         public static bool IsSystemMetaData(this MXFObject obj)
         {
             return obj is MXFSystemMetaDataPack;
@@ -76,20 +71,30 @@ namespace Myriadbits.MXF
             return obj.Children.Any(c => c is MXFIndexTableSegment);
         }
 
-        public static bool IsMetadataLike(this MXFObject obj)
+        public static bool IsIndexLike(this MXFObject obj)
         {
-            return obj is MXFMetadataBaseclass or MXFPackageMetaData or MXFPrimerPack;
-        }
-
-        public static bool IsHeaderMetadataLike(this MXFObject obj)
-        {
-            return obj is MXFMetadataBaseclass or MXFPrimerPack;
+            return obj is MXFIndexTableSegment or MXFEntryDelta or MXFEntryIndex ||
+                obj.Parent is MXFIndexTableSegment;
         }
 
         public static bool IsIndexCollection(this MXFObject obj)
         {
             return obj.Descendants().Any() &&
                 obj.Descendants().All(d => d is MXFEntryDelta || d is MXFEntryIndex);
+        }
+
+        public static bool IsMetadataLike(this MXFObject obj)
+        {
+            return obj is MXFMetadataBaseclass or MXFPackageMetaData or MXFPrimerPack
+                || (obj is IResolvable r)
+                || obj.Ancestors().Any(a => a is MXFMetadataBaseclass or MXFPackageMetaData or MXFPrimerPack);
+        }
+
+        public static bool IsHeaderMetadataLike(this MXFObject obj)
+        {
+            return obj is MXFMetadataBaseclass or MXFPrimerPack ||
+                // this includes also Filler Packs
+                (obj as MXFPack)?.Key.RegistryDesignator == Identifiers.ULRegistries.MetadataDictionaries;
         }
 
         public static long GetTreeMaxOffset(this MXFObject obj)

@@ -165,19 +165,14 @@ namespace Myriadbits.MXF
             ulong headerByteCount = 0;
 
             var primerPack = p.Children.FirstOrDefault(c => c is MXFPrimerPack);
-            var lastHeaderMetadata = p.Children.LastOrDefault(c => c.IsHeaderMetadataLike());
+            var lastHeaderMetadata = p.Children.TakeWhile(c => c.IsHeaderMetadataLike())?.LastOrDefault();
+            //var trailingKLV = lastHeaderMetadata?.NextSibling();
 
-            if (lastHeaderMetadata != null)
-            {
-                int index = p.Children.ToList().IndexOf(lastHeaderMetadata);
-                if (index + 1 <= p.Children.Count)
-                {
-                    if (p.Children[index + 1].IsFiller())
-                    {
-                        lastHeaderMetadata = p.Children[index + 1];
-                    };
-                }
-            }
+            //// add trailing KLV Fill item if any
+            //if (trailingKLV != null && trailingKLV.IsFiller())
+            //{
+            //    lastHeaderMetadata = trailingKLV;
+            //}
 
             if (primerPack != null && lastHeaderMetadata != null)
             {
@@ -185,7 +180,6 @@ namespace Myriadbits.MXF
             }
 
             return p.HeaderByteCount == headerByteCount;
-
         }
 
         public bool IsHeaderPartitionOpen()
@@ -426,18 +420,15 @@ namespace Myriadbits.MXF
                             });
                         }
 
-
-
-                        // TODO disabled as implementation is buggy
-                        //if (!IsHeaderByteCountCorrect(p))
-                        //{
-                        //    retval.Add(new MXFValidationResult
-                        //    {
-                        //        Object = p,
-                        //        Severity = MXFValidationSeverity.Error,
-                        //        Result = $"Partition #{p.PartitionNumber} has incorrect value for HeaderByteCount"
-                        //    });
-                        //}
+                        if (!IsHeaderByteCountCorrect(p))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Object = p,
+                                Severity = MXFValidationSeverity.Error,
+                                Result = $"Partition #{p.PartitionNumber} has incorrect value for HeaderByteCount"
+                            });
+                        }
                     }
                 }
                 else
