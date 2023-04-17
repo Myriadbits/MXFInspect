@@ -23,6 +23,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
@@ -33,16 +34,16 @@ namespace Myriadbits.MXF
 
         [Category(CATEGORYNAME)]
         public UInt32 BodySID { get; set; }
-        
+
         [Category(CATEGORYNAME)]
         public UInt64 PartitionOffset { get; set; }
 
         public MXFEntryRIP(IKLVStreamReader reader, long offset)
             : base(offset + reader.Position)
         {
-            this.BodySID = reader.ReadUInt32();
-            this.PartitionOffset = reader.ReadUInt64();
-            this.TotalLength = 12; // Fixed length
+            this.BodySID = reader.ReadUInt32(); // 4 bytes
+            this.PartitionOffset = reader.ReadUInt64(); // 8 bytes
+            this.TotalLength = 12; // Fixed length 4+8 bytes
         }
 
         /// <summary>
@@ -51,7 +52,20 @@ namespace Myriadbits.MXF
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format($"RIPEntry - BodySID {this.BodySID}, PartitionOffset {this.PartitionOffset:N0} (0x{this.PartitionOffset:X})");
+            MXFRIP rip = this.Parent as MXFRIP;
+            int? ripEntryCount = rip?.Children.Count;
+            int? ripEntryNumber = rip?.Children.ToList().IndexOf(this);
+
+            if (ripEntryCount.HasValue && ripEntryNumber.Value >= 0)
+            {
+                int digitCount = Helper.GetDigitCount(ripEntryCount.Value);
+                string ripEntryNumberPadded = ripEntryNumber.Value.ToString().PadLeft(digitCount, '0');
+                return $"RIPEntry #{ripEntryNumberPadded} - BodySID {this.BodySID}, PartitionOffset {this.PartitionOffset:N0} (0x{this.PartitionOffset:X})";
+            }
+            else
+            {
+                return $"RIPEntry - BodySID {this.BodySID}, PartitionOffset {this.PartitionOffset:N0} (0x{this.PartitionOffset:X})";
+            }
         }
     }
 }

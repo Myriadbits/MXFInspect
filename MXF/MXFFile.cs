@@ -47,6 +47,7 @@ namespace Myriadbits.MXF
     public class MXFFile : MXFObject
     {
         private List<MXFValidationResult> validationResults = new List<MXFValidationResult>();
+        
         public FileInfo File { get; }
 
         public MXFRIP RIP { get; set; }
@@ -61,14 +62,6 @@ namespace Myriadbits.MXF
         public MXFSystemMetaDataPack LastSystemItem { get; set; }
 
         public MXFLogicalObject LogicalTreeRoot { get; set; }
-
-        public int RIPEntryCount
-        {
-            get
-            {
-                return this.RIP?.Children.Count ?? 0;
-            }
-        }
 
         private MXFFile(FileInfo fi)
         {
@@ -316,7 +309,6 @@ namespace Myriadbits.MXF
 
                     case MXFRIP rip:
                         this.AddChild(rip);
-                        this.RIP = rip;
                         break;
 
                     case MXFPreface preface:

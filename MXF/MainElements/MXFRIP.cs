@@ -22,6 +22,7 @@
 #endregion
 
 
+using System.ComponentModel;
 using System.Linq;
 using Myriadbits.MXF.KLV;
 
@@ -29,7 +30,12 @@ namespace Myriadbits.MXF
 {
     public class MXFRIP : MXFPack
 	{
-		public MXFRIP(MXFPack pack)
+        private const string CATEGORYNAME = "RIP";
+
+        [Category(CATEGORYNAME)]
+        public long DeclaredTotalLength { get; private set; }
+
+        public MXFRIP(MXFPack pack)
 			: base(pack)
         {
 			Initialize(this.GetReader());
@@ -40,25 +46,28 @@ namespace Myriadbits.MXF
 			// Make sure we read at the data position
 			reader.Seek(this.RelativeValueOffset);
 
-			// Read all local tags
+			// Read all RIP entries (12 bytes = 4 bytes BodySID + 8 bytes PartitionOffset)
 			long klvEnd = this.RelativeValueOffset + this.Length.Value;
 			while (reader.Position + 12 < klvEnd)
 			{
 				// Add to the collection
 				AddChild(new MXFEntryRIP(reader, this.Offset));
 			}
+
+			DeclaredTotalLength = reader.ReadInt32();
 		}
 
 		public override string ToString()
 		{
 			if (!this.Children.Any())
-				return string.Format("RIP [0 items]");
-			return string.Format("RIP [{0} items]", this.Children.Count);
-		}
+			{
+				return "RIP [0 items]";
 
-		public MXFEntryRIP GetPartition(int partitionIndex)
-		{
-			return this.Children.ElementAtOrDefault(partitionIndex) as MXFEntryRIP;
+			}
+			else
+			{
+				return $"RIP [{this.Children.Count} items]";
+			}
 		}
 	}
 }

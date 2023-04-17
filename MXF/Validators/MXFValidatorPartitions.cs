@@ -142,6 +142,12 @@ namespace Myriadbits.MXF
             if (IsFooterPartitionPresent() && IsFooterPartitionUnique())
             {
                 var footer = File.GetFooterPartition();
+
+                // In Open Partitions, the value shall be as correct or zero(0)
+                if (IsOpen(p))
+                {
+                    return p.FooterPartition == (ulong)footer.Offset || p.FooterPartition == 0;
+                }
                 return p.FooterPartition == (ulong)footer.Offset;
             }
             else
@@ -159,6 +165,12 @@ namespace Myriadbits.MXF
                 p.Status == PartitionStatus.ClosedComplete;
         }
 
+        public bool IsOpen(MXFPartition p)
+        {
+            return
+                p.Status == PartitionStatus.OpenComplete ||
+                p.Status == PartitionStatus.OpenIncomplete;
+        }
         public bool IsMajorVersionCorrect(MXFPartition p)
         {
             return p.MajorVersion == 1;
@@ -368,13 +380,14 @@ namespace Myriadbits.MXF
                     //        Result = "Invalid partition structure. The last partition is not a Footer Partition"
                     //    });
                     //}
-                    
-                    
+
+
                     // *****************************************************
                     // checks for all partitions 
 
                     foreach (var p in this.File.GetPartitions())
                     {
+                        // TODO consider also RunIn
                         if (!IsThisPartitionValueCorrect(p))
                         {
                             retval.Add(new MXFValidationResult
@@ -386,6 +399,10 @@ namespace Myriadbits.MXF
                             });
                         }
 
+                        // TODO consider also RunIn
+                        // The number of the previous Partition in the
+                        // sequence of Partitions(as a byte offset relative
+                        // to the start of the Header Partition).
                         if (!IsPreviousPartitionValueCorrect(p))
                         {
                             retval.Add(new MXFValidationResult
@@ -399,6 +416,8 @@ namespace Myriadbits.MXF
 
                         if (IsFooterPartitionPresent() && IsFooterPartitionUnique())
                         {
+                            // TODO consider also RunIn
+                            // TODO Consider if Partition is open
                             if (!IsFooterPartitionValueCorrect(p))
                             {
                                 retval.Add(new MXFValidationResult

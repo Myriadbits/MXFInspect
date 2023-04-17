@@ -55,6 +55,11 @@ namespace Myriadbits.MXF
             return file.GetPartitions().Where(p => p.PartitionType == PartitionType.Body);
         }
 
+        public static MXFRIP GetRIP(this MXFFile file)
+        {
+            return file.Descendants().OfType<MXFRIP>().SingleOrDefault();
+        }
+
         public static IEnumerable<MXFPartition> GetBodiesContainingEssences(this MXFFile file)
         {
             return file.GetBodyPartitions().Where(b => b.Children.OfType<MXFEssenceElement>().Any());
@@ -111,11 +116,6 @@ namespace Myriadbits.MXF
         public static bool AreEssencesInHeader(this MXFFile file)
         {
             return !file.GetHeaderPartition().Children.OfType<MXFEssenceElement>().Any();
-        }
-
-        public static bool ISRIPPresent(this MXFFile file)
-        {
-            return file.RIP != null;
         }
 
         public static long CountPictureEssences(this MXFPartition p)
