@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
             return file.GetPartitions().SingleOrDefault(p => p.PartitionType == PartitionType.Header);
         }
 
-        public static MXFPartition GetFooter(this MXFFile file)
+        public static MXFPartition GetFooterPartition(this MXFFile file)
         {
             return file.GetPartitions().SingleOrDefault(p => p.PartitionType == PartitionType.Footer);
         }
@@ -90,7 +90,7 @@ namespace Myriadbits.MXF
 
         public static bool IsFooterPartitionClosedAndComplete(this MXFFile file)
         {
-            return file.GetFooter().IsClosedAndComplete();
+            return file.GetFooterPartition().IsClosedAndComplete();
         }
 
         public static bool IsHeaderPartitionClosedAndComplete(this MXFFile file)

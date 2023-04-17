@@ -73,7 +73,7 @@ namespace Myriadbits.MXF
             FilePathName = file.File.FullName;
             FileSize = file.File.Length;
             OperationalPattern = file.Descendants().OfType<MXFPreface>()?.FirstOrDefault()?.OperationalPattern;
-            FooterPresent = file.GetFooter() != null;
+            FooterPresent = file.GetFooterPartition() != null;
             RIPPresent = file.Descendants().Last() is MXFRIP;
             ApplicationSupplierName = file.Descendants().OfType<MXFIdentification>()?.FirstOrDefault()?.ApplicationSupplierName;
             ApplicationName = file.Descendants().OfType<MXFIdentification>()?.FirstOrDefault()?.ApplicationSupplierName;
