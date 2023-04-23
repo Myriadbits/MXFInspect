@@ -141,7 +141,7 @@ namespace Myriadbits.MXF
 
                         // Only report progress when the percentage has changed
                         currentPercentage = (int)((parser.Current.Offset + parser.Current.TotalLength) * 100 / this.File.Length);
-                        if (currentPercentage != previousPercentage)
+                        if (currentPercentage > previousPercentage)
                         {
                             // TODO really need to check this?
                             if (currentPercentage <= 100)
