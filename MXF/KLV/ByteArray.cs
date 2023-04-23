@@ -26,7 +26,6 @@ using System.Collections;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
-using static Myriadbits.MXF.KLVKey;
 using System.Text;
 
 namespace Myriadbits.MXF
@@ -44,11 +43,11 @@ namespace Myriadbits.MXF
         {
             if (bytes == null)
             {
-                throw new ArgumentNullException("bytes cannot be null");
+                throw new ArgumentNullException(nameof(bytes), "bytes cannot be null");
             }
             else if (bytes.Length == 0)
             {
-                throw new ArgumentException("There must at least be one byte");
+                throw new ArgumentException("There must at least be one byte", nameof(bytes));
             }
             else
             {
