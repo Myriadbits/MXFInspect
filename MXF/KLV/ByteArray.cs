@@ -22,17 +22,15 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public class ByteArray : IReadOnlyList<byte>, IEquatable<ByteArray>
+    public class ByteArray : IEquatable<ByteArray>
     {
-        private readonly byte[] theBytes = null;
+        private readonly byte[] theBytes;
 
         [Browsable(false)]
         public int ArrayLength => theBytes.Length;
@@ -52,25 +50,13 @@ namespace Myriadbits.MXF
             else
             {
                 theBytes = new byte[bytes.Length];
-                for (int n = 0; n < bytes.Length; n++)
-                {
-                    theBytes[n] = bytes[n];
-                }
+                Buffer.BlockCopy(bytes, 0, theBytes, 0, bytes.Length);
+                //theBytes = new byte[bytes.Length];
+                //for (int n = 0; n < bytes.Length; n++)
+                //{
+                //    theBytes[n] = bytes[n];
+                //}
             }
-        }
-
-        byte IReadOnlyList<byte>.this[int index] => theBytes[index];
-
-        int IReadOnlyCollection<byte>.Count => theBytes.Length;
-
-        IEnumerator<byte> IEnumerable<byte>.GetEnumerator()
-        {
-            return (IEnumerator<byte>)theBytes.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return theBytes.GetEnumerator();
         }
 
         public bool HasSameBeginning(ByteArray other)
