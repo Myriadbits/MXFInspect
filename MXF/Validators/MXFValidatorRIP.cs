@@ -57,11 +57,13 @@ namespace Myriadbits.MXF
                 this.Description = "Validating partitions";
 
                 MXFRIP rip = this.File.GetRIP();
-                int ripEntryCount = rip.Children.Count;
-                int partitionCount = this.File.GetPartitions().Count();
 
                 if (rip != null)
                 {
+                    int ripEntryCount = rip.Children.Count;
+                    int partitionCount = this.File.GetPartitions().Count();
+
+
                     retval.Add(new MXFValidationResult
                     {
                         Category = CATEGORY_NAME,
