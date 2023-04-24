@@ -23,7 +23,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Myriadbits.MXF.Identifiers
 {
@@ -55,7 +54,7 @@ namespace Myriadbits.MXF.Identifiers
         [Category(CATEGORYNAME)]
         [Description("Unique identification of the particular item within the context of the UL Designator")]
         [TypeConverter(typeof(ByteArrayConverter))]
-        public ReadOnlyMemory<byte> ItemDesignator { get; private set; }
+        public byte[] ItemDesignator { get; private set; }
         #endregion
 
         [Category(CATEGORYNAME)]
@@ -78,9 +77,9 @@ namespace Myriadbits.MXF.Identifiers
 
             StructureDesignator = this[6];
             VersionNumber = this[7];
-            ItemDesignator = new ReadOnlyMemory<byte>(bytes, 8, 8);
+            ItemDesignator = new byte[] { this[8], this[9], this[10], this[11], this[12], this[13], this[14], this[15] };
 
-            //SMPTEInformation = SMPTERegisters.GetULDescription(this);
+            SMPTEInformation = SMPTERegisters.GetULDescription(this);
             Name = SMPTEInformation?.Name;
         }
 
