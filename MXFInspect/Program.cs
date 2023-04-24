@@ -40,9 +40,9 @@ namespace Myriadbits.MXFInspect
         static void Main()
         {
             var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
-            var path = Path.GetDirectoryName(configFile);
-            string txtLogFile = Path.Combine(path, "MXFInspect_log_.txt");
-            string jsonLogFile = Path.Combine(path, "MXFInspect_log_.json");
+            var logPath = Path.GetDirectoryName(configFile);
+            string txtLogFile = Path.Combine(logPath, "MXFInspect_log_.txt");
+            string jsonLogFile = Path.Combine(logPath, "MXFInspect_log_.json");
 
             using var log = new LoggerConfiguration()
             .MinimumLevel.Verbose()
@@ -61,11 +61,11 @@ namespace Myriadbits.MXFInspect
             .CreateLogger();
 
             Log.Logger = log;
-
             Log.ForContext(typeof(Program)).Information($"Application started from '{Application.ExecutablePath}'");
             Log.ForContext(typeof(Program)).Information($"Application Version: {Application.ProductVersion}");
-            Log.ForContext(typeof(Program)).Information($"Operating System: {System.Environment.OSVersion}");
-            Log.ForContext(typeof(Program)).Information($"Current Username: {System.Environment.UserName}, Computer Name: {System.Environment.MachineName}");
+            Log.ForContext(typeof(Program)).Information($"Operating System: {Environment.OSVersion}");
+            Log.ForContext(typeof(Program)).Information($"Current Username: {Environment.UserName}, Computer Name: {Environment.MachineName}");
+            Log.ForContext(typeof(Program)).Information($"Log path: '{logPath}'");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
