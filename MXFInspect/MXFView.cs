@@ -171,6 +171,14 @@ namespace Myriadbits.MXFInspect
                 // TODO: really needed?
                 prgForm.Close();
                 await progressFormTask;
+
+                if (cts.IsCancellationRequested)
+                {
+                    Log.ForContext<MXFView>().Warning($"File opening aborted by user.");
+                    this.ParentMainForm.SetActivityText("File opening aborted by user");
+                    this.Close();
+                }
+                
                 ParentMainForm.EnableUI(true);
 
                 if (this.File?.ParsingExceptions.Any() ?? false)

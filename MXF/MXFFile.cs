@@ -46,11 +46,16 @@ namespace Myriadbits.MXF
     /// </summary>
     public class MXFFile : MXFObject
     {
+        private const int MIN_PARSER_PERCENTAGE = 12;
+        private const int MAX_PARSER_PERCENTAGE = 65;
+        private const int MIN_LOCALTAG_PERCENTAGE = 70;
+        private const int MAX_LOCALTAG_PERCENTAGE = 88;
+        private const int REFERENCE_PERCENTAGE = 90;
+        private const int LOGICALTREE_PERCENTAGE = 97;
+
         private List<MXFValidationResult> validationResults = new List<MXFValidationResult>();
         
         public FileInfo File { get; }
-
-        public MXFRIP RIP { get; set; }
 
         public IReadOnlyList<MXFValidationResult> ValidationResults
         {
@@ -144,9 +149,9 @@ namespace Myriadbits.MXF
                         if (currentPercentage > previousPercentage)
                         {
                             // TODO really need to check this?
-                            if (currentPercentage <= 100)
+                            if (currentPercentage < 100)
                             {
-                                int overallPercentage = 12 + currentPercentage * (65 - 12) / 100;
+                                int overallPercentage = MIN_PARSER_PERCENTAGE + currentPercentage * (MAX_PARSER_PERCENTAGE - MIN_PARSER_PERCENTAGE) / 100;
                                 overallProgress?.Report(new TaskReport(overallPercentage, "Reading KLV stream"));
                                 singleProgress?.Report(new TaskReport(currentPercentage, "Parsing packs..."));
                                 previousPercentage = currentPercentage;
@@ -159,22 +164,27 @@ namespace Myriadbits.MXF
                     Log.ForContext<MXFFile>().Information($"Finished parsing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
 
                     // Now process the pack list (partition packs, treat special cases)
-                    overallProgress?.Report(new TaskReport(65, "Process packs"));
+                    overallProgress?.Report(new TaskReport(MAX_PARSER_PERCENTAGE, "Process packs"));
+                    sw.Restart();
                     ProcessAndAttachPacks(packList);
+                    Log.ForContext<MXFFile>().Information($"Finished processing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
 
                     // Reparse all local tags, as now we know the primerpackage aliases
-                    ResolveAndReadLocalTags();
+                    sw.Restart();
+                    overallProgress?.Report(new TaskReport(MIN_LOCALTAG_PERCENTAGE, "Resolving tags"));
+                    ResolveAndReadLocalTags(overallProgress, singleProgress, ct);
+                    Log.ForContext<MXFFile>().Information($"Finished resolving local tags in {sw.ElapsedMilliseconds} ms");
 
-                    overallProgress?.Report(new TaskReport(73, "Updating tree"));
+                    overallProgress?.Report(new TaskReport(MAX_LOCALTAG_PERCENTAGE, "Updating tree"));
 
                     // Resolve the references
                     sw.Restart();
-                    overallProgress?.Report(new TaskReport(81, "Resolving references"));
+                    overallProgress?.Report(new TaskReport(REFERENCE_PERCENTAGE, "Resolving references"));
                     int numOfResolved = ResolveReferences();
                     Log.ForContext<MXFFile>().Information($"{numOfResolved} references resolved in {sw.ElapsedMilliseconds} ms");
 
                     // Create the logical tree
-                    overallProgress?.Report(new TaskReport(95, "Creating Logical tree"));
+                    overallProgress?.Report(new TaskReport(LOGICALTREE_PERCENTAGE, "Creating Logical tree"));
                     sw.Restart();
                     CreateLogicalTree();
                     Log.ForContext<MXFFile>().Information($"Logical tree created in {sw.ElapsedMilliseconds} ms");
@@ -369,19 +379,59 @@ namespace Myriadbits.MXF
             }
         }
 
-        private void ResolveAndReadLocalTags()
+        private void ResolveAndReadLocalTags(IProgress<TaskReport> overallProgress = null, IProgress<TaskReport> singleProgress = null, CancellationToken ct = default)
         {
-            var localSetList = this.Descendants().OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any());
+            int currentPercentage = 0;
+            int previousPercentage = 0;
 
-            foreach (var ls in localSetList.ToList())
+            var localSetList = this.Descendants().OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any());
+            int localSetListCount = localSetList.Count();
+            
+            var collection = localSetList.ToList();
+
+            for (int index = 0; index < collection.Count; index++)
             {
+                var ls = collection[index];
+
                 // link local tag keys to primer entry keys
+                // TODO do this just once!
                 ls.LookUpLocalTagKeys();
+
+                ct.ThrowIfCancellationRequested();
 
                 // now parse tags
                 ls.ReadLocalTagValues();
+
+                // update progress
+                currentPercentage = (int)(index * 100.0 / localSetListCount);
+                if (currentPercentage > previousPercentage)
+                {
+                    // TODO really need to check this?
+                    if (currentPercentage < 100)
+                    {
+                        int overallPercentage = MIN_LOCALTAG_PERCENTAGE + currentPercentage * (MAX_LOCALTAG_PERCENTAGE - MIN_LOCALTAG_PERCENTAGE) / 100;
+                        overallProgress?.Report(new TaskReport(overallPercentage, "Resolving tags"));
+                        singleProgress?.Report(new TaskReport(currentPercentage, $"Resolving tag {index}/{localSetListCount}"));
+                        previousPercentage = currentPercentage;
+                    }
+                }
             }
-        }
+
+            //foreach (var ls in localSetList.ToList())
+            //{
+            //    // link local tag keys to primer entry keys
+            //    // TODO do this just once!
+            //    ls.LookUpLocalTagKeys();
+
+            //    // now parse tags
+            //    ls.ReadLocalTagValues();
+
+            //    // Only report progress when the percentage has changed
+
+
+                //    //}
+                //}
+            }
 
         /// <summary>
         /// Create the logical view (starting with the preface)
