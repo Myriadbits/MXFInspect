@@ -54,7 +54,7 @@ namespace Myriadbits.MXF
         private const int LOGICALTREE_PERCENTAGE = 97;
 
         private List<MXFValidationResult> validationResults = new List<MXFValidationResult>();
-        
+
         public FileInfo File { get; }
 
         public IReadOnlyList<MXFValidationResult> ValidationResults
@@ -84,106 +84,37 @@ namespace Myriadbits.MXF
             var result = await Task.Run(() =>
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                int currentPercentage = 0;
-                int previousPercentage = 0;
 
                 using (var fileStream = new FileStream(File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240))
                 {
-                    // Parse Packs 
-                    MXFPackParser parser = new MXFPackParser(fileStream);
-                    List<MXFObject> packList = new List<MXFObject>();
-                    overallProgress?.Report(new TaskReport(0, "Reading KLV stream"));
-                    while (parser.HasNext())
-                    {
-                        try
-                        {
-                            var pack = parser.GetNext();
-                            packList.Add(pack);
-                            ct.ThrowIfCancellationRequested();
-                        }
-                        // TODO be more selective with the exception
-                        catch (KLVKeyParsingException ex)
-                        {
-                            long lastgoodPos = 0;
-                            // klv stream error
-                            if (parser.Current != null)
-                            {
-                                lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
-                            }
+                    // Parse file and obtain a list of mxf packs
 
-                            // reposition klvstream
-
-                            if (!parser.SeekForNextPotentialKey(out long newOffset))
-                            {
-                                // we have reached end of file, exceptional case so handle it
-                                // TODO handle if exceeding 65536 bytes
-                                throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.");
-                            }
-                            else
-                            {
-                                if (packList.Any())
-                                {
-                                    packList.Add(new MXFNamedObject("Non-KLV Data", lastgoodPos, newOffset - lastgoodPos));
-                                }
-                                else
-                                {
-                                    this.AddChild(new MXFNamedObject("Run-In", lastgoodPos, newOffset - lastgoodPos));
-                                }
-                            }
-
-                            continue;
-                        }
-                        catch (KLVStreamException ex)
-                        {
-                            Log.ForContext<MXFFile>().Error(ex, $"Exception occured during parsing of MXF pack.");
-                            this.ParsingExceptions.Add(ex);
-                            break;
-                        }
-                        catch (Exception ex) when (ex is not OperationCanceledException)
-                        {
-                            // TODO log error
-                        }
-
-                        // Only report progress when the percentage has changed
-                        currentPercentage = (int)((parser.Current.Offset + parser.Current.TotalLength) * 100 / this.File.Length);
-                        if (currentPercentage > previousPercentage)
-                        {
-                            // TODO really need to check this?
-                            if (currentPercentage < 100)
-                            {
-                                int overallPercentage = MIN_PARSER_PERCENTAGE + currentPercentage * (MAX_PARSER_PERCENTAGE - MIN_PARSER_PERCENTAGE) / 100;
-                                overallProgress?.Report(new TaskReport(overallPercentage, "Reading KLV stream"));
-                                singleProgress?.Report(new TaskReport(currentPercentage, "Parsing packs..."));
-                                previousPercentage = currentPercentage;
-                            }
-                        }
-                    }
-
-                    this.ParsingExceptions.AddRange(parser.Exceptions);
-
-                    Log.ForContext<MXFFile>().Information($"Finished parsing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
+                    List<MXFObject> mxfPacks = ParseMXFPacks(fileStream, overallProgress, singleProgress, ct);
+                    Log.ForContext<MXFFile>().Information($"Finished parsing MXF packs [{mxfPacks.Count} items] in {sw.ElapsedMilliseconds} ms");
 
                     // Now process the pack list (partition packs, treat special cases)
+
                     overallProgress?.Report(new TaskReport(MAX_PARSER_PERCENTAGE, "Process packs"));
                     sw.Restart();
-                    ProcessAndAttachPacks(packList);
-                    Log.ForContext<MXFFile>().Information($"Finished processing MXF packs [{packList.Count} items] in {sw.ElapsedMilliseconds} ms");
+                    PartitionAndPostProcessMXFPacks(mxfPacks);
+                    Log.ForContext<MXFFile>().Information($"Finished processing MXF packs [{mxfPacks.Count} items] in {sw.ElapsedMilliseconds} ms");
 
                     // Reparse all local tags, as now we know the primerpackage aliases
+
                     sw.Restart();
                     overallProgress?.Report(new TaskReport(MIN_LOCALTAG_PERCENTAGE, "Resolving tags"));
                     ResolveAndReadLocalTags(overallProgress, singleProgress, ct);
                     Log.ForContext<MXFFile>().Information($"Finished resolving local tags in {sw.ElapsedMilliseconds} ms");
 
-                    overallProgress?.Report(new TaskReport(MAX_LOCALTAG_PERCENTAGE, "Updating tree"));
-
                     // Resolve the references
+
                     sw.Restart();
                     overallProgress?.Report(new TaskReport(REFERENCE_PERCENTAGE, "Resolving references"));
                     int numOfResolved = ResolveReferences();
                     Log.ForContext<MXFFile>().Information($"{numOfResolved} references resolved in {sw.ElapsedMilliseconds} ms");
 
                     // Create the logical tree
+
                     overallProgress?.Report(new TaskReport(LOGICALTREE_PERCENTAGE, "Creating Logical tree"));
                     sw.Restart();
                     CreateLogicalTree();
@@ -295,7 +226,85 @@ namespace Myriadbits.MXF
             return results;
         }
 
-        private void ProcessAndAttachPacks(IEnumerable<MXFObject> packList)
+        private List<MXFObject> ParseMXFPacks(FileStream fileStream, IProgress<TaskReport> overallProgress, IProgress<TaskReport> singleProgress, CancellationToken ct = default)
+        {
+            int currentPercentage;
+            int previousPercentage = 0;
+            MXFPackParser parser = new MXFPackParser(fileStream);
+            List<MXFObject> mxfPacks = new List<MXFObject>();
+            overallProgress?.Report(new TaskReport(0, "Reading KLV stream"));
+            while (parser.HasNext())
+            {
+                try
+                {
+                    var pack = parser.GetNext();
+                    mxfPacks.Add(pack);
+                    ct.ThrowIfCancellationRequested();
+                }
+                // TODO be more selective with the exception
+                catch (KLVKeyParsingException ex)
+                {
+                    long lastgoodPos = 0;
+                    // klv stream error
+                    if (parser.Current != null)
+                    {
+                        lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
+                    }
+
+                    // reposition klvstream
+
+                    if (!parser.SeekForNextPotentialKey(out long newOffset))
+                    {
+                        // we have reached end of file, exceptional case so handle it
+                        // TODO handle if exceeding 65536 bytes
+                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.");
+                    }
+                    else
+                    {
+                        if (mxfPacks.Any())
+                        {
+                            mxfPacks.Add(new MXFNamedObject("Non-KLV Data", lastgoodPos, newOffset - lastgoodPos));
+                        }
+                        else
+                        {
+                            this.AddChild(new MXFNamedObject("Run-In", lastgoodPos, newOffset - lastgoodPos));
+                        }
+                    }
+
+                    continue;
+                }
+                catch (KLVStreamException ex)
+                {
+                    Log.ForContext<MXFFile>().Error(ex, $"Exception occured during parsing of MXF pack.");
+                    this.ParsingExceptions.Add(ex);
+                    break;
+                }
+                catch (Exception ex) when (ex is not OperationCanceledException)
+                {
+                    // TODO log error
+                }
+
+                // Only report progress when the percentage has changed
+                currentPercentage = (int)((parser.Current.Offset + parser.Current.TotalLength) * 100 / this.File.Length);
+                if (currentPercentage > previousPercentage)
+                {
+                    // TODO really need to check this?
+                    if (currentPercentage < 100)
+                    {
+                        int overallPercentage = MIN_PARSER_PERCENTAGE + currentPercentage * (MAX_PARSER_PERCENTAGE - MIN_PARSER_PERCENTAGE) / 100;
+                        overallProgress?.Report(new TaskReport(overallPercentage, "Reading KLV stream"));
+                        singleProgress?.Report(new TaskReport(currentPercentage, "Parsing packs..."));
+                        previousPercentage = currentPercentage;
+                    }
+                }
+            }
+
+            // TODO are parsing errors of localtag parser also included?
+            this.ParsingExceptions.AddRange(parser.Exceptions);
+            return mxfPacks;
+        }
+
+        private void PartitionAndPostProcessMXFPacks(IEnumerable<MXFObject> packList)
         {
             MXFPartition currentPartition = null;
             int partitionNumber = 0;
@@ -386,7 +395,7 @@ namespace Myriadbits.MXF
 
             var localSetList = this.Descendants().OfType<MXFLocalSet>().Where(ls => ls.Children.OfType<MXFLocalTag>().Any());
             int localSetListCount = localSetList.Count();
-            
+
             var collection = localSetList.ToList();
 
             for (int index = 0; index < collection.Count; index++)
@@ -416,26 +425,8 @@ namespace Myriadbits.MXF
                     }
                 }
             }
+        }
 
-            //foreach (var ls in localSetList.ToList())
-            //{
-            //    // link local tag keys to primer entry keys
-            //    // TODO do this just once!
-            //    ls.LookUpLocalTagKeys();
-
-            //    // now parse tags
-            //    ls.ReadLocalTagValues();
-
-            //    // Only report progress when the percentage has changed
-
-
-                //    //}
-                //}
-            }
-
-        /// <summary>
-        /// Create the logical view (starting with the preface)
-        /// </summary>
         private void CreateLogicalTree()
         {
             if (this.LogicalTreeRoot == null)
@@ -449,10 +440,6 @@ namespace Myriadbits.MXF
             this.LogicalTreeRoot.AddChildren(orderedChildren);
         }
 
-        /// <summary>
-        /// Add all children (recursively)
-        /// </summary>
-        /// <param name="lObj"></param>
         private MXFLogicalObject LogicalAddChilds(MXFLogicalObject lObj)
         {
             // Check properties for reference
