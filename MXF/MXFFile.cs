@@ -336,6 +336,10 @@ namespace Myriadbits.MXF
                         {
                             currentPartition.AddChild(obj);
                         }
+                        else
+                        {
+                            this.AddChild(obj);
+                        }
                         break;
 
                     case MXFSystemMetaDataPack si:

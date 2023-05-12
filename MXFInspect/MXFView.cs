@@ -178,7 +178,7 @@ namespace Myriadbits.MXFInspect
                     this.ParentMainForm.SetActivityText("File opening aborted by user");
                     this.Close();
                 }
-                
+
                 ParentMainForm.EnableUI(true);
 
                 if (this.File?.ParsingExceptions.Any() ?? false)
@@ -197,7 +197,14 @@ namespace Myriadbits.MXFInspect
             try
             {
                 this.tlvPhysical.FillTree(this.File.Children.OrderBy(c => c.Offset));
-                this.tlvPhysical.RevealAndSelectObject(this.File.GetPartitions().First());
+                if (this.File.GetPartitions().Any())
+                {
+                    this.tlvPhysical.RevealAndSelectObject(this.File.GetPartitions().First());
+                }
+                else
+                {
+                    this.tlvPhysical.RevealAndSelectObject(this.File.Children.First());
+                }
                 this.tlvPhysical.HideFillers(this.FillerHidden);
                 this.tlvPhysical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
