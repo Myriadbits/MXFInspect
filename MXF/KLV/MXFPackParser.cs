@@ -58,7 +58,7 @@ namespace Myriadbits.MXF
             catch (Exception ex)
             {
                 Log.ForContext(typeof(MXFPackParser)).Error($"Error occured while parsing {pack}: {@ex}", pack);
-                exceptions.Add(ex);
+                pack = new MXFUnparseablePack(pack, ex);
             }
             finally
             {

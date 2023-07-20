@@ -201,10 +201,9 @@ namespace Myriadbits.MXFInspect
             {
                 return Properties.Settings.Default.Color_MetaData;
             }
-            else if (false)
+            else if (obj is MXFUnparseablePack)
             {
-                //case MXFObjectType.Special:
-                //    return Properties.Settings.Default.Color_Special;
+                return Properties.Settings.Default.Color_Special;
             }
             else
             {

@@ -85,7 +85,7 @@ namespace Myriadbits.MXF
 
         public static bool IsMetadataLike(this MXFObject obj)
         {
-            return obj is MXFMetadataBaseclass or MXFPackageMetaData or MXFPrimerPack
+            return obj is MXFMetadataBaseclass or MXFPackageMetaData or MXFPrimerPack or MXFLocalSet
                 || (obj is IResolvable r)
                 || obj.Ancestors().Any(a => a is MXFMetadataBaseclass or MXFPackageMetaData or MXFPrimerPack);
         }

@@ -124,13 +124,17 @@ namespace Myriadbits.MXFInspect
         [SupportedOSPlatform("windows")]
 		private void SetFontFormat(FormatCellEventArgs e, MXFObject obj)
         {
-            if (obj is ILazyLoadable loadable && !loadable.IsLoaded)
+            switch (obj)
             {
-                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Bold);
-            }
-            else
-            {
-                e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
+                case ILazyLoadable l when !l.IsLoaded:
+                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Bold);
+                    break;
+                case MXFUnparseablePack:
+                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Bold);
+                    break;
+                default:
+                    e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Regular);
+                    break;
             }
         }
 
