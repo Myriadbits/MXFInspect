@@ -39,8 +39,8 @@ namespace Myriadbits.MXFInspect
         [STAThread]
         static void Main()
         {
-            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
-            var logPath = Path.GetDirectoryName(configFile);
+            var configFilePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            var logPath = Path.GetDirectoryName(configFilePath);
             string txtLogFile = Path.Combine(logPath, "MXFInspect_log_.txt");
             string jsonLogFile = Path.Combine(logPath, "MXFInspect_log_.json");
 
