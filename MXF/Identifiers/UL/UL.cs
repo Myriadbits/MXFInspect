@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF.Identifiers
@@ -30,6 +31,38 @@ namespace Myriadbits.MXF.Identifiers
     {
         private const string CATEGORYNAME = "Key";
         public static readonly byte[] ValidULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
+        private static readonly IReadOnlyDictionary<byte, string> privateOrganizationsIdentifiers = new Dictionary<byte, string>
+        {
+           {0x04,"Avid Technology, Inc." },
+           {0x05,"CNN"},
+           {0x06,"Sony Corporation"},
+           {0x07,"IdeasUnlimited.TV"},
+           {0x08,"IPV Ltd"},
+           {0x09,"Dolby Laboratories Inc."},
+           {0x0a,"Snell &Wilcox"},
+           {0x0b,"Omneon Video Networks"},
+           {0x0c,"Ascent Media Group, Inc."},
+           {0x0d,"Quantel Ltd"},
+           {0x0e,"Panasonic"},
+           {0x0f,"Grass Valley, Inc."},
+           {0x10,"Doremi Labs, Inc."},
+           {0x11,"EVS Broadcast Equipment"},
+           {0x12,"Turner Broadcasting System, Inc."},
+           {0x13,"NL Technology, LLC"},
+           {0x14,"Harris Corporation"},
+           {0x15,"Canon, Inc."},
+           {0x16,"D-BOX Technologies"},
+           {0x17,"ARRI"},
+           {0x18,"JVC"},
+           {0x19,"3ality Technica"},
+           {0x1a,"NHK"},
+           {0x1b,"HBO"},
+           {0x1d,"DTS, Inc."},
+           {0x1e,"FLIR Systems, Inc."},
+           {0x1f,"Barco"},
+           {0x20,"Apple Inc."},
+           {0x21,"Fraunhofer"},
+        };
 
         #region properties
 
@@ -81,6 +114,18 @@ namespace Myriadbits.MXF.Identifiers
 
             SMPTEInformation = SMPTERegisters.GetULDescription(this);
             Name = SMPTEInformation?.Name;
+
+            if (this.IdentifiesPrivatelyRegisteredUL())
+            {
+                if (privateOrganizationsIdentifiers.TryGetValue(this[9], out string organization))
+                {
+                    Name = $"Privately Registered UL ({organization})";
+                }
+                else
+                {
+                    Name = $"Privately Registered UL";
+                }
+            }
         }
 
         public static bool HasValidULPrefix(params byte[] bytes)

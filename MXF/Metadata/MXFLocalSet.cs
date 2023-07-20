@@ -152,7 +152,15 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return $"{this.Key} [len {this.Length.Value}]";
+            if (this.Key.Name == null)
+            {
+                return $"{this.Key} [len {this.Length.Value}]";
+            }
+            else
+            {
+                return $"{this.Key.Name} [len {this.Length.Value}]";
+            }
+
         }
 
         private MXFLocalTagParser InitializeLocalTagParser(SubStream ss, long valueOffset)
