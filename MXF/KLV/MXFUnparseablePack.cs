@@ -45,7 +45,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return $"ERROR !!! {Key.SMPTEInformation?.Name ?? Key.Name} [len {this.Length.Value}]";
+            return $"Unparseable Pack - {Key.SMPTEInformation?.Name ?? Key.Name} [len {this.Length.Value}]";
         }
     }
 }
