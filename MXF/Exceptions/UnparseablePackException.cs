@@ -20,32 +20,23 @@
 // For more information, contact me at: info@myriadbits.com
 //
 #endregion
-
-using Myriadbits.MXF.Utils;
 using System;
-using System.ComponentModel;
-using static Myriadbits.MXF.Exceptions.ExceptionExtensions;
 
-namespace Myriadbits.MXF
+namespace Myriadbits.MXF.Exceptions
 {
-    [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class MXFUnparseablePack : MXFPack
+    public class UnparseablePackException : KLVParsingException
     {
+        public MXFPack Pack { get; }
 
-        private const string CATEGORYNAME = "Unparseable MXFPack";
-        private const int CATEGORYPOS = 2;
+        // TODO save streamPosition in order to localize the exception better
+        // needs a new initialization concept as the streamPos cannot be saved/retrieved,
+        // since the ctor never completes because of the raised exception
+        public long StreamPosition { get; }
 
-        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        public ExceptionInfo ExceptionInfo { get; private set; }
-       
-        public MXFUnparseablePack(MXFPack pack, Exception ex) : base(pack)
+        public UnparseablePackException(MXFPack pack, Exception innerException) : base(innerException)
         {
-            ExceptionInfo = new ExceptionInfo(ex, true, true);
-        }
-
-        public override string ToString()
-        {
-            return $"Unparseable Pack - {Key.SMPTEInformation?.Name ?? Key.Name} [len {this.Length.Value}]";
+            Pack = pack;
+            Offset = pack.Offset;
         }
     }
 }

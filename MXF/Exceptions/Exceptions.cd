@@ -21,11 +21,12 @@
       <FileName>Exceptions\KLVParsingException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.Exceptions.KLVStreamException">
+  <Class Name="Myriadbits.MXF.Exceptions.UnparseablePackException">
     <Position X="7.75" Y="3.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Exceptions\KLVStreamException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\UnparseablePackException.cs</FileName>
+      <NewMemberFileName>Exceptions\KLVStreamException.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.Exceptions.LocalTagParsingException">

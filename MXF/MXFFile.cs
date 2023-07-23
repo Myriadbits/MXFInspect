@@ -90,8 +90,13 @@ namespace Myriadbits.MXF
                     // Parse file and obtain a list of mxf packs
 
                     List<MXFObject> mxfPacks = ParseMXFPacks(fileStream, overallProgress, singleProgress, ct);
+                    if (mxfPacks.OfType<MXFUnparseablePack>().Any())
+                    {
+                        Log.ForContext<MXFFile>().Warning($"Unparseable packs [{mxfPacks.OfType<MXFUnparseablePack>().Count()} items] encountered during parsing");
+                    }
                     Log.ForContext<MXFFile>().Information($"Finished parsing MXF packs [{mxfPacks.Count} items] in {sw.ElapsedMilliseconds} ms");
-
+                    
+                    
                     // Now process the pack list (partition packs, treat special cases)
 
                     overallProgress?.Report(new TaskReport(MAX_PARSER_PERCENTAGE, "Process packs"));

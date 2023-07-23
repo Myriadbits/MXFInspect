@@ -34,8 +34,12 @@ namespace Myriadbits.MXF.Exceptions
         {
             public ExceptionInfo() { }
             public string Type { get; set; }
+
+            [MultiLine()]
             public string Message { get; set; }
             public string Source { get; set; }
+
+            [MultiLine()]
             public string StackTrace { get; set; }
             public ExceptionInfo InnerException { get; set; }
 
@@ -54,6 +58,11 @@ namespace Myriadbits.MXF.Exceptions
                 {
                     InnerException = new ExceptionInfo(exception.InnerException, includeInnerException, includeStackTrace);
                 }
+            }
+
+            public override string ToString()
+            {
+                return Message.ToString();
             }
         }
     }

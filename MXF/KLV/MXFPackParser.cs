@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Serilog;
@@ -28,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
@@ -55,7 +57,15 @@ namespace Myriadbits.MXF
             {
                 pack = MXFPackFactory.CreateStronglyTypedPack(pack);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is TargetInvocationException tiEx)
+            {
+                // Exception raised during ctor via Activator.CreateInstance, therefore unparseable pack
+                Exception innerEx = tiEx.InnerException;
+                pack = new MXFUnparseablePack(pack, innerEx);
+                exceptions.Add(new UnparseablePackException(pack, innerEx));
+                Log.ForContext(typeof(MXFPackParser)).Error($"Error occured while parsing {pack}: {@innerEx}", pack);
+            }
+            catch (Exception ex) 
             {
                 Log.ForContext(typeof(MXFPackParser)).Error($"Error occured while parsing {pack}: {@ex}", pack);
                 pack = new MXFUnparseablePack(pack, ex);
