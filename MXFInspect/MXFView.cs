@@ -21,13 +21,11 @@
 //
 #endregion
 
-using BrightIdeasSoftware;
 using Myriadbits.MXF;
 using Myriadbits.MXF.Exceptions;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -109,7 +107,7 @@ namespace Myriadbits.MXFInspect
             this.ParentMainForm = this.MdiParent as FormMain;
 
             //ObjectListView.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-            this.Text = this.FileInfo.FullName;
+            this.Text = this.FileInfo.FullName.Ellipsis(80);
 
             this.MinimizeBox = false;
             this.MaximizeBox = false;
@@ -183,7 +181,7 @@ namespace Myriadbits.MXFInspect
 
                 if (this.File?.ParsingExceptions.Any() ?? false)
                 {
-                    MessageBox.Show("Error(s) occured during parsing of the file. See the log for more information", "Parsing Error(s)");
+                    MessageBox.Show("Error(s) occured during parsing of the file. See the log (Settings -> Logging...) for more information", "Parsing Error(s)");
                 }
             }
         }

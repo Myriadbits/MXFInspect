@@ -22,8 +22,13 @@
 #endregion
 
 using Myriadbits.MXFInspect.Properties;
+using Serilog;
+using Serilog.Events;
 using System;
+using System.Net.NetworkInformation;
+using System.Reflection.Emit;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Myriadbits.MXFInspect
 {
@@ -32,11 +37,27 @@ namespace Myriadbits.MXFInspect
         public FormSettings()
         {
             InitializeComponent();
+            cmbLogLevel.DataSource = Enum.GetValues(typeof(LogEventLevel));
         }
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
             LoadSettings();
+            lnkLogPath.Text = Program.LogDirectoryPath.Ellipsis(60);
+            System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
+            toolTip.SetToolTip(lnkLogPath, Program.LogDirectoryPath);
+        }
+
+        private void VisitLogPath()
+        {
+            // Change the color of the link text by setting LinkVisited
+            // to true.
+            lnkLogPath.LinkVisited = true;
+
+            string argument = $"/root, \"{Program.LogDirectoryPath}\\";
+
+            // Open Windows explorer with log file path
+            System.Diagnostics.Process.Start("explorer.exe", argument);
         }
 
         private void LoadSettings()
@@ -60,7 +81,7 @@ namespace Myriadbits.MXFInspect
                 case 5000:
                     this.cmbThreshold.SelectedIndex = 4;
                     break;
-                case 10*1000:
+                case 10 * 1000:
                     this.cmbThreshold.SelectedIndex = 5;
                     break;
                 case -1:
@@ -82,6 +103,16 @@ namespace Myriadbits.MXFInspect
             this.pbColorSpecial.BackColor = settings.Color_Special;
             this.chkPartialLoadMsg.Checked = settings.PartialLoadWarning;
             this.chkOffsetAsHex.Checked = settings.ShowOffsetAsHex;
+
+            if (Enum.TryParse(settings.LogLevel, out LogEventLevel logLevel))
+            {
+                this.cmbLogLevel.SelectedItem = logLevel;
+            }
+            else
+            {
+                Log.ForContext<FormSettings>().Error($"Unable to load logging level from settings file.");
+            }
+
         }
 
         private void ChangeColor(PictureBox pb)
@@ -139,6 +170,16 @@ namespace Myriadbits.MXFInspect
             settings.PartialLoadWarning = this.chkPartialLoadMsg.Checked;
             settings.ShowOffsetAsHex = this.chkOffsetAsHex.Checked;
 
+
+            if (Enum.TryParse(cmbLogLevel.SelectedValue.ToString(), out LogEventLevel logLevel))
+            {
+                settings.LogLevel = logLevel.ToString();
+            }
+            else
+            {
+                Log.ForContext<FormSettings>().Error($"Unable to save logging level to settings file.");
+            }
+
             MXFInspect.Properties.Settings.Default.Save();
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
@@ -152,14 +193,21 @@ namespace Myriadbits.MXFInspect
         private void pbColorFiller_Click(object sender, EventArgs e) { ChangeColor(this.pbColorFiller); }
         private void pbColorSpecial_Click(object sender, EventArgs e) { ChangeColor(this.pbColorSpecial); }
         private void pbColorReference_Click(object sender, EventArgs e) { ChangeColor(this.pbColorReference); }
-
         private void btnReset_Click(object sender, EventArgs e)
         {
             MXFInspect.Properties.Settings.Default.Reset();
             LoadSettings();
         }
-
-
-
+        private void lnkLogPath_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                VisitLogPath();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to open link that was clicked.");
+            }
+        }
     }
 }

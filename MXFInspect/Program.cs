@@ -33,16 +33,18 @@ namespace Myriadbits.MXFInspect
 {
     static class Program
     {
+        public static string LogDirectoryPath { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            var configFilePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
-            var logPath = Path.GetDirectoryName(configFilePath);
-            string txtLogFile = Path.Combine(logPath, "MXFInspect_log_.txt");
-            string jsonLogFile = Path.Combine(logPath, "MXFInspect_log_.json");
+            string configFilePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            LogDirectoryPath = Path.GetDirectoryName(configFilePath);
+            string txtLogFilePath = Path.Combine(LogDirectoryPath, "MXFInspect_log_.txt");
+            string jsonLogFilePath = Path.Combine(LogDirectoryPath, "MXFInspect_log_.json");
 
             using var log = new LoggerConfiguration()
             .MinimumLevel.Verbose()
@@ -51,8 +53,8 @@ namespace Myriadbits.MXFInspect
             .Enrich.FromLogContext()
             .Enrich.WithExceptionDetails()
             .WriteTo.Debug(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
-            .WriteTo.File(new JsonFormatter(renderMessage: true), jsonLogFile)
-            .WriteTo.File(txtLogFile,
+            .WriteTo.File(new JsonFormatter(renderMessage: true), jsonLogFilePath)
+            .WriteTo.File(txtLogFilePath,
                     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext}) <{ThreadId}:{ThreadName}> {Message:lj}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day,
                     fileSizeLimitBytes: 80000000)
@@ -65,7 +67,7 @@ namespace Myriadbits.MXFInspect
             Log.ForContext(typeof(Program)).Information($"Application Version: {Application.ProductVersion}");
             Log.ForContext(typeof(Program)).Information($"Operating System: {Environment.OSVersion}");
             Log.ForContext(typeof(Program)).Information($"Current Username: {Environment.UserName}, Computer Name: {Environment.MachineName}");
-            Log.ForContext(typeof(Program)).Information($"Log path: '{logPath}'");
+            Log.ForContext(typeof(Program)).Information($"Log path: '{LogDirectoryPath}'");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
             this.btnOk = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tbcControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.chkOffsetAsHex = new System.Windows.Forms.CheckBox();
             this.chkPartialLoadMsg = new System.Windows.Forms.CheckBox();
@@ -37,9 +37,9 @@
             this.chkShowLines = new System.Windows.Forms.CheckBox();
             this.cmbTopNumber = new System.Windows.Forms.ComboBox();
             this.cmbThreshold = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblNumOfFilesInList = new System.Windows.Forms.Label();
+            this.lblPartialLoad = new System.Windows.Forms.Label();
+            this.tabColors = new System.Windows.Forms.TabPage();
             this.pbColorReference = new System.Windows.Forms.PictureBox();
             this.lblColorSpecial = new System.Windows.Forms.Label();
             this.pbColorSpecial = new System.Windows.Forms.PictureBox();
@@ -54,17 +54,23 @@
             this.lblColorRIP = new System.Windows.Forms.Label();
             this.pbColorIndex = new System.Windows.Forms.PictureBox();
             this.pbColorEssence = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblColorHint = new System.Windows.Forms.Label();
             this.lblColorIndexTable = new System.Windows.Forms.Label();
             this.lblColorEssence = new System.Windows.Forms.Label();
             this.pbColorPartition = new System.Windows.Forms.PictureBox();
             this.lblColorPartition = new System.Windows.Forms.Label();
+            this.tabLogging = new System.Windows.Forms.TabPage();
+            this.lnkLogPath = new System.Windows.Forms.LinkLabel();
+            this.lblLoggingPath = new System.Windows.Forms.Label();
+            this.chkLogJson = new System.Windows.Forms.CheckBox();
+            this.cmbLogLevel = new System.Windows.Forms.ComboBox();
+            this.lblLogLevel = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
+            this.tbcControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabColors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorReference)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorSpecial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorFiller)).BeginInit();
@@ -74,6 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbColorIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorEssence)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorPartition)).BeginInit();
+            this.tabLogging.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOk
@@ -89,19 +96,20 @@
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.bntOk_Click);
             // 
-            // tabControl1
+            // tbcControl
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tbcControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabGeneral);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(15, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(582, 286);
-            this.tabControl1.TabIndex = 8;
+            this.tbcControl.Controls.Add(this.tabGeneral);
+            this.tbcControl.Controls.Add(this.tabColors);
+            this.tbcControl.Controls.Add(this.tabLogging);
+            this.tbcControl.Location = new System.Drawing.Point(15, 15);
+            this.tbcControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbcControl.Name = "tbcControl";
+            this.tbcControl.SelectedIndex = 0;
+            this.tbcControl.Size = new System.Drawing.Size(582, 286);
+            this.tbcControl.TabIndex = 8;
             // 
             // tabGeneral
             // 
@@ -111,8 +119,8 @@
             this.tabGeneral.Controls.Add(this.chkShowLines);
             this.tabGeneral.Controls.Add(this.cmbTopNumber);
             this.tabGeneral.Controls.Add(this.cmbThreshold);
-            this.tabGeneral.Controls.Add(this.label4);
-            this.tabGeneral.Controls.Add(this.label1);
+            this.tabGeneral.Controls.Add(this.lblNumOfFilesInList);
+            this.tabGeneral.Controls.Add(this.lblPartialLoad);
             this.tabGeneral.Location = new System.Drawing.Point(4, 24);
             this.tabGeneral.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabGeneral.Name = "tabGeneral";
@@ -216,58 +224,58 @@
             this.cmbThreshold.Size = new System.Drawing.Size(154, 23);
             this.cmbThreshold.TabIndex = 1;
             // 
-            // label4
+            // lblNumOfFilesInList
             // 
-            this.label4.AutoSize = true;
-            this.label4.Enabled = false;
-            this.label4.Location = new System.Drawing.Point(7, 144);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(209, 15);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Number of files to show in the top list:";
-            this.label4.Visible = false;
+            this.lblNumOfFilesInList.AutoSize = true;
+            this.lblNumOfFilesInList.Enabled = false;
+            this.lblNumOfFilesInList.Location = new System.Drawing.Point(7, 144);
+            this.lblNumOfFilesInList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNumOfFilesInList.Name = "lblNumOfFilesInList";
+            this.lblNumOfFilesInList.Size = new System.Drawing.Size(209, 15);
+            this.lblNumOfFilesInList.TabIndex = 0;
+            this.lblNumOfFilesInList.Text = "Number of files to show in the top list:";
+            this.lblNumOfFilesInList.Visible = false;
             // 
-            // label1
+            // lblPartialLoad
             // 
-            this.label1.AutoSize = true;
-            this.label1.Enabled = false;
-            this.label1.Location = new System.Drawing.Point(7, 14);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Partial load threshold";
+            this.lblPartialLoad.AutoSize = true;
+            this.lblPartialLoad.Enabled = false;
+            this.lblPartialLoad.Location = new System.Drawing.Point(7, 14);
+            this.lblPartialLoad.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPartialLoad.Name = "lblPartialLoad";
+            this.lblPartialLoad.Size = new System.Drawing.Size(119, 15);
+            this.lblPartialLoad.TabIndex = 0;
+            this.lblPartialLoad.Text = "Partial load threshold";
             // 
-            // tabPage2
+            // tabColors
             // 
-            this.tabPage2.Controls.Add(this.pbColorReference);
-            this.tabPage2.Controls.Add(this.lblColorSpecial);
-            this.tabPage2.Controls.Add(this.pbColorSpecial);
-            this.tabPage2.Controls.Add(this.lblColorReference);
-            this.tabPage2.Controls.Add(this.pbColorFiller);
-            this.tabPage2.Controls.Add(this.lblColorFiller);
-            this.tabPage2.Controls.Add(this.pbColorMeta);
-            this.tabPage2.Controls.Add(this.lblColorMetaData);
-            this.tabPage2.Controls.Add(this.pbColorSystemItem);
-            this.tabPage2.Controls.Add(this.lblColorSystemItem);
-            this.tabPage2.Controls.Add(this.pbColorRIP);
-            this.tabPage2.Controls.Add(this.lblColorRIP);
-            this.tabPage2.Controls.Add(this.pbColorIndex);
-            this.tabPage2.Controls.Add(this.pbColorEssence);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.lblColorIndexTable);
-            this.tabPage2.Controls.Add(this.lblColorEssence);
-            this.tabPage2.Controls.Add(this.pbColorPartition);
-            this.tabPage2.Controls.Add(this.lblColorPartition);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabPage2.Size = new System.Drawing.Size(574, 258);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Colors";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabColors.Controls.Add(this.pbColorReference);
+            this.tabColors.Controls.Add(this.lblColorSpecial);
+            this.tabColors.Controls.Add(this.pbColorSpecial);
+            this.tabColors.Controls.Add(this.lblColorReference);
+            this.tabColors.Controls.Add(this.pbColorFiller);
+            this.tabColors.Controls.Add(this.lblColorFiller);
+            this.tabColors.Controls.Add(this.pbColorMeta);
+            this.tabColors.Controls.Add(this.lblColorMetaData);
+            this.tabColors.Controls.Add(this.pbColorSystemItem);
+            this.tabColors.Controls.Add(this.lblColorSystemItem);
+            this.tabColors.Controls.Add(this.pbColorRIP);
+            this.tabColors.Controls.Add(this.lblColorRIP);
+            this.tabColors.Controls.Add(this.pbColorIndex);
+            this.tabColors.Controls.Add(this.pbColorEssence);
+            this.tabColors.Controls.Add(this.lblColorHint);
+            this.tabColors.Controls.Add(this.lblColorIndexTable);
+            this.tabColors.Controls.Add(this.lblColorEssence);
+            this.tabColors.Controls.Add(this.pbColorPartition);
+            this.tabColors.Controls.Add(this.lblColorPartition);
+            this.tabColors.Location = new System.Drawing.Point(4, 24);
+            this.tabColors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabColors.Name = "tabColors";
+            this.tabColors.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabColors.Size = new System.Drawing.Size(574, 258);
+            this.tabColors.TabIndex = 1;
+            this.tabColors.Text = "Colors";
+            this.tabColors.UseVisualStyleBackColor = true;
             // 
             // pbColorReference
             // 
@@ -425,16 +433,16 @@
             this.pbColorEssence.TabStop = false;
             this.pbColorEssence.Click += new System.EventHandler(this.pbColorEssence_Click);
             // 
-            // label7
+            // lblColorHint
             // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label7.Location = new System.Drawing.Point(11, 216);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(216, 15);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Click on the colors to change the colors";
+            this.lblColorHint.AutoSize = true;
+            this.lblColorHint.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lblColorHint.Location = new System.Drawing.Point(11, 216);
+            this.lblColorHint.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblColorHint.Name = "lblColorHint";
+            this.lblColorHint.Size = new System.Drawing.Size(216, 15);
+            this.lblColorHint.TabIndex = 2;
+            this.lblColorHint.Text = "Click on the colors to change the colors";
             // 
             // lblColorIndexTable
             // 
@@ -478,6 +486,88 @@
             this.lblColorPartition.TabIndex = 0;
             this.lblColorPartition.Text = "Partition color";
             // 
+            // tabLogging
+            // 
+            this.tabLogging.Controls.Add(this.lnkLogPath);
+            this.tabLogging.Controls.Add(this.lblLoggingPath);
+            this.tabLogging.Controls.Add(this.chkLogJson);
+            this.tabLogging.Controls.Add(this.cmbLogLevel);
+            this.tabLogging.Controls.Add(this.lblLogLevel);
+            this.tabLogging.Location = new System.Drawing.Point(4, 24);
+            this.tabLogging.Name = "tabLogging";
+            this.tabLogging.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLogging.Size = new System.Drawing.Size(574, 258);
+            this.tabLogging.TabIndex = 2;
+            this.tabLogging.Text = "Logging";
+            this.tabLogging.UseVisualStyleBackColor = true;
+            // 
+            // lnkLogPath
+            // 
+            this.lnkLogPath.AutoSize = true;
+            this.lnkLogPath.Location = new System.Drawing.Point(109, 26);
+            this.lnkLogPath.Name = "lnkLogPath";
+            this.lnkLogPath.Size = new System.Drawing.Size(60, 15);
+            this.lnkLogPath.TabIndex = 8;
+            this.lnkLogPath.TabStop = true;
+            this.lnkLogPath.Text = "linkLabel1";
+            this.lnkLogPath.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLogPath_LinkClicked);
+            // 
+            // lblLoggingPath
+            // 
+            this.lblLoggingPath.AutoSize = true;
+            this.lblLoggingPath.Location = new System.Drawing.Point(20, 26);
+            this.lblLoggingPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblLoggingPath.Name = "lblLoggingPath";
+            this.lblLoggingPath.Size = new System.Drawing.Size(78, 15);
+            this.lblLoggingPath.TabIndex = 7;
+            this.lblLoggingPath.Text = "Logging Path";
+            // 
+            // chkLogJson
+            // 
+            this.chkLogJson.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkLogJson.Location = new System.Drawing.Point(20, 102);
+            this.chkLogJson.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.chkLogJson.Name = "chkLogJson";
+            this.chkLogJson.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.chkLogJson.Size = new System.Drawing.Size(243, 22);
+            this.chkLogJson.TabIndex = 6;
+            this.chkLogJson.Text = "Log also to JSON file";
+            this.chkLogJson.UseVisualStyleBackColor = true;
+            // 
+            // cmbLogLevel
+            // 
+            this.cmbLogLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLogLevel.FormattingEnabled = true;
+            this.cmbLogLevel.Items.AddRange(new object[] {
+            "10",
+            "25",
+            "50",
+            "100",
+            "150",
+            "200",
+            "250",
+            "500",
+            "750",
+            "1000",
+            "1500",
+            "2000",
+            "2500"});
+            this.cmbLogLevel.Location = new System.Drawing.Point(109, 62);
+            this.cmbLogLevel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cmbLogLevel.Name = "cmbLogLevel";
+            this.cmbLogLevel.Size = new System.Drawing.Size(154, 23);
+            this.cmbLogLevel.TabIndex = 3;
+            // 
+            // lblLogLevel
+            // 
+            this.lblLogLevel.AutoSize = true;
+            this.lblLogLevel.Location = new System.Drawing.Point(20, 64);
+            this.lblLogLevel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblLogLevel.Name = "lblLogLevel";
+            this.lblLogLevel.Size = new System.Drawing.Size(81, 15);
+            this.lblLogLevel.TabIndex = 2;
+            this.lblLogLevel.Text = "Logging Level";
+            // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -510,7 +600,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(611, 348);
             this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tbcControl);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -522,11 +612,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.FormSettings_Load);
-            this.tabControl1.ResumeLayout(false);
+            this.tbcControl.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabColors.ResumeLayout(false);
+            this.tabColors.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorReference)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorSpecial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorFiller)).EndInit();
@@ -536,6 +626,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbColorIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorEssence)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorPartition)).EndInit();
+            this.tabLogging.ResumeLayout(false);
+            this.tabLogging.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -543,11 +635,11 @@
 		#endregion
 
 		private System.Windows.Forms.Button btnOk;
-		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabControl tbcControl;
 		private System.Windows.Forms.TabPage tabGeneral;
 		private System.Windows.Forms.ComboBox cmbThreshold;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.Label lblPartialLoad;
+		private System.Windows.Forms.TabPage tabColors;
 		private System.Windows.Forms.PictureBox pbColorPartition;
 		private System.Windows.Forms.Label lblColorPartition;
 		private System.Windows.Forms.ColorDialog colorDialog1;
@@ -556,10 +648,10 @@
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.CheckBox chkShowLines;
 		private System.Windows.Forms.PictureBox pbColorIndex;
-		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label lblColorHint;
 		private System.Windows.Forms.Label lblColorIndexTable;
 		private System.Windows.Forms.ComboBox cmbTopNumber;
-		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label lblNumOfFilesInList;
 		private System.Windows.Forms.PictureBox pbColorRIP;
 		private System.Windows.Forms.Label lblColorRIP;
 		private System.Windows.Forms.PictureBox pbColorSystemItem;
@@ -576,5 +668,11 @@
         private System.Windows.Forms.CheckBox chkOffsetAsHex;
         private System.Windows.Forms.PictureBox pbColorReference;
         private System.Windows.Forms.Label lblColorSpecial;
+        private System.Windows.Forms.TabPage tabLogging;
+        private System.Windows.Forms.ComboBox cmbLogLevel;
+        private System.Windows.Forms.Label lblLogLevel;
+        private System.Windows.Forms.CheckBox chkLogJson;
+        private System.Windows.Forms.LinkLabel lnkLogPath;
+        private System.Windows.Forms.Label lblLoggingPath;
     }
 }
