@@ -525,6 +525,9 @@
             // chkLogJson
             // 
             this.chkLogJson.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkLogJson.Checked = true;
+            this.chkLogJson.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkLogJson.Enabled = false;
             this.chkLogJson.Location = new System.Drawing.Point(20, 102);
             this.chkLogJson.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chkLogJson.Name = "chkLogJson";
@@ -537,6 +540,7 @@
             // cmbLogLevel
             // 
             this.cmbLogLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLogLevel.Enabled = false;
             this.cmbLogLevel.FormattingEnabled = true;
             this.cmbLogLevel.Items.AddRange(new object[] {
             "10",
@@ -561,6 +565,7 @@
             // lblLogLevel
             // 
             this.lblLogLevel.AutoSize = true;
+            this.lblLogLevel.Enabled = false;
             this.lblLogLevel.Location = new System.Drawing.Point(20, 64);
             this.lblLogLevel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLogLevel.Name = "lblLogLevel";
