@@ -147,11 +147,7 @@ namespace Myriadbits.MXF
                 case 0x02: this.PartitionType = PartitionType.Header; break;
                 case 0x03: this.PartitionType = PartitionType.Body; break;
                 case 0x04: this.PartitionType = PartitionType.Footer; break;
-                default:
-                    this.PartitionType = PartitionType.Unknown;
-                    // TODO remove
-                    //Log(MXFLogType.Error, "unknown partition type");
-                    break;
+                default:   this.PartitionType = PartitionType.Unknown; break;
             }
 
             switch (this.Key[14])
