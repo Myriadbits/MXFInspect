@@ -158,10 +158,8 @@ namespace Myriadbits.MXFInspect
                 // correctly and finally reverse order, i.e. lowest offset first
                 this.tlvValidationResults.SetObjects(results.OrderByDescending(vr => vr.Offset));
                 this.tlvValidationResults.AutoResizeColumns();
-                this.tlvValidationResults.PrimarySortColumn = colSeverity;
+                this.tlvValidationResults.PrimarySortColumn = colOffset;
                 this.tlvValidationResults.PrimarySortOrder = SortOrder.Ascending;
-                this.tlvValidationResults.SecondarySortColumn = colOffset;
-                this.tlvValidationResults.SecondarySortOrder = SortOrder.Ascending;
                 this.tlvValidationResults.Sort();
 
                 this.prbProcessing.Visible = false;
