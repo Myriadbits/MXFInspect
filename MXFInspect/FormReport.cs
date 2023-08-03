@@ -21,8 +21,8 @@
 //
 #endregion
 
-using BrightIdeasSoftware;
 using Myriadbits.MXF;
+using Myriadbits.MXFInspect.CustomControls;
 using Serilog;
 using System;
 using System.Drawing;
@@ -57,6 +57,16 @@ namespace Myriadbits.MXFInspect
         private void InitValidationResultTreeListView()
         {
             this.tlvValidationResults.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
+            
+            this.colOffset.UseFiltering = false;
+            this.colResult.UseFiltering = false;
+            this.tlvValidationResults.UseFilterIndicator = true;
+            this.tlvValidationResults.UseFiltering = true;
+            this.colSeverity.ClusteringStrategy = new MXFValidationSeverityCluster();
+            
+            // TODO what are these lines for?
+            this.colCategory.Renderer = null;
+            this.colSeverity.Renderer = null;
 
             this.tlvValidationResults.CanExpandGetter = delegate (object x)
             {
@@ -100,11 +110,7 @@ namespace Myriadbits.MXFInspect
                 return null;
             };
 
-            OLVColumn col = (OLVColumn)this.tlvValidationResults.Columns[0];
-            col.Renderer = null;
 
-            OLVColumn col1 = (OLVColumn)this.tlvValidationResults.Columns[2];
-            col1.Renderer = null;
 
             if (OperatingSystem.IsWindows())
             {

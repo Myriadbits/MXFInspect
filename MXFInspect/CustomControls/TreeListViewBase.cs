@@ -64,7 +64,9 @@ namespace Myriadbits.MXFInspect
             this.ColumnFirst.Hideable = false;
             this.ColumnOffset.Hideable = false;
             this.ColumnOffset.TextAlign = HorizontalAlignment.Right;
+            this.ColumnOffset.UseFiltering = false;
             this.ColumnMXFObject.Hideable = false;
+
 
             // Set tree delegates
             this.CanExpandGetter = TreeNode_HasChildren;
@@ -74,6 +76,8 @@ namespace Myriadbits.MXFInspect
             // Set Event Handlers
             this.Expanding += Tree_Expanding;
             this.FormatCell += Tree_FormatCell;
+
+            this.UseFilterIndicator = true;
         }
 
         [SupportedOSPlatform("windows")]
