@@ -26,17 +26,17 @@ namespace Myriadbits.MXF.Exceptions
 {
     public class UnparseablePackException : KLVParsingException
     {
-        public MXFPack Pack { get; }
+        public MXFUnparseablePack UnparseablePack { get; }
 
         // TODO save streamPosition in order to localize the exception better
         // needs a new initialization concept as the streamPos cannot be saved/retrieved,
         // since the ctor never completes because of the raised exception
-        public long StreamPosition { get; }
+        //public long StreamPosition { get; }
 
-        public UnparseablePackException(MXFPack pack, Exception innerException) : base(innerException)
+        public UnparseablePackException(MXFUnparseablePack unparseablePack, string message, long offset, Exception innerException) 
+            : base(message, offset, innerException)
         {
-            Pack = pack;
-            Offset = pack.Offset;
+            UnparseablePack = unparseablePack;
         }
     }
 }

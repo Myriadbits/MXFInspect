@@ -28,10 +28,10 @@ namespace Myriadbits.MXF.Exceptions
     {
         public MXFLocalTag LocalTag { get; }
 
-        public LocalTagParsingException(MXFLocalTag tag, Exception innerException) : base(innerException)
+        public LocalTagParsingException(MXFLocalTag tag, string message, long offset, Exception innerException) 
+            : base(message, offset, innerException)
         {
             LocalTag = tag;
-            Offset = tag.Offset;
         }
     }
 }

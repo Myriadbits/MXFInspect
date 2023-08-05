@@ -7,9 +7,8 @@ namespace Myriadbits.MXF.Exceptions
 {
     public class NotAnMXFFileException : KLVParsingException
     {
-        public NotAnMXFFileException(string message) : base(message)
+        public NotAnMXFFileException(string message, long offset, Exception innerException) : base(message, offset, innerException)
         {
-
         }
     }
 }

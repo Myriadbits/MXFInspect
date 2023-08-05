@@ -95,8 +95,8 @@ namespace Myriadbits.MXF
                         Log.ForContext<MXFFile>().Warning($"Unparseable packs [{mxfPacks.OfType<MXFUnparseablePack>().Count()} items] encountered during parsing");
                     }
                     Log.ForContext<MXFFile>().Information($"Finished parsing MXF packs [{mxfPacks.Count} items] in {sw.ElapsedMilliseconds} ms");
-                    
-                    
+
+
                     // Now process the pack list (partition packs, treat special cases)
 
                     overallProgress?.Report(new TaskReport(MAX_PARSER_PERCENTAGE, "Process packs"));
@@ -262,7 +262,7 @@ namespace Myriadbits.MXF
                     {
                         // we have reached end of file, exceptional case so handle it
                         // TODO handle if exceeding 65536 bytes
-                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.");
+                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", parser.Offset, null);
                     }
                     else
                     {
@@ -278,15 +278,15 @@ namespace Myriadbits.MXF
 
                     continue;
                 }
-                catch (KLVStreamException ex)
+                catch (EndOfKLVStreamException ex)
                 {
-                    Log.ForContext<MXFFile>().Error(ex, $"Exception occured during parsing of MXF pack.");
-                    this.ParsingExceptions.Add(ex);
+                    mxfPacks.Add(ex.TruncatedKLV);
                     break;
                 }
-                catch (Exception ex) when (ex is not OperationCanceledException)
+                catch (UnparseablePackException ex)
                 {
-                    // TODO log error
+                    mxfPacks.Add(ex.UnparseablePack);
+                    continue;
                 }
 
                 // Only report progress when the percentage has changed
@@ -305,7 +305,7 @@ namespace Myriadbits.MXF
             }
 
             // TODO are parsing errors of localtag parser also included?
-            this.ParsingExceptions.AddRange(parser.Exceptions);
+            //this.ParsingExceptions.AddRange(parser.Exceptions);
             return mxfPacks;
         }
 

@@ -23,6 +23,7 @@
 
 using Myriadbits.MXF.Exceptions;
 using Myriadbits.MXF.KLV;
+using Serilog;
 using System;
 using System.IO;
 
@@ -33,9 +34,10 @@ namespace Myriadbits.MXF
         where K : KLVKey
         where L : KLVLengthBase
     {
-        protected readonly IKLVStreamReader reader;
         protected long currentOffset = 0;
         protected readonly long baseOffset = 0;
+
+        protected readonly IKLVStreamReader reader;
         protected readonly Stream klvStream;
         protected abstract K ParseKLVKey();
         protected abstract L ParseKLVLength();
@@ -43,6 +45,9 @@ namespace Myriadbits.MXF
 
         public T Current { get; protected set; }
 
+        public long Offset {get { return currentOffset; } }
+        
+        public long RemainingBytesCount { get { return klvStream.Length - currentOffset; } }
         public KLVTripletParser(Stream stream)
         {
             klvStream = stream;
@@ -65,9 +70,10 @@ namespace Myriadbits.MXF
             return klv;
         }
 
+        // TODO consider making this a property
         public bool HasNext()
         {
-            return !(currentOffset >= klvStream.Length);
+            return RemainingBytesCount > 0;
         }
 
         protected void Seek(long position)
@@ -82,17 +88,16 @@ namespace Myriadbits.MXF
             L length;
 
             Seek(offset);
-            
+
             try
             {
                 // TODO before parsing check if we have enough bytes to read
                 key = ParseKLVKey();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                throw new KLVKeyParsingException(offset, e);
+                throw new KLVKeyParsingException("Exception occured during parsing of key", klvStream.Position, e);
             }
-
             try
             {
                 // TODO before parsing check if we have enough bytes to read
@@ -100,16 +105,25 @@ namespace Myriadbits.MXF
             }
             catch (Exception e)
             {
-                throw new KLVLengthParsingException(klvStream.Position, e);
+                throw new KLVLengthParsingException("Exception occured during parsing of length", klvStream.Position, e);
             }
 
             long subStreamLength = key.ArrayLength + length.ArrayLength + length.Value;
 
             // check if substream not longer than the parent stream
-            if (offset + subStreamLength > klvStream.Length)
+            if (RemainingBytesCount < subStreamLength)
             {
-                // TODO add more context like offset to exception
-                throw new KLVStreamException("The parsed length exceeds the stream length");
+                // TODO klvstream is always a filestream, right?
+                // this check does not make sense!
+                if (klvStream is FileStream)
+                {
+                    Log.ForContext<KLVTripletParser<T, K, L>>().Error($"Substream length longer than parent stream, i.e. file finishes before last klv triplet.\r\nFile finishes @{klvStream.Length} while last KLV triplet with length {subStreamLength} should finish @{offset + subStreamLength}");
+
+                    long truncatedLength = klvStream.Length - offset;
+                    Stream truncatedStream = new SubStream(klvStream, offset, truncatedLength);
+                    var truncatedKLV = new TruncatedKLV(key, length, baseOffset + currentOffset, truncatedStream);
+                    throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", klvStream.Length, truncatedKLV , null);
+                }
             }
 
             Stream ss = new SubStream(klvStream, offset, subStreamLength);

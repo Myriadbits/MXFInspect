@@ -24,11 +24,15 @@ using System;
 
 namespace Myriadbits.MXF.Exceptions
 {
-    public class KLVStreamException : KLVParsingException
+    public class EndOfKLVStreamException : KLVParsingException
     {
-        public KLVStreamException(string message) : base(message)
-        {
+        public KLVTriplet TruncatedKLV { get; }
 
+        public EndOfKLVStreamException(string message, long offset, KLVTriplet truncatedKLV, Exception innerException) : base(message, offset, innerException)
+        {
+            TruncatedKLV = truncatedKLV;
         }
+
+
     }
 }

@@ -37,8 +37,6 @@ namespace Myriadbits.MXF
     public class MXFPackParser : KLVTripletParser<MXFPack, UL, KLVBERLength>
     {
         private long currentPackNumber = 0;
-        private List<Exception> exceptions = new List<Exception>();
-        public IReadOnlyList<Exception> Exceptions { get { return exceptions.AsReadOnly(); } }
 
         public MXFPackParser(Stream stream)
             : base(stream)
@@ -52,23 +50,19 @@ namespace Myriadbits.MXF
 
         public override MXFPack GetNext()
         {
-            var pack = base.GetNext();
+            MXFPack pack = base.GetNext();
             try
             {
                 pack = MXFPackFactory.CreateStronglyTypedPack(pack);
             }
-            catch (Exception ex) when (ex is TargetInvocationException tiEx)
+            catch (TargetInvocationException ex)
             {
                 // Exception raised during ctor via Activator.CreateInstance, therefore unparseable pack
-                Exception innerEx = tiEx.InnerException;
-                pack = new MXFUnparseablePack(pack, innerEx);
-                exceptions.Add(new UnparseablePackException(pack, innerEx));
-                Log.ForContext(typeof(MXFPackParser)).Error($"Error occured while parsing {pack}: {@innerEx}", pack);
-            }
-            catch (Exception ex) 
-            {
-                Log.ForContext(typeof(MXFPackParser)).Error($"Error occured while parsing {pack}: {@ex}", pack);
-                pack = new MXFUnparseablePack(pack, ex);
+                Log.ForContext(typeof(MXFPackParser)).Error($"Exception occured while parsing {pack}: {ex.InnerException}", pack);
+                MXFUnparseablePack unparseablePack = new MXFUnparseablePack(pack, ex.InnerException);
+                unparseablePack.Number = currentPackNumber; 
+                throw new UnparseablePackException(unparseablePack, $"Exception occured while parsing {pack}", pack.Offset, ex.InnerException);
+                
             }
             finally
             {
@@ -111,6 +105,7 @@ namespace Myriadbits.MXF
                     foundBytes = 0;
                 }
             }
+
             // TODO what does the caller have to do in this case?
             newOffset = reader.Position;
             return false;
