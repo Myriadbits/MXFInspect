@@ -26,7 +26,6 @@ using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;

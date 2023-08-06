@@ -26,6 +26,7 @@ using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System.ComponentModel;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Myriadbits.MXF
 {
@@ -37,7 +38,6 @@ namespace Myriadbits.MXF
         private const int CATEGORYPOS = 2;
 
         // override as the declared length is longer than stream, as this KLV is truncated
-        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public override long TotalLength { get => Stream.Length; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
@@ -49,7 +49,8 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            return $"Truncated KLV triplet - [len {this.Length.Value}]";
+            string keyString = (Key is UL ul) ? ul.ToString(true): Key.ToString();
+            return $"Truncated KLV triplet - {keyString} [len {this.Length.Value}]";
         }
     }
 }

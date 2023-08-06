@@ -205,7 +205,7 @@ namespace Myriadbits.MXFInspect
             {
                 return Properties.Settings.Default.Color_MetaData;
             }
-            else if (obj is MXFUnparseablePack)
+            else if (obj is MXFUnparseablePack || obj is TruncatedKLV)
             {
                 return Properties.Settings.Default.Color_Special;
             }

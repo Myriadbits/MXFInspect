@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
             get => validationResults;
         }
 
-        public List<Exception> ParsingExceptions { get; } = new List<Exception>();
+        public List<Exception> Exceptions { get; } = new List<Exception>();
         public MXFSystemMetaDataPack FirstSystemItem { get; set; }
         public MXFSystemMetaDataPack LastSystemItem { get; set; }
 
@@ -195,20 +195,36 @@ namespace Myriadbits.MXF
             };
 
             // add exceptions
-            foreach (var ex in ParsingExceptions)
+            foreach (var ex in Exceptions)
             {
-                var r = new MXFValidationResult(ex.GetType().Name);
-                if (ex is KLVParsingException klvEx)
-                {
-                    r.Object = this.Descendants().Where(o => o.Offset == klvEx.Offset).FirstOrDefault();
-                    r.SetError(ex.InnerException?.Message ?? ex.Message, klvEx.Offset);
-                }
-                else
-                {
-                    r.SetError(ex.InnerException?.Message ?? ex.Message);
-                }
+                MXFValidationResult result;
 
-                results.Add(r);
+                switch (ex)
+                {
+                    case EndOfKLVStreamException eofEx:
+                        result = new MXFValidationResult("KLVStream");
+                        result.Object = eofEx.TruncatedKLV;
+                        result.SetError(eofEx.Message, eofEx.Offset);
+                        break;
+
+                    case UnparseablePackException upEx:
+                        result = new MXFValidationResult("Parser");
+                        result.Object = upEx.UnparseablePack;
+                        result.SetError(upEx.Message, upEx.Offset);
+                        break;
+
+                    case KLVParsingException pEx:
+                        result = new MXFValidationResult("Parser");
+                        result.Object = this.Descendants().Where(o => o.Offset == pEx.Offset).FirstOrDefault();
+                        result.SetError(pEx.InnerException?.Message ?? ex.Message, pEx.Offset);
+                        break;
+
+                    default:
+                        result = new MXFValidationResult(ex.GetType().Name);
+                        result.SetError(ex.InnerException?.Message ?? ex.Message);
+                        break;
+                }
+                results.Add(result);
             }
 
 
@@ -280,11 +296,13 @@ namespace Myriadbits.MXF
                 }
                 catch (EndOfKLVStreamException ex)
                 {
+                    Exceptions.Add(ex);
                     mxfPacks.Add(ex.TruncatedKLV);
                     break;
                 }
                 catch (UnparseablePackException ex)
                 {
+                    Exceptions.Add(ex);
                     mxfPacks.Add(ex.UnparseablePack);
                     continue;
                 }

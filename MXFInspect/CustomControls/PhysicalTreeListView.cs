@@ -130,6 +130,7 @@ namespace Myriadbits.MXFInspect
                     e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Bold);
                     break;
                 case MXFUnparseablePack:
+                case TruncatedKLV:
                     e.SubItem.Font = new Font(e.SubItem.Font, FontStyle.Bold);
                     break;
                 default:

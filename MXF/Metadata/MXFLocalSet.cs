@@ -102,7 +102,7 @@ namespace Myriadbits.MXF
                     Log.ForContext<MXFLocalSet>().Error(ex, $"Exception occured during reading of local tag {lt} @{lt.Offset} of MXFPack {lt.Parent}.");
                     if (this.Root() is MXFFile file)
                     {
-                        file.ParsingExceptions.Add(ex);
+                        file.Exceptions.Add(ex);
                     }
                 }
             }

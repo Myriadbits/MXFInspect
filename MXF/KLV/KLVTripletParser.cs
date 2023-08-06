@@ -122,7 +122,7 @@ namespace Myriadbits.MXF
                     long truncatedLength = klvStream.Length - offset;
                     Stream truncatedStream = new SubStream(klvStream, offset, truncatedLength);
                     var truncatedKLV = new TruncatedKLV(key, length, baseOffset + currentOffset, truncatedStream);
-                    throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", klvStream.Length, truncatedKLV , null);
+                    throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", currentOffset, truncatedKLV , null);
                 }
             }
 

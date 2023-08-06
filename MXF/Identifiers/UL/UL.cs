@@ -181,12 +181,26 @@ namespace Myriadbits.MXF.Identifiers
 
         public override string ToString()
         {
-            if (SMPTEInformation?.Name != null)
-            {
-                return $"{SMPTEInformation?.Name} - {base.ToString()}";
-            }
+            return ToString(false);
+        }
 
-            return base.ToString();
+        public string ToString(bool shortFormat)
+        {
+            if (shortFormat)
+            {
+                if (Name == null)
+                {
+                    return base.ToString();
+                }
+                else
+                {
+                    return $"{Name}";
+                }
+            }
+            else
+            {
+                return $"{Name ?? "Unknown"} - {base.ToString()}";
+            }
         }
 
         private void SetCategoryAndRegistryDesignator()
