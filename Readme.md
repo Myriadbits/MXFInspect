@@ -52,18 +52,20 @@ This project is updated in February 2023 by merging the rayden84 fork. This proj
 
 However, there is still a long **TODO list:**
 
-* implement additional/more thorough file checks/validations such as:
+* implement additional/more thorough file checks/validations features such as:
   * Structurual validation (is KLV stream error-free?)
   * KAG (=Key alignment grid) validation
   * Essence validation
   * Metadata validation
   * add validation profiles, like [ARD ZDF profiles](https://www.irt.de/en/publications/technical-guidelines/technical-guidelines-download/mxf)
   * ability to export validation reports in various formats (txt, json, xml)
+  * search for text in validation output
+  * filter based on severity/error type
   
 * User Interface
   * true MDI application, where multiple MXF files can be opened side-by-side
   * pimp up the property grid (colors, hyperlinks for UMIDs)
-  * use a better control for the hex view, which makes use of colors for the various byte segments (e.g. )
+  * use a better control for the hex view, which makes use of colors for the various byte segments (e.g. this [HexViewer](https://github.com/themeldingwars/Be.HexEditor))
   * thumbnail preview of video essences (by using <https://github.com/cmxl/FFmpeg.NET> or <https://github.com/rosenbjerg/FFMpegCore>)
   * decoding of subtitles
   * "go to offset/go to pack number" navigation
@@ -71,6 +73,13 @@ However, there is still a long **TODO list:**
   * optimize the MXFReader class to reduce file loading time
   * reorganize the file check dialog
 
+* General
+  * export/demux/remux essences
+  * command-line-interface of MXF library for automated validation
+
+* Long Term TODO
+  * porting to NET.8
+  * multi-platform-support (maybe by replacing winforms with [Electron.NET?](<https://github.com/ElectronNET/Electron.NET>)
 
 **Any help/contribution is greatly appreciated!!!**
 
