@@ -156,7 +156,7 @@ namespace Myriadbits.MXFInspect.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("LightSeaGreen")]
+        [global::System.Configuration.DefaultSettingValueAttribute("DarkRed")]
         public global::System.Drawing.Color Color_Special {
             get {
                 return ((global::System.Drawing.Color)(this["Color_Special"]));

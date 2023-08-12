@@ -36,7 +36,7 @@
       <Value Profile="(Default)">SaddleBrown</Value>
     </Setting>
     <Setting Name="Color_Special" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">LightSeaGreen</Value>
+      <Value Profile="(Default)">DarkRed</Value>
     </Setting>
     <Setting Name="PartialLoadWarning" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
