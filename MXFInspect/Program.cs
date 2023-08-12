@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXFInspect.Properties;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Formatting.Json;
@@ -45,24 +46,28 @@ namespace Myriadbits.MXFInspect
             LogDirectoryPath = Path.GetDirectoryName(configFilePath);
             string txtLogFilePath = Path.Combine(LogDirectoryPath, "MXFInspect_log_.txt");
             string jsonLogFilePath = Path.Combine(LogDirectoryPath, "MXFInspect_log_.json");
+            Settings settings = MXFInspect.Properties.Settings.Default;
 
-            using var log = new LoggerConfiguration()
+            var loggerConfig = new LoggerConfiguration()
             .MinimumLevel.Verbose()
             .Enrich.WithThreadId()
             .Enrich.WithThreadName()
             .Enrich.FromLogContext()
             .Enrich.WithExceptionDetails()
             .WriteTo.Debug(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
-            .WriteTo.File(new JsonFormatter(renderMessage: true), jsonLogFilePath)
             .WriteTo.File(txtLogFilePath,
                     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext}) <{ThreadId}:{ThreadName}> {Message:lj}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day,
                     fileSizeLimitBytes: 80000000)
+            .Destructure.ToMaximumDepth(5);
 
-            .Destructure.ToMaximumDepth(5)
-            .CreateLogger();
 
-            Log.Logger = log;
+            if (settings.LogToJson)
+            {
+                loggerConfig.WriteTo.File(new JsonFormatter(renderMessage: true), jsonLogFilePath);
+            }
+            
+            Log.Logger = loggerConfig.CreateLogger();
             Log.ForContext(typeof(Program)).Information($"Application started from '{Application.ExecutablePath}'");
             Log.ForContext(typeof(Program)).Information($"Application Version: {Application.ProductVersion}");
             Log.ForContext(typeof(Program)).Information($"Operating System: {Environment.OSVersion}");

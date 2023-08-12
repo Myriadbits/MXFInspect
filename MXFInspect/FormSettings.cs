@@ -25,10 +25,7 @@ using Myriadbits.MXFInspect.Properties;
 using Serilog;
 using Serilog.Events;
 using System;
-using System.Net.NetworkInformation;
-using System.Reflection.Emit;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Myriadbits.MXFInspect
 {
@@ -103,6 +100,7 @@ namespace Myriadbits.MXFInspect
             this.pbColorSpecial.BackColor = settings.Color_Special;
             this.chkPartialLoadMsg.Checked = settings.PartialLoadWarning;
             this.chkOffsetAsHex.Checked = settings.ShowOffsetAsHex;
+            this.chkLogJson.Checked = settings.LogToJson;
 
             if (Enum.TryParse(settings.LogLevel, out LogEventLevel logLevel))
             {
@@ -179,6 +177,8 @@ namespace Myriadbits.MXFInspect
             {
                 Log.ForContext<FormSettings>().Error($"Unable to save logging level to settings file.");
             }
+
+            settings.LogToJson = chkLogJson.Checked;
 
             MXFInspect.Properties.Settings.Default.Save();
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
