@@ -55,6 +55,7 @@ This project is updated in February 2023 by merging the rayden84 fork. This proj
   * New MXF types (e.g. CodedContentScanningKind, ProductVersion, FrameLayout, Emphasis). A list of MXF types can be found [here](https://registry.smpte-ra.org/view/published/ul_hierarchy.html?rgr=t)
 * Quick info panel added
 * Basic logging functionality (see settings window...)
+* Basic exception handling an of unparseable MXF packs
 
 ## Future work
 
