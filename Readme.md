@@ -32,21 +32,29 @@ This project is updated in February 2023 by merging the rayden84 fork. This proj
 
 ## Screenshots
 
-![Report screen showing the new ‘Execute all tests’ button](doc/screenshots/Report.png)
-*Report screen showing the new 'Execute all tests' button*
+![Validation report showing the "health status" of the MXF file*](doc/screenshots/ValidationReport.png)
+*Validation report showing the "health status" of the MXF file*
 
-![Logical view](doc/screenshots/Logical.png)
+![Logical view](doc/screenshots/LogicalView.png)
 *Logical view*
 
-![MXF file tree (with 'syntax' coloring)](doc/screenshots/WholeFile2.png)
-*MXF file tree (with 'syntax' coloring)*
+![Physical view](doc/screenshots/PhysicalView.png)
+*Physical view*
+
+![MXF Packs tree (with 'syntax' coloring, i.e. colorization based on MXF pack type)](doc/screenshots/MXFTree.png)
+*MXF Packs tree (with 'syntax' coloring, i.e. colorization based on MXF pack type)*
+
+![Quick info](doc/screenshots/QuickInfo.png)
+*Quick info*
 
 **Latest improvements:**
 
 * Further SMPTE Standards Implementation
-  * Quick info panel added
+
   * New metadata classes (e.g. MPEGPictureEssenceDescriptor, JPEG2000PictureSubDescriptor). A hierarchical inheritance tree of MXF classes can be found [here](https://registry.smpte-ra.org/view/published/Groups_inheritance_tree.html). See this [TODO list](/tree.md) for the classes that still need to be implemented.
   * New MXF types (e.g. CodedContentScanningKind, ProductVersion, FrameLayout, Emphasis). A list of MXF types can be found [here](https://registry.smpte-ra.org/view/published/ul_hierarchy.html?rgr=t)
+* Quick info panel added
+* Basic logging functionality (see settings window...)
 
 ## Future work
 
