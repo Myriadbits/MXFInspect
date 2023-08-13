@@ -57,8 +57,14 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             if (!this.Children.Any())
-                return this.Name;
-            return string.Format("{0} [{1} items]", this.Name, this.Children.Count);
+            {
+                return $"{this.Name} [len {this.TotalLength}]";
+            }
+            else
+            {
+                return $"{this.Name} [{this.Children.Count} items]";
+            }
+            
         }
     }
 }
