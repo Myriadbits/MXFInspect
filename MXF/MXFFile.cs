@@ -274,24 +274,12 @@ namespace Myriadbits.MXF
 
                     // reposition klvstream
 
-                    if (!parser.SeekForNextPotentialKey(out long newOffset))
+                    if (!parser.SeekForNextPotentialKey(out long newOffset, ct))
                     {
                         // we have reached end of file, exceptional case so handle it
                         // TODO handle if exceeding 65536 bytes
                         throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", parser.Offset, null);
                     }
-                    else
-                    {
-                        if (mxfPacks.Any())
-                        {
-                            mxfPacks.Add(new MXFNamedObject("Non-KLV Data", lastgoodPos, newOffset - lastgoodPos));
-                        }
-                        else
-                        {
-                            this.AddChild(new MXFNamedObject("Run-In", lastgoodPos, newOffset - lastgoodPos));
-                        }
-                    }
-
                     continue;
                 }
                 catch (EndOfKLVStreamException ex)
@@ -322,12 +310,45 @@ namespace Myriadbits.MXF
                 }
             }
 
-            // TODO are parsing errors of localtag parser also included?
-            //this.ParsingExceptions.AddRange(parser.Exceptions);
+            // Now search for holes, i.e. non-KLV-data
+
+            var nonConsecutiveObjects = GetNonConsecutiveMXFObjects(mxfPacks);
+            foreach (var obj in nonConsecutiveObjects)
+            {
+                long nonKLVOffset = obj.Item1.Offset + obj.Item1.TotalLength;
+                long nonKLVLength = obj.Item2.Offset - nonKLVOffset;
+                if (nonKLVOffset == 0)
+                {
+                    this.AddChild(new MXFNamedObject("Run-In", nonKLVOffset, nonKLVLength));
+                }
+                else
+                {
+                    var nonKLV = new MXFNamedObject("Non-KLV Data", nonKLVOffset, nonKLVLength);
+                    mxfPacks.Insert(mxfPacks.IndexOf(obj.Item2), nonKLV);
+                }
+            }
+
             return mxfPacks;
+
         }
 
-        private void PartitionAndPostProcessMXFPacks(IEnumerable<MXFObject> packList)
+
+        private List<(MXFObject, MXFObject)> GetNonConsecutiveMXFObjects(List<MXFObject> objects)
+        {
+            var list = new List<(MXFObject, MXFObject)>();
+            for (int i = 0; i < objects.Count - 1; i++)
+            {
+                var actual = objects[i];
+                var next = objects[i + 1];
+                if (actual.Offset + actual.TotalLength != next.Offset)
+                {
+                    list.Add((actual, next));
+                }
+            }
+            return list;
+        }
+
+        private void PartitionAndPostProcessMXFPacks(IEnumerable<MXFObject> packList, CancellationToken ct = default)
         {
             MXFPartition currentPartition = null;
             int partitionNumber = 0;
@@ -335,6 +356,8 @@ namespace Myriadbits.MXF
 
             foreach (var obj in packList)
             {
+                ct.ThrowIfCancellationRequested();
+
                 switch (obj)
                 {
                     case MXFPartition partition:

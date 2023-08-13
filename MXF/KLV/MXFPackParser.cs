@@ -29,6 +29,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
@@ -71,7 +72,7 @@ namespace Myriadbits.MXF
             return pack;
         }
 
-        public bool SeekForNextPotentialKey(out long newOffset)
+        public bool SeekForNextPotentialKey(out long newOffset, CancellationToken ct = default)
         {
             // Seek to last good position
             if (Current != null)
@@ -88,6 +89,8 @@ namespace Myriadbits.MXF
             // TODO implement Boyer-Moore algorithm
             while (!reader.EOF)
             {
+                ct.ThrowIfCancellationRequested();
+
                 if (reader.ReadByte() == UL.ValidULPrefix[foundBytes])
                 {
                     foundBytes++;
