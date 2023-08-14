@@ -42,6 +42,7 @@ This project is updated in February 2023 by merging the rayden84 fork. This proj
 *Physical view*
 
 ![MXF Packs tree (with 'syntax' coloring, i.e. colorization based on MXF pack type)](doc/screenshots/MXFTree.png)
+
 *MXF Packs tree (with 'syntax' coloring, i.e. colorization based on MXF pack type)*
 
 ![Quick info](doc/screenshots/QuickInfo.png)
@@ -55,7 +56,7 @@ This project is updated in February 2023 by merging the rayden84 fork. This proj
   * New MXF types (e.g. CodedContentScanningKind, ProductVersion, FrameLayout, Emphasis). A list of MXF types can be found [here](https://registry.smpte-ra.org/view/published/ul_hierarchy.html?rgr=t)
 * Quick info panel added
 * Basic logging functionality (see settings window...) using [Serilog](https://github.com/serilog/serilog) logging
-* Basic exception handling an of unparseable MXF packs
+* Basic exception handling of unparseable MXF packs
 
 ## Future work
 
@@ -71,23 +72,22 @@ However, there is still a long **TODO list:**
   * search for text in validation output
   * filter based on severity/error type
   
-* User Interface
+* User Interface/Usability
   * true MDI application, where multiple MXF files can be opened side-by-side
   * pimp up the property grid (colors, hyperlinks for UMIDs)
   * use a better control for the hex view, which makes use of colors for the various byte segments (e.g. this [HexViewer](https://github.com/themeldingwars/Be.HexEditor))
   * thumbnail preview of video essences (by using <https://github.com/cmxl/FFmpeg.NET> or <https://github.com/rosenbjerg/FFMpegCore>)
   * decoding of subtitles
   * "go to offset/go to pack number" navigation
-  * in distant future migrate from Winforms to cross-platform UI like Electron.NET
   * optimize the MXFReader class to reduce file loading time
   * reorganize the file check dialog
 
-* General
+* Features
   * export/demux/remux essences
   * command-line-interface of MXF library for automated validation
 
 * Long Term TODO
-  * porting to NET.8
+  * migrating to NET.8 (not possible at the moment because of ObjectListView dependency)
   * multi-platform-support (maybe by replacing winforms with [Electron.NET?](<https://github.com/ElectronNET/Electron.NET>)
 
 **Any help/contribution is greatly appreciated!!!**
