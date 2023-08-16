@@ -51,15 +51,15 @@ namespace Myriadbits.MXF
         [Description("Value part of KLV triplet")]
         public virtual V Value { get; }
 
-        /// <summary>
-        /// Offset from beginning of the file (i.e. position of start of key within file)
-        /// </summary>
-        public override long Offset { get; protected set; }
+        ///// <summary>
+        ///// Offset from beginning of the file (i.e. position of start of key within file)
+        ///// </summary>
+        //public override long Offset { get; protected set; }
 
-        /// <summary>
-        /// Total length of KLV (= sum of lengths of key, KLV-length and value)
-        /// </summary>
-        public override long TotalLength { get; protected set; }
+        ///// <summary>
+        ///// Total length of KLV (= sum of lengths of key, KLV-length and value)
+        ///// </summary>
+        //public override long TotalLength { get; protected set; }
 
         /// <summary>
         /// Offset of the value (=data), i.e. where the payload begins.
