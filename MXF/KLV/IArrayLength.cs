@@ -21,13 +21,10 @@
 //
 #endregion
 
-
-using System.ComponentModel;
-
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
 {
-    public interface ILength : IArrayLength
+    public interface IArrayLength
     {
-        public long Value { get; }
+        public int ArrayLength { get; }
     }
 }

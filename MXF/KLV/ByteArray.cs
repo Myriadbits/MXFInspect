@@ -28,7 +28,7 @@ using System.Text;
 
 namespace Myriadbits.MXF
 {
-    public class ByteArray : IEquatable<ByteArray>
+    public class ByteArray : IEquatable<ByteArray>, IArrayLength
     {
         private readonly byte[] theBytes;
 
@@ -51,11 +51,6 @@ namespace Myriadbits.MXF
             {
                 theBytes = new byte[bytes.Length];
                 Buffer.BlockCopy(bytes, 0, theBytes, 0, bytes.Length);
-                //theBytes = new byte[bytes.Length];
-                //for (int n = 0; n < bytes.Length; n++)
-                //{
-                //    theBytes[n] = bytes[n];
-                //}
             }
         }
 

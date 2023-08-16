@@ -187,7 +187,6 @@
       <HashCode>AAEAAAAAAQAgAgAAGACAgAAAAAAQCAIQAAAAAAAQgAA=</HashCode>
       <FileName>KLV\KLVTripletParser.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.KLV.KLVStreamReader">
     <Position X="39" Y="1" Width="3.25" />
@@ -230,6 +229,24 @@
     <TypeIdentifier>
       <HashCode>gAAQAAACBAAACHgoKCEAEIAAADAAQEgAAEQRgACAAAA=</HashCode>
       <FileName>KLV\IKLVStreamReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Myriadbits.MXF.KLV.ILength">
+    <Position X="17" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>KLV\ILength.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.IEquatable&lt;T&gt;">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Myriadbits.MXF.IArrayLength">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KLV\IArrayLength.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
