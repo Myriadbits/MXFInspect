@@ -22,11 +22,9 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
-using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 
 namespace Myriadbits.MXF
 {
