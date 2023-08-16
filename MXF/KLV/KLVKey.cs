@@ -43,8 +43,7 @@ namespace Myriadbits.MXF
 
         public KLVKey(KeyLengths keyLength, params byte[] bytes) : base(bytes)
         {
-            // TODO does this parameter really makes sense?
-            // check if passed array length is contained in defined key lengths
+            // check if passed array length matches with passed key length
             if ((int)keyLength != bytes.Length)
             {
                 throw new ArgumentException($"Key length of {bytes.Length} is not a valid key length");

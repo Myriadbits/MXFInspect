@@ -75,7 +75,7 @@ namespace Myriadbits.MXF
                 throw new ArgumentException($"The key for a local tag must be 1 or 2 bytes long, instead is: {Key.KeyLength}.");
             }
 
-            // TODO 
+            // TODO check length encoding 
             //if (Length.LengthEncoding != LengthEncodings.TwoBytes)
             //{
             //    throw new ArgumentException($"The length encoding for a local tag must be two bytes long, instead is: {Length.LengthEncoding}.");

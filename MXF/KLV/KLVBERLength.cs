@@ -59,7 +59,6 @@ namespace Myriadbits.MXF
                     throw new ArgumentException($"First byte indicates BER Long Form, but byte array consists of only one byte");
 
                 case > 0x80 when bytes.Length > 1:
-                    // TODO check value against array
                     if (bytes.Skip(1).ToArray().ToLong() != Value)
                     {
                         throw new ArgumentException($"Byte array value ({BitConverter.ToUInt32(bytes)}) does not match with given length value ({Value})");
@@ -70,7 +69,6 @@ namespace Myriadbits.MXF
                     break;
 
                 case 0x80:
-                    //TODO is this the correct way to handle this?
                     BERForm = BERForms.Indefinite;
                     throw new NotSupportedException("BER Indefinite Length is not supported");
 
