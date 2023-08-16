@@ -72,7 +72,7 @@ namespace Myriadbits.MXF
         public long RelativeValueOffset { get; }
 
 
-        public KLVTriplet(KLVKey key, KLVLengthBase length, long offset, Stream stream)
+        public KLVTriplet(KLVKey key, ILength length, long offset, Stream stream)
         {
             Key = key;
             Length = length;

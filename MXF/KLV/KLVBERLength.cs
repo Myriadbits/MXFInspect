@@ -29,7 +29,7 @@ using System.Linq;
 namespace Myriadbits.MXF
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class KLVBERLength : KLVLengthBase
+    public class KLVBERLength : ByteArray, ILength
     {
         public enum BERForms
         {
@@ -38,8 +38,14 @@ namespace Myriadbits.MXF
             Indefinite // Not supported
         }
 
+        /// <summary>
+        /// Gets the length value of the L part in a KLV
+        /// </summary>
+        [Description("Value of the length part of the KLV triplet")]
+        public long Value { get; }
         public BERForms BERForm { get; }
         public int AdditionalOctets { get; }
+
 
         public KLVBERLength(long lengthValue, params byte[] bytes) : base(bytes)
         {

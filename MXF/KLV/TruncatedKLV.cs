@@ -43,7 +43,7 @@ namespace Myriadbits.MXF
         //[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         //public long RealLength { get => Stream.Length - Key.ArrayLength - Length.ArrayLength; }
 
-        public TruncatedKLV(KLVKey ul, KLVLengthBase length, long offset, Stream stream) : base(ul, length, offset, stream)
+        public TruncatedKLV(KLVKey ul, ILength length, long offset, Stream stream) : base(ul, length, offset, stream)
         {
         }
 

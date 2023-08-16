@@ -22,10 +22,11 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 
 namespace Myriadbits.MXF.KLV
 {
-    public class KLVLength : KLVLengthBase
+    public class KLVLength : ByteArray, ILength
     {
         public enum LengthEncodings
         {
@@ -34,13 +35,19 @@ namespace Myriadbits.MXF.KLV
             FourBytes = 4,
         }
 
+        /// <summary>
+        /// Gets the length value of the L part in a KLV
+        /// </summary>
+        [Description("Value of the length part of the KLV triplet")]
+        public long Value { get; }
+
         public LengthEncodings LengthEncoding { get; }
 
         public KLVLength(LengthEncodings lengthEncoding, params byte[] bytes) : base(bytes)
         {
             LengthEncoding = lengthEncoding;
-            Value = bytes.ToLong(); 
-           
+            Value = bytes.ToLong();
+
             // TODO where do we check if each byte does not exceed 0x7F?
             if (bytes.Length != (int)lengthEncoding)
             {
