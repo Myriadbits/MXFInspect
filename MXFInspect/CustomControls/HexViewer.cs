@@ -40,7 +40,7 @@ namespace Myriadbits.MXFInspect
 
         public bool ShowOffsetAsHex { get; private set; } = false;
 
-        protected MXFObject ObjectToShow { get; set; }
+        protected MXFObject MXFObject { get; private set; }
 
         /// <summary>
         /// Read the data of an mxf object and display it as hex dump
@@ -48,7 +48,7 @@ namespace Myriadbits.MXFInspect
         /// <param name="obj"></param>
         public void SetObject(MXFObject obj)
         {
-            this.ObjectToShow = obj;
+            this.MXFObject = obj;
             this.Clear();
 
 
@@ -85,9 +85,9 @@ namespace Myriadbits.MXFInspect
 
         public void RefreshView()
         {
-            if (ObjectToShow != null)
+            if (MXFObject != null)
             {
-                SetObject(ObjectToShow);
+                SetObject(MXFObject);
             }
 
         }
