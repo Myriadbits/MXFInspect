@@ -29,10 +29,10 @@ using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public abstract class KLVTripletParser<T, K, L> : IKLVTripletParser<T, K, L>
+    public abstract class KLVTripletParser<T, K, L>
         where T : KLVTriplet
         where K : KLVKey
-        where L : KLVLengthBase
+        where L : ILength
     {
         protected long currentOffset = 0;
         protected readonly long baseOffset = 0;
