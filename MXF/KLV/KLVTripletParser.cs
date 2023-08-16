@@ -34,8 +34,8 @@ namespace Myriadbits.MXF
         where L : ILength
         where V : KLVValue
     {
-        protected long currentOffset = 0;
-        protected readonly long baseOffset = 0;
+        private long currentOffset = 0;
+        private readonly long baseOffset = 0;
 
         protected readonly IKLVStreamReader reader;
         protected readonly Stream klvStream;
