@@ -59,21 +59,21 @@ namespace Myriadbits.MXF
         public byte[] User { get; }
 
 
-        public ExtendedUMID(params byte[] list) : base(list)
+        public ExtendedUMID(params byte[] byteArray) : base(byteArray)
         {
             if (this.ArrayLength == 64)
             {
-                UL = new ReadOnlySpan<byte>(list, 0, 12).ToArray();
-                UMIDLength = list[12];
-                InstanceNumber = new ReadOnlySpan<byte>(list, 13, 3).ToArray();
-                MaterialNumber = new ReadOnlySpan<byte>(list, 16, 16).ToArray();
-                DateTime = new ReadOnlySpan<byte>(list, 32, 8).ToArray();
-                Spatial = new ReadOnlySpan<byte>(list, 40, 12).ToArray();
-                Country = new ReadOnlySpan<byte>(list, 52, 4).ToArray();
-                Organisation = new ReadOnlySpan<byte>(list, 56, 4).ToArray();
-                User = new ReadOnlySpan<byte>(list, 60, 4).ToArray();
+                UL = new ReadOnlySpan<byte>(byteArray, 0, 12).ToArray();
+                UMIDLength = byteArray[12];
+                InstanceNumber = new ReadOnlySpan<byte>(byteArray, 13, 3).ToArray();
+                MaterialNumber = new ReadOnlySpan<byte>(byteArray, 16, 16).ToArray();
+                DateTime = new ReadOnlySpan<byte>(byteArray, 32, 8).ToArray();
+                Spatial = new ReadOnlySpan<byte>(byteArray, 40, 12).ToArray();
+                Country = new ReadOnlySpan<byte>(byteArray, 52, 4).ToArray();
+                Organisation = new ReadOnlySpan<byte>(byteArray, 56, 4).ToArray();
+                User = new ReadOnlySpan<byte>(byteArray, 60, 4).ToArray();
             }
-            else throw new ArgumentException("Number of bytes must be 64", "list");
+            else throw new ArgumentException("Number of bytes must be 64", nameof(byteArray));
         }
 
         public override string ToString()
