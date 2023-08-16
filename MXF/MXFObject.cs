@@ -40,7 +40,7 @@ namespace Myriadbits.MXF
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Offset from the beginning of file in terms of bytes")]
         [TypeConverter(typeof(FormattedNumberTypeConverter))]
-        public virtual long Offset
+        public long Offset
         {
             get
             {
