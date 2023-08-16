@@ -42,7 +42,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length part of KLV triplet")]
-        public virtual KLVLengthBase Length { get; }
+        public virtual ILength Length { get; }
 
         [Browsable(false)]
         [Description("Value part of KLV triplet")]

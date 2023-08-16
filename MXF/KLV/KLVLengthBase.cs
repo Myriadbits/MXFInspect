@@ -26,7 +26,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF.KLV
 {
-    public abstract class KLVLengthBase : ByteArray
+    public abstract class KLVLengthBase : ByteArray, ILength
     {
         /// <summary>
         /// Gets the length value of a Length Encoding
@@ -37,5 +37,10 @@ namespace Myriadbits.MXF.KLV
         public KLVLengthBase(params byte[] bytes) : base(bytes)
         {
         }
+    }
+
+    public interface ILength
+    {
+        public long Value { get; }
     }
 }

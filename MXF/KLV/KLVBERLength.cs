@@ -23,10 +23,12 @@
 
 using Myriadbits.MXF.KLV;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Myriadbits.MXF
 {
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public class KLVBERLength : KLVLengthBase
     {
         public enum BERForms

@@ -40,8 +40,8 @@ namespace Myriadbits.MXF
         // override as the declared length is longer than stream, as this KLV is truncated
         public override long TotalLength { get => Stream.Length; }
 
-        [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
-        public long RealLength { get => Stream.Length - Key.ArrayLength - Length.ArrayLength; }
+        //[SortedCategory(CATEGORYNAME, CATEGORYPOS)]
+        //public long RealLength { get => Stream.Length - Key.ArrayLength - Length.ArrayLength; }
 
         public TruncatedKLV(KLVKey ul, KLVLengthBase length, long offset, Stream stream) : base(ul, length, offset, stream)
         {

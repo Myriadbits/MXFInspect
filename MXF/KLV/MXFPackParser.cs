@@ -115,7 +115,7 @@ namespace Myriadbits.MXF
 
         protected override UL ParseKLVKey()
         {
-            return new UL(reader.ReadBytes((int)KeyLengths.SixteenBytes));
+            return reader.ReadUL();
         }
 
         protected override KLVBERLength ParseKLVLength()
