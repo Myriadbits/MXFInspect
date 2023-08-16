@@ -79,13 +79,6 @@ namespace Myriadbits.MXF
         public MXFLogicalObject LogicalWrapper { get; private set; }
 
         /// <summary>
-        ///Default constructor needed for derived classes such as MXFFile, ...
-        /// </summary>
-        protected MXFObject()
-        {
-        }
-
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="reader"></param>

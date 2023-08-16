@@ -68,7 +68,7 @@ namespace Myriadbits.MXF
 
         public MXFLogicalObject LogicalTreeRoot { get; set; }
 
-        private MXFFile(FileInfo fi)
+        private MXFFile(FileInfo fi) : base(0)
         {
             this.File = fi;
         }
