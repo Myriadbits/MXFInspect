@@ -31,17 +31,48 @@ namespace Myriadbits.MXF
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public abstract class MXFObject : Node<MXFObject> //ILazyLoadable
     {
+        private long _offset;
+        private long _totalLength;
+
         private const string CATEGORYNAME = "Object";
         private const int CATEGORYPOS = 0;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Offset from the beginning of file in terms of bytes")]
         [TypeConverter(typeof(FormattedNumberTypeConverter))]
-        public virtual long Offset { get; protected set; } = 0;
+        public virtual long Offset
+        {
+            get
+            {
+                return _offset;
+            }
+            private set
+            {
+                if (_offset < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(Offset), $"{nameof(Offset)} must be non-negative.");
+                }
+                _offset = value;
+            }
+        }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Total length of object in term of bytes. If KLV then sum of Key length + Length length + Value length")]
-        public virtual long TotalLength { get; protected set; } = 0;
+        public virtual long TotalLength
+        {
+            get
+            {
+                return _totalLength;
+            }
+            protected set
+            {
+                if (_totalLength < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(TotalLength), $"{nameof(TotalLength)} must be non-negative.");
+                }
+                _totalLength = value;
+            }
+        }
 
         [Browsable(false)]
         // TODO find better name
