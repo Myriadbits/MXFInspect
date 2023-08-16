@@ -28,7 +28,10 @@ using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public class KLVTriplet : MXFObject
+    public class KLVTriplet<K, L, V> : MXFObject, IKLVTriplet<K, L, V>
+        where K : KLVKey
+        where L : ILength
+        where V : KLVValue
     {
         private const string CATEGORYNAME = "KLV";
         private const int CATEGORYPOS = 1;
@@ -38,15 +41,15 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Key part of KLV triplet")]
-        public virtual KLVKey Key { get; }
+        public virtual K Key { get; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length part of KLV triplet")]
-        public virtual ILength Length { get; }
+        public virtual L Length { get; }
 
         [Browsable(false)]
         [Description("Value part of KLV triplet")]
-        public virtual ByteArray Value { get; }
+        public virtual V Value { get; }
 
         /// <summary>
         /// Offset from beginning of the file (i.e. position of start of key within file)
@@ -72,7 +75,7 @@ namespace Myriadbits.MXF
         public long RelativeValueOffset { get; }
 
 
-        public KLVTriplet(KLVKey key, ILength length, long offset, Stream stream)
+        public KLVTriplet(K key, L length, long offset, Stream stream)
         {
             Key = key;
             Length = length;
@@ -86,7 +89,7 @@ namespace Myriadbits.MXF
         public IKLVStreamReader GetReader()
         {
             return new KLVStreamReader(this.Stream);
-        } 
+        }
 
         //// TODO this should not be the responsibility of the class to read its content
         //public V GetValue(SubStream ss)

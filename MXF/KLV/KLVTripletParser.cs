@@ -29,10 +29,10 @@ using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public abstract class KLVTripletParser<T, K, L>
-        where T : KLVTriplet
+    public abstract class KLVTripletParser<T, K, L, V> where T : KLVTriplet<K, L, V>
         where K : KLVKey
         where L : ILength
+        where V : KLVValue
     {
         protected long currentOffset = 0;
         protected readonly long baseOffset = 0;
@@ -45,8 +45,8 @@ namespace Myriadbits.MXF
 
         public T Current { get; protected set; }
 
-        public long Offset {get { return currentOffset; } }
-        
+        public long Offset { get { return currentOffset; } }
+
         public long RemainingBytesCount { get { return klvStream.Length - currentOffset; } }
         public KLVTripletParser(Stream stream)
         {
@@ -117,12 +117,12 @@ namespace Myriadbits.MXF
                 // this check does not make sense!
                 if (klvStream is FileStream)
                 {
-                    Log.ForContext<KLVTripletParser<T, K, L>>().Error($"Substream length longer than parent stream, i.e. file finishes before last klv triplet.\r\nFile finishes @{klvStream.Length} while last KLV triplet with length {subStreamLength} should finish @{offset + subStreamLength}");
+                    Log.ForContext<KLVTripletParser<T, K, L, V>>().Error($"Substream length longer than parent stream, i.e. file finishes before last klv triplet.\r\nFile finishes @{klvStream.Length} while last KLV triplet with length {subStreamLength} should finish @{offset + subStreamLength}");
 
                     long truncatedLength = klvStream.Length - offset;
                     Stream truncatedStream = new SubStream(klvStream, offset, truncatedLength);
                     var truncatedKLV = new TruncatedKLV(key, length, baseOffset + currentOffset, truncatedStream);
-                    throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", currentOffset, truncatedKLV , null);
+                    throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", currentOffset, truncatedKLV, null);
                 }
             }
 

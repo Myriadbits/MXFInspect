@@ -20,19 +20,20 @@
 // For more information, contact me at: info@myriadbits.com
 //
 #endregion
-using System;
 
-namespace Myriadbits.MXF.Exceptions
+using Myriadbits.MXF.KLV;
+
+namespace Myriadbits.MXF
 {
-    public class EndOfKLVStreamException : KLVParsingException
+    public interface IKLVTriplet<K, L, V>
+        where K : KLVKey
+        where L : ILength
+        where V : KLVValue
     {
-        public MXFObject TruncatedKLV { get; }
+        public K Key { get; }
 
-        public EndOfKLVStreamException(string message, long offset, MXFObject truncatedKLV, Exception innerException) : base(message, offset, innerException)
-        {
-            TruncatedKLV = truncatedKLV;
-        }
+        public L Length { get; }
 
-
+        public V Value { get; }
     }
 }

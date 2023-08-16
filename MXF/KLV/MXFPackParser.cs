@@ -30,11 +30,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPackParser : KLVTripletParser<MXFPack, UL, KLVBERLength>
+    public class MXFPackParser : KLVTripletParser<MXFPack, UL, KLVBERLength, KLVValue>
     {
         private long currentPackNumber = 0;
 

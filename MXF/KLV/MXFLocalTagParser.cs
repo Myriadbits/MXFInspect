@@ -31,7 +31,7 @@ using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFLocalTagParser : KLVTripletParser<MXFLocalTag, KLVKey, KLVLength>
+    public class MXFLocalTagParser : KLVTripletParser<MXFLocalTag, KLVKey, KLVLength, KLVValue>
     {
         public KeyLengths KeyLength { get;}
 

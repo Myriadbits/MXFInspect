@@ -81,12 +81,13 @@
       <FileName>KLV\ByteArrayExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.KLVTriplet">
+  <Class Name="Myriadbits.MXF.KLVTriplet&lt;K, L, V&gt;">
     <Position X="26.75" Y="1" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAACAQAAgAAAABAAAAIABAQCAAgAAAAgAA=</HashCode>
       <FileName>KLV\KLVTriplet.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.MXFPack">
     <Position X="25.25" Y="5.75" Width="2.25" />
@@ -181,7 +182,7 @@
       <FileName>Identifiers\UMID.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.KLVTripletParser&lt;T, K, L&gt;">
+  <Class Name="Myriadbits.MXF.KLVTripletParser&lt;T, K, L, V&gt;">
     <Position X="31.75" Y="4.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAQAgAgAAGACAgAAAAAAQCAIQAAAAAAAQgAA=</HashCode>

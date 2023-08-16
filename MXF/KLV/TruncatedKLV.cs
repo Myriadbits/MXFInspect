@@ -31,7 +31,7 @@ using System.Security.Cryptography;
 namespace Myriadbits.MXF
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class TruncatedKLV : KLVTriplet
+    public class TruncatedKLV : KLVTriplet<KLVKey, ILength, KLVValue>
     {
 
         private const string CATEGORYNAME = "Truncated KLV triplet";
@@ -49,7 +49,7 @@ namespace Myriadbits.MXF
 
         public override string ToString()
         {
-            string keyString = (Key is UL ul) ? ul.ToString(true): Key.ToString();
+            string keyString = (Key is UL ul) ? ul.ToString(true) : Key.ToString();
             return $"Truncated KLV triplet - {keyString} [len {this.Length.Value}]";
         }
     }
