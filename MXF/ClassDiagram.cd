@@ -18,7 +18,7 @@
   <Class Name="Myriadbits.MXF.MXFObject">
     <Position X="11.25" Y="6.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAACAAEAgIAAAAAAAAAABAAiAAAAAAAgAA=</HashCode>
+      <HashCode>IAAAAAAAAAAACAAEIgIAAAAAAAAABBAAiAAAAAAAgAA=</HashCode>
       <FileName>MXFObject.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -50,31 +50,18 @@
       <FileName>Metadata\MXFMetadataBaseclass.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.ExtendedUMID">
-    <Position X="15" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAgAAAAAAAAEAAAABAAAAIIAAAQAAAAAGAAIAAA=</HashCode>
-      <FileName>Identifiers\ExtendedUMID.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Myriadbits.MXF.UMID">
-    <Position X="13.25" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAAEAAAAAAAAAIAAAAAAAAAACAAIAAA=</HashCode>
-      <FileName>Identifiers\UMID.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Myriadbits.MXF.KLVTriplet">
+  <Class Name="Myriadbits.MXF.KLVTriplet&lt;K, L, V&gt;">
     <Position X="13.25" Y="12" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAACAQAAgAAAABAAAAIABAQCAAgAAAAgAA=</HashCode>
+      <HashCode>AAAAACAAAAAACAQAAAAAAABAAAAIABAQCAAgAAAAAAA=</HashCode>
       <FileName>KLV\KLVTriplet.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Myriadbits.MXF.MXFUnparseablePack">
     <Position X="17.5" Y="20.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAACAAEAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFUnparseablePack.cs</FileName>
       <NewMemberFileName>KLV\MXFPack.cs</NewMemberFileName>
     </TypeIdentifier>
