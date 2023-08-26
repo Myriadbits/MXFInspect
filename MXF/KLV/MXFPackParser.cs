@@ -59,9 +59,8 @@ namespace Myriadbits.MXF
                 // Exception raised during ctor via Activator.CreateInstance, therefore unparseable pack
                 Log.ForContext<MXFPackParser>().Error($"Exception occured while parsing {pack}: {ex.InnerException}", pack);
                 MXFUnparseablePack unparseablePack = new MXFUnparseablePack(pack, ex.InnerException);
-                unparseablePack.Number = currentPackNumber; 
+                unparseablePack.Number = currentPackNumber;
                 throw new UnparseablePackException(unparseablePack, $"Exception occured while parsing {pack}", pack.Offset, ex.InnerException);
-                
             }
             finally
             {
@@ -69,47 +68,6 @@ namespace Myriadbits.MXF
                 Current = pack;
             }
             return pack;
-        }
-
-        public bool SeekForNextPotentialKey(out long newOffset, CancellationToken ct = default)
-        {
-            // Seek to last good position
-            if (Current != null)
-            {
-                Seek(Current.Offset + Current.TotalLength);
-            }
-            else
-            {
-                Seek(0);
-            }
-
-            int foundBytes = 0;
-
-            // TODO implement Boyer-Moore algorithm
-            while (!reader.EOF)
-            {
-                ct.ThrowIfCancellationRequested();
-
-                if (reader.ReadByte() == UL.ValidULPrefix[foundBytes])
-                {
-                    foundBytes++;
-
-                    if (foundBytes == 4)
-                    {
-                        Seek(reader.Position - 4);
-                        newOffset = reader.Position;
-                        return true;
-                    }
-                }
-                else
-                {
-                    foundBytes = 0;
-                }
-            }
-
-            // TODO what does the caller have to do in this case?
-            newOffset = reader.Position;
-            return false;
         }
 
         protected override UL ParseKLVKey()

@@ -251,6 +251,8 @@ namespace Myriadbits.MXF
         {
             int currentPercentage;
             int previousPercentage = 0;
+            bool streambroken = false;
+            long lastgoodPos = 0;
             MXFPackParser parser = new MXFPackParser(fileStream);
             List<MXFObject> mxfPacks = new List<MXFObject>();
             overallProgress?.Report(new TaskReport(0, "Reading KLV stream"));
@@ -261,23 +263,35 @@ namespace Myriadbits.MXF
                     var pack = parser.GetNext();
                     mxfPacks.Add(pack);
                     ct.ThrowIfCancellationRequested();
+
+                    // if klv stream was broken due to exception add "non-klv-data object"
+                    if (streambroken == true)
+                    {
+                        if (lastgoodPos == 0)
+                        {
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Run-In", lastgoodPos, lastgoodPos + parser.Current.Offset));
+                        }
+                        else
+                        {
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Non-KLV Data", lastgoodPos, lastgoodPos + parser.Current.Offset));
+                        }
+                        streambroken = false;
+                    }
                 }
-                // TODO be more selective with the exception
+
+                // TODO be more selective with the exception or catch also other exceptions
                 catch (KLVKeyParsingException ex)
                 {
-                    long lastgoodPos = 0;
-                    // klv stream error
-                    if (parser.Current != null)
-                    {
-                        lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
-                    }
+                    streambroken = true;
 
-                    // reposition klvstream
+                    // seek to last good position, i.e. after current/last klv/pack
+                    parser.SeekToNext();
+                    lastgoodPos = parser.Offset;
 
-                    if (!parser.SeekForNextPotentialKey(out long newOffset, ct))
+                    const int RUN_IN_THRESHOLD = 66536 + 1;
+                    if (!parser.SeekToNextPotentialKey(out long newOffset, RUN_IN_THRESHOLD, ct))
                     {
                         // we have reached end of file, exceptional case so handle it
-                        // TODO handle if exceeding 65536 bytes
                         throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", parser.Offset, null);
                     }
                     continue;
@@ -310,42 +324,8 @@ namespace Myriadbits.MXF
                 }
             }
 
-            // Now search for holes, i.e. non-KLV-data
-
-            var nonConsecutiveObjects = GetNonConsecutiveMXFObjects(mxfPacks);
-            foreach (var obj in nonConsecutiveObjects)
-            {
-                long nonKLVOffset = obj.Item1.Offset + obj.Item1.TotalLength;
-                long nonKLVLength = obj.Item2.Offset - nonKLVOffset;
-                if (nonKLVOffset == 0)
-                {
-                    this.AddChild(new MXFNamedObject("Run-In", nonKLVOffset, nonKLVLength));
-                }
-                else
-                {
-                    var nonKLV = new MXFNamedObject("Non-KLV Data", nonKLVOffset, nonKLVLength);
-                    mxfPacks.Insert(mxfPacks.IndexOf(obj.Item2), nonKLV);
-                }
-            }
-
             return mxfPacks;
 
-        }
-
-
-        private List<(MXFObject, MXFObject)> GetNonConsecutiveMXFObjects(List<MXFObject> objects)
-        {
-            var list = new List<(MXFObject, MXFObject)>();
-            for (int i = 0; i < objects.Count - 1; i++)
-            {
-                var actual = objects[i];
-                var next = objects[i + 1];
-                if (actual.Offset + actual.TotalLength != next.Offset)
-                {
-                    list.Add((actual, next));
-                }
-            }
-            return list;
         }
 
         private void PartitionAndPostProcessMXFPacks(IEnumerable<MXFObject> packList, CancellationToken ct = default)
