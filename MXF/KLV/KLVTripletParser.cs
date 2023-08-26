@@ -22,10 +22,12 @@
 #endregion
 
 using Myriadbits.MXF.Exceptions;
+using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Serilog;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Myriadbits.MXF
 {
@@ -66,11 +68,22 @@ namespace Myriadbits.MXF
             Current = klv;
 
             // advance to next pack
-            Seek(currentOffset + klv.TotalLength);
+            SeekToNext();
             return klv;
         }
 
-        // TODO consider making this a property
+        public void SeekToNext()
+        {
+            if (Current != null)
+            {
+                Seek(currentOffset + Current.TotalLength);
+            }
+            else
+            {
+                Seek(0);
+            }
+        }
+
         public bool HasNext()
         {
             return RemainingBytesCount > 0;
@@ -128,6 +141,45 @@ namespace Myriadbits.MXF
 
             Stream ss = new SubStream(klvStream, offset, subStreamLength);
             return InstantiateKLV(key, length, baseOffset + currentOffset, ss);
+        }
+
+        public bool SeekToNextPotentialKey(out long newOffset, long seekThresholdInBytes = 0, CancellationToken ct = default)
+        {
+            return SeekToBytePattern(out newOffset, UL.ValidULPrefix, seekThresholdInBytes, ct);
+        }
+
+        public bool SeekToBytePattern(out long newOffset, byte[] bytePattern, long seekThresholdInBytes = 0, CancellationToken ct = default)
+        {
+            int foundBytes = 0;
+            int bytesRead = 0;
+
+            // TODO implement Boyer-Moore algorithm
+            while (!reader.EOF && (seekThresholdInBytes == 0 || bytesRead <= seekThresholdInBytes))
+            {
+                if (reader.ReadByte() == bytePattern[foundBytes])
+                {
+                    foundBytes++;
+
+                    if (foundBytes == bytePattern.Length)
+                    {
+                        // pattern found, reposition to pattern beginning
+                        Seek(reader.Position - bytePattern.Length);
+                        newOffset = reader.Position;
+                        return true;
+                    }
+                }
+                else
+                {
+                    foundBytes = 0;
+                }
+
+                ct.ThrowIfCancellationRequested();
+                bytesRead++;
+            }
+
+            // TODO what does the caller have to do in this case?
+            newOffset = reader.Position;
+            return false;
         }
     }
 }
