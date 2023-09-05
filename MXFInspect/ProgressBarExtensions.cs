@@ -13,7 +13,7 @@ namespace Myriadbits.MXFInspect
         {
             progressBar.Value = value;
 
-            if (value > 0)    // prevent ArgumentException error on value = 0
+            if (value > 0 && value > progressBar.Value)    // prevent ArgumentException error on value = 0
             {
                 progressBar.Value = value - 1;
                 progressBar.Value = value;
