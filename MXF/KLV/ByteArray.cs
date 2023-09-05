@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace Myriadbits.MXF
 {
     public class ByteArray : IEquatable<ByteArray>, IArrayLength
     {
-        private readonly byte[] theBytes;
+        private readonly ImmutableArray<byte> theBytes;
 
         [Browsable(false)]
         public int ArrayLength => theBytes.Length;
@@ -49,8 +50,7 @@ namespace Myriadbits.MXF
             }
             else
             {
-                theBytes = new byte[bytes.Length];
-                Buffer.BlockCopy(bytes, 0, theBytes, 0, bytes.Length);
+                theBytes = ImmutableArray.Create(bytes);
             }
         }
 
