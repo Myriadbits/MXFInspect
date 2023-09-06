@@ -27,6 +27,8 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+	// TODO add ULElement attributes
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.011b0100")]
     public class MXFAddress : MXFDescriptiveObject
 	{
 		private const string CATEGORYNAME = "Address";

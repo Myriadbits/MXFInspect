@@ -27,6 +27,8 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+    // TODO add ULElement attributes
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.01190100")]
     public class MXFContactsList : MXFDescriptiveObject
     {
         public readonly UL personObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x14, 0x00);

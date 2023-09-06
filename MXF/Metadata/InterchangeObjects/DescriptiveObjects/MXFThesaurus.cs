@@ -27,6 +27,7 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.017f1200")]
     public class MXFThesaurus : MXFDescriptiveObject
     {
         private const string CATEGORYNAME = "Thesaurus";
@@ -34,6 +35,7 @@ namespace Myriadbits.MXF
         public readonly UL thesaurusName_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x04, 0x03, 0x02, 0x01, 0x02, 0x02, 0x01, 0x00, 0x00);
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.03020102.02010000")]
         public string ThesaurusName { get; set; }
 
         public MXFThesaurus(MXFPack pack)

@@ -27,6 +27,7 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013a00")]
     public class MXFContact : MXFThesaurus
     {
         private const string CATEGORYNAME = "Contact";
@@ -36,6 +37,7 @@ namespace Myriadbits.MXF
         public readonly UL nameValueObjects_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x05, 0x06, 0x01, 0x01, 0x04, 0x05, 0x40, 0x1f, 0x02);
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010108.01011540.01020000")]
         public UUID ContactID { get; set; }
 
         public MXFContact(MXFPack pack)

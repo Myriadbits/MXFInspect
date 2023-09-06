@@ -27,6 +27,7 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.011a0400")]
     public class MXFLocation : MXFContact
     {
         private const string CATEGORYNAME = "Location";
@@ -36,9 +37,11 @@ namespace Myriadbits.MXF
 
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.07012002.02010000")]
         public string LocationDescription { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010104.07012002.03010000")]
         public string LocationKind { get; set; }
 
         public MXFLocation(MXFPack pack)
