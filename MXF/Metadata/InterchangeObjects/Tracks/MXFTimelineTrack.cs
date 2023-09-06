@@ -27,24 +27,38 @@ using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
+	[ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010101.01013b00")]
     public class MXFTimelineTrack : MXFTrack
 	{
 		private const string CATEGORYNAME = "TimeLineTrack";
 
 		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010102.05300405.00000000")]
 		public MXFRational EditRate { get; set; }
+		
 		[Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010102.07020103.01030000")]
 		public MXFPosition? Origin { get; set; }
+		
 		[Category(CATEGORYNAME)]
+		[ULElement("urn:smpte:ul:060e2b34.01010107.07020103.010c0000")]
 		public MXFPosition? MarkIn { get; set; }
+		
 		[Category(CATEGORYNAME)]
-		public MXFPosition? UserPosition { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010107.07020103.010d0000")]
+        public MXFPosition? UserPosition { get; set; }
+		
 		[Category(CATEGORYNAME)]
-		public MXFPosition? PackageMarkInPosition { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.0101010a.07020103.010e0000")]
+        public MXFPosition? PackageMarkInPosition { get; set; }
+		
 		[Category(CATEGORYNAME)]
-		public MXFPosition? MarkOut { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.01010107.07020103.02030000")]
+        public MXFPosition? MarkOut { get; set; }
+		
 		[Category(CATEGORYNAME)]
-		public MXFPosition? PackageMarkOutPosition { get; set; }
+        [ULElement("urn:smpte:ul:060e2b34.0101010a.07020103.02040000")]
+        public MXFPosition? PackageMarkOutPosition { get; set; }
 
 		public MXFTimelineTrack(MXFPack pack)
 			: base(pack, "Timeline Track")

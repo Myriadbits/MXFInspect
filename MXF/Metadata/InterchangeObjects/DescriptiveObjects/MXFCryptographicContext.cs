@@ -27,6 +27,7 @@ using System.ComponentModel;
 
 namespace Myriadbits.MXF
 {
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.02020000")]
     public class MXFCryptographicContext : MXFDescriptiveObject
     {
         private const string CATEGORYNAME = "CryptographicContext";
@@ -39,21 +40,27 @@ namespace Myriadbits.MXF
         public readonly UL mICCarriage_Key = new UL(0x06, 0x0e, 0x2b, 0x34, 0x01, 0x01, 0x01, 0x01, 0x0d, 0x0e, 0x01, 0x01, 0x07, 0x04, 0x03, 0x00);
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.01011511.00000000")]
         public UUID CryptographicContextID { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.02090301.01000000")]
         public AUID CipherAlgorithm { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.02090301.02000000")]
         public AUID CryptographicKeyID { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.02090302.01000000")]
         public AUID MICAlgorithm { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010109.06010102.02000000")]
         public AUID SourceContainerFormat { get; set; }
 
         [Category(CATEGORYNAME)]
+        [ULElement("urn:smpte:ul:060e2b34.01010101.0d0e0101.07040300")]
         public AUID MICCarriage { get; set; }
 
 

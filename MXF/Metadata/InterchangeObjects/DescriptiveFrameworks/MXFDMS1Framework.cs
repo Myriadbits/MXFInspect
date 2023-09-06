@@ -28,6 +28,8 @@ using Myriadbits.MXF.KLV;
 namespace Myriadbits.MXF
 {
     // TODO complete this class
+    // TODO add ULElement attributes
+    [ULGroup("urn:smpte:ul:060e2b34.027f0101.0d010401.017f0100")]
     public class MXFDMS1Framework : MXFDescriptiveFramework
     {
         private const string CATEGORYNAME = "DMS1Framework";
