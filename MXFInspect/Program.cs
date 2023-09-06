@@ -70,7 +70,7 @@ namespace Myriadbits.MXFInspect
             Log.Logger = loggerConfig.CreateLogger();
             Log.ForContext(typeof(Program)).Information($"Application started from '{Application.ExecutablePath}'");
             Log.ForContext(typeof(Program)).Information($"Application version: {Application.ProductVersion}");
-            Log.ForContext(typeof(Program)).Information($"Runtime Version: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
+            Log.ForContext(typeof(Program)).Information($".NET Runtime Version: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
             Log.ForContext(typeof(Program)).Information($"Operating System: {Environment.OSVersion}");
             Log.ForContext(typeof(Program)).Information($"Current Username: {Environment.UserName}, Computer Name: {Environment.MachineName}");
             Log.ForContext(typeof(Program)).Information($"Log path: '{LogDirectoryPath}'");

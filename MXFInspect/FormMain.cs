@@ -56,6 +56,8 @@ namespace Myriadbits.MXFInspect
             FillMRU();
             this.UpdateMenu();
             this.tslVersion.Text = $"Version: {typeof(FormMain).Assembly.GetName().Version.ToString(3)}";
+            this.tslNetRuntimeVersion.Text = $"{System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}";
+
             SetActivityText($"{SMPTERegisters.TotalEntriesCount:N0} SMPTE entries loaded");
             RefreshStatusStrip();
         }
@@ -190,8 +192,8 @@ namespace Myriadbits.MXFInspect
         {
             // Update the MRU
             AddFileToMRU(fileName);
-            
-            FileInfo fi = new FileInfo(fileName);  
+
+            FileInfo fi = new FileInfo(fileName);
 
             var fileParseMode = DetermineFileParseMode(fi);
 
