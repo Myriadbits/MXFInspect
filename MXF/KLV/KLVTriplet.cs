@@ -28,10 +28,7 @@ using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public class KLVTriplet<K, L, V> : MXFObject, IKLVTriplet<K, L, V>
-        where K : KLVKey
-        where L : ILength
-        where V : KLVValue
+    public class KLVTriplet : MXFObject
     {
         private const string CATEGORYNAME = "KLV";
         private const int CATEGORYPOS = 1;
@@ -41,25 +38,15 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Key part of KLV triplet")]
-        public virtual K Key { get; }
+        public virtual KLVKey Key { get; }
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length part of KLV triplet")]
-        public virtual L Length { get; }
+        public virtual ILength Length { get; }
 
         [Browsable(false)]
         [Description("Value part of KLV triplet")]
-        public virtual V Value { get; }
-
-        ///// <summary>
-        ///// Offset from beginning of the file (i.e. position of start of key within file)
-        ///// </summary>
-        //public override long Offset { get; protected set; }
-
-        ///// <summary>
-        ///// Total length of KLV (= sum of lengths of key, KLV-length and value)
-        ///// </summary>
-        //public override long TotalLength { get; protected set; }
+        public virtual byte[] Value { get; }
 
         /// <summary>
         /// Offset of the value (=data), i.e. where the payload begins.
@@ -75,7 +62,7 @@ namespace Myriadbits.MXF
         public long RelativeValueOffset { get; }
 
 
-        public KLVTriplet(K key, L length, long offset, Stream stream) : base(offset)
+        public KLVTriplet(KLVKey key, ILength length, long offset, Stream stream) : base(offset)
         {
             Key = key;
             Length = length;

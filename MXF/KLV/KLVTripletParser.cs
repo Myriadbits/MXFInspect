@@ -31,19 +31,16 @@ using System.Threading;
 
 namespace Myriadbits.MXF
 {
-    public abstract class KLVTripletParser<T, K, L, V> where T : KLVTriplet<K, L, V>
-        where K : KLVKey
-        where L : ILength
-        where V : KLVValue
+    public abstract class KLVTripletParser<T> where T : KLVTriplet
     {
         private long currentOffset = 0;
         private readonly long baseOffset = 0;
 
         protected readonly IKLVStreamReader reader;
         protected readonly Stream klvStream;
-        protected abstract K ParseKLVKey();
-        protected abstract L ParseKLVLength();
-        protected abstract T InstantiateKLV(K key, L length, long offset, Stream stream);
+        protected abstract KLVKey ParseKLVKey();
+        protected abstract ILength ParseKLVLength();
+        protected abstract T InstantiateKLV(KLVKey key, ILength length, long offset, Stream stream);
 
         public T Current { get; protected set; }
 
@@ -97,8 +94,8 @@ namespace Myriadbits.MXF
 
         protected T CreateKLV(long offset)
         {
-            K key;
-            L length;
+            KLVKey key;
+            ILength length;
 
             Seek(offset);
 
@@ -130,7 +127,7 @@ namespace Myriadbits.MXF
                 // this check does not make sense!
                 if (klvStream is FileStream)
                 {
-                    Log.ForContext<KLVTripletParser<T, K, L, V>>().Error($"Substream length longer than parent stream, i.e. file finishes before last klv triplet.\r\nFile finishes @{klvStream.Length} while last KLV triplet with length {subStreamLength} should finish @{offset + subStreamLength}");
+                    Log.ForContext<KLVTripletParser<T>>().Error($"Substream length longer than parent stream, i.e. file finishes before last klv triplet.\r\nFile finishes @{klvStream.Length} while last KLV triplet with length {subStreamLength} should finish @{offset + subStreamLength}");
 
                     long truncatedLength = klvStream.Length - offset;
                     Stream truncatedStream = new SubStream(klvStream, offset, truncatedLength);

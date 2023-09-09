@@ -31,7 +31,7 @@ using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFLocalTagParser : KLVTripletParser<MXFLocalTag, KLVKey, KLVLength, KLVValue>
+    public class MXFLocalTagParser : KLVTripletParser<MXFLocalTag>
     {
         public KeyLengths KeyLength { get;}
 
@@ -53,9 +53,9 @@ namespace Myriadbits.MXF
             return new KLVLength(LengthEncoding, reader.ReadBytes((int)LengthEncoding));
         }
 
-        protected override MXFLocalTag InstantiateKLV(KLVKey key, KLVLength length, long offset, Stream stream)
+        protected override MXFLocalTag InstantiateKLV(KLVKey key, ILength length, long offset, Stream stream)
         {
-            return new MXFLocalTag(key, length, offset, stream);
+            return new MXFLocalTag(key, (KLVLength)length, offset, stream);
         }
     }
 }

@@ -28,7 +28,7 @@ using System.IO;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPack : KLVTriplet<UL, KLVBERLength, KLVValue>
+    public class MXFPack : KLVTriplet
     {
         private const string CATEGORYNAME = "MXFPack";
         private const int CATEGORYPOS = 1;
@@ -36,12 +36,12 @@ namespace Myriadbits.MXF
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Universal label as key")]
         // override not really needed but for assigning the sortedcategory attribute
-        public override UL Key => base.Key;
+        public override UL Key => (UL)base.Key;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("BER Length")]
         // override not really needed but for assigning the sortedcategory attribute
-        public override KLVBERLength Length => base.Length;
+        public override KLVBERLength Length => (KLVBERLength)base.Length;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Consecutive pack number")]

@@ -33,7 +33,7 @@ using System.Threading;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPackParser : KLVTripletParser<MXFPack, UL, KLVBERLength, KLVValue>
+    public class MXFPackParser : KLVTripletParser<MXFPack>
     {
         private long currentPackNumber = 0;
 
@@ -109,9 +109,9 @@ namespace Myriadbits.MXF
             }
         }
 
-        protected override MXFPack InstantiateKLV(UL key, KLVBERLength length, long offset, Stream stream)
+        protected override MXFPack InstantiateKLV(KLVKey key, ILength length, long offset, Stream stream)
         {
-            return new MXFPack(key, length, offset, stream);
+            return new MXFPack((UL)key, (KLVBERLength) length, offset, stream);
         }
     }
 }

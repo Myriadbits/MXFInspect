@@ -36,7 +36,7 @@ using static Myriadbits.MXF.KLVKey;
 namespace Myriadbits.MXF
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class MXFLocalTag : KLVTriplet<KLVKey, KLVLength, KLVValue>
+    public class MXFLocalTag : KLVTriplet
     {
         private const string CATEGORYNAME = "LocalTag";
         private const int CATEGORYPOS = 1;
@@ -47,7 +47,7 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         // override not really needed but for assigning the sortedcategory attribute
-        public override KLVLength Length => base.Length;
+        public override KLVLength Length => (KLVLength)base.Length;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         public AUID AliasUID { get; set; }
