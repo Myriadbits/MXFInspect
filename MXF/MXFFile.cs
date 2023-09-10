@@ -288,7 +288,7 @@ namespace Myriadbits.MXF
                     parser.SeekToNext();
                     lastgoodPos = parser.Offset;
 
-                    const int RUN_IN_THRESHOLD = 66536 + 1;
+                    const int RUN_IN_THRESHOLD = 65536 + 1; // +1 for tolerance
                     if (!parser.SeekToNextPotentialKey(out long newOffset, RUN_IN_THRESHOLD, ct))
                     {
                         // we have reached end of file, exceptional case so handle it
