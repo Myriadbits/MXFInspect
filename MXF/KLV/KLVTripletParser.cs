@@ -26,6 +26,7 @@ using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Serilog;
 using System;
+using System.Collections.Immutable;
 using System.IO;
 using System.Threading;
 
@@ -47,6 +48,7 @@ namespace Myriadbits.MXF
         public long Offset { get { return currentOffset; } }
 
         public long RemainingBytesCount { get { return klvStream.Length - currentOffset; } }
+        
         public KLVTripletParser(Stream stream)
         {
             klvStream = stream;
@@ -145,7 +147,12 @@ namespace Myriadbits.MXF
             return SeekToBytePattern(out newOffset, UL.ValidULPrefix, seekThresholdInBytes, ct);
         }
 
-        public bool SeekToBytePattern(out long newOffset, byte[] bytePattern, long seekThresholdInBytes = 0, CancellationToken ct = default)
+        public bool SeekToPotentialPartitionKey(out long newOffset, long seekThresholdInBytes = 0, CancellationToken ct = default)
+        {
+            return SeekToBytePattern(out newOffset, UL.ValidPartitionPrefix, seekThresholdInBytes, ct);
+        }
+
+        public bool SeekToBytePattern(out long newOffset, ImmutableArray<byte> bytePattern, long seekThresholdInBytes = 0, CancellationToken ct = default)
         {
             int foundBytes = 0;
             int bytesRead = 0;
