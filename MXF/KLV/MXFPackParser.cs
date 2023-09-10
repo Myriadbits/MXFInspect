@@ -60,6 +60,8 @@ namespace Myriadbits.MXF
                 Log.ForContext<MXFPackParser>().Error($"Exception occured while parsing {pack}: {ex.InnerException}", pack);
                 MXFUnparseablePack unparseablePack = new MXFUnparseablePack(pack, ex.InnerException);
                 unparseablePack.Number = currentPackNumber;
+                // seek to last good position, i.e. after current/last klv/pack
+                SeekToEndOfCurrentKLV();
                 throw new UnparseablePackException(unparseablePack, $"Exception occured while parsing {pack}", pack.Offset, ex.InnerException);
             }
             finally

@@ -67,20 +67,8 @@ namespace Myriadbits.MXF
             Current = klv;
 
             // advance to next pack
-            SeekToNext();
+            SeekToEndOfCurrentKLV();
             return klv;
-        }
-
-        public void SeekToNext()
-        {
-            if (Current != null)
-            {
-                Seek(currentOffset + Current.TotalLength);
-            }
-            else
-            {
-                Seek(0);
-            }
         }
 
         public bool HasNext()
@@ -92,6 +80,18 @@ namespace Myriadbits.MXF
         {
             reader.Seek(position);
             currentOffset = position;
+        }
+
+        public void SeekToEndOfCurrentKLV()
+        {
+            if (Current != null)
+            {
+                Seek(Current.Offset - baseOffset + Current.TotalLength);
+            }
+            else
+            {
+                Seek(0);
+            }
         }
 
         protected T CreateKLV(long offset)
@@ -108,7 +108,10 @@ namespace Myriadbits.MXF
             }
             catch (Exception e)
             {
-                throw new KLVKeyParsingException("Exception occured during parsing of key", klvStream.Position, e);
+                // save faulty position and  seek to last good position, i.e. after current/last klv/pack
+                long faultyPosition = klvStream.Position;
+                SeekToEndOfCurrentKLV();
+                throw new KLVKeyParsingException("Exception occured during parsing of key", faultyPosition, e);
             }
             try
             {
@@ -117,7 +120,10 @@ namespace Myriadbits.MXF
             }
             catch (Exception e)
             {
-                throw new KLVLengthParsingException("Exception occured during parsing of length", klvStream.Position, e);
+                // save faulty position and  seek to last good position, i.e. after current/last klv/pack
+                long faultyPosition = klvStream.Position;
+                SeekToEndOfCurrentKLV();
+                throw new KLVLengthParsingException("Exception occured during parsing of length", faultyPosition, e);
             }
 
             long subStreamLength = key.ArrayLength + length.ArrayLength + length.Value;
@@ -134,6 +140,7 @@ namespace Myriadbits.MXF
                     long truncatedLength = klvStream.Length - offset;
                     Stream truncatedStream = new SubStream(klvStream, offset, truncatedLength);
                     var truncatedKLV = new TruncatedKLV(key, length, baseOffset + currentOffset, truncatedStream);
+                    
                     throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", currentOffset, truncatedKLV, null);
                 }
             }

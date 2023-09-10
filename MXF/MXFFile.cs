@@ -273,7 +273,7 @@ namespace Myriadbits.MXF
                         }
                         else
                         {
-                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Non-KLV Data", lastgoodPos, lastgoodPos + parser.Current.Offset));
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Non-KLV Data", lastgoodPos, parser.Current.Offset - lastgoodPos));
                         }
                         streambroken = false;
                     }
@@ -283,9 +283,6 @@ namespace Myriadbits.MXF
                 catch (KLVKeyParsingException ex)
                 {
                     streambroken = true;
-
-                    // seek to last good position, i.e. after current/last klv/pack
-                    parser.SeekToNext();
                     lastgoodPos = parser.Offset;
 
                     const int RUN_IN_THRESHOLD = 65536 + 1; // +1 for tolerance
