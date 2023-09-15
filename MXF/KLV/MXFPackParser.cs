@@ -57,7 +57,7 @@ namespace Myriadbits.MXF
             catch (TargetInvocationException ex)
             {
                 // Exception raised during ctor via Activator.CreateInstance, therefore unparseable pack
-                Log.ForContext(typeof(MXFPackParser)).Error($"Exception occured while parsing {pack}: {ex.InnerException}", pack);
+                Log.ForContext<MXFPackParser>().Error($"Exception occured while parsing {pack}: {ex.InnerException}", pack);
                 MXFUnparseablePack unparseablePack = new MXFUnparseablePack(pack, ex.InnerException);
                 unparseablePack.Number = currentPackNumber; 
                 throw new UnparseablePackException(unparseablePack, $"Exception occured while parsing {pack}", pack.Offset, ex.InnerException);

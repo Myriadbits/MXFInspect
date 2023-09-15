@@ -119,7 +119,7 @@ namespace Myriadbits.MXFInspect
                 catch (InvalidCastException ex)
                 {
 
-                    Log.ForContext(typeof(TreeListViewBase<T>)).Error($"Exception occured during conversion of offset: {@ex}", ex);
+                    Log.ForContext<TreeListViewBase<T>>().Error($"Exception occured during conversion of offset: {@ex}", ex);
                     return "";
                 }
                 return ShowOffsetAsHex ? "0x" + offset.ToString("X"+ maxDigitCount) : $"{offset:N0}";
