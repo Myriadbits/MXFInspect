@@ -45,11 +45,14 @@ namespace Myriadbits.MXF
 
         protected override KLVKey ParseKLVKey()
         {
+            // TODO think of possible exceptions raised here 
             return new KLVKey(KeyLength, reader.ReadBytes((int)KeyLength));
         }
 
         protected override KLVLength ParseKLVLength()
         {
+            // TODO think of possible exceptions raised here 
+            // e.g. what if end of stream and ReadBytes returns less bytes than LengthEncoding -> exception from ctor
             return new KLVLength(LengthEncoding, reader.ReadBytes((int)LengthEncoding));
         }
 

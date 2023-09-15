@@ -29,7 +29,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
+using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
@@ -74,46 +74,78 @@ namespace Myriadbits.MXF
 
         protected override UL ParseKLVKey()
         {
-            return reader.ReadUL();
+            // before parsing check if we have enough bytes to read
+            if (RemainingBytesCount >= (int)KeyLengths.SixteenBytes)
+            {
+                return reader.ReadUL();
+            }
+            else
+            {
+                // return to last KLV
+                SeekToEndOfCurrentKLV();
+                var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
+                throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key.", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
+            }
         }
 
         protected override KLVBERLength ParseKLVLength()
         {
-            byte[] bytes = new byte[] { reader.ReadByte() };
-
-            switch (bytes[0])
+            // we need at least one byte to read
+            if (RemainingBytesCount >= 1)
             {
-                case <= 0x7F:
-                    // short form, size = length
-                    return new KLVBERLength(bytes[0], bytes);
+                byte[] bytes = new byte[] { reader.ReadByte() };
 
-                case 0x80:
-                    // Indefinite form
-                    // LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
-                    // TODO is this the correct way to handle this?
-                    throw new NotSupportedException("BER Indefinite Form is not supported");
+                switch (bytes[0])
+                {
+                    case <= 0x7F:
+                        // short form, size = length
+                        return new KLVBERLength(bytes[0], bytes);
 
-                case > 0x80:
+                    case 0x80:
+                        // Indefinite form
+                        // LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
+                        // TODO is this the correct way to handle this?
+                        throw new NotSupportedException("BER Indefinite Form is not supported");
 
-                    // long form: size is number of octets following, 1 + x octets
-                    int additionalOctetsCount = bytes[0] - 0x80;
+                    case > 0x80:
 
-                    // SMPTE 379M 5.3.4 guarantee that additional octets must not exceed 8 bytes
-                    if (additionalOctetsCount > 8)
-                    {
-                        throw new NotSupportedException($"BER Length exceeds 8 octets (not valid according to SMPTE 379M 5.3.4). Found at offset {reader.Position}");
-                    }
+                        // long form: size is number of octets following, 1 + x octets
+                        int additionalOctetsCount = bytes[0] - 0x80;
 
-                    byte[] additionalOctets = reader.ReadBytes(additionalOctetsCount);
-                    long lengthValue = additionalOctets.ToLong();
-                    bytes = bytes.Concat(additionalOctets).ToArray();
-                    return new KLVBERLength(lengthValue, bytes);
+                        // check again if the remaining bytes from stream are at least as many as additional octets
+                        if (RemainingBytesCount >= additionalOctetsCount)
+                        {
+                            // SMPTE 379M 5.3.4 guarantee that additional octets must not exceed 8 bytes
+                            if (additionalOctetsCount > 8)
+                            {
+                                throw new NotSupportedException($"BER Length exceeds 8 octets (not valid according to SMPTE 379M 5.3.4). Found at offset {reader.Position}");
+                            }
+
+                            byte[] additionalOctets = reader.ReadBytes(additionalOctetsCount);
+                            long lengthValue = additionalOctets.ToLong();
+                            bytes = bytes.Concat(additionalOctets).ToArray();
+                            return new KLVBERLength(lengthValue, bytes);
+                        }
+                        else
+                        {
+                            SeekToEndOfCurrentKLV();
+                            var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
+                            throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length.", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
+                        }
+                }
             }
+            else
+            {
+                SeekToEndOfCurrentKLV();
+                var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
+                throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length.", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
+            }
+
         }
 
         protected override MXFPack InstantiateKLV(KLVKey key, ILength length, long offset, Stream stream)
         {
-            return new MXFPack((UL)key, (KLVBERLength) length, offset, stream);
+            return new MXFPack((UL)key, (KLVBERLength)length, offset, stream);
         }
     }
 }

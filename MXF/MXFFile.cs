@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 using Myriadbits.MXF.Exceptions;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -203,7 +204,7 @@ namespace Myriadbits.MXF
                 {
                     case EndOfKLVStreamException eofEx:
                         result = new MXFValidationResult("KLVStream");
-                        result.Object = eofEx.TruncatedKLV;
+                        result.Object = eofEx.TruncatedObject;
                         result.SetError(eofEx.Message, eofEx.Offset);
                         break;
 
@@ -269,7 +270,7 @@ namespace Myriadbits.MXF
                     {
                         if (lastgoodPos == 0)
                         {
-                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Run-In", lastgoodPos, lastgoodPos + parser.Current.Offset));
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Run-In", 0, parser.Current.Offset));
                         }
                         else
                         {
@@ -278,26 +279,38 @@ namespace Myriadbits.MXF
                         streambroken = false;
                     }
                 }
-
-                // TODO be more selective with the exception or catch also other exceptions
-                catch (KLVKeyParsingException ex)
+                catch (KLVKeyParsingException ex) when (parser.Current == null)
                 {
+                    // Possible Run-In found
                     streambroken = true;
-                    lastgoodPos = parser.Offset;
-
+                    lastgoodPos = 0;
                     const int RUN_IN_THRESHOLD = 65536 + 1; // +1 for tolerance
-                    if (!parser.SeekToNextPotentialKey(out long newOffset, RUN_IN_THRESHOLD, ct))
+                    if (!parser.SeekToPotentialPartitionKey(out long newOffset, RUN_IN_THRESHOLD, ct))
                     {
-                        // we have reached end of file, exceptional case so handle it
-                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", parser.Offset, null);
+                        // we have reached end of file and not found a partition key
+                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", 0, null);
                     }
                     continue;
                 }
-                catch (EndOfKLVStreamException ex)
+                catch (Exception ex) when (ex is KLVKeyParsingException || ex is KLVLengthParsingException)
                 {
-                    Exceptions.Add(ex);
-                    mxfPacks.Add(ex.TruncatedKLV);
-                    break;
+                    streambroken = true;
+                    lastgoodPos = parser.Current?.Offset + parser.Current?.TotalLength ?? 0;
+                    if (ex is KLVKeyParsingException)
+                    {
+                        parser.SeekToEndOfCurrentKLV();
+                    }
+                    if (!parser.SeekToNextPotentialKey(out long newOffset, 0, ct))
+                    {
+                        // we have reached end of file and there is an error at L part
+                        parser.SeekToEndOfCurrentKLV();
+                        var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", parser.Current?.Offset ?? 0, parser.RemainingBytesCount);
+                        var exEOF = new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length.", parser.Current?.Offset ?? 0 + parser.RemainingBytesCount, truncatedObject, null);
+                        Exceptions.Add(exEOF);
+                        mxfPacks.Add(exEOF.TruncatedObject);
+                        break;
+                    }
+                    continue;
                 }
                 catch (UnparseablePackException ex)
                 {
@@ -305,6 +318,18 @@ namespace Myriadbits.MXF
                     mxfPacks.Add(ex.UnparseablePack);
                     continue;
                 }
+                catch (EndOfKLVStreamException ex) when (parser.Current == null)
+                {
+                    // we have reached end of file and first klv is corrupted or not even there
+                    throw new NotAnMXFFileException("Either the file is truncated at the first KLV triplet or it is simply not an MXF file.", 0, null);
+                }
+                catch (EndOfKLVStreamException ex)
+                {
+                    Exceptions.Add(ex);
+                    mxfPacks.Add(ex.TruncatedObject);
+                    break;
+                }
+
 
                 // Only report progress when the percentage has changed
                 currentPercentage = (int)((parser.Current.Offset + parser.Current.TotalLength) * 100 / this.File.Length);

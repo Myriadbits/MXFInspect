@@ -45,9 +45,9 @@ namespace Myriadbits.MXF
 
         public T Current { get; protected set; }
 
-        public long Offset { get { return currentOffset; } }
+        //public long Offset { get { return currentOffset; } }
 
-        public long RemainingBytesCount { get { return klvStream.Length - currentOffset; } }
+        public long RemainingBytesCount { get { return klvStream.Length - klvStream.Position; } }
         
         public KLVTripletParser(Stream stream)
         {
@@ -103,33 +103,25 @@ namespace Myriadbits.MXF
 
             try
             {
-                // TODO before parsing check if we have enough bytes to read
                 key = ParseKLVKey();
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not EndOfKLVStreamException)
             {
-                // save faulty position and  seek to last good position, i.e. after current/last klv/pack
-                long faultyPosition = klvStream.Position;
-                SeekToEndOfCurrentKLV();
-                throw new KLVKeyParsingException("Exception occured during parsing of key", faultyPosition, e);
+                throw new KLVKeyParsingException("Exception occured during parsing of key", klvStream.Position, e);
             }
             try
             {
-                // TODO before parsing check if we have enough bytes to read
                 length = ParseKLVLength();
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not EndOfKLVStreamException)
             {
-                // save faulty position and  seek to last good position, i.e. after current/last klv/pack
-                long faultyPosition = klvStream.Position;
-                SeekToEndOfCurrentKLV();
-                throw new KLVLengthParsingException("Exception occured during parsing of length", faultyPosition, e);
+                throw new KLVLengthParsingException("Exception occured during parsing of length", klvStream.Position, e);
             }
 
             long subStreamLength = key.ArrayLength + length.ArrayLength + length.Value;
 
             // check if substream not longer than the parent stream
-            if (RemainingBytesCount < subStreamLength)
+            if (RemainingBytesCount < length.Value)
             {
                 // TODO klvstream is always a filestream, right?
                 // this check does not make sense!
@@ -164,7 +156,7 @@ namespace Myriadbits.MXF
             int foundBytes = 0;
             int bytesRead = 0;
 
-            // TODO implement Boyer-Moore algorithm
+            // TODO consider Boyer-Moore search algorithm
             while (!reader.EOF && (seekThresholdInBytes == 0 || bytesRead <= seekThresholdInBytes))
             {
                 if (reader.ReadByte() == bytePattern[foundBytes])
