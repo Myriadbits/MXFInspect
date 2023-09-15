@@ -105,7 +105,7 @@ namespace Myriadbits.MXF
             {
                 key = ParseKLVKey();
             }
-            catch (Exception e) when (e is not EndOfKLVStreamException)
+            catch (Exception e)
             {
                 throw new KLVKeyParsingException("Exception occured during parsing of key", klvStream.Position, e);
             }
@@ -113,7 +113,7 @@ namespace Myriadbits.MXF
             {
                 length = ParseKLVLength();
             }
-            catch (Exception e) when (e is not EndOfKLVStreamException)
+            catch (Exception e)
             {
                 throw new KLVLengthParsingException("Exception occured during parsing of length", klvStream.Position, e);
             }

@@ -84,7 +84,7 @@ namespace Myriadbits.MXF
                 // return to last KLV
                 SeekToEndOfCurrentKLV();
                 var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
-                throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key.", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
+                throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key(K).", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
             }
         }
 
@@ -130,7 +130,7 @@ namespace Myriadbits.MXF
                         {
                             SeekToEndOfCurrentKLV();
                             var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
-                            throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length.", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
+                            throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length(L).", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
                         }
                 }
             }
