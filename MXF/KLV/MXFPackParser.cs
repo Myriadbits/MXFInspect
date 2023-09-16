@@ -102,10 +102,8 @@ namespace Myriadbits.MXF
                         return new KLVBERLength(bytes[0], bytes);
 
                     case 0x80:
-                        // Indefinite form
-                        // LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
-                        // TODO is this the correct way to handle this?
-                        throw new NotSupportedException("BER Indefinite Form is not supported");
+                        // Indefinite form 
+                        return new KLVBERLength(bytes[0], bytes);
 
                     case > 0x80:
 

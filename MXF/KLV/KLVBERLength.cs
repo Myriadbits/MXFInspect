@@ -70,7 +70,10 @@ namespace Myriadbits.MXF
 
                 case 0x80:
                     BERForm = BERForms.Indefinite;
-                    throw new NotSupportedException("BER Indefinite Length is not supported");
+                    AdditionalOctets = 0;
+                    // Length should be -1 but is set to 0 instead
+                    Value = 0;
+                    break;
 
                 case <= 0x7F when bytes.Length > 1:
                     throw new ArgumentException($"First byte indicates BER Long Form, but byte array consists of only one byte");
