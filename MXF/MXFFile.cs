@@ -270,11 +270,11 @@ namespace Myriadbits.MXF
                     {
                         if (lastgoodPos == 0)
                         {
-                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Run-In", 0, parser.Current.Offset));
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFRunIn(parser.Current.Offset));
                         }
                         else
                         {
-                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNamedObject("Non-KLV Data", lastgoodPos, parser.Current.Offset - lastgoodPos));
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNonKLV(lastgoodPos, parser.Current.Offset - lastgoodPos));
                         }
                         streambroken = false;
                     }
@@ -420,7 +420,7 @@ namespace Myriadbits.MXF
                     case MXFPartition partition:
                         if (partitionRoot == null)
                         {
-                            partitionRoot = new MXFNamedObject("Partitions", partition.Offset);
+                            partitionRoot = new MXFObjectCollection("Partitions", partition.Offset);
                             this.AddChild(partitionRoot);
                         }
                         currentPartition = partition;

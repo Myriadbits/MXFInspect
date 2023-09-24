@@ -81,7 +81,6 @@ namespace Myriadbits.MXF
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="reader"></param>
         protected MXFObject(long offset)
         {
             this.Offset = offset;
