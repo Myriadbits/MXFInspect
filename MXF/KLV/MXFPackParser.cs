@@ -52,7 +52,11 @@ namespace Myriadbits.MXF
             MXFPack pack = base.GetNext();
             try
             {
-                pack = MXFPackFactory.CreateStronglyTypedPack(pack);
+                if (pack.Length.BERForm != KLVBERLength.BERForms.Indefinite)
+                {
+                    pack = MXFPackFactory.CreateStronglyTypedPack(pack);
+                }
+
             }
             catch (TargetInvocationException ex)
             {
