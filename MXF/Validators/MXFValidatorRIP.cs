@@ -24,7 +24,6 @@
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,14 +33,20 @@ namespace Myriadbits.MXF
 {
     public class MXFValidatorRIP : MXFValidator
     {
+        private ulong runInHeaderOffset = 0;
 
         public MXFValidatorRIP(MXFFile file) : base(file)
         {
-
+            // if there is a RunIn consider it for the partition offsets
+            var runIn = File.Descendants().OfType<MXFRunIn>().SingleOrDefault();
+            if (runIn != null)
+            {
+                runInHeaderOffset = (ulong)runIn.TotalLength;
+            }
         }
 
         /// <summary>
-        /// Check if the RIP is present and valid
+        /// Check if klv stream contains errors
         /// </summary>
         /// <param name="this.File"></param>
         /// <param name="results"></param>
@@ -54,16 +59,16 @@ namespace Myriadbits.MXF
                 var retval = new List<MXFValidationResult>();
                 Stopwatch sw = Stopwatch.StartNew();
 
-                this.Description = "Validating partitions";
+                this.Description = "Validating RIP";
 
                 MXFRIP rip = this.File.GetRIP();
 
+                IEnumerable<MXFEntryRIP> ripEntries = rip?.Children.OfType<MXFEntryRIP>();
+
+                // TODO check if RIP is unique
+
                 if (rip != null)
                 {
-                    int ripEntryCount = rip.Children.Count;
-                    int partitionCount = this.File.GetPartitions().Count();
-
-
                     retval.Add(new MXFValidationResult
                     {
                         Category = CATEGORY_NAME,
@@ -72,7 +77,24 @@ namespace Myriadbits.MXF
                         Result = "Random Index Pack present"
                     });
 
-                    if (ripEntryCount != partitionCount)
+
+                    if (!AreAllRIPChildrenRIPEntries(rip))
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = CATEGORY_NAME,
+                            Object = rip,
+                            Severity = MXFValidationSeverity.Error,
+                            Result = $"The RIP contains extraneous (non RIP entries) elements"
+                        });
+                    }
+
+
+                    // for every partition there must be a RIP entry
+                    // TODO make error more explicit -> "no RIP entry for partion #X"
+                    int ripEntryCount = rip.Children.Count;
+                    int partitionCount = this.File.GetPartitions().Count();
+                    if (!RIPEntryCountEqualsPartitionCount(rip))
                     {
                         retval.Add(new MXFValidationResult
                         {
@@ -83,13 +105,12 @@ namespace Myriadbits.MXF
                         });
                     }
 
+                    // check validity of all RIP entries
                     for (int n = 0; n < ripEntryCount; n++)
                     {
                         if (rip.Children[n] is MXFEntryRIP ripEntry)
                         {
-
-                            MXFPartition partition = File.GetPartitions().FirstOrDefault(p => (ulong)p.Offset == ripEntry.PartitionOffset);
-                            if (partition == null)
+                            if (!IsRIPEntryPointingToPartition(ripEntry))
                             {
                                 retval.Add(new MXFValidationResult
                                 {
@@ -102,7 +123,20 @@ namespace Myriadbits.MXF
                         }
                     }
 
+                    // check if RIP entries are ordered ascending
+                    if (!AreAllRIPEntriesAscending(rip))
+                    {
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = CATEGORY_NAME,
+                            Object = rip,
+                            Severity = MXFValidationSeverity.Error,
+                            Result = $"RIP entries are not in ascending Byte Offset order."
+                        });
+                    }
+
                     // TODO check DeclaredTotalLength against effective TotalLength
+                    // really neccessary? would be caught earlier as pack not parseable, i.e. exception at ctor
                 }
                 Log.ForContext<MXFValidatorRIP>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
                 return retval;
@@ -111,6 +145,44 @@ namespace Myriadbits.MXF
             return result;
 
 
+        }
+
+        public bool IsRIPEntryPointingToPartition(MXFEntryRIP ripEntry)
+        {
+            // TODO beware of SingleOrDefault
+            return File.GetPartitions().SingleOrDefault(p => (ulong)p.Offset == ripEntry.PartitionOffset + runInHeaderOffset) != null;
+        }
+
+        public bool AreAllRIPChildrenRIPEntries(MXFRIP rip)
+        {
+            return rip.Children.All(e => e is MXFEntryRIP);
+        }
+
+        // The pairs shall be stored in ascending Byte Offset order
+        public bool AreAllRIPEntriesAscending(MXFRIP rip)
+        {
+            var ripEntries = GetRIPEntries(rip);
+            var orderedRipEntries = ripEntries.OrderBy(e => e.PartitionOffset);
+            return Enumerable.SequenceEqual(ripEntries, orderedRipEntries);
+        }
+
+        // Every Partition shall be indexed if the Random Index Pack exists.
+        public bool RIPEntryCountEqualsPartitionCount(MXFRIP rip)
+        {
+            int ripEntryCount = rip.Children.Count;
+            int partitionCount = this.File.GetPartitions().Count();
+            return ripEntryCount == partitionCount;
+        }
+
+        public IEnumerable<MXFEntryRIP> GetRIPEntries(MXFRIP rip)
+        {
+            return rip.Children.OfType<MXFEntryRIP>();
+        }
+
+        public bool IsRIPPresent()
+        {
+            // TODO beware of SingleOrDefault inside GetRip()
+            return File.GetRIP() != null;
         }
     }
 }
