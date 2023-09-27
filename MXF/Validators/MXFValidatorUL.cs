@@ -67,7 +67,7 @@ namespace Myriadbits.MXF
 
                     if (klv.Key.IdentifiesPrivatelyRegisteredUL())
                     {
-                        valResult.Result = $"{klv.Key.Name} {klv.Key}";
+                        valResult.Result = $"{klv.Key}";
                     }
                     retval.Add(valResult);
                 }
