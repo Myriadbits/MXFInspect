@@ -33,10 +33,16 @@ namespace Myriadbits.MXF
 {
     public class MXFValidatorPartitions : MXFValidator
     {
+        private ulong runInHeaderOffset = 0;
 
         public MXFValidatorPartitions(MXFFile file) : base(file)
         {
-
+            // if there is a RunIn consider it for the partition offsets
+            var runIn = File.Descendants().OfType<MXFRunIn>().SingleOrDefault();
+            if (runIn != null)
+            {
+                runInHeaderOffset = (ulong)runIn.TotalLength;
+            }
         }
 
         public bool AnyPartitionsPresent()
@@ -125,15 +131,16 @@ namespace Myriadbits.MXF
 
         public bool IsThisPartitionValueCorrect(MXFPartition p)
         {
-            return (ulong)p.Offset == p.ThisPartition;
+            return p.ThisPartition + runInHeaderOffset == (ulong)p.Offset;
         }
 
         public bool IsPreviousPartitionValueCorrect(MXFPartition p)
         {
             if (p.PreviousSibling() is MXFPartition prev)
             {
-                return p.PreviousPartition == (ulong)prev.Offset;
+                return p.PreviousPartition + runInHeaderOffset == (ulong)prev.Offset;
             }
+            // previous partition is/points to header partition
             else return p.PreviousPartition == 0;
         }
 
@@ -143,12 +150,13 @@ namespace Myriadbits.MXF
             {
                 var footer = File.GetFooterPartition();
 
-                // In Open Partitions, the value shall be as correct or zero(0)
+                // In Open Partitions, the value shall be as defined in Section 7.1 or zero(0).
+                // If the Footer Partition is not present in the file then the value of this Property shall be zero(0).
                 if (IsOpen(p))
                 {
-                    return p.FooterPartition == (ulong)footer.Offset || p.FooterPartition == 0;
+                    return (p.FooterPartition + runInHeaderOffset == (ulong)footer.Offset)  || p.FooterPartition == 0;
                 }
-                return p.FooterPartition == (ulong)footer.Offset;
+                return p.FooterPartition + runInHeaderOffset == (ulong)footer.Offset;
             }
             else
             {
@@ -369,25 +377,26 @@ namespace Myriadbits.MXF
                                 Result = $"Footer Partition contains Index Table Segments"
                             });
                         }
-                    }
-                    //else
-                    //{
-                    //    retval.Add(new MXFValidationResult
-                    //    {
-                    //        Category = CATEGORY_NAME,
-                    //        Object = this.File.GetPartitions().Last(),
-                    //        Severity = MXFValidationSeverity.Error,
-                    //        Result = "Invalid partition structure. The last partition is not a Footer Partition"
-                    //    });
-                    //}
 
+                        // If there is a footer then it must be closed
+                        var footer = File.GetFooterPartition();
+                        if (IsOpen(footer))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Category = CATEGORY_NAME,
+                                Object = footer,
+                                Severity = MXFValidationSeverity.Success,
+                                Result = $"The Footer Partition, if present, must be closed"
+                            });
+                        }
+                    }
 
                     // *****************************************************
                     // checks for all partitions 
 
                     foreach (var p in this.File.GetPartitions())
                     {
-                        // TODO consider also RunIn
                         if (!IsThisPartitionValueCorrect(p))
                         {
                             retval.Add(new MXFValidationResult
@@ -399,10 +408,6 @@ namespace Myriadbits.MXF
                             });
                         }
 
-                        // TODO consider also RunIn
-                        // The number of the previous Partition in the
-                        // sequence of Partitions(as a byte offset relative
-                        // to the start of the Header Partition).
                         if (!IsPreviousPartitionValueCorrect(p))
                         {
                             retval.Add(new MXFValidationResult
@@ -416,7 +421,6 @@ namespace Myriadbits.MXF
 
                         if (IsFooterPartitionPresent() && IsFooterPartitionUnique())
                         {
-                            // TODO consider also RunIn
                             // TODO Consider if Partition is open
                             if (!IsFooterPartitionValueCorrect(p))
                             {
