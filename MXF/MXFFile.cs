@@ -192,7 +192,8 @@ namespace Myriadbits.MXF
                 new MXFValidatorInfo(this),
                 new MXFValidatorPartitions(this),
                 new MXFValidatorRIP(this),
-                new MXFValidatorUL(this)
+                new MXFValidatorUL(this),
+                new MXFValidatorKLVStream(this)
             };
 
             // add exceptions
