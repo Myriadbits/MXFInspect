@@ -68,7 +68,16 @@ namespace Myriadbits.MXF
             Length = length;
             RelativeValueOffset = key.ArrayLength + length.ArrayLength;
             ValueOffset = offset + RelativeValueOffset;
-            TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
+            if (length.Value == -1)
+            {
+                // indefinite BER form
+                TotalLength = (int)key.KeyLength + length.ArrayLength;
+            }
+            else
+            {
+                TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
+            }
+            
             Stream = stream;
         }
 

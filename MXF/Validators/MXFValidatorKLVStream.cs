@@ -69,7 +69,7 @@ namespace Myriadbits.MXF
                     });
                 }
 
-
+                // get Run-In
                 var runIn = File.Descendants().OfType<MXFRunIn>().SingleOrDefault();
                 if (runIn != null)
                 {
@@ -79,6 +79,20 @@ namespace Myriadbits.MXF
                         Object = runIn,
                         Severity = MXFValidationSeverity.Error,
                         Result = $"Run-In present which is not allowed for Generic Operational Pattern and Operational Pattern Atom files."
+                    });
+                }
+
+
+                // get KLV triplets with BER length: indefinite 
+                var indefiniteKLVs = File.Descendants().OfType<MXFPack>().Where(p => p.Length.BERForm == KLVBERLength.BERForms.Indefinite);
+                foreach (var iKLV in indefiniteKLVs)
+                {
+                    retval.Add(new MXFValidationResult
+                    {
+                        Category = CATEGORY_NAME,
+                        Object = iKLV,
+                        Severity = MXFValidationSeverity.Error,
+                        Result = $"KLV triplet with indefinite BER length"
                     });
                 }
 

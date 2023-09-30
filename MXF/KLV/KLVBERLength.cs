@@ -35,7 +35,7 @@ namespace Myriadbits.MXF
         {
             ShortForm,
             LongForm,
-            Indefinite // Not supported
+            Indefinite 
         }
 
         /// <summary>
@@ -71,8 +71,7 @@ namespace Myriadbits.MXF
                 case 0x80:
                     BERForm = BERForms.Indefinite;
                     AdditionalOctets = 0;
-                    // Length should be -1 but is set to 0 instead
-                    Value = 0;
+                    Value = -1;
                     break;
 
                 case <= 0x7F when bytes.Length > 1:
