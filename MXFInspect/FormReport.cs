@@ -173,7 +173,7 @@ namespace Myriadbits.MXFInspect
 
                 var progressHandler = new Progress<TaskReport>(this.ReportProgress);
 
-                var results = await MXFFileValidator.ValidateFile(mxfFile, true, progressHandler, cts.Token);
+                var results = await MXFFileValidator.ValidateFile(mxfFile, false, progressHandler, cts.Token);
 
                 // display the one with biggest offset first, then autoresize columns executes
                 // correctly and finally reverse order, i.e. lowest offset first

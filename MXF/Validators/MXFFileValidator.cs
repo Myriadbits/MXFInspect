@@ -41,10 +41,11 @@ namespace Myriadbits.MXF
             // create list of tests
             List<MXFValidator> allTests = new List<MXFValidator>
             {
-                new MXFValidatorInfo(file),
+                new MXFValidatorKLVStream(file),
                 new MXFValidatorPartitions(file),
                 new MXFValidatorRIP(file),
-                new MXFValidatorUL(file)
+                new MXFValidatorUL(file),
+                new MXFValidatorInfo(file),
             };
 
             if (extendedTest)
@@ -54,7 +55,7 @@ namespace Myriadbits.MXF
             else
             {
                 MXFValidationResult valResult = new MXFValidationResult("Index Table");
-                valResult.SetQuestion("Index table test not executed.");
+                valResult.SetQuestion("Index table test not executed");
                 resultsList.Add(valResult);
             }
 
@@ -67,7 +68,7 @@ namespace Myriadbits.MXF
                 {
                     case EndOfKLVStreamException eofEx:
                         result = new MXFValidationResult("KLVStream");
-                        result.Object = eofEx.TruncatedKLV;
+                        result.Object = eofEx.TruncatedObject;
                         result.SetError(eofEx.Message, eofEx.Offset);
                         break;
 
