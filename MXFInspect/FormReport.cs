@@ -36,6 +36,7 @@ namespace Myriadbits.MXFInspect
     public partial class FormReport : Form
     {
         private readonly MXFFile mxfFile = null;
+        private CancellationTokenSource cts;
 
         public FormReport(MXFFile file)
         {
@@ -147,18 +148,32 @@ namespace Myriadbits.MXFInspect
             this.Close();
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnClose.Text = "Cancelling...";
+            btnClose.Enabled = false;
+            cts.Cancel();
+        }
+
         private async Task ValidateMXFFile()
         {
             try
             {
                 this.tlvValidationResults.ClearObjects();
+                this.tlvValidationResults.Enabled = false;
                 this.prbProcessing.Visible = true;
-                this.Enabled = false;
+                //this.Enabled = false;
+                btnClose.Enabled = true;
+                this.btnClose.Text = "Cancel";
+                btnClose.Click -= btnClose_Click;
+                btnClose.Click += btnCancel_Click;
 
-                var cts = new CancellationTokenSource();
+                cts = new CancellationTokenSource();
+                cts.Token.ThrowIfCancellationRequested();
+
                 var progressHandler = new Progress<TaskReport>(this.ReportProgress);
 
-                var results = await mxfFile.ExecuteValidationTest(false, progressHandler, cts.Token);
+                var results = await MXFFileValidator.ValidateFile(mxfFile, true, progressHandler, cts.Token);
 
                 // display the one with biggest offset first, then autoresize columns executes
                 // correctly and finally reverse order, i.e. lowest offset first
@@ -183,7 +198,7 @@ namespace Myriadbits.MXFInspect
             {
                 Log.ForContext<FormReport>().Error(ex, $"Exception occured while validating file:");
                 MessageBox.Show(ex.Message, "Exception occured while validating file");
-                this.Close();
+                
             }
             finally
             {

@@ -231,7 +231,8 @@ namespace Myriadbits.MXF
         public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             const string CATEGORY_NAME = "Partitions";
-
+            ct.ThrowIfCancellationRequested();
+            
             List<MXFValidationResult> result = await Task.Run(() =>
             {
                 var retval = new List<MXFValidationResult>();

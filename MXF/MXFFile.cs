@@ -54,19 +54,10 @@ namespace Myriadbits.MXF
         private const int REFERENCE_PERCENTAGE = 90;
         private const int LOGICALTREE_PERCENTAGE = 97;
 
-        private List<MXFValidationResult> validationResults = new List<MXFValidationResult>();
-
         public FileInfo File { get; }
-
-        public IReadOnlyList<MXFValidationResult> ValidationResults
-        {
-            get => validationResults;
-        }
-
         public List<Exception> Exceptions { get; } = new List<Exception>();
         public MXFSystemMetaDataPack FirstSystemItem { get; set; }
         public MXFSystemMetaDataPack LastSystemItem { get; set; }
-
         public MXFLogicalObject LogicalTreeRoot { get; set; }
 
         private MXFFile(FileInfo fi) : base(0)
@@ -143,6 +134,7 @@ namespace Myriadbits.MXF
             return $"{File.FullName} ({File.Length:N0})";
         }
 
+        // TODO move into another class
         /// <summary>
         /// Return info for a generic track packet
         /// </summary>
@@ -179,76 +171,7 @@ namespace Myriadbits.MXF
             }
         }
 
-        public async Task<List<MXFValidationResult>> ExecuteValidationTest(bool extendedTest, IProgress<TaskReport> progress = null, CancellationToken ct = default)
-        {
-            List<MXFValidationResult> results = new List<MXFValidationResult>();
-
-            // Reset results
-            this.validationResults.Clear();
-
-            // Execute validation tests
-            List<MXFValidator> allTests = new List<MXFValidator>
-            {
-                new MXFValidatorInfo(this),
-                new MXFValidatorPartitions(this),
-                new MXFValidatorRIP(this),
-                new MXFValidatorUL(this),
-                new MXFValidatorKLVStream(this)
-            };
-
-            // add exceptions
-            foreach (var ex in Exceptions)
-            {
-                MXFValidationResult result;
-
-                switch (ex)
-                {
-                    case EndOfKLVStreamException eofEx:
-                        result = new MXFValidationResult("KLVStream");
-                        result.Object = eofEx.TruncatedObject;
-                        result.SetError(eofEx.Message, eofEx.Offset);
-                        break;
-
-                    case UnparseablePackException upEx:
-                        result = new MXFValidationResult("Parser");
-                        result.Object = upEx.UnparseablePack;
-                        result.SetError(upEx.Message, upEx.Offset);
-                        break;
-
-                    case KLVParsingException pEx:
-                        result = new MXFValidationResult("Parser");
-                        result.Object = this.Descendants().Where(o => o.Offset == pEx.Offset).FirstOrDefault();
-                        result.SetError(pEx.InnerException?.Message ?? ex.Message, pEx.Offset);
-                        break;
-
-                    default:
-                        result = new MXFValidationResult(ex.GetType().Name);
-                        result.SetError(ex.InnerException?.Message ?? ex.Message);
-                        break;
-                }
-                results.Add(result);
-            }
-
-
-            if (extendedTest)
-            {
-                allTests.Add(new MXFValidatorIndex(this));
-            }
-            foreach (MXFValidator mxfTest in allTests)
-            {
-                results.AddRange(await mxfTest.Validate(progress, ct));
-            }
-
-            if (!extendedTest)
-            {
-                MXFValidationResult valResult = new MXFValidationResult("Index Table");
-                this.validationResults.Add(valResult);
-                valResult.SetQuestion("Index table test not executed.");
-                results.Add(valResult);
-            }
-            return results;
-        }
-
+        #region private methods
         private List<MXFObject> ParseMXFPacks(FileStream fileStream, IProgress<TaskReport> overallProgress, IProgress<TaskReport> singleProgress, CancellationToken ct = default)
         {
             int currentPercentage;
@@ -601,5 +524,7 @@ namespace Myriadbits.MXF
             }
             return numOfResolved;
         }
+
+        #endregion
     }
 }
