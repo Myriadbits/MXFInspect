@@ -78,7 +78,7 @@ namespace Myriadbits.MXF
                         Category = CATEGORY_NAME,
                         Object = runIn,
                         Severity = MXFValidationSeverity.Error,
-                        Result = $"Run-In present which is not allowed for Generic Operational Pattern and Operational Pattern Atom files."
+                        Result = $"Run-In present which is not allowed for Generic Operational Pattern and Operational Pattern Atom files"
                     });
                 }
 
