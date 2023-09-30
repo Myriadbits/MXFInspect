@@ -56,7 +56,7 @@ namespace Myriadbits.MXF
 
                  CreateIndexTableDictionary();
 
-                var dict = GetEssencesWithEssenceOffset();
+                var dict = GetEssencesWithEssenceOffset(ct);
 
                 // Clear list
                 m_indexTables = new List<MXFIndexTableSegment>();
@@ -125,6 +125,7 @@ namespace Myriadbits.MXF
                     // And all index entries
                     if (ids.IndexEntries != null)
                     {
+                        ct.ThrowIfCancellationRequested();
                         List<MXFIndexTableSegment> sameStuff = this.m_indexTables.Where(a => a != ids && a.IndexSID == ids.IndexSID && a.IndexStartPosition == ids.IndexStartPosition).ToList();
                         foreach (MXFIndexTableSegment sameIds in sameStuff)
                         {
@@ -296,7 +297,7 @@ namespace Myriadbits.MXF
             }
         }
 
-        private Dictionary<(uint, long), MXFPack> GetEssencesWithEssenceOffset()
+        private Dictionary<(uint, long), MXFPack> GetEssencesWithEssenceOffset(CancellationToken ct = default)
         {
             // Collect essences in single list
             IEnumerable<MXFEssenceElement> essences = File.Descendants().OfType<MXFEssenceElement>();
@@ -323,6 +324,7 @@ namespace Myriadbits.MXF
 
             foreach (var el in essenceList)
             {
+                ct.ThrowIfCancellationRequested();
                 var essenceOffset = GetEssenceOffset(el);
                 var bodySID = GetBodySID(el);
                 if (essenceOffset != null)
@@ -330,7 +332,7 @@ namespace Myriadbits.MXF
                     try
                     {
                         dict.Add((bodySID.Value, essenceOffset.Value), el);
-                        Debug.WriteLine(dict.Last());
+                        //Debug.WriteLine(dict.Last());
                     }
                     catch (Exception e)
                     {

@@ -1,4 +1,4 @@
-﻿#region license
+#region license
 //
 // MXFInspect - Myriadbits MXF Viewer. 
 // Inspect MXF Files.
@@ -169,13 +169,25 @@ namespace Myriadbits.MXFInspect
                 this.tlvValidationResults.Sort();
 
                 this.prbProcessing.Visible = false;
-                this.Enabled = true;
+                this.tlvValidationResults.Enabled = true;
+
+                btnClose.Click += btnClose_Click;
+                btnClose.Click -= btnCancel_Click;
+            }
+            catch (OperationCanceledException ex)
+            {
+                Log.ForContext<FormReport>().Error(ex, $"OperationCanceled exception occured while validating file:");
+                this.Close();
             }
             catch (Exception ex)
             {
                 Log.ForContext<FormReport>().Error(ex, $"Exception occured while validating file:");
                 MessageBox.Show(ex.Message, "Exception occured while validating file");
                 this.Close();
+            }
+            finally
+            {
+                btnClose.Text = "Close";
             }
 
         }
@@ -202,5 +214,10 @@ namespace Myriadbits.MXFInspect
             this.prbProcessing.SetValueFast(report.Percent);
         }
 
+        private void FormReport_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // set cancellation on cancellation token
+            cts.Cancel();
+        }
     }
 }
