@@ -206,10 +206,11 @@ namespace Myriadbits.MXF
                     {
                         // we have reached end of file and there is an error at the K part of the KLV
                         parser.SeekToEndOfCurrentKLV();
-                        var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", parser.Current?.Offset ?? 0, parser.RemainingBytesCount);
-                        var exEOF = new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key(K).", parser.Current?.Offset ?? 0 + parser.RemainingBytesCount, truncatedObject, null);
-                        Exceptions.Add(exEOF);
-                        mxfPacks.Add(exEOF.TruncatedObject);
+                        //var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", parser.Current?.Offset ?? 0, parser.RemainingBytesCount);
+                        //var exEOF = new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key(K).", parser.Current?.Offset ?? 0 + parser.RemainingBytesCount, truncatedObject, null);
+                        //Exceptions.Add(exEOF);
+                        var nonKLV = new MXFNonKLV(lastgoodPos, parser.RemainingBytesCount);
+                        mxfPacks.Add(nonKLV);
                         break;
                     }
                     continue;
