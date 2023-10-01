@@ -1,4 +1,4 @@
-﻿#region license
+#region license
 //
 // MXFInspect - Myriadbits MXF Viewer. 
 // Inspect MXF Files.
@@ -151,15 +151,15 @@ namespace Myriadbits.MXFInspect
             catch (NotAnMXFFileException ex)
             {
                 Log.ForContext<MXFView>().Error(ex, $"Exception occured while opening the file:");
-                MessageBox.Show(ex.Message, "Error while opening the file");
-                this.ParentMainForm.SetActivityText($"Error while opening the file {this.FileInfo.FullName}.");
+                MessageBox.Show(ex.Message, "Error while opening the file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.ParentMainForm.SetActivityText($"Error while opening the file {this.FileInfo.FullName}");
                 this.Close();
 
             }
             catch (Exception ex)
             {
                 Log.ForContext<MXFView>().Error(ex, $"Exception occured while opening the file:");
-                MessageBox.Show(ex.Message, "Error while opening the file");
+                MessageBox.Show(ex.Message, "Error while opening the file", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.ParentMainForm.SetActivityText($"Error while opening the file {this.FileInfo.FullName}");
                 this.Close();
             }
@@ -180,7 +180,7 @@ namespace Myriadbits.MXFInspect
 
                 if (this.File?.Exceptions.Any() ?? false)
                 {
-                    MessageBox.Show("Error(s) occured during parsing of the file. See the log (Settings -> Logging...) for more information", "Parsing Error(s)");
+                    MessageBox.Show("Error(s) occured during parsing of the file. See the log (Settings -> Logging...) for more information", "Parsing Error(s)", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace Myriadbits.MXFInspect
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error occured while populating the trees");
+                MessageBox.Show(ex.Message, "Error occured while populating the trees", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
         }
