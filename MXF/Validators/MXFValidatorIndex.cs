@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Reflection;
 
 namespace Myriadbits.MXF
 {
@@ -43,18 +44,16 @@ namespace Myriadbits.MXF
 
         }
 
-        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        protected override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             List<MXFValidationResult> result = await Task.Run(() =>
             {
                 var retval = new List<MXFValidationResult>();
-                MXFValidationResult valResult = new MXFValidationResult("Index Tables");
-                retval.Add(valResult); // And directly add the results
 
                 Stopwatch sw = Stopwatch.StartNew();
                 progress?.Report(new TaskReport(12, "Locating index tables"));
 
-                 CreateIndexTableDictionary();
+                CreateIndexTableDictionary();
 
                 var dict = GetEssencesWithEssenceOffset(ct);
 
@@ -74,7 +73,12 @@ namespace Myriadbits.MXF
                 // Check if first index table is CBE
                 if (this.m_indexTables.Count == 0)
                 {
-                    valResult.SetWarning(string.Format("No index table segments found", m_indexTables.Count));
+                    retval.Add(new MXFValidationResult
+                    {
+                        Category = "Index Tables",
+                        Severity = MXFValidationSeverity.Warning,
+                        Message = "No index table segments found"
+                    });
                     return retval;
                 }
 
@@ -91,7 +95,12 @@ namespace Myriadbits.MXF
                             if (this.m_indexTables[n].EditUnitByteCount != firstTable.EditUnitByteCount &&
                                 this.m_indexTables[n].BodySID == firstTable.BodySID)
                             {
-                                valResult.SetError(string.Format("Constant Bytes per Element ({0} bytes) but index table {1} has other CBE: {2} (both have BodySID {3}).", firstTable.EditUnitByteCount, n, this.m_indexTables[n].EditUnitByteCount, firstTable.BodySID));
+                                retval.Add(new MXFValidationResult
+                                {
+                                    Category = "Index Tables",
+                                    Severity = MXFValidationSeverity.Error,
+                                    Message = $"Constant Bytes per Element ({firstTable.EditUnitByteCount} bytes) but index table {n} has other CBE: {this.m_indexTables[n].EditUnitByteCount} (both have BodySID {firstTable.BodySID})."
+                                });
                                 return retval;
                             }
                         }
@@ -99,14 +108,24 @@ namespace Myriadbits.MXF
                         // CBE for this BodySID
                         if (firstTable.IndexDuration == 0 && firstTable.IndexStartPosition == 0)
                         {
-                            valResult.SetSuccess(string.Format("Constant Bytes per Element ({0} bytes) for the whole duration of BodySID {1}", firstTable.EditUnitByteCount, firstTable.BodySID));
+                            retval.Add(new MXFValidationResult
+                            {
+                                Category = "Index Tables",
+                                Severity = MXFValidationSeverity.Success,
+                                Message = $"Constant Bytes per Element ({firstTable.EditUnitByteCount} bytes) for the whole file for BodySID {firstTable.BodySID}"
+                            });
                             // TODO Check if the size of all compounds is the same??
                             return retval;
                         }
                         else
                         {
                             // Complicated, mixed file
-                            valResult.SetWarning(string.Format("Constant Bytes per Element ({0} bytes) but not for the whole file for BodySID {1}. Duration: {2}, StartOffset: {3}", firstTable.EditUnitByteCount, firstTable.BodySID, firstTable.IndexDuration, firstTable.IndexStartPosition));
+                            retval.Add(new MXFValidationResult
+                            {
+                                Category = "Index Tables",
+                                Severity = MXFValidationSeverity.Warning,
+                                Message = $"Constant Bytes per Element ({firstTable.EditUnitByteCount} bytes) but not for the whole file for BodySID {firstTable.BodySID}. Duration: {firstTable.IndexDuration}, StartOffset: {firstTable.IndexStartPosition}"
+                            });
                             return retval;
                         }
                     }
@@ -131,7 +150,12 @@ namespace Myriadbits.MXF
                         {
                             if (sameIds.IndexEntries.Count != ids.IndexEntries.Count)
                             {
-                                valResult.AddError(string.Format("Index {0} in partition {1} is not the same length as in partition {2}!", sameIds.IndexSID, sameIds.Partition.ToString(), ids.Partition.ToString()));
+                                retval.Add(new MXFValidationResult
+                                {
+                                    Category = "Index Tables",
+                                    Severity = MXFValidationSeverity.Error,
+                                    Message = $"Index {sameIds.IndexSID} in partition {sameIds.Partition} is not the same length as in partition {ids.Partition}!"
+                                });
                                 invalidCt++;
                             }
                             else
@@ -142,7 +166,12 @@ namespace Myriadbits.MXF
                                         ids.IndexEntries[n].StreamOffset != sameIds.IndexEntries[n].StreamOffset ||
                                         ids.IndexEntries[n].TemporalOffset != sameIds.IndexEntries[n].TemporalOffset)
                                     {
-                                        valResult.AddError(string.Format("The indexentry {0} of Index {1} in partition {2} is not the same data as in partition {3}!", n, sameIds.IndexSID, sameIds.Partition.ToString(), ids.Partition.ToString()));
+                                        retval.Add(new MXFValidationResult
+                                        {
+                                            Category = "Index Tables",
+                                            Severity = MXFValidationSeverity.Error,
+                                            Message = $"The indexentry {n} of Index {sameIds.IndexSID} in partition {sameIds.Partition.ToString()} is not the same data as in partition {ids.Partition.ToString()}!"
+                                        });
                                         invalidCt++;
                                         break;
                                     }
@@ -182,7 +211,12 @@ namespace Myriadbits.MXF
                                 else
                                 {
                                     // Not found
-                                    valResult.AddError(string.Format("Index {0} not pointing to valid essence!", index.Index));
+                                    retval.Add(new MXFValidationResult
+                                    {
+                                        Category = "Index Tables",
+                                        Severity = MXFValidationSeverity.Error,
+                                        Message = $"Index {index.Index} not pointing to a valid picture essence!"
+                                    });
                                     invalidCt++;
                                 }
                             }
@@ -220,7 +254,12 @@ namespace Myriadbits.MXF
                                 else
                                 {
                                     // Not found
-                                    valResult.AddError(string.Format("Index {0} not pointing to a valid picture essence!", index.Index));
+                                    retval.Add(new MXFValidationResult
+                                    {
+                                        Category = "Index Tables",
+                                        Severity = MXFValidationSeverity.Error,
+                                        Message = $"Index {index.Index} not pointing to a valid picture essence!"
+                                    });
                                     invalidCt++;
                                 }
                             }
@@ -229,7 +268,12 @@ namespace Myriadbits.MXF
                 }
                 else
                 {
-                    valResult.SetError(string.Format("No system items and/or picture essences found (found {0} index table segments)", m_indexTables.Count));
+                    retval.Add(new MXFValidationResult
+                    {
+                        Category = "Index Tables",
+                        Severity = MXFValidationSeverity.Error,
+                        Message = $"No system items and/or picture essences found (found {{m_indexTables.Count}} index table segments)"
+                    });
                     return retval;
                 }
 
@@ -240,7 +284,12 @@ namespace Myriadbits.MXF
                     if (this.m_systemItems.Count(a => !a.Indexed) != 0)
                     {
                         // Hmm still some items left in the array
-                        valResult.SetError(string.Format("There are {0} essence elements (of the total {1}) that are not referenced in an index table!", this.m_systemItems.Count, totalSystemItems));
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = "Index Tables",
+                            Severity = MXFValidationSeverity.Error,
+                            Message = $"There are {this.m_systemItems.Count} essence elements(of the total {totalSystemItems}) that are not referenced in an index table!"
+                        });
                         fError = true;
                     }
                 }
@@ -249,7 +298,12 @@ namespace Myriadbits.MXF
                     if (this.m_pictureItems.Count(a => !a.Indexed) != 0)
                     {
                         // Hmm still some items left in the array
-                        valResult.SetError(string.Format("There are {0} essence elements (of the total {1}) that are not referenced in an index table!", this.m_pictureItems.Count, totalSystemItems));
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = "Index Tables",
+                            Severity = MXFValidationSeverity.Error,
+                            Message = $"There are {this.m_pictureItems.Count} essence elements (of the total {totalSystemItems}) that are not referenced in an index table!",
+                        });
                         fError = true;
                     }
                 }
@@ -258,11 +312,29 @@ namespace Myriadbits.MXF
                 if (!fError)
                 {
                     if (invalidCt > 0)
-                        valResult.SetError(string.Format("Found {0} index errors! There are {0} indices that are NOT pointing to valid essence data (valid {1})!", invalidCt, validCt));
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = "Index Tables",
+                            Severity = MXFValidationSeverity.Error,
+                            Message = $"Found {invalidCt} index errors! There are {invalidCt} indices that are NOT pointing to valid essence data (valid {validCt})!"
+
+                        });
                     else if (validCt > 0)
-                        valResult.SetSuccess(string.Format("Index table is valid! All {0} index entries point to valid essences!", validCt));
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = "Index Tables",
+                            Severity = MXFValidationSeverity.Success,
+                            Message = $"Index table is valid! All {validCt} index entries point to valid essences!"
+
+                        });
                     if (validCt == 0 && invalidCt == 0)
-                        valResult.SetError(string.Format("No valid indexes found in this file!"));
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = "Index Tables",
+                            Severity = MXFValidationSeverity.Error,
+                            Message = $"No valid indexes found in this file!"
+
+                        });
                 }
                 Log.ForContext<MXFValidatorIndex>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
 
@@ -356,7 +428,7 @@ namespace Myriadbits.MXF
                     var groups = essences.GroupBy(e => e.Key);
                     var elementCount = groups.Count();
                     var essenceDict = essences.ToDictionary(e => GetEssenceOffset(e));
-                    
+
                     if (table.EditUnitByteCount > 0)
                     {
                         // CBE
@@ -365,7 +437,7 @@ namespace Myriadbits.MXF
                         // order of the elementss shall always be the same in the stored file, so that it agrees
                         // with the order of the Delta entries.
                         // TODO this should be checked BEFORE any IndexValidator is called!!!
-                        
+
                         // first deltra entry must match with first essence element
 
 
@@ -450,9 +522,6 @@ namespace Myriadbits.MXF
                 MXFTimeStamp ts = new MXFTimeStamp(items.First().UserDate);
                 if (ts != null)
                 {
-                    MXFValidationResult valResult = new MXFValidationResult("System Items");
-                    retval.Add(valResult); // And directly add the results
-
                     MXFTimeStamp tsLast = null;
                     for (int n = 1; n < items.Count() - 1; n++) // Skip last one (always invalid??)
                     {
@@ -461,16 +530,34 @@ namespace Myriadbits.MXF
                         {
                             if (!items[n].UserDate.IsSame(ts))
                             {
-                                valResult.SetError(string.Format("Invalid user date at offset {0} (was {1}, expected {2})!", items[n].Offset, items[n].UserDate, ts));
+                                retval.Add(new MXFValidationResult
+                                {
+                                    Category = "Index Tables",
+                                    Severity = MXFValidationSeverity.Error,
+                                    Message = $"Invalid user date at offset {items[n].Offset} (was {items[n].UserDate}, expected {ts})!"
+
+                                });
                                 return retval;
                             }
                             tsLast = items[n].UserDate;
                         }
                     }
                     if (tsLast != null)
-                        valResult.SetSuccess(string.Format("UserDates are continious from {0} to {1}, at {2} fps!", items.First().UserDate, tsLast, ts.FrameRate));
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = "Index Tables",
+                            Severity = MXFValidationSeverity.Success,
+                            Message = $"UserDates are continious from {items.First().UserDate} to {tsLast}, at {ts.FrameRate} fps!"
+
+                        });
                     else
-                        valResult.SetSuccess(string.Format("UserDates are continious!"));
+                        retval.Add(new MXFValidationResult
+                        {
+                            Category = "Index Tables",
+                            Severity = MXFValidationSeverity.Success,
+                            Message = $"UserDates are continious!"
+
+                        });
                 }
             }
             return retval;
@@ -485,8 +572,6 @@ namespace Myriadbits.MXF
         protected List<MXFValidationResult> CheckContinuityCounter(MXFFile file)
         {
             var retval = new List<MXFValidationResult>();
-            MXFValidationResult valResult = new MXFValidationResult("System Items");
-            retval.Add(valResult); // And directly add the results
 
             // Check for continous range
             // Continuity count = modulo 65536 count as per SMPTE 326M. Note that the continuity
@@ -512,13 +597,31 @@ namespace Myriadbits.MXF
             if (errorCount > 0)
             {
                 if (errorCount >= this.m_systemItems.Count() - 1)
-                    valResult.SetWarning(string.Format("All continuity counter values are not set!"));
+                    retval.Add(new MXFValidationResult
+                    {
+                        Category = "Index Tables",
+                        Severity = MXFValidationSeverity.Warning,
+                        Message = "All continuity counter values are not set!"
+
+                    });
                 else
-                    valResult.SetError(string.Format("Found {0} invalid continuity counter values (total system items {1})!", errorCount, this.m_systemItems.Count()));
+                    retval.Add(new MXFValidationResult
+                    {
+                        Category = "Index Tables",
+                        Severity = MXFValidationSeverity.Warning,
+                        Message = $"Found {errorCount} invalid continuity counter values (total system items {this.m_systemItems.Count()})!"
+
+                    });
             }
             else
             {
-                valResult.SetSuccess(string.Format("Continuity counter values are correct!"));
+                retval.Add(new MXFValidationResult
+                {
+                    Category = "Index Tables",
+                    Severity = MXFValidationSeverity.Success,
+                    Message = "Continuity counter values are correct!"
+
+                });
             }
 
             return retval;

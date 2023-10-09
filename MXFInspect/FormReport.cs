@@ -25,6 +25,7 @@ using Myriadbits.MXF;
 using Myriadbits.MXFInspect.CustomControls;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -58,20 +59,20 @@ namespace Myriadbits.MXFInspect
         private void InitValidationResultTreeListView()
         {
             this.tlvValidationResults.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
-            
+
             this.colOffset.UseFiltering = false;
             this.colResult.UseFiltering = false;
             this.tlvValidationResults.UseFilterIndicator = true;
             this.tlvValidationResults.UseFiltering = true;
             this.colSeverity.ClusteringStrategy = new MXFValidationSeverityCluster();
-            
+
             // TODO what are these lines for?
             this.colCategory.Renderer = null;
             this.colSeverity.Renderer = null;
 
             this.tlvValidationResults.CanExpandGetter = delegate (object x)
             {
-                if (x is MXFValidationResult vr)
+                if (x is List<MXFValidationResult> vr)
                 {
                     return vr.Count > 1;
                 }
@@ -80,7 +81,7 @@ namespace Myriadbits.MXFInspect
 
             this.tlvValidationResults.ChildrenGetter = delegate (object x)
             {
-                if (x is MXFValidationResult vr)
+                if (x is List<MXFValidationResult> vr)
                 {
                     return vr;
                 }
@@ -198,7 +199,7 @@ namespace Myriadbits.MXFInspect
             {
                 Log.ForContext<FormReport>().Error(ex, $"Exception occured while validating file:");
                 MessageBox.Show(ex.Message, "Exception occured while validating file");
-                
+
             }
             finally
             {

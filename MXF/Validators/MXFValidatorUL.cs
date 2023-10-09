@@ -38,7 +38,7 @@ namespace Myriadbits.MXF
 
         }
 
-        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        protected override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             List<MXFValidationResult> result = await Task.Run(() =>
             {
@@ -60,14 +60,14 @@ namespace Myriadbits.MXF
                     {
                         Severity = MXFValidationSeverity.Warning,
                         Category = "Universal Label",
-                        Result = $"Unknown Universal Label: {klv.Key}",
+                        Message = $"Unknown Universal Label: {klv.Key}",
                         Offset = klv.Offset,
                         Object = klv
                     };
 
                     if (klv.Key.IdentifiesPrivatelyRegisteredUL())
                     {
-                        valResult.Result = $"{klv.Key}";
+                        valResult.Message = $"{klv.Key}";
                     }
                     retval.Add(valResult);
                 }

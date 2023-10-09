@@ -50,7 +50,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="this.File"></param>
         /// <param name="results"></param>
-        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        protected override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             const string CATEGORY_NAME = "Random Index Pack";
 
@@ -74,7 +74,7 @@ namespace Myriadbits.MXF
                         Category = CATEGORY_NAME,
                         Object = rip,
                         Severity = MXFValidationSeverity.Success,
-                        Result = "Random Index Pack present"
+                        Message = "Random Index Pack present"
                     });
 
 
@@ -85,7 +85,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = rip,
                             Severity = MXFValidationSeverity.Error,
-                            Result = $"The RIP contains extraneous (non RIP entries) elements"
+                            Message = $"The RIP contains extraneous (non RIP entries) elements"
                         });
                     }
 
@@ -101,7 +101,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = rip,
                             Severity = MXFValidationSeverity.Error,
-                            Result = $"Number of RIP entries is not equal to the number of partitions ({ripEntryCount} vs {partitionCount})"
+                            Message = $"Number of RIP entries is not equal to the number of partitions ({ripEntryCount} vs {partitionCount})"
                         });
                     }
 
@@ -117,7 +117,7 @@ namespace Myriadbits.MXF
                                     Category = CATEGORY_NAME,
                                     Object = rip.Children[n],
                                     Severity = MXFValidationSeverity.Error,
-                                    Result = $"RIP entry {rip.Children[n]} not pointing to a partition location."
+                                    Message = $"RIP entry {rip.Children[n]} not pointing to a partition location."
                                 });
                             }
                         }
@@ -131,7 +131,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = rip,
                             Severity = MXFValidationSeverity.Error,
-                            Result = $"RIP entries are not in ascending Byte Offset order."
+                            Message = $"RIP entries are not in ascending Byte Offset order."
                         });
                     }
 

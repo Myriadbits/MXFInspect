@@ -30,8 +30,8 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-	public class MXFFileValidator
-	{
+    public class MXFFileValidator
+    {
         public static async Task<List<MXFValidationResult>> ValidateFile(MXFFile file, bool extendedTest, IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             List<MXFValidationResult> resultsList = new List<MXFValidationResult>();
@@ -54,9 +54,12 @@ namespace Myriadbits.MXF
             }
             else
             {
-                MXFValidationResult valResult = new MXFValidationResult("Index Table");
-                valResult.SetQuestion("Index table test not executed");
-                resultsList.Add(valResult);
+                resultsList.Add(new MXFValidationResult
+                {
+                    Category = "Index tables",
+                    Severity = MXFValidationSeverity.Question,
+                    Message = "Index table test not executed"
+                });
             }
 
             // add exceptions
@@ -67,26 +70,45 @@ namespace Myriadbits.MXF
                 switch (ex)
                 {
                     case EndOfKLVStreamException eofEx:
-                        result = new MXFValidationResult("KLVStream");
-                        result.Object = eofEx.TruncatedObject;
-                        result.SetError(eofEx.Message, eofEx.Offset);
+                        result = new MXFValidationResult
+                        {
+                            Category = "KLVStream",
+                            Severity = MXFValidationSeverity.Error,
+                            Object = eofEx.TruncatedObject,
+                            Offset = eofEx.Offset,
+                            Message = eofEx.Message
+                        };
                         break;
 
                     case UnparseablePackException upEx:
-                        result = new MXFValidationResult("Parser");
-                        result.Object = upEx.UnparseablePack;
-                        result.SetError(upEx.Message, upEx.Offset);
+                        result = new MXFValidationResult
+                        {
+                            Category = "Parser",
+                            Severity = MXFValidationSeverity.Error,
+                            Object = upEx.UnparseablePack,
+                            Offset = upEx.Offset,
+                            Message = upEx.Message
+                        };
                         break;
 
                     case KLVParsingException pEx:
-                        result = new MXFValidationResult("Parser");
-                        result.Object = file.Descendants().Where(o => o.Offset == pEx.Offset).FirstOrDefault();
-                        result.SetError(pEx.InnerException?.Message ?? ex.Message, pEx.Offset);
+                        result = new MXFValidationResult
+                        {
+                            Category = "Parser",
+                            Severity = MXFValidationSeverity.Error,
+                            Object = file.Descendants().Where(o => o.Offset == pEx.Offset).FirstOrDefault(),
+                            Offset = pEx.Offset,
+                            Message = pEx.InnerException?.Message ?? ex.Message
+                        };
                         break;
 
                     default:
-                        result = new MXFValidationResult(ex.GetType().Name);
-                        result.SetError(ex.InnerException?.Message ?? ex.Message);
+                        result = new MXFValidationResult
+                        {
+                            Severity = MXFValidationSeverity.Error,
+                            Category = ex.GetType().Name,
+                            Message = ex.InnerException?.Message ?? ex.Message
+                        };
                         break;
                 }
                 resultsList.Add(result);

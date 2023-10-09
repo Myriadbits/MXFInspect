@@ -44,7 +44,7 @@ namespace Myriadbits.MXF
         /// </summary>
         /// <param name="this.File"></param>
         /// <param name="results"></param>
-        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        protected override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             const string CATEGORY_NAME = "KLV Stream";
 
@@ -65,7 +65,7 @@ namespace Myriadbits.MXF
                         Category = CATEGORY_NAME,
                         Object = nonKLV,
                         Severity = MXFValidationSeverity.Error,
-                        Result = $"Non-KLV chunk of data from {nonKLV.Offset} to {nonKLV.Offset + nonKLV.TotalLength}"
+                        Message = $"Non-KLV chunk of data from {nonKLV.Offset} to {nonKLV.Offset + nonKLV.TotalLength}"
                     });
                 }
 
@@ -78,7 +78,7 @@ namespace Myriadbits.MXF
                         Category = CATEGORY_NAME,
                         Object = runIn,
                         Severity = MXFValidationSeverity.Error,
-                        Result = $"Run-In present which is not allowed for Generic Operational Pattern and Operational Pattern Atom files"
+                        Message = $"Run-In present which is not allowed for Generic Operational Pattern and Operational Pattern Atom files"
                     });
                 }
 
@@ -92,7 +92,7 @@ namespace Myriadbits.MXF
                         Category = CATEGORY_NAME,
                         Object = iKLV,
                         Severity = MXFValidationSeverity.Error,
-                        Result = $"KLV triplet with indefinite BER length"
+                        Message = $"KLV triplet with indefinite BER length"
                     });
                 }
 
