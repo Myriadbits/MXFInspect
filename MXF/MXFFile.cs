@@ -82,6 +82,11 @@ namespace Myriadbits.MXF
                     // Parse file and obtain a list of mxf packs
 
                     List<MXFObject> mxfPacks = ParseMXFPacks(fileStream, overallProgress, singleProgress, ct);
+                    if (!mxfPacks.Any())
+                    {
+                        throw new NotAnMXFFileException("No MXF packs found. Probably this is not an MXF file.", 0, null);
+                    }
+
                     if (mxfPacks.OfType<MXFUnparseablePack>().Any())
                     {
                         Log.ForContext<MXFFile>().Warning($"Unparseable packs [{mxfPacks.OfType<MXFUnparseablePack>().Count()} items] encountered during parsing");

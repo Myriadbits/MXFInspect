@@ -153,7 +153,7 @@ namespace Myriadbits.MXFInspect
             {
                 Log.ForContext<MXFView>().Error(ex, $"Exception occured while opening the file:");
                 MessageBox.Show(ex.Message, "Error while opening the file");
-                this.ParentMainForm.SetActivityText($"Error while opening the file {this.FileInfo.FullName}");
+                this.ParentMainForm.SetActivityText($"Error while opening the file {this.FileInfo.FullName}.");
                 this.Close();
 
             }
