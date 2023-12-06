@@ -54,7 +54,7 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
     - [x] DataDefinition [0/0]
     - [x] OperationDefinition [7/7]
     - [x] ParameterDefinition [2/2]
-    - [ ] PluginDefinition [0/20]
+    - [x] PluginDefinition [20/20]
     - [x] CodecDefinition [2/2]
     - [x] ContainerDefinition [1/1]
     - [x] InterpolationDefinition [0/0]
@@ -83,8 +83,8 @@ This document shows the SMPTE groups register as a hierarchical inheritance tree
         - [x] MPEGAudioDescriptor [2/2]
       - [x] DataEssenceDescriptor [1/1]
         - [x] ParsedTextDescriptor [1/1]
-          - [ ] SGMLDescriptor [0/0] *(abstract)*
-            - [ ] XMLDescriptor [0/3] :scroll: :dart:
+          - [x] SGMLDescriptor [0/0] *(abstract)*
+            - [x] XMLDescriptor [3/3] :scroll: :dart:
             - [ ] HTMLParsedTextDescriptor [0/1] :scroll: :dart:
         - [ ] RP217Descriptor [0/2] :scroll: :dart:
         - [ ] VBIDataDescriptor [0/0]
