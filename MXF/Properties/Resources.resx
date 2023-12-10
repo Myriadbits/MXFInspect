@@ -130,6 +130,127 @@
   <data name="Groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SMPTE\Groups.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="ID_0051" xml:space="preserve">
+    <value>Header Partition contains Index Table Segments</value>
+  </data>
+  <data name="ID_0052" xml:space="preserve">
+    <value>At least one Body Partition contains Index Table Segments</value>
+  </data>
+  <data name="ID_0053" xml:space="preserve">
+    <value>Footer Partition contains Index Table Segments</value>
+  </data>
+  <data name="ID_0054" xml:space="preserve">
+    <value>{0} Body Partition(s) present</value>
+    <comment>{0} Body Partition Count</comment>
+  </data>
+  <data name="ID_0055" xml:space="preserve">
+    <value>Invalid partition structure. The first partition must be a Header Partition</value>
+  </data>
+  <data name="ID_0056" xml:space="preserve">
+    <value>Invalid partition structure. Only the first partition shall be a Header Partition</value>
+  </data>
+  <data name="ID_0057" xml:space="preserve">
+    <value>Invalid partition structure. Only the last partition can be a Footer Partition</value>
+  </data>
+  <data name="ID_0058" xml:space="preserve">
+    <value>Header Partition does not contain header metadata </value>
+  </data>
+  <data name="ID_0062" xml:space="preserve">
+    <value>RIP</value>
+  </data>
+  <data name="ID_0063" xml:space="preserve">
+    <value>Invalid partition structure. The last partition is not a Footer Partition</value>
+  </data>
+  <data name="ID_0064" xml:space="preserve">
+    <value>Invalid partition structure. The last partition is not a Footer Partition</value>
+  </data>
+  <data name="ID_0065" xml:space="preserve">
+    <value>The Operational Pattern property is not consistent across all partitions</value>
+  </data>
+  <data name="ID_0066" xml:space="preserve">
+    <value>KLV Validator</value>
+  </data>
+  <data name="ID_0067" xml:space="preserve">
+    <value>RIP/ KAG</value>
+  </data>
+  <data name="ID_0068" xml:space="preserve">
+    <value>KLV Validator</value>
+  </data>
+  <data name="ID_0069" xml:space="preserve">
+    <value>KLV Validator?</value>
+  </data>
+  <data name="ID_0070" xml:space="preserve">
+    <value>KLV Validator?</value>
+  </data>
+  <data name="ID_0071" xml:space="preserve">
+    <value>KLV/ KAG</value>
+  </data>
+  <data name="ID_0072" xml:space="preserve">
+    <value>KLV</value>
+  </data>
+  <data name="ID_0073" xml:space="preserve">
+    <value>KLV/Partition Validator</value>
+  </data>
+  <data name="ID_0074" xml:space="preserve">
+    <value>RIP</value>
+  </data>
+  <data name="ID_0075" xml:space="preserve">
+    <value>RIP</value>
+  </data>
+  <data name="ID_0084" xml:space="preserve">
+    <value>KAG</value>
+  </data>
+  <data name="ID_0085" xml:space="preserve">
+    <value>KAG</value>
+  </data>
+  <data name="ID_0090" xml:space="preserve">
+    <value>KAG</value>
+  </data>
+  <data name="ID_0091" xml:space="preserve">
+    <value>KLV / Metadata</value>
+  </data>
+  <data name="ID_0092" xml:space="preserve">
+    <value>Header Partition status is "open" (= required values may be absent)</value>
+  </data>
+  <data name="ID_0093" xml:space="preserve">
+    <value>KAG</value>
+  </data>
+  <data name="ID_0094" xml:space="preserve">
+    <value>KAG</value>
+  </data>
+  <data name="ID_0095" xml:space="preserve">
+    <value>Partition #{p.PartitionNumber} has incorrect value for ThisPartition</value>
+    <comment>{0} = PartitionNumber</comment>
+  </data>
+  <data name="ID_0096" xml:space="preserve">
+    <value>Partition #{p.PartitionNumber} has incorrect value for PreviousPartition</value>
+    <comment>{0} = PartitionNumber</comment>
+  </data>
+  <data name="ID_0097" xml:space="preserve">
+    <value>Partition #{p.PartitionNumber} has incorrect value for FooterPartition</value>
+    <comment>{0} = PartitionNumber</comment>
+  </data>
+  <data name="ID_0106" xml:space="preserve">
+    <value>KAG</value>
+  </data>
+  <data name="ID_0107" xml:space="preserve">
+    <value>Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MajorVersion}, expected: 1)</value>
+    <comment>{0} = PartitionNumber</comment>
+  </data>
+  <data name="ID_0108" xml:space="preserve">
+    <value>Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MinorVersion}, expected: 2 or 3)</value>
+    <comment>{0} = PartitionNumber</comment>
+  </data>
+  <data name="ID_0110" xml:space="preserve">
+    <value>Preface</value>
+  </data>
+  <data name="ID_0111" xml:space="preserve">
+    <value>Preface</value>
+  </data>
+  <data name="ID_0114" xml:space="preserve">
+    <value>$"Partition #{p.PartitionNumber} has an invalid PartitionStatus (0x{(byte)p.Status:X2})"</value>
+    <comment>{0} = PartitionNumber</comment>
+  </data>
   <data name="Labels" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SMPTE\Labels.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
