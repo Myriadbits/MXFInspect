@@ -142,6 +142,348 @@ namespace Myriadbits.MXF.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Header Partition contains Index Table Segments.
+        /// </summary>
+        internal static string ID_0051 {
+            get {
+                return ResourceManager.GetString("ID_0051", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At least one Body Partition contains Index Table Segments.
+        /// </summary>
+        internal static string ID_0052 {
+            get {
+                return ResourceManager.GetString("ID_0052", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Footer Partition contains Index Table Segments.
+        /// </summary>
+        internal static string ID_0053 {
+            get {
+                return ResourceManager.GetString("ID_0053", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Body Partition(s) present.
+        /// </summary>
+        internal static string ID_0054 {
+            get {
+                return ResourceManager.GetString("ID_0054", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid partition structure. The first partition must be a Header Partition.
+        /// </summary>
+        internal static string ID_0055 {
+            get {
+                return ResourceManager.GetString("ID_0055", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid partition structure. Only the first partition shall be a Header Partition.
+        /// </summary>
+        internal static string ID_0056 {
+            get {
+                return ResourceManager.GetString("ID_0056", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid partition structure. Only the last partition can be a Footer Partition.
+        /// </summary>
+        internal static string ID_0057 {
+            get {
+                return ResourceManager.GetString("ID_0057", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header Partition does not contain header metadata .
+        /// </summary>
+        internal static string ID_0058 {
+            get {
+                return ResourceManager.GetString("ID_0058", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIP.
+        /// </summary>
+        internal static string ID_0062 {
+            get {
+                return ResourceManager.GetString("ID_0062", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid partition structure. The last partition is not a Footer Partition.
+        /// </summary>
+        internal static string ID_0063 {
+            get {
+                return ResourceManager.GetString("ID_0063", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid partition structure. The last partition is not a Footer Partition.
+        /// </summary>
+        internal static string ID_0064 {
+            get {
+                return ResourceManager.GetString("ID_0064", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Operational Pattern property is not consistent across all partitions.
+        /// </summary>
+        internal static string ID_0065 {
+            get {
+                return ResourceManager.GetString("ID_0065", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV Validator.
+        /// </summary>
+        internal static string ID_0066 {
+            get {
+                return ResourceManager.GetString("ID_0066", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIP/ KAG.
+        /// </summary>
+        internal static string ID_0067 {
+            get {
+                return ResourceManager.GetString("ID_0067", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV Validator.
+        /// </summary>
+        internal static string ID_0068 {
+            get {
+                return ResourceManager.GetString("ID_0068", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV Validator?.
+        /// </summary>
+        internal static string ID_0069 {
+            get {
+                return ResourceManager.GetString("ID_0069", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV Validator?.
+        /// </summary>
+        internal static string ID_0070 {
+            get {
+                return ResourceManager.GetString("ID_0070", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV/ KAG.
+        /// </summary>
+        internal static string ID_0071 {
+            get {
+                return ResourceManager.GetString("ID_0071", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV.
+        /// </summary>
+        internal static string ID_0072 {
+            get {
+                return ResourceManager.GetString("ID_0072", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV/Partition Validator.
+        /// </summary>
+        internal static string ID_0073 {
+            get {
+                return ResourceManager.GetString("ID_0073", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIP.
+        /// </summary>
+        internal static string ID_0074 {
+            get {
+                return ResourceManager.GetString("ID_0074", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIP.
+        /// </summary>
+        internal static string ID_0075 {
+            get {
+                return ResourceManager.GetString("ID_0075", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KAG.
+        /// </summary>
+        internal static string ID_0084 {
+            get {
+                return ResourceManager.GetString("ID_0084", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KAG.
+        /// </summary>
+        internal static string ID_0085 {
+            get {
+                return ResourceManager.GetString("ID_0085", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KAG.
+        /// </summary>
+        internal static string ID_0090 {
+            get {
+                return ResourceManager.GetString("ID_0090", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KLV / Metadata.
+        /// </summary>
+        internal static string ID_0091 {
+            get {
+                return ResourceManager.GetString("ID_0091", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header Partition status is &quot;open&quot; (= required values may be absent).
+        /// </summary>
+        internal static string ID_0092 {
+            get {
+                return ResourceManager.GetString("ID_0092", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KAG.
+        /// </summary>
+        internal static string ID_0093 {
+            get {
+                return ResourceManager.GetString("ID_0093", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KAG.
+        /// </summary>
+        internal static string ID_0094 {
+            get {
+                return ResourceManager.GetString("ID_0094", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partition #{p.PartitionNumber} has incorrect value for ThisPartition.
+        /// </summary>
+        internal static string ID_0095 {
+            get {
+                return ResourceManager.GetString("ID_0095", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partition #{p.PartitionNumber} has incorrect value for PreviousPartition.
+        /// </summary>
+        internal static string ID_0096 {
+            get {
+                return ResourceManager.GetString("ID_0096", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partition #{p.PartitionNumber} has incorrect value for FooterPartition.
+        /// </summary>
+        internal static string ID_0097 {
+            get {
+                return ResourceManager.GetString("ID_0097", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KAG.
+        /// </summary>
+        internal static string ID_0106 {
+            get {
+                return ResourceManager.GetString("ID_0106", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MajorVersion}, expected: 1).
+        /// </summary>
+        internal static string ID_0107 {
+            get {
+                return ResourceManager.GetString("ID_0107", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MinorVersion}, expected: 2 or 3).
+        /// </summary>
+        internal static string ID_0108 {
+            get {
+                return ResourceManager.GetString("ID_0108", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preface.
+        /// </summary>
+        internal static string ID_0110 {
+            get {
+                return ResourceManager.GetString("ID_0110", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preface.
+        /// </summary>
+        internal static string ID_0111 {
+            get {
+                return ResourceManager.GetString("ID_0111", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to $&quot;Partition #{p.PartitionNumber} has an invalid PartitionStatus (0x{(byte)p.Status:X2})&quot;.
+        /// </summary>
+        internal static string ID_0114 {
+            get {
+                return ResourceManager.GetString("ID_0114", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;!-- ************************************* --&gt;
         ///&lt;!-- ************************************* --&gt;
         ///&lt;!-- ************************************* --&gt;
