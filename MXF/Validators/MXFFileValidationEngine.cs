@@ -30,29 +30,15 @@ using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public class MXFFileValidator
+    public class MXFFileValidationEngine
     {
-        public static async Task<List<MXFValidationResult>> ValidateFile(MXFFile file, bool extendedTest, IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        public static async Task<List<MXFValidationResult>> Validate(MXFFile file, IEnumerable<MXFValidator> validatorList, IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             List<MXFValidationResult> resultsList = new List<MXFValidationResult>();
             ct.ThrowIfCancellationRequested();
 
 
-            // create list of tests
-            List<MXFValidator> allTests = new List<MXFValidator>
-            {
-                new MXFValidatorKLVStream(file),
-                new MXFValidatorPartitions(file),
-                new MXFValidatorRIP(file),
-                new MXFValidatorUL(file),
-                new MXFValidatorInfo(file),
-            };
-
-            if (extendedTest)
-            {
-                allTests.Add(new MXFValidatorIndex(file));
-            }
-            else
+            if (!validatorList.OfType<MXFValidatorIndex>().Any())
             {
                 resultsList.Add(new MXFValidationResult
                 {
@@ -116,9 +102,9 @@ namespace Myriadbits.MXF
 
             // execute validators
 
-            foreach (MXFValidator mxfTest in allTests)
+            foreach (MXFValidator validator in validatorList)
             {
-                resultsList.AddRange(await mxfTest.Validate(progress, ct));
+                resultsList.AddRange(await validator.Validate(progress, ct));
             }
 
             return resultsList;
