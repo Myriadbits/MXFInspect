@@ -28,6 +28,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using Myriadbits.MXF.Properties;
 
 namespace Myriadbits.MXF
 {
@@ -74,7 +75,7 @@ namespace Myriadbits.MXF
                         Category = CATEGORY_NAME,
                         Object = rip,
                         Severity = MXFValidationSeverity.Success,
-                        Message = "Random Index Pack present"
+                        Message = ValidationMessages.ID_0074
                     });
 
 
@@ -85,15 +86,16 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = rip,
                             Severity = MXFValidationSeverity.Error,
-                            Message = $"The RIP contains extraneous (non RIP entries) elements"
+                            Message = ValidationMessages.ID_0712
                         });
                     }
 
 
                     // for every partition there must be a RIP entry
-                    // TODO make error more explicit -> "no RIP entry for partion #X"
                     int ripEntryCount = rip.Children.Count;
-                    int partitionCount = this.File.GetPartitions().Count();
+                    List<MXFPartition> partitions = this.File.GetPartitions().ToList();
+                    int partitionCount = partitions.Count;
+
                     if (!RIPEntryCountEqualsPartitionCount(rip))
                     {
                         retval.Add(new MXFValidationResult
@@ -101,8 +103,22 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = rip,
                             Severity = MXFValidationSeverity.Error,
-                            Message = $"Number of RIP entries is not equal to the number of partitions ({ripEntryCount} vs {partitionCount})"
+                            Message = string.Format(ValidationMessages.ID_0713, ripEntryCount, partitionCount)
                         });
+
+                        foreach (var p in partitions)
+                        {
+                            if (!HasPartitionRIPEntry(p, rip))
+                            {
+                                retval.Add(new MXFValidationResult
+                                {
+                                    Category = CATEGORY_NAME,
+                                    Object = rip,
+                                    Severity = MXFValidationSeverity.Error,
+                                    Message = string.Format(ValidationMessages.ID_0714, p.PartitionNumber)
+                                });
+                            }
+                        }
                     }
 
                     // check validity of all RIP entries
@@ -117,7 +133,7 @@ namespace Myriadbits.MXF
                                     Category = CATEGORY_NAME,
                                     Object = rip.Children[n],
                                     Severity = MXFValidationSeverity.Error,
-                                    Message = $"RIP entry {rip.Children[n]} not pointing to a partition location."
+                                    Message = string.Format(ValidationMessages.ID_0062, rip.Children[n])
                                 });
                             }
                         }
@@ -131,12 +147,22 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = rip,
                             Severity = MXFValidationSeverity.Error,
-                            Message = $"RIP entries are not in ascending Byte Offset order."
+                            Message = ValidationMessages.ID_0715
                         });
                     }
 
                     // TODO check DeclaredTotalLength against effective TotalLength
                     // really neccessary? would be caught earlier as pack not parseable, i.e. exception at ctor
+                }
+                else
+                {
+                    retval.Add(new MXFValidationResult
+                    {
+                        Category = CATEGORY_NAME,
+                        Object = rip,
+                        Severity = MXFValidationSeverity.Success,
+                        Message = ValidationMessages.ID_0075
+                    });
                 }
                 Log.ForContext<MXFValidatorRIP>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
                 return retval;
@@ -164,6 +190,12 @@ namespace Myriadbits.MXF
             var ripEntries = GetRIPEntries(rip);
             var orderedRipEntries = ripEntries.OrderBy(e => e.PartitionOffset);
             return Enumerable.SequenceEqual(ripEntries, orderedRipEntries);
+        }
+
+        public bool HasPartitionRIPEntry(MXFPartition p, MXFRIP rip)
+        {
+            var ripEntries = GetRIPEntries(rip);
+            return ripEntries.Any(e => e.PartitionOffset == (ulong)p.Offset);
         }
 
         // Every Partition shall be indexed if the Random Index Pack exists.
