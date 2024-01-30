@@ -169,7 +169,7 @@
   <Class Name="Myriadbits.MXF.KLVTripletParser&lt;T&gt;">
     <Position X="33.5" Y="4" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAQAgAgAAGACAgBIAAQAQCAIQAAAAAAAQgAA=</HashCode>
+      <HashCode>AAEAAAAAIQAgAgAAGACAgAIAAQAQCAIQAAAAAQAQAAA=</HashCode>
       <FileName>KLV\KLVTripletParser.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -220,14 +220,14 @@
     <Position X="27" Y="4.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MXFNamedObject.cs</FileName>
+      <FileName>Special\MXFNamedObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFLogicalObject">
     <Position X="27" Y="0.5" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MXFLogicalObject.cs</FileName>
+      <FileName>Special\MXFLogicalObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Myriadbits.MXF.KLV.IKLVStreamReader">

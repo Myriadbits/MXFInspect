@@ -28,6 +28,10 @@ namespace Myriadbits.MXF.KLV
 {
     public interface ILength : IArrayLength
     {
+        /// <summary>
+        /// Gets the length value of the L part in a KLV
+        /// </summary>
+        [Description("Value of the length part of the KLV triplet")]
         public long Value { get; }
     }
 }

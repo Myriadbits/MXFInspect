@@ -24,6 +24,7 @@
 using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System.ComponentModel;
+using System.Dynamic;
 using System.IO;
 
 namespace Myriadbits.MXF
@@ -77,7 +78,7 @@ namespace Myriadbits.MXF
             {
                 TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
             }
-            
+
             Stream = stream;
         }
 
@@ -95,6 +96,18 @@ namespace Myriadbits.MXF
 
         //        //return new KLVValue(reader.ReadArray(reader.ReadByte, Length.Value));
         //}
+
+        private MXFFile GetFile()
+        {
+            return this.Root() as MXFFile;
+        }
+
+        public SubStream GetValueStream()
+        {
+            MXFFile mxfFile = GetFile();
+            FileStream fs = new FileStream(mxfFile.File.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 10240);
+            return new SubStream(fs, ValueOffset, Length.Value); 
+        }
     }
 
 }
