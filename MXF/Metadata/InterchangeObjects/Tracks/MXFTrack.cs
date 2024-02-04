@@ -38,7 +38,8 @@ namespace Myriadbits.MXF
 
 		[Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.01040103.00000000")]
-        public UInt32? EssenceTrackNumber { get; set; }
+		[TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] EssenceTrackNumber { get; set; }
 
 		[Category(CATEGORYNAME)]
         [ULElement("urn:smpte:ul:060e2b34.01010102.01070102.01000000")]
@@ -76,7 +77,7 @@ namespace Myriadbits.MXF
 					localTag.AddChild(reader.ReadReference<MXFSegment>("TrackSegment", localTag.Offset)); 
 					return true;
 				case 0x4804: 
-					this.EssenceTrackNumber = reader.ReadUInt32();
+					this.EssenceTrackNumber = reader.ReadBytes(4);
                     localTag.Value = this.EssenceTrackNumber;
                     return true;
 			}
