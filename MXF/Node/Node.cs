@@ -41,7 +41,6 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public T Parent { get; private set; }
 
-        [Browsable(false)]
         public INode<T> Root()
         {
             if (this.Parent != null)
@@ -49,7 +48,6 @@ namespace Myriadbits.MXF
             return this;
         }
 
-        [Browsable(false)]
         public IEnumerable<T> Ancestors()
         {
             var parent = this.Parent;
