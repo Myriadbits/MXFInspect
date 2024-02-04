@@ -79,7 +79,7 @@ namespace Myriadbits.MXF
                     localTag.Value = this.SampleRate;
                     return true;
                 case 0x3002: 
-                    this.ContainerDuration = reader.ReadUInt64();
+                    this.ContainerDuration = reader.ReadInt64();
                     localTag.Value = this.ContainerDuration;
                     return true;
                 case 0x3004: 

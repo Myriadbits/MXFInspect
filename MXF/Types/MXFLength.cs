@@ -29,14 +29,14 @@ namespace Myriadbits.MXF
     [ULType("urn:smpte:ul:060e2b34.01040101.01012002.00000000")]
     public struct MXFLength
     {
-        private UInt64 _Value;
+        private Int64 _Value;
 
-        public static implicit operator MXFLength(UInt64 value)
+        public static implicit operator MXFLength(Int64 value)
         {
             return new MXFLength { _Value = value };
         }
 
-        public static implicit operator UInt64(MXFLength value)
+        public static implicit operator Int64(MXFLength value)
         {
             return value._Value;
         }

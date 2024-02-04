@@ -71,7 +71,7 @@ namespace Myriadbits.MXF
                     localTag.Value = this.StartPosition;
                     return true;
                 case 0x1202: 
-                    this.FadeInLength = reader.ReadUInt64();
+                    this.FadeInLength = reader.ReadInt64();
                     localTag.Value = this.FadeInLength;
                     return true;
                 case 0x1203: 
@@ -79,7 +79,7 @@ namespace Myriadbits.MXF
                     localTag.Value = this.FadeInType;
                     return true;
                 case 0x1204: 
-                    this.FadeOutLength = reader.ReadUInt64();
+                    this.FadeOutLength = reader.ReadInt64();
                     localTag.Value = this.FadeOutLength;
                     return true;
                 case 0x1205: 
