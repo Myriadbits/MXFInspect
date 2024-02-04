@@ -62,7 +62,7 @@ namespace Myriadbits.MXF
                     localTag.Value = this.DataDefinition;
                     return true;
                 case 0x0202: 
-                    this.Duration = reader.ReadUInt64();
+                    this.Duration = reader.ReadInt64();
                     localTag.Value = this.Duration;
                     return true;
                 // TODO replace generic MXFObject with class KLVData once implemented
