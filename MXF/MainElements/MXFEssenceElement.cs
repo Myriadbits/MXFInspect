@@ -43,16 +43,20 @@ namespace Myriadbits.MXF
         };
 
         [Category(CATEGORYNAME)]
-        public string EssenceType { get; set; }
+        public string EssenceType { get; private set; }
         [Category(CATEGORYNAME)]
-        public byte ElementCount { get; set; }
+        public byte ElementCount { get; private set; }
         [Category(CATEGORYNAME)]
-        public byte ElementType { get; set; }
+        public byte ElementType { get; private set; }
         [Category(CATEGORYNAME)]
-        public byte ElementNumber { get; set; }
+        public byte ElementNumber { get; private set; }
+        [Category(CATEGORYNAME)]
+        [TypeConverter(typeof(ByteArrayConverter))]
+        public byte[] ElementTrackNumber { get; private set; }
+
         [Browsable(false)]
         // TODO helper property for indexvalidator that should be avoided
-        public bool IsPicture { get; set; }
+        public bool IsPicture { get; private set; }
 
         [Category(CATEGORYNAME)]
         // TODO helper property for indexvalidator that should be avoided
@@ -91,6 +95,7 @@ namespace Myriadbits.MXF
             this.ElementCount = this.Key[13];
             this.ElementType = this.Key[14];
             this.ElementNumber = this.Key[15];
+            this.ElementTrackNumber = new byte[] { this.Key[12], this.Key[13], this.Key[14], this.Key[15] };
         }
 
         public override string ToString()
