@@ -74,10 +74,6 @@ namespace Myriadbits.MXF
             }
         }
 
-        [Browsable(false)]
-        // TODO find better name
-        public MXFLogicalObject LogicalWrapper { get; private set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -109,14 +105,6 @@ namespace Myriadbits.MXF
             if (this.Children.Any())
                 return this.Offset.ToString();
             return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
-        }
-
-        // TODO find better name, maybe Wrap
-        public MXFLogicalObject CreateLogicalObject()
-        {
-            var wrapper = new MXFLogicalObject(this);
-            this.LogicalWrapper = wrapper;
-            return wrapper;
         }
     }
 }

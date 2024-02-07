@@ -354,9 +354,9 @@ namespace Myriadbits.MXF
             // Find all index tables, system items and essence elements
             this.Description = "Locating index tables, essence";
 
-            m_indexTables = this.File.GetDescendantsOfType<MXFIndexTableSegment>().ToList();
-            m_systemItems = this.File.GetDescendantsOfType<MXFSystemMetaDataPack>().ToList();
-            m_pictureItems = this.File.GetDescendantsOfType<MXFEssenceElement>().Where(e => e.IsPicture).ToList();
+            m_indexTables = this.File.Descendants().OfType<MXFIndexTableSegment>().ToList();
+            m_systemItems = this.File.Descendants().OfType<MXFSystemMetaDataPack>().ToList();
+            m_pictureItems = this.File.Descendants().OfType<MXFEssenceElement>().Where(e => e.IsPicture).ToList();
 
             foreach (var si in m_systemItems)
             {
@@ -418,7 +418,7 @@ namespace Myriadbits.MXF
 
         private void CreateIndexTableDictionary()
         {
-            var indexTables = this.File.GetDescendantsOfType<MXFIndexTableSegment>();
+            var indexTables = this.File.Descendants().OfType<MXFIndexTableSegment>();
 
             foreach (var table in indexTables)
             {

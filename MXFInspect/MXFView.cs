@@ -25,7 +25,6 @@ using Myriadbits.MXF;
 using Myriadbits.MXF.Exceptions;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -41,7 +40,7 @@ namespace Myriadbits.MXFInspect
         public MXFFile File { get; private set; }
 
         public MXFObject PhysicalTreeSelectedObject { get; private set; }
-        public MXFLogicalObject LogicalTreeSelectedObject { get; private set; }
+        public MXFObject LogicalTreeSelectedObject { get; private set; }
         public bool PhysicalViewShown { get; set; } = true;
         public FileInfo FileInfo { get; private set; }
 
@@ -206,10 +205,9 @@ namespace Myriadbits.MXFInspect
                 this.tlvPhysical.HideFillers(this.FillerHidden);
                 this.tlvPhysical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-                if (this.File.LogicalTreeRoot != null)
+                if (this.File.LogicalRoot() != null)
                 {
-                    var logicalList = new List<MXFLogicalObject>() { this.File.LogicalTreeRoot };
-                    this.tlvLogical.FillTree(logicalList);
+                    this.tlvLogical.FillTree(File.LogicalChildren);
                     this.tlvLogical.ColumnOffset.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
                     this.tlvPhysical.ColumnMXFObject.Text = $"Object [{this.File.Descendants().Count():N0} items]";
                 }
@@ -227,7 +225,7 @@ namespace Myriadbits.MXFInspect
         private void PhysicalTree_SelectionChanged(object sender, EventArgs e)
         {
             PhysicalTreeSelectedObject = this.tlvPhysical.SelectedObject as MXFObject;
-            var logicalObj = PhysicalTreeSelectedObject?.LogicalWrapper;
+            var logicalObj = PhysicalTreeSelectedObject;
 
             if (PhysicalTreeSelectedObject != null)
             {
@@ -255,24 +253,20 @@ namespace Myriadbits.MXFInspect
         /// <param name="e"></param>
         private void LogicalTree_SelectionChanged(object sender, EventArgs e)
         {
-            LogicalTreeSelectedObject = this.tlvLogical.SelectedObject as MXFLogicalObject;
+            LogicalTreeSelectedObject = this.tlvLogical.SelectedObject as MXFObject;
             if (LogicalTreeSelectedObject != null)
             {
-                MXFObject obj = LogicalTreeSelectedObject.Object;
-                if (obj != null)
+                if (!m_fDoNotSelectOther)
                 {
-                    if (!m_fDoNotSelectOther)
-                    {
-                        this.propGrid.SelectedObject = obj;
+                    this.propGrid.SelectedObject = LogicalTreeSelectedObject;
 
 
-                        // Try to select this item in the main list as well
-                        m_fDoNotSelectOther = true;
-                        this.tlvPhysical.RevealAndSelectObject(obj);
-                        // Display the mxfobject as hex dump
-                        rtfHexViewer.SetObject(obj);
-                        m_fDoNotSelectOther = false;
-                    }
+                    // Try to select this item in the main list as well
+                    m_fDoNotSelectOther = true;
+                    this.tlvPhysical.RevealAndSelectObject(LogicalTreeSelectedObject);
+                    // Display the mxfobject as hex dump
+                    rtfHexViewer.SetObject(LogicalTreeSelectedObject);
+                    m_fDoNotSelectOther = false;
                 }
             }
             ParentMainForm.UpdateMenu();
@@ -357,7 +351,7 @@ namespace Myriadbits.MXFInspect
             }
             else
             {
-                tlvLogical.RevealAndSelectObject(obj.LogicalWrapper);
+                tlvLogical.RevealAndSelectObject(obj);
             }
         }
 

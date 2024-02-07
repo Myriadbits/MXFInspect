@@ -33,7 +33,7 @@ using System.Windows.Forms;
 
 namespace Myriadbits.MXFInspect
 {
-    public class LogicalTreeListView : TreeListViewBase<MXFLogicalObject>
+    public class LogicalTreeListView : TreeListViewBase<MXFObject>
     {
         public LogicalTreeListView() : base()
         {
@@ -46,7 +46,7 @@ namespace Myriadbits.MXFInspect
             // 
             // olvColumn1
             // 
-            this.ColumnOffset.AspectName = "Object.Offset";
+            this.ColumnOffset.AspectName = "Offset";
             this.ColumnOffset.Text = "Offset";
             this.ColumnOffset.Width = 85;
             this.ColumnOffset.MinimumWidth = 50;
@@ -80,26 +80,53 @@ namespace Myriadbits.MXFInspect
             }
             else if (e.Column == ColumnMXFObject)
             {
-                MXFLogicalObject obj = e.Model as MXFLogicalObject;
-                e.SubItem.ForeColor = GetColor(obj.Object);
+                MXFObject obj = e.Model as MXFObject;
+                e.SubItem.ForeColor = GetColor(obj);
             }
 
         }
 
-        protected override void CalculateOffsetMaxDigitCount()
+        protected override int CalculateOffsetMaxDigitCount()
         {
-            var logicalRoot = this.Objects?.OfType<MXFLogicalObject>()?.FirstOrDefault()?.Root();
+            // pick any object of type MXF and get to its root
+            var logicalRoot = this.Objects.OfType<MXFObject>().FirstOrDefault()?.LogicalRoot() as MXFObject;
             if (logicalRoot != null)
             {
-                var descendants = logicalRoot.Descendants();
+                var descendants = logicalRoot.LogicalDescendants();
                 if (descendants.Any())
                 {
-                    long maxOffset = descendants.Max(o => o.Object.Offset);
-                    maxDigitCount = Helper.GetDigitCount(maxOffset);
+                    long maxOffset = descendants.Max(o => o.Offset);
+                    return Helper.GetDigitCount(maxOffset);
                 }
-                maxDigitCount = 0;
             }
-            maxDigitCount = 0;
+            return 0;
+        }
+
+        protected override bool TreeNode_HasChildren(object x)
+        {
+            if (x is MXFObject obj)
+            {
+                return obj.LogicalChildren.Any();
+            }
+            return false;
+        }
+
+        protected override IEnumerable TreeNode_ChildGetter(object x)
+        {
+            if (x is MXFObject obj)
+            {
+                return obj.LogicalChildren;
+            }
+            return Enumerable.Empty<object>();
+        }
+
+        protected override object TreeNode_ParentGetter(object model)
+        {
+            if (model is MXFObject obj)
+            {
+                return obj.LogicalParent;
+            }
+            return null;
         }
     }
 }

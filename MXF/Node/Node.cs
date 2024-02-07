@@ -21,16 +21,19 @@
 //
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Myriadbits.MXF
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public abstract class Node<T> : INode<T> where T : Node<T>
+    public abstract class Node<T> : INode<T>, ILogicalNode<T> where T : Node<T>
     {
         private readonly List<T> childrenList = new List<T>();
+        private readonly List<T> logicalChildrenList = new List<T>();
 
         [Browsable(false)]
         public IReadOnlyList<T> Children
@@ -39,12 +42,28 @@ namespace Myriadbits.MXF
         }
 
         [Browsable(false)]
+        public IReadOnlyList<T> LogicalChildren
+        {
+            get => logicalChildrenList;
+        }
+
+        [Browsable(false)]
         public T Parent { get; private set; }
+
+        [Browsable(false)]
+        public T LogicalParent { get; private set; }
 
         public INode<T> Root()
         {
             if (this.Parent != null)
                 return this.Parent.Root();
+            return this;
+        }
+
+        public INode<T> LogicalRoot()
+        {
+            if (this.LogicalParent != null)
+                return this.LogicalParent.LogicalRoot();
             return this;
         }
 
@@ -55,6 +74,16 @@ namespace Myriadbits.MXF
             {
                 yield return parent;
                 parent = parent.Parent;
+            }
+        }
+
+        public IEnumerable<T> LogicalAncestors()
+        {
+            var lParent = this.LogicalParent;
+            while (lParent != null)
+            {
+                yield return lParent;
+                lParent = lParent.LogicalParent;
             }
         }
 
@@ -80,10 +109,38 @@ namespace Myriadbits.MXF
             else yield break;
         }
 
+        public IEnumerable<T> LogicalDescendants()
+        {
+            if (this.logicalChildrenList.Any())
+            {
+                var nodes = new Stack<T>(this.logicalChildrenList);
+                while (nodes.Any())
+                {
+                    T node = nodes.Pop();
+                    yield return node;
+                    if (node.logicalChildrenList.Any())
+                    {
+                        foreach (var n in node.logicalChildrenList)
+                        {
+                            nodes.Push(n);
+                        }
+                    }
+
+                }
+            }
+            else yield break;
+        }
+
         public virtual void AddChild(T child)
         {
             child.Parent = (T)this;
             this.childrenList.Add(child);
+        }
+
+        public virtual void AddLogicalChild(T child)
+        {
+            child.LogicalParent = (T)this;
+            this.logicalChildrenList.Add(child);
         }
 
         public void AddChildren(IEnumerable<T> children)
@@ -94,14 +151,51 @@ namespace Myriadbits.MXF
             }
         }
 
+        public void AddLogicalChildren(IEnumerable<T> logicalChildren)
+        {
+            foreach (var lchild in logicalChildren)
+            {
+                AddLogicalChild(lchild);
+            }
+        }
+
         public void ClearChildren()
         {
             childrenList.Clear();
         }
 
+        public void ClearLogicalChildren()
+        {
+            logicalChildrenList.Clear();
+        }
+
+        public void ReorderChildren(Func<T, long> order)
+        {
+            var orderedChildrenList = childrenList.OrderBy(order).ToList();
+            ClearChildren();
+            AddChildren(orderedChildrenList);
+        }
+
+        public void ReorderLogicalChildren(Func<T, long> order)
+        {
+            var orderedlogicalChildrenList = logicalChildrenList.OrderBy(order).ToList();
+            ClearLogicalChildren();
+            AddLogicalChildren(orderedlogicalChildrenList);
+        }
+
         public T NextSibling()
         {
             var siblings = this.Parent?.Children?.ToList();
+            if (siblings != null)
+            {
+                return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) + 1);
+            }
+            else return null;
+        }
+
+        public T NextLogicalSibling()
+        {
+            var siblings = this.LogicalParent?.LogicalChildren?.ToList();
             if (siblings != null)
             {
                 return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) + 1);
@@ -118,5 +212,16 @@ namespace Myriadbits.MXF
             }
             else return null;
         }
+
+        public T PreviousLogicalSibling()
+        {
+            var siblings = this.LogicalParent?.LogicalChildren?.ToList();
+            if (siblings != null)
+            {
+                return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) - 1);
+            }
+            else return null;
+        }
+
     }
 }
