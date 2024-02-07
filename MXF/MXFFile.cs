@@ -32,7 +32,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 using Myriadbits.MXF.Exceptions;
-using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -58,7 +57,6 @@ namespace Myriadbits.MXF
         public List<Exception> Exceptions { get; } = new List<Exception>();
         public MXFSystemMetaDataPack FirstSystemItem { get; set; }
         public MXFSystemMetaDataPack LastSystemItem { get; set; }
-        public MXFLogicalObject LogicalTreeRoot { get; set; }
 
         private MXFFile(FileInfo fi) : base(0)
         {
@@ -137,43 +135,6 @@ namespace Myriadbits.MXF
         public override string ToString()
         {
             return $"{File.FullName} ({File.Length:N0})";
-        }
-
-        // TODO move into another class
-        /// <summary>
-        /// Return info for a generic track packet
-        /// </summary>
-        /// <returns>A string representing information about a generic track</returns>
-        public string GetTrackInfo(MXFTrack genericTrack)
-        {
-            try
-            {
-                if (genericTrack != null)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    MXFSequence seq = genericTrack.GetFirstMXFSequence();
-                    if (seq != null && seq.DataDefinition != null && seq.DataDefinition is UL ul)
-                    {
-                        sb.Append((seq.DataDefinition as UL)?.Name);
-                    }
-
-                    if (genericTrack is MXFTimelineTrack timeLineTrack)
-                    {
-                        sb.Append($" @ {timeLineTrack.EditRate.ToString(true)}");
-                    }
-                    if (!string.IsNullOrEmpty(genericTrack.TrackName))
-                    {
-                        sb.Append($" {{{genericTrack.TrackName}}}");
-                    }
-                    return sb.ToString();
-
-                }
-                return "";
-            }
-            catch (Exception)
-            {
-                return "Unable to retrieve track info. See error log for more details";
-            }
         }
 
         #region private methods
@@ -363,7 +324,7 @@ namespace Myriadbits.MXF
                         break;
 
                     case MXFPreface preface:
-                        this.LogicalTreeRoot = preface.CreateLogicalObject();
+                        this.AddLogicalChild(preface);
                         if (currentPartition != null)
                         {
                             currentPartition.AddChild(obj);
@@ -465,21 +426,19 @@ namespace Myriadbits.MXF
 
         private void CreateLogicalTree()
         {
-            if (this.LogicalTreeRoot == null)
-                return;
+            //var logicalRoot = this.LogicalDescendants().First();
+            //if (logicalRoot == null)
+            //    return;
 
-            LogicalAddChilds(this.LogicalTreeRoot);
+            foreach (var lChild in this.LogicalChildren)
+            {
+                LogicalAddChildren(lChild);
+                lChild.ReorderLogicalChildren(c => c.Offset);
+            }
+        }   
 
-            // order children by offset
-            var orderedChildren = this.LogicalTreeRoot.Children.OrderBy(c => c.Object.Offset).ToList();
-            this.LogicalTreeRoot.ClearChildren();
-            this.LogicalTreeRoot.AddChildren(orderedChildren);
-        }
-
-        private MXFLogicalObject LogicalAddChilds(MXFLogicalObject lObj)
+        private MXFObject LogicalAddChildren(MXFObject obj)
         {
-            // Check properties for reference
-            MXFObject obj = lObj.Object;
             if (obj != null)
             {
                 var desc = obj.Descendants().OfType<IResolvable>();
@@ -488,21 +447,22 @@ namespace Myriadbits.MXF
                 {
                     // create and add the logical child
                     var refObj = r.GetReference();
-                    if (refObj != null)
+
+                    // make sure obj is not already present in logical tree
+                    var offsets = this.LogicalDescendants().Select(c => c.Offset);
+                    bool isContained = offsets.Contains(refObj.Offset);
+                    if (refObj != null && !isContained)
                     {
-                        MXFLogicalObject newLObj = refObj.CreateLogicalObject();
-                        lObj.AddChild(newLObj);
+                        obj.AddLogicalChild(refObj);
 
                         if (refObj.Children.Any())
                         {
-                            LogicalAddChilds(newLObj);
+                            LogicalAddChildren(refObj);
                         }
                     }
-
-
                 }
             }
-            return lObj;
+            return obj;
         }
 
         /// <summary>

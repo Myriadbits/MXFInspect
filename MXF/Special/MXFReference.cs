@@ -23,6 +23,7 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using Myriadbits.MXF.KLV;
 using Serilog;
 
@@ -60,9 +61,15 @@ namespace Myriadbits.MXF
             {
                 if (obj is T t)
                 {
-                    Reference = t;
-                    Log.ForContext<MXFReference<T>>().Debug($"Reference resolved: {this} -> {Reference}");
-                    return true;
+                    // obj must be from the same partition
+                    var parentPartitionOf_t = t.Ancestors().OfType<MXFPartition>().FirstOrDefault();
+                    var parentPartitionOf_this = this.Ancestors().OfType<MXFPartition>().FirstOrDefault();
+                    if(parentPartitionOf_t == parentPartitionOf_this)
+                    {
+                        Reference = t;
+                        Log.ForContext<MXFReference<T>>().Debug($"Reference resolved: {this} -> {Reference}");
+                        return true;
+                    }
                 }
                 Log.ForContext<MXFReference<T>>().Warning($"Reference not resolveable as types don't match: {this.GetType()} -> {obj.GetType()}");
             }

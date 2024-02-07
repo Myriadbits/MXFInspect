@@ -25,7 +25,6 @@ using BrightIdeasSoftware;
 using Myriadbits.MXF;
 using Serilog;
 using System;
-using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -37,11 +36,9 @@ namespace Myriadbits.MXFInspect
 {
     public abstract class TreeListViewBase<T> : TreeListView where T : Node<T>
     {
-        protected int maxDigitCount = 0;
-
         public bool ShowOffsetAsHex { get; protected set; }
 
-        private OLVColumn ColumnFirst { get; set; } = new OLVColumn();
+        private OLVColumn ColumnDummy { get; set; } = new OLVColumn();
         public OLVColumn ColumnOffset { get; set; } = new OLVColumn();
         public OLVColumn ColumnMXFObject { get; set; } = new OLVColumn();
 
@@ -53,15 +50,15 @@ namespace Myriadbits.MXFInspect
             // first column triggers an exception, we make a fake column 
             // with its width equal to 0 (hack)
             // same hack is needed in report tree list
-            this.ColumnFirst.MaximumWidth = 0;
-            this.ColumnFirst.Width = 0;
-            this.ColumnFirst.Text = "Index";
+            this.ColumnDummy.MaximumWidth = 0;
+            this.ColumnDummy.Width = 0;
+            this.ColumnDummy.Text = "Index";
 
-            this.AllColumns.Add(ColumnFirst);
+            this.AllColumns.Add(ColumnDummy);
             this.AllColumns.Add(ColumnOffset);
             this.AllColumns.Add(ColumnMXFObject);
 
-            this.ColumnFirst.Hideable = false;
+            this.ColumnDummy.Hideable = false;
             this.ColumnOffset.Hideable = false;
             this.ColumnOffset.TextAlign = HorizontalAlignment.Right;
             this.ColumnOffset.UseFiltering = false;
@@ -93,7 +90,6 @@ namespace Myriadbits.MXFInspect
             // Clear tree and set objects
             this.Items.Clear();
             this.SetObjects(objects);
-            this.CalculateOffsetMaxDigitCount();
         }
 
         public void RevealAndSelectObject(T objToSelect)
@@ -108,6 +104,7 @@ namespace Myriadbits.MXFInspect
 
         public void SetOffsetStyle(bool showOffsetAsHex)
         {
+            int maxDigitCount = CalculateOffsetMaxDigitCount();
             ShowOffsetAsHex = showOffsetAsHex;
             this.ColumnOffset.AspectToStringConverter = delegate (object x)
             {
@@ -131,11 +128,11 @@ namespace Myriadbits.MXFInspect
 
         protected abstract void Tree_FormatCell(object sender, FormatCellEventArgs e);
 
-        protected abstract void CalculateOffsetMaxDigitCount();
+        protected abstract int CalculateOffsetMaxDigitCount();
 
         #region private methods
 
-        private bool TreeNode_HasChildren(object x)
+        protected virtual bool TreeNode_HasChildren(object x)
         {
             if (x is T obj)
             {
@@ -144,7 +141,7 @@ namespace Myriadbits.MXFInspect
             return false;
         }
 
-        private IEnumerable TreeNode_ChildGetter(object x)
+        protected virtual IEnumerable TreeNode_ChildGetter(object x)
         {
             if (x is T obj)
             {
@@ -153,7 +150,7 @@ namespace Myriadbits.MXFInspect
             return Enumerable.Empty<object>();
         }
 
-        private object TreeNode_ParentGetter(object model)
+        protected virtual object TreeNode_ParentGetter(object model)
         {
             if (model is T obj)
             {
@@ -172,7 +169,6 @@ namespace Myriadbits.MXFInspect
                 Cursor.Current = Cursors.Default;
             }
         }
-
 
         protected static Color GetColor(MXFObject obj)
         {

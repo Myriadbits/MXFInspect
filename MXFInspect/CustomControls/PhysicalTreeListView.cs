@@ -139,10 +139,10 @@ namespace Myriadbits.MXFInspect
             }
         }
 
-        protected override void CalculateOffsetMaxDigitCount()
+        protected override int CalculateOffsetMaxDigitCount()
         {
             long maxOffset = this.Objects?.OfType<MXFObject>()?.FirstOrDefault()?.GetTreeMaxOffset() ?? 0;
-            maxDigitCount = Helper.GetDigitCount(maxOffset);
+            return Helper.GetDigitCount(maxOffset);
         }
 
         private void SetupColumns()

@@ -137,52 +137,23 @@ namespace Myriadbits.MXF
         public static MXFContentStorage GetContentStorage(this MXFFile file)
         {
             // TODO assuming there is only one content storage
-            return file.LogicalTreeRoot
-                        .Children
-                        .OfWrappedType<MXFContentStorage>()
-                        .FirstOrDefault()
-                        .UnWrapAs<MXFContentStorage>();
+            return file.LogicalDescendants().OfType<MXFContentStorage>().FirstOrDefault();
         }
 
-        public static MXFMaterialPackage GetFirstMaterialPackage(this MXFContentStorage cs)
+        public static MXFMaterialPackage GetFirstMaterialPackage(this MXFFile file)
         {
             // TODO assuming there is at least one material package linked to the content storage
-            return cs.LogicalWrapper
-                        .Children
-                        .OfWrappedType<MXFMaterialPackage>()
-                        .FirstOrDefault()?
-                        .UnWrapAs<MXFMaterialPackage>();
+            return file.LogicalDescendants().OfType<MXFMaterialPackage>().FirstOrDefault();
         }
 
-        public static IEnumerable<MXFTrack> GetGenericTracks(this MXFPackage package)
+        public static IEnumerable<MXFTrack> GetTracks(this MXFPackage package)
         {
-            return package.LogicalWrapper
-                        .Children
-                        .OfWrappedType<MXFTrack>()
-                        .UnWrapAs<MXFTrack>();
+            return package.LogicalChildren.OfType<MXFTrack>();
         }
 
         public static MXFSequence GetFirstMXFSequence(this MXFTrack track)
         {
-            return track.LogicalWrapper
-                    .Children.OfWrappedType<MXFSequence>()
-                    .FirstOrDefault()?
-                    .UnWrapAs<MXFSequence>();
+            return track.LogicalChildren.OfType<MXFSequence>().FirstOrDefault();
         }
-
-        public static IEnumerable<T> GetDescendantsOfType<T>(this MXFFile file) where T : MXFObject
-        {
-            file.LoadAllPartitions();
-            return file.Descendants().OfType<T>();
-        }
-
-        public static void LoadAllPartitions(this MXFFile file)
-        {
-            foreach (MXFPartition p in file.GetPartitions())
-            {
-                p.Load();
-            }
-        }
-
     }
 }
