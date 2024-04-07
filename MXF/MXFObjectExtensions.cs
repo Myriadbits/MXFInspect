@@ -92,7 +92,8 @@ namespace Myriadbits.MXF
 
         public static bool IsHeaderMetadataLike(this MXFObject obj)
         {
-            return obj is MXFMetadataBaseclass or MXFPrimerPack ||
+            return (obj is MXFMetadataBaseclass && obj is not MXFIndexTableSegment) ||
+                obj is MXFPrimerPack ||
                 // this includes also Filler Packs
                 (obj as MXFPack)?.Key.RegistryDesignator == Identifiers.ULRegistries.MetadataDictionaries;
         }
