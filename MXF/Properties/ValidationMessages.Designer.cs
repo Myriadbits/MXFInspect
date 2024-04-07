@@ -403,7 +403,7 @@ namespace Myriadbits.MXF.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to $&quot;Partition #{0} has an invalid PartitionStatus (0x{1:X2})&quot;.
+        ///   Looks up a localized string similar to Partition #{0} has an invalid PartitionStatus (0x{1:X2}).
         /// </summary>
         internal static string ID_0114 {
             get {
