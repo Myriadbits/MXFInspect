@@ -240,7 +240,7 @@
     <value>Preface</value>
   </data>
   <data name="ID_0114" xml:space="preserve">
-    <value>$"Partition #{0} has an invalid PartitionStatus (0x{1:X2})"</value>
+    <value>Partition #{0} has an invalid PartitionStatus (0x{1:X2})</value>
     <comment>{0} = PartitionNumber {1} = PartitionStatus</comment>
   </data>
   <data name="ID_0707" xml:space="preserve">
