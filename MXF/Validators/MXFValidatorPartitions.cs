@@ -190,14 +190,7 @@ namespace Myriadbits.MXF
             ulong headerByteCount = 0;
 
             var primerPack = p.Children.FirstOrDefault(c => c is MXFPrimerPack);
-            var lastHeaderMetadata = p.Children.TakeWhile(c => c.IsHeaderMetadataLike())?.LastOrDefault();
-            //var trailingKLV = lastHeaderMetadata?.NextSibling();
-
-            //// add trailing KLV Fill item if any
-            //if (trailingKLV != null && trailingKLV.IsFiller())
-            //{
-            //    lastHeaderMetadata = trailingKLV;
-            //}
+            var lastHeaderMetadata = p.Children.TakeWhile(c => c.IsHeaderMetadataLike() && !c.IsIndexLike())?.LastOrDefault();
 
             if (primerPack != null && lastHeaderMetadata != null)
             {
