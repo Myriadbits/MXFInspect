@@ -1,4 +1,4 @@
-﻿#region license
+#region license
 //
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
@@ -22,32 +22,33 @@
 #endregion
 
 using Myriadbits.MXF.Exceptions;
+using Myriadbits.MXF.Identifiers;
 using Myriadbits.MXF.KLV;
 using Serilog;
 using System;
+using System.Collections.Immutable;
 using System.IO;
+using System.Threading;
 
 namespace Myriadbits.MXF
 {
-    public abstract class KLVTripletParser<T, K, L> : IKLVTripletParser<T, K, L>
-        where T : KLVTriplet
-        where K : KLVKey
-        where L : KLVLengthBase
+    public abstract class KLVTripletParser<T> where T : KLVTriplet
     {
-        protected long currentOffset = 0;
-        protected readonly long baseOffset = 0;
+        private long currentOffset = 0;
+        private readonly long baseOffset = 0;
 
         protected readonly IKLVStreamReader reader;
         protected readonly Stream klvStream;
-        protected abstract K ParseKLVKey();
-        protected abstract L ParseKLVLength();
-        protected abstract T InstantiateKLV(K key, L length, long offset, Stream stream);
+        protected abstract KLVKey ParseKLVKey();
+        protected abstract ILength ParseKLVLength();
+        protected abstract T InstantiateKLV(KLVKey key, ILength length, long offset, Stream stream);
 
         public T Current { get; protected set; }
 
-        public long Offset {get { return currentOffset; } }
+        //public long Offset { get { return currentOffset; } }
+
+        public long RemainingBytesCount { get { return klvStream.Length - klvStream.Position; } }
         
-        public long RemainingBytesCount { get { return klvStream.Length - currentOffset; } }
         public KLVTripletParser(Stream stream)
         {
             klvStream = stream;
@@ -66,11 +67,10 @@ namespace Myriadbits.MXF
             Current = klv;
 
             // advance to next pack
-            Seek(currentOffset + klv.TotalLength);
+            SeekToEndOfCurrentKLV();
             return klv;
         }
 
-        // TODO consider making this a property
         public bool HasNext()
         {
             return RemainingBytesCount > 0;
@@ -82,16 +82,27 @@ namespace Myriadbits.MXF
             currentOffset = position;
         }
 
+        public void SeekToEndOfCurrentKLV()
+        {
+            if (Current != null)
+            {
+                Seek(Current.Offset - baseOffset + Current.TotalLength);
+            }
+            else
+            {
+                Seek(0);
+            }
+        }
+
         protected T CreateKLV(long offset)
         {
-            K key;
-            L length;
+            KLVKey key;
+            ILength length;
 
             Seek(offset);
 
             try
             {
-                // TODO before parsing check if we have enough bytes to read
                 key = ParseKLVKey();
             }
             catch (Exception e)
@@ -100,7 +111,6 @@ namespace Myriadbits.MXF
             }
             try
             {
-                // TODO before parsing check if we have enough bytes to read
                 length = ParseKLVLength();
             }
             catch (Exception e)
@@ -111,23 +121,68 @@ namespace Myriadbits.MXF
             long subStreamLength = key.ArrayLength + length.ArrayLength + length.Value;
 
             // check if substream not longer than the parent stream
-            if (RemainingBytesCount < subStreamLength)
+            if (RemainingBytesCount < length.Value)
             {
                 // TODO klvstream is always a filestream, right?
                 // this check does not make sense!
                 if (klvStream is FileStream)
                 {
-                    Log.ForContext<KLVTripletParser<T, K, L>>().Error($"Substream length longer than parent stream, i.e. file finishes before last klv triplet.\r\nFile finishes @{klvStream.Length} while last KLV triplet with length {subStreamLength} should finish @{offset + subStreamLength}");
+                    Log.ForContext<KLVTripletParser<T>>().Error($"Substream length longer than parent stream, i.e. file finishes before last klv triplet.\r\nFile finishes @{klvStream.Length} while last KLV triplet with length {subStreamLength} should finish @{offset + subStreamLength}");
 
                     long truncatedLength = klvStream.Length - offset;
                     Stream truncatedStream = new SubStream(klvStream, offset, truncatedLength);
                     var truncatedKLV = new TruncatedKLV(key, length, baseOffset + currentOffset, truncatedStream);
-                    throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", currentOffset, truncatedKLV , null);
+                    
+                    throw new EndOfKLVStreamException("Premature end of file: Last KLV triplet is shorter than declared.", currentOffset, truncatedKLV, null);
                 }
             }
 
             Stream ss = new SubStream(klvStream, offset, subStreamLength);
             return InstantiateKLV(key, length, baseOffset + currentOffset, ss);
+        }
+
+        public bool SeekToNextPotentialKey(out long newOffset, long seekThresholdInBytes = 0, CancellationToken ct = default)
+        {
+            return SeekToBytePattern(out newOffset, UL.ValidULPrefix, seekThresholdInBytes, ct);
+        }
+
+        public bool SeekToPotentialPartitionKey(out long newOffset, long seekThresholdInBytes = 0, CancellationToken ct = default)
+        {
+            return SeekToBytePattern(out newOffset, UL.ValidPartitionPrefix, seekThresholdInBytes, ct);
+        }
+
+        public bool SeekToBytePattern(out long newOffset, ImmutableArray<byte> bytePattern, long seekThresholdInBytes = 0, CancellationToken ct = default)
+        {
+            int foundBytes = 0;
+            int bytesRead = 0;
+
+            // TODO consider Boyer-Moore search algorithm
+            while (!reader.EOF && (seekThresholdInBytes == 0 || bytesRead <= seekThresholdInBytes))
+            {
+                if (reader.ReadByte() == bytePattern[foundBytes])
+                {
+                    foundBytes++;
+
+                    if (foundBytes == bytePattern.Length)
+                    {
+                        // pattern found, reposition to pattern beginning
+                        Seek(reader.Position - bytePattern.Length);
+                        newOffset = reader.Position;
+                        return true;
+                    }
+                }
+                else
+                {
+                    foundBytes = 0;
+                }
+
+                ct.ThrowIfCancellationRequested();
+                bytesRead++;
+            }
+
+            // TODO what does the caller have to do in this case?
+            newOffset = reader.Position;
+            return false;
         }
     }
 }

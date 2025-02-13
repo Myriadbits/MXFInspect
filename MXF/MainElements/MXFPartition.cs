@@ -125,6 +125,7 @@ namespace Myriadbits.MXF
         [Browsable(false)]
         public MXFEssenceElement FirstPictureEssenceElement { get; set; }
 
+        // TODO really needed?
         [Browsable(false)]
         public MXFFile File { get; set; }
 

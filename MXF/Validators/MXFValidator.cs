@@ -34,6 +34,7 @@ namespace Myriadbits.MXF
     {
         public MXFFile File { get; set; }
         public string Description { get; set; }
+        protected List<MXFValidationResult> Results { get; set; }
 
         public MXFValidator(MXFFile file)
         {
@@ -43,15 +44,15 @@ namespace Myriadbits.MXF
         public async Task<List<MXFValidationResult>> Validate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            List<MXFValidationResult> results = await OnValidate(progress, ct);
+            Results = await OnValidate(progress, ct);
             Debug.WriteLine("Validation test run in {0} ms", sw.ElapsedMilliseconds);
-            return results;
+            return Results;
         }
 
         /// <summary>
         /// Override in derived classes
         /// </summary>
-        public virtual async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        protected virtual async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             List<MXFValidationResult> result = await Task.Run(() =>
             {

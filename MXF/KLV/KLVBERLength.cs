@@ -23,21 +23,29 @@
 
 using Myriadbits.MXF.KLV;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Myriadbits.MXF
 {
-    public class KLVBERLength : KLVLengthBase
+    [TypeConverter(typeof(ExpandableObjectConverter))]
+    public class KLVBERLength : ByteArray, ILength
     {
         public enum BERForms
         {
             ShortForm,
             LongForm,
-            Indefinite // Not supported
+            Indefinite 
         }
 
+        /// <summary>
+        /// Gets the length value of the L part in a KLV
+        /// </summary>
+        [Description("Value of the length part of the KLV triplet")]
+        public long Value { get; }
         public BERForms BERForm { get; }
         public int AdditionalOctets { get; }
+
 
         public KLVBERLength(long lengthValue, params byte[] bytes) : base(bytes)
         {
@@ -51,7 +59,6 @@ namespace Myriadbits.MXF
                     throw new ArgumentException($"First byte indicates BER Long Form, but byte array consists of only one byte");
 
                 case > 0x80 when bytes.Length > 1:
-                    // TODO check value against array
                     if (bytes.Skip(1).ToArray().ToLong() != Value)
                     {
                         throw new ArgumentException($"Byte array value ({BitConverter.ToUInt32(bytes)}) does not match with given length value ({Value})");
@@ -62,9 +69,10 @@ namespace Myriadbits.MXF
                     break;
 
                 case 0x80:
-                    //TODO is this the correct way to handle this?
                     BERForm = BERForms.Indefinite;
-                    throw new NotSupportedException("BER Indefinite Length is not supported");
+                    AdditionalOctets = 0;
+                    Value = -1;
+                    break;
 
                 case <= 0x7F when bytes.Length > 1:
                     throw new ArgumentException($"First byte indicates BER Long Form, but byte array consists of only one byte");

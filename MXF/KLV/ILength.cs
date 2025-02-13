@@ -21,13 +21,13 @@
 //
 #endregion
 
-namespace Myriadbits.MXF
-{
-    public class KLVValue : ByteArray
-    {
-        public KLVValue(byte[] bytes) : base(bytes)
-        {
 
-        }
+using System.ComponentModel;
+
+namespace Myriadbits.MXF.KLV
+{
+    public interface ILength : IArrayLength
+    {
+        public long Value { get; }
     }
 }

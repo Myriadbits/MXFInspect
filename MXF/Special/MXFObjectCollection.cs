@@ -21,43 +21,33 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
 
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
 {
-    public class KLVLength : ByteArray, ILength
+    /// <summary>
+    /// Serves as parent node for an object collection
+    /// </summary>
+    public class MXFObjectCollection : MXFObject
     {
-        public enum LengthEncodings
+        [Browsable(false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// MXF Object constructor
+        /// </summary>
+        public MXFObjectCollection(string name, long offset) : base(offset)
         {
-            OneByte = 1,
-            TwoBytes = 2,
-            FourBytes = 4,
+            Name = name;
+            TotalLength = 0;
         }
 
         /// <summary>
-        /// Gets the length value of the L part in a KLV
+        /// Some output
         /// </summary>
-        [Description("Value of the length part of the KLV triplet")]
-        public long Value { get; }
-
-        public LengthEncodings LengthEncoding { get; }
-
-        public KLVLength(LengthEncodings lengthEncoding, params byte[] bytes) : base(bytes)
-        {
-            LengthEncoding = lengthEncoding;
-            Value = bytes.ToLong();
-
-            // TODO where do we check if each byte does not exceed 0x7F?
-            if (bytes.Length != (int)lengthEncoding)
-            {
-                throw new ArgumentException($"Declared length encoding ({lengthEncoding}) does not correspond to given array length ({bytes.Length})");
-            }
-        }
-
         public override string ToString()
         {
-            return $"{LengthEncoding}, ({Value})";
+            return $"{this.Name} [{this.Children.Count} items]";
         }
     }
 }

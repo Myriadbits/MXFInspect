@@ -119,7 +119,7 @@ namespace Myriadbits.MXFInspect
                 catch (InvalidCastException ex)
                 {
 
-                    Log.ForContext(typeof(TreeListViewBase<T>)).Error($"Exception occured during conversion of offset: {@ex}", ex);
+                    Log.ForContext<TreeListViewBase<T>>().Error($"Exception occured during conversion of offset: {@ex}", ex);
                     return "";
                 }
                 return ShowOffsetAsHex ? "0x" + offset.ToString("X"+ maxDigitCount) : $"{offset:N0}";
@@ -205,7 +205,7 @@ namespace Myriadbits.MXFInspect
             {
                 return Properties.Settings.Default.Color_MetaData;
             }
-            else if (obj is MXFUnparseablePack || obj is TruncatedKLV)
+            else if (obj is MXFUnparseablePack || obj is TruncatedKLV || obj is MXFRunIn || obj is MXFNonKLV)
             {
                 return Properties.Settings.Default.Color_Special;
             }

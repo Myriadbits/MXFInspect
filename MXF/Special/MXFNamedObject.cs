@@ -21,43 +21,49 @@
 //
 #endregion
 
-using System;
 using System.ComponentModel;
+using System.Linq;
 
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
 {
-    public class KLVLength : ByteArray, ILength
+    /// <summary>
+    /// Named object type (collectionname)
+    /// </summary>
+    public class MXFNamedObject : MXFObject
     {
-        public enum LengthEncodings
+        [Browsable(false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// MXF Object constructor
+        /// </summary>
+        public MXFNamedObject(string name, long offset) : base(offset)
         {
-            OneByte = 1,
-            TwoBytes = 2,
-            FourBytes = 4,
+            Name = name;
         }
 
         /// <summary>
-        /// Gets the length value of the L part in a KLV
+        /// MXF Object constructor
         /// </summary>
-        [Description("Value of the length part of the KLV triplet")]
-        public long Value { get; }
-
-        public LengthEncodings LengthEncoding { get; }
-
-        public KLVLength(LengthEncodings lengthEncoding, params byte[] bytes) : base(bytes)
+        public MXFNamedObject(string name, long offset, long length) : this(name, offset)
         {
-            LengthEncoding = lengthEncoding;
-            Value = bytes.ToLong();
-
-            // TODO where do we check if each byte does not exceed 0x7F?
-            if (bytes.Length != (int)lengthEncoding)
-            {
-                throw new ArgumentException($"Declared length encoding ({lengthEncoding}) does not correspond to given array length ({bytes.Length})");
-            }
+            TotalLength = length;
         }
 
+        /// <summary>
+        /// Some output
+        /// </summary>
         public override string ToString()
         {
-            return $"{LengthEncoding}, ({Value})";
+            if (!this.Children.Any())
+            {
+                return $"{this.Name} [Total len {this.TotalLength}]";
+            }
+            else
+            {
+                return $"{this.Name} [{this.Children.Count} items]";
+            }
+            
         }
     }
 }

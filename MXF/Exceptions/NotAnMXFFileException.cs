@@ -7,6 +7,7 @@ namespace Myriadbits.MXF.Exceptions
 {
     public class NotAnMXFFileException : KLVParsingException
     {
+        // TODO does an offset here make really sense?
         public NotAnMXFFileException(string message, long offset, Exception innerException) : base(message, offset, innerException)
         {
         }

@@ -33,10 +33,16 @@ namespace Myriadbits.MXF
 {
     public class MXFValidatorPartitions : MXFValidator
     {
+        private ulong runInHeaderOffset = 0;
 
         public MXFValidatorPartitions(MXFFile file) : base(file)
         {
-
+            // if there is a RunIn consider it for the partition offsets
+            var runIn = File.Descendants().OfType<MXFRunIn>().SingleOrDefault();
+            if (runIn != null)
+            {
+                runInHeaderOffset = (ulong)runIn.TotalLength;
+            }
         }
 
         public bool AnyPartitionsPresent()
@@ -125,15 +131,16 @@ namespace Myriadbits.MXF
 
         public bool IsThisPartitionValueCorrect(MXFPartition p)
         {
-            return (ulong)p.Offset == p.ThisPartition;
+            return p.ThisPartition + runInHeaderOffset == (ulong)p.Offset;
         }
 
         public bool IsPreviousPartitionValueCorrect(MXFPartition p)
         {
             if (p.PreviousSibling() is MXFPartition prev)
             {
-                return p.PreviousPartition == (ulong)prev.Offset;
+                return p.PreviousPartition + runInHeaderOffset == (ulong)prev.Offset;
             }
+            // previous partition is/points to header partition
             else return p.PreviousPartition == 0;
         }
 
@@ -143,12 +150,13 @@ namespace Myriadbits.MXF
             {
                 var footer = File.GetFooterPartition();
 
-                // In Open Partitions, the value shall be as correct or zero(0)
+                // In Open Partitions, the value shall be as defined in Section 7.1 or zero(0).
+                // If the Footer Partition is not present in the file then the value of this Property shall be zero(0).
                 if (IsOpen(p))
                 {
-                    return p.FooterPartition == (ulong)footer.Offset || p.FooterPartition == 0;
+                    return (p.FooterPartition + runInHeaderOffset == (ulong)footer.Offset)  || p.FooterPartition == 0;
                 }
-                return p.FooterPartition == (ulong)footer.Offset;
+                return p.FooterPartition + runInHeaderOffset == (ulong)footer.Offset;
             }
             else
             {
@@ -213,10 +221,11 @@ namespace Myriadbits.MXF
         /// Check if partition structure and its values are correct 
         /// </summary>
         /// <param name="results"></param>
-        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        protected override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             const string CATEGORY_NAME = "Partitions";
-
+            ct.ThrowIfCancellationRequested();
+            
             List<MXFValidationResult> result = await Task.Run(() =>
             {
                 var retval = new List<MXFValidationResult>();
@@ -233,7 +242,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = File.GetPartitionRoot(),
                             Severity = MXFValidationSeverity.Success,
-                            Result = $"{this.File.GetBodyPartitions().Count()} Body Partition(s) present"
+                            Message = $"{this.File.GetBodyPartitions().Count()} Body Partition(s) present"
                         });
 
                         if (AreIndexTableSegmentsInBodyPartitions())
@@ -242,7 +251,7 @@ namespace Myriadbits.MXF
                             {
                                 Category = CATEGORY_NAME,
                                 Severity = MXFValidationSeverity.Success,
-                                Result = $"At least one Body Partition contains Index Table Segments"
+                                Message = $"At least one Body Partition contains Index Table Segments"
                             });
                         }
 
@@ -253,7 +262,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = File.GetPartitionRoot(),
                                 Severity = MXFValidationSeverity.Error,
-                                Result = $"The Operational Pattern property is not consistent across all partitions"
+                                Message = $"The Operational Pattern property is not consistent across all partitions"
                             });
                         }
 
@@ -264,7 +273,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = File.GetPartitionRoot(),
                                 Severity = MXFValidationSeverity.Error,
-                                Result = $"The Major/Minor Version property is not consistent across all partitions"
+                                Message = $"The Major/Minor Version property is not consistent across all partitions"
                             });
                         }
                     }
@@ -278,7 +287,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Offset = 0,
                             Severity = MXFValidationSeverity.Error,
-                            Result = "Invalid partition structure. Only the first partition shall be a Header Partition"
+                            Message = "Invalid partition structure. Only the first partition shall be a Header Partition"
                         });
                     }
 
@@ -289,7 +298,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = this.File.GetPartitions()?.First(),
                             Severity = MXFValidationSeverity.Error,
-                            Result = "Invalid partition structure. The first partition must be a Header Partition"
+                            Message = "Invalid partition structure. The first partition must be a Header Partition"
                         });
                     }
                     else
@@ -301,7 +310,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = this.File.GetPartitions()?.First(),
                                 Severity = MXFValidationSeverity.Success,
-                                Result = "Header Partition status is \"open\" (= required values may be absent)"
+                                Message = "Header Partition status is \"open\" (= required values may be absent)"
                             });
                         }
 
@@ -312,7 +321,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = this.File.GetPartitions()?.First(),
                                 Severity = MXFValidationSeverity.Error,
-                                Result = "Header Partition does not contain header metadata"
+                                Message = "Header Partition does not contain header metadata"
                             });
                         }
 
@@ -323,7 +332,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = this.File.GetPartitions()?.First(),
                                 Severity = MXFValidationSeverity.Success,
-                                Result = $"Header Partition contains Index Table Segments"
+                                Message = $"Header Partition contains Index Table Segments"
                             });
                         }
                     }
@@ -338,7 +347,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Offset = 0,
                             Severity = MXFValidationSeverity.Error,
-                            Result = "Invalid partition structure. Only the last partition can be a Footer Partition"
+                            Message = "Invalid partition structure. Only the last partition can be a Footer Partition"
                         });
                     }
 
@@ -349,7 +358,7 @@ namespace Myriadbits.MXF
                             Category = CATEGORY_NAME,
                             Object = this.File.GetPartitions().Last(),
                             Severity = MXFValidationSeverity.Success,
-                            Result = "Footer Partition present"
+                            Message = "Footer Partition present"
                         });
 
                         if (FooterPartitionContainsIndexTableSegments())
@@ -359,28 +368,29 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = this.File.GetPartitions().Last(),
                                 Severity = MXFValidationSeverity.Success,
-                                Result = $"Footer Partition contains Index Table Segments"
+                                Message = $"Footer Partition contains Index Table Segments"
+                            });
+                        }
+
+                        // If there is a footer then it must be closed
+                        var footer = File.GetFooterPartition();
+                        if (IsOpen(footer))
+                        {
+                            retval.Add(new MXFValidationResult
+                            {
+                                Category = CATEGORY_NAME,
+                                Object = footer,
+                                Severity = MXFValidationSeverity.Success,
+                                Message = $"The Footer Partition, if present, must be closed"
                             });
                         }
                     }
-                    //else
-                    //{
-                    //    retval.Add(new MXFValidationResult
-                    //    {
-                    //        Category = CATEGORY_NAME,
-                    //        Object = this.File.GetPartitions().Last(),
-                    //        Severity = MXFValidationSeverity.Error,
-                    //        Result = "Invalid partition structure. The last partition is not a Footer Partition"
-                    //    });
-                    //}
-
 
                     // *****************************************************
                     // checks for all partitions 
 
                     foreach (var p in this.File.GetPartitions())
                     {
-                        // TODO consider also RunIn
                         if (!IsThisPartitionValueCorrect(p))
                         {
                             retval.Add(new MXFValidationResult
@@ -388,14 +398,10 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = p,
                                 Severity = MXFValidationSeverity.Error,
-                                Result = $"Partition #{p.PartitionNumber} has incorrect value for ThisPartition"
+                                Message = $"Partition #{p.PartitionNumber} has incorrect value for ThisPartition"
                             });
                         }
 
-                        // TODO consider also RunIn
-                        // The number of the previous Partition in the
-                        // sequence of Partitions(as a byte offset relative
-                        // to the start of the Header Partition).
                         if (!IsPreviousPartitionValueCorrect(p))
                         {
                             retval.Add(new MXFValidationResult
@@ -403,13 +409,12 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = p,
                                 Severity = MXFValidationSeverity.Error,
-                                Result = $"Partition #{p.PartitionNumber} has incorrect value for PreviousPartition"
+                                Message = $"Partition #{p.PartitionNumber} has incorrect value for PreviousPartition"
                             });
                         }
 
                         if (IsFooterPartitionPresent() && IsFooterPartitionUnique())
                         {
-                            // TODO consider also RunIn
                             // TODO Consider if Partition is open
                             if (!IsFooterPartitionValueCorrect(p))
                             {
@@ -418,7 +423,7 @@ namespace Myriadbits.MXF
                                     Category = CATEGORY_NAME,
                                     Object = p,
                                     Severity = MXFValidationSeverity.Error,
-                                    Result = $"Partition #{p.PartitionNumber} has incorrect value for FooterPartition"
+                                    Message = $"Partition #{p.PartitionNumber} has incorrect value for FooterPartition"
                                 });
                             }
                         }
@@ -429,7 +434,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = p,
                                 Severity = MXFValidationSeverity.Error,
-                                Result = $"FooterPartition value of Partition #{p.PartitionNumber} is non-zero but the file has no Footer Partition"
+                                Message = $"FooterPartition value of Partition #{p.PartitionNumber} is non-zero but the file has no Footer Partition"
                             });
                         }
 
@@ -440,7 +445,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = p,
                                 Severity = MXFValidationSeverity.Error,
-                                Result = $"Partition #{p.PartitionNumber} has an invalid PartitionStatus (0x{(byte)p.Status:X2})"
+                                Message = $"Partition #{p.PartitionNumber} has an invalid PartitionStatus (0x{(byte)p.Status:X2})"
                             });
                         }
 
@@ -451,7 +456,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = p,
                                 Severity = MXFValidationSeverity.Warning,
-                                Result = $"Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MajorVersion}, expected: 1)"
+                                Message = $"Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MajorVersion}, expected: 1)"
                             });
                         }
 
@@ -462,7 +467,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = p,
                                 Severity = MXFValidationSeverity.Warning,
-                                Result = $"Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MinorVersion}, expected: 3)"
+                                Message = $"Partition #{p.PartitionNumber} Major Version property has an invalid value (read: {p.MinorVersion}, expected: 3)"
                             });
                         }
 
@@ -473,7 +478,7 @@ namespace Myriadbits.MXF
                                 Category = CATEGORY_NAME,
                                 Object = p,
                                 Severity = MXFValidationSeverity.Error,
-                                Result = $"Partition #{p.PartitionNumber} has incorrect value for HeaderByteCount"
+                                Message = $"Partition #{p.PartitionNumber} has incorrect value for HeaderByteCount"
                             });
                         }
                     }
@@ -486,7 +491,7 @@ namespace Myriadbits.MXF
                         // TODO make Offset nullable?
                         Offset = 0,
                         Severity = MXFValidationSeverity.Error,
-                        Result = "No partitions detected"
+                        Message = "No partitions detected"
                     });
                 }
 

@@ -42,21 +42,11 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Length part of KLV triplet")]
-        public virtual KLVLengthBase Length { get; }
+        public virtual ILength Length { get; }
 
         [Browsable(false)]
         [Description("Value part of KLV triplet")]
-        public virtual ByteArray Value { get; }
-
-        /// <summary>
-        /// Offset from beginning of the file (i.e. position of start of key within file)
-        /// </summary>
-        public override long Offset { get; protected set; }
-
-        /// <summary>
-        /// Total length of KLV (= sum of lengths of key, KLV-length and value)
-        /// </summary>
-        public override long TotalLength { get; protected set; }
+        public virtual byte[] Value { get; }
 
         /// <summary>
         /// Offset of the value (=data), i.e. where the payload begins.
@@ -72,21 +62,29 @@ namespace Myriadbits.MXF
         public long RelativeValueOffset { get; }
 
 
-        public KLVTriplet(KLVKey key, KLVLengthBase length, long offset, Stream stream)
+        public KLVTriplet(KLVKey key, ILength length, long offset, Stream stream) : base(offset)
         {
             Key = key;
             Length = length;
-            Offset = offset;
             RelativeValueOffset = key.ArrayLength + length.ArrayLength;
             ValueOffset = offset + RelativeValueOffset;
-            TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
+            if (length.Value == -1)
+            {
+                // indefinite BER form
+                TotalLength = (int)key.KeyLength + length.ArrayLength;
+            }
+            else
+            {
+                TotalLength = (int)key.KeyLength + length.ArrayLength + length.Value;
+            }
+            
             Stream = stream;
         }
 
         public IKLVStreamReader GetReader()
         {
             return new KLVStreamReader(this.Stream);
-        } 
+        }
 
         //// TODO this should not be the responsibility of the class to read its content
         //public V GetValue(SubStream ss)

@@ -21,21 +21,37 @@
 //
 #endregion
 
-
 using System.ComponentModel;
+using System.Linq;
 
-namespace Myriadbits.MXF.KLV
+namespace Myriadbits.MXF
+
 {
-    public abstract class KLVLengthBase : ByteArray
+    /// <summary>
+    /// The Run-In sequence shall be less than 65536 bytes long and shall not contain the first 11 bytes of the
+    /// Partition Pack label.
+    /// </summary>
+    public class MXFRunIn : MXFObject
     {
-        /// <summary>
-        /// Gets the length value of a Length Encoding
-        /// </summary>
-        [Description("Value of the length part of the KLV triplet")]
-        public long Value { get; protected set; }
+        [Browsable(false)]
+        public string Name { get; set; }
 
-        public KLVLengthBase(params byte[] bytes) : base(bytes)
+        public MXFRunIn(long length) : base(0)
         {
+            TotalLength = length;
+        }
+
+        public override string ToString()
+        {
+            if (!this.Children.Any())
+            {
+                return $"Run-In [len {this.TotalLength}]";
+            }
+            else
+            {
+                return $"Run-In [{this.Children.Count} items]";
+            }
+
         }
     }
 }

@@ -21,18 +21,10 @@
 //
 #endregion
 
-
-using Myriadbits.MXF.KLV;
-
 namespace Myriadbits.MXF
 {
-    public interface IKLVTripletParser<T, K, L> 
-        where T : KLVTriplet 
-        where K : KLVKey 
-        where L :KLVLengthBase
+    public interface IArrayLength
     {
-        public T Current { get; }
-        public bool HasNext();
-        public T GetNext();
+        public int ArrayLength { get; }
     }
 }

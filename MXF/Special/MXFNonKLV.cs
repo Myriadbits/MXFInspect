@@ -21,50 +21,22 @@
 //
 #endregion
 
-using System.ComponentModel;
-using System.Linq;
-
 namespace Myriadbits.MXF
+
 {
     /// <summary>
-    /// Named object type (collectionname)
+    /// Data chunk which is not KLV encoded (when klv stream is broken or interrupted)
     /// </summary>
-    public class MXFNamedObject : MXFObject
+    public class MXFNonKLV : MXFObject
     {
-        [Browsable(false)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// MXF Object constructor
-        /// </summary>
-        /// <param name="reader"></param>
-        public MXFNamedObject(string name, long offset) : base(offset)
-        {
-            Name = name;
-        }
-
-        /// <summary>
-        /// MXF Object constructor
-        /// </summary>
-        public MXFNamedObject(string name, long offset, long length) : this(name, offset)
+        public MXFNonKLV(long offset, long length) : base(offset)
         {
             TotalLength = length;
         }
 
-        /// <summary>
-        /// Some output
-        /// </summary>
         public override string ToString()
         {
-            if (!this.Children.Any())
-            {
-                return $"{this.Name} [len {this.TotalLength}]";
-            }
-            else
-            {
-                return $"{this.Name} [{this.Children.Count} items]";
-            }
-            
+            return $"Non-KLV chunk [Total len {this.TotalLength}]";
         }
     }
 }

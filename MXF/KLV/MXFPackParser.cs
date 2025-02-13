@@ -1,4 +1,4 @@
-﻿#region license
+#region license
 //
 // MXF - Myriadbits .NET MXF library. 
 // Read MXF Files.
@@ -29,12 +29,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using static Myriadbits.MXF.KLVKey;
 
 namespace Myriadbits.MXF
 {
-    public class MXFPackParser : KLVTripletParser<MXFPack, UL, KLVBERLength>
+    public class MXFPackParser : KLVTripletParser<MXFPack>
     {
         private long currentPackNumber = 0;
 
@@ -53,16 +52,21 @@ namespace Myriadbits.MXF
             MXFPack pack = base.GetNext();
             try
             {
-                pack = MXFPackFactory.CreateStronglyTypedPack(pack);
+                if (pack.Length.BERForm != KLVBERLength.BERForms.Indefinite)
+                {
+                    pack = MXFPackFactory.CreateStronglyTypedPack(pack);
+                }
+
             }
             catch (TargetInvocationException ex)
             {
                 // Exception raised during ctor via Activator.CreateInstance, therefore unparseable pack
-                Log.ForContext(typeof(MXFPackParser)).Error($"Exception occured while parsing {pack}: {ex.InnerException}", pack);
+                Log.ForContext<MXFPackParser>().Error($"Exception occured while parsing {pack}: {ex.InnerException}", pack);
                 MXFUnparseablePack unparseablePack = new MXFUnparseablePack(pack, ex.InnerException);
-                unparseablePack.Number = currentPackNumber; 
+                unparseablePack.Number = currentPackNumber;
+                // seek to last good position, i.e. after current/last klv/pack
+                SeekToEndOfCurrentKLV();
                 throw new UnparseablePackException(unparseablePack, $"Exception occured while parsing {pack}", pack.Offset, ex.InnerException);
-                
             }
             finally
             {
@@ -72,89 +76,78 @@ namespace Myriadbits.MXF
             return pack;
         }
 
-        public bool SeekForNextPotentialKey(out long newOffset, CancellationToken ct = default)
+        protected override UL ParseKLVKey()
         {
-            // Seek to last good position
-            if (Current != null)
+            // before parsing check if we have enough bytes to read
+            if (RemainingBytesCount >= (int)KeyLengths.SixteenBytes)
             {
-                Seek(Current.Offset + Current.TotalLength);
+                return reader.ReadUL();
             }
             else
             {
-                Seek(0);
+                // return to last KLV
+                SeekToEndOfCurrentKLV();
+                var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
+                throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key(K).", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
             }
-
-            int foundBytes = 0;
-
-            // TODO implement Boyer-Moore algorithm
-            while (!reader.EOF)
-            {
-                ct.ThrowIfCancellationRequested();
-
-                if (reader.ReadByte() == UL.ValidULPrefix[foundBytes])
-                {
-                    foundBytes++;
-
-                    if (foundBytes == 4)
-                    {
-                        Seek(reader.Position - 4);
-                        newOffset = reader.Position;
-                        return true;
-                    }
-                }
-                else
-                {
-                    foundBytes = 0;
-                }
-            }
-
-            // TODO what does the caller have to do in this case?
-            newOffset = reader.Position;
-            return false;
-        }
-
-        protected override UL ParseKLVKey()
-        {
-            return new UL(reader.ReadBytes((int)KeyLengths.SixteenBytes));
         }
 
         protected override KLVBERLength ParseKLVLength()
         {
-            byte[] bytes = new byte[] { reader.ReadByte() };
-
-            switch (bytes[0])
+            // we need at least one byte to read
+            if (RemainingBytesCount >= 1)
             {
-                case <= 0x7F:
-                    // short form, size = length
-                    return new KLVBERLength(bytes[0], bytes);
+                byte[] bytes = new byte[] { reader.ReadByte() };
 
-                case 0x80:
-                    // Indefinite form
-                    // LogWarning("KLV length having value 0x80 (=indefinite, not valid according to SMPTE 379M 5.3.4) found at offset {0}!", reader.Position);
-                    // TODO is this the correct way to handle this?
-                    throw new NotSupportedException("BER Indefinite Form is not supported");
+                switch (bytes[0])
+                {
+                    case <= 0x7F:
+                        // short form, size = length
+                        return new KLVBERLength(bytes[0], bytes);
 
-                case > 0x80:
+                    case 0x80:
+                        // Indefinite form 
+                        return new KLVBERLength(bytes[0], bytes);
 
-                    // long form: size is number of octets following, 1 + x octets
-                    int additionalOctetsCount = bytes[0] - 0x80;
+                    case > 0x80:
 
-                    // SMPTE 379M 5.3.4 guarantee that additional octets must not exceed 8 bytes
-                    if (additionalOctetsCount > 8)
-                    {
-                        throw new NotSupportedException($"BER Length exceeds 8 octets (not valid according to SMPTE 379M 5.3.4). Found at offset {reader.Position}");
-                    }
+                        // long form: size is number of octets following, 1 + x octets
+                        int additionalOctetsCount = bytes[0] - 0x80;
 
-                    byte[] additionalOctets = reader.ReadBytes(additionalOctetsCount);
-                    long lengthValue = additionalOctets.ToLong();
-                    bytes = bytes.Concat(additionalOctets).ToArray();
-                    return new KLVBERLength(lengthValue, bytes);
+                        // check again if the remaining bytes from stream are at least as many as additional octets
+                        if (RemainingBytesCount >= additionalOctetsCount)
+                        {
+                            // SMPTE 379M 5.3.4 guarantee that additional octets must not exceed 8 bytes
+                            if (additionalOctetsCount > 8)
+                            {
+                                throw new NotSupportedException($"BER Length exceeds 8 octets (not valid according to SMPTE 379M 5.3.4). Found at offset {reader.Position}");
+                            }
+
+                            byte[] additionalOctets = reader.ReadBytes(additionalOctetsCount);
+                            long lengthValue = additionalOctets.ToLong();
+                            bytes = bytes.Concat(additionalOctets).ToArray();
+                            return new KLVBERLength(lengthValue, bytes);
+                        }
+                        else
+                        {
+                            SeekToEndOfCurrentKLV();
+                            var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
+                            throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length(L).", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
+                        }
+                }
             }
+            else
+            {
+                SeekToEndOfCurrentKLV();
+                var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", Current?.Offset ?? 0, RemainingBytesCount);
+                throw new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length.", Current?.Offset ?? 0 + RemainingBytesCount, truncatedObject, null);
+            }
+
         }
 
-        protected override MXFPack InstantiateKLV(UL key, KLVBERLength length, long offset, Stream stream)
+        protected override MXFPack InstantiateKLV(KLVKey key, ILength length, long offset, Stream stream)
         {
-            return new MXFPack(key, length, offset, stream);
+            return new MXFPack((UL)key, (KLVBERLength)length, offset, stream);
         }
     }
 }

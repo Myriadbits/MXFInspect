@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 
 namespace Myriadbits.MXF.Identifiers
@@ -30,7 +31,8 @@ namespace Myriadbits.MXF.Identifiers
     public class UL : AUID
     {
         private const string CATEGORYNAME = "Key";
-        public static readonly byte[] ValidULPrefix = new byte[] { 0x06, 0x0e, 0x2b, 0x34 };
+        public static readonly ImmutableArray<byte> ValidULPrefix = ImmutableArray.Create<byte>(0x06, 0x0e, 0x2b, 0x34);
+        public static readonly ImmutableArray<byte> ValidPartitionPrefix = ImmutableArray.Create<byte>(0x06, 0x0e, 0x2b, 0x34, 0x02, 0x05, 0x01, 0x01, 0x0d, 0x01, 0x02);
         private static readonly IReadOnlyDictionary<byte, string> privateOrganizationsIdentifiers = new Dictionary<byte, string>
         {
            {0x04,"Avid Technology, Inc." },

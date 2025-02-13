@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 using Myriadbits.MXF.Exceptions;
+using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
 {
@@ -53,22 +54,13 @@ namespace Myriadbits.MXF
         private const int REFERENCE_PERCENTAGE = 90;
         private const int LOGICALTREE_PERCENTAGE = 97;
 
-        private List<MXFValidationResult> validationResults = new List<MXFValidationResult>();
-
         public FileInfo File { get; }
-
-        public IReadOnlyList<MXFValidationResult> ValidationResults
-        {
-            get => validationResults;
-        }
-
         public List<Exception> Exceptions { get; } = new List<Exception>();
         public MXFSystemMetaDataPack FirstSystemItem { get; set; }
         public MXFSystemMetaDataPack LastSystemItem { get; set; }
-
         public MXFLogicalObject LogicalTreeRoot { get; set; }
 
-        private MXFFile(FileInfo fi)
+        private MXFFile(FileInfo fi) : base(0)
         {
             this.File = fi;
         }
@@ -90,6 +82,11 @@ namespace Myriadbits.MXF
                     // Parse file and obtain a list of mxf packs
 
                     List<MXFObject> mxfPacks = ParseMXFPacks(fileStream, overallProgress, singleProgress, ct);
+                    if (!mxfPacks.Any())
+                    {
+                        throw new NotAnMXFFileException("No MXF packs found. Probably this is not an MXF file.", 0, null);
+                    }
+
                     if (mxfPacks.OfType<MXFUnparseablePack>().Any())
                     {
                         Log.ForContext<MXFFile>().Warning($"Unparseable packs [{mxfPacks.OfType<MXFUnparseablePack>().Count()} items] encountered during parsing");
@@ -142,6 +139,7 @@ namespace Myriadbits.MXF
             return $"{File.FullName} ({File.Length:N0})";
         }
 
+        // TODO move into another class
         /// <summary>
         /// Return info for a generic track packet
         /// </summary>
@@ -178,79 +176,13 @@ namespace Myriadbits.MXF
             }
         }
 
-        public async Task<List<MXFValidationResult>> ExecuteValidationTest(bool extendedTest, IProgress<TaskReport> progress = null, CancellationToken ct = default)
-        {
-            List<MXFValidationResult> results = new List<MXFValidationResult>();
-
-            // Reset results
-            this.validationResults.Clear();
-
-            // Execute validation tests
-            List<MXFValidator> allTests = new List<MXFValidator>
-            {
-                new MXFValidatorInfo(this),
-                new MXFValidatorPartitions(this),
-                new MXFValidatorRIP(this),
-                new MXFValidatorUL(this)
-            };
-
-            // add exceptions
-            foreach (var ex in Exceptions)
-            {
-                MXFValidationResult result;
-
-                switch (ex)
-                {
-                    case EndOfKLVStreamException eofEx:
-                        result = new MXFValidationResult("KLVStream");
-                        result.Object = eofEx.TruncatedKLV;
-                        result.SetError(eofEx.Message, eofEx.Offset);
-                        break;
-
-                    case UnparseablePackException upEx:
-                        result = new MXFValidationResult("Parser");
-                        result.Object = upEx.UnparseablePack;
-                        result.SetError(upEx.Message, upEx.Offset);
-                        break;
-
-                    case KLVParsingException pEx:
-                        result = new MXFValidationResult("Parser");
-                        result.Object = this.Descendants().Where(o => o.Offset == pEx.Offset).FirstOrDefault();
-                        result.SetError(pEx.InnerException?.Message ?? ex.Message, pEx.Offset);
-                        break;
-
-                    default:
-                        result = new MXFValidationResult(ex.GetType().Name);
-                        result.SetError(ex.InnerException?.Message ?? ex.Message);
-                        break;
-                }
-                results.Add(result);
-            }
-
-
-            if (extendedTest)
-            {
-                allTests.Add(new MXFValidatorIndex(this));
-            }
-            foreach (MXFValidator mxfTest in allTests)
-            {
-                results.AddRange(await mxfTest.Validate(progress, ct));
-            }
-
-            if (!extendedTest)
-            {
-                MXFValidationResult valResult = new MXFValidationResult("Index Table");
-                this.validationResults.Add(valResult);
-                valResult.SetQuestion("Index table test not executed.");
-                results.Add(valResult);
-            }
-            return results;
-        }
-
+        #region private methods
         private List<MXFObject> ParseMXFPacks(FileStream fileStream, IProgress<TaskReport> overallProgress, IProgress<TaskReport> singleProgress, CancellationToken ct = default)
         {
             int currentPercentage;
             int previousPercentage = 0;
+            bool streambroken = false;
+            long lastgoodPos = 0;
             MXFPackParser parser = new MXFPackParser(fileStream);
             List<MXFObject> mxfPacks = new List<MXFObject>();
             overallProgress?.Report(new TaskReport(0, "Reading KLV stream"));
@@ -261,32 +193,113 @@ namespace Myriadbits.MXF
                     var pack = parser.GetNext();
                     mxfPacks.Add(pack);
                     ct.ThrowIfCancellationRequested();
-                }
-                // TODO be more selective with the exception
-                catch (KLVKeyParsingException ex)
-                {
-                    long lastgoodPos = 0;
-                    // klv stream error
-                    if (parser.Current != null)
+
+                    // if klv stream was broken due to exception add "non-klv-data object"
+                    if (streambroken == true)
                     {
-                        lastgoodPos = parser.Current.Offset + parser.Current.TotalLength;
+                        if (lastgoodPos == 0)
+                        {
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFRunIn(parser.Current.Offset));
+                        }
+                        else
+                        {
+                            mxfPacks.Insert(mxfPacks.Count - 1, new MXFNonKLV(lastgoodPos, parser.Current.Offset - lastgoodPos));
+                        }
+                        streambroken = false;
                     }
-
-                    // reposition klvstream
-
-                    if (!parser.SeekForNextPotentialKey(out long newOffset, ct))
+                }
+                catch (KLVKeyParsingException ex) when (ex.InnerException is EndOfKLVStreamException eosEx && parser.Current == null)
+                {
+                    // 1a) truncated at K part of KLV, but not even a single KLV yet encoded
+                    throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", 0, eosEx);
+                }
+                catch (KLVKeyParsingException ex) when (parser.Current == null)
+                {
+                    // 1b) error at K part of KLV, but not even a single KLV yet encoded -> possible Run-In found
+                    streambroken = true;
+                    lastgoodPos = 0;
+                    const int RUN_IN_THRESHOLD = 65536 + 1; // +1 for tolerance
+                    if (!parser.SeekToPotentialPartitionKey(out long newOffset, RUN_IN_THRESHOLD, ct))
                     {
-                        // we have reached end of file, exceptional case so handle it
-                        // TODO handle if exceeding 65536 bytes
-                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", parser.Offset, null);
+                        // we have reached end of file and not found a partition key
+                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", 0, null);
                     }
                     continue;
                 }
-                catch (EndOfKLVStreamException ex)
+                catch (KLVKeyParsingException ex) when (ex.InnerException is EndOfKLVStreamException eosEx)
                 {
-                    Exceptions.Add(ex);
-                    mxfPacks.Add(ex.TruncatedKLV);
+                    // 1c) error at K part of KLV at end of file -> last KLV truncated
+                    streambroken = true;
+                    lastgoodPos = parser.Current?.Offset + parser.Current?.TotalLength ?? 0;
+                    var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", lastgoodPos, parser.RemainingBytesCount);
+                    var exEOF = new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key(K).", parser.Current?.Offset ?? 0 + parser.RemainingBytesCount, truncatedObject, null);
+                    Exceptions.Add(exEOF);
+                    mxfPacks.Add(exEOF.TruncatedObject);
                     break;
+                }
+                catch (KLVKeyParsingException ex)
+                {
+                    // 1d) error at K part of KLV -> seek to next potential K
+                    streambroken = true;
+                    lastgoodPos = parser.Current?.Offset + parser.Current?.TotalLength ?? 0;
+                    parser.SeekToEndOfCurrentKLV();
+                    if (!parser.SeekToNextPotentialKey(out long newOffset, 0, ct))
+                    {
+                        // we have reached end of file and there is an error at the K part of the KLV
+                        parser.SeekToEndOfCurrentKLV();
+                        var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", parser.Current?.Offset ?? 0, parser.RemainingBytesCount);
+                        var exEOF = new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Key(K).", parser.Current?.Offset ?? 0 + parser.RemainingBytesCount, truncatedObject, null);
+                        Exceptions.Add(exEOF);
+                        mxfPacks.Add(exEOF.TruncatedObject);
+                        break;
+                    }
+                    continue;
+                }
+                catch (KLVLengthParsingException ex) when (ex.InnerException is EndOfKLVStreamException eosEx && parser.Current == null)
+                {
+                    // 2a) truncated at L part of KLV, but not even a single KLV yet encoded -> consider as not an MXF File
+                    throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", 0, eosEx);
+                }
+                catch (KLVLengthParsingException ex) when (parser.Current == null)
+                {
+                    // 2b) error at L part of first KLV with partitionkey -> possible corrupted Run-In found
+                    streambroken = true;
+                    lastgoodPos = 0;
+                    const int RUN_IN_THRESHOLD = 65536 + 1; // +1 for tolerance
+                    if (!parser.SeekToPotentialPartitionKey(out long newOffset, RUN_IN_THRESHOLD, ct))
+                    {
+                        // we have reached end of file and not found a partition key
+                        throw new NotAnMXFFileException("No partition key found within the first 65536 bytes.", 0, null);
+                    }
+                    continue;
+                }
+                catch (KLVLengthParsingException ex) when (ex.InnerException is EndOfKLVStreamException eosEx)
+                {
+                    // 2c) error at L part of KLV at end of file -> last KLV truncated
+                    streambroken = true;
+                    lastgoodPos = parser.Current?.Offset + parser.Current?.TotalLength ?? 0;
+                    var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", lastgoodPos, parser.RemainingBytesCount);
+                    var exEOF = new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length(L).", parser.Current?.Offset ?? 0 + parser.RemainingBytesCount, truncatedObject, null);
+                    Exceptions.Add(exEOF);
+                    mxfPacks.Add(exEOF.TruncatedObject);
+                    break;
+                }
+                catch (KLVLengthParsingException ex)
+                {
+                    // 2d) error at L part of KLV -> seek to next potential K
+                    streambroken = true;
+                    lastgoodPos = parser.Current?.Offset + parser.Current?.TotalLength ?? 0;
+                    if (!parser.SeekToNextPotentialKey(out long newOffset, 0, ct))
+                    {
+                        // we have reached end of file and there is an error at L part
+                        parser.SeekToEndOfCurrentKLV();
+                        var truncatedObject = new MXFNamedObject("Truncated Object/NON-KLV area", lastgoodPos, parser.RemainingBytesCount);
+                        var exEOF = new EndOfKLVStreamException("Premature end of file: Not enough bytes to read KLV Length.", parser.Current?.Offset ?? 0 + parser.RemainingBytesCount, truncatedObject, null);
+                        Exceptions.Add(exEOF);
+                        mxfPacks.Add(exEOF.TruncatedObject);
+                        break;
+                    }
+                    continue;
                 }
                 catch (UnparseablePackException ex)
                 {
@@ -294,6 +307,13 @@ namespace Myriadbits.MXF
                     mxfPacks.Add(ex.UnparseablePack);
                     continue;
                 }
+                catch (EndOfKLVStreamException ex)
+                {
+                    Exceptions.Add(ex);
+                    mxfPacks.Add(ex.TruncatedObject);
+                    break;
+                }
+
 
                 // Only report progress when the percentage has changed
                 currentPercentage = (int)((parser.Current.Offset + parser.Current.TotalLength) * 100 / this.File.Length);
@@ -310,42 +330,8 @@ namespace Myriadbits.MXF
                 }
             }
 
-            // Now search for holes, i.e. non-KLV-data
-
-            var nonConsecutiveObjects = GetNonConsecutiveMXFObjects(mxfPacks);
-            foreach (var obj in nonConsecutiveObjects)
-            {
-                long nonKLVOffset = obj.Item1.Offset + obj.Item1.TotalLength;
-                long nonKLVLength = obj.Item2.Offset - nonKLVOffset;
-                if (nonKLVOffset == 0)
-                {
-                    this.AddChild(new MXFNamedObject("Run-In", nonKLVOffset, nonKLVLength));
-                }
-                else
-                {
-                    var nonKLV = new MXFNamedObject("Non-KLV Data", nonKLVOffset, nonKLVLength);
-                    mxfPacks.Insert(mxfPacks.IndexOf(obj.Item2), nonKLV);
-                }
-            }
-
             return mxfPacks;
 
-        }
-
-
-        private List<(MXFObject, MXFObject)> GetNonConsecutiveMXFObjects(List<MXFObject> objects)
-        {
-            var list = new List<(MXFObject, MXFObject)>();
-            for (int i = 0; i < objects.Count - 1; i++)
-            {
-                var actual = objects[i];
-                var next = objects[i + 1];
-                if (actual.Offset + actual.TotalLength != next.Offset)
-                {
-                    list.Add((actual, next));
-                }
-            }
-            return list;
         }
 
         private void PartitionAndPostProcessMXFPacks(IEnumerable<MXFObject> packList, CancellationToken ct = default)
@@ -363,7 +349,7 @@ namespace Myriadbits.MXF
                     case MXFPartition partition:
                         if (partitionRoot == null)
                         {
-                            partitionRoot = new MXFNamedObject("Partitions", partition.Offset);
+                            partitionRoot = new MXFObjectCollection("Partitions", partition.Offset);
                             this.AddChild(partitionRoot);
                         }
                         currentPartition = partition;
@@ -543,5 +529,7 @@ namespace Myriadbits.MXF
             }
             return numOfResolved;
         }
+
+        #endregion
     }
 }

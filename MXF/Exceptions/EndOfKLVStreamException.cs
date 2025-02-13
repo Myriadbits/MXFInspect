@@ -26,11 +26,11 @@ namespace Myriadbits.MXF.Exceptions
 {
     public class EndOfKLVStreamException : KLVParsingException
     {
-        public KLVTriplet TruncatedKLV { get; }
+        public MXFObject TruncatedObject { get; }
 
-        public EndOfKLVStreamException(string message, long offset, KLVTriplet truncatedKLV, Exception innerException) : base(message, offset, innerException)
+        public EndOfKLVStreamException(string message, long offset, MXFObject truncatedObject, Exception innerException) : base(message, offset, innerException)
         {
-            TruncatedKLV = truncatedKLV;
+            TruncatedObject = truncatedObject;
         }
 
 

@@ -22,11 +22,9 @@
 #endregion
 
 using Myriadbits.MXF.Identifiers;
-using Myriadbits.MXF.KLV;
 using Myriadbits.MXF.Utils;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 
 namespace Myriadbits.MXF
 {
@@ -37,10 +35,12 @@ namespace Myriadbits.MXF
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("Universal label as key")]
+        // override not really needed but for assigning the sortedcategory attribute
         public override UL Key => (UL)base.Key;
-        
+
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]
         [Description("BER Length")]
+        // override not really needed but for assigning the sortedcategory attribute
         public override KLVBERLength Length => (KLVBERLength)base.Length;
 
         [SortedCategory(CATEGORYNAME, CATEGORYPOS)]

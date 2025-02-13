@@ -18,7 +18,7 @@
   <Class Name="Myriadbits.MXF.MXFObject">
     <Position X="11.25" Y="6.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAACAAEAgIAAAAAAAAAABAAiAAAAAAAgAA=</HashCode>
+      <HashCode>IAAAAAAAAAAACAAEIgIAAAAAAAAABBAAiAAAAAAAgAA=</HashCode>
       <FileName>MXFObject.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -29,11 +29,11 @@
       <FileName>MXFWrapperObject.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.MXFNamedObject">
-    <Position X="8.5" Y="12" Width="2.5" />
+  <Class Name="Myriadbits.MXF.MXFNonKLV">
+    <Position X="1.25" Y="12" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MXFNamedObject.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MXFNonKLV.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFLocalSet">
@@ -50,31 +50,17 @@
       <FileName>Metadata\MXFMetadataBaseclass.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Myriadbits.MXF.ExtendedUMID">
-    <Position X="15" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAgAAAAAAAAEAAAABAAAAIIAAAQAAAAAGAAIAAA=</HashCode>
-      <FileName>Identifiers\ExtendedUMID.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Myriadbits.MXF.UMID">
-    <Position X="13.25" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAAEAAAAAAAAAIAAAAAAAAAACAAIAAA=</HashCode>
-      <FileName>Identifiers\UMID.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Myriadbits.MXF.KLVTriplet">
     <Position X="13.25" Y="12" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAACAQAAgAAAABAAAAIABAQCAAgAAAAgAA=</HashCode>
+      <HashCode>AAAAACAAAAAACAQAAAAAAABAAAAIABAQCAAgAAAAAAA=</HashCode>
       <FileName>KLV\KLVTriplet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Myriadbits.MXF.MXFUnparseablePack">
     <Position X="17.5" Y="20.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAACAAEAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFUnparseablePack.cs</FileName>
       <NewMemberFileName>KLV\MXFPack.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -84,6 +70,27 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAQEAEAAAABAAAAAQAAACAAAAAAAAAA=</HashCode>
       <FileName>KLV\MXFPack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFLocalTag">
+    <Position X="17.5" Y="16.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQEAAAAAABAAAAAAABACAAgAAAAAAA=</HashCode>
+      <FileName>KLV\MXFLocalTag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFNamedObject">
+    <Position X="8.5" Y="12" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MXFNamedObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Myriadbits.MXF.MXFRunIn">
+    <Position X="4.5" Y="12" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MXFRunIn.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Myriadbits.MXF.INode&lt;T&gt;">

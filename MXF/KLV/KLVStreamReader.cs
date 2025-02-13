@@ -44,34 +44,6 @@ namespace Myriadbits.MXF.KLV
             this.klvStream.Seek(newPosition, SeekOrigin.Begin);
         }
 
-        // TODO check which classes responsibility 
-        public bool SeekForNextPotentialKey()
-        {
-            byte[] validULPrefix = { 0x06, 0x0e, 0x2b, 0x34 };
-            int foundBytes = 0;
-
-            // TODO implement Boyer-Moore algorithm
-            while (!this.EOF)
-            {
-                if (this.ReadByte() == validULPrefix[foundBytes])
-                {
-                    foundBytes++;
-
-                    if (foundBytes == 4)
-                    {
-                        this.Seek(this.Position - 4);
-                        return true;
-                    }
-                }
-                else
-                {
-                    foundBytes = 0;
-                }
-            }
-            // TODO what does the caller have to do in this case?
-            return false;
-        }
-
         #region Basic types
 
         public override UInt16 ReadUInt16()

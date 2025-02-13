@@ -38,7 +38,7 @@ namespace Myriadbits.MXF
 
         }
 
-        public override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
+        protected override async Task<List<MXFValidationResult>> OnValidate(IProgress<TaskReport> progress = null, CancellationToken ct = default)
         {
             List<MXFValidationResult> result = await Task.Run(() =>
             {
@@ -53,12 +53,13 @@ namespace Myriadbits.MXF
                 {
                     int n = tracks.IndexOf(t);
                     progress?.Report(new TaskReport(n * 100 / tracks.Count, ""));
-                    MXFValidationResult valResult = new MXFValidationResult(string.Format("Track {0}", n));
-                    valResult.Category = "Track Info";
-                    valResult.SetInfo(this.File.GetTrackInfo(t));
-                    valResult.Offset = t.Offset;
-                    valResult.Object = t;
-                    retval.Add(valResult); // And directly add the results
+                    retval.Add(new MXFValidationResult
+                    {
+                        Category = "Track Info",
+                        Severity = MXFValidationSeverity.Info,
+                        Object = t,
+                        Message = this.File.GetTrackInfo(t)
+                    });
                 }
                 Log.ForContext<MXFValidatorInfo>().Information($"Validation completed in {sw.ElapsedMilliseconds} ms");
                 return retval;

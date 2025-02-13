@@ -1,4 +1,4 @@
-﻿#region license
+#region license
 //
 // MXFInspect - Myriadbits MXF Viewer. 
 // Inspect MXF Files.
@@ -25,6 +25,7 @@ using Myriadbits.MXF;
 using Myriadbits.MXFInspect.CustomControls;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -36,6 +37,7 @@ namespace Myriadbits.MXFInspect
     public partial class FormReport : Form
     {
         private readonly MXFFile mxfFile = null;
+        private CancellationTokenSource cts;
 
         public FormReport(MXFFile file)
         {
@@ -57,20 +59,20 @@ namespace Myriadbits.MXFInspect
         private void InitValidationResultTreeListView()
         {
             this.tlvValidationResults.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
-            
+
             this.colOffset.UseFiltering = false;
             this.colResult.UseFiltering = false;
             this.tlvValidationResults.UseFilterIndicator = true;
             this.tlvValidationResults.UseFiltering = true;
             this.colSeverity.ClusteringStrategy = new MXFValidationSeverityCluster();
-            
+
             // TODO what are these lines for?
             this.colCategory.Renderer = null;
             this.colSeverity.Renderer = null;
 
             this.tlvValidationResults.CanExpandGetter = delegate (object x)
             {
-                if (x is MXFValidationResult vr)
+                if (x is List<MXFValidationResult> vr)
                 {
                     return vr.Count > 1;
                 }
@@ -79,7 +81,7 @@ namespace Myriadbits.MXFInspect
 
             this.tlvValidationResults.ChildrenGetter = delegate (object x)
             {
-                if (x is MXFValidationResult vr)
+                if (x is List<MXFValidationResult> vr)
                 {
                     return vr;
                 }
@@ -147,18 +149,32 @@ namespace Myriadbits.MXFInspect
             this.Close();
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnClose.Text = "Cancelling...";
+            btnClose.Enabled = false;
+            cts.Cancel();
+        }
+
         private async Task ValidateMXFFile()
         {
             try
             {
                 this.tlvValidationResults.ClearObjects();
+                this.tlvValidationResults.Enabled = false;
                 this.prbProcessing.Visible = true;
-                this.Enabled = false;
+                //this.Enabled = false;
+                btnClose.Enabled = true;
+                this.btnClose.Text = "Cancel";
+                btnClose.Click -= btnClose_Click;
+                btnClose.Click += btnCancel_Click;
 
-                var cts = new CancellationTokenSource();
+                cts = new CancellationTokenSource();
+                cts.Token.ThrowIfCancellationRequested();
+
                 var progressHandler = new Progress<TaskReport>(this.ReportProgress);
 
-                var results = await mxfFile.ExecuteValidationTest(false, progressHandler, cts.Token);
+                var results = await MXFFileValidator.ValidateFile(mxfFile, false, progressHandler, cts.Token);
 
                 // display the one with biggest offset first, then autoresize columns executes
                 // correctly and finally reverse order, i.e. lowest offset first
@@ -169,13 +185,25 @@ namespace Myriadbits.MXFInspect
                 this.tlvValidationResults.Sort();
 
                 this.prbProcessing.Visible = false;
-                this.Enabled = true;
+                this.tlvValidationResults.Enabled = true;
+
+                btnClose.Click += btnClose_Click;
+                btnClose.Click -= btnCancel_Click;
+            }
+            catch (OperationCanceledException ex)
+            {
+                Log.ForContext<FormReport>().Error(ex, $"OperationCanceled exception occured while validating file:");
+                this.Close();
             }
             catch (Exception ex)
             {
                 Log.ForContext<FormReport>().Error(ex, $"Exception occured while validating file:");
                 MessageBox.Show(ex.Message, "Exception occured while validating file");
-                this.Close();
+
+            }
+            finally
+            {
+                btnClose.Text = "Close";
             }
 
         }
@@ -202,5 +230,10 @@ namespace Myriadbits.MXFInspect
             this.prbProcessing.SetValueFast(report.Percent);
         }
 
+        private void FormReport_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // set cancellation on cancellation token
+            cts.Cancel();
+        }
     }
 }

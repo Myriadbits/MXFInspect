@@ -165,7 +165,7 @@ namespace Myriadbits.MXF
                         if (NbIndexEntries > 0)
                         {
                             this.IndexEntries = new List<MXFEntryIndex>();
-                            MXFObject indexCollection = new MXFNamedObject("IndexEntries", localTag.Offset);
+                            MXFObject indexCollection = new MXFObjectCollection("IndexEntries", localTag.Offset);
 
                             for (UInt64 i = 0; i < NbIndexEntries; i++)
                             {
@@ -192,7 +192,7 @@ namespace Myriadbits.MXF
                         UInt32 entryLength = reader.ReadUInt32();
                         if (NbDeltaEntries > 0)
                         {
-                            MXFObject deltaCollection = new MXFNamedObject("DeltaEntries", localTag.Offset);
+                            MXFObject deltaCollection = new MXFObjectCollection("DeltaEntries", localTag.Offset);
                             for (int i = 0; i < NbDeltaEntries; i++)
                             {
                                 long next = reader.Position + entryLength;
