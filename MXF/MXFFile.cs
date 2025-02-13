@@ -21,13 +21,11 @@
 //
 #endregion
 
-using Myriadbits.MXF.Identifiers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
@@ -426,10 +424,6 @@ namespace Myriadbits.MXF
 
         private void CreateLogicalTree()
         {
-            //var logicalRoot = this.LogicalDescendants().First();
-            //if (logicalRoot == null)
-            //    return;
-
             foreach (var lChild in this.LogicalChildren)
             {
                 LogicalAddChildren(lChild);
@@ -449,9 +443,7 @@ namespace Myriadbits.MXF
                     var refObj = r.GetReference();
 
                     // make sure obj is not already present in logical tree
-                    var offsets = this.LogicalDescendants().Select(c => c.Offset);
-                    bool isContained = offsets.Contains(refObj.Offset);
-                    if (refObj != null && !isContained)
+                    if (refObj != null && !this.LogicalDescendants().Contains(refObj))
                     {
                         obj.AddLogicalChild(refObj);
 

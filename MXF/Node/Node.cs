@@ -25,9 +25,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 
-namespace Myriadbits.MXF
+namespace Myriadbits.MXF.Node
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public abstract class Node<T> : INode<T>, ILogicalNode<T> where T : Node<T>
@@ -55,21 +54,21 @@ namespace Myriadbits.MXF
 
         public INode<T> Root()
         {
-            if (this.Parent != null)
-                return this.Parent.Root();
+            if (Parent != null)
+                return Parent.Root();
             return this;
         }
 
         public INode<T> LogicalRoot()
         {
-            if (this.LogicalParent != null)
-                return this.LogicalParent.LogicalRoot();
+            if (LogicalParent != null)
+                return LogicalParent.LogicalRoot();
             return this;
         }
 
         public IEnumerable<T> Ancestors()
         {
-            var parent = this.Parent;
+            var parent = Parent;
             while (parent != null)
             {
                 yield return parent;
@@ -79,7 +78,7 @@ namespace Myriadbits.MXF
 
         public IEnumerable<T> LogicalAncestors()
         {
-            var lParent = this.LogicalParent;
+            var lParent = LogicalParent;
             while (lParent != null)
             {
                 yield return lParent;
@@ -89,9 +88,9 @@ namespace Myriadbits.MXF
 
         public IEnumerable<T> Descendants()
         {
-            if (this.childrenList.Any())
+            if (childrenList.Any())
             {
-                var nodes = new Stack<T>(this.childrenList);
+                var nodes = new Stack<T>(childrenList);
                 while (nodes.Any())
                 {
                     T node = nodes.Pop();
@@ -111,9 +110,9 @@ namespace Myriadbits.MXF
 
         public IEnumerable<T> LogicalDescendants()
         {
-            if (this.logicalChildrenList.Any())
+            if (logicalChildrenList.Any())
             {
-                var nodes = new Stack<T>(this.logicalChildrenList);
+                var nodes = new Stack<T>(logicalChildrenList);
                 while (nodes.Any())
                 {
                     T node = nodes.Pop();
@@ -134,13 +133,13 @@ namespace Myriadbits.MXF
         public virtual void AddChild(T child)
         {
             child.Parent = (T)this;
-            this.childrenList.Add(child);
+            childrenList.Add(child);
         }
 
         public virtual void AddLogicalChild(T child)
         {
             child.LogicalParent = (T)this;
-            this.logicalChildrenList.Add(child);
+            logicalChildrenList.Add(child);
         }
 
         public void AddChildren(IEnumerable<T> children)
@@ -185,7 +184,7 @@ namespace Myriadbits.MXF
 
         public T NextSibling()
         {
-            var siblings = this.Parent?.Children?.ToList();
+            var siblings = Parent?.Children?.ToList();
             if (siblings != null)
             {
                 return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) + 1);
@@ -195,7 +194,7 @@ namespace Myriadbits.MXF
 
         public T NextLogicalSibling()
         {
-            var siblings = this.LogicalParent?.LogicalChildren?.ToList();
+            var siblings = LogicalParent?.LogicalChildren?.ToList();
             if (siblings != null)
             {
                 return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) + 1);
@@ -205,7 +204,7 @@ namespace Myriadbits.MXF
 
         public T PreviousSibling()
         {
-            var siblings = this.Parent?.Children?.ToList();
+            var siblings = Parent?.Children?.ToList();
             if (siblings != null)
             {
                 return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) - 1);
@@ -215,7 +214,7 @@ namespace Myriadbits.MXF
 
         public T PreviousLogicalSibling()
         {
-            var siblings = this.LogicalParent?.LogicalChildren?.ToList();
+            var siblings = LogicalParent?.LogicalChildren?.ToList();
             if (siblings != null)
             {
                 return siblings.SingleOrDefault(s => siblings.IndexOf(s) == siblings.IndexOf((T)this) - 1);

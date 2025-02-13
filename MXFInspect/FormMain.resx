@@ -255,16 +255,16 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJcSURBVDhPjZHtS1NhGMZvyxx+8YNRH/xSoNEbQZQajcwi
-        sQijpmgluJhlLSsw1M1Rzl40hJANCcskmwXacCSGmS6dzmGk9iFKemE59R8wZjYo2K6e+zlHUZjQBT+4
-        n/u6rucczqFoikQiGsFGQYpgizprVHt1AYj9ubCw+82H2SedPv/0g6HAH4bn3omZVvY4o8ZXio3e8cDF
-        u0/Hftm7v6PO+WUFvKsVXs/7H5eiXlL7bFif1zwUrmr7iCqHQttgQLJ4Zq+gZSh8xzGsV2uK4rWVSZmm
-        zuDVR+NYpOzxGMKRiITn5V6myRVcn1WZpNaJ1mVY6osavDhn8y1R1DCCrtGAhOflnsHugybjRr1ap5ik
-        U/cn8+55sIiubhDOkSm8YLxT8rzcZzbn2ya5S7QjP27T6cZQdnUfJNZ+ZFndaB3wi2+l6Ij1LbJvDUiP
-        M0etfdiubwpxlyjlmCYh2xbSVryC1tQDrcUN7U0P0i0Dah04UO3BodtepJv7sK3UhQ2FDtDhmhB3xVvU
-        rKGDNd9iT7Yg/mwHEoq7kXjZjURjP+bn5xEMBhFn6AXpX4POuEC5z0E5zeCO7EqlldtJJ24tcIKKekAX
-        PKDzHszNzUmoeFDZsccZXRsorcKulFk7S5LpeOMCFXaBDG5QiRfm9s9LF5jbP4ndsOJxhrN7riWrbVV7
-        y4yU2RGWTzK+g9nlh/nljGAa5k6/2I0qb8EZzkZRDKVeL6Vcx2+6MgEq/wqyzCrwzDv2OCN/32raZdxK
-        +0wP6UTTDOU4/0p43i92qcL7f+WvFb8pQcJzVBH9A6gyx5dlxQWUAAAAAElFTkSuQmCC
+        sQijNNaL4ELLWlZgqJuj3HrREEIcEpZJNgu04UgMM13bdIqR2oco6YXlnP+AMbNBwXb13M85isKELvjB
+        /dzXdT3ncA7FUjQa1QjWC9IEm9RZo9orC0D8z/n5nW8+zDzpGvFPPxgM/GF47psItrHHGTW+XGz0jQcu
+        3n069svW8x11ji/L4F2t8Hrf/7gU85LaZ0P6gpbBSHX7R1TbFdo9AcnCmT1d62Dkjn1Ir9YUJWqrUrKN
+        XaGrj8axQPnjMUSiUQnPS71sozO0NqcqRa0Trcky1xc1+HCucWSRooZhdI8GJDwv9YptI9Bk3ahX6xSX
+        cuL+5Ml7XiyQX+eBY3gKLxjflDwv9ZmNusZJ7hJt0yVsON0Uzq3ph8QygByLC21uv/hWig5Z3iL3llt6
+        nDls6cdWfXOYu0RpRzRJuY1hbeUraI290Jpd0N70ItPsVuvAvhovDtz2IdPUjy1lTqwrtIMOWsPcFW9h
+        XUX7rd/ij7ci8Wwnkkp6kHzZhWTDAObm5hAKhZBQ3AfSvwadcYIKnoPyWsAd2ZXKqLBRvrj1lANU1Au6
+        4AWd92J2dlZCJR5lxx5n8ttBGZU2pczaXppKR5vmqbAbVOwClfpg6vi8eIGp45PYDSkeZzi761qq2la1
+        u9xA2Z0R+STDO5icfpheBgXTMHX5xW5UeQvOcDaG4ij9ehkV2H/TlQlQxVeQeUaBZ96xxxn5+1bSDsNm
+        2mN8SMeag5Tn+Cvhea/YpQvv/6VbLX5TkoTnmCL6B6HWx5WnOMMOAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="tsbSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -284,7 +284,7 @@
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>125</value>
+    <value>43</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

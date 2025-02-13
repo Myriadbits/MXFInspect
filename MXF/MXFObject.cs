@@ -21,6 +21,7 @@
 //
 #endregion
 
+using Myriadbits.MXF.Node;
 using Myriadbits.MXF.Utils;
 using System;
 using System.ComponentModel;
@@ -106,5 +107,34 @@ namespace Myriadbits.MXF
                 return this.Offset.ToString();
             return string.Format("{0} [{1} items]", this.Offset, this.Children.Count);
         }
+
+        #region Equals
+        public bool Equals(MXFObject other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+
+            return this.Offset.Equals(other.Offset);
+        }
+
+        //public override bool Equals(object obj)
+        //{
+        //    if (ReferenceEquals(null, obj)) return false;
+        //    if (ReferenceEquals(this, obj)) return true;
+        //    if (obj is not MXFObject) return false;
+        //    return Equals((MXFObject)obj);
+        //}
+
+        ////see https://stackoverflow.com/a/468084 and https://stackoverflow.com/a/53316768
+        //public override int GetHashCode()
+        //{
+
+        //    return 0;
+        //}
+
+        public static bool operator ==(MXFObject x, MXFObject y) { return Equals(x, y); }
+        public static bool operator !=(MXFObject x, MXFObject y) { return !Equals(x, y); }
+
+        #endregion
     }
 }
