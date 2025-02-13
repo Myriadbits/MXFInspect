@@ -23,6 +23,7 @@
 
 using BrightIdeasSoftware;
 using Myriadbits.MXF;
+using Myriadbits.MXF.Node;
 using Serilog;
 using System;
 using System.Collections;

@@ -34,6 +34,7 @@
             toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             tslOffsetStyle = new System.Windows.Forms.ToolStripStatusLabel();
             tslPartialLoading = new System.Windows.Forms.ToolStripStatusLabel();
+            tslNetRuntimeVersion = new System.Windows.Forms.ToolStripStatusLabel();
             tslVersion = new System.Windows.Forms.ToolStripStatusLabel();
             menuMain = new System.Windows.Forms.MenuStrip();
             tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +73,6 @@
             toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             tsbSettings = new System.Windows.Forms.ToolStripButton();
             tabMain = new System.Windows.Forms.TabControl();
-            tslNetRuntimeVersion = new System.Windows.Forms.ToolStripStatusLabel();
             statusStrip.SuspendLayout();
             menuMain.SuspendLayout();
             toolStrip.SuspendLayout();
@@ -98,7 +98,7 @@
             // toolStripStatusLabel1
             // 
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new System.Drawing.Size(995, 19);
+            toolStripStatusLabel1.Size = new System.Drawing.Size(1026, 19);
             toolStripStatusLabel1.Spring = true;
             // 
             // tslOffsetStyle
@@ -118,6 +118,12 @@
             tslPartialLoading.Size = new System.Drawing.Size(87, 19);
             tslPartialLoading.Text = "PartialLoading";
             tslPartialLoading.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tslNetRuntimeVersion
+            // 
+            tslNetRuntimeVersion.Name = "tslNetRuntimeVersion";
+            tslNetRuntimeVersion.Size = new System.Drawing.Size(118, 19);
+            tslNetRuntimeVersion.Text = "toolStripStatusLabel2";
             // 
             // tslVersion
             // 
@@ -151,7 +157,7 @@
             tsmiOpenFile.Image = (System.Drawing.Image)resources.GetObject("tsmiOpenFile.Image");
             tsmiOpenFile.Name = "tsmiOpenFile";
             tsmiOpenFile.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O;
-            tsmiOpenFile.Size = new System.Drawing.Size(155, 22);
+            tsmiOpenFile.Size = new System.Drawing.Size(180, 22);
             tsmiOpenFile.Text = "&Open...";
             tsmiOpenFile.Click += tsmiOpenFile_Click;
             // 
@@ -159,20 +165,20 @@
             // 
             tsmiClose.Name = "tsmiClose";
             tsmiClose.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W;
-            tsmiClose.Size = new System.Drawing.Size(155, 22);
+            tsmiClose.Size = new System.Drawing.Size(180, 22);
             tsmiClose.Text = "&Close";
             tsmiClose.Click += tsmiClose_Click;
             // 
             // tsSeparator1
             // 
             tsSeparator1.Name = "tsSeparator1";
-            tsSeparator1.Size = new System.Drawing.Size(152, 6);
+            tsSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiExit
             // 
             tsmiExit.Name = "tsmiExit";
             tsmiExit.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
-            tsmiExit.Size = new System.Drawing.Size(155, 22);
+            tsmiExit.Size = new System.Drawing.Size(180, 22);
             tsmiExit.Text = "E&xit";
             tsmiExit.Click += tsmiExit_Click;
             // 
@@ -425,12 +431,6 @@
             tabMain.TabIndex = 18;
             tabMain.Visible = false;
             tabMain.SelectedIndexChanged += tabMain_SelectedIndexChanged;
-            // 
-            // tslNetRuntimeVersion
-            // 
-            tslNetRuntimeVersion.Name = "tslNetRuntimeVersion";
-            tslNetRuntimeVersion.Size = new System.Drawing.Size(118, 19);
-            tslNetRuntimeVersion.Text = "toolStripStatusLabel2";
             // 
             // FormMain
             // 
