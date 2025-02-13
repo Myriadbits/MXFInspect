@@ -1,25 +1,28 @@
-<!-- ************************************* -->
-<!-- ************************************* -->
-<!-- ************************************* -->
-<!-- *****DO NOT EDIT THIS XML FILE******* -->
-<!-- ************************************* -->
-<!-- ************************************* -->
-<!-- ************************************* -->
-<!--  -->
-<!-- DRAFT REGISTER -->
-<!--  -->
-<!-- SMPTE METADATA REGISTER -->
-<!-- ####################### -->
-<!--  -->
-<!-- See https://registry.smpte-ra.org for SMPTE Metadata Registers resources including copies of the  -->
-<!-- SMPTE Metadata Registers that are suitable for editing. -->
-<!--  -->
-<!-- Contact -->
-<!-- ####### -->
-<!--  -->
-<!-- Please email:  30mr10wg-def@lists.smpte.org -->
-<!--  -->
-<!--  -->
+<!-- DO NOT EDIT THIS TAG -->
+<!-- master_commit_tag=v000000085 -->
+<!-- DO NOT EDIT THIS TAG -->
+<!--
+Copyright (c) 2024 SMPTE All rights reserved.
+
+The latest version of this document can be retrieved at
+
+http://smpte-ra.org/smpte-metadata-registry
+
+The document is constructed according to 
+
+ST 395:2014  -  Metadata Groups Register,
+
+which is available at http://dx.doi.org/10.5594/SMPTE.ST395.2014
+
+Use of this file without consulting the corresponding SMPTE Engineering Document is NOT supported.  Interoperability will generally require adherence to additional guidelines and constraints specified in the corresponding prose document.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
 <GroupsRegister xmlns="http://www.smpte-ra.org/ns/395/2016">
   <Entries>
     <Entry>
@@ -1080,6 +1083,70 @@
     <Entry>
       <Register>Groups</Register>
       <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>ColorTransformPacks</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.05320000.00000000</UL>
+      <Kind>NODE</Kind>
+      <Name>Color Transform Packs</Name>
+      <Definition>Color Transform Metadata Packs for Serial Interfaces</Definition>
+      <IsDeprecated>false</IsDeprecated>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>MDColorVolumeMetadata</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.05320100.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>MD Color Volume Metadata</Name>
+      <Definition>Identifies a Mastering Display Color Volume Metadata Defined Length Pack</Definition>
+      <DefiningDocument>SMPTE ST 2108-2</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200401.02010000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200401.02020000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200401.02030000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200401.02040000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>MaximumLightLevelMetadata</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.05320200.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Maximum Light Level Metadata</Name>
+      <Definition>Identifies a Maximum Light Level Metadata Defined Length Pack</Definition>
+      <DefiningDocument>SMPTE ST 2108-2</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.05310142.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.05310143.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
       <Symbol>RELATIONAL</Symbol>
       <UL>urn:smpte:ul:060e2b34.027f0101.06000000.00000000</UL>
       <Kind>NODE</Kind>
@@ -1294,7 +1361,7 @@
       <Name>Lens Unit Acquisition Metadata</Name>
       <Definition>Lens Unit Acquisition Metadata</Definition>
       <Notes>Per RDD 18, for each Element the static local tag is used in the System Item; a dynamic local tag is used in MXF header metadata</Notes>
-      <DefiningDocument>RDD 18</DefiningDocument>
+      <DefiningDocument>SMPTE RDD 18</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <KLVSyntax>53</KLVSyntax>
       <Contents>
@@ -1354,6 +1421,16 @@
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200202.0c000000</UL>
+          <LocalTag>800c</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200202.0d000000</UL>
+          <LocalTag>800d</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
           <UL>urn:smpte:ul:060e2b34.0101010d.04200202.07000000</UL>
           <LocalTag>8006</LocalTag>
           <IsOptional>true</IsOptional>
@@ -1374,7 +1451,7 @@
       <Name>Camera Unit Acquisition Metadata</Name>
       <Definition>Camera Unit Acquisition Metadata</Definition>
       <Notes>Per RDD 18, for each Element the static local tag is used in the System Item; a dynamic local tag is used in MXF header metadata</Notes>
-      <DefiningDocument>RDD 18</DefiningDocument>
+      <DefiningDocument>SMPTE RDD 18</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <KLVSyntax>53</KLVSyntax>
       <Contents>
@@ -1394,6 +1471,11 @@
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.010c0100</UL>
+          <LocalTag>8119</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
           <UL>urn:smpte:ul:060e2b34.0101010d.04200103.01020000</UL>
           <LocalTag>8101</LocalTag>
           <IsOptional>true</IsOptional>
@@ -1406,6 +1488,16 @@
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010d.04200103.01040000</UL>
           <LocalTag>8103</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.010e0000</UL>
+          <LocalTag>811a</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.010f0000</UL>
+          <LocalTag>811b</LocalTag>
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
@@ -1429,6 +1521,16 @@
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.01100000</UL>
+          <LocalTag>811c</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.01110000</UL>
+          <LocalTag>811d</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
           <UL>urn:smpte:ul:060e2b34.0101010d.04200103.01080000</UL>
           <LocalTag>8108</LocalTag>
           <IsOptional>true</IsOptional>
@@ -1449,6 +1551,11 @@
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.010a0100</UL>
+          <LocalTag>811e</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
           <UL>urn:smpte:ul:060e2b34.0101010e.04200103.010d0000</UL>
           <LocalTag>8118</LocalTag>
           <IsOptional>true</IsOptional>
@@ -1466,6 +1573,11 @@
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010d.04200103.02020000</UL>
           <LocalTag>810e</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.02090000</UL>
+          <LocalTag>811f</LocalTag>
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
@@ -1494,13 +1606,38 @@
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
+          <UL>urn:smpte:ul:060e2b34.01010109.04010201.01060100</UL>
+          <LocalTag>3219</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010102.04010201.01030100</UL>
+          <LocalTag>321a</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.01120000</UL>
+          <LocalTag>8120</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
           <UL>urn:smpte:ul:060e2b34.0101010e.04200103.02070000</UL>
           <LocalTag>8116</LocalTag>
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.020a0000</UL>
+          <LocalTag>8121</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
           <UL>urn:smpte:ul:060e2b34.0101010e.04200103.02080000</UL>
           <LocalTag>8117</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04200103.01130000</UL>
+          <LocalTag>8122</LocalTag>
           <IsOptional>true</IsOptional>
         </Record>
         <Record>
@@ -1524,7 +1661,7 @@
       <Name>UserDefinedAcquisitionMetadata</Name>
       <Definition>UserDefinedAcquisitionMetadata</Definition>
       <Notes>Per RDD 18, for each Element the static local tag is used in the System Item; a dynamic local tag is used in MXF header metadata</Notes>
-      <DefiningDocument>RDD 18</DefiningDocument>
+      <DefiningDocument>SMPTE RDD 18</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <KLVSyntax>53</KLVSyntax>
       <Contents>
@@ -1536,6 +1673,11 @@
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010d.04060805.00000000</UL>
           <LocalTag>e000</LocalTag>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04060807.00000000</UL>
+          <LocalTag>e010</LocalTag>
           <IsOptional>true</IsOptional>
         </Record>
       </Contents>
@@ -1618,6 +1760,1008 @@
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010e.02400109.00000000</UL>
           <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>SMSOMBCommunicationsProtocol</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030200.00000000</UL>
+      <Kind>NODE</Kind>
+      <Name>SMS-OMB Communications Protocol</Name>
+      <Definition>Protocol Metadata Packs for SMS-OMB Communication</Definition>
+      <IsDeprecated>false</IsDeprecated>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>OMBBadRequestResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030201.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Bad Request Response</Name>
+      <Definition>Bad Request Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetCertificateRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030202.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Certificate Request</Name>
+      <Definition>Get Certificate Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400203.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetCertificateResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030203.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Certificate Response</Name>
+      <Definition>Get Certificate Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400204.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400205.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400206.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>AdjustSecureTimeRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030204.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Adjust Secure Time Request</Name>
+      <Definition>Adjust Secure Time Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400207.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400208.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400209.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>AdjustSecureTimeResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030205.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Adjust Secure Time Response</Name>
+      <Definition>Adjust Secure Time Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240020a.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetSecureTimeRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030206.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Secure Time Request</Name>
+      <Definition>Get Secure Time Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetSecureTimeResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030207.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Secure Time Response</Name>
+      <Definition>Get Secure Time Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240020b.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240020c.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>ValidateCPLRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030208.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Validate CPL Request</Name>
+      <Definition>Validate CPL Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400208.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400209.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240020d.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240020e.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240020f.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>ValidateCPLResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030209.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Validate CPL Response</Name>
+      <Definition>Validate CPL Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400210.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetCPLValidationResultRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03020a.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get CPL Validation Result Request</Name>
+      <Definition>Get CPL Validation Result Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400211.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetCPLValidationResultResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03020b.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get CPL Validation Result Response</Name>
+      <Definition>Get CPL Validation Result Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400212.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>ValidateKDMRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03020c.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Validate KDM Request</Name>
+      <Definition>Validate KDM Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400208.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400209.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400213.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400214.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>ValidateKDMResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03020d.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Validate KDM Response</Name>
+      <Definition>Validate KDM Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400215.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetKDMValidationResultRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03020e.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get KDM Validation Result Request</Name>
+      <Definition>Get KDM Validation Result Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400216.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetKDMValidationResultResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03020f.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get KDM Validation Result Response</Name>
+      <Definition>Get KDM Validation Result Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400217.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>ValidatePlaybackRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030210.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Validate Playback Request</Name>
+      <Definition>Validate Playback Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400208.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400209.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>ValidatePlaybackResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030211.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Validate Playback Response</Name>
+      <Definition>Validate Playback Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400218.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400219.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>InvalidatePlaybackRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030212.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Invalidate Playback Request</Name>
+      <Definition>Invalidate Playback Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>InvalidatePlaybackResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030213.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Invalidate Playback Response</Name>
+      <Definition>Invalidate Playback Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetDeviceInfoRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030214.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Device Info Request</Name>
+      <Definition>Get Device Info Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetDeviceInfoResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030215.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Device Info Response</Name>
+      <Definition>Get Device Info Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240021a.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240021b.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240021c.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240021d.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240021e.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetStatusRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030216.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Status Request</Name>
+      <Definition>Get Status Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240021f.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetStatusResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030217.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Status Response</Name>
+      <Definition>Get Status Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0240021f.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400220.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400219.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GenerateSecurityLogReportRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030218.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Generate Security Log Report Request</Name>
+      <Definition>Generate Security Log Report Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400221.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400222.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GenerateSecurityLogReportResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030219.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Generate Security Log Report Response</Name>
+      <Definition>Generate Security Log Report Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400223.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetSecurityLogReportRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03021a.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Security Log Report Request</Name>
+      <Definition>Get Security Log Report Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetSecurityLogReportResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03021b.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get Security Log Report Response</Name>
+      <Definition>Get Security Log Report Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400224.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400225.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400226.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400227.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>CancelSecurityLogReportRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03021c.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Cancel Security Log Report Request</Name>
+      <Definition>Cancel Security Log Report Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>CancelSecurityLogReportResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03021d.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Cancel Security Log Report Response</Name>
+      <Definition>Cancel Security Log Report Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GenerateCPLProcessedLogReportRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03021e.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Generate CPLProcessed Log Report Request</Name>
+      <Definition>Generate CPLProcessed Log Report Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GenerateCPLProcessedLogReportResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c03021f.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Generate CPLProcessed Log Report Response</Name>
+      <Definition>Generate CPLProcessed Log Report Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400223.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetCPLProcessedLogReportRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030220.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get CPLProcessed Log Report Request</Name>
+      <Definition>Get CPLProcessed Log Report Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>GetCPLProcessedLogReportResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030221.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Get CPLProcessed Log Report Response</Name>
+      <Definition>Get CPLProcessed Log Report Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400224.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400226.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400227.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>CancelCPLProcessedLogReportRequest</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030222.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Cancel CPLProcessed Log Report Request</Name>
+      <Definition>Cancel CPLProcessed Log Report Request</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>CancelCPLProcessedLogReportResponse</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c030223.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Cancel CPLProcessed Log Report Response</Name>
+      <Definition>Cancel CPLProcessed Log Report Response</Definition>
+      <DefiningDocument>SMPTE ST 430-17</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400202.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.02400201.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>AudioMetadata</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c040000.00000000</UL>
+      <Kind>NODE</Kind>
+      <Name>Audio Metadata</Name>
+      <Definition>Audio Metadata</Definition>
+      <DefiningDocument>SMPTE ST 2109</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>AudioMetadataPack</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c040100.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Audio Metadata Pack</Name>
+      <Definition>Audio Metadata Pack</Definition>
+      <DefiningDocument>SMPTE ST 2109</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>false</IsConcrete>
+      <KLVSyntax>05</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020901.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>DataSets</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c050000.00000000</UL>
+      <Kind>NODE</Kind>
+      <Name>Data Sets</Name>
+      <Definition>Data Sets</Definition>
+      <IsDeprecated>false</IsDeprecated>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014</NamespaceName>
+      <Symbol>StreamingData</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0c050101.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Streaming Data</Name>
+      <Definition>Defines a Data Stream Set</Definition>
+      <DefiningDocument>SMPTE RDD 55</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>false</IsConcrete>
+      <KLVSyntax>53 13</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0103040b.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.07020110.01050000</UL>
+          <IsOptional>true</IsOptional>
         </Record>
       </Contents>
     </Entry>
@@ -2460,8 +3604,8 @@
       <Kind>LEAF</Kind>
       <Name>Definition Object</Name>
       <Definition>Definition Object</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01010100</Parent>
       <IsConcrete>false</IsConcrete>
@@ -2495,8 +3639,8 @@
       <Kind>LEAF</Kind>
       <Name>Data Definition</Name>
       <Definition>Data Definition</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01011a00</Parent>
       <IsConcrete>true</IsConcrete>
@@ -2764,8 +3908,8 @@
       <Kind>LEAF</Kind>
       <Name>Container Definition</Name>
       <Definition>Container Definition</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01011a00</Parent>
       <IsConcrete>true</IsConcrete>
@@ -2802,8 +3946,8 @@
       <Kind>LEAF</Kind>
       <Name>Dictionary</Name>
       <Definition>Dictionary</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01010100</Parent>
       <IsConcrete>true</IsConcrete>
@@ -3707,6 +4851,11 @@
         </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.01010101.0d010801.01010000</UL>
+          <IsUniqueID>false</IsUniqueID>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.01020210.02040000</UL>
           <IsUniqueID>false</IsUniqueID>
           <IsOptional>true</IsOptional>
         </Record>
@@ -5224,6 +6373,18 @@
           <UL>urn:smpte:ul:060e2b34.0101010e.04010603.0e000000</UL>
           <IsOptional>true</IsOptional>
         </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010603.0f000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010603.10000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010603.11000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
       </Contents>
     </Entry>
     <Entry>
@@ -5266,7 +6427,7 @@
       <Definition>DC PCM Sound Descriptor</Definition>
       <Applications>MXF</Applications>
       <DefiningDocument>SMPTE 429-10M</DefiningDocument>
-      <IsDeprecated>false</IsDeprecated>
+      <IsDeprecated>true</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01014200</Parent>
       <KLVSyntax>06 53</KLVSyntax>
     </Entry>
@@ -5434,10 +6595,10 @@
       <Kind>LEAF</Kind>
       <Name>DC Timed Text Descriptor</Name>
       <Definition>DC Timed Text Descriptor</Definition>
-      <Applications>MXF</Applications>
-      <DefiningDocument>SMPTE ST 429-5</DefiningDocument>
+      <DefiningDocument>SMPTE ST 429-5, SMPTE ST 429-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01014300</Parent>
+      <IsConcrete>true</IsConcrete>
       <KLVSyntax>06 53</KLVSyntax>
       <Contents>
         <Record>
@@ -5454,6 +6615,18 @@
         </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010e.03010102.02160000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.06010102.04000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.06010102.05000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.06010102.06000000</UL>
           <IsOptional>true</IsOptional>
         </Record>
       </Contents>
@@ -5515,6 +6688,7 @@
       <Name>Container Constraints Sub-Descriptor</Name>
       <Definition>Container Constraints Sub-Descriptor</Definition>
       <Applications>MXF</Applications>
+      <DefiningDocument>SMPTE ST 379-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
       <KLVSyntax>06 53</KLVSyntax>
@@ -5616,6 +6790,34 @@
         </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010e.03020102.21000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.03020102.22000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.03020102.23000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.03020102.24000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.03020102.25000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.03020102.26000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.03020102.27000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.03020102.28000000</UL>
           <IsOptional>true</IsOptional>
         </Record>
       </Contents>
@@ -6125,6 +7327,34 @@
     <Entry>
       <Register>Groups</Register>
       <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>IABEssenceDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01017b00</UL>
+      <Kind>LEAF</Kind>
+      <Name>IAB Essence Descriptor</Name>
+      <Definition>Identifies an Immersive Audio Bitstream Essence Descriptor</Definition>
+      <DefiningDocument>SMPTE ST 2067-201</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01014200</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>IABSoundfieldLabelSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01017c00</UL>
+      <Kind>LEAF</Kind>
+      <Name>IAB Soundfield Label SubDescriptor</Name>
+      <Definition>Identifies an IAB Soundfield Label SubDescriptor</Definition>
+      <DefiningDocument>SMPTE ST 2067-201</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01016a00</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
       <Symbol>OPDefinition</Symbol>
       <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01017d00</UL>
       <Kind>LEAF</Kind>
@@ -6173,6 +7403,401 @@
     <Entry>
       <Register>Groups</Register>
       <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>HEVCSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01018101</UL>
+      <Kind>LEAF</Kind>
+      <Name>HEVC Sub-Descriptor</Name>
+      <Definition>HEVC Sub-Descriptor</Definition>
+      <DefiningDocument>SMPTE ST 381-5</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02030000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02040000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02060000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02070000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02080000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02090000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.020a0000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.020b0000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.020c0000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.020d0000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.020e0000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.020f0000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02100000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02110000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02120000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02130000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02140000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02150000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02160000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02170000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02180000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.02190000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.021a0000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04010606.021b0000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>JPEGXSSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01018102</UL>
+      <Kind>LEAF</Kind>
+      <Name>JPEG XS SubDescriptor</Name>
+      <Definition>JPEG XS SubDescriptor</Definition>
+      <DefiningDocument>SMPTE ST 2124</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.01000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.02000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.03000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.04000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.05000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.06000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.07000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.08000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060b.09000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>FFV1PictureSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01018103</UL>
+      <Kind>LEAF</Kind>
+      <Name>FFV1PictureSubDescriptor</Name>
+      <Definition>FFV1 Picture Essence Descriptor</Definition>
+      <Applications>RDD48</Applications>
+      <DefiningDocument>SMPTE RDD 48</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060c.01000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060c.02000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060c.03000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060c.04000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060c.05000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.0401060c.06000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>MGASoundEssenceDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01018106</UL>
+      <Kind>LEAF</Kind>
+      <Name>MGA Sound Essence Descriptor</Name>
+      <Definition>MGA Sound Essence Descriptor</Definition>
+      <DefiningDocument>SMPTE ST 2127-1</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01014200</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020304.01000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020304.02000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020304.03000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>MGAAudioMetadataSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01018107</UL>
+      <Kind>LEAF</Kind>
+      <Name>MGA Audio Metadata SubDescriptor</Name>
+      <Definition>MGA Audio Metadata SubDescriptor</Definition>
+      <DefiningDocument>SMPTE ST 2127-1</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020305.01000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020305.02000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020305.03000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020305.04000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>MGASoundfieldGroupLabelSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01018108</UL>
+      <Kind>LEAF</Kind>
+      <Name>MGA Soundfield Group Label SubDescriptor</Name>
+      <Definition>MGA Soundfield Group Label SubDescriptor</Definition>
+      <DefiningDocument>SMPTE ST 2127-1</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01016c00</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020306.01000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020306.02000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020306.03000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020306.04000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>SADMAudioMetadataSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.01018109</UL>
+      <Kind>LEAF</Kind>
+      <Name>S-ADM Audio Metadata SubDescriptor</Name>
+      <Definition>S-ADM Audio Metadata SubDescriptor</Definition>
+      <DefiningDocument>SMPTE ST 2127-10</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020307.01000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020307.02000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>SupplementalDataEssenceDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.0101810a</UL>
+      <Kind>LEAF</Kind>
+      <Name>Supplemental Data Essence Descriptor</Name>
+      <Definition>Defines a Supplemental Data Descriptor</Definition>
+      <DefiningDocument>SMPTE RDD 55</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01014300</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>53 13</KLVSyntax>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>DataStreamSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.0101810b</UL>
+      <Kind>LEAF</Kind>
+      <Name>Data Stream SubDescriptor</Name>
+      <Definition>Defines an Data Stream SubDescriptor</Definition>
+      <DefiningDocument>SMPTE RDD 55</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>53 13</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04061003.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.06010102.07000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04060103.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>DataStreamDeviceSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.0101810c</UL>
+      <Kind>LEAF</Kind>
+      <Name>Data Stream Device SubDescriptor</Name>
+      <Definition>Defines a Data Stream Device SubDescriptor</Definition>
+      <DefiningDocument>SMPTE RDD 55</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.0101810b</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>53 13</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.05010206.01000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.05010206.02000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.05010206.03000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.05010206.04000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
       <Symbol>MetaDefinitions</Symbol>
       <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.02000000</UL>
       <Kind>NODE</Kind>
@@ -6189,8 +7814,8 @@
       <Kind>LEAF</Kind>
       <Name>Class Definition</Name>
       <Definition>Class Definition</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02240000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6224,8 +7849,8 @@
       <Kind>LEAF</Kind>
       <Name>Property Definition</Name>
       <Definition>Property Definition</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02240000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6247,12 +7872,17 @@
           <UL>urn:smpte:ul:060e2b34.01010102.06010107.05000000</UL>
           <LocalTag>0d</LocalTag>
           <IsUniqueID>false</IsUniqueID>
-          <IsOptional>false</IsOptional>
+          <IsOptional>true</IsOptional>
         </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.01010102.06010107.06000000</UL>
           <LocalTag>0e</LocalTag>
           <IsUniqueID>false</IsUniqueID>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010d.06010107.22000000</UL>
+          <LocalTag>2b</LocalTag>
           <IsOptional>true</IsOptional>
         </Record>
       </Contents>
@@ -6265,8 +7895,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition</Name>
       <Definition>Type Definition</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02240000</Parent>
       <IsConcrete>false</IsConcrete>
@@ -6280,8 +7910,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Integer</Name>
       <Definition>Type Definition Integer</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6309,8 +7939,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Strong Object Reference</Name>
       <Definition>Type Definition Strong Object Reference</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6332,8 +7962,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Weak Object Reference</Name>
       <Definition>Type Definition Weak Object Reference</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6361,8 +7991,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Enumeration</Name>
       <Definition>Type Definition Enumeration</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6396,8 +8026,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Fixed Array</Name>
       <Definition>Type Definition Fixed Array</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6425,8 +8055,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Variable Array</Name>
       <Definition>Type Definition Variable Array</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6448,8 +8078,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Set</Name>
       <Definition>Type Definition Set</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6471,8 +8101,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition String</Name>
       <Definition>Type Definition String</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6494,8 +8124,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Stream</Name>
       <Definition>Type Definition Stream</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6509,8 +8139,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Record</Name>
       <Definition>Type Definition Record</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6538,8 +8168,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Rename</Name>
       <Definition>Type Definition Rename</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6561,8 +8191,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Extendible Enumeration</Name>
       <Definition>Type Definition Extendible Enumeration</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6572,13 +8202,13 @@
           <UL>urn:smpte:ul:060e2b34.01010102.03010203.07000000</UL>
           <LocalTag>1f</LocalTag>
           <IsUniqueID>false</IsUniqueID>
-          <IsOptional>false</IsOptional>
+          <IsOptional>true</IsOptional>
         </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.01010102.03010203.08000000</UL>
           <LocalTag>20</LocalTag>
           <IsUniqueID>false</IsUniqueID>
-          <IsOptional>false</IsOptional>
+          <IsOptional>true</IsOptional>
         </Record>
       </Contents>
     </Entry>
@@ -6590,8 +8220,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Indirect</Name>
       <Definition>Type Definition Indirect</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6605,8 +8235,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Opaque</Name>
       <Definition>Type Definition Opaque</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02210000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6620,8 +8250,8 @@
       <Kind>LEAF</Kind>
       <Name>Type Definition Character</Name>
       <Definition>Type Definition Character</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02030000</Parent>
       <IsConcrete>true</IsConcrete>
@@ -6635,12 +8265,17 @@
       <Kind>LEAF</Kind>
       <Name>Meta-Definition</Name>
       <Definition>Meta-Definition</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
       <IsConcrete>false</IsConcrete>
       <KLVSyntax>06 53</KLVSyntax>
       <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010101.01011502.00000000</UL>
+          <LocalTag>3c0a</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.01010102.06010107.13000000</UL>
           <LocalTag>05</LocalTag>
@@ -6696,8 +8331,10 @@
       <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.02260000</UL>
       <Kind>LEAF</Kind>
       <Name>Extension Scheme</Name>
+      <Applications>MXF</Applications>
       <DefiningDocument>SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
       <KLVSyntax>06 53</KLVSyntax>
       <Contents>
         <Record>
@@ -6735,25 +8372,68 @@
     <Entry>
       <Register>Groups</Register>
       <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>PropertyAliasDefinition</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.02270000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Property Alias Definition</Name>
+      <Applications>MXF</Applications>
+      <DefiningDocument>SMPTE ST 377-2</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.02020000</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010d.06010107.20000000</UL>
+          <LocalTag>29</LocalTag>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
+      <Symbol>ExtendibleEnumerationElement</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.02280000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Extendible Enumeration Element</Name>
+      <Applications>MXF</Applications>
+      <DefiningDocument>SMPTE ST 377-2</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01011a00</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010d.06010107.21000000</UL>
+          <LocalTag>2a</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/13/1/aaf</NamespaceName>
       <Symbol>Root</Symbol>
       <UL>urn:smpte:ul:060e2b34.027f0101.0d010101.03000000</UL>
       <Kind>LEAF</Kind>
       <Name>Root</Name>
       <Definition>Root</Definition>
-      <Applications>AAF</Applications>
-      <DefiningDocument>AAF Object Specification</DefiningDocument>
+      <Applications>AAF MXF</Applications>
+      <DefiningDocument>AAF Object Specification, SMPTE ST 377-2</DefiningDocument>
       <IsDeprecated>false</IsDeprecated>
+      <IsConcrete>true</IsConcrete>
       <KLVSyntax>06 53</KLVSyntax>
       <Contents>
         <Record>
           <UL>urn:smpte:ul:060e2b34.01010101.01011502.00000000</UL>
           <LocalTag>3c0a</LocalTag>
-          <IsOptional>false</IsOptional>
+          <IsOptional>true</IsOptional>
         </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010a.06010107.16000000</UL>
           <LocalTag>01</LocalTag>
-          <IsOptional>false</IsOptional>
+          <IsOptional>true</IsOptional>
         </Record>
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010a.06010107.17000000</UL>
@@ -6768,6 +8448,11 @@
         <Record>
           <UL>urn:smpte:ul:060e2b34.0101010a.06010107.19000000</UL>
           <LocalTag>22</LocalTag>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010d.06010107.1a000000</UL>
+          <LocalTag>23</LocalTag>
           <IsOptional>true</IsOptional>
         </Record>
       </Contents>
@@ -16047,6 +17732,108 @@
     </Entry>
     <Entry>
       <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/14/9</NamespaceName>
+      <Symbol>ISXDDataEssenceDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0105.0e090502.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>ISXD Data Essence Descriptor</Name>
+      <Definition>Identifies an ISXD Data Essence Descriptor</Definition>
+      <DefiningDocument>SMPTE ST 2067-202</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01014300</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090400.00000000</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/14/9</NamespaceName>
+      <Symbol>IADataEssenceDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0105.0e090603.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>Immersive Audio Data Essence Descriptor</Name>
+      <Definition>Immersive Audio Data Essence Descriptor</Definition>
+      <DefiningDocument>SMPTE ST 429-18</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01014300</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/14/9</NamespaceName>
+      <Symbol>IADataEssenceSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0105.0e090606.00000000</UL>
+      <Kind>LEAF</Kind>
+      <Name>IA Data Essence SubDescriptor</Name>
+      <Definition>Defines the Immersive Audio Data Essence SubDescriptor Set</Definition>
+      <DefiningDocument>SMPTE ST 429-18</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090506.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090507.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090508.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090509.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e09050a.00000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.0101010e.04020301.0f000000</UL>
+          <IsOptional>true</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/14/9</NamespaceName>
+      <Symbol>PHDRMetadataTrackSubDescriptor</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0105.0e090607.01010103</UL>
+      <Kind>LEAF</Kind>
+      <Name>PHDR Metadata Track Sub Descriptor</Name>
+      <Definition>Identifies a PHDR Metadata Track Sub Descriptor</Definition>
+      <DefiningDocument>SMPTE RDD 56</DefiningDocument>
+      <IsDeprecated>false</IsDeprecated>
+      <Parent>urn:smpte:ul:060e2b34.027f0101.0d010101.01015900</Parent>
+      <IsConcrete>true</IsConcrete>
+      <KLVSyntax>06 53</KLVSyntax>
+      <Contents>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090607.01010104</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090607.01010105</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+        <Record>
+          <UL>urn:smpte:ul:060e2b34.01010105.0e090607.01010106</UL>
+          <IsOptional>false</IsOptional>
+        </Record>
+      </Contents>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
       <NamespaceName>http://www.smpte-ra.org/reg/395/2014/14/10</NamespaceName>
       <Symbol>Snell_and_Wilcox</Symbol>
       <UL>urn:smpte:ul:060e2b34.027f0101.0e0a0000.00000000</UL>
@@ -16263,6 +18050,16 @@
       <Kind>NODE</Kind>
       <Name>Apple Inc.</Name>
       <Definition>Metadata registered by Apple Inc. for private use</Definition>
+      <IsDeprecated>false</IsDeprecated>
+    </Entry>
+    <Entry>
+      <Register>Groups</Register>
+      <NamespaceName>http://www.smpte-ra.org/reg/395/2014/14/33</NamespaceName>
+      <Symbol>Fraunhofer</Symbol>
+      <UL>urn:smpte:ul:060e2b34.027f0101.0e210000.00000000</UL>
+      <Kind>NODE</Kind>
+      <Name>Fraunhofer</Name>
+      <Definition>Metadata registered by Fraunhofer for private use</Definition>
       <IsDeprecated>false</IsDeprecated>
     </Entry>
     <Entry>

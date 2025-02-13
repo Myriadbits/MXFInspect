@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2021 SMPTE All rights reserved.
+Copyright (c) 2024 SMPTE All rights reserved.
 
 The latest version of this document can be retrieved at
 
@@ -472,7 +472,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
             <DefiningDocument>SMPTE RDD 44</DefiningDocument>
             <IsDeprecated>false</IsDeprecated>
         </Entry>
-        <Entry>  
+        <Entry>
             <Register>Essence</Register>
             <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
             <Symbol>FrameWrappedDNxPackedPictureElement</Symbol>
@@ -492,6 +492,61 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
             <Name>Clip-wrapped DNxPacked Picture Element</Name>
             <Definition>Identifies Clip-wrapped DNxPacked Picture Element</Definition>
             <DefiningDocument>SMPTE RDD 50</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedJPEGXSPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f1a7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped JPEG XS Picture Element</Name>
+            <Definition>Identifies a frame-wrapped JPEG XS Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2124</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedJPEGXSPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f1b7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped JPEG XS Picture Element</Name>
+            <Definition>Identifies a clip-wrapped JPEG XS Picture Element</Definition>
+            <DefiningDocument>SMPTE ST 2124</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ARRIRAWPictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f1c7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>ARRIRAW Picture Element</Name>
+            <Definition>Identifies an ARRIRAW Picture Element</Definition>
+            <DefiningDocument>SMPTE RDD 54</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedFFV1PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f1d7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped FFV1 Picture Element</Name>
+            <Definition>Identifies a frame-wrapped FFV1 Picture Element</Definition>
+            <DefiningDocument>SMPTE RDD 48</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedFFV1PictureElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.157f1e7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped FFV1 Picture Element</Name>
+            <Definition>Identifies a clip-wrapped FFV1 Picture Element</Definition>
+            <DefiningDocument>SMPTE RDD 48</DefiningDocument>
             <IsDeprecated>false</IsDeprecated>
         </Entry>
         <Entry>
@@ -651,6 +706,28 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <Entry>
             <Register>Essence</Register>
             <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>FrameWrappedMGASoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f0e7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame-wrapped MGA Sound Element</Name>
+            <Definition>Identifies a frame-wrapped MGA Sound Element</Definition>
+            <DefiningDocument>SMPTE ST 2127-1</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>ClipWrappedMGASoundElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.167f0f7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Clip-wrapped MGA Sound Element</Name>
+            <Definition>Identifies a clip-wrapped MGA Sound Element</Definition>
+            <DefiningDocument>SMPTE ST 2127-1</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
             <Symbol>GCDataItem</Symbol>
             <UL>urn:smpte:ul:060e2b34.01020101.0d010301.17000000</UL>
             <Kind>NODE</Kind>
@@ -783,6 +860,17 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <Entry>
             <Register>Essence</Register>
             <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
+            <Symbol>SupplementalDataElement</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020101.0d010301.177f0f7f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Supplemental Data Element</Name>
+            <Definition>Identifies a Supplemental Data Element</Definition>
+            <DefiningDocument>SMPTE RDD 55</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/13/1/aaf</NamespaceName>
             <Symbol>GCCompoundItem</Symbol>
             <UL>urn:smpte:ul:060e2b34.01020101.0d010301.18000000</UL>
             <Kind>NODE</Kind>
@@ -811,6 +899,28 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
             <Name>DV-DIF Clip-wrapped</Name>
             <Definition>Identifies a clip-wrapped DV-DIF compound element</Definition>
             <DefiningDocument>SMPTE ST 383</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/14/9</NamespaceName>
+            <Symbol>FrameWrappedISXDData</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020105.0e090502.017f017f</UL>
+            <Kind>LEAF</Kind>
+            <Name>Frame Wrapped ISXD Data</Name>
+            <Definition>Identifies Frame Wrapped ISXD Data Essence</Definition>
+            <DefiningDocument>SMPTE ST 2067-202</DefiningDocument>
+            <IsDeprecated>false</IsDeprecated>
+        </Entry>
+        <Entry>
+            <Register>Essence</Register>
+            <NamespaceName>http://www.smpte-ra.org/reg/2088/2019/14/9</NamespaceName>
+            <Symbol>PHDRImageMetadataItem</Symbol>
+            <UL>urn:smpte:ul:060e2b34.01020105.0e090607.017f017f</UL>
+            <Kind>LEAF</Kind>
+            <Name>PHDR Image Metadata Item</Name>
+            <Definition>Identifies a PHDR image metadata item</Definition>
+            <DefiningDocument>SMPTE RDD 56</DefiningDocument>
             <IsDeprecated>false</IsDeprecated>
         </Entry>
     </Entries>
