@@ -22,7 +22,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Myriadbits.MXF.KLV;
 
 namespace Myriadbits.MXF
@@ -104,5 +106,12 @@ namespace Myriadbits.MXF
             return base.ReadLocalTagValue(reader, localTag);
         }
 
+        public IEnumerable<MXFTrack> GetLinkedTracks()
+        {
+            return this.Children.OfType<MXFLocalTag>()
+                .SingleOrDefault(lt => lt.TagValue == 0x4403)
+                .Children.OfType<MXFReference<MXFTrack>>()
+                .Select(r => r.Reference);
+        }
     }
 }
