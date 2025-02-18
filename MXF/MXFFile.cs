@@ -430,7 +430,8 @@ namespace Myriadbits.MXF
                 LogicalAddChildren(lChild);
                 lChild.ReorderLogicalChildren(c => c.Offset);
             }
-        }   
+            AssociateEssencesToTimelineTracks();
+        }
 
         private MXFObject LogicalAddChildren(MXFObject obj)
         {
@@ -456,6 +457,37 @@ namespace Myriadbits.MXF
                 }
             }
             return obj;
+        }
+        
+        private void AssociateEssencesToTimelineTracks()
+        {
+            var sourcePackages = this.LogicalDescendants().OfType<MXFSourcePackage>();
+
+            foreach (var sp in sourcePackages)
+            {
+                // get associated essence container/essence id
+                uint essenceSID = sp.LogicalParent.LogicalChildren.OfType<MXFEssenceContainerData>()
+                    .FirstOrDefault(ec => ec.LinkedPackageID == sp.PackageID)?
+                    .EssenceSID ?? 0;
+
+                if (essenceSID > 0)
+                {
+                    // get all essence elements with that essenceSID in all partitions
+                    var essenceElements = this.GetPartitions().Where(p => p.BodySID == essenceSID).SelectMany(p => p.Children.OfType<MXFEssenceElement>());
+                    var tracks = sp.LogicalChildren.OfType<MXFTrack>();
+
+                    foreach (var t in tracks)
+                    {
+                        byte[] trackNumberBytes = t.EssenceTrackNumber;
+                        var associatedEssences = essenceElements.Where(el => el.Key.LastBytesQuadruple().SequenceEqual(trackNumberBytes));
+                        t.AddLogicalChildren(associatedEssences);
+                    }
+                }
+                else
+                {
+                    // TODO: log error/validation, should not happen
+                }
+            }
         }
 
         /// <summary>
