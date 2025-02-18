@@ -139,6 +139,11 @@ namespace Myriadbits.MXF.Identifiers
                 bytes[3] == ValidULPrefix[3];
         }
 
+        public IEnumerable<byte> LastBytesQuadruple()
+        {
+            return this.GetRange(12, 4);
+        }
+
         public bool IdentifiesLocalSet()
         {
             return CategoryDesignator == ULCategories.Groups &&
@@ -368,8 +373,6 @@ namespace Myriadbits.MXF.Identifiers
                     break;
             }
         }
-
-
     }
 
 }

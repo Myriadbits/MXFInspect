@@ -69,6 +69,11 @@ namespace Myriadbits.MXF
 
         }
 
+        public ImmutableArray<byte> GetRange(int start, int length)
+        {
+            return ImmutableArray.CreateRange(theBytes, start, length, (b => b));
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
