@@ -10,9 +10,9 @@
     <PackageId>MXF Inspect Library</PackageId>
     <Authors>Jochem Bakker, rayden84</Authors>
     <Product>MXF Inspect</Product>
-    <AssemblyVersion>4.2.1</AssemblyVersion>
-    <FileVersion>4.2.1</FileVersion>
-    <Version>4.1.9</Version>
+    <AssemblyVersion>4.2.5</AssemblyVersion>
+    <FileVersion>4.2.5</FileVersion>
+    <Version>4.2.5</Version>
     <AssemblyName>Myriadbits.MXF</AssemblyName>
     <RootNamespace>Myriadbits.MXF</RootNamespace>
   </PropertyGroup>
